@@ -561,6 +561,7 @@ public final class ReBrowserActivity extends Activity
     public void deleteProfileIfPossible(String profileName) {
         if (!ReBrowserStore.isOwnedProfile(profileName)) return;
         sitePermissions.clearForProfile(profileName);
+        webController.clearYoutubePlayerCompatibility(profileName);
         try {
             ProfileStore.getInstance().deleteProfile(profileName);
             workspaceController.unmarkProfileForDeletion(profileName);
@@ -763,6 +764,30 @@ public final class ReBrowserActivity extends Activity
     @Override
     public void openSettings() {
         startActivity(new Intent(this, ReBrowserSettingsActivity.class));
+    }
+
+    /** Internal mode/protection-policy hook. Call on the UI thread; no menu or web bridge. */
+    boolean setYoutubePlayerCompatibilityEnabled(
+            ReBrowserStore.Workspace workspace,
+            boolean enabled
+    ) {
+        if (workspace == null || !workspaces.contains(workspace)
+                && !shelvedSecondaryWorkspaces.contains(workspace)) return false;
+        if (webController.youtubePlayerCompatibilityEnabled(
+                workspace.profileName, "https://m.youtube.com") == enabled) return true;
+        if (!webController.setYoutubePlayerCompatibilityEnabled(workspace.profileName, enabled)) {
+            return false;
+        }
+        if (workspace == activeWorkspace() && webController.hasPages()) {
+            // A policy change must replace old script closures, not merely affect the next load.
+            dismissPermissionPrompt("player-compatibility-changed");
+            fullscreenController.hideIfVisible();
+            saveCurrentTabStates();
+            destroyTabWebViews();
+            ReBrowserStore.Tab tab = workspace.activeTab();
+            if (tab != null) showTab(tab);
+        }
+        return true;
     }
 
     private void reloadActivePage() {
@@ -1766,6 +1791,12 @@ public final class ReBrowserActivity extends Activity
         }
         ReBrowserStore.Tab tab = activeWorkspace() == null ? null : activeWorkspace().activeTab();
         String currentUrl = tab == null ? null : webController.currentUrl(tab.id);
+        if (workspaceController.popupSource(activeWorkspace(), tab) != null) {
+            lastBackPressAt = 0;
+            // A link-created tab unwinds its own history before returning to its actual source.
+            if (!webController.goBackWithinPopup(tab.id)) closeTab(tab);
+            return;
+        }
         boolean atHomepage = currentUrl != null
                 && samePage(currentUrl, browserPreferences.homeUrl());
         if (!atHomepage && tab != null && webController.canGoBack(tab.id)) {
@@ -2144,7 +2175,8 @@ public final class ReBrowserActivity extends Activity
         ) {
             ReBrowserStore.Workspace workspace = activeWorkspace();
             if (workspace == null || !workspace.tabs.contains(sourceTab)) return null;
-            ReBrowserStore.Tab tab = workspaceController.addTab(workspace, "about:blank");
+            saveVisibleTabState();
+            ReBrowserStore.Tab tab = workspaceController.addPopupTab(workspace, sourceTab);
             if (tab == null) {
                 toast("每个总标签页最多 50 个子标签页");
                 return null;

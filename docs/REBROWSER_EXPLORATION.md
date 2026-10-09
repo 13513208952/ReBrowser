@@ -136,11 +136,18 @@ video to sensor-landscape. Enabling the override selects sensor-landscape, ordin
 auto-rotation, or normal portrait from a three-segment setting. Reverse portrait is deliberately
 not requested. Leaving full-screen playback reapplies the persisted global browser orientation.
 
-Hardware-button and edge-gesture back navigation use the same dispatcher. Transient overviews or
-the focused omnibox close first; then the current child WebView walks backward through page history.
-A restored page without history is sent to the configured homepage. Only at the homepage does the
-first back show an anti-mistouch confirmation and a second back within two seconds exit the entire
-application. ReOutlook applies the equivalent policy using the Outlook mailbox list as its homepage.
+Hardware-button and edge-gesture back navigation use the same dispatcher. Permission prompts,
+fullscreen video, transient overviews, and the focused omnibox close first. A child tab opened by a
+webpage link records its source tab for the current workspace runtime: back first walks its own
+page history, then closes the link-created tab and returns to the actual source, rather than an
+adjacent tab or the homepage. Leading `about:blank` popup history is not treated as a destination.
+Nested link-created tabs can unwind in sequence; manually created tabs or manual tab switches do
+not create source links. Closing a source, switching workspaces, shelving, or restarting invalidates
+the affected runtime links; they are not persisted and do not create cross-workspace navigation.
+Without a source link, the existing policy remains: page history is used away from the homepage,
+a page without history is sent to the configured homepage, and only at the homepage does the first
+back show an anti-mistouch confirmation and a second back within two seconds exit the entire
+application. ReOutlook keeps its existing policy using the Outlook mailbox list as its homepage.
 
 ## Download model
 

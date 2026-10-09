@@ -19,6 +19,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -187,6 +188,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
             new IdentityHashMap<>();
     private final List<ReBrowserPermissionRequest> pendingPermissionRequests = new ArrayList<>();
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private final ReBrowserPlayerCompatibility playerCompatibility = new ReBrowserPlayerCompatibility();
     private FrameLayout container;
     private ValueCallback<Uri[]> pendingFileChooser;
     private String pendingFileChooserTabId;
@@ -333,7 +335,20 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
                         handlePermissionMessage(page, view, message, sourceOrigin,
                                 isMainFrame, replyProxy));
         WebViewCompat.addDocumentStartJavaScript(
-                page.webView, ReBrowserPermissionScript.DOCUMENT_START, Set.of("*"));
+                page.webView, ReBrowserPermissionScript.documentStart(
+                        playerCompatibility.originsForProfile(page.profileName)), Set.of("*"));
+    }
+
+    boolean youtubePlayerCompatibilityEnabled(String profileName, String url) {
+        return playerCompatibility.enabled(profileName, url);
+    }
+
+    boolean setYoutubePlayerCompatibilityEnabled(String profileName, boolean enabled) {
+        return playerCompatibility.setEnabled(profileName, enabled);
+    }
+
+    void clearYoutubePlayerCompatibility(String profileName) {
+        playerCompatibility.clearForProfile(profileName);
     }
 
     private void handlePermissionMessage(
@@ -571,6 +586,32 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
 
     void goBack(String tabId) {
         requirePage(tabId).webView.goBack();
+    }
+
+    boolean goBackWithinPopup(String tabId) {
+        PageBinding page = pagesByTabId.get(tabId);
+        if (page == null || !page.webView.canGoBack()) return false;
+        WebBackForwardList history = page.webView.copyBackForwardList();
+        List<String> urls = new ArrayList<>();
+        for (int index = 0; index < history.getSize(); index++) {
+            urls.add(history.getItemAtIndex(index).getUrl());
+        }
+        if (!hasPopupBackHistory(urls, history.getCurrentIndex())) return false;
+        page.webView.goBack();
+        return true;
+    }
+
+    static boolean hasPopupBackHistory(List<String> urls, int currentIndex) {
+        if (currentIndex <= 0 || currentIndex >= urls.size()) return false;
+        // WebView can retain an initial empty document before a popup's destination.
+        // Do not strand the user there; later intentional about:blank visits remain history.
+        for (int index = 0; index < currentIndex; index++) {
+            String url = urls.get(index);
+            if (url != null && !url.isBlank() && !"about:blank".equalsIgnoreCase(url)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     void goForward(String tabId) {
@@ -1245,7 +1286,8 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
                 Message resultMsg
         ) {
             PageBinding source = pagesByView.get(view);
-            if (!isUserGesture || source == null) return false;
+            if (!isUserGesture || source == null || !foreground
+                    || !isCurrentVisiblePage(source)) return false;
             PopupTarget target = listener.onCreatePopup(source.tab);
             if (target == null || target.tab == null) return false;
             try {

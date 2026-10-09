@@ -1,8 +1,20 @@
 package io.github.reoutlook;
 
+import org.json.JSONArray;
+
+import java.util.Set;
+import java.util.TreeSet;
+
 /** Fixed semantic website API policy installed before untrusted page scripts. */
 final class ReBrowserPermissionScript {
     private ReBrowserPermissionScript() {}
+
+    static String documentStart(Set<String> youtubeOrigins) {
+        Set<String> supported = new TreeSet<>(youtubeOrigins);
+        supported.retainAll(ReBrowserPlayerCompatibility.YOUTUBE_ORIGINS);
+        return DOCUMENT_START.replace("const youtubePlayerOrigins = [];",
+                "const youtubePlayerOrigins = " + new JSONArray(supported) + ";");
+    }
 
     static final String DOCUMENT_START = """
             (() => {
@@ -124,18 +136,83 @@ final class ReBrowserPermissionScript {
                 try { Object.defineProperty(globalThis, name, {value: undefined, configurable: false}); }
                 catch (_) {}
               }
-              const blockedEvents = new Set([
-                'devicemotion', 'deviceorientation', 'deviceorientationabsolute'
-              ]);
+              const apply = Reflect.apply;
+              const string = String;
+              const lowerCase = String.prototype.toLowerCase;
+              const defineProperty = Object.defineProperty;
               const originalAddEventListener = EventTarget.prototype.addEventListener;
+              const blockedEvent = type => {
+                const lower = apply(lowerCase, type, []);
+                return lower === 'devicemotion' || lower === 'deviceorientation' ||
+                  lower === 'deviceorientationabsolute';
+              };
+              const filteredAddEventListener = function(type, listener, options) {
+                const eventType = string(type);
+                if (blockedEvent(eventType)) return;
+                return apply(originalAddEventListener, this, [eventType, listener, options]);
+              };
               try {
-                Object.defineProperty(EventTarget.prototype, 'addEventListener', {
-                  configurable: false, writable: false,
-                  value: function(type, listener, options) {
-                    if (blockedEvents.has(String(type).toLowerCase())) return;
-                    return originalAddEventListener.call(this, type, listener, options);
-                  }
+                defineProperty(EventTarget.prototype, 'addEventListener', {
+                  configurable: false, writable: false, value: filteredAddEventListener
                 });
+
+                // Opt-in player API facade, not a writable global event hook. Never install
+                // this in frames or on another origin sharing this WebView's Profile.
+                const youtubePlayerOrigins = [];
+                if (globalThis.top === globalThis &&
+                    youtubePlayerOrigins.includes(location.origin)) {
+                  try {
+                    const localName = Object.getOwnPropertyDescriptor(Element.prototype, 'localName').get;
+                    const ownerDocument = Object.getOwnPropertyDescriptor(Node.prototype, 'ownerDocument').get;
+                    const isConnected = Object.getOwnPropertyDescriptor(Node.prototype, 'isConnected').get;
+                    const getAttribute = Element.prototype.getAttribute;
+                    const playerElement = element => {
+                      try {
+                        return apply(localName, element, []) === 'div' &&
+                          apply(ownerDocument, element, []) === document &&
+                          apply(isConnected, element, []) &&
+                          apply(getAttribute, element, ['id']) === 'movie_player';
+                      } catch (_) { return false; }
+                    };
+                    defineProperty(HTMLDivElement.prototype, 'addEventListener', {
+                      configurable: false, enumerable: true,
+                      get: () => filteredAddEventListener,
+                      set: function(replacement) {
+                        if (!playerElement(this) || typeof replacement !== 'function') {
+                          throw denied('Only the YouTube player DIV can install an event facade');
+                        }
+                        const element = this;
+                        let facade;
+                        const replace = next => {
+                          if (typeof next !== 'function') throw denied('Event facade must be a function');
+                          facade = function(type, ...args) {
+                            if (this !== element || !playerElement(element)) {
+                              throw denied('Event facade belongs to its player DIV');
+                            }
+                            const eventType = string(type);
+                            if (blockedEvent(eventType)) return;
+                            const forwarded = [eventType];
+                            for (let index = 0; index < args.length; index++) forwarded[index + 1] = args[index];
+                            return apply(next, element, forwarded);
+                          };
+                        };
+                        replace(replacement);
+                        defineProperty(element, 'addEventListener', {
+                          configurable: false, enumerable: true,
+                          get: () => facade,
+                          set: function(next) {
+                            if (this !== element || !playerElement(element)) {
+                              throw denied('Event facade belongs to its player DIV');
+                            }
+                            replace(next);
+                          }
+                        });
+                      }
+                    });
+                  } catch (_) {
+                    // Unsupported DOM descriptors keep the original read-only filter.
+                  }
+                }
                 for (const property of ['ondevicemotion', 'ondeviceorientation',
                     'ondeviceorientationabsolute']) {
                   Object.defineProperty(globalThis, property, {

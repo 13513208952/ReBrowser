@@ -103,6 +103,111 @@ public final class ReBrowserWorkspaceControllerTest {
     }
 
     @Test
+    public void popupCloseReturnsToSourceRatherThanAdjacentTab() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab source = workspace.activeTab();
+        ReBrowserStore.Tab unrelated = controller.addTab(workspace, "https://example.com/");
+        assertTrue(controller.selectTab(workspace, source));
+        ReBrowserStore.Tab popup = controller.addPopupTab(workspace, source);
+        assertNotNull(popup);
+        assertEquals(source, controller.popupSource(workspace, popup));
+
+        ReBrowserWorkspaceController.TabCloseResult result =
+                controller.closeTab(workspace, popup, ReBrowserStore.HOME_URL);
+        assertEquals(source, result.nextActiveTab);
+        assertEquals(source, workspace.activeTab());
+        assertTrue(workspace.tabs.contains(unrelated));
+        assertFalse(workspace.tabs.contains(popup));
+        assertNull(controller.popupSource(workspace, popup));
+    }
+
+    @Test
+    public void nestedPopupsUnwindToTheirRespectiveSources() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab first = workspace.activeTab();
+        ReBrowserStore.Tab second = controller.addPopupTab(workspace, first);
+        ReBrowserStore.Tab third = controller.addPopupTab(workspace, second);
+        assertNotNull(third);
+        assertEquals(second, controller.closeTab(
+                workspace, third, ReBrowserStore.HOME_URL).nextActiveTab);
+        assertEquals(first, controller.popupSource(workspace, second));
+        assertEquals(first, controller.closeTab(
+                workspace, second, ReBrowserStore.HOME_URL).nextActiveTab);
+        assertEquals(1, workspace.tabs.size());
+    }
+
+    @Test
+    public void closingSourceInvalidatesLinkWithoutChoosingAnUnrelatedSource() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab source = workspace.activeTab();
+        ReBrowserStore.Tab popup = controller.addPopupTab(workspace, source);
+        controller.closeTab(workspace, source, ReBrowserStore.HOME_URL);
+        assertNull(controller.popupSource(workspace, popup));
+        assertEquals(popup, workspace.activeTab());
+        assertTrue(controller.closeTab(workspace, popup, ReBrowserStore.HOME_URL).resetOnly);
+    }
+
+    @Test
+    public void manualTabsAndSelectionDoNotAcquirePopupSources() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab first = workspace.activeTab();
+        ReBrowserStore.Tab manual = controller.addTab(workspace, "https://example.com/");
+        assertNull(controller.popupSource(workspace, manual));
+        assertTrue(controller.selectTab(workspace, first));
+        assertNull(controller.popupSource(workspace, first));
+        assertTrue(controller.selectTab(workspace, manual));
+        assertNull(controller.popupSource(workspace, manual));
+        assertNull(controller.addPopupTab(workspace, first));
+        assertNull(controller.addPopupTab(null, null));
+    }
+
+    @Test
+    public void failedPopupCreationRestoresSelectionAndLeavesNoSourceLink() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab source = workspace.activeTab();
+        controller.addTab(workspace, "https://example.com/");
+        controller.selectTab(workspace, source);
+        ReBrowserStore.Tab popup = controller.addPopupTab(workspace, source);
+        controller.discardAddedTab(workspace, popup);
+        assertEquals(source, workspace.activeTab());
+        assertNull(controller.popupSource(workspace, popup));
+        assertEquals(2, workspace.tabs.size());
+    }
+
+    @Test
+    public void workspaceSwitchAndShelvingClearRuntimePopupLinks() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab source = workspace.activeTab();
+        ReBrowserStore.Tab popup = controller.addPopupTab(workspace, source);
+        ReBrowserStore.Workspace other = controller.createTemporary(ReBrowserStore.HOME_URL);
+        assertTrue(controller.activate(other));
+        assertTrue(controller.activate(workspace));
+        assertNull(controller.popupSource(workspace, popup));
+
+        controller.selectTab(workspace, source);
+        ReBrowserStore.Tab nextPopup = controller.addPopupTab(workspace, source);
+        assertTrue(controller.lockAsSecondary(workspace));
+        assertTrue(controller.shelfSecondary(workspace));
+        assertTrue(controller.restoreSecondary(workspace));
+        assertTrue(controller.activate(workspace));
+        assertNull(controller.popupSource(workspace, nextPopup));
+    }
+
+    @Test
+    public void persistentRestoreDoesNotInventPopupNavigationHistory() {
+        ReBrowserStore.Workspace workspace = controller.activeWorkspace();
+        ReBrowserStore.Tab source = workspace.activeTab();
+        ReBrowserStore.Tab popup = controller.addPopupTab(workspace, source);
+        assertTrue(controller.lockAsSecondary(workspace));
+        ReBrowserWorkspaceController restored = new ReBrowserWorkspaceController(store);
+        restored.initialize(ReBrowserStore.HOME_URL);
+        ReBrowserStore.Workspace restoredWorkspace = restored.activeWorkspace();
+        assertEquals(workspace.id, restoredWorkspace.id);
+        assertEquals(popup.id, restoredWorkspace.activeTab().id);
+        assertNull(restored.popupSource(restoredWorkspace, restoredWorkspace.activeTab()));
+    }
+
+    @Test
     public void shelvingRestoringAndDeletingSecondaryPreservesIntent() {
         ReBrowserStore.Workspace workspace = controller.activeWorkspace();
         assertTrue(controller.lockAsSecondary(workspace));

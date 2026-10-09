@@ -32,6 +32,9 @@ final class ReBrowserWorkspaceController {
     private final List<ReBrowserStore.Workspace> activeView;
     private final List<ReBrowserStore.Workspace> shelvedView;
     private ReBrowserStore.Workspace activeWorkspace;
+    // Runtime-only links: restored metadata has no corresponding live navigation history.
+    private final java.util.Map<ReBrowserStore.Tab, ReBrowserStore.Tab> popupSources =
+            new java.util.IdentityHashMap<>();
 
     ReBrowserWorkspaceController(ReBrowserStore store) {
         this.store = store;
@@ -87,11 +90,13 @@ final class ReBrowserWorkspaceController {
 
     boolean activate(ReBrowserStore.Workspace workspace) {
         if (workspace == null || !activeWorkspaces.contains(workspace)) return false;
+        if (workspace != activeWorkspace) clearPopupSources(activeWorkspace);
         activeWorkspace = workspace;
         return true;
     }
 
     void clearActiveWorkspace() {
+        clearPopupSources(activeWorkspace);
         activeWorkspace = null;
     }
 
@@ -100,9 +105,37 @@ final class ReBrowserWorkspaceController {
         return store.addTab(workspace, url);
     }
 
+    ReBrowserStore.Tab addPopupTab(
+            ReBrowserStore.Workspace workspace,
+            ReBrowserStore.Tab source
+    ) {
+        if (workspace == null || workspace != activeWorkspace || source == null
+                || !workspace.tabs.contains(source) || workspace.activeTab() != source) return null;
+        ReBrowserStore.Tab tab = addTab(workspace, "about:blank");
+        if (tab != null) popupSources.put(tab, source);
+        return tab;
+    }
+
+    ReBrowserStore.Tab popupSource(
+            ReBrowserStore.Workspace workspace,
+            ReBrowserStore.Tab tab
+    ) {
+        if (workspace == null || tab == null || !activeWorkspaces.contains(workspace)
+                || !workspace.tabs.contains(tab)) return null;
+        ReBrowserStore.Tab source = popupSources.get(tab);
+        if (source != null && workspace.tabs.contains(source)) return source;
+        popupSources.remove(tab);
+        return null;
+    }
+
     void discardAddedTab(ReBrowserStore.Workspace workspace, ReBrowserStore.Tab tab) {
-        if (workspace == null || tab == null || !activeWorkspaces.contains(workspace)) return;
+        if (workspace == null || tab == null || !activeWorkspaces.contains(workspace)
+                || !workspace.tabs.contains(tab)) return;
+        ReBrowserStore.Tab source = popupSource(workspace, tab);
+        boolean wasActive = tab.id.equals(workspace.activeTabId);
         workspace.tabs.remove(tab);
+        forgetPopupTab(tab);
+        if (wasActive && source != null) workspace.activeTabId = source.id;
         workspace.activeTab();
         save();
     }
@@ -122,6 +155,7 @@ final class ReBrowserWorkspaceController {
         if (workspace == null || tab == null || !activeWorkspaces.contains(workspace)
                 || !workspace.tabs.contains(tab)) return TabCloseResult.invalid();
         if (workspace.tabs.size() == 1) {
+            forgetPopupTab(tab);
             tab.title = "新子标签页";
             tab.url = ReBrowserStore.safeUrl(homeUrl);
             workspace.activeTabId = tab.id;
@@ -130,11 +164,13 @@ final class ReBrowserWorkspaceController {
         }
         int oldIndex = workspace.tabs.indexOf(tab);
         boolean wasActive = tab.id.equals(workspace.activeTabId);
+        ReBrowserStore.Tab source = popupSource(workspace, tab);
         workspace.tabs.remove(tab);
+        forgetPopupTab(tab);
         ReBrowserStore.Tab next = null;
         if (wasActive) {
             int nextIndex = Math.min(oldIndex, workspace.tabs.size() - 1);
-            next = workspace.tabs.get(nextIndex);
+            next = source != null ? source : workspace.tabs.get(nextIndex);
             workspace.activeTabId = next.id;
         }
         save();
@@ -186,6 +222,7 @@ final class ReBrowserWorkspaceController {
     boolean shelfSecondary(ReBrowserStore.Workspace workspace) {
         if (!activeWorkspaces.contains(workspace)
                 || workspace.level != ReBrowserStore.Level.SECONDARY) return false;
+        clearPopupSources(workspace);
         store.shelfSecondary(workspace, activeWorkspaces, shelvedWorkspaces);
         if (workspace == activeWorkspace) activeWorkspace = null;
         return shelvedWorkspaces.contains(workspace);
@@ -194,6 +231,7 @@ final class ReBrowserWorkspaceController {
     boolean removeTemporary(ReBrowserStore.Workspace workspace) {
         if (!activeWorkspaces.contains(workspace)
                 || workspace.level != ReBrowserStore.Level.TEMPORARY) return false;
+        clearPopupSources(workspace);
         store.removeWorkspace(workspace, activeWorkspaces);
         if (workspace == activeWorkspace) activeWorkspace = null;
         return !activeWorkspaces.contains(workspace);
@@ -225,6 +263,16 @@ final class ReBrowserWorkspaceController {
 
     void unmarkProfileForDeletion(String profileName) {
         store.unmarkProfileForDeletion(profileName);
+    }
+
+    private void forgetPopupTab(ReBrowserStore.Tab tab) {
+        popupSources.remove(tab);
+        popupSources.values().removeIf(source -> source == tab);
+    }
+
+    private void clearPopupSources(ReBrowserStore.Workspace workspace) {
+        if (workspace == null) return;
+        for (ReBrowserStore.Tab tab : workspace.tabs) forgetPopupTab(tab);
     }
 
     private boolean ownsTab(ReBrowserStore.Tab tab) {

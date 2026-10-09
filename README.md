@@ -69,13 +69,16 @@ export ANDROID_HOME=$HOME/Android/Sdk
 
 ## 文档
 
+完整阅读入口见[文档导航与接手说明](docs/README.md)。文档中的后续方向是讨论参考，不是已批准的开发计划。
+
 | 文档 | 内容 |
 | --- | --- |
 | [ReOutlook 架构与同步](docs/REOUTLOOK_ARCHITECTURE.md) | 邮件采集、回填、检查点、账号隔离和离线界面 |
 | [ReBrowser 设计](docs/REBROWSER_EXPLORATION.md) | 双层标签、Profile、生命周期、方向和返回策略 |
 | [ReBrowser 管理协议](docs/REBROWSER_ADMIN_CONTROL.md) | ADB 挑战授权、命令范围和数据边界 |
 | [ReBrowser 网站权限](docs/REBROWSER_SITE_PERMISSIONS.md) | 单站授权、定位、剪贴板、永久禁用项和后台冻结 |
-| [项目状态](docs/PROJECT_STATUS.md) | 已验证能力、当前限制和后续工作 |
+| [项目状态](docs/PROJECT_STATUS.md) | 已验证能力、当前限制和候选方向 |
+| [开发历史与验证资料](docs/DEVELOPMENT_HISTORY.md) | 版本演进、历史测试范围和本地资料索引 |
 | [隐私说明](PRIVACY.md) | 本地数据、网络通信、备份和删除 |
 | [安全策略](SECURITY.md) | 安全边界、管理员接口和漏洞报告 |
 | [管理员工具](tools/admin/README.md) | 命令行使用和加密导出解密 |

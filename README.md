@@ -5,7 +5,7 @@
 - **ReOutlook**：在线使用完整 Outlook Web，并将已同步邮件保存到本地供离线阅读。
 - **ReBrowser**：基于系统 WebView Multi-Profile 的轻量浏览器；以“总标签页”管理独立网站环境，以“子标签页”管理环境内页面。
 
-安装同一个 `io.github.reoutlook` APK 后，桌面会出现 **ReOutlook** 和 **ReBrowser** 两个入口。它们不是两个 APK；ReOutlook 独占 WebView Default Profile，ReBrowser 只使用隔离的命名 Profile。
+安装同一个 `io.github.reoutlook` APK 后，桌面默认出现 **ReOutlook** 和 **ReBrowser** 两个入口。ReBrowser 设置可隐藏或恢复 ReOutlook 桌面入口，隐藏后仍可从浏览器菜单切换到邮件。它们不是两个 APK；ReOutlook 独占 WebView Default Profile，ReBrowser 只使用隔离的命名 Profile。
 
 > **项目状态：实验性原型。** 当前代码已经在真实设备上完成核心流程验证，但尚未接受独立安全审计，也不是成熟的生产邮件或浏览器产品。
 
@@ -41,6 +41,7 @@ ReBrowser 的核心原则是 **Persist by intent, not by visitation（由意图�
 - 最多同时存在 5 个主总标签页、64 个总标签页，每个总标签页最多 50 个子标签页；
 - 支持网页新窗口转为当前环境内的子标签页、原生全屏视频、持久化全局方向及独立的视频方向策略；
 - 地址栏下方显示 2dp 橙紫渐变加载进度线，支持平滑推进、完成淡出及切换标签页后的状态同步；
+- 访问历史按整个总标签页生命周期保留：副／主来源长期保留，临时来源通常保留 30 分钟，副来源收起后再保留 30 分钟；支持删除、维持记录、清理有时限记录和暂停写入，暂停不等同于完整无痕隔离；
 - 不支持 WebView `MULTI_PROFILE` 时完全禁用，不回退到 ReOutlook 的 Default Profile。
 
 当前版本不会把自身注册为系统默认浏览器候选。完整模型和交互说明见 [ReBrowser 设计](docs/REBROWSER_EXPLORATION.md)。独立的 [ReBrowser 仓库](https://github.com/13513208952/ReBrowser) 仅作为项目入口，代码统一维护在本仓库。
@@ -79,7 +80,8 @@ export ANDROID_HOME=$HOME/Android/Sdk
 | [ReBrowser 管理协议](docs/REBROWSER_ADMIN_CONTROL.md) | ADB 挑战授权、命令范围和数据边界 |
 | [ReBrowser 网站权限](docs/REBROWSER_SITE_PERMISSIONS.md) | 单站授权、定位、剪贴板、永久禁用项和后台冻结 |
 | [项目状态](docs/PROJECT_STATUS.md) | 已验证能力、当前限制和候选方向 |
-| [新标签页与个性化讨论](docs/REBROWSER_NEW_TAB_PLAN.md) | 新标签页、历史入口、个性化、防护和桌面入口显隐设想（未实现） |
+| [新标签页与个性化讨论](docs/REBROWSER_NEW_TAB_PLAN.md) | 新标签页、个性化及防护设想，以及桌面入口显隐 |
+| [历史记录](docs/REBROWSER_HISTORY_PLAN.md) | 按总标签页生命周期保留、维持／清理／暂停及验证范围 |
 | [开发历史与验证资料](docs/DEVELOPMENT_HISTORY.md) | 版本演进、历史测试范围和本地资料索引 |
 | [隐私说明](PRIVACY.md) | 本地数据、网络通信、备份和删除 |
 | [安全策略](SECURITY.md) | 安全边界、管理员接口和漏洞报告 |

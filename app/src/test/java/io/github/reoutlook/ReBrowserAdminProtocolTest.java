@@ -105,6 +105,40 @@ public final class ReBrowserAdminProtocolTest {
     }
 
     @Test
+    public void historyDiagnosticsAreBoundedAndCannotMutateOrExtractHistory() throws Exception {
+        JSONObject query = prepared(ReBrowserAdminProtocol.OP_GET_HISTORY_STATUS);
+        ReBrowserAdminProtocol.prepareExternalRequest(query);
+        assertEquals(1, query.getInt("authorizationLevel"));
+        assertTrue(ReBrowserAdminProtocol.ownerCredentialAllowed(query));
+        JSONObject show = prepared(ReBrowserAdminProtocol.OP_SHOW_HISTORY);
+        ReBrowserAdminProtocol.prepareExternalRequest(show);
+        assertEquals(1, show.getInt("authorizationLevel"));
+        assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                prepared("GET_HISTORY_URLS")));
+        assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                prepared("DELETE_HISTORY")));
+        assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE)
+                        .put("name", "historyPaused").put("value", false)));
+    }
+
+    @Test
+    public void launcherStatusIsLevelOneButCannotMutateComponents() throws Exception {
+        JSONObject query = prepared(ReBrowserAdminProtocol.OP_GET_LAUNCHER_STATUS);
+        ReBrowserAdminProtocol.prepareExternalRequest(query);
+        assertEquals(1, query.getInt("authorizationLevel"));
+        assertTrue(ReBrowserAdminProtocol.ownerCredentialAllowed(query));
+        assertTrue(ReBrowserAdminProtocol.supportedOperations().toString()
+                .contains(ReBrowserAdminProtocol.OP_GET_LAUNCHER_STATUS));
+        assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                prepared("SET_COMPONENT_ENABLED").put("component", ".MainActivity")
+                        .put("enabled", false)));
+        assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE)
+                        .put("name", "outlookLauncherVisible").put("value", false)));
+    }
+
+    @Test
     public void ownerChallengeIsSingleUseAndCannotAuthorizeLevelThree() throws Exception {
         JSONObject request = prepared(ReBrowserAdminProtocol.OP_GET_DIAGNOSTICS);
         String challenge = ReBrowserAdminAuthorizer.createChallenge(

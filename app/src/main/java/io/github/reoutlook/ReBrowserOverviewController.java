@@ -11,6 +11,7 @@ final class ReBrowserOverviewController {
         CHILD_TABS,
         FAVORITES,
         WORKSPACE_BOOKMARKS,
+        HISTORY,
         DOWNLOADS
     }
 

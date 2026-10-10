@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 @SuppressLint("SetTextI18n")
 public final class ReBrowserSettingsActivity extends Activity {
     private ReBrowserPreferences preferences;
+    private ReOutlookLauncherVisibility launcherVisibility;
+    private Switch outlookLauncherSwitch;
     private EditText homeUrl;
     private Spinner searchEngine;
     private LinearLayout videoOrientationSelector;
@@ -33,6 +36,7 @@ public final class ReBrowserSettingsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = new ReBrowserPreferences(this);
+        launcherVisibility = new ReOutlookLauncherVisibility(this);
         ScrollView root = new ScrollView(this);
         root.setFillViewport(true);
         WindowStyling.apply(this, root);
@@ -63,6 +67,17 @@ public final class ReBrowserSettingsActivity extends Activity {
         LinearLayout.LayoutParams scopeParams = matchWrap();
         scopeParams.setMargins(0, dp(8), 0, dp(22));
         content.addView(scope, scopeParams);
+
+        content.addView(sectionTitle("桌面入口"));
+        LinearLayout launcherRow = settingSwitch(
+                "显示 ReOutlook 桌面入口",
+                "仅控制桌面图标；隐藏后仍可从 ReBrowser 菜单切换到邮件",
+                launcherVisibility.visible(),
+                enabled -> {});
+        outlookLauncherSwitch = (Switch) launcherRow.getChildAt(1);
+        outlookLauncherSwitch.setContentDescription("显示 ReOutlook 桌面入口");
+        outlookLauncherSwitch.setOnCheckedChangeListener(this::onOutlookLauncherChanged);
+        content.addView(launcherRow);
 
         content.addView(sectionTitle("启动与搜索"));
         content.addView(fieldLabel("主页网址"));
@@ -145,6 +160,28 @@ public final class ReBrowserSettingsActivity extends Activity {
         content.addView(save, saveParams);
 
         setContentView(root);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // PackageManager is the single source of truth, including after process restarts.
+        if (outlookLauncherSwitch != null) {
+            outlookLauncherSwitch.setOnCheckedChangeListener(null);
+            outlookLauncherSwitch.setChecked(launcherVisibility.visible());
+            outlookLauncherSwitch.setOnCheckedChangeListener(this::onOutlookLauncherChanged);
+        }
+    }
+
+    private void onOutlookLauncherChanged(CompoundButton button, boolean visible) {
+        try {
+            launcherVisibility.setVisible(visible);
+        } catch (RuntimeException error) {
+            button.setOnCheckedChangeListener(null);
+            button.setChecked(!visible);
+            button.setOnCheckedChangeListener(this::onOutlookLauncherChanged);
+            Toast.makeText(this, "桌面入口更新失败，请重试", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private TextView sectionTitle(String text) {

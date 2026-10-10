@@ -32,6 +32,7 @@ final class ReBrowserAdminController {
         void showWorkspaceOverview();
         void showChildOverview();
         void showDownloadOverview();
+        void showHistoryOverview();
         void openSettings();
         void refreshLifecycleUi();
         void closeWorkspace(ReBrowserStore.Workspace workspace);
@@ -159,6 +160,10 @@ final class ReBrowserAdminController {
         if (ReBrowserAdminProtocol.OP_OPEN_SETTINGS.equals(operation)) {
             host.openSettings();
             return new JSONObject().put("view", "settings");
+        }
+        if (ReBrowserAdminProtocol.OP_SHOW_HISTORY.equals(operation)) {
+            host.showHistoryOverview();
+            return new JSONObject().put("view", "history");
         }
         if (ReBrowserAdminProtocol.OP_SHOW_DOWNLOADS.equals(operation)) {
             host.showDownloadOverview();
@@ -451,6 +456,8 @@ final class ReBrowserAdminController {
         value.put("saveState", WebViewFeature.isFeatureSupported(WebViewFeature.SAVE_STATE));
         value.put("downloads", downloadPolicy());
         value.put("websitePermissions", websitePermissionPolicy());
+        value.put("launcherVisibility", new ReOutlookLauncherVisibility(context).snapshot());
+        value.put("history", historyStatus());
         return value;
     }
 
@@ -484,7 +491,15 @@ final class ReBrowserAdminController {
         value.put("websitePermissionGrantCount",
                 sitePermissions.grants(System.currentTimeMillis()).size());
         value.put("backgroundRuntimeEnabled", sitePermissions.backgroundRuntimeEnabled());
+        value.put("launcherVisibility", new ReOutlookLauncherVisibility(context).snapshot());
+        value.put("history", historyStatus());
         return value;
+    }
+
+    private JSONObject historyStatus() throws Exception {
+        try (ReBrowserHistory history = new ReBrowserHistory(context)) {
+            return history.snapshot();
+        }
     }
 
     private JSONObject websitePermissions() throws Exception {

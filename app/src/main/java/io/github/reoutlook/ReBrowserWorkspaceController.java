@@ -27,6 +27,7 @@ final class ReBrowserWorkspaceController {
     }
 
     private final ReBrowserStore store;
+    private final ReBrowserHistory history;
     private final List<ReBrowserStore.Workspace> activeWorkspaces;
     private final List<ReBrowserStore.Workspace> shelvedWorkspaces;
     private final List<ReBrowserStore.Workspace> activeView;
@@ -37,7 +38,12 @@ final class ReBrowserWorkspaceController {
             new java.util.IdentityHashMap<>();
 
     ReBrowserWorkspaceController(ReBrowserStore store) {
+        this(store, null);
+    }
+
+    ReBrowserWorkspaceController(ReBrowserStore store, ReBrowserHistory history) {
         this.store = store;
+        this.history = history;
         activeWorkspaces = new java.util.ArrayList<>();
         shelvedWorkspaces = new java.util.ArrayList<>();
         activeView = Collections.unmodifiableList(activeWorkspaces);
@@ -51,6 +57,7 @@ final class ReBrowserWorkspaceController {
         shelvedWorkspaces.addAll(store.loadShelvedSecondaryWorkspaces(activeWorkspaces));
         if (activeWorkspaces.isEmpty()) activeWorkspaces.add(newTemporary(homeUrl));
         activeWorkspace = chooseInitialWorkspace();
+        if (history != null) history.reconcile(activeWorkspaces);
     }
 
     List<ReBrowserStore.Workspace> activeWorkspaces() {
@@ -154,6 +161,7 @@ final class ReBrowserWorkspaceController {
     ) {
         if (workspace == null || tab == null || !activeWorkspaces.contains(workspace)
                 || !workspace.tabs.contains(tab)) return TabCloseResult.invalid();
+        if (history != null) history.navigationStarted(tab.id);
         if (workspace.tabs.size() == 1) {
             forgetPopupTab(tab);
             tab.title = "新子标签页";
@@ -196,23 +204,31 @@ final class ReBrowserWorkspaceController {
     }
 
     boolean lockAsSecondary(ReBrowserStore.Workspace workspace) {
-        return activeWorkspaces.contains(workspace)
+        boolean changed = activeWorkspaces.contains(workspace)
                 && store.lockAsSecondary(workspace, activeWorkspaces);
+        if (changed && history != null) history.workspaceChanged(workspace, true);
+        return changed;
     }
 
     boolean unlockToTemporary(ReBrowserStore.Workspace workspace) {
-        return activeWorkspaces.contains(workspace)
+        boolean changed = activeWorkspaces.contains(workspace)
                 && store.unlockToTemporary(workspace, activeWorkspaces);
+        if (changed && history != null) history.workspaceChanged(workspace, true);
+        return changed;
     }
 
     boolean promoteToPrimary(ReBrowserStore.Workspace workspace, boolean allowTemporary) {
-        return activeWorkspaces.contains(workspace)
+        boolean changed = activeWorkspaces.contains(workspace)
                 && store.promoteToPrimary(workspace, activeWorkspaces, allowTemporary);
+        if (changed && history != null) history.workspaceChanged(workspace, true);
+        return changed;
     }
 
     boolean demotePrimaryToSecondary(ReBrowserStore.Workspace workspace) {
-        return activeWorkspaces.contains(workspace)
+        boolean changed = activeWorkspaces.contains(workspace)
                 && store.demotePrimaryToSecondary(workspace, activeWorkspaces);
+        if (changed && history != null) history.workspaceChanged(workspace, true);
+        return changed;
     }
 
     boolean canPromoteToPrimary() {
@@ -225,7 +241,9 @@ final class ReBrowserWorkspaceController {
         clearPopupSources(workspace);
         store.shelfSecondary(workspace, activeWorkspaces, shelvedWorkspaces);
         if (workspace == activeWorkspace) activeWorkspace = null;
-        return shelvedWorkspaces.contains(workspace);
+        boolean changed = shelvedWorkspaces.contains(workspace);
+        if (changed && history != null) history.workspaceChanged(workspace, false);
+        return changed;
     }
 
     boolean removeTemporary(ReBrowserStore.Workspace workspace) {
@@ -234,12 +252,16 @@ final class ReBrowserWorkspaceController {
         clearPopupSources(workspace);
         store.removeWorkspace(workspace, activeWorkspaces);
         if (workspace == activeWorkspace) activeWorkspace = null;
-        return !activeWorkspaces.contains(workspace);
+        boolean changed = !activeWorkspaces.contains(workspace);
+        if (changed && history != null) history.workspaceChanged(workspace, false);
+        return changed;
     }
 
     boolean restoreSecondary(ReBrowserStore.Workspace workspace) {
-        return shelvedWorkspaces.contains(workspace)
+        boolean changed = shelvedWorkspaces.contains(workspace)
                 && store.restoreSecondary(workspace, activeWorkspaces, shelvedWorkspaces);
+        if (changed && history != null) history.workspaceChanged(workspace, true);
+        return changed;
     }
 
     boolean deleteShelvedSecondary(ReBrowserStore.Workspace workspace) {

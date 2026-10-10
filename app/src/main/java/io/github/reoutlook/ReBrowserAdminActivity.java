@@ -191,6 +191,22 @@ public final class ReBrowserAdminActivity extends Activity {
             status.postDelayed(this::finish, 900);
             return;
         }
+        if (ReBrowserAdminProtocol.OP_GET_HISTORY_STATUS.equals(operation)) {
+            try (ReBrowserHistory history = new ReBrowserHistory(this)) {
+                ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed",
+                        authentication, keyId, history.snapshot(), null);
+            }
+            status.setText("历史记录状态已查询。此次授权已经失效。");
+            status.postDelayed(this::finish, 500);
+            return;
+        }
+        if (ReBrowserAdminProtocol.OP_GET_LAUNCHER_STATUS.equals(operation)) {
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed",
+                    authentication, keyId, new ReOutlookLauncherVisibility(this).snapshot(), null);
+            status.setText("桌面入口状态已查询。此次授权已经失效。");
+            status.postDelayed(this::finish, 500);
+            return;
+        }
         if (ReBrowserAdminProtocol.OP_GET_AUDIT.equals(operation)) {
             JSONObject details = new JSONObject();
             details.put("entries", ReBrowserAdminProtocol.audit(this));

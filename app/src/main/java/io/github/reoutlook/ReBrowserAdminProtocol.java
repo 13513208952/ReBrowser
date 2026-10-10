@@ -28,6 +28,9 @@ final class ReBrowserAdminProtocol {
     static final String OP_GET_STATE = "GET_STATE";
     static final String OP_GET_CAPABILITIES = "GET_CAPABILITIES";
     static final String OP_GET_DIAGNOSTICS = "GET_DIAGNOSTICS";
+    static final String OP_GET_LAUNCHER_STATUS = "GET_LAUNCHER_STATUS";
+    static final String OP_GET_HISTORY_STATUS = "GET_HISTORY_STATUS";
+    static final String OP_SHOW_HISTORY = "SHOW_HISTORY";
     static final String OP_GET_AUDIT = "GET_AUDIT";
     static final String OP_VALIDATE_STATE = "VALIDATE_STATE";
     static final String OP_REPAIR_STATE = "REPAIR_STATE";
@@ -68,7 +71,8 @@ final class ReBrowserAdminProtocol {
     private static final Set<String> OPERATIONS = new HashSet<>(Arrays.asList(
             OP_OPEN_URL, OP_NEW_WORKSPACE, OP_NEW_CHILD_TAB, OP_SHOW_WORKSPACES,
             OP_SHOW_CHILD_TABS, OP_OPEN_SETTINGS, OP_SWITCH_TO_OUTLOOK, OP_GET_STATE,
-            OP_GET_CAPABILITIES, OP_GET_DIAGNOSTICS, OP_GET_AUDIT, OP_VALIDATE_STATE,
+            OP_GET_CAPABILITIES, OP_GET_DIAGNOSTICS, OP_GET_LAUNCHER_STATUS,
+            OP_GET_HISTORY_STATUS, OP_SHOW_HISTORY, OP_GET_AUDIT, OP_VALIDATE_STATE,
             OP_REPAIR_STATE, OP_SET_HOME, OP_SET_PREFERENCE, OP_ACTIVATE_WORKSPACE,
             OP_ACTIVATE_TAB, OP_RELOAD, OP_STOP, OP_GO_BACK, OP_GO_FORWARD, OP_GO_HOME,
             OP_ASSERT_LOCATION,

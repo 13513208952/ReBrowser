@@ -47,10 +47,10 @@ A bounded audit ring records the request ID, operation, level, authorization met
 
 `tools/admin/rebrowser_admin.py` currently supports:
 
-- capability and state: `capabilities`, `state`, `diagnostics`, `audit`, `validate`;
+- capability and state: `capabilities`, `state`, `diagnostics`, `launcher-status`, `history-status`, `audit`, `validate`;
 - navigation: `open`, `reload`, `stop`, `back`, `forward`, `home`, and non-disclosing `assert-location`;
 - object selection: `activate-workspace`, `activate-tab`;
-- creation and UI: `new-workspace`, `new-tab`, `workspaces`, `tabs`, `settings`, `outlook`;
+- creation and UI: `new-workspace`, `new-tab`, `workspaces`, `tabs`, `settings`, `history`, `outlook`;
 - lifecycle: `lock`, `unlock`, `promote`, `demote`, `shelve`, `restore`;
 - destructive operations: `close-workspace`, `close-tab`, `delete-shelved` with `--confirm-delete`;
 - settings: `set-home` and whitelisted `set-pref` values;
@@ -95,6 +95,33 @@ python3 tools/admin/rebrowser_admin.py diagnostics --key-id reoutlook-root-v1
 ```
 
 Use `--auth device` for an owner-approved level-one or level-two command. Run `--help` for target and wait options.
+
+## ReOutlook desktop-entry diagnostics
+
+Protocol v2 adds the level-one, read-only `GET_LAUNCHER_STATUS` operation (`launcher-status` in the CLI). It uses the existing challenge/signature or owner-credential authorization and audit flow. The query runs directly in the protected administrator Activity, without opening a ReBrowser workspace or loading a website.
+
+It returns only four fixed booleans: `outlookLauncherVisible`, `outlookActivityEnabled`, `rebrowserLauncherEnabled`, and `administratorCanSet` (always false). Capabilities and diagnostics include the same snapshot under `launcherVisibility`. Visibility reports the configured launcher component state; the desktop launcher may take time to refresh its icon cache.
+
+The normal display/hide control exists only in ReBrowser settings. It changes the `ReOutlookLauncher` activity alias using PackageManager with `DONT_KILL_APP`; MainActivity, ReBrowser's launcher, mail state, and named Profiles remain untouched. The choice defaults to visible and survives process restarts and upgrades. ReBrowser's menu and the existing `outlook` administrator operation still route directly to MainActivity, not through the toggleable alias.
+
+There is no administrator setter for this choice, no arbitrary component-name input, and no component-enable/disable command. `set-pref outlookLauncherVisible ...` is not whitelisted. Hiding the alias is not disabling the mail feature, uninstalling the app, or preventing explicit navigation to ReOutlook.
+
+```bash
+python3 tools/admin/rebrowser_admin.py launcher-status --key-id rebrowser-root-v1
+```
+
+## History diagnostics and UI
+
+Protocol v2 adds level-one `GET_HISTORY_STATUS` (`history-status`) and `SHOW_HISTORY` (`history`). Both retain the existing DUMP permission, one-use challenge, authorization, structured result, and audit boundaries. The status query runs directly in the protected administrator Activity without loading a browser page; the UI route opens the owner's history list, not a history-data export.
+
+The status snapshot contains only `maintaining`, `paused`, `recordCount`, `timedRecordCount`, `longLivedRecordCount`, `retentionSeconds`, `nextExpiryAt`, `lastStorageError` (exception type only), and `administratorCanSet=false`. Capabilities and diagnostics include it under `history`. Timed counts classify normally limited sources even when maintaining suspends expiry; zero next-expiry means no currently effective automatic expiry. Reading may perform ordinary timestamp expiry cleanup but does not change switches.
+
+No operation returns history URLs, titles, entries or page contents, changes its switches, deletes or exports arbitrary history, or accesses SQLite directly. The ordinary history interface may display complete URLs to the owner; this protocol boundary is not a promise to conceal visible UI from an authorized device owner or shell.
+
+```bash
+python3 tools/admin/rebrowser_admin.py history-status --key-id rebrowser-root-v1
+python3 tools/admin/rebrowser_admin.py history --key-id rebrowser-root-v1
+```
 
 ## Data boundary
 

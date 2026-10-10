@@ -55,6 +55,8 @@ public final class ReBrowserActivity extends Activity
             new ReBrowserOverviewController();
 
     private ReBrowserWorkspaceController workspaceController;
+    private ReBrowserHistory history;
+    private ReBrowserHistoryView historyView;
     private ReBrowserPreferences browserPreferences;
     private ReBrowserSitePermissions sitePermissions;
     private ReBrowserFavorites bookmarkStore;
@@ -87,7 +89,8 @@ public final class ReBrowserActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SystemBackDispatcher.register(this, this::handleSystemBack);
-        workspaceController = new ReBrowserWorkspaceController(new ReBrowserStore(this));
+        history = new ReBrowserHistory(this);
+        workspaceController = new ReBrowserWorkspaceController(new ReBrowserStore(this), history);
         workspaces = workspaceController.activeWorkspaces();
         shelvedSecondaryWorkspaces = workspaceController.shelvedWorkspaces();
         browserPreferences = new ReBrowserPreferences(this);
@@ -120,6 +123,7 @@ public final class ReBrowserActivity extends Activity
 
         deletePendingProfiles();
         workspaceController.initialize(browserPreferences.homeUrl());
+        history.syncStartup(workspaces, activeWorkspace() == null ? null : activeWorkspace().activeTab());
         activateWorkspace(activeWorkspace());
         adminController.handle(getIntent());
     }
@@ -670,6 +674,10 @@ public final class ReBrowserActivity extends Activity
         addMenuListItem(panel, R.drawable.ic_rb_workspaces, "书签栏", () -> {
             popup.dismiss();
             showWorkspaceBookmarkOverview();
+        });
+        addMenuListItem(panel, R.drawable.ic_rb_history, "历史记录", () -> {
+            popup.dismiss();
+            showHistoryOverview();
         });
         boolean primary = activeWorkspace().level == ReBrowserStore.Level.PRIMARY;
         boolean temporaryPromotionAllowed = activeWorkspace().level != ReBrowserStore.Level.TEMPORARY
@@ -1370,6 +1378,40 @@ public final class ReBrowserActivity extends Activity
     }
 
     @Override
+    public void showHistoryOverview() {
+        if (activeWorkspace() == null) return;
+        saveCurrentTabStates();
+        overviewController.show(ReBrowserOverviewController.Page.HISTORY);
+        setBrowserContentVisible(false);
+        overviewContainer.removeAllViews();
+        historyView = new ReBrowserHistoryView(this, history, this::hideOverview,
+                url -> { hideOverview(); navigateActiveTab(url); },
+                paused -> { if (!paused) syncCurrentHistory(); });
+        overviewContainer.addView(historyView, matchMatch());
+        overviewContainer.setAlpha(1f);
+        overviewContainer.setVisibility(View.VISIBLE);
+    }
+
+    private void syncCurrentHistory() {
+        // Metadata covers background tabs whose WebViews were legitimately destroyed/frozen.
+        history.syncCurrent(workspaces, tab -> webController.currentUrl(tab.id),
+                tab -> webController.currentTitle(tab.id));
+    }
+
+    private ReBrowserStore.Workspace historySource(ReBrowserStore.Tab tab) {
+        for (ReBrowserStore.Workspace workspace : workspaces) {
+            if (workspace.tabs.contains(tab)) return workspace;
+        }
+        return null;
+    }
+
+    private void refreshHistoryUi() {
+        if (historyView != null && overviewController.is(ReBrowserOverviewController.Page.HISTORY)) {
+            historyView.refresh();
+        }
+    }
+
+    @Override
     public void showDownloadOverview() {
         if (activeWorkspace() == null) return;
         downloadController.refresh();
@@ -1692,6 +1734,7 @@ public final class ReBrowserActivity extends Activity
         overviewContainer.animate().cancel();
         overviewContainer.setVisibility(View.GONE);
         overviewContainer.removeAllViews();
+        historyView = null;
         setBrowserContentVisible(true);
     }
 
@@ -1864,6 +1907,7 @@ public final class ReBrowserActivity extends Activity
         webController.onResume();
         downloadController.refresh();
         if (overviewController.is(ReBrowserOverviewController.Page.DOWNLOADS)) showDownloadOverview();
+        refreshHistoryUi();
     }
 
     @Override
@@ -1900,6 +1944,7 @@ public final class ReBrowserActivity extends Activity
                 deleteProfileIfPossible(workspace.profileName);
             }
         }
+        history.close();
         super.onDestroy();
     }
 
@@ -2102,6 +2147,7 @@ public final class ReBrowserActivity extends Activity
     private final class WebListener implements ReBrowserWebController.Listener {
         @Override
         public void onPageStarted(ReBrowserStore.Tab tab, String url, boolean visible) {
+            history.navigationStarted(tab.id);
             if (visiblePermissionRequest != null
                     && visiblePermissionRequest.tabId.equals(tab.id)) {
                 dismissPermissionPrompt("page-navigated");
@@ -2123,12 +2169,23 @@ public final class ReBrowserActivity extends Activity
         ) {
             workspaceController.updatePageMetadata(tab, url, title);
             adminController.onPageFinished(tab);
+            history.updateTitle(tab, url, title);
+            refreshHistoryUi();
             saveWorkspaceMetadata();
             updateChromeUi();
             if (visible) {
                 omnibox.setText(ReBrowserStore.safeUrl(url));
                 progressBar.finish(tab.id);
             }
+        }
+
+        @Override
+        public void onVisitedHistory(ReBrowserStore.Tab tab, String url, boolean reload) {
+            workspaceController.updateTab(tab, url, null);
+            ReBrowserStore.Workspace source = historySource(tab);
+            if (source != null) history.record(source, tab, url, tab.title);
+            saveWorkspaceMetadata();
+            refreshHistoryUi();
         }
 
         @Override
@@ -2168,6 +2225,8 @@ public final class ReBrowserActivity extends Activity
         ) {
             if (title == null || title.isBlank()) return;
             workspaceController.updateTab(tab, null, title);
+            history.updateTitle(tab, tab.url, title);
+            refreshHistoryUi();
             saveWorkspaceMetadata();
             if (visible) updateChromeUi();
         }

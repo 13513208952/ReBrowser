@@ -53,6 +53,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     interface Listener {
         void onPageStarted(ReBrowserStore.Tab tab, String url, boolean visible);
+        void onVisitedHistory(ReBrowserStore.Tab tab, String url, boolean reload);
         void onPageFinished(ReBrowserStore.Tab tab, String url, String title, boolean visible);
         void onMainFrameError(
                 ReBrowserStore.Tab tab,
@@ -1186,6 +1187,12 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
             page.loadProgress = 5;
             page.lastMainFrameError = "";
             listener.onPageStarted(page.tab, url, view.getParent() == container);
+        }
+
+        @Override
+        public void doUpdateVisitedHistory(WebView view, String url, boolean isReload) {
+            PageBinding page = pagesByView.get(view);
+            if (page != null) listener.onVisitedHistory(page.tab, url, isReload);
         }
 
         @Override

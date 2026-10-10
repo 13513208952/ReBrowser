@@ -57,6 +57,25 @@ lifecycle control, diagnostics, audit metadata, settings, website-permission con
 download-task control, and root-only repair. Commands that close or delete an object—or globally
 clear downloads or website grants—require `--confirm-delete`.
 
+Desktop-entry diagnostics:
+
+```bash
+python3 tools/admin/rebrowser_admin.py launcher-status --key-id rebrowser-root-v1
+```
+
+This level-one read-only query reports the fixed Outlook launcher/mail Activity/ReBrowser launcher states. It does not open a website or change the entry. Capabilities and diagnostics also expose the snapshot. Visibility can only be changed in ReBrowser settings; there is no administrator component setter or whitelisted visibility preference. The existing `outlook` command still works when the desktop alias is hidden.
+
+History diagnostics and UI:
+
+```bash
+python3 tools/admin/rebrowser_admin.py history-status --key-id rebrowser-root-v1
+python3 tools/admin/rebrowser_admin.py history --key-id rebrowser-root-v1
+```
+
+These level-one operations query aggregate retention/recording state or open the owner's history UI. They do not return history URLs/titles or provide a switch, delete, export, or arbitrary database command. Status reads apply normal timestamp expiry cleanup. The same snapshot is available in capabilities and diagnostics.
+
+When ADB lists multiple connections, select the phone using `ANDROID_SERIAL` before running a command.
+
 Download examples:
 
 ```bash

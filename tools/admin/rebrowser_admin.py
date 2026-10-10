@@ -33,6 +33,7 @@ OPERATIONS = {
     "workspaces": "SHOW_WORKSPACES",
     "tabs": "SHOW_CHILD_TABS",
     "settings": "OPEN_SETTINGS",
+    "settings-status": "GET_SETTINGS_STATUS",
     "outlook": "SWITCH_TO_OUTLOOK",
     "state": "GET_STATE",
     "capabilities": "GET_CAPABILITIES",
@@ -96,7 +97,13 @@ SITE_PERMISSIONS = {
 }
 BOOLEAN_PREFERENCES = {
     "javascript", "thirdPartyCookies", "desktopMode", "forcePrimaryPromotion",
-    "videoOrientationOverride",
+    "videoOrientationOverride", "newTabRecent",
+}
+STRING_PREFERENCES = {
+    "searchEngine": {"bing", "baidu", "duckduckgo", "google"},
+    "globalOrientation": {"portrait", "landscape", "unlocked"},
+    "videoOrientation": {"portrait", "landscape", "auto"},
+    "newTabBackground": {"white", "exclusive"},
 }
 REBROWSER_PRIVATE_KEY = pathlib.Path(os.environ.get(
     "REBROWSER_ROOT_PRIVATE_KEY",
@@ -158,6 +165,11 @@ def build_request(args: argparse.Namespace) -> dict:
         "operation": OPERATIONS[args.command],
     }
     values = list(args.arguments)
+    if args.command == "settings" and values:
+        section = values.pop(0)
+        if section not in ("general", "personalization", "isolation"):
+            raise SystemExit("settings accepts general, personalization or isolation")
+        request["section"] = section
     if args.command in ("open", "set-home", "assert-location"):
         if not values:
             raise SystemExit(f"{args.command} requires an HTTP(S) URL")
@@ -191,8 +203,12 @@ def build_request(args: argparse.Namespace) -> dict:
         if len(values) < 2:
             raise SystemExit("set-pref requires NAME VALUE")
         name, value = values.pop(0), values.pop(0)
+        if name in BOOLEAN_PREFERENCES:
+            value = parse_bool(value)
+        elif name not in STRING_PREFERENCES or value not in STRING_PREFERENCES[name]:
+            raise SystemExit("Unsupported preference or value")
         request["name"] = name
-        request["value"] = parse_bool(value) if name in BOOLEAN_PREFERENCES else value
+        request["value"] = value
     if values:
         raise SystemExit(f"Unexpected arguments: {' '.join(values)}")
     if args.workspace:

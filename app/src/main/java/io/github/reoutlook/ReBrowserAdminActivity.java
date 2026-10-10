@@ -191,6 +191,13 @@ public final class ReBrowserAdminActivity extends Activity {
             status.postDelayed(this::finish, 900);
             return;
         }
+        if (ReBrowserAdminProtocol.OP_GET_SETTINGS_STATUS.equals(operation)) {
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed",
+                    authentication, keyId, ReBrowserSettings.snapshot(this), null);
+            status.setText("设置状态已查询。此次授权已经失效。");
+            status.postDelayed(this::finish, 500);
+            return;
+        }
         if (ReBrowserAdminProtocol.OP_GET_HISTORY_STATUS.equals(operation)) {
             try (ReBrowserHistory history = new ReBrowserHistory(this)) {
                 ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed",

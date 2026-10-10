@@ -10,6 +10,7 @@
 | --- | --- |
 | 产品概览、安装和构建 | [项目 README](../README.md) |
 | 当前能力、已知限制、历史候选方向 | [项目状态](PROJECT_STATUS.md) |
+| v0.4.4-alpha 新标签页、双风味、三页设置与包体分布 | [发布说明](releases/v0.4.4-alpha.md) |
 | v0.4.3-alpha 历史记录、入口显隐、安装包校验 | [发布说明](releases/v0.4.3-alpha.md) |
 | v0.4.2-alpha 进度条更新、安装包校验 | [发布说明](releases/v0.4.2-alpha.md) |
 | v0.4.1-alpha 返回与 YouTube 修正 | [发布说明](releases/v0.4.1-alpha.md) |
@@ -17,6 +18,7 @@
 | 邮件采集、回填、账号与数据库 | [ReOutlook 架构与同步](REOUTLOOK_ARCHITECTURE.md) |
 | 工作区理念、双层标签、Profile 与交互 | [ReBrowser 设计](REBROWSER_EXPLORATION.md) |
 | 新标签页、个性化设想及入口显隐进展 | [讨论记录](REBROWSER_NEW_TAB_PLAN.md) |
+| 常规／个性化／隔离与权限三页设置及管理员补充 | [三页设置](REBROWSER_SETTINGS.md) |
 | 历史保留期限、维持／清理／暂停与验证范围 | [历史记录](REBROWSER_HISTORY_PLAN.md) |
 | 网站权限与后台策略 | [ReBrowser 网站权限](REBROWSER_SITE_PERMISSIONS.md) |
 | YouTube 黑屏原因、兼容开关与验证范围 | [YouTube 播放兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) |

@@ -30,7 +30,9 @@ ReOutlook 保留 Outlook 官方网页、学校登录和 MFA 流程，同时提�
 ReBrowser 的核心原则是 **Persist by intent, not by visitation（由意图决定持久化，而不是由访问决定）**：
 
 - 每个总标签页拥有独立命名 Profile，并可包含多个共享该 Profile 的子标签页；
-- 新总标签页默认是关闭即清理的临时环境；
+- 新总标签页默认是关闭即清理的临时环境；空白总标签页显示原生新标签页，子标签页和主页仍使用配置的首页；
+- 新标签页提供随实际搜索引擎切换的本地 Logo／图标、搜索输入和最近 8 个不同网址；不自动联网取图标或新闻，历史为空时隐藏近期栏；
+- 设置分为常规、个性化、隔离与权限三个同级页面，直接整合现有网站权限管理；
 - 用户主动上锁后成为副总标签页，完整环境进入书签栏并可收起、恢复；
 - 再次明确提升后成为不可关闭、启动时恢复的主总标签页；
 - 收藏夹以单行网址列表保存标题和网址，书签栏保存完整副总标签页环境；
@@ -59,15 +61,19 @@ ReBrowser 管理协议还提供有界的下载策略、任务、批准、拒绝�
 
 开发者预览 APK 发布在 [GitHub Releases](https://github.com/13513208952/ReOutlook/releases)。当前版本要求 Android 10／API 29 或更高版本；Android 8/9 留待未来完整浏览器内核路线重新评估。当前公开包使用 Android Debug 证书签署，以便测试设备连续升级，但 Release 构建本身不含 `DEBUGGABLE` 标志。不要把该签名视为正式生产签名。
 
+从 v0.4.4-alpha 起提供两个可原地互换的风味：`lite` 轻量版没有照片资源；`background` 背景版可选择纯白或专属蓝紫背景。两者 applicationId、版本号和签名相同，不能同时安装为两个应用；互换时保留数据和背景偏好，轻量版实际显示纯白。请覆盖安装，不卸载或清除数据。体积及校验见 [v0.4.4-alpha](docs/releases/v0.4.4-alpha.md)。
+
 也可以从源码构建。要求 JDK 17 和 Android SDK 36：
 
 ```bash
 export JAVA_HOME=/path/to/jdk-17
 export ANDROID_HOME=$HOME/Android/Sdk
-./gradlew assembleDebug
+./gradlew assembleLiteDebug assembleBackgroundDebug
+# 优化的 Release 构建（产物未签名，需自行用一致的密钥签名）
+./gradlew assembleLiteRelease assembleBackgroundRelease
 ```
 
-调试 APK 位于 `app/build/outputs/apk/debug/app-debug.apk`。
+调试 APK 位于 `app/build/outputs/apk/{lite,background}/debug/`；未签名 Release 位于对应 `release/` 目录。测试命令见 [回归检查](tools/tests/README.md)。
 
 ## 文档
 
@@ -81,6 +87,7 @@ export ANDROID_HOME=$HOME/Android/Sdk
 | [ReBrowser 网站权限](docs/REBROWSER_SITE_PERMISSIONS.md) | 单站授权、定位、剪贴板、永久禁用项和后台冻结 |
 | [项目状态](docs/PROJECT_STATUS.md) | 已验证能力、当前限制和候选方向 |
 | [新标签页与个性化讨论](docs/REBROWSER_NEW_TAB_PLAN.md) | 新标签页、个性化及防护设想，以及桌面入口显隐 |
+| [三页设置](docs/REBROWSER_SETTINGS.md) | 常规、个性化、隔离与权限及管理员设置控制 |
 | [历史记录](docs/REBROWSER_HISTORY_PLAN.md) | 按总标签页生命周期保留、维持／清理／暂停及验证范围 |
 | [开发历史与验证资料](docs/DEVELOPMENT_HISTORY.md) | 版本演进、历史测试范围和本地资料索引 |
 | [隐私说明](PRIVACY.md) | 本地数据、网络通信、备份和删除 |
@@ -99,4 +106,4 @@ export ANDROID_HOME=$HOME/Android/Sdk
 
 ## 许可证与声明
 
-本项目采用 [GNU General Public License v3.0](LICENSE) 发布，与 Microsoft、Outlook、Google Chrome 或任何学校没有隶属或官方合作关系。Outlook、Chrome 及相关名称和商标属于其各自权利人。
+本项目采用 [GNU General Public License v3.0](LICENSE) 发布，与 Microsoft、Outlook、Google Chrome 或任何学校没有隶属或官方合作关系。Outlook、Chrome 及相关名称和商标属于其各自权利人。搜索引擎品牌图形的商标／版权归原权利人，不因本项目的代码许可证而获得任意品牌使用授权；来源与规范参考见 [界面资源来源](docs/ASSET_CREDITS.md)。

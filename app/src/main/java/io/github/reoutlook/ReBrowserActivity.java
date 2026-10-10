@@ -57,6 +57,9 @@ public final class ReBrowserActivity extends Activity
     private ReBrowserWorkspaceController workspaceController;
     private ReBrowserHistory history;
     private ReBrowserHistoryView historyView;
+    private ReBrowserNewTabView newTabView;
+    private String newTabId;
+    private ReBrowserNewTabBackground newTabBackground;
     private ReBrowserPreferences browserPreferences;
     private ReBrowserSitePermissions sitePermissions;
     private ReBrowserFavorites bookmarkStore;
@@ -122,7 +125,7 @@ public final class ReBrowserActivity extends Activity
         }
 
         deletePendingProfiles();
-        workspaceController.initialize(browserPreferences.homeUrl());
+        workspaceController.initialize(ReBrowserPreferences.NEW_TAB_URL);
         history.syncStartup(workspaces, activeWorkspace() == null ? null : activeWorkspace().activeTab());
         activateWorkspace(activeWorkspace());
         adminController.handle(getIntent());
@@ -268,7 +271,9 @@ public final class ReBrowserActivity extends Activity
         workspaceCountButton.setText(Integer.toString(workspaces.size()));
         workspaceCountButton.setContentDescription(
                 workspaces.size() + " 个总标签页；管理总标签页");
-        if (!omnibox.hasFocus() && activeTab != null) omnibox.setText(activeTab.url);
+        if (!omnibox.hasFocus() && activeTab != null) {
+            omnibox.setText(ReBrowserNewTabView.isBlank(activeTab.url) ? "" : activeTab.url);
+        }
     }
 
     @Override
@@ -298,6 +303,7 @@ public final class ReBrowserActivity extends Activity
         workspaceController.selectTab(workspace, tab);
         try {
             webController.showTab(workspace.id, workspace.profileName, tab);
+            refreshNewTabPage();
             syncLoadingBar();
         } catch (Throwable error) {
             showProfileFailure(error);
@@ -329,7 +335,11 @@ public final class ReBrowserActivity extends Activity
         String url = normalizeAddress(input);
         workspaceController.updateTab(tab, url, null);
         if (webController.currentUrl(tab.id) == null) showTab(tab);
-        else webController.load(tab.id, url);
+        else {
+            webController.resumeTab(tab.id);
+            webController.load(tab.id, url);
+        }
+        refreshNewTabPage();
         saveWorkspaceMetadata();
         omnibox.setText(url);
     }
@@ -429,7 +439,7 @@ public final class ReBrowserActivity extends Activity
 
     private void createTemporaryWorkspace() {
         ReBrowserStore.Workspace workspace = workspaceController.createTemporary(
-                browserPreferences.homeUrl());
+                ReBrowserPreferences.NEW_TAB_URL);
         if (workspace == null) {
             toast("当前与书签栏中的总标签页数量已达到上限");
             return;
@@ -439,12 +449,7 @@ public final class ReBrowserActivity extends Activity
     }
 
     private String normalizeAddress(String input) {
-        String clean = input == null ? "" : input.trim();
-        if (clean.isEmpty()) return browserPreferences.homeUrl();
-        String lower = clean.toLowerCase(java.util.Locale.ROOT);
-        if (lower.startsWith("https://") || lower.startsWith("http://")) return clean;
-        if (!clean.contains(" ") && clean.contains(".")) return "https://" + clean;
-        return browserPreferences.searchUrl(clean);
+        return browserPreferences.navigationUrl(input);
     }
 
     @Override
@@ -522,7 +527,7 @@ public final class ReBrowserActivity extends Activity
             workspaceController.removeTemporary(closing);
             deleteProfileIfPossible(closing.profileName);
         }
-        workspaceController.ensureActiveWorkspace(browserPreferences.homeUrl());
+        workspaceController.ensureActiveWorkspace(ReBrowserPreferences.NEW_TAB_URL);
         if (wasActive) {
             activateWorkspace(activeWorkspace());
             hideOverview();
@@ -537,12 +542,14 @@ public final class ReBrowserActivity extends Activity
         ReBrowserStore.Tab tab = activeWorkspace().activeTab();
         if (tab == null) return;
         workspaceController.updateTab(
-                tab, webController.currentUrl(tab.id), webController.currentTitle(tab.id));
+                tab, webController.currentUrl(tab.id), ReBrowserNewTabView.isBlank(tab.url)
+                        ? "新标签页" : webController.currentTitle(tab.id));
     }
 
     private void saveCurrentTabStates() {
         for (ReBrowserWebController.PageState state : webController.pageStates()) {
-            workspaceController.updateTab(state.tab, state.url, state.title);
+            workspaceController.updateTab(state.tab, state.url,
+                    ReBrowserNewTabView.isBlank(state.url) ? "新标签页" : state.title);
         }
         saveWorkspaceMetadata();
     }
@@ -771,8 +778,9 @@ public final class ReBrowserActivity extends Activity
     }
 
     @Override
-    public void openSettings() {
-        startActivity(new Intent(this, ReBrowserSettingsActivity.class));
+    public void openSettings(String section) {
+        startActivity(new Intent(this, ReBrowserSettingsActivity.class)
+                .putExtra(ReBrowserSettings.EXTRA_SECTION, ReBrowserSettings.section(section)));
     }
 
     /** Internal mode/protection-policy hook. Call on the UI thread; no menu or web bridge. */
@@ -1002,7 +1010,7 @@ public final class ReBrowserActivity extends Activity
                 deleteProfileIfPossible(workspace.profileName);
             }
         }
-        workspaceController.ensureActiveWorkspace(browserPreferences.homeUrl());
+        workspaceController.ensureActiveWorkspace(ReBrowserPreferences.NEW_TAB_URL);
         if (activeClosing) {
             activateWorkspace(activeWorkspace());
         }
@@ -1738,9 +1746,79 @@ public final class ReBrowserActivity extends Activity
         setBrowserContentVisible(true);
     }
 
+    private void refreshNewTabPage() {
+        ReBrowserStore.Workspace workspace = activeWorkspace();
+        ReBrowserStore.Tab tab = workspace == null ? null : workspace.activeTab();
+        boolean blank = tab != null && ReBrowserNewTabView.isBlank(tab.url)
+                && workspaceController.popupSource(workspace, tab) == null;
+        if (blank) {
+            workspaceController.updateTab(tab, null, "新标签页");
+            if (newTabView == null || !tab.id.equals(newTabId) || !newTabView.matchesPreferences()) {
+                newTabView = new ReBrowserNewTabView(this, browserPreferences, history,
+                        this::navigateActiveTab);
+                newTabId = tab.id;
+            } else newTabView.refreshRecent();
+            omnibox.clearFocus();
+            webController.showNativePage(newTabView);
+        } else {
+            if (newTabView != null && newTabView.getParent() == webContainer && tab != null) {
+                webController.resumeTab(tab.id);
+            }
+            newTabView = null;
+            newTabId = null;
+        }
+        styleNewTabSurface();
+        syncLoadingBar();
+    }
+
+    private void styleNewTabSurface() {
+        boolean nativePage = newTabView != null && newTabView.getParent() == webContainer;
+        boolean photo = nativePage && browserPreferences.exclusiveBackgroundEnabled()
+                && overviewController.is(ReBrowserOverviewController.Page.NONE);
+        if ((!nativePage || !browserPreferences.exclusiveBackgroundEnabled()) && newTabBackground != null) {
+            newTabBackground.close();
+            newTabBackground = null;
+        }
+        if (photo) {
+            if (newTabBackground == null) newTabBackground = new ReBrowserNewTabBackground(this);
+            if (root.getBackground() != newTabBackground) root.setBackground(newTabBackground);
+        } else root.setBackgroundColor(nativePage ? Color.WHITE : Color.rgb(247, 248, 252));
+        browserToolbar.setBackgroundColor(nativePage ? Color.TRANSPARENT : Color.WHITE);
+        browserToolbar.setElevation(nativePage ? 0 : dp(3));
+        omnibox.setVisibility(nativePage ? View.INVISIBLE : View.VISIBLE);
+        int color = photo ? Color.WHITE : Color.rgb(49, 53, 61);
+        for (int i = 0; i < browserToolbar.getChildCount(); i++) {
+            View child = browserToolbar.getChildAt(i);
+            if (child instanceof TextView && child != omnibox) ((TextView) child).setTextColor(color);
+        }
+        GradientDrawable counter = roundedBackground(Color.TRANSPARENT, dp(8));
+        counter.setStroke(dp(2), color);
+        workspaceCountButton.setBackground(counter);
+        root.post(() -> {
+            if (fullscreenController.isFullscreen()) return;
+            boolean light = !(newTabView != null && newTabView.getParent() == webContainer
+                    && browserPreferences.exclusiveBackgroundEnabled()
+                    && overviewController.is(ReBrowserOverviewController.Page.NONE));
+            if (android.os.Build.VERSION.SDK_INT >= 30) {
+                android.view.WindowInsetsController controller = getWindow().getInsetsController();
+                if (controller != null) {
+                    int mask = android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                            | android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+                    controller.setSystemBarsAppearance(light ? mask : 0, mask);
+                }
+            } else {
+                View decor = getWindow().getDecorView();
+                int flags = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+                decor.setSystemUiVisibility(light ? decor.getSystemUiVisibility() | flags
+                        : decor.getSystemUiVisibility() & ~flags);
+            }
+        });
+    }
+
     private void syncLoadingBar() {
         ReBrowserStore.Tab tab = activeWorkspace() == null ? null : activeWorkspace().activeTab();
-        if (tab == null || browserToolbar.getVisibility() != View.VISIBLE) {
+        if (tab == null || browserToolbar.getVisibility() != View.VISIBLE
+                || (newTabView != null && newTabView.getParent() == webContainer)) {
             progressBar.hideImmediately();
             return;
         }
@@ -1758,6 +1836,7 @@ public final class ReBrowserActivity extends Activity
                 : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS;
         browserToolbar.setImportantForAccessibility(importance);
         webContainer.setImportantForAccessibility(importance);
+        styleNewTabSurface();
     }
 
     private ReBrowserStore.Workspace activeWorkspace() {
@@ -1830,11 +1909,13 @@ public final class ReBrowserActivity extends Activity
             case FAVORITES:
             case WORKSPACE_BOOKMARKS:
             case DOWNLOADS:
+            case HISTORY:
                 hideOverview();
                 return;
             case NONE:
                 break;
         }
+        if (newTabView != null && newTabView.dismissInput()) return;
         if (omnibox.hasFocus()) {
             omnibox.clearFocus();
             InputMethodManager keyboard = (InputMethodManager)
@@ -1850,8 +1931,8 @@ public final class ReBrowserActivity extends Activity
             if (!webController.goBackWithinPopup(tab.id)) closeTab(tab);
             return;
         }
-        boolean atHomepage = currentUrl != null
-                && samePage(currentUrl, browserPreferences.homeUrl());
+        boolean atHomepage = (tab != null && ReBrowserNewTabView.isBlank(tab.url))
+                || (currentUrl != null && samePage(currentUrl, browserPreferences.homeUrl()));
         if (!atHomepage && tab != null && webController.canGoBack(tab.id)) {
             lastBackPressAt = 0;
             webController.goBack(tab.id);
@@ -1880,12 +1961,15 @@ public final class ReBrowserActivity extends Activity
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         fullscreenController.onConfigurationChanged();
+        if (newTabBackground != null) { newTabBackground.close(); newTabBackground = null; }
+        root.post(this::refreshNewTabPage);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         fullscreenController.onWindowFocusChanged(hasFocus);
+        if (hasFocus) styleNewTabSurface();
     }
 
     @Override
@@ -1905,6 +1989,7 @@ public final class ReBrowserActivity extends Activity
             showTab(activeWorkspace().activeTab());
         }
         webController.onResume();
+        refreshNewTabPage();
         downloadController.refresh();
         if (overviewController.is(ReBrowserOverviewController.Page.DOWNLOADS)) showDownloadOverview();
         refreshHistoryUi();
@@ -1944,6 +2029,7 @@ public final class ReBrowserActivity extends Activity
                 deleteProfileIfPossible(workspace.profileName);
             }
         }
+        if (newTabBackground != null) { newTabBackground.close(); newTabBackground = null; }
         history.close();
         super.onDestroy();
     }
@@ -2158,6 +2244,7 @@ public final class ReBrowserActivity extends Activity
                 omnibox.setText(ReBrowserStore.safeUrl(url));
                 if (browserToolbar.getVisibility() == View.VISIBLE) progressBar.start(tab.id);
             }
+            if (activeWorkspace() != null && activeWorkspace().activeTab() == tab) refreshNewTabPage();
         }
 
         @Override
@@ -2167,7 +2254,11 @@ public final class ReBrowserActivity extends Activity
                 String title,
                 boolean visible
         ) {
-            workspaceController.updatePageMetadata(tab, url, title);
+            // An initial blank completion can arrive after the user has already submitted a URL.
+            if (ReBrowserNewTabView.isBlank(url)
+                    && !ReBrowserNewTabView.isBlank(webController.currentUrl(tab.id))) return;
+            workspaceController.updatePageMetadata(tab, url,
+                    ReBrowserNewTabView.isBlank(url) ? "新标签页" : title);
             adminController.onPageFinished(tab);
             history.updateTitle(tab, url, title);
             refreshHistoryUi();
@@ -2177,6 +2268,7 @@ public final class ReBrowserActivity extends Activity
                 omnibox.setText(ReBrowserStore.safeUrl(url));
                 progressBar.finish(tab.id);
             }
+            if (activeWorkspace() != null && activeWorkspace().activeTab() == tab) refreshNewTabPage();
         }
 
         @Override
@@ -2184,6 +2276,7 @@ public final class ReBrowserActivity extends Activity
             workspaceController.updateTab(tab, url, null);
             ReBrowserStore.Workspace source = historySource(tab);
             if (source != null) history.record(source, tab, url, tab.title);
+            if (activeWorkspace() != null && activeWorkspace().activeTab() == tab) refreshNewTabPage();
             saveWorkspaceMetadata();
             refreshHistoryUi();
         }
@@ -2224,6 +2317,7 @@ public final class ReBrowserActivity extends Activity
                 boolean visible
         ) {
             if (title == null || title.isBlank()) return;
+            if (ReBrowserNewTabView.isBlank(tab.url)) return;
             workspaceController.updateTab(tab, null, title);
             history.updateTitle(tab, tab.url, title);
             refreshHistoryUi();

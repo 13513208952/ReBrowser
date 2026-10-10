@@ -3,11 +3,12 @@ package io.github.reoutlook;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Color;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -31,14 +32,22 @@ public final class ReBrowserSettingsActivity extends Activity {
     private TextView videoLandscape;
     private TextView videoAuto;
     private TextView videoPortrait;
+    private final ScrollView[] pages = new ScrollView[3];
+    private final TextView[] pageButtons = new TextView[3];
+    private final LinearLayout[] pageContents = new LinearLayout[3];
+    private String selectedSection = ReBrowserSettings.GENERAL;
+    private String initialHome;
+    private int initialSearch;
+    private ReBrowserSitePermissionsView sitePermissionsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferences = new ReBrowserPreferences(this);
         launcherVisibility = new ReOutlookLauncherVisibility(this);
-        ScrollView root = new ScrollView(this);
-        root.setFillViewport(true);
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(Color.rgb(247, 248, 252));
         WindowStyling.apply(this, root);
         root.setOnApplyWindowInsetsListener((view, insets) -> {
             view.setPadding(0, insets.getSystemWindowInsetTop(),
@@ -46,27 +55,53 @@ public final class ReBrowserSettingsActivity extends Activity {
             return insets;
         });
 
-        LinearLayout content = new LinearLayout(this);
-        content.setOrientation(LinearLayout.VERTICAL);
-        content.setPadding(dp(22), dp(18), dp(22), dp(28));
-        content.setBackgroundColor(Color.rgb(247, 248, 252));
-        root.addView(content, new ScrollView.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout header = new LinearLayout(this);
+        header.setOrientation(LinearLayout.VERTICAL);
+        header.setPadding(dp(22), dp(18), dp(22), dp(8));
+        root.addView(header, matchWrap());
 
         TextView title = new TextView(this);
         title.setText("ReBrowser 设置");
         title.setTextSize(26);
         title.setTextColor(Color.rgb(31, 36, 45));
         title.setTypeface(null, android.graphics.Typeface.BOLD);
-        content.addView(title, matchWrap());
+        header.addView(title, matchWrap());
 
         TextView scope = new TextView(this);
         scope.setText("这些设置由同一应用内的所有 ReBrowser 总标签页共享；网站登录状态仍按总标签页 Profile 隔离。");
         scope.setTextSize(13);
         scope.setTextColor(Color.rgb(93, 100, 111));
         LinearLayout.LayoutParams scopeParams = matchWrap();
-        scopeParams.setMargins(0, dp(8), 0, dp(22));
-        content.addView(scope, scopeParams);
+        scopeParams.setMargins(0, dp(8), 0, dp(14));
+        header.addView(scope, scopeParams);
+        LinearLayout navigation = new LinearLayout(this);
+        navigation.setPadding(dp(3), dp(3), dp(3), dp(3));
+        navigation.setBackground(roundedBackground(0xffe7e9ef, dp(14)));
+        String[] sectionLabels = {"常规", "个性化", "隔离与权限"};
+        for (int i = 0; i < pages.length; i++) {
+            final String section = ReBrowserSettings.SECTIONS[i];
+            TextView button = new TextView(this);
+            button.setText(sectionLabels[i]); button.setTextSize(14); button.setGravity(Gravity.CENTER);
+            button.setContentDescription(sectionLabels[i] + "设置");
+            button.setOnClickListener(v -> showSection(section));
+            navigation.addView(button, new LinearLayout.LayoutParams(0, dp(48), 1));
+            pageButtons[i] = button;
+        }
+        header.addView(navigation, matchWrap());
+        FrameLayout pageHost = new FrameLayout(this);
+        root.addView(pageHost, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
+        for (int i = 0; i < pages.length; i++) {
+            ScrollView scroll = new ScrollView(this); scroll.setFillViewport(true);
+            scroll.setTag(ReBrowserSettings.SECTIONS[i]);
+            LinearLayout panel = new LinearLayout(this); panel.setOrientation(LinearLayout.VERTICAL);
+            panel.setPadding(dp(22), 0, dp(22), dp(20));
+            scroll.addView(panel, new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            pageHost.addView(scroll, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            pages[i] = scroll; pageContents[i] = panel;
+        }
+        LinearLayout content = pageContents[0];
+        LinearLayout personalization = pageContents[1];
+        LinearLayout isolation = pageContents[2];
 
         content.addView(sectionTitle("桌面入口"));
         LinearLayout launcherRow = settingSwitch(
@@ -83,7 +118,8 @@ public final class ReBrowserSettingsActivity extends Activity {
         content.addView(fieldLabel("主页网址"));
         homeUrl = new EditText(this);
         homeUrl.setSingleLine(true);
-        homeUrl.setText(preferences.homeUrl());
+        initialHome = preferences.homeUrl();
+        homeUrl.setText(savedInstanceState == null ? initialHome : savedInstanceState.getString("homeDraft", initialHome));
         homeUrl.setHint("https://cn.bing.com/");
         content.addView(homeUrl, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
@@ -95,44 +131,65 @@ public final class ReBrowserSettingsActivity extends Activity {
                 this, android.R.layout.simple_spinner_dropdown_item, labels);
         searchEngine.setAdapter(adapter);
         String currentSearch = preferences.searchEngine();
-        searchEngine.setSelection(ReBrowserPreferences.SEARCH_BAIDU.equals(currentSearch)
-                ? 1 : ReBrowserPreferences.SEARCH_DUCKDUCKGO.equals(currentSearch)
-                        ? 2 : ReBrowserPreferences.SEARCH_GOOGLE.equals(currentSearch) ? 3 : 0);
+        initialSearch = searchPosition(currentSearch);
+        searchEngine.setSelection(savedInstanceState == null ? initialSearch : savedInstanceState.getInt("searchDraft", initialSearch));
         content.addView(searchEngine, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
 
-        content.addView(sectionTitle("网页行为"));
-        content.addView(settingSwitch(
+        personalization.addView(sectionTitle("新标签页背景"));
+        personalization.addView(fieldLabel("默认纯白；专属背景按窗口尺寸水平居中、从上方取景"));
+        android.widget.RadioGroup backgrounds = new android.widget.RadioGroup(this);
+        android.widget.RadioButton white = new android.widget.RadioButton(this);
+        white.setId(android.view.View.generateViewId());
+        white.setText("纯白");
+        backgrounds.addView(white);
+        android.widget.RadioButton exclusive = null;
+        if (ReBrowserBackgroundAsset.resourceId() != 0) {
+            exclusive = new android.widget.RadioButton(this);
+            exclusive.setId(android.view.View.generateViewId());
+            exclusive.setText("专属蓝紫背景");
+            backgrounds.addView(exclusive);
+        }
+        backgrounds.check(preferences.exclusiveBackgroundEnabled() && exclusive != null
+                ? exclusive.getId() : white.getId());
+        // Click-only updates preserve a remembered photo choice when installing the lite edition.
+        white.setOnClickListener(v -> preferences.setNewTabBackground(ReBrowserPreferences.BACKGROUND_WHITE));
+        if (exclusive != null) exclusive.setOnClickListener(v ->
+                preferences.setNewTabBackground(ReBrowserPreferences.BACKGROUND_EXCLUSIVE));
+        personalization.addView(backgrounds);
+        if (exclusive == null) personalization.addView(fieldLabel("当前为轻量版，不包含专属照片资源；保留已有背景偏好"));
+        personalization.addView(sectionTitle("近期访问"));
+        personalization.addView(settingSwitch("显示近期访问", "显示最近访问的 8 个不同网址；列表为空时隐藏，不联网获取图标",
+                preferences.newTabRecentEnabled(), preferences::setNewTabRecentEnabled));
+
+        isolation.addView(sectionTitle("隔离边界"));
+        isolation.addView(fieldLabel("网站 Cookie 和存储按总标签页命名 Profile 隔离，同一总标签页的子标签共享 Profile；不与 ReOutlook 共用。临时级别和暂停历史均不等于完整无痕模式。"));
+        isolation.addView(sectionTitle("网页行为"));
+        isolation.addView(settingSwitch(
                 "JavaScript",
                 "关闭后部分网站将无法正常工作",
                 preferences.javascriptEnabled(),
                 preferences::setJavascriptEnabled));
-        content.addView(settingSwitch(
+        isolation.addView(settingSwitch(
                 "允许第三方 Cookie",
                 "按总标签页 Profile 分别保存；不会与 ReOutlook 共用",
                 preferences.thirdPartyCookiesEnabled(),
                 preferences::setThirdPartyCookiesEnabled));
+        content.addView(sectionTitle("网页显示"));
         content.addView(settingSwitch(
                 "桌面版网站",
                 "新建或重新载入的页面使用桌面布局",
                 preferences.desktopModeEnabled(),
                 preferences::setDesktopModeEnabled));
-        Button sitePermissions = new Button(this);
-        sitePermissions.setText("网站权限管理");
-        sitePermissions.setContentDescription("管理剪贴板、摄像头、麦克风、定位和后台策略");
-        sitePermissions.setOnClickListener(view -> startActivity(
-                new Intent(this, ReBrowserSitePermissionsActivity.class)));
-        LinearLayout.LayoutParams permissionParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(52));
-        permissionParams.setMargins(0, dp(8), 0, dp(4));
-        content.addView(sitePermissions, permissionParams);
-
-        content.addView(sectionTitle("总标签页生命周期"));
-        content.addView(settingSwitch(
+        isolation.addView(sectionTitle("总标签页生命周期"));
+        isolation.addView(settingSwitch(
                 "允许强行提升为主标签页",
                 "开启后，临时总标签页可跳过副级别直接提升为主；其他生命周期规则不变",
                 preferences.forcePrimaryPromotionEnabled(),
                 preferences::setForcePrimaryPromotionEnabled));
+        isolation.addView(sectionTitle("网站权限管理"));
+        sitePermissionsView = new ReBrowserSitePermissionsView(this, new ReBrowserSitePermissions(this));
+        isolation.addView(sitePermissionsView, matchWrap());
 
         content.addView(sectionTitle("视频播放器"));
         content.addView(settingSwitch(
@@ -156,21 +213,56 @@ public final class ReBrowserSettingsActivity extends Activity {
         });
         LinearLayout.LayoutParams saveParams = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(54));
-        saveParams.setMargins(0, dp(28), 0, 0);
-        content.addView(save, saveParams);
-
+        saveParams.setMargins(dp(22), dp(8), dp(22), dp(12));
+        root.addView(save, saveParams);
+        showSection(savedInstanceState == null ? getIntent().getStringExtra(ReBrowserSettings.EXTRA_SECTION)
+                : savedInstanceState.getString(ReBrowserSettings.EXTRA_SECTION));
+        if (savedInstanceState != null) for (int i = 0; i < pages.length; i++) {
+            final ScrollView page = pages[i];
+            final int position = savedInstanceState.getInt("scroll_" + ReBrowserSettings.SECTIONS[i], 0);
+            page.post(() -> page.scrollTo(0, position));
+        }
         setContentView(root);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (homeUrl != null && homeUrl.getText().toString().equals(initialHome)) {
+            initialHome = preferences.homeUrl();
+            homeUrl.setText(initialHome);
+        }
+        if (searchEngine != null && searchEngine.getSelectedItemPosition() == initialSearch) {
+            initialSearch = searchPosition(preferences.searchEngine());
+            searchEngine.setSelection(initialSearch);
+        }
+        if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();
         // PackageManager is the single source of truth, including after process restarts.
         if (outlookLauncherSwitch != null) {
             outlookLauncherSwitch.setOnCheckedChangeListener(null);
             outlookLauncherSwitch.setChecked(launcherVisibility.visible());
             outlookLauncherSwitch.setOnCheckedChangeListener(this::onOutlookLauncherChanged);
         }
+    }
+
+    private void showSection(String value) {
+        selectedSection = ReBrowserSettings.section(value);
+        for (int i = 0; i < pages.length; i++) {
+            boolean selected = selectedSection.equals(ReBrowserSettings.SECTIONS[i]);
+            pages[i].setVisibility(selected ? View.VISIBLE : View.GONE);
+            pageButtons[i].setSelected(selected);
+            pageButtons[i].setTextColor(selected ? Color.WHITE : 0xff373b44);
+            pageButtons[i].setBackground(roundedBackground(selected ? 0xff5b46b4 : Color.TRANSPARENT, dp(11)));
+        }
+        if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();
+    }
+
+    @Override protected void onSaveInstanceState(Bundle state) {
+        state.putString(ReBrowserSettings.EXTRA_SECTION, selectedSection);
+        state.putString("homeDraft", homeUrl.getText().toString());
+        state.putInt("searchDraft", searchEngine.getSelectedItemPosition());
+        for (int i = 0; i < pages.length; i++) state.putInt("scroll_" + ReBrowserSettings.SECTIONS[i], pages[i].getScrollY());
+        super.onSaveInstanceState(state);
     }
 
     private void onOutlookLauncherChanged(CompoundButton button, boolean visible) {
@@ -293,11 +385,13 @@ public final class ReBrowserSettingsActivity extends Activity {
         row.addView(labels, new LinearLayout.LayoutParams(0,
                 ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         Switch toggle = new Switch(this);
+        toggle.setContentDescription(title);
         toggle.setChecked(checked);
         toggle.setOnCheckedChangeListener((button, enabled) -> listener.accept(enabled));
         row.addView(toggle, new LinearLayout.LayoutParams(dp(58), dp(52)));
+        row.setMinimumHeight(dp(72));
         row.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(72)));
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return row;
     }
 
@@ -307,16 +401,26 @@ public final class ReBrowserSettingsActivity extends Activity {
         super.onPause();
     }
 
+    private static int searchPosition(String engine) {
+        return ReBrowserPreferences.SEARCH_BAIDU.equals(engine) ? 1
+                : ReBrowserPreferences.SEARCH_DUCKDUCKGO.equals(engine) ? 2
+                : ReBrowserPreferences.SEARCH_GOOGLE.equals(engine) ? 3 : 0;
+    }
+
     private void saveSettings(boolean notify) {
-        preferences.setHomeUrl(homeUrl.getText().toString());
+        if (homeUrl == null || searchEngine == null) return;
+        String draft = homeUrl.getText().toString();
+        if (!draft.equals(initialHome)) {
+            preferences.setHomeUrl(draft);
+            initialHome = draft;
+        }
         int selected = searchEngine.getSelectedItemPosition();
-        preferences.setSearchEngine(selected == 1
-                ? ReBrowserPreferences.SEARCH_BAIDU
-                : selected == 2
-                        ? ReBrowserPreferences.SEARCH_DUCKDUCKGO
-                        : selected == 3
-                                ? ReBrowserPreferences.SEARCH_GOOGLE
-                                : ReBrowserPreferences.SEARCH_BING);
+        if (selected != initialSearch) {
+            preferences.setSearchEngine(selected == 1 ? ReBrowserPreferences.SEARCH_BAIDU
+                    : selected == 2 ? ReBrowserPreferences.SEARCH_DUCKDUCKGO
+                    : selected == 3 ? ReBrowserPreferences.SEARCH_GOOGLE : ReBrowserPreferences.SEARCH_BING);
+            initialSearch = selected;
+        }
         if (notify) Toast.makeText(this, "设置已保存", Toast.LENGTH_SHORT).show();
     }
 

@@ -33,7 +33,7 @@ final class ReBrowserAdminController {
         void showChildOverview();
         void showDownloadOverview();
         void showHistoryOverview();
-        void openSettings();
+        void openSettings(String section);
         void refreshLifecycleUi();
         void closeWorkspace(ReBrowserStore.Workspace workspace);
         void closeTab(ReBrowserStore.Tab tab);
@@ -108,6 +108,14 @@ final class ReBrowserAdminController {
             return downloadPolicy().put("rejectedPendingCount", rejected);
         }
         if (ReBrowserAdminProtocol.OP_GET_DOWNLOADS.equals(operation)) return downloads();
+        if (ReBrowserAdminProtocol.OP_GET_SETTINGS_STATUS.equals(operation)) {
+            return ReBrowserSettings.snapshot(context);
+        }
+        if (ReBrowserAdminProtocol.OP_OPEN_SETTINGS.equals(operation)) {
+            String section = ReBrowserSettings.section(request.opt("section"));
+            host.openSettings(section);
+            return new JSONObject().put("view", "settings").put("section", section);
+        }
         if (ReBrowserAdminProtocol.OP_GET_SITE_PERMISSIONS.equals(operation)) {
             return websitePermissions();
         }
@@ -134,7 +142,7 @@ final class ReBrowserAdminController {
         if (ReBrowserAdminProtocol.OP_REPAIR_STATE.equals(operation)) return repairState();
         if (ReBrowserAdminProtocol.OP_NEW_WORKSPACE.equals(operation)) {
             ReBrowserStore.Workspace workspace = workspaceController.createTemporary(
-                    preferences.homeUrl());
+                    ReBrowserPreferences.NEW_TAB_URL);
             if (workspace == null) throw new IllegalStateException("workspace-limit-reached");
             host.hideOverview();
             host.activateWorkspace(workspace);
@@ -156,10 +164,6 @@ final class ReBrowserAdminController {
         if (ReBrowserAdminProtocol.OP_SHOW_CHILD_TABS.equals(operation)) {
             host.showChildOverview();
             return new JSONObject().put("view", "tabs");
-        }
-        if (ReBrowserAdminProtocol.OP_OPEN_SETTINGS.equals(operation)) {
-            host.openSettings();
-            return new JSONObject().put("view", "settings");
         }
         if (ReBrowserAdminProtocol.OP_SHOW_HISTORY.equals(operation)) {
             host.showHistoryOverview();
@@ -416,6 +420,10 @@ final class ReBrowserAdminController {
         Object value = request.get("value");
         if ("searchEngine".equals(name)) {
             preferences.setSearchEngine((String) value);
+        } else if ("newTabBackground".equals(name)) {
+            preferences.setNewTabBackground((String) value);
+        } else if ("newTabRecent".equals(name)) {
+            preferences.setNewTabRecentEnabled((Boolean) value);
         } else if ("javascript".equals(name)) {
             preferences.setJavascriptEnabled((Boolean) value);
         } else if ("thirdPartyCookies".equals(name)) {
@@ -458,6 +466,7 @@ final class ReBrowserAdminController {
         value.put("websitePermissions", websitePermissionPolicy());
         value.put("launcherVisibility", new ReOutlookLauncherVisibility(context).snapshot());
         value.put("history", historyStatus());
+        value.put("settings", ReBrowserSettings.snapshot(context));
         return value;
     }
 
@@ -493,6 +502,7 @@ final class ReBrowserAdminController {
         value.put("backgroundRuntimeEnabled", sitePermissions.backgroundRuntimeEnabled());
         value.put("launcherVisibility", new ReOutlookLauncherVisibility(context).snapshot());
         value.put("history", historyStatus());
+        value.put("settings", ReBrowserSettings.snapshot(context));
         return value;
     }
 
@@ -518,23 +528,7 @@ final class ReBrowserAdminController {
     }
 
     private JSONObject websitePermissionPolicy() throws Exception {
-        return new JSONObject()
-                .put("clipboard", sitePermissions.capabilityEnabled(
-                        ReBrowserSitePermissions.CLIPBOARD))
-                .put("approximateLocation", sitePermissions.capabilityEnabled(
-                        ReBrowserSitePermissions.APPROXIMATE_LOCATION))
-                .put("preciseLocation", sitePermissions.capabilityEnabled(
-                        ReBrowserSitePermissions.PRECISE_LOCATION))
-                .put("camera", sitePermissions.capabilityEnabled(
-                        ReBrowserSitePermissions.CAMERA))
-                .put("microphone", sitePermissions.capabilityEnabled(
-                        ReBrowserSitePermissions.MICROPHONE))
-                .put("notifications", false)
-                .put("backgroundPush", false)
-                .put("webSensors", false)
-                .put("backgroundRuntime", sitePermissions.backgroundRuntimeEnabled())
-                .put("administratorCanGrant", false)
-                .put("scope", "profileName+topLevelOrigin");
+        return ReBrowserSettings.websitePolicy(sitePermissions);
     }
 
     private JSONObject downloadPolicy() throws Exception {

@@ -24,6 +24,7 @@ final class ReBrowserAdminProtocol {
     static final String OP_SHOW_WORKSPACES = "SHOW_WORKSPACES";
     static final String OP_SHOW_CHILD_TABS = "SHOW_CHILD_TABS";
     static final String OP_OPEN_SETTINGS = "OPEN_SETTINGS";
+    static final String OP_GET_SETTINGS_STATUS = "GET_SETTINGS_STATUS";
     static final String OP_SWITCH_TO_OUTLOOK = "SWITCH_TO_OUTLOOK";
     static final String OP_GET_STATE = "GET_STATE";
     static final String OP_GET_CAPABILITIES = "GET_CAPABILITIES";
@@ -70,7 +71,7 @@ final class ReBrowserAdminProtocol {
 
     private static final Set<String> OPERATIONS = new HashSet<>(Arrays.asList(
             OP_OPEN_URL, OP_NEW_WORKSPACE, OP_NEW_CHILD_TAB, OP_SHOW_WORKSPACES,
-            OP_SHOW_CHILD_TABS, OP_OPEN_SETTINGS, OP_SWITCH_TO_OUTLOOK, OP_GET_STATE,
+            OP_SHOW_CHILD_TABS, OP_OPEN_SETTINGS, OP_GET_SETTINGS_STATUS, OP_SWITCH_TO_OUTLOOK, OP_GET_STATE,
             OP_GET_CAPABILITIES, OP_GET_DIAGNOSTICS, OP_GET_LAUNCHER_STATUS,
             OP_GET_HISTORY_STATUS, OP_SHOW_HISTORY, OP_GET_AUDIT, OP_VALIDATE_STATE,
             OP_REPAIR_STATE, OP_SET_HOME, OP_SET_PREFERENCE, OP_ACTIVATE_WORKSPACE,
@@ -158,6 +159,10 @@ final class ReBrowserAdminProtocol {
         int timeoutSeconds = request.optInt("timeoutSeconds", 30);
         if (timeoutSeconds < 1 || timeoutSeconds > 60) {
             throw new SecurityException("timeoutSeconds must be between 1 and 60");
+        }
+        if (OP_OPEN_SETTINGS.equals(operation) && request.has("section")
+                && !ReBrowserSettings.validSection(request.opt("section"))) {
+            throw new SecurityException("Unsupported settings section");
         }
         if (OP_SET_PREFERENCE.equals(operation)) validatePreference(request);
         if (OP_DISABLE_SITE_PERMISSION.equals(operation)
@@ -361,6 +366,13 @@ final class ReBrowserAdminProtocol {
             }
             return;
         }
+        if ("newTabBackground".equals(name)) {
+            if (!ReBrowserPreferences.BACKGROUND_WHITE.equals(value)
+                    && !ReBrowserPreferences.BACKGROUND_EXCLUSIVE.equals(value)) {
+                throw new SecurityException("Invalid new-tab background");
+            }
+            return;
+        }
         if ("globalOrientation".equals(name)) {
             String string = value instanceof String ? (String) value : "";
             if (!ReBrowserPreferences.ORIENTATION_PORTRAIT.equals(string)
@@ -382,7 +394,7 @@ final class ReBrowserAdminProtocol {
         if (!(value instanceof Boolean) || !("javascript".equals(name)
                 || "thirdPartyCookies".equals(name) || "desktopMode".equals(name)
                 || "forcePrimaryPromotion".equals(name)
-                || "videoOrientationOverride".equals(name))) {
+                || "videoOrientationOverride".equals(name) || "newTabRecent".equals(name))) {
             throw new SecurityException("Unsupported preference or value");
         }
     }

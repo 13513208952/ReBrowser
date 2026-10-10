@@ -10,13 +10,21 @@
 export TMPDIR=/home/zhao/temp/re_outlook/permission-policy-tests
 mkdir -p "$TMPDIR/classes"
 export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
-./gradlew testDebugUnitTest assembleDebug
+./gradlew testLiteDebugUnitTest testBackgroundDebugUnitTest assembleLiteDebug
 
 "$JAVA_HOME/bin/javac" \
-  -cp app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes \
+  -cp app/build/intermediates/javac/liteDebug/compileLiteDebugJavaWithJavac/classes \
   -d "$TMPDIR/classes" tools/tests/DumpPermissionScript.java
 "$JAVA_HOME/bin/java" -cp "$TMPDIR/classes" io.github.reoutlook.DumpPermissionScript \
   | node tools/tests/test_rebrowser_permission_script.cjs
 ```
 
 `DumpPermissionScript` 仅输出编译后的固定脚本常量；它不是应用入口，不打包到 APK，不读取设备、账号或认证数据。
+
+## 管理员 CLI 请求构建检查
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -B tools/tests/test_rebrowser_admin_cli.py
+```
+
+此检查仅构造协议请求，覆盖设置三页入口、只读状态、偏好类型及越权参数拒绝；需要工具已有的 `cryptography` 依赖，但不会执行 ADB、读取密钥或改动设备。

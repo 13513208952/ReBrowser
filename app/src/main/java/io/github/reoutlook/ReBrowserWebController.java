@@ -234,9 +234,38 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
 
     private void showPage(PageBinding page, boolean loadInitialUrl) {
         if (container == null) throw new IllegalStateException("web-container-unavailable");
+        pauseVisiblePage(page.webView);
+        container.removeAllViews();
+        if (page.webView.getParent() instanceof android.view.ViewGroup) {
+            ((android.view.ViewGroup) page.webView.getParent()).removeView(page.webView);
+        }
+        container.addView(page.webView, ReBrowserUi.matchMatch());
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.MUTE_AUDIO)) {
+            WebViewCompat.setAudioMuted(page.webView, false);
+        }
+        if (loadInitialUrl && page.webView.getUrl() == null) page.webView.loadUrl(page.tab.url);
+        page.webView.onResume();
+    }
+
+    void resumeTab(String tabId) {
+        PageBinding page = pagesByTabId.get(tabId);
+        if (page != null) showPage(page, false);
+    }
+
+    void showNativePage(android.view.View view) {
+        if (container == null || view.getParent() == container) return;
+        pauseVisiblePage(view);
+        container.removeAllViews();
+        if (view.getParent() instanceof android.view.ViewGroup) {
+            ((android.view.ViewGroup) view.getParent()).removeView(view);
+        }
+        container.addView(view, ReBrowserUi.matchMatch());
+    }
+
+    private void pauseVisiblePage(android.view.View next) {
         android.view.View previous = container.getChildCount() == 0
                 ? null : container.getChildAt(0);
-        if (previous instanceof WebView && previous != page.webView) {
+        if (previous instanceof WebView && previous != next) {
             PageBinding previousPage = pagesByView.get(previous);
             if (previousPage != null) {
                 cancelPermissionRequestsForTab(previousPage.tab.id, "tab-hidden");
@@ -251,16 +280,6 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
                 }
             }
         }
-        container.removeAllViews();
-        if (page.webView.getParent() instanceof android.view.ViewGroup) {
-            ((android.view.ViewGroup) page.webView.getParent()).removeView(page.webView);
-        }
-        container.addView(page.webView, ReBrowserUi.matchMatch());
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.MUTE_AUDIO)) {
-            WebViewCompat.setAudioMuted(page.webView, false);
-        }
-        if (loadInitialUrl && page.webView.getUrl() == null) page.webView.loadUrl(page.tab.url);
-        page.webView.onResume();
     }
 
     @SuppressLint("SetJavaScriptEnabled")

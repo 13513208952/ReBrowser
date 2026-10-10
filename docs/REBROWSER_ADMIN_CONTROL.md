@@ -47,7 +47,7 @@ A bounded audit ring records the request ID, operation, level, authorization met
 
 `tools/admin/rebrowser_admin.py` currently supports:
 
-- capability and state: `capabilities`, `state`, `diagnostics`, `launcher-status`, `history-status`, `audit`, `validate`;
+- capability and state: `capabilities`, `state`, `diagnostics`, `launcher-status`, `history-status`, `settings-status`, `audit`, `validate`;
 - navigation: `open`, `reload`, `stop`, `back`, `forward`, `home`, and non-disclosing `assert-location`;
 - object selection: `activate-workspace`, `activate-tab`;
 - creation and UI: `new-workspace`, `new-tab`, `workspaces`, `tabs`, `settings`, `history`, `outlook`;
@@ -121,6 +121,22 @@ No operation returns history URLs, titles, entries or page contents, changes its
 ```bash
 python3 tools/admin/rebrowser_admin.py history-status --key-id rebrowser-root-v1
 python3 tools/admin/rebrowser_admin.py history --key-id rebrowser-root-v1
+```
+
+## Three peer settings pages (v0.4.4-alpha)
+
+The native settings UI has General, Personalization, and Isolation/Permissions peer pages. `OPEN_SETTINGS` accepts an optional fixed `section` (`general`, `personalization`, or `isolation`); old requests default to General. Unknown sections and non-string values are rejected. The CLI uses `settings [SECTION]`.
+
+Level-one `GET_SETTINGS_STATUS` (`settings-status`) runs directly in the protected administrator Activity without loading a website. Capabilities and diagnostics include the same `settings` snapshot: fixed browser preferences, photo availability, stored/effective background, and global website policy. It omits the homepage URL entirely (only `homeCustomized` is returned), all grant identities, history, and website data.
+
+The level-one `SET_PREFERENCE` whitelist adds `newTabBackground` (`white`/`exclusive`) and `newTabRecent` (Boolean). Lite can remember `exclusive` but still displays white; this difference is explicit in the snapshot. No arbitrary image URL/file, settings-key reader, isolation-mode setter, capability-enabling command, component setter, or history setter is added. Existing one-way permission operations and authorization levels are unchanged. See [settings scope](REBROWSER_SETTINGS.md).
+
+```bash
+python3 tools/admin/rebrowser_admin.py settings personalization
+python3 tools/admin/rebrowser_admin.py settings isolation
+python3 tools/admin/rebrowser_admin.py settings-status
+python3 tools/admin/rebrowser_admin.py set-pref newTabBackground white
+python3 tools/admin/rebrowser_admin.py set-pref newTabRecent true
 ```
 
 ## Data boundary

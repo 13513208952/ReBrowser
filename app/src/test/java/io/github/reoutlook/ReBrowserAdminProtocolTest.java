@@ -123,6 +123,50 @@ public final class ReBrowserAdminProtocolTest {
     }
 
     @Test
+    public void settingsSectionsAndSnapshotAreBoundedLevelOneOperations() throws Exception {
+        JSONObject query = prepared(ReBrowserAdminProtocol.OP_GET_SETTINGS_STATUS);
+        ReBrowserAdminProtocol.prepareExternalRequest(query);
+        assertEquals(1, query.getInt("authorizationLevel"));
+        assertTrue(ReBrowserAdminProtocol.ownerCredentialAllowed(query));
+        ReBrowserAdminProtocol.prepareExternalRequest(prepared(ReBrowserAdminProtocol.OP_OPEN_SETTINGS));
+        for (String section : ReBrowserSettings.SECTIONS) {
+            JSONObject open = prepared(ReBrowserAdminProtocol.OP_OPEN_SETTINGS).put("section", section);
+            ReBrowserAdminProtocol.prepareExternalRequest(open);
+            assertEquals(1, open.getInt("authorizationLevel"));
+        }
+        for (Object section : new Object[]{"unknown", true, 1, JSONObject.NULL}) {
+            assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                    prepared(ReBrowserAdminProtocol.OP_OPEN_SETTINGS).put("section", section)));
+        }
+    }
+
+    @Test
+    public void personalizationSettersAcceptOnlyFixedBackgroundsAndActualBooleans() throws Exception {
+        for (String background : new String[]{"white", "exclusive"}) {
+            JSONObject request = prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE)
+                    .put("name", "newTabBackground").put("value", background);
+            ReBrowserAdminProtocol.prepareExternalRequest(request);
+            assertEquals(1, request.getInt("authorizationLevel"));
+        }
+        for (Object value : new Object[]{"file:///private/image.png", "https://example.com/image", true, 1, JSONObject.NULL})
+            assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                    prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE).put("name", "newTabBackground").put("value", value)));
+        ReBrowserAdminProtocol.prepareExternalRequest(prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE)
+                .put("name", "newTabRecent").put("value", false));
+        assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE).put("name", "newTabRecent").put("value", "false")));
+    }
+
+    @Test
+    public void settingsReorganizationDoesNotIntroduceIsolationEscalationOrSecretReaders() throws Exception {
+        for (String preference : new String[]{"camera", "clipboard", "fullIncognito", "cleartextHttp", "outlookLauncherVisible", "historyPaused"})
+            assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
+                    prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE).put("name", preference).put("value", true)));
+        for (String operation : new String[]{"GET_ALL_PREFERENCES", "GET_COOKIES", "GRANT_SITE_PERMISSION", "SET_PROFILE_MODE"})
+            assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(prepared(operation)));
+    }
+
+    @Test
     public void launcherStatusIsLevelOneButCannotMutateComponents() throws Exception {
         JSONObject query = prepared(ReBrowserAdminProtocol.OP_GET_LAUNCHER_STATUS);
         ReBrowserAdminProtocol.prepareExternalRequest(query);

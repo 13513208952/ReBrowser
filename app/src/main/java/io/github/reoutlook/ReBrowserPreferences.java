@@ -6,6 +6,9 @@ import android.net.Uri;
 
 /** Browser-global user preferences shared by every ReBrowser workspace. */
 final class ReBrowserPreferences {
+    static final String NEW_TAB_URL = "about:blank";
+    static final String BACKGROUND_WHITE = "white";
+    static final String BACKGROUND_EXCLUSIVE = "exclusive";
     static final String SEARCH_BING = "bing";
     static final String SEARCH_BAIDU = "baidu";
     static final String SEARCH_DUCKDUCKGO = "duckduckgo";
@@ -123,6 +126,48 @@ final class ReBrowserPreferences {
                 && !VIDEO_ORIENTATION_AUTO.equals(value)
                 && !ORIENTATION_PORTRAIT.equals(value)) return;
         preferences.edit().putString(VIDEO_ORIENTATION, value).apply();
+    }
+
+    String newTabBackground() {
+        return BACKGROUND_EXCLUSIVE.equals(preferences.getString("new_tab_background", BACKGROUND_WHITE))
+                ? BACKGROUND_EXCLUSIVE : BACKGROUND_WHITE;
+    }
+
+    void setNewTabBackground(String value) {
+        if (BACKGROUND_WHITE.equals(value) || BACKGROUND_EXCLUSIVE.equals(value)) {
+            preferences.edit().putString("new_tab_background", value).apply();
+        }
+    }
+
+    boolean newTabRecentEnabled() {
+        return preferences.getBoolean("new_tab_recent", true);
+    }
+
+    void setNewTabRecentEnabled(boolean enabled) {
+        preferences.edit().putBoolean("new_tab_recent", enabled).apply();
+    }
+
+    boolean exclusiveBackgroundEnabled() {
+        return ReBrowserBackgroundAsset.resourceId() != 0
+                && BACKGROUND_EXCLUSIVE.equals(newTabBackground());
+    }
+
+    String searchEngineName() {
+        switch (searchEngine()) {
+            case SEARCH_BAIDU: return "百度";
+            case SEARCH_DUCKDUCKGO: return "DuckDuckGo";
+            case SEARCH_GOOGLE: return "Google";
+            default: return "Bing";
+        }
+    }
+
+    String navigationUrl(String input) {
+        String clean = input == null ? "" : input.trim();
+        if (clean.isEmpty()) return homeUrl();
+        String lower = clean.toLowerCase(java.util.Locale.ROOT);
+        if (lower.startsWith("https://") || lower.startsWith("http://")) return clean;
+        if (!clean.contains(" ") && clean.contains(".")) return "https://" + clean;
+        return searchUrl(clean);
     }
 
     String searchUrl(String query) {

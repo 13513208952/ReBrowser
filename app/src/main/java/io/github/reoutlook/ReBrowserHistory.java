@@ -236,6 +236,23 @@ final class ReBrowserHistory implements AutoCloseable {
         return entries;
     }
 
+    List<Entry> recentEntries(int limit) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        cleanup(db, clock.getAsLong());
+        List<Entry> entries = new ArrayList<>();
+        // Keep the latest actual visit to each full URL, including deterministic timestamp ties.
+        // Indexed anti-join also works on Android 10's SQLite (no window-function dependency).
+        String columns = "v." + String.join(",v.", ENTRY_COLUMNS);
+        try (Cursor rows = db.rawQuery("SELECT " + columns + " FROM visits v WHERE NOT EXISTS"
+                + " (SELECT 1 FROM visits n WHERE n.url=v.url AND (n.visited_at>v.visited_at"
+                + " OR (n.visited_at=v.visited_at AND n.id>v.id)))"
+                + " ORDER BY v.visited_at DESC,v.id DESC LIMIT ?",
+                new String[]{Integer.toString(Math.max(1, Math.min(24, limit)))})) {
+            while (rows.moveToNext()) entries.add(new Entry(rows));
+        }
+        return entries;
+    }
+
     Entry find(long id) {
         SQLiteDatabase db = helper.getWritableDatabase();
         cleanup(db, clock.getAsLong());
@@ -305,7 +322,7 @@ final class ReBrowserHistory implements AutoCloseable {
     @Override public void close() { helper.close(); }
 
     private static final class Database extends SQLiteOpenHelper {
-        Database(Context context) { super(context, DATABASE, null, 1); }
+        Database(Context context) { super(context, DATABASE, null, 2); }
         @Override public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE visits (id INTEGER PRIMARY KEY AUTOINCREMENT, workspace_id TEXT NOT NULL,"
                     + " tab_id TEXT NOT NULL, title TEXT NOT NULL, url TEXT NOT NULL, source_title TEXT NOT NULL,"
@@ -314,9 +331,14 @@ final class ReBrowserHistory implements AutoCloseable {
             db.execSQL("CREATE INDEX visits_source ON visits(workspace_id)");
             db.execSQL("CREATE INDEX visits_expiry ON visits(expires_at)");
             db.execSQL("CREATE TABLE settings (name TEXT PRIMARY KEY, value INTEGER NOT NULL)");
+            createRecentIndex(db);
+        }
+        private static void createRecentIndex(SQLiteDatabase db) {
+            db.execSQL("CREATE INDEX visits_url_order ON visits(url,visited_at DESC,id DESC)");
         }
         @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            throw new SQLiteException("Unsupported history schema upgrade");
+            if (oldVersion == 1 && newVersion == 2) createRecentIndex(db);
+            else throw new SQLiteException("Unsupported history schema upgrade");
         }
     }
 }

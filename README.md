@@ -40,6 +40,7 @@ ReBrowser 的核心原则是 **Persist by intent, not by visitation（由意图�
 - 同一“Profile＋顶层 origin”五分钟内第三次下载起进入有界待确认队列，危险类型在保存和外部打开前警告；
 - 最多同时存在 5 个主总标签页、64 个总标签页，每个总标签页最多 50 个子标签页；
 - 支持网页新窗口转为当前环境内的子标签页、原生全屏视频、持久化全局方向及独立的视频方向策略；
+- 地址栏下方显示 2dp 橙紫渐变加载进度线，支持平滑推进、完成淡出及切换标签页后的状态同步；
 - 不支持 WebView `MULTI_PROFILE` 时完全禁用，不回退到 ReOutlook 的 Default Profile。
 
 当前版本不会把自身注册为系统默认浏览器候选。完整模型和交互说明见 [ReBrowser 设计](docs/REBROWSER_EXPLORATION.md)。独立的 [ReBrowser 仓库](https://github.com/13513208952/ReBrowser) 仅作为项目入口，代码统一维护在本仓库。
@@ -78,6 +79,7 @@ export ANDROID_HOME=$HOME/Android/Sdk
 | [ReBrowser 管理协议](docs/REBROWSER_ADMIN_CONTROL.md) | ADB 挑战授权、命令范围和数据边界 |
 | [ReBrowser 网站权限](docs/REBROWSER_SITE_PERMISSIONS.md) | 单站授权、定位、剪贴板、永久禁用项和后台冻结 |
 | [项目状态](docs/PROJECT_STATUS.md) | 已验证能力、当前限制和候选方向 |
+| [新标签页与个性化讨论](docs/REBROWSER_NEW_TAB_PLAN.md) | 新标签页、历史入口、个性化、防护和桌面入口显隐设想（未实现） |
 | [开发历史与验证资料](docs/DEVELOPMENT_HISTORY.md) | 版本演进、历史测试范围和本地资料索引 |
 | [隐私说明](PRIVACY.md) | 本地数据、网络通信、备份和删除 |
 | [安全策略](SECURITY.md) | 安全边界、管理员接口和漏洞报告 |

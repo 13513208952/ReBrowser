@@ -29,7 +29,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +66,7 @@ public final class ReBrowserActivity extends Activity
     private LinearLayout browserToolbar;
     private EditText omnibox;
     private TextView workspaceCountButton;
-    private ProgressBar progressBar;
+    private ReBrowserLoadingBar progressBar;
     private FrameLayout overviewContainer;
     private final Runnable downloadRefreshRunnable = () -> {
         if (!overviewController.is(ReBrowserOverviewController.Page.DOWNLOADS)
@@ -146,9 +145,10 @@ public final class ReBrowserActivity extends Activity
         content.addView(browserToolbar, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(66), Gravity.TOP));
 
-        progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
-        progressBar.setMax(100);
-        progressBar.setVisibility(View.GONE);
+        progressBar = new ReBrowserLoadingBar(this);
+        // The toolbar is elevated; insertion order alone cannot put this line above it.
+        progressBar.setElevation(dp(4));
+        progressBar.setOutlineProvider(null);
         FrameLayout.LayoutParams progressParams = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(2), Gravity.TOP);
         progressParams.topMargin = dp(64);
@@ -294,6 +294,7 @@ public final class ReBrowserActivity extends Activity
         workspaceController.selectTab(workspace, tab);
         try {
             webController.showTab(workspace.id, workspace.profileName, tab);
+            syncLoadingBar();
         } catch (Throwable error) {
             showProfileFailure(error);
             return;
@@ -793,8 +794,7 @@ public final class ReBrowserActivity extends Activity
     private void reloadActivePage() {
         ReBrowserStore.Tab tab = activeWorkspace() == null ? null : activeWorkspace().activeTab();
         if (tab == null || webController.currentUrl(tab.id) == null) return;
-        progressBar.setProgress(5);
-        progressBar.setVisibility(View.VISIBLE);
+        progressBar.start(tab.id);
         root.post(() -> {
             if (activeWorkspace() == null || activeWorkspace().activeTab() != tab) return;
             webController.stop(tab.id);
@@ -1695,11 +1695,21 @@ public final class ReBrowserActivity extends Activity
         setBrowserContentVisible(true);
     }
 
+    private void syncLoadingBar() {
+        ReBrowserStore.Tab tab = activeWorkspace() == null ? null : activeWorkspace().activeTab();
+        if (tab == null || browserToolbar.getVisibility() != View.VISIBLE) {
+            progressBar.hideImmediately();
+            return;
+        }
+        progressBar.bind(tab.id, webController.isLoading(tab.id), webController.loadProgress(tab.id));
+    }
+
     private void setBrowserContentVisible(boolean visible) {
         int visibility = visible ? View.VISIBLE : View.INVISIBLE;
         browserToolbar.setVisibility(visibility);
         webContainer.setVisibility(visibility);
-        if (!visible) progressBar.setVisibility(View.GONE);
+        if (visible) syncLoadingBar();
+        else progressBar.hideImmediately();
         int importance = visible
                 ? View.IMPORTANT_FOR_ACCESSIBILITY_AUTO
                 : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS;
@@ -2100,8 +2110,7 @@ public final class ReBrowserActivity extends Activity
             adminController.onPageStarted(tab);
             if (visible) {
                 omnibox.setText(ReBrowserStore.safeUrl(url));
-                progressBar.setVisibility(View.VISIBLE);
-                progressBar.setProgress(5);
+                if (browserToolbar.getVisibility() == View.VISIBLE) progressBar.start(tab.id);
             }
         }
 
@@ -2118,7 +2127,7 @@ public final class ReBrowserActivity extends Activity
             updateChromeUi();
             if (visible) {
                 omnibox.setText(ReBrowserStore.safeUrl(url));
-                progressBar.setVisibility(View.GONE);
+                progressBar.finish(tab.id);
             }
         }
 
@@ -2131,7 +2140,7 @@ public final class ReBrowserActivity extends Activity
         ) {
             adminController.onMainFrameError(tab, errorCode);
             if (visible) {
-                progressBar.setVisibility(View.GONE);
+                progressBar.hideImmediately();
                 toast("页面连接失败");
             }
         }
@@ -2142,9 +2151,13 @@ public final class ReBrowserActivity extends Activity
                 int progress,
                 boolean visible
         ) {
-            if (!visible) return;
-            progressBar.setProgress(progress);
-            progressBar.setVisibility(progress >= 100 ? View.GONE : View.VISIBLE);
+            if (!visible || browserToolbar.getVisibility() != View.VISIBLE) return;
+            progressBar.update(tab.id, progress);
+        }
+
+        @Override
+        public void onLoadingStopped(ReBrowserStore.Tab tab, boolean visible) {
+            if (visible) progressBar.hideImmediately();
         }
 
         @Override
@@ -2188,6 +2201,7 @@ public final class ReBrowserActivity extends Activity
         @Override
         public void onPopupCreated(ReBrowserStore.Tab tab) {
             workspaceController.selectTab(activeWorkspace(), tab);
+            syncLoadingBar();
             saveWorkspaceMetadata();
             updateChromeUi();
         }

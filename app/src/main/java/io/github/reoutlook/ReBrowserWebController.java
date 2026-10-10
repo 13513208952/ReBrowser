@@ -60,6 +60,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
                 String description,
                 boolean visible);
         void onProgressChanged(ReBrowserStore.Tab tab, int progress, boolean visible);
+        void onLoadingStopped(ReBrowserStore.Tab tab, boolean visible);
         void onTitleReceived(ReBrowserStore.Tab tab, String title, boolean visible);
         void onExternalNavigationBlocked(String message);
         void onExternalNavigationRequested(Uri uri, String scheme);
@@ -568,6 +569,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         PageBinding page = requirePage(tabId);
         page.webView.stopLoading();
         page.loading = false;
+        listener.onLoadingStopped(page.tab, isCurrentVisiblePage(page));
     }
 
     void reload(String tabId) {

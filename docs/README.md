@@ -10,6 +10,7 @@
 | --- | --- |
 | 产品概览、安装和构建 | [项目 README](../README.md) |
 | 当前能力、已知限制、历史候选方向 | [项目状态](PROJECT_STATUS.md) |
+| v0.4.1-alpha 发布内容、安装包校验 | [发布说明](releases/v0.4.1-alpha.md) |
 | 版本演进、历史测试与仓库外资料 | [开发历史与验证资料](DEVELOPMENT_HISTORY.md) |
 | 邮件采集、回填、账号与数据库 | [ReOutlook 架构与同步](REOUTLOOK_ARCHITECTURE.md) |
 | 工作区理念、双层标签、Profile 与交互 | [ReBrowser 设计](REBROWSER_EXPLORATION.md) |

@@ -25,6 +25,10 @@ final class ReBrowserAdminProtocol {
     static final String OP_SHOW_CHILD_TABS = "SHOW_CHILD_TABS";
     static final String OP_OPEN_SETTINGS = "OPEN_SETTINGS";
     static final String OP_GET_SETTINGS_STATUS = "GET_SETTINGS_STATUS";
+    static final String OP_GET_APPLICATION_STATUS = "GET_APPLICATION_STATUS";
+    static final String OP_GET_RUNTIME_STATUS = "GET_RUNTIME_STATUS";
+    static final String OP_OPEN_APPLICATION_MANAGEMENT = "OPEN_APPLICATION_MANAGEMENT";
+    static final String OP_OPEN_MODE = "OPEN_MODE";
     static final String OP_SWITCH_TO_OUTLOOK = "SWITCH_TO_OUTLOOK";
     static final String OP_GET_STATE = "GET_STATE";
     static final String OP_GET_CAPABILITIES = "GET_CAPABILITIES";
@@ -73,6 +77,7 @@ final class ReBrowserAdminProtocol {
             OP_OPEN_URL, OP_NEW_WORKSPACE, OP_NEW_CHILD_TAB, OP_SHOW_WORKSPACES,
             OP_SHOW_CHILD_TABS, OP_OPEN_SETTINGS, OP_GET_SETTINGS_STATUS, OP_SWITCH_TO_OUTLOOK, OP_GET_STATE,
             OP_GET_CAPABILITIES, OP_GET_DIAGNOSTICS, OP_GET_LAUNCHER_STATUS,
+            OP_GET_APPLICATION_STATUS, OP_GET_RUNTIME_STATUS, OP_OPEN_APPLICATION_MANAGEMENT, OP_OPEN_MODE,
             OP_GET_HISTORY_STATUS, OP_SHOW_HISTORY, OP_GET_AUDIT, OP_VALIDATE_STATE,
             OP_REPAIR_STATE, OP_SET_HOME, OP_SET_PREFERENCE, OP_ACTIVATE_WORKSPACE,
             OP_ACTIVATE_TAB, OP_RELOAD, OP_STOP, OP_GO_BACK, OP_GO_FORWARD, OP_GO_HOME,
@@ -164,6 +169,8 @@ final class ReBrowserAdminProtocol {
                 && !ReBrowserSettings.validSection(request.opt("section"))) {
             throw new SecurityException("Unsupported settings section");
         }
+        if (OP_OPEN_MODE.equals(operation) && !ReBrowserApplications.validMode(request.opt("mode")))
+            throw new SecurityException("Unsupported fixed application mode");
         if (OP_SET_PREFERENCE.equals(operation)) validatePreference(request);
         if (OP_DISABLE_SITE_PERMISSION.equals(operation)
                 || OP_CLEAR_SITE_PERMISSION_GRANTS.equals(operation)) {

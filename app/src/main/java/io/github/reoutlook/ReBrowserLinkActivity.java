@@ -11,7 +11,10 @@ public final class ReBrowserLinkActivity extends Activity {
         super.onCreate(state);
         if (state == null) {
             Intent browser = ReBrowserExternalNavigation.browserIntent(this, getIntent());
-            if (browser != null) startActivity(browser);
+            if (browser != null) {
+                if (ReBrowserRuntime.inspect().browserAvailable()) startActivity(browser);
+                else ReBrowserApplications.openManagement(this);
+            }
             else Toast.makeText(this, "仅支持有效的 HTTP(S) 网页链接", Toast.LENGTH_SHORT).show();
         }
         finish();

@@ -4,6 +4,7 @@ import importlib.util
 import pathlib
 import types
 import unittest
+from unittest import mock
 
 path = pathlib.Path(__file__).resolve().parents[1] / "admin" / "rebrowser_admin.py"
 spec = importlib.util.spec_from_file_location("rebrowser_admin", path)
@@ -23,11 +24,22 @@ class SettingsCommands(unittest.TestCase):
         self.assertNotIn("section", request("settings"))
 
     def test_three_fixed_peer_routes(self):
-        for section in ("general", "personalization", "isolation"):
+        for section in ("general", "isolation", "applications"):
             self.assertEqual(section, request("settings", section)["section"])
-        for section in ("unknown", "true", "io.github.reoutlook.MainActivity"):
+        for section in ("unknown", "personalization", "true", "io.github.reoutlook.MainActivity"):
             with self.assertRaises(SystemExit):
                 request("settings", section)
+
+    def test_native_application_commands_and_fixed_modes(self):
+        for command, operation in (("applications", "GET_APPLICATION_STATUS"), ("runtime", "GET_RUNTIME_STATUS"),
+                                   ("application-management", "OPEN_APPLICATION_MANAGEMENT")):
+            self.assertEqual(operation, request(command)["operation"])
+            with self.assertRaises(SystemExit): request(command, "arbitraryKey")
+        for mode in ("browser", "outlook"):
+            self.assertEqual(mode, request("mode", mode)["mode"])
+        for mode in ("com.android.settings", "file:///private/file", "true"):
+            with self.assertRaises(SystemExit): request("mode", mode)
+        with self.assertRaises(SystemExit): request("mode")
 
     def test_bounded_status_request(self):
         self.assertEqual("GET_SETTINGS_STATUS", request("settings-status")["operation"])
@@ -47,6 +59,26 @@ class SettingsCommands(unittest.TestCase):
                             ("outlookLauncherVisible", "false"), ("historyPaused", "true")):
             with self.assertRaises(SystemExit):
                 request("set-pref", name, value)
+
+    def test_launch_always_creates_a_fresh_transient_authorization_task(self):
+        args = types.SimpleNamespace(command="runtime", arguments=[], workspace=None, tab=None,
+            wait=False, timeout=30, confirm_delete=False, auth="key", key_id=None, private_key=None)
+        with mock.patch.object(admin, "provider_call", return_value="Bundle[{challenge=one-use, requestId=request}]") as provider, \
+             mock.patch.object(admin, "selected_key", return_value=("reoutlook-root-v1", None)), \
+             mock.patch.object(admin, "sign_challenge", return_value=b"signature"), \
+             mock.patch.object(admin, "adb") as adb, \
+             mock.patch.object(admin, "wait_for_result", return_value={"status": "completed"}):
+            self.assertEqual("completed", admin.run_request(args)["status"])
+            launch = adb.call_args.args
+            self.assertEqual(("shell", "am", "start", "-W", "-f", "0x18000000"), launch[:6])
+            self.assertEqual(admin.ACTIVITY, launch[7])
+            self.assertIn("--es", launch)
+            self.assertEqual("createChallenge", provider.call_args.args[0])
+
+    def test_adb_commands_have_a_transport_deadline(self):
+        with mock.patch.object(admin.subprocess, "run", return_value=types.SimpleNamespace(stdout="done")) as run:
+            self.assertEqual("done",admin.adb("shell", "echo", "test"))
+            self.assertEqual(30,run.call_args.kwargs["timeout"])
 
     def test_existing_settings_and_site_permission_commands_remain_compatible(self):
         self.assertEqual("google", request("set-pref", "searchEngine", "google")["value"])

@@ -8,11 +8,13 @@ final class ModeRouter {
     private ModeRouter() {}
 
     static void openOutlook(Context context) {
-        start(context, MainActivity.class);
+        if (ReBrowserRuntime.inspect().provider) start(context, MainActivity.class);
+        else ReBrowserApplications.openManagement(context);
     }
 
     static void openReBrowser(Context context) {
-        start(context, ReBrowserActivity.class);
+        if (ReBrowserRuntime.inspect().browserAvailable()) start(context, ReBrowserActivity.class);
+        else ReBrowserApplications.openManagement(context);
     }
 
     private static void start(Context context, Class<?> activityClass) {

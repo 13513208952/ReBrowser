@@ -57,16 +57,22 @@ lifecycle control, diagnostics, audit metadata, settings, website-permission con
 download-task control, and root-only repair. Commands that close or delete an object—or globally
 clear downloads or website grants—require `--confirm-delete`.
 
-Three peer settings pages (v0.4.4-alpha):
+Three peer settings pages (v1.0.0): General, Isolation/Permissions, Application Management. Personalization UI is removed; bounded protocol-v2 preference controls remain compatible.
 
 ```bash
 python3 tools/admin/rebrowser_admin.py settings                 # General; legacy-compatible
-python3 tools/admin/rebrowser_admin.py settings personalization
+python3 tools/admin/rebrowser_admin.py settings applications
+python3 tools/admin/rebrowser_admin.py applications
+python3 tools/admin/rebrowser_admin.py runtime
+python3 tools/admin/rebrowser_admin.py application-management
+python3 tools/admin/rebrowser_admin.py mode outlook
 python3 tools/admin/rebrowser_admin.py settings isolation
 python3 tools/admin/rebrowser_admin.py settings-status
 python3 tools/admin/rebrowser_admin.py set-pref newTabBackground exclusive
 python3 tools/admin/rebrowser_admin.py set-pref newTabRecent true
 ```
+
+The CLI starts each authorization in a fresh transient task and bounds individual ADB calls to 30 seconds. Native settings are kept outside that task and reordered to the foreground without finishing browser activities or losing drafts.
 
 These are level-one operations. The fixed status snapshot omits the homepage URL, site-grant identities and website data; the read-only query does not load a website. Lite retains an exclusive-background preference without displaying the absent image. Settings arguments and values are whitelisted; this does not add permission enabling, arbitrary preference/file access, launcher or history setters, or a claimed full incognito mode. See [the settings scope](../../docs/REBROWSER_SETTINGS.md).
 

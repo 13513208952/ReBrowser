@@ -1,7 +1,7 @@
 # Security policy
 
-ReOutlook is currently an experimental client and has not received an independent security audit.
-Do not treat it as a hardened enterprise mail product.
+ReBrowser includes the ReOutlook mail mode in the same APK and has not received an independent security audit.
+A first non-alpha release number does not imply a hardened enterprise browser or mail product.
 
 ## Security boundaries
 
@@ -12,12 +12,16 @@ Do not treat it as a hardened enterprise mail product.
 - Passwords, cookies, access tokens, refresh tokens, and Web Storage are excluded from native persistence and exports.
 - Offline HTML is rendered with JavaScript, network loading, local file access, and navigation disabled.
 - ReOutlook has no download path. ReBrowser downloads bind Cookie lookup to the exact named Profile and use Cookie only for the concrete HTTP(S) request.
-- Downloaded files are never automatically opened, installed, previewed, unpacked, or executed. ReBrowser does not request package-install permission and hands a user-selected file to Android only with a read-only content URI.
+- Downloaded files are never automatically opened, installed, previewed, unpacked, or executed. The separate, user-initiated local `.1` APK handoff uses `REQUEST_INSTALL_PACKAGES` and a bounded unchanged copy with a private read-only content URI; only an allowlisted system installer is invoked. Android unknown-source authorization, signature verification and final user confirmation remain mandatory. The administrator protocol has no install or arbitrary-file command.
 - Blob/Data extraction uses fixed application code, bounded size, one active Blob transfer, one-time object names, and chunked output; it is not an administrator or website-controlled JavaScript API.
 - Web-page external intents require a foreground main-frame user gesture and an allowlisted scheme. `file:`, `content:`, `javascript:`, and `intent:` navigation is rejected.
 - ReBrowser website grants are bounded to a named Profile, HTTPS top-level origin, permission type, and expiry. Global enablement never grants a site automatically; disabled capabilities reject without prompting and delete existing grants.
 - Camera, microphone, and precise location use one-request or three-hour authorization. Approximate location and text clipboard access use five-minute or fifteen-day authorization. No clipboard value, coordinate, or media data enters permission persistence, administrator results, logs, or audit.
 - Native WebView geolocation is disabled. The fixed semantic location bridge coarsens approximate results before disclosure. Website notifications, push, and motion sensors are permanently disabled. ReOutlook explicitly denies WebView media and geolocation requests even though Android runtime permissions belong to the shared APK.
+
+- Browser capability checks precede workspace initialization. Missing isolation or permission features open native Application Management, never Outlook's Default Profile. Mail can use an available provider without Multi-Profile; provider availability is not an Outlook-compatibility guarantee.
+- Subsoftware desktop visibility is owner-controlled, defaults hidden for fresh installations and preserves old upgrade state. Administrator operations accept only fixed mode IDs, not arbitrary components, Intents or visibility setters.
+- Public APKs retain the historical Android Debug certificate for upgrade continuity but are non-debuggable Release builds. This is not a new production-signing identity; private signing material remains outside the repository.
 
 ## Administrator maintenance interfaces
 

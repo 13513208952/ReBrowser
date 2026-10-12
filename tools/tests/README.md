@@ -21,6 +21,10 @@ export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
 
 `DumpPermissionScript` 仅输出编译后的固定脚本常量；它不是应用入口，不打包到 APK，不读取设备、账号或认证数据。
 
+## 主软件与原生应用管理 JVM 检查
+
+`ReBrowserApplicationsTest` / `ReBrowserSettingsTest` 覆盖软件名称、三个并列设置页、个性化控件移除、风味默认与显式偏好保留、旧 alias DEFAULT／显式选择和迁移标记、无 provider 的浏览器与邮件直接入口／生命周期，以及固定管理员模式。provider 存在但缺少浏览器特性的状态为模拟检查，不是完整设备兼容验证；不增加公开版特性覆写入口。
+
 ## Android 交接 JVM 检查
 
 `ReBrowserPlatformTest` 覆盖 API 29／35 的浏览器与 `.1` 路径注册、外部 Intent 参数隔离、已持有默认浏览器角色时按钮仍可点击、推荐原生默认应用入口／拒绝第三方假冒处理器／旧系统入口兼容、独立 Profile 初始化、原样复制与有界缓存、只读随机 URI／过期／路径拒绝及系统安装组件选择。模拟测试不实际设置系统默认应用、不安装软件，不能替代 QQ 和厂商安装器真机验证。
@@ -35,4 +39,4 @@ export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
 PYTHONDONTWRITEBYTECODE=1 python3 -B tools/tests/test_rebrowser_admin_cli.py
 ```
 
-此检查仅构造协议请求，覆盖设置三页入口、只读状态、偏好类型及越权参数拒绝；需要工具已有的 `cryptography` 依赖，但不会执行 ADB、读取密钥或改动设备。
+此检查构造协议请求并模拟 ADB 调用，覆盖设置三页入口、只读状态、偏好类型、越权参数拒绝、独立管理员任务标志与传输期限；需要工具已有的 `cryptography` 依赖，但不会执行 ADB、读取密钥或改动设备。

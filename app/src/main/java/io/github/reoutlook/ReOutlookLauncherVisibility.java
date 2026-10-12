@@ -20,6 +20,28 @@ final class ReOutlookLauncherVisibility {
                 this.context.getPackageName() + ".ReOutlookLauncher");
     }
 
+    void migrateInstallation() {
+        boolean upgrade = false;
+        try {
+            android.content.pm.PackageInfo info = packages.getPackageInfo(context.getPackageName(), 0);
+            upgrade = info.firstInstallTime < info.lastUpdateTime;
+        } catch (PackageManager.NameNotFoundException ignored) {}
+        migrateInstallation(upgrade);
+    }
+
+    synchronized void migrateInstallation(boolean upgrade) {
+        android.content.SharedPreferences state = context.getSharedPreferences("rebrowser_applications_v1", Context.MODE_PRIVATE);
+        if (state.getBoolean("entranceDefaultsMigrated", false)) return;
+        int existing = packages.getComponentEnabledSetting(launcher);
+        // Explicit old owner choices remain untouched. Old manifest DEFAULT meant visible.
+        if (upgrade && existing == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT) {
+            packages.setComponentEnabledSetting(launcher, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+        }
+        if (!state.edit().putBoolean("entranceDefaultsMigrated", true).commit())
+            throw new IllegalStateException("entrance-migration-save-failed");
+    }
+
     boolean visible() {
         return enabled(launcher);
     }

@@ -102,7 +102,7 @@ Protocol v2 adds the level-one, read-only `GET_LAUNCHER_STATUS` operation (`laun
 
 It returns only four fixed booleans: `outlookLauncherVisible`, `outlookActivityEnabled`, `rebrowserLauncherEnabled`, and `administratorCanSet` (always false). Capabilities and diagnostics include the same snapshot under `launcherVisibility`. Visibility reports the configured launcher component state; the desktop launcher may take time to refresh its icon cache.
 
-The normal display/hide control exists only in ReBrowser settings. It changes the `ReOutlookLauncher` activity alias using PackageManager with `DONT_KILL_APP`; MainActivity, ReBrowser's launcher, mail state, and named Profiles remain untouched. The choice defaults to visible and survives process restarts and upgrades. ReBrowser's menu and the existing `outlook` administrator operation still route directly to MainActivity, not through the toggleable alias.
+The normal display/hide control exists only in ReBrowser settings. It changes the `ReOutlookLauncher` activity alias using PackageManager with `DONT_KILL_APP`; MainActivity, ReBrowser's launcher, mail state, and named Profiles remain untouched. In v1.0.0 the control lives in Application Management, not General or the browser menu. Fresh installations hide the subsoftware launcher; upgrades preserve explicit owner choices and the old implicit-visible default using a one-time migration. Application Management and the existing `outlook` administrator operation route directly to MainActivity, not through the toggleable alias.
 
 There is no administrator setter for this choice, no arbitrary component-name input, and no component-enable/disable command. `set-pref outlookLauncherVisible ...` is not whitelisted. Hiding the alias is not disabling the mail feature, uninstalling the app, or preventing explicit navigation to ReOutlook.
 
@@ -123,21 +123,38 @@ python3 tools/admin/rebrowser_admin.py history-status --key-id rebrowser-root-v1
 python3 tools/admin/rebrowser_admin.py history --key-id rebrowser-root-v1
 ```
 
-## Three peer settings pages (v0.4.4-alpha)
+## Three peer settings pages (v1.0.0)
 
-The native settings UI has General, Personalization, and Isolation/Permissions peer pages. `OPEN_SETTINGS` accepts an optional fixed `section` (`general`, `personalization`, or `isolation`); old requests default to General. Unknown sections and non-string values are rejected. The CLI uses `settings [SECTION]`.
+The native settings UI has General, Isolation/Permissions, and Application Management peer pages. Personalization UI is removed. `OPEN_SETTINGS` accepts an optional fixed `section` (`general`, `isolation`, or `applications`); old requests with no section default to General. Unknown sections and non-string values are rejected. The CLI uses `settings [SECTION]`.
 
 Level-one `GET_SETTINGS_STATUS` (`settings-status`) runs directly in the protected administrator Activity without loading a website. Capabilities and diagnostics include the same `settings` snapshot: fixed browser preferences, photo availability, stored/effective background, and global website policy. It omits the homepage URL entirely (only `homeCustomized` is returned), all grant identities, history, and website data.
 
 The level-one `SET_PREFERENCE` whitelist adds `newTabBackground` (`white`/`exclusive`) and `newTabRecent` (Boolean). Lite can remember `exclusive` but still displays white; this difference is explicit in the snapshot. No arbitrary image URL/file, settings-key reader, isolation-mode setter, capability-enabling command, component setter, or history setter is added. Existing one-way permission operations and authorization levels are unchanged. See [settings scope](REBROWSER_SETTINGS.md).
 
 ```bash
-python3 tools/admin/rebrowser_admin.py settings personalization
+python3 tools/admin/rebrowser_admin.py settings applications
 python3 tools/admin/rebrowser_admin.py settings isolation
 python3 tools/admin/rebrowser_admin.py settings-status
 python3 tools/admin/rebrowser_admin.py set-pref newTabBackground white
 python3 tools/admin/rebrowser_admin.py set-pref newTabRecent true
 ```
+
+## Native mode management and runtime diagnostics (v1.0.0)
+
+New level-one operations retain DUMP, exact signed one-use challenge, both immutable roots, owner-credential limits, and audit records:
+
+- `GET_APPLICATION_STATUS` / `applications`: fixed same-package modes, launcher visibility and provider availability; no component setter.
+- `GET_RUNTIME_STATUS` / `runtime`: installed WebView identity/version and missing browser features, without creating a workspace or WebView.
+- `OPEN_APPLICATION_MANAGEMENT` / `application-management`: opens the native settings peer page.
+- `OPEN_MODE` / `mode browser|outlook`: only these fixed values. Unsupported browser requests open native management and report `view=application-management`, `modeAvailable=false`; absent provider rejects Outlook with `webview-unavailable`.
+
+Each CLI authorization starts a fresh transient administrator task, with a 30-second deadline per ADB call. Native settings are launched outside that task and reordered to the foreground; repeated requests honor the selected section without finishing the browser or discarding drafts.
+
+Capabilities execute natively. When the browser is unavailable, diagnostics use a `scope=native-environment` snapshot with `workspaceRuntimeLoaded=false`, runtime/application/settings/history/launcher status and fixed download/security policy. It is not a live workspace diagnostic. Browser-dependent commands fail with `browser-runtime-unavailable` rather than silently using Outlook's Default Profile or remaining queued. Existing native history/settings/launcher/audit queries remain usable. Provider availability is not a guarantee that Outlook login works on every vendor.
+
+The old `settings.personalization` diagnostic key and bounded background/recent setters remain protocol-v2 compatibility fields, not a hidden UI page. Defaults are white in lite, photo in background and recent visits enabled; explicit old choices survive upgrades and flavor switches.
+
+No default-browser setter, arbitrary Intent/component, launcher setter, install command, website-capability enablement/grant or private-file export is added. New commands do not authorize ReOutlook mail export. Release builds remain non-debuggable; no public feature override is introduced for tests.
 
 ## Android handoff additions (v0.4.5-alpha)
 

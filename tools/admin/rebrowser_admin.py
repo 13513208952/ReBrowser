@@ -34,6 +34,10 @@ OPERATIONS = {
     "tabs": "SHOW_CHILD_TABS",
     "settings": "OPEN_SETTINGS",
     "settings-status": "GET_SETTINGS_STATUS",
+    "applications": "GET_APPLICATION_STATUS",
+    "runtime": "GET_RUNTIME_STATUS",
+    "application-management": "OPEN_APPLICATION_MANAGEMENT",
+    "mode": "OPEN_MODE",
     "outlook": "SWITCH_TO_OUTLOOK",
     "state": "GET_STATE",
     "capabilities": "GET_CAPABILITIES",
@@ -112,7 +116,7 @@ REBROWSER_PRIVATE_KEY = pathlib.Path(os.environ.get(
 
 def adb(*args: str) -> str:
     result = subprocess.run([ADB, *args], check=True, stdout=subprocess.PIPE,
-                            stderr=subprocess.STDOUT, text=True)
+                            stderr=subprocess.STDOUT, text=True, timeout=30)
     return result.stdout.strip()
 
 
@@ -167,9 +171,13 @@ def build_request(args: argparse.Namespace) -> dict:
     values = list(args.arguments)
     if args.command == "settings" and values:
         section = values.pop(0)
-        if section not in ("general", "personalization", "isolation"):
-            raise SystemExit("settings accepts general, personalization or isolation")
+        if section not in ("general", "isolation", "applications"):
+            raise SystemExit("settings accepts general, isolation or applications")
         request["section"] = section
+    if args.command == "mode":
+        if not values or values[0] not in ("browser", "outlook"):
+            raise SystemExit("mode requires browser or outlook")
+        request["mode"] = values.pop(0)
     if args.command in ("open", "set-home", "assert-location"):
         if not values:
             raise SystemExit(f"{args.command} requires an HTTP(S) URL")
@@ -271,7 +279,9 @@ def run_request(args: argparse.Namespace) -> dict:
     if not challenge:
         clear_challenge()
         raise SystemExit(f"Could not read challenge: {response}")
-    launch = ["shell", "am", "start", "-W", "-n", ACTIVITY,
+    # Always create a fresh transient authorization task, even if an older task
+    # retains this component as its base Intent after the screen has finished.
+    launch = ["shell", "am", "start", "-W", "-f", "0x18000000", "-n", ACTIVITY,
               "--es", "challenge", challenge]
     if args.auth == "key":
         key_id, path = selected_key(args)

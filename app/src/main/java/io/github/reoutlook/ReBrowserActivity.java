@@ -91,6 +91,11 @@ public final class ReBrowserActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!ReBrowserRuntime.inspect().browserAvailable()) {
+            ReBrowserApplications.openManagement(this);
+            finish();
+            return;
+        }
         SystemBackDispatcher.register(this, this::handleSystemBack);
         history = new ReBrowserHistory(this);
         workspaceController = new ReBrowserWorkspaceController(new ReBrowserStore(this), history);
@@ -116,14 +121,6 @@ public final class ReBrowserActivity extends Activity
                 this, workspaceController, browserPreferences, sitePermissions,
                 fullscreenController, webController, downloadController, this);
 
-        if (!WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)
-                || !WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
-                || !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-            showUnsupportedProvider();
-            adminController.handle(getIntent());
-            return;
-        }
-
         deletePendingProfiles();
         String externalUrl = ReBrowserExternalNavigation.consume(getIntent());
         ReBrowserStore.Workspace created = workspaceController.initialize(
@@ -143,14 +140,11 @@ public final class ReBrowserActivity extends Activity
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        if (webController == null || !ReBrowserRuntime.inspect().browserAvailable()) {
+            ReBrowserApplications.openManagement(this); finish(); return;
+        }
         String externalUrl = ReBrowserExternalNavigation.consume(intent);
         if (externalUrl != null) {
-            if (!WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)
-                    || !WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
-                    || !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-                showUnsupportedProvider();
-                return;
-            }
             ReBrowserStore.Workspace incoming = workspaceController.createTemporary(externalUrl);
             if (incoming == null) toast("总标签页数量已达上限，未打开外部链接");
             else { hideOverview(); activateWorkspace(incoming); }
@@ -604,19 +598,6 @@ public final class ReBrowserActivity extends Activity
         }
     }
 
-    private void showUnsupportedProvider() {
-        browserToolbar.setVisibility(View.GONE);
-        TextView message = new TextView(this);
-        message.setText("当前系统 WebView 不支持 ReBrowser 所需的 Multi-Profile 或网站权限策略。\n\n"
-                + "为保护 ReOutlook 的 Default Profile，并防止网页绕过权限管理，ReBrowser 已禁用。\n\n"
-                + "可以更新 Android System WebView 后重试。");
-        message.setTextColor(Color.rgb(35, 39, 43));
-        message.setTextSize(18);
-        message.setGravity(Gravity.CENTER);
-        message.setPadding(dp(32), dp(32), dp(32), dp(32));
-        webContainer.addView(message, matchMatch());
-    }
-
     private void showProfileFailure(Throwable error) {
         String detail = error.getClass().getSimpleName();
         toast("命名 Profile 创建失败，ReBrowser 已停止：" + detail);
@@ -724,11 +705,6 @@ public final class ReBrowserActivity extends Activity
         addMenuListItem(panel, R.drawable.ic_rb_settings, "浏览器设置", () -> {
             popup.dismiss();
             startActivity(new Intent(this, ReBrowserSettingsActivity.class));
-        });
-        addMenuListItem(panel, R.drawable.ic_rb_switch, "切换到 ReOutlook", () -> {
-            popup.dismiss();
-            ModeRouter.openOutlook(this);
-            finish();
         });
 
         int xOffset = anchor.getWidth() - popupWidth;
@@ -1912,6 +1888,7 @@ public final class ReBrowserActivity extends Activity
     }
 
     private void handleSystemBack() {
+        if (webController == null) { finish(); return; }
         if (visiblePermissionRequest != null) {
             dismissPermissionPrompt("user-dismissed");
             return;
@@ -1980,6 +1957,7 @@ public final class ReBrowserActivity extends Activity
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        if (fullscreenController == null) return;
         fullscreenController.onConfigurationChanged();
         if (newTabBackground != null) { newTabBackground.close(); newTabBackground = null; }
         root.post(this::refreshNewTabPage);
@@ -1988,6 +1966,7 @@ public final class ReBrowserActivity extends Activity
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        if (fullscreenController == null) return;
         fullscreenController.onWindowFocusChanged(hasFocus);
         if (hasFocus) styleNewTabSurface();
     }
@@ -1995,6 +1974,7 @@ public final class ReBrowserActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
+        if (webController == null) return;
         long currentPermissionRevision = sitePermissions.revision();
         if (currentPermissionRevision != observedPermissionRevision) {
             observedPermissionRevision = currentPermissionRevision;
@@ -2017,6 +1997,7 @@ public final class ReBrowserActivity extends Activity
 
     @Override
     protected void onPause() {
+        if (webController == null) { super.onPause(); return; }
         saveCurrentTabStates();
         if (!androidPermissionDialogVisible) {
             dismissPermissionPrompt("application-backgrounded");
@@ -2028,7 +2009,7 @@ public final class ReBrowserActivity extends Activity
     @Override
     protected void onStop() {
         super.onStop();
-        if (!androidPermissionDialogVisible && !sitePermissions.backgroundRuntimeEnabled()
+        if (webController != null && !androidPermissionDialogVisible && !sitePermissions.backgroundRuntimeEnabled()
                 && !webController.hasPendingFileChooser() && webController.hasPages()) {
             saveCurrentTabStates();
             downloadController.invalidatePageTransfers("background-runtime-disabled");
@@ -2038,6 +2019,7 @@ public final class ReBrowserActivity extends Activity
 
     @Override
     protected void onDestroy() {
+        if (webController == null) { super.onDestroy(); return; }
         dismissPermissionPrompt("activity-destroyed");
         adminController.onDestroy();
         fullscreenController.hide();
@@ -2057,7 +2039,7 @@ public final class ReBrowserActivity extends Activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        webController.onActivityResult(requestCode, resultCode, data);
+        if (webController != null) webController.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

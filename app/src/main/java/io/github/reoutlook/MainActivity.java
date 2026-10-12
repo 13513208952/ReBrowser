@@ -103,6 +103,9 @@ public final class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!ReBrowserRuntime.inspect().provider) {
+            ReBrowserApplications.openManagement(this); finish(); return;
+        }
         SystemBackDispatcher.register(this, this::handleSystemBack);
         // Repair a vendor package-manager override left by an interrupted maintenance test.
         MaintenanceAuthorizer.ensureEntryPointsEnabled(this);
@@ -732,6 +735,7 @@ public final class MainActivity extends Activity {
     }
 
     private void handleSystemBack() {
+        if (webView == null) { finish(); return; }
         if (drawerOpen) {
             closeDrawer();
             return;
@@ -768,6 +772,7 @@ public final class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (webView == null) return;
         activityVisible = true;
         webView.onResume();
         handler.removeCallbacks(autoCapture);
@@ -779,6 +784,7 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
+        if (webView == null) { super.onPause(); return; }
         activityVisible = false;
         handler.removeCallbacks(autoCapture);
         handler.removeCallbacks(autoScroll);
@@ -789,7 +795,7 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        webView.saveState(outState);
+        if (webView != null) webView.saveState(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -806,7 +812,7 @@ public final class MainActivity extends Activity {
             webView.destroy();
         }
         cacheWriter.shutdown();
-        database.close();
+        if (database != null) database.close();
         super.onDestroy();
     }
 

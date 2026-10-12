@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ReOutlook"
+rootProject.name = "ReBrowser"
 include(":app")

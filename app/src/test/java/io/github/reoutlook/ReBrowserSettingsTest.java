@@ -66,32 +66,42 @@ public final class ReBrowserSettingsTest {
         try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
             ReBrowserSettingsActivity a=c.get();
             assertEquals(View.VISIBLE,page(a,"general").getVisibility());
-            assertEquals(View.GONE,page(a,"personalization").getVisibility());
+            assertNull(page(a,"personalization"));
+            assertNull(find(root(a),"个性化设置"));
             assertNotNull(find(page(a,"general"),"主页网址"));
             assertNull(find(page(a,"general"),"JavaScript"));
             assertNull(find(page(a,"general"),"显示近期访问"));
-            assertNotNull(find(page(a,"personalization"),"新标签页背景"));
-            assertNotNull(find(page(a,"personalization"),"显示近期访问"));
-            assertNull(find(page(a,"personalization"),"摄像头"));
+            assertNull(find(root(a),"新标签页背景"));
+            assertNull(find(root(a),"显示近期访问"));
+            assertNotNull(find(page(a,"applications"),"ReOutlook"));
             assertNotNull(find(page(a,"isolation"),"JavaScript"));
             assertNotNull(find(page(a,"isolation"),"网站权限管理"));
             assertNotNull(find(page(a,"isolation"),"摄像头"));
             assertNull(find(page(a,"isolation"),"主页网址"));
-            find(root(a),"个性化设置").performClick();
-            assertEquals(View.VISIBLE,page(a,"personalization").getVisibility());
+            find(root(a),"应用管理设置").performClick();
+            assertEquals(View.VISIBLE,page(a,"applications").getVisibility());
             find(root(a),"隔离与权限设置").performClick();
             assertEquals(View.VISIBLE,page(a,"isolation").getVisibility());
-            assertEquals(View.GONE,page(a,"personalization").getVisibility());
+            assertEquals(View.GONE,page(a,"applications").getVisibility());
             find(root(a),"常规设置").performClick();
             assertEquals(View.VISIBLE,page(a,"general").getVisibility());
         }
     }
     @Test public void routingAndRecreationKeepTheSelectedSection() {
-        try(ActivityController<ReBrowserSettingsActivity> c=activity("personalization")) {
-            c.recreate(); assertEquals(View.VISIBLE,page(c.get(),"personalization").getVisibility());
+        try(ActivityController<ReBrowserSettingsActivity> c=activity("applications")) {
+            c.recreate(); assertEquals(View.VISIBLE,page(c.get(),"applications").getVisibility());
         }
         try(ActivityController<ReBrowserSettingsActivity> c=activity("unknown")) {
             assertEquals(View.VISIBLE,page(c.get(),"general").getVisibility());
+        }
+    }
+    @Test public void reorderedNativeSettingsHonorSectionWithoutLosingDrafts() {
+        try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
+            type(page(c.get(),"general"),EditText.class).setText("https://example.com/uncommitted");
+            c.newIntent(new Intent().putExtra(ReBrowserSettings.EXTRA_SECTION,"applications"));
+            assertEquals(View.VISIBLE,page(c.get(),"applications").getVisibility());
+            assertEquals("https://example.com/uncommitted",type(page(c.get(),"general"),EditText.class).getText().toString());
+            assertFalse(c.get().isFinishing());
         }
     }
     @Test public void switchingSectionsKeepsAndSavesGeneralDrafts() {
@@ -99,7 +109,7 @@ public final class ReBrowserSettingsTest {
             EditText home=type(page(c.get(),"general"),EditText.class);
             Spinner engine=type(page(c.get(),"general"),Spinner.class);
             home.setText("https://example.com/home");engine.setSelection(3);
-            find(root(c.get()),"个性化设置").performClick();
+            find(root(c.get()),"应用管理设置").performClick();
             assertEquals("https://example.com/home",home.getText().toString());
             c.pause();
             assertEquals("https://example.com/home",preferences.homeUrl());
@@ -110,9 +120,9 @@ public final class ReBrowserSettingsTest {
         try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
             type(page(c.get(),"general"),EditText.class).setText("https://example.com/draft");
             type(page(c.get(),"general"),Spinner.class).setSelection(3);
-            find(root(c.get()),"个性化设置").performClick();
+            find(root(c.get()),"应用管理设置").performClick();
             c.recreate();
-            assertEquals(View.VISIBLE,page(c.get(),"personalization").getVisibility());
+            assertEquals(View.VISIBLE,page(c.get(),"applications").getVisibility());
             assertEquals("https://example.com/draft",type(page(c.get(),"general"),EditText.class).getText().toString());
             assertEquals(3,type(page(c.get(),"general"),Spinner.class).getSelectedItemPosition());
         }
@@ -134,20 +144,27 @@ public final class ReBrowserSettingsTest {
             c.pause();assertEquals("baidu",preferences.searchEngine());
         }
     }
-    @Test public void visitingPersonalizationDoesNotEraseRememberedPhotoChoice() throws Exception {
-        preferences.setNewTabBackground("exclusive");
+    @Test public void removedPersonalizationPageDoesNotEraseExplicitOwnerChoices() throws Exception {
+        preferences.setNewTabBackground("exclusive"); preferences.setNewTabRecentEnabled(false);
         try(ActivityController<ReBrowserSettingsActivity> c=activity("personalization")) {
-            c.pause();assertEquals("exclusive",preferences.newTabBackground());
+            assertEquals(View.VISIBLE,page(c.get(),"general").getVisibility());
+            assertNull(page(c.get(),"personalization"));
+            c.pause();assertEquals("exclusive",preferences.newTabBackground());assertFalse(preferences.newTabRecentEnabled());
             JSONObject p=ReBrowserSettings.snapshot(context).getJSONObject("personalization");
             assertEquals(ReBrowserBackgroundAsset.resourceId()!=0,p.getBoolean("photoAvailable"));
             assertEquals(ReBrowserBackgroundAsset.resourceId()!=0?"exclusive":"white",p.getString("effectiveNewTabBackground"));
-            if(ReBrowserBackgroundAsset.resourceId()==0)assertNull(find(page(c.get(),"personalization"),"专属蓝紫背景"));
         }
     }
-    @Test public void recentAndExistingBehaviorSwitchesUseTheirOriginalStores() {
-        try(ActivityController<ReBrowserSettingsActivity> c=activity("personalization")) {
-            toggle(page(c.get(),"personalization"),"显示近期访问").setChecked(false);
-            assertFalse(preferences.newTabRecentEnabled());
+    @Test public void explicitWhiteAndHiddenRecentSurviveOpeningEveryRemainingPage() {
+        preferences.setNewTabBackground("white");preferences.setNewTabRecentEnabled(false);
+        for(String section:ReBrowserSettings.SECTIONS) {
+            try(ActivityController<ReBrowserSettingsActivity> c=activity(section)) { c.recreate();c.pause(); }
+            assertEquals("white",new ReBrowserPreferences(context).newTabBackground());
+            assertFalse(new ReBrowserPreferences(context).newTabRecentEnabled());
+        }
+    }
+    @Test public void existingBehaviorSwitchesUseTheirOriginalStores() {
+        try(ActivityController<ReBrowserSettingsActivity> c=activity("isolation")) {
             toggle(page(c.get(),"isolation"),"JavaScript").setChecked(false);
             assertFalse(preferences.javascriptEnabled());
             toggle(page(c.get(),"isolation"),"允许第三方 Cookie").setChecked(false);

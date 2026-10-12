@@ -451,6 +451,8 @@ final class ReBrowserAdminController {
     private JSONObject capabilities() throws Exception {
         JSONObject value = new JSONObject();
         value.put("protocolVersion", ReBrowserAdminProtocol.VERSION);
+        value.put("runtime", ReBrowserRuntime.inspect().snapshot());
+        value.put("applications", ReBrowserApplications.snapshot(context));
         value.put("operations", ReBrowserAdminProtocol.supportedOperations());
         value.put("administratorRoots", ReBrowserAdminKeys.capabilities());
         value.put("ownerCredentialMaximumLevel", 2);
@@ -473,6 +475,8 @@ final class ReBrowserAdminController {
     private JSONObject diagnostics() throws Exception {
         JSONObject value = new JSONObject();
         android.content.pm.PackageInfo provider = ReBrowserWebController.currentProvider();
+        value.put("runtime", ReBrowserRuntime.inspect().snapshot());
+        value.put("applications", ReBrowserApplications.snapshot(context));
         value.put("webViewPackage", provider == null ? "" : provider.packageName);
         value.put("webViewVersion", provider == null ? "" : provider.versionName);
         value.put("multiProfile", WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE));

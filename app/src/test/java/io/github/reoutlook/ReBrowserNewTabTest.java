@@ -65,8 +65,8 @@ public class ReBrowserNewTabTest {
     }
 
     @Test public void backgroundDefaultsAndFlavorFallbackDoNotLoseRememberedChoice() {
-        assertEquals("white", preferences.newTabBackground()); assertTrue(preferences.newTabRecentEnabled());
-        assertFalse(preferences.exclusiveBackgroundEnabled());
+        assertEquals(ReBrowserBackgroundAsset.resourceId() == 0 ? "white" : "exclusive", preferences.newTabBackground()); assertTrue(preferences.newTabRecentEnabled());
+        assertEquals(ReBrowserBackgroundAsset.resourceId() != 0, preferences.exclusiveBackgroundEnabled());
         preferences.setNewTabBackground("exclusive");
         assertEquals(ReBrowserBackgroundAsset.resourceId() != 0, preferences.exclusiveBackgroundEnabled());
         preferences.setNewTabBackground("bad-value"); assertEquals("exclusive", preferences.newTabBackground());
@@ -152,7 +152,7 @@ public class ReBrowserNewTabTest {
                     preferences.searchEngineName() + " 搜索");
             int logoId = org.robolectric.Shadows.shadowOf(logo.getDrawable()).getCreatedFromResId();
             int iconId = org.robolectric.Shadows.shadowOf(icon.getDrawable()).getCreatedFromResId();
-            assertEquals(ReBrowserSearchEngineAssets.logo(engine, false), logoId);
+            assertEquals(ReBrowserSearchEngineAssets.logo(engine, preferences.exclusiveBackgroundEnabled()), logoId);
             assertEquals(ReBrowserSearchEngineAssets.icon(engine), iconId);
             assertNull(logo.getImageTintList()); assertNull(icon.getImageTintList());
             assertNotNull(logo.getDrawable()); assertNotNull(icon.getDrawable());

@@ -129,7 +129,8 @@ final class ReBrowserPreferences {
     }
 
     String newTabBackground() {
-        return BACKGROUND_EXCLUSIVE.equals(preferences.getString("new_tab_background", BACKGROUND_WHITE))
+        String fallback = ReBrowserBackgroundAsset.resourceId() == 0 ? BACKGROUND_WHITE : BACKGROUND_EXCLUSIVE;
+        return BACKGROUND_EXCLUSIVE.equals(preferences.getString("new_tab_background", fallback))
                 ? BACKGROUND_EXCLUSIVE : BACKGROUND_WHITE;
     }
 

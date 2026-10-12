@@ -183,6 +183,46 @@ public final class ReBrowserAdminActivity extends Activity {
         commandExecuted = true;
         String authentication = pendingRequest.optString("_authentication");
         String keyId = pendingRequest.optString("_keyId");
+        if (ReBrowserAdminProtocol.OP_GET_APPLICATION_STATUS.equals(operation)
+                || ReBrowserAdminProtocol.OP_GET_RUNTIME_STATUS.equals(operation)
+                || ReBrowserAdminProtocol.OP_GET_CAPABILITIES.equals(operation)
+                || ReBrowserAdminProtocol.OP_GET_DIAGNOSTICS.equals(operation) && !ReBrowserRuntime.inspect().browserAvailable()) {
+            JSONObject details = ReBrowserAdminProtocol.OP_GET_APPLICATION_STATUS.equals(operation)
+                    ? ReBrowserApplications.snapshot(this)
+                    : ReBrowserAdminProtocol.OP_GET_RUNTIME_STATUS.equals(operation)
+                    ? ReBrowserRuntime.inspect().snapshot() : ReBrowserAdminEnvironment.snapshot(this);
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed", authentication, keyId, details, null);
+            finish();
+            return;
+        }
+        if (ReBrowserAdminProtocol.OP_OPEN_APPLICATION_MANAGEMENT.equals(operation)
+                || ReBrowserAdminProtocol.OP_OPEN_SETTINGS.equals(operation)) {
+            String section = ReBrowserAdminProtocol.OP_OPEN_APPLICATION_MANAGEMENT.equals(operation)
+                    ? ReBrowserSettings.APPLICATIONS : ReBrowserSettings.section(pendingRequest.opt("section"));
+            startActivity(ReBrowserApplications.settingsIntent(this, section));
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed", authentication, keyId,
+                    new JSONObject().put("view", "settings").put("section", section), null);
+            finish();
+            return;
+        }
+        if (ReBrowserAdminProtocol.OP_OPEN_MODE.equals(operation)) {
+            String mode = pendingRequest.getString("mode");
+            boolean available = ReBrowserRuntime.inspect().provider;
+            if (ReBrowserApplications.OUTLOOK.equals(mode) && !available) {
+                ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "failed", authentication, keyId, null, "webview-unavailable");
+            } else {
+                if (ReBrowserApplications.OUTLOOK.equals(mode)) ModeRouter.openOutlook(this);
+                else ModeRouter.openReBrowser(this);
+                boolean browserAvailable = ReBrowserRuntime.inspect().browserAvailable();
+                boolean nativeFallback = "browser".equals(mode) && !browserAvailable;
+                ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed", authentication, keyId,
+                        new JSONObject().put("mode", mode).put("browserAvailable", browserAvailable)
+                                .put("view", nativeFallback ? "application-management" : "mode")
+                                .put("modeAvailable", "outlook".equals(mode) ? available : browserAvailable), null);
+            }
+            finish();
+            return;
+        }
         if (ReBrowserAdminProtocol.OP_SET_HOME.equals(operation)) {
             new ReBrowserPreferences(this).setHomeUrl(pendingRequest.getString("url"));
             ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed",
@@ -224,9 +264,19 @@ public final class ReBrowserAdminActivity extends Activity {
             return;
         }
         if (ReBrowserAdminProtocol.OP_SWITCH_TO_OUTLOOK.equals(operation)) {
+            if (!ReBrowserRuntime.inspect().provider) {
+                ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "failed", authentication, keyId, null, "webview-unavailable");
+                finish(); return;
+            }
             ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed",
                     authentication, keyId, new JSONObject().put("mode", "ReOutlook"), null);
             ModeRouter.openOutlook(this);
+            finish();
+            return;
+        }
+        if (!ReBrowserRuntime.inspect().browserAvailable()) {
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "failed", authentication, keyId,
+                    ReBrowserRuntime.inspect().snapshot(), "browser-runtime-unavailable");
             finish();
             return;
         }

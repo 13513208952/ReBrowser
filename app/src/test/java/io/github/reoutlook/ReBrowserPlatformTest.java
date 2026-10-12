@@ -69,7 +69,8 @@ public final class ReBrowserPlatformTest {
         try(ActivityController<ReBrowserLinkActivity> c=Robolectric.buildActivity(ReBrowserLinkActivity.class,
                 new Intent(Intent.ACTION_VIEW,Uri.parse("https://example.com/")).putExtra("adminRequest","forged")).create()) {
             Intent next=org.robolectric.Shadows.shadowOf(c.get()).getNextStartedActivity();
-            assertNotNull(next);assertEquals(1,next.getExtras().size());assertTrue(c.get().isFinishing());
+            assertNotNull(next);assertEquals(ReBrowserSettingsActivity.class.getName(),next.getComponent().getClassName());
+            assertEquals(ReBrowserSettings.APPLICATIONS,next.getStringExtra(ReBrowserSettings.EXTRA_SECTION));assertTrue(c.get().isFinishing());
         }
     }
     private ResolveInfo settingsHandler(String pkg, int flags) {

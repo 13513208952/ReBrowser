@@ -26,15 +26,17 @@ public final class ReBrowserSettingsActivity extends Activity {
     private ReBrowserPreferences preferences;
     private ReOutlookLauncherVisibility launcherVisibility;
     private Switch outlookLauncherSwitch;
+    private Button outlookOpenButton;
+    private TextView runtimeMessage;
     private EditText homeUrl;
     private Spinner searchEngine;
     private LinearLayout videoOrientationSelector;
     private TextView videoLandscape;
     private TextView videoAuto;
     private TextView videoPortrait;
-    private final ScrollView[] pages = new ScrollView[3];
-    private final TextView[] pageButtons = new TextView[3];
-    private final LinearLayout[] pageContents = new LinearLayout[3];
+    private final ScrollView[] pages = new ScrollView[ReBrowserSettings.SECTIONS.length];
+    private final TextView[] pageButtons = new TextView[ReBrowserSettings.SECTIONS.length];
+    private final LinearLayout[] pageContents = new LinearLayout[ReBrowserSettings.SECTIONS.length];
     private String selectedSection = ReBrowserSettings.GENERAL;
     private String initialHome;
     private int initialSearch;
@@ -77,7 +79,7 @@ public final class ReBrowserSettingsActivity extends Activity {
         LinearLayout navigation = new LinearLayout(this);
         navigation.setPadding(dp(3), dp(3), dp(3), dp(3));
         navigation.setBackground(roundedBackground(0xffe7e9ef, dp(14)));
-        String[] sectionLabels = {"常规", "个性化", "隔离与权限"};
+        String[] sectionLabels = {"常规", "隔离与权限", "应用管理"};
         for (int i = 0; i < pages.length; i++) {
             final String section = ReBrowserSettings.SECTIONS[i];
             TextView button = new TextView(this);
@@ -100,19 +102,32 @@ public final class ReBrowserSettingsActivity extends Activity {
             pages[i] = scroll; pageContents[i] = panel;
         }
         LinearLayout content = pageContents[0];
-        LinearLayout personalization = pageContents[1];
-        LinearLayout isolation = pageContents[2];
-
-        content.addView(sectionTitle("桌面入口"));
-        LinearLayout launcherRow = settingSwitch(
-                "显示 ReOutlook 桌面入口",
-                "仅控制桌面图标；隐藏后仍可从 ReBrowser 菜单切换到邮件",
-                launcherVisibility.visible(),
-                enabled -> {});
-        outlookLauncherSwitch = (Switch) launcherRow.getChildAt(1);
+        LinearLayout isolation = pageContents[1];
+        LinearLayout applications = pageContents[2];
+        runtimeMessage = fieldLabel("");
+        applications.addView(runtimeMessage);
+        applications.addView(sectionTitle("子软件"));
+        LinearLayout applicationRow = new LinearLayout(this);
+        applicationRow.setGravity(Gravity.CENTER_VERTICAL);
+        applicationRow.setPadding(dp(8), dp(12), dp(8), dp(12));
+        applicationRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        LinearLayout name = new LinearLayout(this);
+        name.setOrientation(LinearLayout.VERTICAL);
+        name.addView(fieldLabel("ReOutlook"));
+        name.addView(fieldLabel("邮件模式 · 与本应用共用安装包"));
+        applicationRow.addView(name, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        outlookLauncherSwitch = new Switch(this);
         outlookLauncherSwitch.setContentDescription("显示 ReOutlook 桌面入口");
+        outlookLauncherSwitch.setChecked(launcherVisibility.visible());
         outlookLauncherSwitch.setOnCheckedChangeListener(this::onOutlookLauncherChanged);
-        content.addView(launcherRow);
+        applicationRow.addView(outlookLauncherSwitch);
+        outlookOpenButton = new Button(this);
+        outlookOpenButton.setText("进入");
+        outlookOpenButton.setContentDescription("进入 ReOutlook 模式");
+        outlookOpenButton.setOnClickListener(v -> ModeRouter.openOutlook(this));
+        applicationRow.addView(outlookOpenButton);
+        applications.addView(applicationRow);
+        applications.addView(fieldLabel("开关仅控制桌面入口；隐藏时仍可点击进入。新安装默认隐藏，升级保留已有选择。"));
 
         content.addView(sectionTitle("启动与搜索"));
         content.addView(fieldLabel("主页网址"));
@@ -135,32 +150,6 @@ public final class ReBrowserSettingsActivity extends Activity {
         searchEngine.setSelection(savedInstanceState == null ? initialSearch : savedInstanceState.getInt("searchDraft", initialSearch));
         content.addView(searchEngine, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
-
-        personalization.addView(sectionTitle("新标签页背景"));
-        personalization.addView(fieldLabel("默认纯白；专属背景按窗口尺寸水平居中、从上方取景"));
-        android.widget.RadioGroup backgrounds = new android.widget.RadioGroup(this);
-        android.widget.RadioButton white = new android.widget.RadioButton(this);
-        white.setId(android.view.View.generateViewId());
-        white.setText("纯白");
-        backgrounds.addView(white);
-        android.widget.RadioButton exclusive = null;
-        if (ReBrowserBackgroundAsset.resourceId() != 0) {
-            exclusive = new android.widget.RadioButton(this);
-            exclusive.setId(android.view.View.generateViewId());
-            exclusive.setText("专属蓝紫背景");
-            backgrounds.addView(exclusive);
-        }
-        backgrounds.check(preferences.exclusiveBackgroundEnabled() && exclusive != null
-                ? exclusive.getId() : white.getId());
-        // Click-only updates preserve a remembered photo choice when installing the lite edition.
-        white.setOnClickListener(v -> preferences.setNewTabBackground(ReBrowserPreferences.BACKGROUND_WHITE));
-        if (exclusive != null) exclusive.setOnClickListener(v ->
-                preferences.setNewTabBackground(ReBrowserPreferences.BACKGROUND_EXCLUSIVE));
-        personalization.addView(backgrounds);
-        if (exclusive == null) personalization.addView(fieldLabel("当前为轻量版，不包含专属照片资源；保留已有背景偏好"));
-        personalization.addView(sectionTitle("近期访问"));
-        personalization.addView(settingSwitch("显示近期访问", "显示最近访问的 8 个不同网址；列表为空时隐藏，不联网获取图标",
-                preferences.newTabRecentEnabled(), preferences::setNewTabRecentEnabled));
 
         isolation.addView(sectionTitle("网页行为"));
         isolation.addView(settingSwitch(
@@ -231,6 +220,15 @@ public final class ReBrowserSettingsActivity extends Activity {
     }
 
     @Override
+    protected void onNewIntent(android.content.Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        // Reordering an existing native page must honor the requested section
+        // without clearing its drafts or finishing a browser activity above it.
+        showSection(intent.getStringExtra(ReBrowserSettings.EXTRA_SECTION));
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (homeUrl != null && homeUrl.getText().toString().equals(initialHome)) {
@@ -241,6 +239,12 @@ public final class ReBrowserSettingsActivity extends Activity {
             initialSearch = searchPosition(preferences.searchEngine());
             searchEngine.setSelection(initialSearch);
         }
+        ReBrowserRuntime.Status runtime = ReBrowserRuntime.inspect();
+        if (runtimeMessage != null) runtimeMessage.setText(runtime.browserAvailable()
+                ? "ReBrowser 浏览功能可用。子软件是同一应用内的独立模式。"
+                : runtime.provider ? "当前 WebView 不满足 ReBrowser 隔离浏览要求；仍可进入 ReOutlook。此页面不启动浏览器工作区。"
+                : "当前没有可用 WebView；原生应用管理仍可使用，安装或启用 WebView 后再进入网页模式。");
+        if (outlookOpenButton != null) outlookOpenButton.setEnabled(runtime.provider);
         if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();
         // PackageManager is the single source of truth, including after process restarts.
         if (outlookLauncherSwitch != null) {

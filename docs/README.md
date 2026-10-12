@@ -1,47 +1,50 @@
-# 文档导航与接手说明
+# 文档目录
 
-本目录记录项目的实现背景、当前行为与历史验证。项目以实际目的驱动：现有设计和历史选择可以根据新的目标重新讨论，不因写入文档而成为永久不变的要求。
+文档按用户说明、开发参考和历史资料分开。主 [README](../README.md) 面向用户；构建和实现细节从本页进入。
 
-最初的接手整理轮次仅修改文档。此前讨论中的一般优化建议不是已批准任务，也没有据此建立强制验收指标。项目所有者随后指定先修正链接新开子标签页的全局返回体验，再排查 YouTube 播放；无痕模式暂缓。
+## 用户说明
 
-## 阅读入口
-
-| 想了解的内容 | 文档 |
+| 文档 | 内容 |
 | --- | --- |
-| 产品概览、安装和构建 | [项目 README](../README.md) |
-| 当前能力、已知限制、历史候选方向 | [项目状态](PROJECT_STATUS.md) |
-| v0.4.5-alpha 浏览器系统交接、签名及压缩体积分布 | [发布说明](releases/v0.4.5-alpha.md) |
-| Release 无损 ZIP 压缩、剪枝与 APK 统计复现 | [构建工具](../tools/build/README.md) |
-| v0.4.4-alpha 新标签页、双风味、三页设置与包体分布 | [发布说明](releases/v0.4.4-alpha.md) |
-| v0.4.3-alpha 历史记录、入口显隐、安装包校验 | [发布说明](releases/v0.4.3-alpha.md) |
-| v0.4.2-alpha 进度条更新、安装包校验 | [发布说明](releases/v0.4.2-alpha.md) |
-| v0.4.1-alpha 返回与 YouTube 修正 | [发布说明](releases/v0.4.1-alpha.md) |
-| 版本演进、历史测试与仓库外资料 | [开发历史与验证资料](DEVELOPMENT_HISTORY.md) |
-| 邮件采集、回填、账号与数据库 | [ReOutlook 架构与同步](REOUTLOOK_ARCHITECTURE.md) |
-| 工作区理念、双层标签、Profile 与交互 | [ReBrowser 设计](REBROWSER_EXPLORATION.md) |
-| 新标签页、个性化设想及入口显隐进展 | [讨论记录](REBROWSER_NEW_TAB_PLAN.md) |
-| 常规／个性化／隔离与权限三页设置及管理员补充 | [三页设置](REBROWSER_SETTINGS.md) |
-| 浏览器注册、手动默认应用设置、`.1` APK 系统安装交接（v0.4.5-alpha） | [Android 交接](REBROWSER_ANDROID_HANDOFF.md) |
-| 历史保留期限、维持／清理／暂停与验证范围 | [历史记录](REBROWSER_HISTORY_PLAN.md) |
-| 网站权限与后台策略 | [ReBrowser 网站权限](REBROWSER_SITE_PERMISSIONS.md) |
-| YouTube 黑屏原因、兼容开关与验证范围 | [YouTube 播放兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) |
-| 管理员授权与协议 | [ReBrowser 管理协议](REBROWSER_ADMIN_CONTROL.md) |
-| 管理员命令行工具 | [工具说明](../tools/admin/README.md) |
-| 数据保存、网络与删除 | [隐私说明](../PRIVACY.md) |
-| 当前安全边界与漏洞报告 | [安全策略](../SECURITY.md) |
+| [ReBrowser 使用指南](user/REBROWSER.md) | 搜索、独立浏览环境、收藏／书签、历史、设置、下载和兼容性 |
+| [ReOutlook 邮件指南](user/REOUTLOOK.md) | 内置邮件模式的进入、登录、离线阅读与数据保留 |
+| [隐私说明](../PRIVACY.md) | 本地数据、网络、备份和删除 |
+| [安全策略](../SECURITY.md) | 对外安全边界与漏洞报告 |
 
-## 如何理解这些材料
+## 开发参考
 
-- **当前行为**：描述这一版本怎样工作，不代表以后不能改变。安全与隐私文档仍是理解当前实现对外说明的入口。
-- **历史决策**：解释当时为什么这样做，例如保持安装升级连续性、限制下载请求重建范围、逐步拆分 Activity。后续可结合新目标重新评估。
-- **历史验证**：记录前任开发阶段的测试结果，不等于本轮重新验证，也不代表所有设备和网站都已覆盖。
-- **待验证事项**：尚缺样本、复现或端到端测试的内容，不直接视为已发生的故障。
-- **候选方向**：供讨论参考，不是已确定的开发顺序或强制计划；实施范围由项目所有者另行指定。
+| 文档 | 内容 |
+| --- | --- |
+| [开发入口](DEVELOPMENT.md) | 构建、安装身份、测试、发布流程与参考索引 |
+| [项目状态](PROJECT_STATUS.md) | 本轮通过／待验证项、已知限制；历史记录按版本区分 |
+| [设置与应用管理](REBROWSER_SETTINGS.md) | 三页设置、子软件入口、迁移、风味默认与原生回退 |
+| [浏览器设计与沿革](REBROWSER_EXPLORATION.md) | 双层标签、Profile、状态与交互背景 |
+| [邮件架构与同步](REOUTLOOK_ARCHITECTURE.md) | 桥、缓存、账号、回填、检查点与迁移 |
+| [管理协议](REBROWSER_ADMIN_CONTROL.md)、[管理员 CLI](../tools/admin/README.md) | 挑战、签名、三级授权、固定命令与数据边界 |
+| [网站权限](REBROWSER_SITE_PERMISSIONS.md) | 单站授权、后台策略及永久禁止能力 |
+| [Android 交接](REBROWSER_ANDROID_HANDOFF.md) | 浏览器注册、默认应用、外部链接和 `.1` APK 交接 |
+| [历史记录](REBROWSER_HISTORY_PLAN.md) | 生命周期保留、维持／暂停及验证范围 |
+| [YouTube 兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) | 窄兼容策略与未覆盖场景 |
+| [回归检查](../tools/tests/README.md) | JVM、Node、CLI、打包测试 |
+| [Release 构建工具](../tools/build/README.md) | R8、无损 ZIP、对齐、签名与体积统计 |
+| [资源来源](ASSET_CREDITS.md) | 照片与搜索品牌；来源不等于任意品牌使用授权 |
 
-历史发布说明可能与当前实现不同，例如早期最低版本为 Android 8，当前为 Android 10。阅读时应结合版本，不把旧记录直接当作现行行为。
+## 当前正式版
 
-## 本地资料与临时文件
+[v1.0.0 发布记录](releases/v1.0.0.md)：首个正式版的变化、签名 APK 体积与校验、已完成检查和未覆盖范围。
 
-本项目在当前开发机器上指定的临时文件路径为 `/home/zhao/temp/re_outlook/`；`/tmp` 是内存盘，不作为本项目临时文件存储位置。
+## 历史发布与讨论
 
-该目录已有发布说明、测试脚本和验证产物。它不是公开仓库的一部分，公开仓库的读者不一定拥有这些文件。资料清单见[开发历史与验证资料](DEVELOPMENT_HISTORY.md)。本轮只阅读和归纳相关资料，没有搬移、执行或清理原文件，也没有读取私钥和真实邮件数据库。
+- [开发历史与验证资料](DEVELOPMENT_HISTORY.md)：版本演进和历史测试，不代表本轮重新执行。
+- [新标签页与个性化讨论](REBROWSER_NEW_TAB_PLAN.md)：保留讨论背景，其中个性化页等设计已被后续需求替换。
+- [v0.4.5-alpha](releases/v0.4.5-alpha.md)：Android 浏览器／安装器交接和无损打包。
+- [v0.4.4-alpha](releases/v0.4.4-alpha.md)：原生新标签页、双风味与当时的三页设置。
+- [v0.4.3-alpha](releases/v0.4.3-alpha.md)：历史记录与邮件入口显隐。
+- [v0.4.2-alpha](releases/v0.4.2-alpha.md)：加载进度条。
+- [v0.4.1-alpha](releases/v0.4.1-alpha.md)：Popup 返回与 YouTube 修正。
+
+历史发布、设计讨论和未来候选方向不是现行功能承诺，也不是不可更改的要求。当前默认值和界面以当前使用指南、设置说明、源码与对应发布记录为准。
+
+## 维护资料
+
+本维护机器临时文件统一使用 `/home/zhao/temp/re_outlook/`，不使用内存盘 `/tmp`。历史设备截图、日志、私钥、原始照片及 R8 报告保留在仓库外，不作为公开文档资产上传。

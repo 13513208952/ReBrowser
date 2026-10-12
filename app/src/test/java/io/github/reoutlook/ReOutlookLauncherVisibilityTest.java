@@ -41,15 +41,16 @@ public final class ReOutlookLauncherVisibilityTest {
     }
 
     @Test
-    public void launcherDefaultsToVisibleAndTargetsMail() throws Exception {
-        assertTrue(visibility.visible());
-        assertEquals(MainActivity.class.getName(), packages.getActivityInfo(launcher(), 0).targetActivity);
+    public void launcherDefaultsHiddenAndTargetsMail() throws Exception {
+        assertFalse(visibility.visible());
+        assertEquals(MainActivity.class.getName(), packages.getActivityInfo(launcher(), PackageManager.GET_DISABLED_COMPONENTS).targetActivity);
         assertEquals(PackageManager.COMPONENT_ENABLED_STATE_DEFAULT,
                 packages.getComponentEnabledSetting(launcher()));
     }
 
     @Test
     public void hidingOnlyDisablesLauncherAlias() throws Exception {
+        visibility.setVisible(true);
         visibility.setVisible(false);
         assertFalse(visibility.visible());
         assertEquals(PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -82,7 +83,8 @@ public final class ReOutlookLauncherVisibilityTest {
         visibility.setVisible(false);
         ModeRouter.openOutlook(context);
         Intent started = shadowOf(RuntimeEnvironment.getApplication()).getNextStartedActivity();
-        assertEquals(new ComponentName(context, MainActivity.class), started.getComponent());
+        // This JVM has no provider: routing stays native rather than crashing a WebView.
+        assertEquals(new ComponentName(context, ReBrowserSettingsActivity.class), started.getComponent());
         assertNotNull(packages.resolveActivity(started, 0));
     }
 
@@ -92,7 +94,8 @@ public final class ReOutlookLauncherVisibilityTest {
                 Robolectric.buildActivity(ReBrowserSettingsActivity.class).setup()) {
             Switch toggle = launcherSwitch(settings.get().findViewById(android.R.id.content));
             assertNotNull(toggle);
-            assertTrue(toggle.isChecked());
+            assertFalse(toggle.isChecked());
+            toggle.setChecked(true);
             toggle.setChecked(false);
             assertFalse(visibility.visible());
             settings.recreate();

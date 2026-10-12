@@ -10,8 +10,8 @@ android {
         applicationId = "io.github.reoutlook"
         minSdk = 29
         targetSdk = 36
-        versionCode = 15
-        versionName = "0.4.4-alpha"
+        versionCode = 16
+        versionName = "0.4.5-alpha"
     }
 
     flavorDimensions += "background"
@@ -34,6 +34,11 @@ android {
     packaging {
         dex {
             useLegacyPackaging = true
+        }
+        resources {
+            // This Java-only app has no kotlin-reflect; R8 retains no Kotlin runtime classes.
+            // Reevaluate if future features introduce Kotlin runtime reflection.
+            excludes += setOf("kotlin/*.kotlin_builtins", "kotlin/**/*.kotlin_builtins")
         }
     }
 

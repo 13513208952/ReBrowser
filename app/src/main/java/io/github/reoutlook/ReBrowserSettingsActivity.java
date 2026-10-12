@@ -162,8 +162,6 @@ public final class ReBrowserSettingsActivity extends Activity {
         personalization.addView(settingSwitch("显示近期访问", "显示最近访问的 8 个不同网址；列表为空时隐藏，不联网获取图标",
                 preferences.newTabRecentEnabled(), preferences::setNewTabRecentEnabled));
 
-        isolation.addView(sectionTitle("隔离边界"));
-        isolation.addView(fieldLabel("网站 Cookie 和存储按总标签页命名 Profile 隔离，同一总标签页的子标签共享 Profile；不与 ReOutlook 共用。临时级别和暂停历史均不等于完整无痕模式。"));
         isolation.addView(sectionTitle("网页行为"));
         isolation.addView(settingSwitch(
                 "JavaScript",
@@ -204,6 +202,13 @@ public final class ReBrowserSettingsActivity extends Activity {
         content.addView(videoOrientationSelector, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(50)));
         updateVideoOrientationSelector();
+
+        content.addView(sectionTitle("系统默认浏览器"));
+        Button defaultBrowser = new Button(this);
+        defaultBrowser.setText("选择默认浏览器");
+        defaultBrowser.setContentDescription("选择默认浏览器，打开 Android 系统默认应用设置");
+        defaultBrowser.setOnClickListener(v -> ReBrowserDefaultBrowser.openSettings(this));
+        content.addView(defaultBrowser, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(54)));
 
         Button save = new Button(this);
         save.setText("保存并返回");

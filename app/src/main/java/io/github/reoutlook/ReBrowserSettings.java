@@ -32,6 +32,7 @@ final class ReBrowserSettings {
                 .put("general", new JSONObject()
                         .put("homeCustomized", !ReBrowserStore.HOME_URL.equals(p.homeUrl()))
                         .put("searchEngine", p.searchEngine())
+                        .put("defaultBrowser", ReBrowserDefaultBrowser.snapshot(context))
                         .put("desktopMode", p.desktopModeEnabled())
                         .put("globalOrientation", p.globalOrientation())
                         .put("videoOrientationOverride", p.videoOrientationOverrideEnabled())

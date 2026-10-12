@@ -159,10 +159,10 @@ public final class ReBrowserAdminProtocolTest {
 
     @Test
     public void settingsReorganizationDoesNotIntroduceIsolationEscalationOrSecretReaders() throws Exception {
-        for (String preference : new String[]{"camera", "clipboard", "fullIncognito", "cleartextHttp", "outlookLauncherVisible", "historyPaused"})
+        for (String preference : new String[]{"camera", "clipboard", "fullIncognito", "cleartextHttp", "outlookLauncherVisible", "historyPaused", "defaultBrowser", "renamedApkEnabled", "installPackages"})
             assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(
                     prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE).put("name", preference).put("value", true)));
-        for (String operation : new String[]{"GET_ALL_PREFERENCES", "GET_COOKIES", "GRANT_SITE_PERMISSION", "SET_PROFILE_MODE"})
+        for (String operation : new String[]{"GET_ALL_PREFERENCES", "GET_COOKIES", "GRANT_SITE_PERMISSION", "SET_PROFILE_MODE", "SET_DEFAULT_BROWSER", "INSTALL_APK", "OPEN_INSTALLER"})
             assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(prepared(operation)));
     }
 

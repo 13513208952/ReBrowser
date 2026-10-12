@@ -10,6 +10,8 @@
 | --- | --- |
 | 产品概览、安装和构建 | [项目 README](../README.md) |
 | 当前能力、已知限制、历史候选方向 | [项目状态](PROJECT_STATUS.md) |
+| v0.4.5-alpha 浏览器系统交接、签名及压缩体积分布 | [发布说明](releases/v0.4.5-alpha.md) |
+| Release 无损 ZIP 压缩、剪枝与 APK 统计复现 | [构建工具](../tools/build/README.md) |
 | v0.4.4-alpha 新标签页、双风味、三页设置与包体分布 | [发布说明](releases/v0.4.4-alpha.md) |
 | v0.4.3-alpha 历史记录、入口显隐、安装包校验 | [发布说明](releases/v0.4.3-alpha.md) |
 | v0.4.2-alpha 进度条更新、安装包校验 | [发布说明](releases/v0.4.2-alpha.md) |
@@ -19,6 +21,7 @@
 | 工作区理念、双层标签、Profile 与交互 | [ReBrowser 设计](REBROWSER_EXPLORATION.md) |
 | 新标签页、个性化设想及入口显隐进展 | [讨论记录](REBROWSER_NEW_TAB_PLAN.md) |
 | 常规／个性化／隔离与权限三页设置及管理员补充 | [三页设置](REBROWSER_SETTINGS.md) |
+| 浏览器注册、手动默认应用设置、`.1` APK 系统安装交接（v0.4.5-alpha） | [Android 交接](REBROWSER_ANDROID_HANDOFF.md) |
 | 历史保留期限、维持／清理／暂停与验证范围 | [历史记录](REBROWSER_HISTORY_PLAN.md) |
 | 网站权限与后台策略 | [ReBrowser 网站权限](REBROWSER_SITE_PERMISSIONS.md) |
 | YouTube 黑屏原因、兼容开关与验证范围 | [YouTube 播放兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) |

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,6 +10,25 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Only the system installer may complete a user-selected renamed APK installation. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <queries>
+        <intent>
+            <action android:name="android.settings.MANAGE_DEFAULT_APPS_SETTINGS" />
+        </intent>
+        <intent>
+            <action android:name="android.settings.SETTINGS" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.INSTALL_PACKAGE" />
+            <data android:scheme="content" android:mimeType="application/vnd.android.package-archive" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="content" android:mimeType="application/vnd.android.package-archive" />
+        </intent>
+    </queries>
 
     <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
@@ -96,6 +116,69 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ReBrowserLinkActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:icon="@drawable/ic_rebrowser_launcher"
+            android:label="@string/rebrowser_name"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name=".ReBrowserApkProvider"
+            android:authorities="io.github.reoutlook.apk-handoff"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+
+        <activity
+            android:name=".ReBrowserRenamedApkActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/ic_rebrowser_launcher"
+            android:label="@string/rebrowser_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:host="*" />
+                <!-- API 31+ has a real suffix matcher; older systems use bounded simple-glob alternatives. -->
+                <data android:pathSuffix=".1" tools:targetApi="s" />
+                <data android:pathPattern=".*\\.1" />
+                <data android:pathPattern=".*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.1" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:host="*" />
+                <data android:pathSuffix=".1" tools:targetApi="s" />
+                <data android:pathPattern=".*\\.1" />
+                <data android:pathPattern=".*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.1" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.1" />
             </intent-filter>
         </activity>
 

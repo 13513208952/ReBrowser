@@ -46,7 +46,7 @@ ReBrowser 的核心原则是 **Persist by intent, not by visitation（由意图�
 - 访问历史按整个总标签页生命周期保留：副／主来源长期保留，临时来源通常保留 30 分钟，副来源收起后再保留 30 分钟；支持删除、维持记录、清理有时限记录和暂停写入，暂停不等同于完整无痕隔离；
 - 不支持 WebView `MULTI_PROFILE` 时完全禁用，不回退到 ReOutlook 的 Default Profile。
 
-当前版本不会把自身注册为系统默认浏览器候选。完整模型和交互说明见 [ReBrowser 设计](docs/REBROWSER_EXPLORATION.md)。独立的 [ReBrowser 仓库](https://github.com/13513208952/ReBrowser) 仅作为项目入口，代码统一维护在本仓库。
+v0.4.5-alpha 默认注册为系统浏览器候选；常规页按钮仅用户点击时打开系统推荐的原生默认应用页，已是默认时仍可打开。支持 `.1` APK 只读交接系统安装器，保留系统授权与安装确认；`.1` 实际文件流程留给机主自行测试，本轮不宣称 QQ 流程已验证。详见 [Android 交接说明](docs/REBROWSER_ANDROID_HANDOFF.md)。完整模型和交互说明见 [ReBrowser 设计](docs/REBROWSER_EXPLORATION.md)。独立的 [ReBrowser 仓库](https://github.com/13513208952/ReBrowser) 仅作为项目入口，代码统一维护在本仓库。
 
 ## 管理员控制
 
@@ -61,7 +61,7 @@ ReBrowser 管理协议还提供有界的下载策略、任务、批准、拒绝�
 
 开发者预览 APK 发布在 [GitHub Releases](https://github.com/13513208952/ReOutlook/releases)。当前版本要求 Android 10／API 29 或更高版本；Android 8/9 留待未来完整浏览器内核路线重新评估。当前公开包使用 Android Debug 证书签署，以便测试设备连续升级，但 Release 构建本身不含 `DEBUGGABLE` 标志。不要把该签名视为正式生产签名。
 
-从 v0.4.4-alpha 起提供两个可原地互换的风味：`lite` 轻量版没有照片资源；`background` 背景版可选择纯白或专属蓝紫背景。两者 applicationId、版本号和签名相同，不能同时安装为两个应用；互换时保留数据和背景偏好，轻量版实际显示纯白。请覆盖安装，不卸载或清除数据。体积及校验见 [v0.4.4-alpha](docs/releases/v0.4.4-alpha.md)。
+从 v0.4.4-alpha 起提供两个可原地互换的风味：`lite` 轻量版没有照片资源；`background` 背景版可选择纯白或专属蓝紫背景。两者 applicationId、版本号和签名相同，不能同时安装为两个应用；互换时保留数据和背景偏好，轻量版实际显示纯白。请覆盖安装，不卸载或清除数据。当前 [v0.4.5-alpha](docs/releases/v0.4.5-alpha.md) 轻量版 **240,160 字节**、背景版 **1,079,954 字节**，含体积分布与校验值。
 
 也可以从源码构建。要求 JDK 17 和 Android SDK 36：
 
@@ -73,7 +73,7 @@ export ANDROID_HOME=$HOME/Android/Sdk
 ./gradlew assembleLiteRelease assembleBackgroundRelease
 ```
 
-调试 APK 位于 `app/build/outputs/apk/{lite,background}/debug/`；未签名 Release 位于对应 `release/` 目录。测试命令见 [回归检查](tools/tests/README.md)。
+调试 APK 位于 `app/build/outputs/apk/{lite,background}/debug/`；未签名 Release 位于对应 `release/` 目录。测试命令见 [回归检查](tools/tests/README.md)；与公开包相同的增强无损压缩、对齐及现代签名步骤见 [Release 构建工具](tools/build/README.md)。
 
 ## 文档
 

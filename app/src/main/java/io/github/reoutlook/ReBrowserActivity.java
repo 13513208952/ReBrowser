@@ -125,9 +125,17 @@ public final class ReBrowserActivity extends Activity
         }
 
         deletePendingProfiles();
-        workspaceController.initialize(ReBrowserPreferences.NEW_TAB_URL);
-        history.syncStartup(workspaces, activeWorkspace() == null ? null : activeWorkspace().activeTab());
-        activateWorkspace(activeWorkspace());
+        String externalUrl = ReBrowserExternalNavigation.consume(getIntent());
+        ReBrowserStore.Workspace created = workspaceController.initialize(
+                externalUrl == null ? ReBrowserPreferences.NEW_TAB_URL : externalUrl);
+        ReBrowserStore.Workspace initial = activeWorkspace();
+        if (externalUrl != null && created == null) {
+            ReBrowserStore.Workspace incoming = workspaceController.createTemporary(externalUrl);
+            if (incoming != null) initial = incoming;
+            else toast("总标签页数量已达上限，未打开外部链接");
+        }
+        history.syncStartup(workspaces, initial == null ? null : initial.activeTab());
+        activateWorkspace(initial);
         adminController.handle(getIntent());
     }
 
@@ -135,6 +143,18 @@ public final class ReBrowserActivity extends Activity
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        String externalUrl = ReBrowserExternalNavigation.consume(intent);
+        if (externalUrl != null) {
+            if (!WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE)
+                    || !WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
+                    || !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
+                showUnsupportedProvider();
+                return;
+            }
+            ReBrowserStore.Workspace incoming = workspaceController.createTemporary(externalUrl);
+            if (incoming == null) toast("总标签页数量已达上限，未打开外部链接");
+            else { hideOverview(); activateWorkspace(incoming); }
+        }
         adminController.handle(intent);
     }
 

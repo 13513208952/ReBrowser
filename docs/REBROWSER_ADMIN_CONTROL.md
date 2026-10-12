@@ -139,6 +139,10 @@ python3 tools/admin/rebrowser_admin.py set-pref newTabBackground white
 python3 tools/admin/rebrowser_admin.py set-pref newTabRecent true
 ```
 
+## Android handoff additions (v0.4.5-alpha)
+
+`settings.general.defaultBrowser` adds only `registered`, `roleAvailable`, `roleHeld`, and `administratorCanSet=false`. No other browser identity, file location, handoff URI, default-role setter, arbitrary Intent, or installer operation is exposed. The ordinary owner's settings button opens the system default-app UI only on click, including when the app already holds the browser role. The exported `.1` file entry is a separate ordinary Android surface, not an administrator operation; final installation remains a system/user decision. See [Android handoff](REBROWSER_ANDROID_HANDOFF.md).
+
 ## Data boundary
 
 State and diagnostics expose bounded workspace/tab/download IDs, controlled Profile names, titles, page origins, load progress, main-frame errors, lifecycle levels, feature support, non-secret settings, download progress, risk reasons and SHA-256. Page URL paths, queries, and fragments are stripped. Download request locations expose only the HTTP(S) origin; paths, query parameters and fragments are stripped, and Blob/Data payloads are never returned.

@@ -50,14 +50,19 @@ final class ReBrowserWorkspaceController {
         shelvedView = Collections.unmodifiableList(shelvedWorkspaces);
     }
 
-    void initialize(String homeUrl) {
+    ReBrowserStore.Workspace initialize(String homeUrl) {
         if (!activeWorkspaces.isEmpty() || !shelvedWorkspaces.isEmpty()
-                || activeWorkspace != null) return;
+                || activeWorkspace != null) return null;
         activeWorkspaces.addAll(store.loadPersistentWorkspaces());
         shelvedWorkspaces.addAll(store.loadShelvedSecondaryWorkspaces(activeWorkspaces));
-        if (activeWorkspaces.isEmpty()) activeWorkspaces.add(newTemporary(homeUrl));
+        ReBrowserStore.Workspace created = null;
+        if (activeWorkspaces.isEmpty()) {
+            created = newTemporary(homeUrl);
+            activeWorkspaces.add(created);
+        }
         activeWorkspace = chooseInitialWorkspace();
         if (history != null) history.reconcile(activeWorkspaces);
+        return created;
     }
 
     List<ReBrowserStore.Workspace> activeWorkspaces() {

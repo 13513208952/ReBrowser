@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def measure(apk):
     apk = Path(apk)
     brands = {hashlib.sha256(p.read_bytes()).hexdigest()
-              for p in (ROOT / "app/src/main/res/drawable-nodpi").glob("rb_brand_*.webp")}
+              for p in (ROOT / "app/src").glob("*/res/drawable-nodpi/rb_brand_*.webp")}
     photo = hashlib.sha256((ROOT / "app/src/background/res/raw/rb_new_tab_background.webp").read_bytes()).hexdigest()
     groups = {}
     with zipfile.ZipFile(apk) as archive:

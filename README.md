@@ -16,7 +16,7 @@
 
 | 版本 | 默认新标签页背景 | 适合谁 |
 | --- | --- | --- |
-| **[Lite 轻量版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.2/ReBrowser-v1.0.2-lite.apk)** | 纯白，不包含背景照片 | 更看重安装包大小，约 250 KB |
+| **[Lite 轻量版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.2/ReBrowser-v1.0.2-lite.apk)** | 纯白，不包含背景照片 | 更看重安装包大小，约 244 KB |
 | **[Background 背景版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.2/ReBrowser-v1.0.2-background.apk)** | 专属蓝紫背景 | 喜欢照片背景，约 1.10 MB |
 
 两版默认显示近期访问，历史为空时不显示。升级保留已有背景和近期访问选择；轻量版不含照片，即使记住照片偏好也显示纯白。没有单独的个性化设置页。

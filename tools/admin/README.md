@@ -70,11 +70,14 @@ python3 tools/admin/rebrowser_admin.py settings isolation
 python3 tools/admin/rebrowser_admin.py settings-status
 python3 tools/admin/rebrowser_admin.py set-pref newTabBackground exclusive
 python3 tools/admin/rebrowser_admin.py set-pref newTabRecent true
+python3 tools/admin/rebrowser_admin.py set-pref deviceType tablet  # v1.0.1-beta: auto | phone | tablet
 ```
 
 The CLI starts each authorization in a fresh transient task and bounds individual ADB calls to 30 seconds. Native settings are kept outside that task and reordered to the foreground without finishing browser activities or losing drafts.
 
 These are level-one operations. The fixed status snapshot omits the homepage URL, site-grant identities and website data; the read-only query does not load a website. Lite retains an exclusive-background preference without displaying the absent image. Settings arguments and values are whitelisted; this does not add permission enabling, arbitrary preference/file access, launcher or history setters, or a claimed full incognito mode. See [the settings scope](../../docs/REBROWSER_SETTINGS.md).
+
+v1.0.1-beta device/orientation support adds a fixed `deviceType` enum and read-only native screen/DPI/classification fields to settings status. Browser diagnostics report the actual browser Activity's multi-window/PiP/full-window state and requested/configuration orientation, plus the system's auto-rotate/user-rotation settings read-only. Native fallback diagnostics explicitly report that browser-window status is unavailable; the transient authorization window is not presented as the browser window. No system-setting writes, sensor access or arbitrary device/preference keys are added.
 
 Desktop-entry diagnostics:
 

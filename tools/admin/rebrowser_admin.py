@@ -108,6 +108,7 @@ STRING_PREFERENCES = {
     "globalOrientation": {"portrait", "landscape", "unlocked"},
     "videoOrientation": {"portrait", "landscape", "auto"},
     "newTabBackground": {"white", "exclusive"},
+    "deviceType": {"auto", "phone", "tablet"},
 }
 REBROWSER_PRIVATE_KEY = pathlib.Path(os.environ.get(
     "REBROWSER_ROOT_PRIVATE_KEY",

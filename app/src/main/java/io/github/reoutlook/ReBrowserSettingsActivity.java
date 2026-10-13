@@ -2,6 +2,7 @@ package io.github.reoutlook;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -30,6 +32,9 @@ public final class ReBrowserSettingsActivity extends Activity {
     private TextView runtimeMessage;
     private EditText homeUrl;
     private Spinner searchEngine;
+    private Spinner deviceType;
+    private TextView deviceStatus;
+    private LinearLayout videoOverrideRow;
     private LinearLayout videoOrientationSelector;
     private TextView videoLandscape;
     private TextView videoAuto;
@@ -45,6 +50,7 @@ public final class ReBrowserSettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         preferences = new ReBrowserPreferences(this);
         launcherVisibility = new ReOutlookLauncherVisibility(this);
         LinearLayout root = new LinearLayout(this);
@@ -178,15 +184,31 @@ public final class ReBrowserSettingsActivity extends Activity {
         sitePermissionsView = new ReBrowserSitePermissionsView(this, new ReBrowserSitePermissions(this));
         isolation.addView(sitePermissionsView, matchWrap());
 
+        content.addView(sectionTitle("设备与方向"));
+        content.addView(fieldLabel("设备类型"));
+        deviceType = new Spinner(this);
+        deviceType.setContentDescription("设备类型：自动、手机或平板");
+        deviceType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"自动识别", "手机", "平板"}));
+        deviceType.setSelection(devicePosition(preferences.deviceType()));
+        deviceType.setOnItemSelectedListener(deviceListener);
+        content.addView(deviceType, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
+        deviceStatus = fieldLabel("");
+        content.addView(deviceStatus);
+        content.addView(fieldLabel("自动按屏幕物理 DPI 计算对角线，7 英寸及以上识别为平板；可手动纠正。"
+                + "平板完整窗口遵守系统方向锁定，允许四个朝向；分屏、小窗跟随窗口。设置界面固定竖屏。"));
+        refreshDeviceStatus();
+
         content.addView(sectionTitle("视频播放器"));
-        content.addView(settingSwitch(
+        videoOverrideRow = settingSwitch(
                 "覆写视频播放器界面方向",
-                "关闭时根据当前全局方向状态自动选择视频方向策略",
+                "仅手机生效；平板完整窗口始终遵守系统四方向策略",
                 preferences.videoOrientationOverrideEnabled(),
                 enabled -> {
                     preferences.setVideoOrientationOverrideEnabled(enabled);
                     updateVideoOrientationSelector();
-                }));
+                });
+        content.addView(videoOverrideRow);
         videoOrientationSelector = createVideoOrientationSelector();
         content.addView(videoOrientationSelector, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(50)));
@@ -231,6 +253,13 @@ public final class ReBrowserSettingsActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (deviceType != null) {
+            deviceType.setOnItemSelectedListener(null);
+            deviceType.setSelection(devicePosition(preferences.deviceType()));
+            deviceType.setOnItemSelectedListener(deviceListener);
+            refreshDeviceStatus();
+        }
         if (homeUrl != null && homeUrl.getText().toString().equals(initialHome)) {
             initialHome = preferences.homeUrl();
             homeUrl.setText(initialHome);
@@ -337,9 +366,39 @@ public final class ReBrowserSettingsActivity extends Activity {
         return choice;
     }
 
+    private final AdapterView.OnItemSelectedListener deviceListener = new AdapterView.OnItemSelectedListener() {
+        @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            String value = position == 1 ? ReBrowserDevice.PHONE
+                    : position == 2 ? ReBrowserDevice.TABLET : ReBrowserDevice.AUTO;
+            if (!value.equals(preferences.deviceType())) preferences.setDeviceType(value);
+            refreshDeviceStatus();
+        }
+        @Override public void onNothingSelected(AdapterView<?> parent) {}
+    };
+
+    private static int devicePosition(String value) {
+        return ReBrowserDevice.PHONE.equals(value) ? 1 : ReBrowserDevice.TABLET.equals(value) ? 2 : 0;
+    }
+
+    private void refreshDeviceStatus() {
+        if (deviceStatus == null) return;
+        ReBrowserDevice.Status status = ReBrowserDevice.inspect(this);
+        String size = Double.isFinite(status.diagonalInches)
+                ? String.format(java.util.Locale.ROOT, "（约 %.1f 英寸）", status.diagonalInches)
+                : "（屏幕尺寸或物理 DPI 不可用，默认手机）";
+        deviceStatus.setText("自动识别：" + (ReBrowserDevice.TABLET.equals(status.automatic) ? "平板" : "手机")
+                + size + "；当前按" + (status.tablet() ? "平板" : "手机") + "处理");
+        updateVideoOrientationSelector();
+    }
+
     private void updateVideoOrientationSelector() {
         if (videoOrientationSelector == null) return;
-        boolean enabled = preferences.videoOrientationOverrideEnabled();
+        boolean phone = !ReBrowserDevice.inspect(this).tablet();
+        if (videoOverrideRow != null) {
+            videoOverrideRow.setAlpha(phone ? 1f : 0.45f);
+            videoOverrideRow.getChildAt(1).setEnabled(phone);
+        }
+        boolean enabled = phone && preferences.videoOrientationOverrideEnabled();
         String selected = preferences.videoOrientation();
         videoOrientationSelector.setAlpha(enabled ? 1f : 0.45f);
         styleVideoOrientationChoice(videoLandscape, enabled,
@@ -359,7 +418,7 @@ public final class ReBrowserSettingsActivity extends Activity {
                 dp(11)));
         choice.setContentDescription(choice.getText()
                 + (selected ? "，已选择" : "")
-                + (enabled ? "" : "，覆写未启用"));
+                + (enabled ? "" : "，当前设备未启用方向覆写"));
     }
 
     private GradientDrawable roundedBackground(int color, int radius) {

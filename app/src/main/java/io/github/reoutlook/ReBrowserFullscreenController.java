@@ -54,15 +54,35 @@ final class ReBrowserFullscreenController {
         applyGlobalOrientationPreference();
     }
 
+    boolean isTablet() { return ReBrowserDevice.inspect(activity).tablet(); }
+
+    static int windowOrientation(boolean tablet, boolean fullWindow, int phoneOrientation) {
+        if (!fullWindow) return ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+        // FULL_USER allows reverse portrait too, but still honors the system rotation lock.
+        return tablet ? ActivityInfo.SCREEN_ORIENTATION_FULL_USER : phoneOrientation;
+    }
+
     void applyGlobalOrientationPreference() {
         String mode = preferences.globalOrientation();
-        if (ReBrowserPreferences.ORIENTATION_LANDSCAPE.equals(mode)) {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        } else if (ReBrowserPreferences.ORIENTATION_UNLOCKED.equals(mode)) {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-        } else {
-            activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+        int phoneOrientation = ReBrowserPreferences.ORIENTATION_LANDSCAPE.equals(mode)
+                ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                : ReBrowserPreferences.ORIENTATION_UNLOCKED.equals(mode)
+                        ? ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                        : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        if (fullscreenContainer != null) phoneOrientation = effectiveVideoOrientation();
+        int requested = windowOrientation(isTablet(), ReBrowserDevice.fullWindow(activity), phoneOrientation);
+        if (activity.getRequestedOrientation() != requested) activity.setRequestedOrientation(requested);
+    }
+
+    org.json.JSONObject windowSnapshot() throws org.json.JSONException {
+        return new org.json.JSONObject().put("scope", "browser-activity-window")
+                .put("multiWindow", activity.isInMultiWindowMode())
+                .put("pictureInPicture", activity.isInPictureInPictureMode())
+                .put("fullWindow", ReBrowserDevice.fullWindow(activity))
+                .put("requestedOrientation", activity.getRequestedOrientation())
+                .put("configurationOrientation", activity.getResources().getConfiguration().orientation)
+                .put("fullscreenVideo", isFullscreen())
+                .put("tabletFourDirections", isTablet() && ReBrowserDevice.fullWindow(activity));
     }
 
     void show(View customView, WebChromeClient.CustomViewCallback callback) {
@@ -82,7 +102,7 @@ final class ReBrowserFullscreenController {
         content.addView(fullscreenContainer, new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         setFullscreenSystemUi(true);
-        activity.setRequestedOrientation(effectiveVideoOrientation());
+        applyGlobalOrientationPreference();
     }
 
     boolean hideIfVisible() {
@@ -105,12 +125,16 @@ final class ReBrowserFullscreenController {
     }
 
     void onConfigurationChanged() {
+        applyGlobalOrientationPreference();
         if (styledRoot != null) styledRoot.requestApplyInsets();
         if (fullscreenContainer != null) fullscreenContainer.requestLayout();
     }
 
     void onWindowFocusChanged(boolean hasFocus) {
-        if (hasFocus && fullscreenContainer != null) setFullscreenSystemUi(true);
+        if (hasFocus) {
+            applyGlobalOrientationPreference();
+            if (fullscreenContainer != null) setFullscreenSystemUi(true);
+        }
     }
 
     private int effectiveVideoOrientation() {

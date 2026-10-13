@@ -34,6 +34,7 @@ final class ReBrowserSettings {
                         .put("searchEngine", p.searchEngine())
                         .put("defaultBrowser", ReBrowserDefaultBrowser.snapshot(context))
                         .put("desktopMode", p.desktopModeEnabled())
+                        .put("device", ReBrowserDevice.inspect(context).snapshot())
                         .put("globalOrientation", p.globalOrientation())
                         .put("videoOrientationOverride", p.videoOrientationOverrideEnabled())
                         .put("videoOrientation", p.videoOrientation())

@@ -25,6 +25,7 @@ final class ReBrowserPreferences {
     private static final String THIRD_PARTY_COOKIES = "third_party_cookies";
     private static final String DESKTOP_MODE = "desktop_mode";
     private static final String FORCE_PRIMARY_PROMOTION = "force_primary_promotion";
+    private static final String DEVICE_TYPE = "device_type";
     private static final String GLOBAL_ORIENTATION = "global_orientation";
     private static final String VIDEO_ORIENTATION_OVERRIDE = "video_orientation_override";
     private static final String VIDEO_ORIENTATION = "video_orientation";
@@ -88,6 +89,15 @@ final class ReBrowserPreferences {
 
     void setForcePrimaryPromotionEnabled(boolean enabled) {
         preferences.edit().putBoolean(FORCE_PRIMARY_PROMOTION, enabled).apply();
+    }
+
+    String deviceType() {
+        String value = preferences.getString(DEVICE_TYPE, ReBrowserDevice.AUTO);
+        return ReBrowserDevice.validType(value) ? value : ReBrowserDevice.AUTO;
+    }
+
+    void setDeviceType(String value) {
+        if (ReBrowserDevice.validType(value)) preferences.edit().putString(DEVICE_TYPE, value).apply();
     }
 
     String globalOrientation() {

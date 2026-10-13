@@ -158,6 +158,17 @@ public final class ReBrowserAdminProtocolTest {
     }
 
     @Test
+    public void deviceChoiceIsBoundedAndCannotEnableUnrestrictedRotationOrSensors() throws Exception {
+        for (String value : new String[]{"auto", "phone", "tablet"}) {
+            JSONObject request=prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE).put("name","deviceType").put("value",value);
+            ReBrowserAdminProtocol.prepareExternalRequest(request);assertEquals(1,request.getInt("authorizationLevel"));
+        }
+        for (Object value : new Object[]{"sensor", "full-sensor", "file:///device", true, 1, JSONObject.NULL})
+            assertThrows(SecurityException.class,()->ReBrowserAdminProtocol.prepareExternalRequest(
+                    prepared(ReBrowserAdminProtocol.OP_SET_PREFERENCE).put("name","deviceType").put("value",value)));
+    }
+
+    @Test
     public void settingsReorganizationDoesNotIntroduceIsolationEscalationOrSecretReaders() throws Exception {
         for (String preference : new String[]{"camera", "clipboard", "fullIncognito", "cleartextHttp", "outlookLauncherVisible", "historyPaused", "defaultBrowser", "renamedApkEnabled", "installPackages"})
             assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(

@@ -29,6 +29,10 @@
 | [Release 构建工具](../tools/build/README.md) | R8、无损 ZIP、对齐、签名与体积统计 |
 | [资源来源](ASSET_CREDITS.md) | 照片与搜索品牌；来源不等于任意品牌使用授权 |
 
+## 当前测试版
+
+[v1.0.1-beta 发布记录](releases/v1.0.1-beta.md) · [设备与窗口策略](REBROWSER_DEVICE_MODE.md)：设备识别／手动指定、平板系统四方向、竖屏设置及有界管理员诊断，仅有限针对性验证。
+
 ## 当前正式版
 
 [v1.0.0 发布记录](releases/v1.0.0.md)：首个正式版的变化、签名 APK 体积与校验、已完成检查和未覆盖范围。

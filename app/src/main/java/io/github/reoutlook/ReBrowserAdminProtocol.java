@@ -373,6 +373,10 @@ final class ReBrowserAdminProtocol {
             }
             return;
         }
+        if ("deviceType".equals(name)) {
+            if (!ReBrowserDevice.validType(value)) throw new SecurityException("Invalid device type");
+            return;
+        }
         if ("newTabBackground".equals(name)) {
             if (!ReBrowserPreferences.BACKGROUND_WHITE.equals(value)
                     && !ReBrowserPreferences.BACKGROUND_EXCLUSIVE.equals(value)) {

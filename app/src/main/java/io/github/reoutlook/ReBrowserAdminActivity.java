@@ -195,6 +195,15 @@ public final class ReBrowserAdminActivity extends Activity {
             finish();
             return;
         }
+        if (ReBrowserAdminProtocol.OP_SET_PREFERENCE.equals(operation)
+                && "deviceType".equals(pendingRequest.optString("name"))) {
+            new ReBrowserPreferences(this).setDeviceType(pendingRequest.getString("value"));
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed", authentication, keyId,
+                    new JSONObject().put("name", "deviceType").put("updated", true)
+                            .put("device", ReBrowserDevice.inspect(this).snapshot()), null);
+            finish();
+            return;
+        }
         if (ReBrowserAdminProtocol.OP_OPEN_APPLICATION_MANAGEMENT.equals(operation)
                 || ReBrowserAdminProtocol.OP_OPEN_SETTINGS.equals(operation)) {
             String section = ReBrowserAdminProtocol.OP_OPEN_APPLICATION_MANAGEMENT.equals(operation)

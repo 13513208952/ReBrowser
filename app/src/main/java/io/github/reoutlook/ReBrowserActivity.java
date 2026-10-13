@@ -645,17 +645,20 @@ public final class ReBrowserActivity extends Activity
                     toggleCurrentBookmark();
                 }));
         boolean landscape = fullscreenController.isLandscape();
+        boolean manualOrientation = !fullscreenController.isTablet();
         ImageButton orientation = menuShortcut(
                 landscape ? R.drawable.ic_rb_orientation_portrait
                         : R.drawable.ic_rb_orientation_landscape,
-                landscape ? "切换并锁定竖屏；长按取消方向锁定"
+                !manualOrientation ? "平板方向跟随系统；小窗跟随窗口布局"
+                        : landscape ? "切换并锁定竖屏；长按取消方向锁定"
                         : "切换并锁定横屏；长按取消方向锁定",
-                true,
+                manualOrientation,
                 () -> {
                     popup.dismiss();
                     toggleOrientationLock();
                 });
         orientation.setOnLongClickListener(view -> {
+            if (!manualOrientation) return true;
             popup.dismiss();
             clearOrientationLock();
             return true;
@@ -1964,6 +1967,18 @@ public final class ReBrowserActivity extends Activity
     }
 
     @Override
+    public void onMultiWindowModeChanged(boolean inMultiWindowMode, Configuration configuration) {
+        super.onMultiWindowModeChanged(inMultiWindowMode, configuration);
+        if (fullscreenController != null) fullscreenController.applyGlobalOrientationPreference();
+    }
+
+    @Override
+    public void onPictureInPictureModeChanged(boolean inPictureInPictureMode, Configuration configuration) {
+        super.onPictureInPictureModeChanged(inPictureInPictureMode, configuration);
+        if (fullscreenController != null) fullscreenController.applyGlobalOrientationPreference();
+    }
+
+    @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (fullscreenController == null) return;
@@ -1975,6 +1990,7 @@ public final class ReBrowserActivity extends Activity
     protected void onResume() {
         super.onResume();
         if (webController == null) return;
+        fullscreenController.applyGlobalOrientationPreference();
         long currentPermissionRevision = sitePermissions.revision();
         if (currentPermissionRevision != observedPermissionRevision) {
             observedPermissionRevision = currentPermissionRevision;

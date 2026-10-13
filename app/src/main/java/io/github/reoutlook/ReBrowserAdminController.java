@@ -420,6 +420,9 @@ final class ReBrowserAdminController {
         Object value = request.get("value");
         if ("searchEngine".equals(name)) {
             preferences.setSearchEngine((String) value);
+        } else if ("deviceType".equals(name)) {
+            preferences.setDeviceType((String) value);
+            fullscreenController.applyGlobalOrientationPreference();
         } else if ("newTabBackground".equals(name)) {
             preferences.setNewTabBackground((String) value);
         } else if ("newTabRecent".equals(name)) {
@@ -489,6 +492,9 @@ final class ReBrowserAdminController {
         value.put("loadProgress", tab == null ? 0 : webController.loadProgress(tab.id));
         value.put("lastMainFrameError", tab == null ? ""
                 : webController.lastMainFrameError(tab.id));
+        value.put("device", ReBrowserDevice.inspect(context).snapshot());
+        value.put("window", fullscreenController.windowSnapshot());
+        value.put("systemRotation", ReBrowserDevice.systemRotation(context));
         value.put("fullscreenVideo", fullscreenController.isFullscreen());
         value.put("globalOrientation", preferences.globalOrientation());
         value.put("videoOrientationOverride", preferences.videoOrientationOverrideEnabled());

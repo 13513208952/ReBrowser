@@ -52,6 +52,13 @@ class SettingsCommands(unittest.TestCase):
         self.assertIs(False, request("set-pref", "newTabRecent", "false")["value"])
         self.assertIs(True, request("set-pref", "newTabRecent", "true")["value"])
 
+    def test_device_choice_is_a_fixed_enum_not_an_orientation_or_sensor_switch(self):
+        for value in ("auto", "phone", "tablet"):
+            self.assertEqual(value, request("set-pref", "deviceType", value)["value"])
+        for value in ("sensor", "full-sensor", "true", "file:///device"):
+            with self.assertRaises(SystemExit):
+                request("set-pref", "deviceType", value)
+
     def test_arbitrary_files_components_and_privilege_switches_are_rejected(self):
         for name, value in (("newTabBackground", "file:///private/image"),
                             ("newTabBackground", "https://example.com/image"),

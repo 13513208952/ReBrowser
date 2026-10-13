@@ -62,6 +62,31 @@ public final class ReBrowserSettingsTest {
         return null;
     }
 
+    @Test public void deviceChoicePersistsAndSettingsRemainPortraitForTablet() {
+        preferences.setDeviceType("tablet");
+        preferences.setGlobalOrientation("landscape");
+        try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
+            assertEquals(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,c.get().getRequestedOrientation());
+            Spinner choice=(Spinner)find(root(c.get()),"设备类型：自动、手机或平板");
+            assertEquals(2,choice.getSelectedItemPosition());
+            choice.setSelection(1);org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+            assertEquals("phone",preferences.deviceType());
+            choice.setSelection(2);org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle();
+            c.recreate();assertEquals("tablet",preferences.deviceType());
+            assertEquals(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_PORTRAIT,c.get().getRequestedOrientation());
+            assertEquals("landscape",preferences.globalOrientation());
+        }
+    }
+    @Test public void returningFromExternalDeviceChoiceRefreshesWithoutLosingHomeDraft() throws Exception {
+        try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
+            type(page(c.get(),"general"),EditText.class).setText("https://example.com/draft");
+            c.pause();preferences.setDeviceType("tablet");c.resume();
+            Spinner choice=(Spinner)find(root(c.get()),"设备类型：自动、手机或平板");
+            assertEquals(2,choice.getSelectedItemPosition());
+            assertEquals("https://example.com/draft",type(page(c.get(),"general"),EditText.class).getText().toString());
+            assertEquals("tablet",ReBrowserSettings.snapshot(context).getJSONObject("general").getJSONObject("device").getString("effectiveType"));
+        }
+    }
     @Test public void threePagesArePeersWithControlsInTheCorrectPage() {
         try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
             ReBrowserSettingsActivity a=c.get();

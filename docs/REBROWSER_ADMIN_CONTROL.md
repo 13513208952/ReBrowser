@@ -96,6 +96,12 @@ python3 tools/admin/rebrowser_admin.py diagnostics --key-id reoutlook-root-v1
 
 Use `--auth device` for an owner-approved level-one or level-two command. Run `--help` for target and wait options.
 
+## Device and orientation diagnostics (v1.0.1-beta)
+
+Level-one `SET_PREFERENCE deviceType` (`set-pref deviceType auto|phone|tablet`) is a fixed enum and executes natively without creating a browser. `GET_SETTINGS_STATUS.general.device` reports the persisted choice, automatic/effective type, source, diagonal, threshold, full-display pixels and physical DPI. Missing dimensions/DPI default to phone; manual tablet still overrides that fallback.
+
+Browser diagnostics add `device`, `window` (scope `browser-activity-window`) and `systemRotation` (scope `system-settings-read-only`). Window fields are actual Activity multi-window/PiP/full-window, requested/configuration orientation, fullscreen video and whether tablet four-direction policy applies. Rotation fields only read system auto-rotate and user-rotation settings, with null for unavailable values. Native capability/fallback snapshots explicitly set `browserWindowStatusAvailable=false`; they do not present the administrator Activity as the browser window. No system-setting writes, sensor reads or arbitrary keys are introduced. See [device policy](REBROWSER_DEVICE_MODE.md) for limitations.
+
 ## ReOutlook desktop-entry diagnostics
 
 Protocol v2 adds the level-one, read-only `GET_LAUNCHER_STATUS` operation (`launcher-status` in the CLI). It uses the existing challenge/signature or owner-credential authorization and audit flow. The query runs directly in the protected administrator Activity, without opening a ReBrowser workspace or loading a website.

@@ -49,7 +49,7 @@ const fixture = `
   Object.setPrototypeOf(globalThis, EventTarget.prototype);
   globalThis.top = frameForTest ? {} : globalThis;
   class DOMException extends Error { constructor(message, name) { super(message); this.name = name; } }
-  const reBrowserPermissionBridge = {postMessage() { throw new Error('native capabilities must not be invoked'); }};
+  globalThis.reBrowserPermissionBridge = {postMessage() { throw new Error('native capabilities must not be invoked'); }};
   class ServiceWorkerRegistration {}
   const Notification = function() {};
   const PushManager = function() {};
@@ -153,4 +153,26 @@ yes(c, 'nativeLeaked === false');
 yes(c, "typeof navigator.clipboard.readText === 'function' && typeof navigator.geolocation.getCurrentPosition === 'function'");
 yes(c, "typeof globalThis.Notification === 'undefined' && typeof globalThis.PushManager === 'undefined' && typeof globalThis.Accelerometer === 'undefined'");
 yes(c, 'window.ondevicemotion === null && window.ondeviceorientation === null');
-console.log(`permission policy: ${checks} checks passed`);
+(async () => {
+  for (const activation of ['undefined', '{isActive: false}']) {
+    const page = realm();
+    evaluate(page, `const clipboardMessages = [];
+      reBrowserPermissionBridge.postMessage = message => clipboardMessages.push(JSON.parse(message));
+      navigator.userActivation = ${activation};`);
+    for (const operation of ["navigator.clipboard.readText()", "navigator.clipboard.writeText('test')"]) {
+      await assert.rejects(evaluate(page, operation), error => error.name === 'NotAllowedError');
+      checks++;
+    }
+    yes(page, 'clipboardMessages.length === 0');
+  }
+  const page = realm();
+  evaluate(page, `const clipboardMessages = [];
+    reBrowserPermissionBridge.postMessage = message => clipboardMessages.push(JSON.parse(message));
+    navigator.userActivation = {isActive: true};`);
+  const result = evaluate(page, 'navigator.clipboard.readText()');
+  yes(page, "clipboardMessages.length === 1 && clipboardMessages[0].operation === 'clipboard-read'");
+  evaluate(page, `reBrowserPermissionBridge.onmessage({data: JSON.stringify({id: '1', ok: false,
+    message: 'clipboard-user-gesture-required'})});`);
+  await assert.rejects(result, error => error.name === 'NotAllowedError');checks++;
+  console.log(`permission policy: ${checks} checks passed`);
+})().catch(error => { console.error(error); process.exitCode = 1; });

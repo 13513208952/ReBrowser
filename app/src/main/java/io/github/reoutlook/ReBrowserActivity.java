@@ -1981,6 +1981,7 @@ public final class ReBrowserActivity extends Activity
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
+        if (webController != null) webController.onWindowFocusChanged(hasFocus);
         if (fullscreenController == null) return;
         fullscreenController.onWindowFocusChanged(hasFocus);
         if (hasFocus) styleNewTabSurface();

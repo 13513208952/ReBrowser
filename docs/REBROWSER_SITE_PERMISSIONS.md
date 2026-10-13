@@ -48,7 +48,9 @@ ReBrowser 禁用 WebView 原生 Geolocation，使用固定语义桥实现 `getCu
 
 ## 剪贴板
 
-受管理范围是 `navigator.clipboard.readText()` 和 `writeText()`，仅支持文本且每次仍要求当前用户手势。富内容 `read()`／`write()`不支持。用户通过系统文本菜单手动复制和粘贴不属于网站程序化权限。
+受管理范围是 `navigator.clipboard.readText()` 和 `writeText()`，仅支持文本。富内容 `read()`／`write()`不支持。用户通过系统文本菜单手动复制和粘贴不属于网站程序化权限。
+
+**已发布 v1.0.0／v1.0.1-beta 存在手势旁路**：JavaScript 包装要求激活，但已有授权的可见 HTTPS 顶层页面可直接发桥消息绕过它。v1.0.2 在原生入口要求五秒、单次、页面绑定的合格输入，再检查网站授权；已有 5 分钟／15 天授权不等于每次操作的输入资格。系统浮层造成遮挡时也可能拒绝合法点击，不回退到相信网页声明。详见[确认问题、修复与验证范围](CLIPBOARD_GESTURE_SECURITY.md)。
 
 Android WebView 没有公开的原生剪贴板 Content Setting。ReBrowser 使用文档启动时安装的固定 API 策略，并在权限关闭或授权撤销后重建页面，避免页面继续持有旧 API 引用。这不是完整 Chromium 内核级隔离；未来如要求更强保证，需要评估完整浏览器内核。
 

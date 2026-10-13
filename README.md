@@ -8,16 +8,16 @@
 
 前往 **[GitHub Releases](https://github.com/13513208952/ReBrowser/releases)** 下载 APK。
 
-当前正式版本：**[v1.0.0](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.0)**。
+当前正式版本：**[v1.0.2](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.2)**。
 
-测试版本：**[v1.0.1-beta](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.1-beta)**，增加设备类型自动识别／手动指定、平板完整窗口跟随系统四方向，以及设置固定竖屏。仅完成针对性检查和一台平板上的窗口／管理员验证；需要稳定版本请仍选择正式版。
+本版修复已授权网站直接调用剪贴板桥时的用户手势旁路，并纳入设备类型自动识别／手动指定、平板完整窗口跟随系统四方向及设置固定竖屏。旧版用户建议覆盖升级；验证范围见[发布记录](docs/releases/v1.0.2.md)。
 
 需要 **Android 10 或更高版本**。浏览器功能还需要系统 WebView 支持独立 Profile 和网页权限管理；仅 Android 版本满足不保证所有厂商设备都支持。能力不足时仍可打开应用管理，进入可用的邮件模式，不会降低浏览器隔离要求。
 
 | 版本 | 默认新标签页背景 | 适合谁 |
 | --- | --- | --- |
-| **[Lite 轻量版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.0/ReBrowser-v1.0.0-lite.apk)** | 纯白，不包含背景照片 | 更看重安装包大小，约 240 KB |
-| **[Background 背景版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.0/ReBrowser-v1.0.0-background.apk)** | 专属蓝紫背景 | 喜欢照片背景，约 1.09 MB |
+| **[Lite 轻量版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.2/ReBrowser-v1.0.2-lite.apk)** | 纯白，不包含背景照片 | 更看重安装包大小，约 250 KB |
+| **[Background 背景版](https://github.com/13513208952/ReBrowser/releases/download/v1.0.2/ReBrowser-v1.0.2-background.apk)** | 专属蓝紫背景 | 喜欢照片背景，约 1.10 MB |
 
 两版默认显示近期访问，历史为空时不显示。升级保留已有背景和近期访问选择；轻量版不含照片，即使记住照片偏好也显示纯白。没有单独的个性化设置页。
 

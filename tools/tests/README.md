@@ -21,6 +21,23 @@ export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
 
 `DumpPermissionScript` 仅输出编译后的固定脚本常量；它不是应用入口，不打包到 APK，不读取设备、账号或认证数据。
 
+## 剪贴板原生入口检查
+
+```bash
+./gradlew testLiteDebugUnitTest \
+  --tests io.github.reoutlook.ReBrowserClipboardGestureTest \
+  --tests io.github.reoutlook.ReBrowserClipboardBridgeTest \
+  --tests io.github.reoutlook.ReBrowserSitePermissionsTest
+```
+
+当前 24 项检查直接调用生产桥处理函数，包括 15 天授权下无输入／伪造字段、单次输入、原生键回调、过期、导航、失焦、后台／切页、待批准及过期批准；Robolectric 夹具使用固定测试文本，不读取真实剪贴板。脚本另有 47 项编译输出检查。旧处理函数的仓库外对照两项无输入测试应失败；正常构建不得携带该临时 Gradle source 替换。
+
+`ReBrowserClipboardProbeActivity` 仅在 Debug 源集，由 DUMP 保护；只拦截固定 HTTPS 离线测试页，不接受外部 URL、脚本或 Profile 参数。`ReBrowserClipboardInstrumentation` 使用独立 Profile、隔离授权记录、随机剪贴板样本和原生注入输入。执行前需机主允许、设备解锁，并明确指定设备；同签名覆盖安装 Debug 和对应 androidTest 包，不卸载或清除主应用数据。某些系统会拦截运行器后台启动，需显式前台启动固定 Probe，不能绕过锁屏或授权。
+
+测试页仅在前台保持亮屏，不写系统锁屏设置。系统剪贴板浮层可能造成部分遮挡，测试等待其消失，生产防护仍拒绝；部分后续步骤用原生 Enter。结束前恢复本轮原剪贴板并清除隔离偏好；`ReBrowserClipboardCleanupInstrumentation` 在新进程中只清理私有登记表内的测试 Profile，避免 Chromium 的 in-use 限制，不扫描删除用户环境。早期未登记空样本不作猜测性删除。
+
+最后必须覆盖回原签名非调试 Release 候选，并禁用测试辅助包。本轮真实 WebView 的 13 项断言在 Debug 夹具通过，最终 R8 安装包另核对字节；不能混称最终 Release 全部攻击复测。具体范围见[修复记录](../../docs/CLIPBOARD_GESTURE_SECURITY.md)。
+
 ## 主软件与原生应用管理 JVM 检查
 
 `ReBrowserApplicationsTest` / `ReBrowserSettingsTest` 覆盖软件名称、三个并列设置页、个性化控件移除、风味默认与显式偏好保留、旧 alias DEFAULT／显式选择和迁移标记、无 provider 的浏览器与邮件直接入口／生命周期，以及固定管理员模式。provider 存在但缺少浏览器特性的状态为模拟检查，不是完整设备兼容验证；不增加公开版特性覆写入口。

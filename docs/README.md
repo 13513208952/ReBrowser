@@ -22,6 +22,7 @@
 | [邮件架构与同步](REOUTLOOK_ARCHITECTURE.md) | 桥、缓存、账号、回填、检查点与迁移 |
 | [管理协议](REBROWSER_ADMIN_CONTROL.md)、[管理员 CLI](../tools/admin/README.md) | 挑战、签名、三级授权、固定命令与数据边界 |
 | [网站权限](REBROWSER_SITE_PERMISSIONS.md) | 单站授权、后台策略及永久禁止能力 |
+| [剪贴板手势修复](CLIPBOARD_GESTURE_SECURITY.md) | v1.0.2 原生输入边界、确认问题与测试限制 |
 | [Android 交接](REBROWSER_ANDROID_HANDOFF.md) | 浏览器注册、默认应用、外部链接和 `.1` APK 交接 |
 | [历史记录](REBROWSER_HISTORY_PLAN.md) | 生命周期保留、维持／暂停及验证范围 |
 | [YouTube 兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) | 窄兼容策略与未覆盖场景 |
@@ -29,15 +30,14 @@
 | [Release 构建工具](../tools/build/README.md) | R8、无损 ZIP、对齐、签名与体积统计 |
 | [资源来源](ASSET_CREDITS.md) | 照片与搜索品牌；来源不等于任意品牌使用授权 |
 
-## 当前测试版
-
-[v1.0.1-beta 发布记录](releases/v1.0.1-beta.md) · [设备与窗口策略](REBROWSER_DEVICE_MODE.md)：设备识别／手动指定、平板系统四方向、竖屏设置及有界管理员诊断，仅有限针对性验证。
-
 ## 当前正式版
 
-[v1.0.0 发布记录](releases/v1.0.0.md)：首个正式版的变化、签名 APK 体积与校验、已完成检查和未覆盖范围。
+[v1.0.2 发布记录](releases/v1.0.2.md)：剪贴板原生手势修复，纳入设备与窗口方向功能；升级、签名包体积、验证范围与限制。
 
 ## 历史发布与讨论
+
+- [v1.0.1-beta](releases/v1.0.1-beta.md)：设备与窗口方向测试版，已由正式版纳入；原包仍含剪贴板手势问题。
+- [v1.0.0](releases/v1.0.0.md)：首个正式版的实现与当时验证。
 
 - [开发历史与验证资料](DEVELOPMENT_HISTORY.md)：版本演进和历史测试，不代表本轮重新执行。
 - [新标签页与个性化讨论](REBROWSER_NEW_TAB_PLAN.md)：保留讨论背景，其中个性化页等设计已被后续需求替换。

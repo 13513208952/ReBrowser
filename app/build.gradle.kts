@@ -10,8 +10,8 @@ android {
         applicationId = "io.github.reoutlook"
         minSdk = 29
         targetSdk = 36
-        versionCode = 18
-        versionName = "1.0.1-beta"
+        versionCode = 19
+        versionName = "1.0.2"
     }
 
     flavorDimensions += "background"

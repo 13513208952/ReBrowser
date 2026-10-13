@@ -31,6 +31,12 @@ The bounded ReBrowser protocol-v2 bridge uses a separate one-use challenge and t
 
 The APK contains only administrator public keys. Private keys and private derivation/recovery material must never be committed to the public repository or packaged in an APK. The development roots have no runtime revocation switch; replacing one requires a code and APK update.
 
+## Known clipboard gesture issue
+
+Published v1.0.0 and v1.0.1-beta check user activation in the JavaScript wrapper but not independently at the native message boundary. A visible authorized HTTPS top-level site can call the bridge directly without fresh input when its clipboard grant is valid. This is not an ungranted-site or cross-Profile bypass. Disable website clipboard access when it is not needed.
+
+v1.0.2 repairs this boundary with a page-bound, five-second, single-use native input credit before checking a grant or prompting. Focus loss, navigation and background transitions invalidate it; script gesture fields are never authority. Upgrade without uninstalling or clearing data. Targeted simulation and one-phone Debug-fixture checks passed, followed by installation of a non-debuggable R8 build; this is not a complete device or final-Release attack matrix. Scope and compatibility limits: [clipboard gesture repair](docs/CLIPBOARD_GESTURE_SECURITY.md).
+
 ## Reporting a vulnerability
 
 Open a minimal public issue without including real mail, credentials, database files, logs, or administrator keys. For sensitive reports, contact the repository owner through a private GitHub channel before sharing diagnostic material.

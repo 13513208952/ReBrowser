@@ -50,7 +50,7 @@ final class ReBrowserPermissionScript {
               };
 
               const requireClipboardGesture = () => {
-                if (navigator.userActivation && !navigator.userActivation.isActive) {
+                if (!navigator.userActivation || navigator.userActivation.isActive !== true) {
                   return Promise.reject(denied('Clipboard requires a user gesture'));
                 }
                 return null;

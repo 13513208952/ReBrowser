@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
+import android.view.ViewConfiguration;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebBackForwardList;
@@ -145,6 +146,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         final WebView webView;
         final long generation;
         long navigationGeneration;
+        final ReBrowserClipboardGesture clipboardGesture = new ReBrowserClipboardGesture();
         final java.util.LinkedHashMap<String, RequestMethodObservation> requestMethods =
                 new java.util.LinkedHashMap<>();
         final Map<String, Long> permissionPromptBlockedUntil = new HashMap<>();
@@ -268,6 +270,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         if (previous instanceof WebView && previous != next) {
             PageBinding previousPage = pagesByView.get(previous);
             if (previousPage != null) {
+                previousPage.clipboardGesture.invalidate();
                 cancelPermissionRequestsForTab(previousPage.tab.id, "tab-hidden");
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.MUTE_AUDIO)) {
                     WebViewCompat.setAudioMuted(previousPage.webView, true);
@@ -318,6 +321,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         settings.setGeolocationEnabled(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         settings.setSafeBrowsingEnabled(true);
+        installClipboardInputPolicy(page);
         installPermissionPolicy(page);
         webView.setWebViewClient(new BrowserClient(page));
         webView.setWebChromeClient(new ChromeClient(page));
@@ -341,6 +345,34 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
                 ? desktopUserAgent() : null);
         WebViewCompat.getProfile(page.webView).getCookieManager().setAcceptThirdPartyCookies(
                 page.webView, preferences.thirdPartyCookiesEnabled());
+    }
+
+    private boolean clipboardPageEligible(PageBinding page) {
+        return foreground && isCurrentVisiblePage(page) && page.webView.isShown()
+                && activity.hasWindowFocus();
+    }
+
+    private void installClipboardInputPolicy(PageBinding page) {
+        int slop = ViewConfiguration.get(activity).getScaledTouchSlop();
+        page.webView.setOnTouchListener((view, event) -> {
+            if (!clipboardPageEligible(page) || event.getX() < 0 || event.getY() < 0
+                    || event.getX() >= view.getWidth() || event.getY() >= view.getHeight()) {
+                page.clipboardGesture.invalidate();
+            } else {
+                page.clipboardGesture.touch(event, slop);
+            }
+            return false; // Observe native input without consuming WebView interaction.
+        });
+    }
+
+    void onWindowFocusChanged(boolean focused) {
+        if (focused) return;
+        for (PageBinding page : pagesByTabId.values()) page.clipboardGesture.invalidate();
+        for (ReBrowserPermissionRequest request : new ArrayList<>(pendingPermissionRequests)) {
+            if (request.permissions.contains(ReBrowserSitePermissions.CLIPBOARD)) {
+                request.deny("window-focus-lost");
+            }
+        }
     }
 
     private void installPermissionPolicy(PageBinding page) {
@@ -436,8 +468,25 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
             JSONObject request,
             JavaScriptReplyProxy reply
     ) {
+        // Site grants never supply input authority. Reject direct bridge calls before
+        // consulting a cached grant or showing a permission prompt.
+        if (!clipboardPageEligible(page)) {
+            page.clipboardGesture.invalidate();
+            replyError(reply, id, "page-not-eligible");
+            return;
+        }
+        if (!page.clipboardGesture.consume()) {
+            replyError(reply, id, "clipboard-user-gesture-required");
+            return;
+        }
+        long navigation = page.navigationGeneration;
+        long inputContext = page.clipboardGesture.contextGeneration();
         requestSemanticPermission(page, origin, ReBrowserSitePermissions.CLIPBOARD, List.of(), () -> {
-            if (!isCurrentVisiblePage(page) || !foreground) {
+            // The consumed input authorizes this one pending operation, not new calls.
+            // A native grant prompt may outlast the five-second input-credit window.
+            if (!clipboardPageEligible(page) || page.navigationGeneration != navigation
+                    || page.clipboardGesture.contextGeneration() != inputContext
+                    || !origin.equals(safeOrigin(page.webView.getUrl()))) {
                 replyError(reply, id, "page-not-eligible");
                 return;
             }
@@ -692,6 +741,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     }
 
     private static void destroyPage(PageBinding page) {
+        page.clipboardGesture.invalidate();
         page.webView.stopLoading();
         if (page.webView.getParent() instanceof android.view.ViewGroup) {
             ((android.view.ViewGroup) page.webView.getParent()).removeView(page.webView);
@@ -716,6 +766,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     void pauseForAndroidPermissionDialog() {
         foreground = false;
         for (PageBinding page : pagesByTabId.values()) {
+            page.clipboardGesture.invalidate();
             if (WebViewFeature.isFeatureSupported(WebViewFeature.MUTE_AUDIO)) {
                 WebViewCompat.setAudioMuted(page.webView, true);
             }
@@ -725,6 +776,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
 
     void onPause() {
         foreground = false;
+        for (PageBinding page : pagesByTabId.values()) page.clipboardGesture.invalidate();
         cancelAllPermissionRequests("application-backgrounded");
         for (PageBinding page : new ArrayList<>(pagesByTabId.values())) {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.MUTE_AUDIO)) {
@@ -1195,9 +1247,17 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         }
 
         @Override
+        public boolean shouldOverrideKeyEvent(WebView view, android.view.KeyEvent event) {
+            if (!clipboardPageEligible(binding) || !view.hasFocus()) binding.clipboardGesture.invalidate();
+            else binding.clipboardGesture.key(event);
+            return false; // WebView handles the original native event normally.
+        }
+
+        @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             PageBinding page = pagesByView.get(view);
             if (page == null) return;
+            page.clipboardGesture.invalidate();
             cancelPermissionRequestsForTab(page.tab.id, "page-navigated");
             cancelFileChooserForTab(page.tab.id);
             page.permissionPromptBlockedUntil.clear();

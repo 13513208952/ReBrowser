@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <application>
+        <activity android:name=".ReBrowserClipboardProbeActivity"
+            android:exported="true" android:permission="android.permission.DUMP"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ReBrowserProbeActivity"
             android:excludeFromRecents="true"

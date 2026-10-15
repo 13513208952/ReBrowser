@@ -12,7 +12,7 @@ window.__rbNeteasePortraitLayoutV1?.cleanup();
 const body=document.body,side=document.querySelector('.Container_c1udi5wp'),main=document.querySelector('.RightContainer_r8p6pvv');
 if(!side||!main)return {ok:false,reason:'unsupported-layout'};
 const oldInert=side.inert;
-let open=false,disposed=false,lastRoute='',lastPage=null,provider=null;
+let open=false,disposed=false,lastRoute='';
 const nodes=[],bindings=[],marked=new Set(),coverStyles=new Map();
 const style=document.createElement('style');style.id='rb-music-mobile-style';
 style.textContent=`
@@ -151,8 +151,14 @@ viewport.content='width=device-width,initial-scale=1';
 function listen(node,name,fn,options){node.addEventListener(name,fn,options);bindings.push([node,name,fn,options]);}
 function toggle(value){open=!!value;document.documentElement.classList.toggle('rb-music-drawer-open',open);side.inert=!open;menu.setAttribute('aria-expanded',String(open));if(!open&&side.contains(document.activeElement))menu.focus({preventScroll:true});}
 listen(menu,'click',e=>{e.preventDefault();e.stopPropagation();toggle(!open);});listen(close,'click',e=>{e.preventDefault();e.stopPropagation();toggle(false);});listen(mask,'click',()=>toggle(false));
-function route(){try{return provider?.getHistory()?.location?.pathname||location.hash||location.pathname;}catch{return location.hash||location.pathname;}}
-function attach(){if(disposed)return;const h=document.querySelector('.HeaderRow_h1n2o69r');if(h&&!menu.isConnected)h.prepend(menu);if(side.isConnected&&!close.isConnected)side.append(close);
+function route(){return window.__rbNeteaseProviderV1?.route()||location.hash||location.pathname;}
+const markerClasses=['rb-local-rail','rb-recent-hide','rb-recent-page','rb-sidebar-hide','rb-meta-column','rb-meta-row','rb-meta-shell','rb-song-detail'];
+function restoreCover(n,v){if(v.value)n.style.setProperty('--rb-cover-size',v.value,v.priority);else n.style.removeProperty('--rb-cover-size');}
+function prune(){
+ for(const n of marked)if(!n.isConnected){n.classList.remove(...markerClasses);marked.delete(n);}
+ for(const [n,v] of coverStyles)if(!n.isConnected){restoreCover(n,v);coverStyles.delete(n);}
+}
+function attach(){if(disposed)return;prune();const h=document.querySelector('.HeaderRow_h1n2o69r');if(h&&!menu.isConnected)h.prepend(menu);if(side.isConnected&&!close.isConnected)side.append(close);
 const nextRoute=route();if(lastRoute&&lastRoute!==nextRoute)toggle(false);lastRoute=nextRoute;
 for(const label of side.querySelectorAll('.title'))if(['我的博客','我的播客','关注','漫游','播客'].includes(label.textContent.trim())){const item=label.closest('.ItemContainer_ijv59hq');if(item){item.classList.add('rb-sidebar-hide');marked.add(item);}}
 for(const tabs of document.querySelectorAll('.btn_pc_recently_play_subtab')){
@@ -167,21 +173,30 @@ for(const card of document.querySelectorAll('.GridCarouselWrapper_gcvcmmp .MetaC
 // Reflow only the homepage's original direct two-column modules. No nodes are cloned or reparented.
 for(const root of document.querySelectorAll('main.Container_c5lfgwg .recent-listen-context'))for(const block of root.children)for(const candidate of block.children){if(candidate.className||candidate.children.length<2||candidate.children.length>4)continue;const s=getComputedStyle(candidate);if(s.display==='grid'&&s.gridTemplateColumns.split(' ').length>1){candidate.classList.add('rb-local-rail');marked.add(candidate);}}
 }
-function handleBack(){if(open){toggle(false);return true;}const input=document.querySelector('.SearchWrapper_s14tpfr6 input');if(input&&document.activeElement===input){input.blur();return true;}const state=provider?.getStore?.();const page=state?.['page:vinylPage'];if(page?.pageState==='opened')return false;const h=provider?.getHistory?.();if(h&&lastPage&&route()!==lastPage&&typeof h.goBack==='function'){h.goBack();return true;}return false;}
+function handleBack(){if(open){toggle(false);return true;}return window.__rbNeteaseProviderV1?.back()==='handled';}
 
-let scheduled=false;const observer=new MutationObserver(()=>{if(!scheduled){scheduled=true;requestAnimationFrame(()=>{scheduled=false;attach();});}});observer.observe(document.getElementById('root'),{childList:true,subtree:true});
+let frame=0;const observer=new MutationObserver(()=>{if(!disposed&&!frame)frame=requestAnimationFrame(()=>{frame=0;attach();});});observer.observe(document.getElementById('root'),{childList:true,subtree:true});
 attach();toggle(false);const timer=setInterval(attach,500);
 // Capture only the fixed official state/navigation facade already loaded by this page.
-if(Array.isArray(window.webpackJsonp)){const id='rb_ui_'+Date.now().toString(36);const entry={};entry[id]=(module,exports,req)=>{try{provider=req(14).a;lastPage=route();}catch{}finally{delete req.m[id];delete req.c[id];}};window.webpackJsonp.push([[id],entry,[[id]]]);}
-function status(){const rect=main.getBoundingClientRect();return {ok:true,open,viewportWidth:innerWidth,mainX:Math.round(rect.x),mainWidth:Math.round(rect.width),drawerWidth:Math.round(side.getBoundingClientRect().width),carouselCount:document.querySelectorAll('.GridCarouselWrapper_gcvcmmp>.content').length,providerAvailable:!!provider,originalPlayerRetained:true,persistent:false};}
-function cleanup(){disposed=true;observer.disconnect();clearInterval(timer);for(const b of bindings)b[0].removeEventListener(b[1],b[2],b[3]);for(const n of nodes)n.remove();style.remove();for(const n of marked)n.classList.remove('rb-local-rail','rb-recent-hide','rb-recent-page','rb-sidebar-hide','rb-meta-column','rb-meta-row','rb-meta-shell','rb-song-detail');for(const [n,v] of coverStyles){if(v.value)n.style.setProperty('--rb-cover-size',v.value,v.priority);else n.style.removeProperty('--rb-cover-size');}if(!createdViewport){if(oldViewport===null)viewport.removeAttribute('content');else viewport.setAttribute('content',oldViewport);}document.documentElement.classList.remove('rb-music-mobile','rb-music-drawer-open');side.inert=oldInert;delete window.__rbNeteasePortraitLayoutV1;}
+
+function status(){const rect=main.getBoundingClientRect();return {ok:true,open,viewportWidth:innerWidth,mainX:Math.round(rect.x),mainWidth:Math.round(rect.width),drawerWidth:Math.round(side.getBoundingClientRect().width),carouselCount:document.querySelectorAll('.GridCarouselWrapper_gcvcmmp>.content').length,providerAvailable:!!window.__rbNeteaseProviderV1,originalPlayerRetained:true,persistent:false};}
+function cleanup(){
+ if(disposed)return;disposed=true;observer.disconnect();clearInterval(timer);if(frame)cancelAnimationFrame(frame);frame=0;
+ for(const b of bindings)b[0].removeEventListener(b[1],b[2],b[3]);bindings.length=0;
+ for(const n of nodes)n.remove();nodes.length=0;style.remove();
+ for(const n of marked)n.classList.remove(...markerClasses);marked.clear();
+ for(const [n,v] of coverStyles)restoreCover(n,v);coverStyles.clear();
+ if(!createdViewport){if(oldViewport===null)viewport.removeAttribute('content');else viewport.setAttribute('content',oldViewport);}
+ document.documentElement.classList.remove('rb-music-mobile','rb-music-drawer-open');side.inert=oldInert;
+ delete window.__rbNeteasePortraitLayoutV1;
+}
 
 function backResult(){
-try{const page=provider?.getStore?.()?.['page:vinylPage'];
-if(!open&&page?.pageState==='opened')return 'layer';
-if(!open&&Array.from(document.querySelectorAll('[role="dialog"]')).some(x=>x.getBoundingClientRect().width>0))return 'layer';
-return handleBack()?'handled':'root';}catch{return 'layer';}}
-window.__rbNeteasePortraitLayoutV1={toggle,status,cleanup,backResult};return status();
+ if(open){toggle(false);return 'handled';}
+ const result=window.__rbNeteaseProviderV1?.back();
+ return ['handled','root','layer'].includes(result)?result:'layer';
+}
+window.__rbNeteasePortraitLayoutV1={toggle,status,cleanup,handleBack,backResult};return status();
 })();
 };
 function attempt(){
@@ -198,6 +213,6 @@ function setPortrait(value){
   attempts=0;attempt();
 }
 function cleanup(){disposed=true;clearTimeout(timer);window.__rbNeteasePortraitLayoutV1?.cleanup();delete window.__rbMusicLayoutHostV1;}
-window.__rbMusicLayoutHostV1=Object.freeze({setPortrait,cleanup,back:()=>window.__rbNeteasePortraitLayoutV1?.backResult()||'unavailable'});
+window.__rbMusicLayoutHostV1=Object.freeze({setPortrait,cleanup,back:()=>window.__rbNeteasePortraitLayoutV1?.backResult()||window.__rbNeteaseProviderV1?.back()||'unavailable'});
 setPortrait(portrait);
 })();

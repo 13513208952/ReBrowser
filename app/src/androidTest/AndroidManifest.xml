@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- AGP rewrites the first instrumentation as the configured primary runner. -->
+    <instrumentation
+        android:name="io.github.reoutlook.ReBrowserRegressionInstrumentation"
+        android:functionalTest="true"
+        android:handleProfiling="false"
+        android:targetPackage="io.github.reoutlook" />
+    <!-- Self-targeting: system media tests must not restart the running Release application. -->
+    <instrumentation
+        android:name="io.github.reoutlook.ReBrowserMusicSystemInstrumentation"
+        android:functionalTest="true"
+        android:handleProfiling="false"
+        android:targetPackage="io.github.reoutlook.test" />
     <instrumentation
         android:name="io.github.reoutlook.MaintenanceExportInstrumentation"
         android:functionalTest="true"
@@ -12,11 +24,6 @@
         android:targetPackage="io.github.reoutlook" />
     <instrumentation
         android:name="io.github.reoutlook.ReBrowserClipboardInstrumentation"
-        android:functionalTest="true"
-        android:handleProfiling="false"
-        android:targetPackage="io.github.reoutlook" />
-    <instrumentation
-        android:name="io.github.reoutlook.ReBrowserRegressionInstrumentation"
         android:functionalTest="true"
         android:handleProfiling="false"
         android:targetPackage="io.github.reoutlook" />

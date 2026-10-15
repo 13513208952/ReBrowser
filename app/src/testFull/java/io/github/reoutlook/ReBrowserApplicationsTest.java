@@ -47,6 +47,24 @@ public final class ReBrowserApplicationsTest {
             c.recreate(); assertEquals(View.VISIBLE,tagged("applications",c.get()).getVisibility());
         }
     }
+    private String labels(View view) {
+        StringBuilder result = new StringBuilder();
+        if (view instanceof android.widget.TextView) result.append(((android.widget.TextView) view).getText()).append('\n');
+        if (view.getContentDescription() != null) result.append(view.getContentDescription()).append('\n');
+        if (view instanceof ViewGroup) for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++)
+            result.append(labels(((ViewGroup) view).getChildAt(i)));
+        return result.toString();
+    }
+    @Test public void musicManagementRetainsControlsButNotObsoleteExplanation() {
+        try (ActivityController<ReBrowserSettingsActivity> c = Robolectric.buildActivity(ReBrowserSettingsActivity.class,
+                new Intent().putExtra(ReBrowserSettings.EXTRA_SECTION, "applications")).setup()) {
+            String text = labels(tagged("applications", c.get()));
+            assertTrue(text.contains("启用音乐及其桌面入口")); assertTrue(text.contains("进入音乐"));
+            assertTrue(text.contains("音乐源工作模式"));
+            assertFalse(text.contains("音乐需先启用")); assertFalse(text.contains("尚未实机验收"));
+            assertFalse(text.contains("后台／系统控制已接入首轮源码"));
+        }
+    }
     @Test public void android12ProviderWithoutProfilesCanStillUseMail() throws Exception {
         ReBrowserRuntime.Status status=new ReBrowserRuntime.Status(true,false,false,false,"huawei.provider","version");
         assertFalse(status.browserAvailable());assertTrue(status.provider);

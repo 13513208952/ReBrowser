@@ -36,8 +36,16 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
     private long lastSave, preparingUntil;
     private android.graphics.Bitmap artwork;
     private String artworkKey = "";
-    private final java.util.concurrent.ExecutorService images = java.util.concurrent.Executors.newSingleThreadExecutor();
-    private java.util.concurrent.Future<?> imageTask;
+    private final ReBrowserMusicLatestTask images = new ReBrowserMusicLatestTask();
+    private final java.util.concurrent.ScheduledThreadPoolExecutor imageDeadlines = artworkDeadlines();
+    private ReBrowserMusicArtwork.Request artworkRequest;
+    private static java.util.concurrent.ScheduledThreadPoolExecutor artworkDeadlines() {
+        java.util.concurrent.ScheduledThreadPoolExecutor executor = new java.util.concurrent.ScheduledThreadPoolExecutor(
+                1, runnable -> new Thread(runnable, "ReBrowserMusicArtworkDeadline"));
+        executor.setRemoveOnCancelPolicy(true);
+        executor.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
+        return executor;
+    }
     private ReBrowserMusicSnapshot snapshot = ReBrowserMusicSnapshot.empty();
     private android.content.BroadcastReceiver noisy;
     private int musicTask = -1, missingTaskChecks;
@@ -147,13 +155,15 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         String imageKey = snapshot.track + "\n" + snapshot.cover;
         if (!imageKey.equals(artworkKey)) {
             artworkKey = imageKey; artwork = null;
-            if (imageTask != null) imageTask.cancel(true);
+            if (artworkRequest != null) artworkRequest.cancel();
+            artworkRequest = null; images.cancel();
             if (!snapshot.cover.isEmpty()) {
                 String url = snapshot.cover;
-                imageTask = images.submit(() -> {
-                    android.graphics.Bitmap bitmap = ReBrowserMusicArtwork.load(url);
-                    new android.os.Handler(android.os.Looper.getMainLooper()).post(() -> {
-                        if (stopped || !imageKey.equals(artworkKey)) { if (bitmap != null) bitmap.recycle(); return; }
+                ReBrowserMusicArtwork.Request request = artworkRequest = new ReBrowserMusicArtwork.Request(imageDeadlines);
+                images.replace(() -> {
+                    android.graphics.Bitmap bitmap = request.load(url);
+                    tasks.post(() -> {
+                        if (stopped || request != artworkRequest || !imageKey.equals(artworkKey)) { if (bitmap != null) bitmap.recycle(); return; }
                         artwork = bitmap; metadataKey = ""; notificationKey = ""; changed(snapshot);
                     });
                 });
@@ -243,7 +253,9 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
     void shutdown() {
         if (stopped) return;
         stopped = true; preparingUntil = 0; tasks.removeCallbacksAndMessages(null);
-        if (imageTask != null) imageTask.cancel(true); images.shutdownNow();
+        if (artworkRequest != null) artworkRequest.cancel(); artworkRequest = null;
+        images.close(); imageDeadlines.shutdown();
+        artwork = null;
         if (runtime != null) { runtime.close(); runtime = null; }
         if (wake != null && wake.isHeld()) wake.release();
         if (session != null) { session.setActive(false); session.release(); session = null; }

@@ -155,7 +155,6 @@ public final class ReBrowserSettingsActivity extends Activity {
         musicOpenButton.setContentDescription("进入音乐");
         musicOpenButton.setOnClickListener(v -> ModeRouter.openMusic(this)); musicRow.addView(musicOpenButton);
         applications.addView(musicRow);
-        applications.addView(fieldLabel("音乐需先启用，启用时同时显示独立桌面入口。关闭会结束运行和播放，保留登录。后台／系统控制已接入首轮源码，尚未实机验收。"));
         applications.addView(fieldLabel("音乐工作模式（同时仅一个源运行）"));
         Spinner source = new Spinner(this);
         source.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"网易云"}));

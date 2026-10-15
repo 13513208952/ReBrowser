@@ -11,6 +11,15 @@ spec.loader.exec_module(generator)
 class MusicLayoutGenerationTest(unittest.TestCase):
     def test_android_asset_matches_approved_generator(self):
         self.assertEqual(generator.generate(), generator.OUTPUT.read_text(encoding='utf-8'))
+    def test_memory_patch_preserves_approved_visual_css(self):
+        reference = generator.REFERENCE.read_text(encoding='utf-8')
+        asset = generator.generate()
+        css = lambda text: text.split('style.textContent=`', 1)[1].split('`;', 1)[0]
+        self.assertEqual(css(reference), css(asset))
+        self.assertNotIn('webpackJsonp.push', asset)
+        self.assertIn('marked.clear()', asset)
+        self.assertIn('coverStyles.clear()', asset)
+
     def test_native_host_is_fixed_and_does_not_dispatch_playback(self):
         asset = generator.generate()
         self.assertIn('window.top!==window', asset)

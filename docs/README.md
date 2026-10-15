@@ -23,6 +23,7 @@
 | [音乐子应用完整设想原文](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md) | 机主整段原话，完整逐字保存，不作整理或改写；压缩交接必读 |
 | [音乐登录前置／UA 硬性要求](NETEASE_MUSIC_LOGIN_REQUIREMENTS.md) | 压缩交接必读；未登录先原手机 UA 登录，仅平板完整窗口横屏可主动切电脑扫码；已恢复全面开发，源码门控已接入，真实 Android 登录待验收 |
 | [音乐 Android 开发](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[非横屏布局](NETEASE_MUSIC_PORTRAIT_LAYOUT.md) | 首轮源码与已安装预览、已确认布局及未验收范围 |
+| [v1.0.3 正式版准备与音乐验收](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md) | 内存修复、逐项剩余测试与发布门槛；未实测不算通过 |
 | [管理协议](REBROWSER_ADMIN_CONTROL.md)、[管理员 CLI](../tools/admin/README.md) | 挑战、签名、三级授权、固定命令与数据边界 |
 | [网站权限](REBROWSER_SITE_PERMISSIONS.md) | 单站授权、后台策略及永久禁止能力 |
 | [剪贴板手势修复](CLIPBOARD_GESTURE_SECURITY.md) | v1.0.2 原生输入边界、确认问题与测试限制 |

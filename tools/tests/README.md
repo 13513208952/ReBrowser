@@ -38,6 +38,21 @@ export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
 
 最后必须覆盖回原签名非调试 Release 候选，并禁用测试辅助包。本轮真实 WebView 的 13 项断言在 Debug 夹具通过，最终 R8 安装包另核对字节；不能混称最终 Release 全部攻击复测。具体范围见[修复记录](../../docs/CLIPBOARD_GESTURE_SECURITY.md)。
 
+## 音乐生命周期与内存回归
+
+```bash
+node tools/tests/test_rebrowser_music_provider.cjs
+node tools/tests/test_rebrowser_music_layout.cjs
+node --expose-gc --max-old-space-size=96 tools/tests/test_rebrowser_music_memory.cjs
+python3 -B tools/tests/test_rebrowser_music_layout.py
+```
+
+`music_memory_fixture.cjs` 模拟 DOM 及 Webpack 4 保留 parent packet 的行为，不加载官网代码、账号或网络。回归覆盖 1,000 次页面替换/布局启停、4,800 次正常/永久故障模拟轮询、最多一个待执行登记、有限重试、延迟启动/取消及清理后旧节点 GC。生成一致性另外验证 Android CSS 与不可变批准参考逐字相同。旧 Beta 的仓库外脚本作为负对照必须失败；这些不是实机 PSS/真实播放测试。
+
+全量专属 JVM 的 `ReBrowserMusicLatestTaskTest`、`ReBrowserMusicArtworkTest` 和 `ReBrowserMusicEvaluationTest` 检查阻塞线程下 4,096 次替换仍只有一个排队任务、封面总时限断连与网络/大小边界，以及 JS 超时不放开真实未完成请求。网络与连接均为假对象，不进行真实图片解码验证。
+
+构建前检查可用内存，使用 `--no-daemon --max-workers=1`，测试 fork=1/heap=512MiB；JVM 测试、R8 与 Lint 分批，不把下面历史多任务示例当作可以在桌面满载时同时执行的推荐命令。
+
 ## 主软件与原生应用管理 JVM 检查
 
 `ReBrowserApplicationsTest` / `ReBrowserSettingsTest` 覆盖软件名称、三个并列设置页、个性化控件移除、风味默认与显式偏好保留、旧 alias DEFAULT／显式选择和迁移标记、无 provider 的浏览器与邮件直接入口／生命周期，以及固定管理员模式。provider 存在但缺少浏览器特性的状态为模拟检查，不是完整设备兼容验证；不增加公开版特性覆写入口。

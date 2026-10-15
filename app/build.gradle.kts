@@ -12,20 +12,20 @@ android {
         targetSdk = 36
         // Minimal codes must remain below the full range forever. Normal Android install
         // rejects full -> minimal as a version downgrade, including newer minimal releases.
-        versionCode = 101
-        versionName = "1.0.3-beta"
+        versionCode = 104
+        versionName = "1.0.3"
     }
 
     flavorDimensions += listOf("suite", "background")
     productFlavors {
         create("minimal") {
             dimension = "suite"
-            versionCode = 101
+            versionCode = 104
             buildConfigField("boolean", "FULL_SUITE", "false")
         }
         create("full") {
             dimension = "suite"
-            versionCode = 1_000_101
+            versionCode = 1_000_104
             buildConfigField("boolean", "FULL_SUITE", "true")
         }
         create("lite") { dimension = "background" }

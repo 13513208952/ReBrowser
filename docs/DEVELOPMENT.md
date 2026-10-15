@@ -1,64 +1,101 @@
 # 开发参考
 
-本页面向构建、维护和贡献代码的开发者。普通用户请从[项目首页](../README.md)与[使用指南](user/REBROWSER.md)开始。当前发布验收状态见[项目状态](PROJECT_STATUS.md)，历史记录不自动代表本轮重新验证。
+用户从[首页](../README.md)和[使用指南](user/REBROWSER.md)开始；当前状态见[项目状态](PROJECT_STATUS.md)，文件归属与清理规则见[维护指南](MAINTENANCE.md)。历史测试数字不自动代表本轮重新验证。
 
-## 仓库与身份
+## 身份与结构
 
-主仓库：[13513208952/ReBrowser](https://github.com/13513208952/ReBrowser)。原 ReOutlook 仓库原地更名；历史提交、标签和 Releases 保留。ReBrowser 是软件主名称，ReOutlook 是同 APK 的邮件模式，不是插件或独立安装。
+主仓库为 [13513208952/ReBrowser](https://github.com/13513208952/ReBrowser)。原仓库原地更名，历史提交、标签和 Releases 保留。显示名为 ReBrowser，安装身份仍是 `io.github.reoutlook`；数据库、Profile、偏好及原签名保持连续，不为整理目录或更名修改它们。
 
-Gradle 项目名与显示名为 ReBrowser；内部 Java package/applicationId 保留 `io.github.reoutlook`，数据库、命名 Profile 和原签名保持连续。不要为更名修改安装身份、删除旧数据或更换签名。
+| variant | 内容 | 当前 v1.0.3 code |
+| --- | --- | ---: |
+| `minimalLite` | 仅浏览器，无照片 | 104 |
+| `minimalBackground` | 仅浏览器，有照片 | 104 |
+| `fullBackground` | 浏览器、邮件、音乐，有照片 | 1,000,104 |
 
-## 构建
+`fullLite` 禁用；三包不能并存。全量高 code 区间阻止普通全量→极简/旧稳定版降级，完整真实极简→全量迁移矩阵尚未专项验证。不要以卸载、清数据或强制降级制造测试基线。版本以 `app/build.gradle.kts` 为准，历史版本见[发布索引](releases/README.md)。
 
-需要 JDK 17 和 Android SDK 36；最低 Android API 29。开发树已拆分套件与背景两轴，合法组合是 `minimalLite`、`minimalBackground`、`fullBackground`，相同安装身份，不能并存；`fullLite` 不生成。正式 v1.0.2 的历史两风味产物不因此改变。v1.0.3-beta 使用极简 code 101／全量 code 1,000,101；普通安装器拒绝新版全量回退极简或旧稳定版。套件剔除、版本区间与升级注意事项见[音乐开发记录](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)。
+`src/main` 是共享代码；音乐具体实现和固定 assets 位于 `src/full`，`src/minimal` 的未注册门面不是残留；`src/lite`、`src/background` 决定照片和品牌资源。详细职责见[仓库地图](MAINTENANCE.md#文件归属)。
+
+## 环境
+
+- JDK 17 或兼容 Android Gradle Plugin 的较新 JDK，Java 源码目标 17；Android SDK/build-tools 36。
+- Gradle 使用仓库 wrapper；Node.js 18+、Python 3.10+ 用于离线工具和测试。
+- Python 的 `cryptography` 用于管理员请求构造；Zopfli 依赖见[打包工具](../tools/build/README.md)。依赖安装在仓库外，不提交虚拟环境或第三方源码。
 
 ```bash
 git clone https://github.com/13513208952/ReBrowser.git
 cd ReBrowser
-export JAVA_HOME=/path/to/jdk-17
-export ANDROID_HOME=$HOME/Android/Sdk
-export TMPDIR=/home/zhao/temp/re_outlook/build-jvm
-mkdir -p "$TMPDIR"
+export JAVA_HOME=/path/to/compatible-jdk
+export ANDROID_HOME="$HOME/Android/Sdk"
+export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$PATH"
+export WORK=/home/zhao/temp/re_outlook/local-build
+mkdir -p "$WORK/jvm"
+export TMPDIR="$WORK/jvm"
 export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
-export PATH="$JAVA_HOME/bin:$PATH"
-./gradlew --no-daemon testMinimalLiteDebugUnitTest testMinimalBackgroundDebugUnitTest testFullBackgroundDebugUnitTest
-./gradlew --no-daemon assembleMinimalLiteDebug assembleMinimalBackgroundDebug assembleFullBackgroundDebug
-./gradlew --no-daemon assembleMinimalLiteRelease assembleMinimalBackgroundRelease assembleFullBackgroundRelease
-./gradlew --no-daemon lintMinimalLiteDebug lintMinimalBackgroundDebug lintFullBackgroundDebug
+export PYTHONDONTWRITEBYTECODE=1
 ```
 
-在本维护机器上临时文件统一使用 `/home/zhao/temp/re_outlook/`，不使用内存盘 `/tmp`；其他开发机器请自行指定可用磁盘目录。
+本维护机器只在 `/home/zhao/temp/re_outlook/` 放临时文件，不使用 `/tmp`。其他机器自行指定磁盘目录。
 
-产物位于 `app/build/outputs/apk/{minimalLite,minimalBackground,fullBackground}/{debug,release}/`，文件名分别包含 `minimal-lite`、`minimal-background`、`full-background`。Release 为未签名产物，已启用完整 R8 优化／混淆、资源剪枝与压缩 DEX。公开包继续使用历史证书以覆盖升级，Release 本身不含 `DEBUGGABLE`；历史 Android Debug 签名不是新的生产签名方案。签名私钥和管理员私钥绝不提交。
+## 有界、串行构建
+
+曾因三套件 JVM/R8/Lint 与桌面浏览器重叠造成宿主 OOM。不要重新使用一次启动全部高峰的旧命令。每批开始前检查内存，Linux 本机至少 3 GiB `MemAvailable`；不足就停止，不杀桌面应用、不改 swap/zram/OOM。
+
+以下函数限制 Gradle 堆 1536 MiB、worker 1，仓库 init script 限制测试 fork 1/heap 512 MiB；不是修改系统或运行时应用策略。
+
+```bash
+gradle_one() {
+  python3 -B -c 'from pathlib import Path; m=int(next(x.split()[1] for x in Path("/proc/meminfo").read_text().splitlines() if x.startswith("MemAvailable:"))); assert m >= 3*1024*1024, "Insufficient MemAvailable; stop this batch"' || return
+  ./gradlew --no-daemon --max-workers=1 \
+    -Dorg.gradle.jvmargs='-Xmx1536m -Dfile.encoding=UTF-8' \
+    -I tools/build/bounded-tests.gradle "$@"
+}
+# Run one phase at a time; do not background these loops.
+for variant in MinimalLite MinimalBackground FullBackground; do
+  gradle_one "test${variant}DebugUnitTest" || break
+done
+# Separate phase, only when a new build is necessary:
+for variant in MinimalLite MinimalBackground FullBackground; do
+  gradle_one "assemble${variant}Release" || break
+done
+# Separate phase:
+for variant in MinimalLite MinimalBackground FullBackground; do
+  gradle_one "lint${variant}Debug" || break
+done
+```
+
+Debug 需要时单独执行，例如 `gradle_one assembleFullBackgroundDebug`。不能仅为文档变更重跑全部设备/R8矩阵。`--no-daemon` 仍可能启动一次性 Gradle 进程，命令完成后再开始下一批。
+
+产物路径：`app/build/outputs/apk/{minimalLite,minimalBackground,fullBackground}/release/`，文件名对应 `app-minimal-lite-release-unsigned.apk`、`app-minimal-background-release-unsigned.apk`、`app-full-background-release-unsigned.apk`。旧 `lite/`、`background/` 输出是历史残留，不是当前构建。Release 启用完整 R8、资源裁剪和压缩 DEX，但 Gradle 输出尚未签名。
 
 ## 测试与发布
 
-- [回归检查](../tools/tests/README.md)：JVM、实际权限脚本的 Node 检查、固定 CLI 请求、打包固件测试。
-- [构建工具](../tools/build/README.md)：未签名 APK 的无损 ZIP 候选压缩、zipalign、现代签名与最终 ZIP 体积统计。
-- [项目状态](PROJECT_STATUS.md)：本轮通过／待验证项及设备覆盖边界。
-- [历次发布说明](releases/)：对应版本的验证、包体与校验值，不替代当前版本验收。
+1. [仓库检查](../tools/maintenance/README.md)：离线链接、不可变参考、源集与当前版本入口。
+2. [自动回归](../tools/tests/README.md)：JVM、实际编译权限脚本、fake DOM/SDK、CLI 和打包测试；各类证据分开。
+3. [Release 流程](../tools/build/README.md)：未签名优化→对齐→原证书 v2/v3→验签/对齐/内容/裁剪检查→签名包统计。签名后不修改 APK。
+4. 发布独立新标签，不移动旧标签或替换旧资产。草稿下载先核对，发布后再未认证下载逐字节/哈希验证，核对 latest 与旧版本不变。
+5. 只发布批准 APK、校验文件和匿名文档；密钥、登录环境、设备日志、截图、原图、原始媒体地址和 R8 私有材料不上传。
 
-发布前逐条比较压缩前后的解压内容、签名、对齐、网络政策、非调试 Manifest、套件剔除和三种组合的照片有无；保留本地 R8 报告。展示最终签名 APK 的体积分布再推送／发布。只发布源码、测试、文档和批准的 APK／校验资产，不发布密钥、设备日志、截图、原始大图或临时网络例外。
+历史 Android Debug 证书仅维持覆盖升级连续性；APK 本身必须不可调试，不宣称已换生产签名。最终保留 manifest/网络/套件裁剪/资源质量/签名/对齐报告及 R8 依据。
 
-真机升级只能覆盖安装（例如 `adb install -r`），不可卸载或清数据；先提醒锁定重要临时环境。保持用户最新默认浏览器选择，不自动改角色、不绕过锁屏或验证码。`.1` 文件与安装器操作仍由机主自行测试；测试 YouTube 前需告知机主准备代理。
+## 设备操作与验收预算
 
-## 实现与协议
+本轮 v1.0.3 发布已完成：RC2 平板限定短测，最终全量包手机覆盖安装及身份核对；机主取消手机/Android 16 专项，高成本矩阵后期。维护文档不自动恢复这些测试，详见[验收记录](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)。
 
-| 主题 | 参考文档 |
+后续任何获准真机更新只用 `adb -s SERIAL install -r APK`，不卸载/清数据/强降；先锁定重要临时环境，保留最新默认浏览器选择。登录、验证码、扫码、解锁、USB 安装权限和系统确认由机主处理，不绕过。测试 YouTube 前告知机主准备代理；`.1` 安装器仍由机主自行测试。设备辅助包不应常驻启用。
+
+## 实现与协议索引
+
+| 主题 | 参考 |
 | --- | --- |
-| 音乐独立运行时、官方登录、套件及延期验收 | [音乐开发记录](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[机主原话](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md) |
-| 当前设置、风味默认、升级入口和原生能力回退 | [设置与应用管理](REBROWSER_SETTINGS.md) |
-| 总／子标签页、命名 Profile 与状态所有者 | [浏览器设计与沿革](REBROWSER_EXPLORATION.md) |
-| 邮件桥、账号、缓存、回填与数据库 | [邮件架构](REOUTLOOK_ARCHITECTURE.md) |
-| 管理员三级授权、双根、固定命令和数据边界 | [管理协议](REBROWSER_ADMIN_CONTROL.md)、[CLI](../tools/admin/README.md) |
-| 网站授权与后台策略 | [网站权限](REBROWSER_SITE_PERMISSIONS.md) |
-| Android 浏览器、默认应用、外部链接和 APK 交接 | [Android 交接](REBROWSER_ANDROID_HANDOFF.md) |
-| 历史保留与实现 | [历史记录](REBROWSER_HISTORY_PLAN.md) |
-| YouTube 窄兼容策略及验证范围 | [播放兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) |
-| 本地图片与第三方品牌来源 | [资源来源](ASSET_CREDITS.md) |
+| 音乐生命周期/固定动作/内存与恢复边界 | [音乐开发](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[机主原话](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md)、[登录要求](NETEASE_MUSIC_LOGIN_REQUIREMENTS.md) |
+| 三页设置/套件入口/无 provider 原生回退 | [设置](REBROWSER_SETTINGS.md) |
+| 双层标签、命名 Profile 与控制器职责 | [浏览器设计](REBROWSER_EXPLORATION.md) |
+| 邮件桥/缓存/检查点/迁移 | [邮件架构](REOUTLOOK_ARCHITECTURE.md) |
+| 一次性精确挑战、三级授权、双根 | [管理协议](REBROWSER_ADMIN_CONTROL.md)、[CLI](../tools/admin/README.md) |
+| 网站授权/后台策略/剪贴板输入边界 | [网站权限](REBROWSER_SITE_PERMISSIONS.md)、[剪贴板修复](CLIPBOARD_GESTURE_SECURITY.md) |
+| 默认浏览器/外部链接/安装交接 | [Android 交接](REBROWSER_ANDROID_HANDOFF.md) |
+| 历史与资源 | [历史规则](REBROWSER_HISTORY_PLAN.md)、[资源来源](ASSET_CREDITS.md) |
+| 窄播放兼容及已否决试验 | [YouTube](YOUTUBE_PLAYER_COMPATIBILITY.md)、[假缩放移除](REBROWSER_LAYOUT_ZOOM.md) |
 
-管理员能力必须保持固定白名单和有界状态，不增加任意 Intent、文件／偏好／数据库读取、脚本执行、安装命令或网站能力启用／授权。ReBrowser 根不能授权邮件导出。
-
-## 历史与讨论
-
-[开发历史](DEVELOPMENT_HISTORY.md)与[新标签页讨论](REBROWSER_NEW_TAB_PLAN.md)保存决策背景；过往默认值、页面名称和候选方向可能已被后续需求替换。实际行为以当前源码、使用指南、设置说明和对应发布验收为准。不要把讨论稿作为已实现功能或不可更改的要求。
+管理员保持固定白名单和有界状态，不增加任意脚本、模块、网络、文件/数据库/偏好、Intent 或安装命令，不授予网页能力、不启用音乐，浏览器根不能授权邮件导出。历史讨论不等于当前实施授权。

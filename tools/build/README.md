@@ -1,29 +1,59 @@
 # Release APK 无损压缩与统计
 
-应用 Release 开启完整模式 R8 优化／剪枝／混淆、资源裁剪和 DEX ZIP 压缩。当前 Java 应用没有 kotlin-reflect，R8 最终没有保留 Kotlin 运行时类；只排除不再需要的 `*.kotlin_builtins` 编译元数据，不移除依赖版本、许可证、服务描述或现有功能。如果未来引入 Kotlin 运行时反射，必须重新评估该排除项。
+Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压缩。当前 Java 应用不保留 Kotlin 反射运行时，只排除无用 `*.kotlin_builtins` 元数据；未来引入反射必须重评估，不移除许可证、服务描述或现有功能。
 
-`optimize_apk.py` 仅处理**未签名 APK**，对原本 DEFLATE 的条目比较原压缩流、zlib level 9 和 Zopfli（100 次迭代），采用最小者。所有原条目和解压内容保持不变；原本 STORED 的资源不改为压缩，尤其 `resources.arsc`，以保留 Android 的直接访问约束。图片不重新编码，也不降低画质。现有 WebP 再作 ZIP 压缩反而更大。
+## 输入与资源预算
 
-当前开发树的合法输入为 `minimalLite`、`minimalBackground`、`fullBackground` 对应目录，文件名分别为 `app-minimal-lite-release-unsigned.apk`、`app-minimal-background-release-unsigned.apk`、`app-full-background-release-unsigned.apk`。需分别验证套件剔除和原签名数据继承；高区间全量包安装后不能普通降级回旧正式包，详见[开发记录](../../docs/NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)。下面保留历史 v0.4.5-alpha 命令示例，不把旧目录内残留 APK 当作新构建。
+当前三种输入必须来自本次构建，不从历史 `lite/`、`background/` 残留目录取包：
 
-在项目指定临时目录安装 Python 压缩依赖，不打包进应用或提交环境：
+| variant | 未签名 APK |
+| --- | --- |
+| `minimalLite` | `app/build/outputs/apk/minimalLite/release/app-minimal-lite-release-unsigned.apk` |
+| `minimalBackground` | `app/build/outputs/apk/minimalBackground/release/app-minimal-background-release-unsigned.apk` |
+| `fullBackground` | `app/build/outputs/apk/fullBackground/release/app-full-background-release-unsigned.apk` |
+
+按[开发参考](../../docs/DEVELOPMENT.md#有界串行构建)分批构建，`--no-daemon --max-workers=1`、Gradle1536MiB、test fork1/512MiB；`bounded-tests.gradle` 是显式 `-I` 使用的测试限制，不负责 Gradle 堆或系统内存。不要重叠 JVM/R8/Lint 高峰。
+
+## 无损 ZIP 优化
+
+`optimize_apk.py` 仅处理**未签名 APK**：逐个 DEFLATE 条目比较原流、zlib9、Zopfli100，保留本轮最小者；不宣称数学全局最优。保留解压字节、顺序、注释和 STORED，尤其 `resources.arsc`。图片不重新编码/降质。拒绝签名、原地写入、重复/加密/不支持/ZIP64 输入。
+
+在仓库外指定目录安装依赖，维护时若已有依赖可复用，不自动下载：
 
 ```bash
-export TMPDIR=/home/zhao/temp/re_outlook/release-v0.4.5-alpha/jvm
-export PYTHONPATH=/home/zhao/temp/re_outlook/release-v0.4.5-alpha/compression-deps
-mkdir -p "$TMPDIR" "$PYTHONPATH"
+export PACKAGE_WORK=/home/zhao/temp/re_outlook/package-work
+mkdir -p "$PACKAGE_WORK/jvm" "$PACKAGE_WORK/compression-deps"
+export TMPDIR="$PACKAGE_WORK/jvm" PYTHONDONTWRITEBYTECODE=1
+export PYTHONPATH="$PACKAGE_WORK/compression-deps"
+# First-time setup only; not part of routine repository checks:
 python3 -m pip install --target "$PYTHONPATH" --no-cache-dir -r tools/build/requirements.txt
-PYTHONDONTWRITEBYTECODE=1 python3 -B tools/tests/test_optimize_apk.py
+python3 -B tools/tests/test_optimize_apk.py
 python3 -B tools/build/optimize_apk.py \
-  app/build/outputs/apk/lite/release/app-lite-release-unsigned.apk \
-  /home/zhao/temp/re_outlook/release-v0.4.5-alpha/lite-optimized-unsigned.apk \
-  --iterations 100 --report /home/zhao/temp/re_outlook/release-v0.4.5-alpha/lite-compression.json
+  app/build/outputs/apk/fullBackground/release/app-full-background-release-unsigned.apk \
+  "$PACKAGE_WORK/full-optimized-unsigned.apk" \
+  --iterations 100 --report "$PACKAGE_WORK/full-compression.json"
 ```
 
-然后依次 `zipalign -f -p 4`、`apksigner sign`、`apksigner verify --verbose --print-certs` 和 `zipalign -c -p 4`。**签名后禁止重新压缩或修改 APK。**
+其他两套件分别处理；输出目录不能覆盖原 Beta/已发布目录。
 
-最低 Android 10／API 29，无需旧 JAR v1 签名；签名显式使用 `--v1-signing-enabled false --v2-signing-enabled true --v3-signing-enabled true`，原证书不变。不要因排除旧签名而更换密钥。工具默认验证可能只报告所选平台的最强方案，额外可用 `verify --min-sdk-version 24 --max-sdk-version 27` 验证 v2（这是验证工具参数，不降低应用 minSdk）。
+## 对齐、签名与复核
 
-`apk_size.py LABEL=SIGNED_APK --output REPORT.json` 按 ZIP 条目的压缩大小分组，并用内容 SHA-256 识别 R8 改名的照片和品牌图形；剩余总字节归到 ZIP 结构、对齐和 APK 签名块。它不报告安装后的数据、缓存或内存，不读取设备或私钥。
+工具来自 SDK build-tools36；设置有效 `JAVA_HOME`/`PATH`，不要将电脑缺少 `java` 误诊为设备故障。原签名身份不能因清理/重打包而更换，私钥/口令不入库；不要自行新建替代 keystore。
 
-每次最终构建需保留 R8 报告，逐条核对打包前后的解压内容、两版照片有无、签名证书、对齐、非调试 Manifest 与无明文例外的网络配置，再统计**签名后的** APK。对于算法输出，不宣称数学意义的全局最优；实际逐条选用本轮候选中的最小流。
+```bash
+export BT="$ANDROID_HOME/build-tools/36.0.0"
+# SIGNING_KEYSTORE and SIGNING_ALIAS refer to the authorized original identity.
+"$BT/zipalign" -f -p 4 "$PACKAGE_WORK/full-optimized-unsigned.apk" "$PACKAGE_WORK/full-aligned.apk"
+"$BT/apksigner" sign --ks "$SIGNING_KEYSTORE" --ks-key-alias "$SIGNING_ALIAS" \
+  --v1-signing-enabled false --v2-signing-enabled true --v3-signing-enabled true \
+  --out "$PACKAGE_WORK/full-signed.apk" "$PACKAGE_WORK/full-aligned.apk"
+"$BT/apksigner" verify --verbose --print-certs "$PACKAGE_WORK/full-signed.apk"
+"$BT/apksigner" verify --min-sdk-version 24 --max-sdk-version 27 "$PACKAGE_WORK/full-signed.apk"
+"$BT/zipalign" -c -p 4 "$PACKAGE_WORK/full-signed.apk"
+python3 -B tools/build/apk_size.py "fullBackground=$PACKAGE_WORK/full-signed.apk" \
+  --output "$PACKAGE_WORK/size-breakdown.json"
+```
+
+API24–27仅单独核对v2，不降低应用minSdk29。**签名后不得重压缩或修改 APK。** `apk_size.py` 按ZIP压缩占用分组并用内容SHA256识别R8改名的照片/品牌；剩余是ZIP/对齐/签名结构，不是安装数据或RAM。
+
+最终还要核对版本/code、原证书、不可调试/无测试探针、压缩DEX、无备份/明文例外、极简剔除邮件/音乐assets/服务权限与照片有无、全部解压内容不变及素材不降质。保留R8/报告在受限仓库外；统计签名后的APK，再按[发布流程](../../docs/DEVELOPMENT.md#测试与发布)核对公开下载/最新稳定版及旧资产。历史原地升级证据不代表当前所有套件数据迁移已验证。

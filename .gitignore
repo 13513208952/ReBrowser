@@ -7,6 +7,7 @@ local.properties
 tools/build/*
 !tools/build/*.py
 !tools/build/*.md
+!tools/build/*.gradle
 !tools/build/requirements.txt
 *.iml
 .cxx/
@@ -21,3 +22,19 @@ tools/build/*
 *.log
 __pycache__/
 *.py[cod]
+
+# Local package outputs, signing material and heap/recording diagnostics
+*.apk
+*.aab
+*.apks
+*.idsig
+*.jks
+*.keystore
+*.hprof
+*.heapdump
+*.jfr
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+.DS_Store

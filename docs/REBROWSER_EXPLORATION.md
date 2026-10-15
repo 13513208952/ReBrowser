@@ -1,10 +1,6 @@
 # ReBrowser design and current implementation
 
-ReBrowser is a second mode of the same `io.github.reoutlook` application, not a separate APK.
-Release builds expose dedicated ReOutlook and ReBrowser launcher entries that open the corresponding
-mode directly, while in-app switching remains available. ReBrowser does not change ReOutlook's
-existing WebView or its Default Profile. The capability probe remains debug-only; the browser
-workspace implementation is part of the main application.
+ReBrowser is now the main product, retaining application ID `io.github.reoutlook`. Minimal packages contain only the browser; the full package includes ReOutlook mail and the owner-enabled music subapplication in the same APK. Optional entries and in-app access are managed through Application Management, not a duplicate browser-menu mail switch. Mail keeps its Default Profile, each browser workspace owns a named Profile, and music uses a separate fixed Profile. The capability probe remains debug-only. This document explains the browser model; current suites/settings and evidence are in [project status](PROJECT_STATUS.md) and [settings](REBROWSER_SETTINGS.md).
 
 ## Product intent
 
@@ -55,7 +51,7 @@ primary are lifecycle classes of that same object, not three different tab syste
 
 The debug APK includes an ADB-shell-only activity named `ReBrowser 探针`; it has no desktop
 launcher entry and requires `android.permission.DUMP`. Launch it during development with
-`adb shell am start -n io.github.reoutlook/.ReBrowserProbeActivity`. It checks:
+`adb -s SERIAL shell am start -n io.github.reoutlook/.ReBrowserProbeActivity`, only with owner authorization; maintenance does not run it or re-enable waived device tests. It checks:
 
 1. the installed WebView provider and version;
 2. support for `MULTI_PROFILE`, `DELETE_BROWSING_DATA`, and `SAVE_STATE`;
@@ -123,12 +119,11 @@ permission for a temporary 总标签页 to skip secondary and promote directly t
 optional three-way video-orientation override. The initial
 homepage and search defaults use `cn.bing.com`, with Baidu also offered before providers that may
 not be reachable directly from mainland China. A changed homepage applies to the home action,
-newly created tabs/workspaces, search/address fallback, and the top-level back policy. More
-conventional browser settings will be added to this same screen. The earlier explanatory privacy
+new child tabs without an assigned URL, search/address fallback, and the top-level back policy; a new blank outer workspace instead displays the native new-tab page. Additional settings remain subject to separate design approval. The earlier explanatory privacy
 paragraph has been removed from the settings UI; privacy guarantees remain documented in the
 project documentation instead of occupying an inert settings section.
 
-WebView custom-view playback is hosted as native full-screen content. The persisted global browser
+WebView custom-view playback is hosted as native full-screen content. The following describes the retained phone preference; full-window tablets now use FULL_USER and special windows do not force orientation, as detailed in [device policy](REBROWSER_DEVICE_MODE.md). The persisted global browser
 orientation defaults to normal portrait on a fresh installation and may be changed to
 sensor-landscape or unlocked from the overflow shortcut. With the video override disabled, an
 unlocked global mode maps video to ordinary sensor auto-rotation, while either global lock maps
@@ -155,7 +150,7 @@ Downloads exist only in ReBrowser. A request is bound to the callback WebView's 
 
 Administrators can globally disable new ReBrowser downloads without interrupting already-running transfers; disabling also rejects the bounded pending queue. Each `Profile + top-level origin` has a persistent five-minute attempt window. The first two attempts receive ordinary confirmation; the third and later attempts enter a bounded pending list without repeated modal prompts. Rejected, failed, and repeated requests count. The list supports progress, cancellation, explicit retry, deletion, SHA-256, and risk reasons. File names are sanitized; risky extensions/MIME types, active-document signatures, executable magic, archives, shebangs and selected MIME/extension mismatches are flagged.
 
-Blob download uses a fixed application-authored fetch-and-slice script, a one-time in-page object name, 128 KiB Base64 chunks, one active transfer, a 1 GiB cap, origin continuity checks and streamed temporary output. Data URLs use a 32 MiB cap. Neither path exposes arbitrary script execution. Files are never automatically opened, installed, previewed, unpacked or executed. A user can explicitly hand a completed `content://` URI with read-only permission to Android's chooser. ReBrowser declares no package-install permission and never loads local HTML in its WebView.
+Blob download uses a fixed application-authored fetch-and-slice script, a one-time in-page object name, 128 KiB Base64 chunks, one active transfer, a 1 GiB cap, origin continuity checks and streamed temporary output. Data URLs use a 32 MiB cap. Neither path exposes arbitrary script execution. Files are never automatically opened, installed, previewed, unpacked or executed. A user can explicitly hand a completed `content://` URI with read-only permission to Android's chooser. The separate user-initiated local `.1` APK handoff now declares `REQUEST_INSTALL_PACKAGES`; it uses a bounded unchanged copy and a system installer, never automatic download installation or an administrator install command. Unknown-source authorization and final confirmation remain with Android/the owner; see [handoff limits](REBROWSER_ANDROID_HANDOFF.md). ReBrowser never loads local HTML in its WebView.
 
 WebView DownloadListener does not expose an original POST body or full Service Worker request context. ReBrowser can safely reconstruct ordinary GET downloads, but does not claim complete Chrome compatibility for POST- or worker-generated transfers.
 
@@ -168,7 +163,4 @@ alone is restricted to levels one and two. This deliberately does not weaken ReO
 mail-export rule. The protocol and bounded command set are documented in
 [REBROWSER_ADMIN_CONTROL.md](REBROWSER_ADMIN_CONTROL.md).
 
-Next stages include page thumbnails, a full new-tab page, favorite folders, site information,
-sharing, dark mode, broader settings, website-permission design, incognito lifecycle design, and
-bounded WebView navigation-state restoration.
-Borrowed-profile behavior remains deferred.
+The native new-tab page, history, bounded website permissions and background policy have since been implemented; see [current status](PROJECT_STATUS.md) and [website permissions](REBROWSER_SITE_PERMISSIONS.md). Page thumbnails, favorite folders, site information, sharing, dark mode, incognito lifecycle and bounded navigation-state restoration remain candidate ideas, not an approved implementation schedule. Borrowed-profile behavior remains deferred.

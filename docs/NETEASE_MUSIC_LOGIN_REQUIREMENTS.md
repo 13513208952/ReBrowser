@@ -2,7 +2,7 @@
 
 **交接／压缩后必须先读本文件。** 这不是可选优化；历史首轮预览曾遗漏该流程，现已由正确登录流程替换，不能恢复“启动即固定电脑 UA 直入业务”的旧方案。
 
-当前状态：正确登录流程已原签名覆盖安装到机主手机与 Android 13 平板。机主完成平板原版手机页登录后，已观察到自动进入同 Profile 的电脑 UA WebPlayer，无需手动检查。机主认可当前个人使用体验，授权以 **v1.0.3-beta** 发布并停止其余设备验收；完整登录失效／取消／扫码及窗口矩阵留到下一 release，不把有限观察扩大为全面验收。
+当前状态：正确登录流程已集成正式 **v1.0.3**，机主平板已观察到原版手机页登录后自动进入同 Profile 电脑 UA WebPlayer，无需手动检查；最终全量包已覆盖更新手机，但没有追加登录专项。完整登录失效/取消/扫码及窗口矩阵移至后期大版本，本轮手机/Android 16 专项由机主取消；不把有限观察扩大为全面验收。[当前验收范围](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)。
 
 ## 1. 登录是进入音乐界面的前置条件
 
@@ -39,11 +39,11 @@ UA／页面切换不复制、导出或搬运 Cookie/token。音乐专属 Profile
 
 登录失效后重新进入上述登录前置流程，不能继续当作已登录音乐界面运行。CAPTCHA、扫码确认、短信及网站权益限制必须保留。
 
-## 4. 后续验收最先检查项
+## 4. 后续另行获准验收时优先检查
 
 1. 机主原话与后续补充是约束依据；当前全面开发已获准，不自动恢复另行停止的第三方调查。
 2. 核对 `ReBrowserMusicLifecycle`、`ReBrowserMusicRuntime` 与固定 provider 的门控：任何未知或过期状态都不能回到旧预览的固定电脑 UA 直入业务流程。
 3. 在同一音乐 Profile 验证：首次登录、已有有效登录、登录失效、取消／失败、扫码切换，以及旋转、分屏／小窗／PiP 变化。
 4. 测试断言：未登录无法进入音乐界面；例外条件三项全部满足才提供电脑扫码切换；例外状态默认仍为手机 UA；非例外状态不得停留在电脑 UA 登录。
 
-相关记录：[Android 首轮开发](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[非横屏布局基线](NETEASE_MUSIC_PORTRAIT_LAYOUT.md)、[接口研究](NETEASE_MUSIC_INTERFACE_RESEARCH.md)。Firefox 的同 Profile 验证与 Android 13 平板的实际登录观察分别记录；两者均不代表所有设备、失效恢复或扫码窗口矩阵已验收。
+相关记录：[Android 开发与历史证据](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[非横屏布局基线](NETEASE_MUSIC_PORTRAIT_LAYOUT.md)、[接口研究](NETEASE_MUSIC_INTERFACE_RESEARCH.md)。Firefox 的同 Profile 验证与 Android 13 平板的实际登录观察分别记录；两者均不代表所有设备、失效恢复或扫码窗口矩阵已验收。

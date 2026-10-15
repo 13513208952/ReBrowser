@@ -1,74 +1,72 @@
-# 网页权限脚本回归检查
+# 自动回归与证据边界
 
-`test_rebrowser_permission_script.cjs` 使用 Node.js 内置 `vm` 和模拟 DOM 检查文档启动策略，读取实际编译输出，不维护第二份权限脚本。它覆盖 YouTube 播放器兼容的来源、顶层文档、对象范围、方法借用、元素迁移、事件名称转换及捕获原生方法等情况。
+所有命令从仓库根目录运行。日常文档/工具维护优先离线检查，不自动构建、联网安装依赖、调用 ADB 或恢复已取消设备专项。当前发布证据见[v1.0.3](../../docs/releases/v1.0.3.md)，如何串行限资源构建见[开发参考](../../docs/DEVELOPMENT.md)。
 
-模拟 DOM 测试不能代替真实 WebView 验证，也不是独立安全审计。Java 测试另检查兼容选择的默认值、Profile／origin 隔离、清理和脚本来源白名单。
+## 第一层：离线、无设备检查
 
-在项目根目录运行（需要 JDK、Android SDK 和 Node.js）：
-
-```bash
-export TMPDIR=/home/zhao/temp/re_outlook/permission-policy-tests
-mkdir -p "$TMPDIR/classes"
-export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
-./gradlew testMinimalLiteDebugUnitTest testMinimalBackgroundDebugUnitTest testFullBackgroundDebugUnitTest assembleFullBackgroundDebug
-
-"$JAVA_HOME/bin/javac" \
-  -cp app/build/intermediates/javac/fullBackgroundDebug/compileFullBackgroundDebugJavaWithJavac/classes \
-  -d "$TMPDIR/classes" tools/tests/DumpPermissionScript.java
-"$JAVA_HOME/bin/java" -cp "$TMPDIR/classes" io.github.reoutlook.DumpPermissionScript \
-  | node tools/tests/test_rebrowser_permission_script.cjs
-```
-
-`DumpPermissionScript` 仅输出编译后的固定脚本常量；它不是应用入口，不打包到 APK，不读取设备、账号或认证数据。
-
-## 剪贴板原生入口检查
+先设置仓库外 `TMPDIR`（本维护机器不使用 `/tmp`）；Python依赖为现有 `cryptography` 和[Zopfli](../build/README.md)，不在测试中自动安装。Node 使用小堆，顺序执行：
 
 ```bash
-./gradlew testMinimalLiteDebugUnitTest \
-  --tests io.github.reoutlook.ReBrowserClipboardGestureTest \
-  --tests io.github.reoutlook.ReBrowserClipboardBridgeTest \
-  --tests io.github.reoutlook.ReBrowserSitePermissionsTest
-```
-
-当前 24 项检查直接调用生产桥处理函数，包括 15 天授权下无输入／伪造字段、单次输入、原生键回调、过期、导航、失焦、后台／切页、待批准及过期批准；Robolectric 夹具使用固定测试文本，不读取真实剪贴板。脚本另有 47 项编译输出检查。旧处理函数的仓库外对照两项无输入测试应失败；正常构建不得携带该临时 Gradle source 替换。
-
-`ReBrowserClipboardProbeActivity` 仅在 Debug 源集，由 DUMP 保护；只拦截固定 HTTPS 离线测试页，不接受外部 URL、脚本或 Profile 参数。`ReBrowserClipboardInstrumentation` 使用独立 Profile、隔离授权记录、随机剪贴板样本和原生注入输入。执行前需机主允许、设备解锁，并明确指定设备；同签名覆盖安装 Debug 和对应 androidTest 包，不卸载或清除主应用数据。某些系统会拦截运行器后台启动，需显式前台启动固定 Probe，不能绕过锁屏或授权。
-
-测试页仅在前台保持亮屏，不写系统锁屏设置。系统剪贴板浮层可能造成部分遮挡，测试等待其消失，生产防护仍拒绝；部分后续步骤用原生 Enter。结束前恢复本轮原剪贴板并清除隔离偏好；`ReBrowserClipboardCleanupInstrumentation` 在新进程中只清理私有登记表内的测试 Profile，避免 Chromium 的 in-use 限制，不扫描删除用户环境。早期未登记空样本不作猜测性删除。
-
-最后必须覆盖回原签名非调试 Release 候选，并禁用测试辅助包。本轮真实 WebView 的 13 项断言在 Debug 夹具通过，最终 R8 安装包另核对字节；不能混称最终 Release 全部攻击复测。具体范围见[修复记录](../../docs/CLIPBOARD_GESTURE_SECURITY.md)。
-
-## 音乐生命周期与内存回归
-
-```bash
-node tools/tests/test_rebrowser_music_provider.cjs
-node tools/tests/test_rebrowser_music_layout.cjs
+export TMPDIR=/home/zhao/temp/re_outlook/host-checks
+mkdir -p "$TMPDIR"
+export PYTHONDONTWRITEBYTECODE=1
+# PYTHONPATH must include your existing external compression-deps if not installed globally.
+python3 -B tools/maintenance/check_repository.py
+python3 -B tools/tests/test_repository_maintenance.py
+node --max-old-space-size=96 tools/tests/test_rebrowser_music_provider.cjs
+node --max-old-space-size=96 tools/tests/test_rebrowser_music_layout.cjs
 node --expose-gc --max-old-space-size=96 tools/tests/test_rebrowser_music_memory.cjs
 python3 -B tools/tests/test_rebrowser_music_layout.py
+python3 -B tools/tests/test_rebrowser_admin_cli.py
+python3 -B tools/tests/test_optimize_apk.py
 ```
 
-`music_memory_fixture.cjs` 模拟 DOM 及 Webpack 4 保留 parent packet 的行为，不加载官网代码、账号或网络。回归覆盖 1,000 次页面替换/布局启停、4,800 次正常/永久故障模拟轮询、最多一个待执行登记、有限重试、延迟启动/取消及清理后旧节点 GC。生成一致性另外验证 Android CSS 与不可变批准参考逐字相同。旧 Beta 的仓库外脚本作为负对照必须失败；这些不是实机 PSS/真实播放测试。
+| 检查 | 实际覆盖 | 不代表 |
+| --- | --- | --- |
+| repository maintenance，18 项夹具 | 本地链接/锚点、不可变参考、版本入口/源集否定；工作树根/清理白名单/跟踪文件/软链接、默认不删/忙碌拒绝，apply只验证临时夹具 | 内容语义审计、秘密扫描、真实仓库删除或设备测试 |
+| provider fake SDK/DOM/audio | 固定官方动作/回调关联、登录/播放门禁、seek/喜欢/层级可见性 | 实际官网、音频可听输出、账号/权益 |
+| layout fake DOM，6 场景 | 宿主适配/撤销、方向范围、固定路由及失败关闭 | 所有真实 DOM/窗口/旋转 |
+| memory fake，7 场景 | 1,000 次页面替换/启停；4,800 次健康/故障轮询；单待执行登记、有限重试、延迟取消/旧节点GC | 实机 PSS、官网全部缓存或长期无泄漏 |
+| generation，3 项 | Android生成一致性、批准CSS逐字相同、固定宿主范围且不 dispatch 播放 | 生产播放器/布局全验收 |
+| admin CLI，11 项 | 固定请求/偏好类型/越权拒绝/独立任务/期限，mock ADB | 实际管理员授权；不读密钥不调设备 |
+| optimizer，3 项 | 解压内容/顺序/STORED/Unicode/注释及拒绝签名/原地处理 | 实际最终APK签名/对齐/裁剪，需要另外检查 |
 
-全量专属 JVM 的 `ReBrowserMusicLatestTaskTest`、`ReBrowserMusicArtworkTest` 和 `ReBrowserMusicEvaluationTest` 检查阻塞线程下 4,096 次替换仍只有一个排队任务、封面总时限断连与网络/大小边界，以及 JS 超时不放开真实未完成请求。网络与连接均为假对象，不进行真实图片解码验证。
+旧 Beta 的仓库外布局/provider 作为内存负对照曾失败；正常测试不自动获取/加载这些旧脚本或真实登录环境。
 
-构建前检查可用内存，使用 `--no-daemon --max-workers=1`，测试 fork=1/heap=512MiB；JVM 测试、R8 与 Lint 分批，不把下面历史多任务示例当作可以在桌面满载时同时执行的推荐命令。
+## 第二层：JVM 与编译后的权限脚本
 
-## 主软件与原生应用管理 JVM 检查
+按开发参考的 `gradle_one` 函数分别执行三套件测试，不能并行各套 JVM/R8/Lint。仓库 `tools/build/bounded-tests.gradle` 显式限制 fork1/512MiB，Gradle堆1536MiB/worker1；本机每批前至少3GiB可用内存。
 
-`ReBrowserApplicationsTest` / `ReBrowserSettingsTest` 覆盖软件名称、三个并列设置页、个性化控件移除、风味默认与显式偏好保留、旧 alias DEFAULT／显式选择和迁移标记、无 provider 的浏览器与邮件直接入口／生命周期，以及固定管理员模式。provider 存在但缺少浏览器特性的状态为模拟检查，不是完整设备兼容验证；不增加公开版特性覆写入口。
+v1.0.3 发布时全量217、两种极简各183 JVM，零失败/错误/跳过；这是对应版本证据，不是文档维护时又执行过全矩阵。
 
-## Android 交接 JVM 检查
+- `ReBrowserApplicationsTest`/`ReBrowserSettingsTest`：三页/草稿、主软件名称、默认/显式偏好、alias迁移、无provider原生回退、固定模式以及指定音乐说明移除。缺能力状态为模拟，不是全厂商验证。
+- `ReBrowserMusicLatestTaskTest`/`ArtworkTest`/`EvaluationTest`/`PlaybackAuthorizationTest`：阻塞线程4,096次替换仍最多一个排队任务、封面时限断连/网络尺寸边界、JS超时不释放实际请求、明确原生播放授权。假连接不是真实图片解码/设备请求。
+- `ReBrowserPlatformTest`：API29/35注册/原生默认应用/外部Intent/`.1`固定交接与有界缓存；不设置真实系统角色或安装文件。
+- 剪贴板针对性：发布修复时24项覆盖原生入口五秒单次输入、无输入/伪造/遮挡/过期、导航/失焦/后台及待批准；夹具使用固定文本，不读真实剪贴板。
 
-`ReBrowserPlatformTest` 覆盖 API 29／35 的浏览器与 `.1` 路径注册、外部 Intent 参数隔离、已持有默认浏览器角色时按钮仍可点击、推荐原生默认应用入口／拒绝第三方假冒处理器／旧系统入口兼容、独立 Profile 初始化、原样复制与有界缓存、只读随机 URI／过期／路径拒绝及系统安装组件选择。模拟测试不实际设置系统默认应用、不安装软件，不能替代 QQ 和厂商安装器真机验证。
-
-## 无损 APK 打包检查
-
-`test_optimize_apk.py` 使用临时 ZIP 固件，验证解压内容与顺序、未压缩资源表／图片保留、签名前处理限制、Unicode 文件名与 ZIP 注释。需安装 [构建工具](../build/README.md) 的仓库外 Zopfli 依赖；只运行 `PYTHONDONTWRITEBYTECODE=1 python3 -B tools/tests/test_optimize_apk.py`，不执行 ADB 或读取密钥。最终候选还逐条比对实际 APK 解压字节、签名证书与对齐。
-
-## 管理员 CLI 请求构建检查
+权限脚本只读取**实际编译常量**，不能直接空输入运行Node或维护第二份JS快照。清理build后先重建Full Debug类：
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python3 -B tools/tests/test_rebrowser_admin_cli.py
+# gradle_one is defined in docs/DEVELOPMENT.md; one bounded batch only.
+gradle_one compileFullBackgroundDebugJavaWithJavac
+set -o pipefail
+mkdir -p "$TMPDIR/policy-classes"
+"$JAVA_HOME/bin/javac" \
+  -cp app/build/intermediates/javac/fullBackgroundDebug/compileFullBackgroundDebugJavaWithJavac/classes \
+  -d "$TMPDIR/policy-classes" tools/tests/DumpPermissionScript.java
+"$JAVA_HOME/bin/java" -cp "$TMPDIR/policy-classes" io.github.reoutlook.DumpPermissionScript \
+  | node --max-old-space-size=96 tools/tests/test_rebrowser_permission_script.cjs
 ```
 
-此检查构造协议请求并模拟 ADB 调用，覆盖设置三页入口、只读状态、偏好类型、越权参数拒绝、独立管理员任务标志与传输期限；需要工具已有的 `cryptography` 依赖，但不会执行 ADB、读取密钥或改动设备。
+47项检查含origin/顶层文档/对象范围/方法借用/元素迁移/事件转换及原生方法捕获。`DumpPermissionScript`不是应用入口，不打包，不读设备、账号或认证数据。
+
+## 第三层：设备测试，仅获机主明确授权后
+
+**本轮手机/Android16专项已取消，高成本矩阵后期。** 此处说明保留夹具的职责，不是执行指令或清理旧账号环境的授权。登录、验证码、解锁、USB安装允许和系统确认由机主处理。
+
+- Debug `ReBrowserClipboardProbeActivity`由DUMP保护，只拦截固定离线HTTPS页，无任意URL/脚本/Profile参数。Clipboard instrumentation用隔离Profile/授权、随机样本与原生输入，结束恢复剪贴板/清理登记的测试偏好；Cleanup instrumentation仅删除其私有登记内的测试Profile，不扫描用户环境。
+- 历史设备剪贴板13项断言在Debug夹具通过，不是最终R8全部攻击复验；系统浮层遮挡仍拒绝，不绕过锁屏或授权。测试页保持亮屏仅属于Debug夹具，不是生产策略。
+- `ReBrowserMusicSystemInstrumentation`自目标辅助包只采用 `MEDIA_CONTENT_CONTROL`，固定包/tag及播放/暂停/前后曲/seek/喜欢/旧控制器检查，输出哈希身份和数值状态，不取账号内容。manifest先列主回归运行器、再音乐运行器，避免AGP覆写。旧MediaController通过不等于旧通知PendingIntent完整矩阵。
+- 必须显式设备序列号、原签名覆盖，不卸载/清数据/强降来制造基线；测试后恢复非调试Release并停用辅助包。无关历史Profile、真实账号、锁屏和最新默认浏览器选择不动。
+
+真机状态/进度、fake音频、JVM、短时PSS、最终包字节和独立可听输出是不同证据。[完整限定范围](../../docs/NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)、[剪贴板修复记录](../../docs/CLIPBOARD_GESTURE_SECURITY.md)。

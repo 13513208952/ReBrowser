@@ -1,0 +1,8 @@
+// Apply explicitly with -I tools/build/bounded-tests.gradle.
+// Limits test JVMs only; also set --max-workers=1 and the Gradle daemon heap on the command line.
+allprojects {
+    tasks.withType(org.gradle.api.tasks.testing.Test).configureEach {
+        maxParallelForks = 1
+        maxHeapSize = '512m'
+    }
+}

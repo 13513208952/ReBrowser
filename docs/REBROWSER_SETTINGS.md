@@ -1,4 +1,4 @@
-# ReBrowser 设置与应用管理（v1.0.0 / v1.0.1-beta）
+# ReBrowser 设置与应用管理（v1.0.3）
 
 设置为三个同级页面，顺序固定：**常规 → 隔离与权限 → 应用管理**。顶部页签、独立滚动位置、公共“保存并返回”、主页／搜索引擎草稿与恢复机制保留。v0.4.4 的个性化页已删除，背景与近期访问控件不搬到其他页。
 
@@ -6,9 +6,9 @@
 | --- | --- |
 | 常规 | 主页、默认搜索引擎、桌面版网站、全局／视频方向、用户手动打开系统默认应用设置 |
 | 隔离与权限 | JavaScript、第三方 Cookie、强行提升主标签页、嵌入的网站能力、后台策略、有效授权与撤销 |
-| 应用管理 | 同 APK 的子软件；目前为 ReOutlook 名称、桌面入口开关、直接进入按钮；显示运行环境是否满足要求 |
+| 应用管理 | 当前套件的运行环境；全量提供 ReOutlook 桌面开关/进入，以及音乐启用、必需独立入口、固定来源/进入；极简不含子软件 |
 
-## Beta 设备与方向
+## 设备与方向（沿用 v1.0.1-beta 起的策略）
 
 v1.0.1-beta 常规页增加自动／手机／平板持久选择。自动使用最大显示范围与物理 DPI，以 7 英寸为暂定分界；数据不可用默认手机，不禁用手动平板选择。完整窗口平板使用 FULL_USER 并遵守系统方向锁定；多窗口／画中画不强制方向，不比较窗口边界。手机原偏好仍保存，平板下相应方向控件不生效。设置固定竖屏，API 36 兼容属性仅限定设置 Activity；系统仍有最终决定权。
 
@@ -16,7 +16,7 @@ v1.0.1-beta 常规页增加自动／手机／平板持久选择。自动使用�
 
 ## 默认背景与保留偏好
 
-- 没有显式背景偏好时：lite 纯白；background 使用专属蓝紫照片。两版默认开启近期访问，列表为空仍隐藏。
+- 没有显式背景偏好时：lite 纯白；background 使用专属蓝紫照片。三套件默认开启近期访问，列表为空仍隐藏。
 - 升级不删除或覆盖已保存的背景／近期访问选择。已有纯白或关闭近期访问仍生效。
 - 风味互换保留偏好；lite 不含照片，记住 `exclusive` 时实际仍显示纯白。
 - 照片和品牌图形未重新编码或降质，不联网获取近期图标、新闻。
@@ -24,7 +24,9 @@ v1.0.1-beta 常规页增加自动／手机／平板持久选择。自动使用�
 
 ## 子软件与升级入口
 
-子软件是同一安装包内的模式，不是插件或独立安装。新安装仅默认显示主软件 ReBrowser 的入口；ReOutlook 桌面入口默认隐藏，但可从应用管理进入。其开关仅控制 launcher alias，MainActivity 不禁用。
+子软件是同一安装包内的模式，不是插件或独立安装；极简不提供邮件/音乐入口实现。全量新安装仅默认显示主软件 ReBrowser；ReOutlook 桌面入口默认隐藏，但可从应用管理进入，其开关仅控制 launcher alias，MainActivity 不禁用。
+
+音乐默认关闭，启用与显示独立音乐桌面入口是同一个机主选择，不能单独隐藏必需入口；只有网易云来源、一个任务/运行时/专属 Profile。关闭或移除任务停止运行，保留登录；新的运行时默认暂停。v1.0.3 只删除机主指定的过时说明，没有删除开关/入口/来源。[音乐用户指南](user/MUSIC.md)与[验收边界](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)。
 
 升级迁移由 Application 初始化和 `MY_PACKAGE_REPLACED` 接收器执行一次：无迁移标记时通过安装／更新时间识别覆盖安装，旧 alias 的 DEFAULT 状态转为显式 ENABLED，保留旧版本默认可见状态；显式 ENABLED／DISABLED 不改动。成功后写入持久迁移标记，后续升级不重新应用旧默认。PackageManager 使用 `DONT_KILL_APP`；启动器图标刷新时机与排列由系统启动器决定。
 
@@ -40,7 +42,7 @@ ReOutlook 不要求 Multi-Profile，仅使用 Default Profile；provider 存在�
 
 `OPEN_SETTINGS.section` 仅接受 `general` / `isolation` / `applications`；无参数默认为常规。旧个性化 Activity 草稿会安全回到常规；新的管理员 `personalization` 请求不再接受。
 
-新增一级固定操作：`GET_APPLICATION_STATUS`、`GET_RUNTIME_STATUS`、`OPEN_APPLICATION_MANAGEMENT`、`OPEN_MODE`（仅 `browser` / `outlook`）。原生状态、能力和设置入口在浏览器不可用时仍能查询／打开；需要浏览器的操作明确返回 `browser-runtime-unavailable`。不增加入口 setter、任意组件／Intent、网站能力启用／授权、Cookie 或安装命令。
+沿用一级固定操作：`GET_APPLICATION_STATUS`、`GET_RUNTIME_STATUS`、`OPEN_APPLICATION_MANAGEMENT`、`OPEN_MODE`（仅 `browser` / `outlook`）。原生状态、能力和设置入口在浏览器不可用时仍能查询／打开；需要浏览器的操作明确返回 `browser-runtime-unavailable`。不增加入口 setter、任意组件／Intent、网站能力启用／授权、Cookie 或安装命令。`validMode("music")` 仍为 false，管理员不能启用或进入音乐。
 
 原生设置独立于管理员临时任务；重用已有设置页时重新选择请求页签并保留草稿，不通过 CLEAR_TOP 结束其上方的浏览器。CLI 为每次授权启动独立临时任务，并给 ADB 调用设置 30 秒传输期限，避免把旧任务带到前台却未执行新请求。
 

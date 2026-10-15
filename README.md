@@ -37,12 +37,14 @@
 - 设置分为 **常规、隔离与权限、应用管理** 三页。默认浏览器只由你在系统设置中选择，应用不会自动替你更改。
 - 使用邮件时（全量包），打开 **设置 → 应用管理 → ReOutlook → 进入**。也可在那里开启独立桌面入口；新安装默认隐藏邮件入口，升级保留原有入口状态。
 
-详细操作见 **[ReBrowser 使用指南](docs/user/REBROWSER.md)** 和 **[ReOutlook 邮件指南](docs/user/REOUTLOOK.md)**。
+使用音乐时（全量包），在 **设置 → 应用管理 → 音乐** 主动启用；独立图标与启用绑定，官方登录后进入真正 WebPlayer。
+
+详细操作：[浏览器指南](docs/user/REBROWSER.md) · [邮件指南](docs/user/REOUTLOOK.md) · [音乐指南](docs/user/MUSIC.md)。
 
 ## 数据与安全
 
 - 邮件缓存、收藏和历史记录保存在本机；没有开发者服务器、广告或遥测服务。
-- 不同总标签页分开保存网站状态，浏览器不与 ReOutlook 共用登录环境。
+- 不同总标签页分开保存网站状态，浏览器、ReOutlook 和音乐不共用登录 Profile（仍属同一个 Android 应用沙箱）。
 - 网站权限仍需要你的授权；网站通知、后台推送和运动传感器保持禁用。
 - 暂停历史记录**不是无痕模式**；卸载应用或清除数据会移除本地资料。应用不提供 Android 自动备份。
 
@@ -52,6 +54,6 @@
 
 遇到问题可在 **[Issues](https://github.com/13513208952/ReBrowser/issues)** 反馈，请描述设备、Android／WebView 版本和复现步骤；不要公开真实邮件、密码、登录令牌或私钥。
 
-[文档目录](docs/README.md) · [开发参考](docs/DEVELOPMENT.md)
+[文档目录](docs/README.md) · [开发参考](docs/DEVELOPMENT.md) · [仓库维护](docs/MAINTENANCE.md) · [发布记录索引](docs/releases/README.md)
 
 本项目采用 [GPL-3.0](LICENSE)，与 Microsoft、Outlook、网易云音乐或搜索引擎厂商没有隶属或官方合作关系。第三方名称与商标归各自权利人；图形资源说明见 [资源来源](docs/ASSET_CREDITS.md)。

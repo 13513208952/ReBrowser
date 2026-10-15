@@ -1,6 +1,6 @@
 # ReBrowser ADB administrator control
 
-ReBrowser is a mode inside the same `io.github.reoutlook` application, not a second APK. Its administrator bridge exists for development, recovery, and controlled automation. It does not weaken the stricter ReOutlook mail-export protocol.
+ReBrowser is the main browser in application `io.github.reoutlook`; full packages additionally include ReOutlook mail and owner-enabled music, not separate APKs. Its administrator bridge exists for development, recovery, and controlled automation. It does not weaken the stricter ReOutlook mail-export protocol, and music remains excluded from administrator mode enablement/access.
 
 ## Removed host-layout zoom experiment
 

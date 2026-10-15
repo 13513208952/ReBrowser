@@ -1,6 +1,6 @@
 # Security policy
 
-ReBrowser includes the ReOutlook mail mode in the same APK and has not received an independent security audit.
+ReBrowser's full package includes the ReOutlook mail mode and the owner-enabled music subapplication in the same APK; minimal packages contain only the browser. The project has not received an independent security audit.
 A first non-alpha release number does not imply a hardened enterprise browser or mail product.
 
 ## Security boundaries
@@ -23,13 +23,15 @@ A first non-alpha release number does not imply a hardened enterprise browser or
 - Subsoftware desktop visibility is owner-controlled, defaults hidden for fresh installations and preserves old upgrade state. Administrator operations accept only fixed mode IDs, not arbitrary components, Intents or visibility setters.
 - Public APKs retain the historical Android Debug certificate for upgrade continuity but are non-debuggable Release builds. This is not a new production-signing identity; private signing material remains outside the repository.
 
-## Music beta and package suites
+## Music and package suites
 
-Starting with v1.0.3-beta, minimal packages omit subapplication components and music assets/permissions; full packages retain mail and add the owner-enabled music task. All suites share one application ID, certificate and Android sandbox. Profiles provide logical storage separation, not separate OS identities. Disjoint version-code ranges prevent ordinary full-to-minimal downgrade; they do not resist uninstall, data clearing, root or privileged downgrade. Installing a new full beta also prevents ordinary rollback to historical low-code stable APKs.
+Starting with v1.0.3-beta, minimal packages omit subapplication components and music assets/permissions; full packages retain mail and add the owner-enabled music task. All suites share one application ID, certificate and Android sandbox. Profiles provide logical storage separation, not separate OS identities. Disjoint version-code ranges prevent ordinary full-to-minimal downgrade; they do not resist uninstall, data clearing, root or privileged downgrade. Installing a full package also prevents ordinary rollback to historical low-code stable APKs.
 
 Music uses a dedicated named Profile, default-deny page permissions and fixed, version-guarded official WebPlayer adaptation. It has no general JSInterface, arbitrary module/network command, extracted-audio player, file handling or credential export. Official authentication, CAPTCHA, trials and rights remain mandatory. Native controls delegate bounded official actions; artwork reads use a fixed HTTPS CDN allowlist, no credentials, no redirect and capped decoding. Owner enablement and its required launcher are one choice; administrator mode IDs cannot enable music.
 
-Background service, media session and wake-lock implementation are not proof of long-Doze, Android 16 or all-OEM correctness. Complete cold-start silence, restoration, task independence, layered Back and media-interruption acceptance remain pending. The owner approved beta publication based on personal use and deferred further device acceptance to the next release; see [beta scope](docs/releases/v1.0.3-beta.md).
+v1.0.3 bounds detached layout references, its own Webpack registration/retry lifetime, artwork replacement/cancellation/deadlines, and outstanding JavaScript evaluations. Timeout is not cancellation of an actual WebView callback. These safeguards do not establish leak-free long-term behavior of the official engine.
+
+Background service, media session and wake-lock implementation are not proof of long-Doze, Android 16 or all-OEM correctness. API 33 tablet RC2 core controls and a roughly nine-minute app/renderer PSS+swap observation passed within their limited scope. The final full APK was installed on an API 36 phone with byte/signature/identity checks only, not Android 16 functional acceptance. The owner waived further phone/Android 16 specialist tests and deferred expensive long-duration, failure, restoration, window and rights matrices to a later major release. Complete instantaneous startup silence, layered Back, notification/process races and media-interruption behavior are not certified; see [formal release scope](docs/releases/v1.0.3.md).
 
 ## Administrator maintenance interfaces
 

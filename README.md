@@ -2,7 +2,7 @@
 
 轻量的 Android 浏览器，用独立的浏览环境分开不同网站的登录状态，并提供搜索、标签页、收藏、历史记录和下载管理。
 
-应用还内置 **ReOutlook** 邮件模式：使用 Outlook 网页收发邮件，将已同步的邮件保存在本机供离线阅读。它是同一应用内的子软件，不需要另外安装。
+稳定版及全量测试包还内置 **ReOutlook** 邮件模式：使用 Outlook 网页收发邮件，将已同步的邮件保存在本机供离线阅读。它是同一应用内的子软件，不需要另外安装。
 
 ## 下载与安装
 
@@ -12,7 +12,23 @@
 
 本版修复已授权网站直接调用剪贴板桥时的用户手势旁路，并纳入设备类型自动识别／手动指定、平板完整窗口跟随系统四方向及设置固定竖屏。旧版用户建议覆盖升级；验证范围见[发布记录](docs/releases/v1.0.2.md)。
 
-需要 **Android 10 或更高版本**。浏览器功能还需要系统 WebView 支持独立 Profile 和网页权限管理；仅 Android 版本满足不保证所有厂商设备都支持。能力不足时仍可打开应用管理，进入可用的邮件模式，不会降低浏览器隔离要求。
+### v1.0.3-beta 测试版：套件与音乐
+
+最新测试版：**[v1.0.3-beta](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.3-beta)**。机主认可当前个人使用体验，剩余验收留到下一 release；稳定正式版仍为 v1.0.2。[Beta 变化与已知限制](docs/releases/v1.0.3-beta.md)。
+
+| 测试包 | 内容 |
+| --- | --- |
+| [极简无背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3-beta/ReBrowser-v1.0.3-beta-minimal-lite.apk) | 仅 ReBrowser，无背景照片 |
+| [极简有背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3-beta/ReBrowser-v1.0.3-beta-minimal-background.apk) | 仅 ReBrowser，有背景照片 |
+| [全量有背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3-beta/ReBrowser-v1.0.3-beta-full-background.apk) | ReBrowser、ReOutlook、音乐（网易云） |
+
+音乐在 **设置 → 应用管理**由机主启用，使用独立任务／Profile 和真正的官方 WebPlayer，保留官方登录、验证码与权益规则。系统媒体控制、后台播放和新启动暂停已有实现及有限观察，完整返回、恢复、窗口及长期锁屏等仍未完成验收。
+
+**使用邮件或音乐请选择全量包。三包同身份，不能并装；只覆盖安装，不卸载／清数据。安装新版全量后，普通安装器不能回退极简，也不能回退旧 v1.0.2；极简→全量可覆盖升级，但完整迁移矩阵未验收。** [校验文件](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3-beta/SHA256SUMS.txt)。
+
+需要 **Android 10 或更高版本**。浏览器功能还需要系统 WebView 支持独立 Profile 和网页权限管理；仅 Android 版本满足不保证所有厂商设备都支持。能力不足时，稳定版及全量测试包仍可打开原生应用管理、进入可用的邮件模式；极简包不含子应用。不会降低浏览器隔离要求。
+
+### v1.0.2 稳定版安装信息
 
 | 版本 | 默认新标签页背景 | 适合谁 |
 | --- | --- | --- |
@@ -28,7 +44,7 @@
 - 打开 **ReBrowser**，在新标签页输入网址或搜索内容；设置中可选择 Bing、百度、Google 或 DuckDuckGo。
 - **总标签页**是独立浏览环境；同一总标签页内的**子标签页**共享登录状态。新建的总标签页默认是临时环境，需要长期保留时请主动上锁。
 - 设置分为 **常规、隔离与权限、应用管理** 三页。默认浏览器只由你在系统设置中选择，应用不会自动替你更改。
-- 使用邮件时，打开 **设置 → 应用管理 → ReOutlook → 进入**。也可在那里开启独立桌面入口；新安装默认隐藏邮件入口，升级保留原有入口状态。
+- 使用邮件时（稳定版／全量测试包），打开 **设置 → 应用管理 → ReOutlook → 进入**。也可在那里开启独立桌面入口；新安装默认隐藏邮件入口，升级保留原有入口状态。
 
 详细操作见 **[ReBrowser 使用指南](docs/user/REBROWSER.md)** 和 **[ReOutlook 邮件指南](docs/user/REOUTLOOK.md)**。
 
@@ -47,4 +63,4 @@
 
 [文档目录](docs/README.md) · [开发参考](docs/DEVELOPMENT.md)
 
-本项目采用 [GPL-3.0](LICENSE)，与 Microsoft、Outlook 或搜索引擎厂商没有隶属或官方合作关系。第三方名称与商标归各自权利人；图形资源说明见 [资源来源](docs/ASSET_CREDITS.md)。
+本项目采用 [GPL-3.0](LICENSE)，与 Microsoft、Outlook、网易云音乐或搜索引擎厂商没有隶属或官方合作关系。第三方名称与商标归各自权利人；图形资源说明见 [资源来源](docs/ASSET_CREDITS.md)。

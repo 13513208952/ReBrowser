@@ -70,7 +70,8 @@ public final class ReBrowserPlatformTest {
                 new Intent(Intent.ACTION_VIEW,Uri.parse("https://example.com/")).putExtra("adminRequest","forged")).create()) {
             Intent next=org.robolectric.Shadows.shadowOf(c.get()).getNextStartedActivity();
             assertNotNull(next);assertEquals(ReBrowserSettingsActivity.class.getName(),next.getComponent().getClassName());
-            assertEquals(ReBrowserSettings.APPLICATIONS,next.getStringExtra(ReBrowserSettings.EXTRA_SECTION));assertTrue(c.get().isFinishing());
+            assertEquals(BuildConfig.FULL_SUITE?ReBrowserSettings.APPLICATIONS:ReBrowserSettings.GENERAL,
+                    next.getStringExtra(ReBrowserSettings.EXTRA_SECTION));assertTrue(c.get().isFinishing());
         }
     }
     private ResolveInfo settingsHandler(String pkg, int flags) {

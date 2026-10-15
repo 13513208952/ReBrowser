@@ -4,6 +4,8 @@
 
 `optimize_apk.py` 仅处理**未签名 APK**，对原本 DEFLATE 的条目比较原压缩流、zlib level 9 和 Zopfli（100 次迭代），采用最小者。所有原条目和解压内容保持不变；原本 STORED 的资源不改为压缩，尤其 `resources.arsc`，以保留 Android 的直接访问约束。图片不重新编码，也不降低画质。现有 WebP 再作 ZIP 压缩反而更大。
 
+当前开发树的合法输入为 `minimalLite`、`minimalBackground`、`fullBackground` 对应目录，文件名分别为 `app-minimal-lite-release-unsigned.apk`、`app-minimal-background-release-unsigned.apk`、`app-full-background-release-unsigned.apk`。需分别验证套件剔除和原签名数据继承；高区间全量包安装后不能普通降级回旧正式包，详见[开发记录](../../docs/NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)。下面保留历史 v0.4.5-alpha 命令示例，不把旧目录内残留 APK 当作新构建。
+
 在项目指定临时目录安装 Python 压缩依赖，不打包进应用或提交环境：
 
 ```bash

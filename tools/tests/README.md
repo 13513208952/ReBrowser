@@ -10,10 +10,10 @@
 export TMPDIR=/home/zhao/temp/re_outlook/permission-policy-tests
 mkdir -p "$TMPDIR/classes"
 export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
-./gradlew testLiteDebugUnitTest testBackgroundDebugUnitTest assembleLiteDebug
+./gradlew testMinimalLiteDebugUnitTest testMinimalBackgroundDebugUnitTest testFullBackgroundDebugUnitTest assembleFullBackgroundDebug
 
 "$JAVA_HOME/bin/javac" \
-  -cp app/build/intermediates/javac/liteDebug/compileLiteDebugJavaWithJavac/classes \
+  -cp app/build/intermediates/javac/fullBackgroundDebug/compileFullBackgroundDebugJavaWithJavac/classes \
   -d "$TMPDIR/classes" tools/tests/DumpPermissionScript.java
 "$JAVA_HOME/bin/java" -cp "$TMPDIR/classes" io.github.reoutlook.DumpPermissionScript \
   | node tools/tests/test_rebrowser_permission_script.cjs
@@ -24,7 +24,7 @@ export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
 ## 剪贴板原生入口检查
 
 ```bash
-./gradlew testLiteDebugUnitTest \
+./gradlew testMinimalLiteDebugUnitTest \
   --tests io.github.reoutlook.ReBrowserClipboardGestureTest \
   --tests io.github.reoutlook.ReBrowserClipboardBridgeTest \
   --tests io.github.reoutlook.ReBrowserSitePermissionsTest

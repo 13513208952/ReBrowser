@@ -20,9 +20,13 @@
 | [设置与应用管理](REBROWSER_SETTINGS.md) | 三页设置、子软件入口、迁移、风味默认与原生回退 |
 | [浏览器设计与沿革](REBROWSER_EXPLORATION.md) | 双层标签、Profile、状态与交互背景 |
 | [邮件架构与同步](REOUTLOOK_ARCHITECTURE.md) | 桥、缓存、账号、回填、检查点与迁移 |
+| [音乐子应用完整设想原文](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md) | 机主整段原话，完整逐字保存，不作整理或改写；压缩交接必读 |
+| [音乐登录前置／UA 硬性要求](NETEASE_MUSIC_LOGIN_REQUIREMENTS.md) | 压缩交接必读；未登录先原手机 UA 登录，仅平板完整窗口横屏可主动切电脑扫码；已恢复全面开发，源码门控已接入，真实 Android 登录待验收 |
+| [音乐 Android 开发](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[非横屏布局](NETEASE_MUSIC_PORTRAIT_LAYOUT.md) | 首轮源码与已安装预览、已确认布局及未验收范围 |
 | [管理协议](REBROWSER_ADMIN_CONTROL.md)、[管理员 CLI](../tools/admin/README.md) | 挑战、签名、三级授权、固定命令与数据边界 |
 | [网站权限](REBROWSER_SITE_PERMISSIONS.md) | 单站授权、后台策略及永久禁止能力 |
 | [剪贴板手势修复](CLIPBOARD_GESTURE_SECURITY.md) | v1.0.2 原生输入边界、确认问题与测试限制 |
+| [旧宿主缩放移除记录](REBROWSER_LAYOUT_ZOOM.md) | 已否决试验及协议／CLI 从源码移除；正常浏览器缩放与网易布局适配保留 |
 | [Android 交接](REBROWSER_ANDROID_HANDOFF.md) | 浏览器注册、默认应用、外部链接和 `.1` APK 交接 |
 | [历史记录](REBROWSER_HISTORY_PLAN.md) | 生命周期保留、维持／暂停及验证范围 |
 | [YouTube 兼容](YOUTUBE_PLAYER_COMPATIBILITY.md) | 窄兼容策略与未覆盖场景 |
@@ -31,6 +35,8 @@
 | [资源来源](ASSET_CREDITS.md) | 照片与搜索品牌；来源不等于任意品牌使用授权 |
 
 ## 当前正式版
+
+[v1.0.3-beta 测试版记录](releases/v1.0.3-beta.md)：三种套件包、官方网易云音乐、有限观察与延期至下一 release 的验收；最新稳定版仍为 v1.0.2。
 
 [v1.0.2 发布记录](releases/v1.0.2.md)：剪贴板原生手势修复，纳入设备与窗口方向功能；升级、签名包体积、验证范围与限制。
 

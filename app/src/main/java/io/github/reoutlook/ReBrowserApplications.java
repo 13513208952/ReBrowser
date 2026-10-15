@@ -6,32 +6,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/** Fixed modes, not downloadable plugins or independent installed packages. */
+/** Fixed build-time applications; providers are mutually exclusive modes inside music. */
 final class ReBrowserApplications {
-    static final String OUTLOOK = "outlook";
+    static final String OUTLOOK = "outlook", MUSIC = "music";
     private ReBrowserApplications() {}
-    static boolean validMode(Object value) { return OUTLOOK.equals(value) || "browser".equals(value); }
-
+    static boolean validMode(Object value) { return "browser".equals(value) || (BuildConfig.FULL_SUITE && OUTLOOK.equals(value)); }
     static Intent settingsIntent(Context context, String section) {
-        // Never strand owner UI inside the transient administrator task.
-        return new Intent(context, ReBrowserSettingsActivity.class)
-                .putExtra(ReBrowserSettings.EXTRA_SECTION, ReBrowserSettings.section(section))
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        String page = ReBrowserSettings.section(section);
+        if (!BuildConfig.FULL_SUITE && ReBrowserSettings.APPLICATIONS.equals(page)) page = ReBrowserSettings.GENERAL;
+        return new Intent(context, ReBrowserSettingsActivity.class).putExtra(ReBrowserSettings.EXTRA_SECTION, page)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
     }
-
-    static void openManagement(Context context) {
-        context.startActivity(settingsIntent(context, ReBrowserSettings.APPLICATIONS));
-    }
-
+    static void openManagement(Context context) { context.startActivity(settingsIntent(context, ReBrowserSettings.APPLICATIONS)); }
     static JSONObject snapshot(Context context) throws JSONException {
         ReBrowserRuntime.Status runtime = ReBrowserRuntime.inspect();
+        JSONArray applications = new JSONArray();
+        if (BuildConfig.FULL_SUITE) {
+            applications.put(new JSONObject().put("id", OUTLOOK).put("name", "ReOutlook")
+                    .put("available", runtime.provider).put("requiresMultiProfile", false)
+                    .put("launcherVisible", new ReOutlookLauncherVisibility(context).visible()).put("freshInstallLauncherVisible", false));
+            applications.put(new JSONObject().put("id", MUSIC).put("name", "音乐")
+                    .put("provider", new ReBrowserMusicSources(context).selected()).put("available", runtime.browserAvailable())
+                    .put("requiresMultiProfile", true).put("enabled", new ReBrowserMusicEntrance(context).enabled())
+                    .put("launcherVisible", new ReBrowserMusicEntrance(context).enabled()).put("freshInstallLauncherVisible", false)
+                    .put("coexistence", true).put("singleActiveProvider", true).put("backgroundPlaybackVerified", false));
+        }
         return new JSONObject().put("mainName", "ReBrowser").put("samePackageModes", true)
-                .put("runtime", runtime.snapshot()).put("administratorCanSetEntrances", false)
-                .put("applications", new JSONArray().put(new JSONObject()
-                        .put("id", OUTLOOK).put("name", "ReOutlook")
-                        .put("available", runtime.provider).put("requiresMultiProfile", false)
-                        .put("launcherVisible", new ReOutlookLauncherVisibility(context).visible())
-                        .put("freshInstallLauncherVisible", false)));
+                .put("suite", BuildConfig.FULL_SUITE ? "full" : "minimal").put("applicationManagementAvailable", BuildConfig.FULL_SUITE)
+                .put("runtime", runtime.snapshot()).put("administratorCanSetEntrances", false).put("applications", applications);
     }
 }

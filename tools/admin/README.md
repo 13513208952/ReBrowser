@@ -1,5 +1,7 @@
 # ReOutlook and ReBrowser administrator tools
 
+The rejected host-layout zoom experiment and its CLI commands have been removed. It was not genuine browser engine page zoom; no substitute zoom command is provided. Public v1.0.2 never included it. Historical previews were subsequently replaced, with owner authorization, by comprehensive music builds without this experiment; see the [removal record](../../docs/REBROWSER_LAYOUT_ZOOM.md).
+
 These tools control two modes of the same `io.github.reoutlook` application; ReBrowser is not a
 separate installed app. Neither administrator surface has a normal in-app entry point. The
 maintenance components remain registered but are callable only by Android shell permission. The

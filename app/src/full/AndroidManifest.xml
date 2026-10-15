@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application>
+        <service android:name=".ReBrowserMusicService" android:exported="false"
+            android:foregroundServiceType="mediaPlayback" android:stopWithTask="false" />
+        <receiver android:name=".ReBrowserMusicControlReceiver" android:exported="false" />
+        <activity android:name=".ReBrowserMusicActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize"
+            android:exported="false" android:icon="@drawable/ic_rbmusic_launcher" android:label="音乐"
+            android:launchMode="singleTask" android:taskAffinity="io.github.reoutlook.music"
+            android:windowSoftInputMode="adjustResize" />
+        <activity-alias android:name=".ReBrowserMusicLauncher" android:enabled="false" android:exported="true"
+            android:icon="@drawable/ic_rbmusic_launcher" android:label="音乐" android:targetActivity=".ReBrowserMusicActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+    </application>
+</manifest>

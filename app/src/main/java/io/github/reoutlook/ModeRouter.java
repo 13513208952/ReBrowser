@@ -8,13 +8,21 @@ final class ModeRouter {
     private ModeRouter() {}
 
     static void openOutlook(Context context) {
-        if (ReBrowserRuntime.inspect().provider) start(context, MainActivity.class);
+        if (BuildConfig.FULL_SUITE && ReBrowserRuntime.inspect().provider) start(context, MainActivity.class);
         else ReBrowserApplications.openManagement(context);
     }
 
     static void openReBrowser(Context context) {
         if (ReBrowserRuntime.inspect().browserAvailable()) start(context, ReBrowserActivity.class);
         else ReBrowserApplications.openManagement(context);
+    }
+
+    static void openMusic(Context context) {
+        if (!BuildConfig.FULL_SUITE || !new ReBrowserMusicEntrance(context).enabled() || !ReBrowserRuntime.inspect().browserAvailable()) {
+            ReBrowserApplications.openManagement(context); return;
+        }
+        context.startActivity(new Intent(context, ReBrowserMusicActivity.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP));
     }
 
     private static void start(Context context, Class<?> activityClass) {

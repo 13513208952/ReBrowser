@@ -2,6 +2,10 @@
 
 ReBrowser is a mode inside the same `io.github.reoutlook` application, not a second APK. Its administrator bridge exists for development, recovery, and controlled automation. It does not weaken the stricter ReOutlook mail-export protocol.
 
+## Removed host-layout zoom experiment
+
+The rejected host-resize/View-transform experiment has been removed from current source, including its protocol operations and capability advertisement. It is not browser engine page zoom. Old requests are rejected as unsupported operations; there is no replacement zoom command. Public v1.0.2 never included it. Previously installed development previews are unchanged until an authorized upgrade; see the [removal record](REBROWSER_LAYOUT_ZOOM.md).
+
 ## Platform and authorization boundary
 
 Both exported ReBrowser administrator components require `android.permission.DUMP`, so only ADB shell/system callers can reach them. Every command then uses a three-minute, single-use challenge bound to the exact request, installation ID, request ID, random nonce, issue time, and expiry.

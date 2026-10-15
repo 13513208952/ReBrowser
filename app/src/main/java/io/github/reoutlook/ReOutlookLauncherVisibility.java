@@ -43,10 +43,12 @@ final class ReOutlookLauncherVisibility {
     }
 
     boolean visible() {
+        if (!BuildConfig.FULL_SUITE) return false;
         return enabled(launcher);
     }
 
     void setVisible(boolean visible) {
+        if (!BuildConfig.FULL_SUITE) throw new IllegalStateException("application-not-included");
         if (visible() == visible) return;
         packages.setComponentEnabledSetting(launcher,
                 visible ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
@@ -57,7 +59,7 @@ final class ReOutlookLauncherVisibility {
     JSONObject snapshot() throws JSONException {
         return new JSONObject()
                 .put("outlookLauncherVisible", visible())
-                .put("outlookActivityEnabled", enabled(new ComponentName(context, MainActivity.class)))
+                .put("outlookActivityEnabled", BuildConfig.FULL_SUITE && enabled(new ComponentName(context.getPackageName(), context.getPackageName() + ".MainActivity")))
                 .put("rebrowserLauncherEnabled", enabled(new ComponentName(
                         context, ReBrowserLauncherActivity.class)))
                 .put("administratorCanSet", false);

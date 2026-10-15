@@ -10,12 +10,24 @@ android {
         applicationId = "io.github.reoutlook"
         minSdk = 29
         targetSdk = 36
-        versionCode = 19
-        versionName = "1.0.2"
+        // Minimal codes must remain below the full range forever. Normal Android install
+        // rejects full -> minimal as a version downgrade, including newer minimal releases.
+        versionCode = 101
+        versionName = "1.0.3-beta"
     }
 
-    flavorDimensions += "background"
+    flavorDimensions += listOf("suite", "background")
     productFlavors {
+        create("minimal") {
+            dimension = "suite"
+            versionCode = 101
+            buildConfigField("boolean", "FULL_SUITE", "false")
+        }
+        create("full") {
+            dimension = "suite"
+            versionCode = 1_000_101
+            buildConfigField("boolean", "FULL_SUITE", "true")
+        }
         create("lite") { dimension = "background" }
         create("background") { dimension = "background" }
     }
@@ -53,6 +65,13 @@ android {
 
     testOptions {
         unitTests.isIncludeAndroidResources = true
+    }
+}
+
+androidComponents {
+    beforeVariants(selector().all()) { variant ->
+        if (variant.productFlavors.contains("suite" to "full") &&
+            variant.productFlavors.contains("background" to "lite")) variant.enable = false
     }
 }
 

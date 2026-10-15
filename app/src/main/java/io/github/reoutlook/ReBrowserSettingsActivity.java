@@ -29,6 +29,8 @@ public final class ReBrowserSettingsActivity extends Activity {
     private ReOutlookLauncherVisibility launcherVisibility;
     private Switch outlookLauncherSwitch;
     private Button outlookOpenButton;
+    private Switch musicEnabledSwitch;
+    private Button musicOpenButton;
     private TextView runtimeMessage;
     private EditText homeUrl;
     private Spinner searchEngine;
@@ -91,6 +93,7 @@ public final class ReBrowserSettingsActivity extends Activity {
             TextView button = new TextView(this);
             button.setText(sectionLabels[i]); button.setTextSize(14); button.setGravity(Gravity.CENTER);
             button.setContentDescription(sectionLabels[i] + "设置");
+            button.setEnabled(BuildConfig.FULL_SUITE || !ReBrowserSettings.APPLICATIONS.equals(section));
             button.setOnClickListener(v -> showSection(section));
             navigation.addView(button, new LinearLayout.LayoutParams(0, dp(48), 1));
             pageButtons[i] = button;
@@ -112,6 +115,7 @@ public final class ReBrowserSettingsActivity extends Activity {
         LinearLayout applications = pageContents[2];
         runtimeMessage = fieldLabel("");
         applications.addView(runtimeMessage);
+        if (BuildConfig.FULL_SUITE) {
         applications.addView(sectionTitle("子软件"));
         LinearLayout applicationRow = new LinearLayout(this);
         applicationRow.setGravity(Gravity.CENTER_VERTICAL);
@@ -134,6 +138,36 @@ public final class ReBrowserSettingsActivity extends Activity {
         applicationRow.addView(outlookOpenButton);
         applications.addView(applicationRow);
         applications.addView(fieldLabel("开关仅控制桌面入口；隐藏时仍可点击进入。新安装默认隐藏，升级保留已有选择。"));
+        LinearLayout musicRow = new LinearLayout(this);
+        musicRow.setGravity(Gravity.CENTER_VERTICAL);
+        musicRow.setPadding(dp(8), dp(12), dp(8), dp(12));
+        musicRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        LinearLayout musicName = new LinearLayout(this); musicName.setOrientation(LinearLayout.VERTICAL);
+        musicName.addView(fieldLabel("音乐"));
+        musicName.addView(fieldLabel("网易云 · 共存型 · 独立任务与登录环境"));
+        musicRow.addView(musicName, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        musicEnabledSwitch = new Switch(this);
+        musicEnabledSwitch.setContentDescription("启用音乐及其桌面入口");
+        musicEnabledSwitch.setChecked(new ReBrowserMusicEntrance(this).enabled());
+        musicEnabledSwitch.setOnCheckedChangeListener(this::onMusicEnabledChanged);
+        musicRow.addView(musicEnabledSwitch);
+        musicOpenButton = new Button(this); musicOpenButton.setText("进入");
+        musicOpenButton.setContentDescription("进入音乐");
+        musicOpenButton.setOnClickListener(v -> ModeRouter.openMusic(this)); musicRow.addView(musicOpenButton);
+        applications.addView(musicRow);
+        applications.addView(fieldLabel("音乐需先启用，启用时同时显示独立桌面入口。关闭会结束运行和播放，保留登录。后台／系统控制已接入首轮源码，尚未实机验收。"));
+        applications.addView(fieldLabel("音乐工作模式（同时仅一个源运行）"));
+        Spinner source = new Spinner(this);
+        source.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"网易云"}));
+        source.setContentDescription("音乐源工作模式");
+        source.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> p, View v, int position, long id) {
+                new ReBrowserMusicSources(ReBrowserSettingsActivity.this).select(ReBrowserMusicSources.NETEASE);
+            }
+            @Override public void onNothingSelected(AdapterView<?> p) {}
+        });
+        applications.addView(source);
+        }
 
         content.addView(sectionTitle("启动与搜索"));
         content.addView(fieldLabel("主页网址"));
@@ -274,6 +308,7 @@ public final class ReBrowserSettingsActivity extends Activity {
                 : runtime.provider ? "当前 WebView 不满足 ReBrowser 隔离浏览要求；仍可进入 ReOutlook。此页面不启动浏览器工作区。"
                 : "当前没有可用 WebView；原生应用管理仍可使用，安装或启用 WebView 后再进入网页模式。");
         if (outlookOpenButton != null) outlookOpenButton.setEnabled(runtime.provider);
+        refreshMusicEntrance();
         if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();
         // PackageManager is the single source of truth, including after process restarts.
         if (outlookLauncherSwitch != null) {
@@ -285,6 +320,7 @@ public final class ReBrowserSettingsActivity extends Activity {
 
     private void showSection(String value) {
         selectedSection = ReBrowserSettings.section(value);
+        if (!BuildConfig.FULL_SUITE && ReBrowserSettings.APPLICATIONS.equals(selectedSection)) selectedSection = ReBrowserSettings.GENERAL;
         for (int i = 0; i < pages.length; i++) {
             boolean selected = selectedSection.equals(ReBrowserSettings.SECTIONS[i]);
             pages[i].setVisibility(selected ? View.VISIBLE : View.GONE);
@@ -312,6 +348,25 @@ public final class ReBrowserSettingsActivity extends Activity {
             button.setOnCheckedChangeListener(this::onOutlookLauncherChanged);
             Toast.makeText(this, "桌面入口更新失败，请重试", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void onMusicEnabledChanged(CompoundButton button, boolean enabled) {
+        try { new ReBrowserMusicEntrance(this).setEnabled(enabled); }
+        catch (RuntimeException error) {
+            Toast.makeText(this, "音乐入口更新失败，请重试", Toast.LENGTH_SHORT).show();
+        }
+        refreshMusicEntrance();
+    }
+
+    private void refreshMusicEntrance() {
+        if (!BuildConfig.FULL_SUITE) return;
+        boolean enabled = new ReBrowserMusicEntrance(this).enabled();
+        if (musicEnabledSwitch != null) {
+            musicEnabledSwitch.setOnCheckedChangeListener(null);
+            musicEnabledSwitch.setChecked(enabled);
+            musicEnabledSwitch.setOnCheckedChangeListener(this::onMusicEnabledChanged);
+        }
+        if (musicOpenButton != null) musicOpenButton.setEnabled(enabled && ReBrowserRuntime.inspect().browserAvailable());
     }
 
     private TextView sectionTitle(String text) {

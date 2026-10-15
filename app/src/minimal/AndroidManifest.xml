@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <application>
+        <provider android:name=".MaintenanceProvider" tools:node="remove" />
+        <activity android:name=".MaintenanceActivity" tools:node="remove" />
+        <activity android:name=".ArchiveActivity" tools:node="remove" />
+        <activity android:name=".MainActivity" tools:node="remove" />
+        <activity-alias android:name=".ReOutlookLauncher" tools:node="remove" />
+    </application>
+</manifest>

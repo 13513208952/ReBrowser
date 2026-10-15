@@ -10,7 +10,7 @@ Gradle 项目名与显示名为 ReBrowser；内部 Java package/applicationId �
 
 ## 构建
 
-需要 JDK 17 和 Android SDK 36；最低 Android API 29。两个风味：`lite`（没有照片资源）、`background`（包含单张专属照片），相同安装身份，不能并存。
+需要 JDK 17 和 Android SDK 36；最低 Android API 29。开发树已拆分套件与背景两轴，合法组合是 `minimalLite`、`minimalBackground`、`fullBackground`，相同安装身份，不能并存；`fullLite` 不生成。正式 v1.0.2 的历史两风味产物不因此改变。v1.0.3-beta 使用极简 code 101／全量 code 1,000,101；普通安装器拒绝新版全量回退极简或旧稳定版。套件剔除、版本区间与升级注意事项见[音乐开发记录](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)。
 
 ```bash
 git clone https://github.com/13513208952/ReBrowser.git
@@ -21,14 +21,15 @@ export TMPDIR=/home/zhao/temp/re_outlook/build-jvm
 mkdir -p "$TMPDIR"
 export JAVA_TOOL_OPTIONS="-Djava.io.tmpdir=$TMPDIR"
 export PATH="$JAVA_HOME/bin:$PATH"
-./gradlew --no-daemon testLiteDebugUnitTest testBackgroundDebugUnitTest
-./gradlew --no-daemon assembleLiteDebug assembleBackgroundDebug
-./gradlew --no-daemon assembleLiteRelease assembleBackgroundRelease lintLiteDebug lintBackgroundDebug
+./gradlew --no-daemon testMinimalLiteDebugUnitTest testMinimalBackgroundDebugUnitTest testFullBackgroundDebugUnitTest
+./gradlew --no-daemon assembleMinimalLiteDebug assembleMinimalBackgroundDebug assembleFullBackgroundDebug
+./gradlew --no-daemon assembleMinimalLiteRelease assembleMinimalBackgroundRelease assembleFullBackgroundRelease
+./gradlew --no-daemon lintMinimalLiteDebug lintMinimalBackgroundDebug lintFullBackgroundDebug
 ```
 
 在本维护机器上临时文件统一使用 `/home/zhao/temp/re_outlook/`，不使用内存盘 `/tmp`；其他开发机器请自行指定可用磁盘目录。
 
-产物位于 `app/build/outputs/apk/{lite,background}/{debug,release}/`。Release 为未签名产物，已启用完整 R8 优化／混淆、资源剪枝与压缩 DEX。公开包继续使用历史证书以覆盖升级，Release 本身不含 `DEBUGGABLE`；历史 Android Debug 签名不是新的生产签名方案。签名私钥和管理员私钥绝不提交。
+产物位于 `app/build/outputs/apk/{minimalLite,minimalBackground,fullBackground}/{debug,release}/`，文件名分别包含 `minimal-lite`、`minimal-background`、`full-background`。Release 为未签名产物，已启用完整 R8 优化／混淆、资源剪枝与压缩 DEX。公开包继续使用历史证书以覆盖升级，Release 本身不含 `DEBUGGABLE`；历史 Android Debug 签名不是新的生产签名方案。签名私钥和管理员私钥绝不提交。
 
 ## 测试与发布
 
@@ -37,7 +38,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 - [项目状态](PROJECT_STATUS.md)：本轮通过／待验证项及设备覆盖边界。
 - [历次发布说明](releases/)：对应版本的验证、包体与校验值，不替代当前版本验收。
 
-发布前逐条比较压缩前后的解压内容、签名、对齐、网络政策、非调试 Manifest 和两版照片有无；保留本地 R8 报告。展示最终签名 APK 的体积分布再推送／发布。只发布源码、测试、文档和批准的 APK／校验资产，不发布密钥、设备日志、截图、原始大图或临时网络例外。
+发布前逐条比较压缩前后的解压内容、签名、对齐、网络政策、非调试 Manifest、套件剔除和三种组合的照片有无；保留本地 R8 报告。展示最终签名 APK 的体积分布再推送／发布。只发布源码、测试、文档和批准的 APK／校验资产，不发布密钥、设备日志、截图、原始大图或临时网络例外。
 
 真机升级只能覆盖安装（例如 `adb install -r`），不可卸载或清数据；先提醒锁定重要临时环境。保持用户最新默认浏览器选择，不自动改角色、不绕过锁屏或验证码。`.1` 文件与安装器操作仍由机主自行测试；测试 YouTube 前需告知机主准备代理。
 
@@ -45,6 +46,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 | 主题 | 参考文档 |
 | --- | --- |
+| 音乐独立运行时、官方登录、套件及延期验收 | [音乐开发记录](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[机主原话](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md) |
 | 当前设置、风味默认、升级入口和原生能力回退 | [设置与应用管理](REBROWSER_SETTINGS.md) |
 | 总／子标签页、命名 Profile 与状态所有者 | [浏览器设计与沿革](REBROWSER_EXPLORATION.md) |
 | 邮件桥、账号、缓存、回填与数据库 | [邮件架构](REOUTLOOK_ARCHITECTURE.md) |

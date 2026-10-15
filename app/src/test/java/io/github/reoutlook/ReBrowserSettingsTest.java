@@ -98,13 +98,14 @@ public final class ReBrowserSettingsTest {
             assertNull(find(page(a,"general"),"显示近期访问"));
             assertNull(find(root(a),"新标签页背景"));
             assertNull(find(root(a),"显示近期访问"));
-            assertNotNull(find(page(a,"applications"),"ReOutlook"));
+            if (BuildConfig.FULL_SUITE) assertNotNull(find(page(a,"applications"),"ReOutlook"));
+            else { assertNull(find(page(a,"applications"),"ReOutlook")); assertFalse(find(root(a),"应用管理设置").isEnabled()); }
             assertNotNull(find(page(a,"isolation"),"JavaScript"));
             assertNotNull(find(page(a,"isolation"),"网站权限管理"));
             assertNotNull(find(page(a,"isolation"),"摄像头"));
             assertNull(find(page(a,"isolation"),"主页网址"));
             find(root(a),"应用管理设置").performClick();
-            assertEquals(View.VISIBLE,page(a,"applications").getVisibility());
+            assertEquals(View.VISIBLE,page(a,BuildConfig.FULL_SUITE?"applications":"general").getVisibility());
             find(root(a),"隔离与权限设置").performClick();
             assertEquals(View.VISIBLE,page(a,"isolation").getVisibility());
             assertEquals(View.GONE,page(a,"applications").getVisibility());
@@ -114,7 +115,7 @@ public final class ReBrowserSettingsTest {
     }
     @Test public void routingAndRecreationKeepTheSelectedSection() {
         try(ActivityController<ReBrowserSettingsActivity> c=activity("applications")) {
-            c.recreate(); assertEquals(View.VISIBLE,page(c.get(),"applications").getVisibility());
+            c.recreate(); assertEquals(View.VISIBLE,page(c.get(),BuildConfig.FULL_SUITE?"applications":"general").getVisibility());
         }
         try(ActivityController<ReBrowserSettingsActivity> c=activity("unknown")) {
             assertEquals(View.VISIBLE,page(c.get(),"general").getVisibility());
@@ -124,7 +125,7 @@ public final class ReBrowserSettingsTest {
         try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
             type(page(c.get(),"general"),EditText.class).setText("https://example.com/uncommitted");
             c.newIntent(new Intent().putExtra(ReBrowserSettings.EXTRA_SECTION,"applications"));
-            assertEquals(View.VISIBLE,page(c.get(),"applications").getVisibility());
+            assertEquals(View.VISIBLE,page(c.get(),BuildConfig.FULL_SUITE?"applications":"general").getVisibility());
             assertEquals("https://example.com/uncommitted",type(page(c.get(),"general"),EditText.class).getText().toString());
             assertFalse(c.get().isFinishing());
         }
@@ -145,9 +146,9 @@ public final class ReBrowserSettingsTest {
         try(ActivityController<ReBrowserSettingsActivity> c=activity("general")) {
             type(page(c.get(),"general"),EditText.class).setText("https://example.com/draft");
             type(page(c.get(),"general"),Spinner.class).setSelection(3);
-            find(root(c.get()),"应用管理设置").performClick();
+            find(root(c.get()),BuildConfig.FULL_SUITE?"应用管理设置":"隔离与权限设置").performClick();
             c.recreate();
-            assertEquals(View.VISIBLE,page(c.get(),"applications").getVisibility());
+            assertEquals(View.VISIBLE,page(c.get(),BuildConfig.FULL_SUITE?"applications":"isolation").getVisibility());
             assertEquals("https://example.com/draft",type(page(c.get(),"general"),EditText.class).getText().toString());
             assertEquals(3,type(page(c.get(),"general"),Spinner.class).getSelectedItemPosition());
         }

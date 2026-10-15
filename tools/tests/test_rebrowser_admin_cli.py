@@ -19,6 +19,12 @@ def request(command, *arguments):
 
 
 class SettingsCommands(unittest.TestCase):
+    def test_removed_host_zoom_commands_are_absent(self):
+        for command in ("page-zoom", "page-zoom-status"):
+            self.assertNotIn(command, admin.OPERATIONS)
+            with self.assertRaises(KeyError):
+                request(command)
+
     def test_legacy_settings_still_has_default_route(self):
         self.assertEqual("OPEN_SETTINGS", request("settings")["operation"])
         self.assertNotIn("section", request("settings"))

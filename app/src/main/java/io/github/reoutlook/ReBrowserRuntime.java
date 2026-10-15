@@ -26,11 +26,12 @@ final class ReBrowserRuntime {
             if (!messageBridge) missing.put("WEB_MESSAGE_LISTENER");
             if (!documentScript) missing.put("DOCUMENT_START_SCRIPT");
             return new JSONObject().put("webViewPresent", provider).put("browserAvailable", browserAvailable())
-                    .put("outlookAvailable", provider).put("outlookRequiresMultiProfile", false)
+                    .put("outlookAvailable", BuildConfig.FULL_SUITE && provider).put("outlookRequiresMultiProfile", false)
+                    .put("musicAvailable", BuildConfig.FULL_SUITE && browserAvailable()).put("musicRequiresMultiProfile", true)
                     .put("multiProfile", multiProfile).put("messageBridge", messageBridge)
                     .put("documentScript", documentScript).put("missingFeatures", missing)
                     .put("webViewPackage", packageName).put("webViewVersion", version)
-                    .put("nativeApplicationManagementAvailable", true);
+                    .put("nativeApplicationManagementAvailable", BuildConfig.FULL_SUITE);
         }
     }
 

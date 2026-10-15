@@ -23,6 +23,14 @@ A first non-alpha release number does not imply a hardened enterprise browser or
 - Subsoftware desktop visibility is owner-controlled, defaults hidden for fresh installations and preserves old upgrade state. Administrator operations accept only fixed mode IDs, not arbitrary components, Intents or visibility setters.
 - Public APKs retain the historical Android Debug certificate for upgrade continuity but are non-debuggable Release builds. This is not a new production-signing identity; private signing material remains outside the repository.
 
+## Music beta and package suites
+
+Starting with v1.0.3-beta, minimal packages omit subapplication components and music assets/permissions; full packages retain mail and add the owner-enabled music task. All suites share one application ID, certificate and Android sandbox. Profiles provide logical storage separation, not separate OS identities. Disjoint version-code ranges prevent ordinary full-to-minimal downgrade; they do not resist uninstall, data clearing, root or privileged downgrade. Installing a new full beta also prevents ordinary rollback to historical low-code stable APKs.
+
+Music uses a dedicated named Profile, default-deny page permissions and fixed, version-guarded official WebPlayer adaptation. It has no general JSInterface, arbitrary module/network command, extracted-audio player, file handling or credential export. Official authentication, CAPTCHA, trials and rights remain mandatory. Native controls delegate bounded official actions; artwork reads use a fixed HTTPS CDN allowlist, no credentials, no redirect and capped decoding. Owner enablement and its required launcher are one choice; administrator mode IDs cannot enable music.
+
+Background service, media session and wake-lock implementation are not proof of long-Doze, Android 16 or all-OEM correctness. Complete cold-start silence, restoration, task independence, layered Back and media-interruption acceptance remain pending. The owner approved beta publication based on personal use and deferred further device acceptance to the next release; see [beta scope](docs/releases/v1.0.3-beta.md).
+
 ## Administrator maintenance interfaces
 
 Administrator components have no launcher or normal in-app entry point and require the platform `android.permission.DUMP` permission used by Android shell. A ReOutlook data export additionally requires a short-lived, single-use administrator signature bound to the installation, active account, operation, nonce, and expiry. The device owner must then approve the export through Android's system lock credential UI.

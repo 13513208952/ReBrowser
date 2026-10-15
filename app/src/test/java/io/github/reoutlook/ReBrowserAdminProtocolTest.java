@@ -30,6 +30,14 @@ public final class ReBrowserAdminProtocolTest {
                 .edit().clear().commit();
     }
 
+    @Test public void removedHostZoomOperationsAreRejected() throws Exception {
+        for (String operation : new String[]{"SET_PAGE_ZOOM", "GET_PAGE_ZOOM_STATUS"}) {
+            JSONObject request = prepared(operation).put("percent", 150);
+            assertThrows(SecurityException.class,
+                    () -> ReBrowserAdminProtocol.prepareExternalRequest(request));
+        }
+    }
+
     @Test
     public void authorizationLevelsAndOwnerBoundaryAreStable() throws Exception {
         assertEquals(1, ReBrowserAdminProtocol.authorizationLevel(

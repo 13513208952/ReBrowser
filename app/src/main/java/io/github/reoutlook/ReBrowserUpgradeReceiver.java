@@ -8,7 +8,7 @@ import android.content.Intent;
 public final class ReBrowserUpgradeReceiver extends BroadcastReceiver {
     @Override public void onReceive(Context context, Intent intent) {
         if (Intent.ACTION_MY_PACKAGE_REPLACED.equals(intent.getAction())) {
-            try { new ReOutlookLauncherVisibility(context).migrateInstallation(); }
+            try { if (BuildConfig.FULL_SUITE) new ReOutlookLauncherVisibility(context).migrateInstallation(); }
             catch (RuntimeException error) {
                 android.util.Log.w("ReBrowser", "Entrance migration deferred: " + error.getClass().getSimpleName());
             }

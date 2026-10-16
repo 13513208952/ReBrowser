@@ -1,16 +1,18 @@
 # 音乐 Android 开发记录
 
-当前：**v1.0.3 已正式发布，最终全量包已原签名覆盖更新手机并核对字节/身份/默认角色；不等于手机功能专项通过。** RC2 平板完成核心短测及约九分钟观察，正式构建仅调整版本标识。机主取消本轮手机/Android 16 专项，高成本完整矩阵移至后期大版本，由长期使用反馈补充。当前结果见[验收记录](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)，文件/哈希见[正式版记录](releases/v1.0.3.md)；旧标签/资产不改动。下文 Beta 观察与当时的待办明确归为历史，不覆盖 RC2 后续结果。
+当前实现纳入 **[v1.0.4](releases/v1.0.4.md)**：音乐启动／手机布局、官方歌词与可选三态桌面歌词，以及系统媒体seek停滞修正；本机有限实测与最终包核对单列，不外推完整矩阵。机主决定其余兼容性由日常反馈，OEM歌词输出暂缓、网页引擎缩放已放弃。旧标签／资产不改动。下文Beta、RC2及[v1.0.3验收](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)数字仍归历史，不用新证据追改旧版。
 
 交接先读：[机主原话（不得改写）](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md)、[登录硬性要求](NETEASE_MUSIC_LOGIN_REQUIREMENTS.md)、[已确认布局](NETEASE_MUSIC_PORTRAIT_LAYOUT.md)、[接口研究](NETEASE_MUSIC_INTERFACE_RESEARCH.md)。另行停止的第三方播放器调研不恢复。
 
+v1.0.4累计开发过程见[启动优化与停止／重开](MUSIC_STARTUP_OPTIMIZATION.md)、[完整播放页与歌词](MUSIC_EXPANDED_PLAYER_AND_LYRICS.md)、[桌面歌词与系统进度修正](MUSIC_DESKTOP_LYRICS.md)。私有候选与最终APK、假测试与实际元素／SDK推进分开记录；首页双入口卡片只改布局及显示，不删除原数据或重绑定官方事件。
+
 ## 套件、安装与版本
 
-| 组合 | variant | v1.0.3 versionCode |
+| 组合 | variant | v1.0.4 versionCode |
 | --- | --- | ---: |
-| 极简、无照片背景 | `minimalLite` | 104 |
-| 极简、有照片背景 | `minimalBackground` | 104 |
-| 全量、有照片背景 | `fullBackground` | 1,000,104 |
+| 极简、无照片背景 | `minimalLite` | 105 |
+| 极简、有照片背景 | `minimalBackground` | 105 |
+| 全量、有照片背景 | `fullBackground` | 1,000,106 |
 
 `fullLite` 不生成，定制包暂不实现。applicationId 保持 `io.github.reoutlook`，沿用原证书，不卸载／清数据。极简只保留浏览器；音乐实现、固定资源及媒体前台服务／唤醒锁权限物理位于 `src/full`，极简编译门面未注册并由 R8 删除；邮件相关共享实现也由 R8 剔除。原生管理／诊断不创建 WebView 或 Profile。
 

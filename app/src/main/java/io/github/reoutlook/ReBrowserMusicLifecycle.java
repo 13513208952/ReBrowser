@@ -13,7 +13,8 @@ final class ReBrowserMusicLifecycle {
     boolean desktop() { return stage == Stage.PLAYER || (stage == Stage.LOGIN && desktopLogin); }
     boolean player() { return stage == Stage.PLAYER; }
     String destination() {
-        return stage == Stage.LOGIN ? (desktopLogin ? ReBrowserMusicPolicy.DESKTOP_LOGIN : ReBrowserMusicPolicy.MOBILE_LOGIN)
+        return stage == Stage.CHECKING ? ReBrowserMusicPolicy.ACCOUNT
+                : stage == Stage.LOGIN ? (desktopLogin ? ReBrowserMusicPolicy.DESKTOP_LOGIN : ReBrowserMusicPolicy.MOBILE_LOGIN)
                 : ReBrowserMusicPolicy.HOME;
     }
     boolean presentLogin(String url, boolean verified) {

@@ -8,27 +8,27 @@
 
 前往 **[GitHub Releases](https://github.com/13513208952/ReBrowser/releases)** 下载 APK。
 
-当前正式版本：**[v1.0.3](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.3)**。
+当前正式版本：**[v1.0.4](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.4)**。
 
-本版提供三种套件，修复音乐旧页面引用、模块登记与封面等待队列的无界保留，增加网页请求背压，并删除指定的过时管理说明。平板核心控制与短时内存观察已完成；高成本完整矩阵移至后期，手机及 Android 16 专项由机主明确暂不进行，不能宣称已通过。[发布记录与验证边界](docs/releases/v1.0.3.md)。
+本版提供三种套件，集中改进音乐启动、手机首页与完整播放器布局、官方歌词与可选桌面歌词，并修正系统媒体进度跳转卡住的问题。当前手机有针对性验证；其他机型、权益及长期兼容性由日常反馈继续补充，不宣称完整矩阵通过。[发布记录与验证边界](docs/releases/v1.0.4.md)。
 
 ### 套件选择
 
 | 安装包 | 内容 |
 | --- | --- |
-| [极简无背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3/ReBrowser-v1.0.3-minimal-lite.apk) | 仅 ReBrowser，无背景照片，约 220 KB |
-| [极简有背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3/ReBrowser-v1.0.3-minimal-background.apk) | 仅 ReBrowser，有背景照片，约 1.07 MB |
-| [全量有背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3/ReBrowser-v1.0.3-full-background.apk) | ReBrowser、ReOutlook、音乐（网易云），约 1.12 MB |
+| [极简无背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/ReBrowser-v1.0.4-minimal-lite.apk) | 仅 ReBrowser，无背景照片，约 220 KB |
+| [极简有背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/ReBrowser-v1.0.4-minimal-background.apk) | 仅 ReBrowser，有背景照片，约 1.07 MB |
+| [全量有背景](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/ReBrowser-v1.0.4-full-background.apk) | ReBrowser、ReOutlook、音乐（网易云），约 1.14 MB |
 
-音乐在 **设置 → 应用管理**由机主启用，使用独立任务／Profile 和真正的官方 WebPlayer，保留官方登录、验证码与权益规则。系统媒体控制、后台播放和新启动暂停已有实现及平板有限验证；完整返回、恢复、窗口及长期锁屏等仍未完成验收。
+音乐在 **设置 → 应用管理**由机主启用，使用独立任务／Profile 和真正的官方 WebPlayer，保留官方登录、验证码与权益规则。支持系统媒体控制、后台播放、新启动暂停及需主动授权的桌面歌词；完整返回、恢复、窗口及长期锁屏等仍未完成全面验收。
 
-**使用邮件或音乐请选择全量包。三包同身份，不能并装；只覆盖安装，不卸载／清数据。安装新版全量后，普通安装器不能回退极简，也不能回退旧 v1.0.2；极简→全量可覆盖升级，但完整迁移矩阵未验收。** [校验文件](https://github.com/13513208952/ReBrowser/releases/download/v1.0.3/SHA256SUMS.txt)。
+**使用邮件或音乐请选择全量包。三包同身份，不能并装；只覆盖安装，不卸载／清数据。安装新版全量后，普通安装器不能回退极简，也不能回退旧 v1.0.2；极简→全量可覆盖升级，但完整迁移矩阵未验收。** [校验文件](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/SHA256SUMS.txt)。
 
 需要 **Android 10 或更高版本**。浏览器功能还需要系统 WebView 支持独立 Profile 和网页权限管理；仅 Android 版本满足不保证所有厂商设备都支持。能力不足时，全量包仍可打开原生应用管理、进入可用的邮件模式；极简包不含子应用。不会降低浏览器隔离要求。
 
 三包默认显示近期访问，历史为空时不显示。升级保留已有背景和近期访问选择；无背景包不含照片，即使记住照片偏好也显示纯白。重要的临时浏览环境请先上锁，避免升级重启后丢失。
 
-历史 [v1.0.3-beta](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.3-beta) 与 [v1.0.2](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.2) 标签及资产保持不变；不要通过卸载来强行回退。
+历史 [v1.0.3](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.3)、[v1.0.3-beta](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.3-beta) 与 [v1.0.2](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.2) 标签及资产保持不变；不要通过卸载来强行回退。
 
 ## 开始使用
 

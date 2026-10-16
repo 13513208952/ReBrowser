@@ -6,11 +6,11 @@
 
 主仓库为 [13513208952/ReBrowser](https://github.com/13513208952/ReBrowser)。原仓库原地更名，历史提交、标签和 Releases 保留。显示名为 ReBrowser，安装身份仍是 `io.github.reoutlook`；数据库、Profile、偏好及原签名保持连续，不为整理目录或更名修改它们。
 
-| variant | 内容 | 当前 v1.0.3 code |
+| variant | 内容 | 当前 v1.0.4 code |
 | --- | --- | ---: |
-| `minimalLite` | 仅浏览器，无照片 | 104 |
-| `minimalBackground` | 仅浏览器，有照片 | 104 |
-| `fullBackground` | 浏览器、邮件、音乐，有照片 | 1,000,104 |
+| `minimalLite` | 仅浏览器，无照片 | 105 |
+| `minimalBackground` | 仅浏览器，有照片 | 105 |
+| `fullBackground` | 浏览器、邮件、音乐，有照片 | 1,000,106 |
 
 `fullLite` 禁用；三包不能并存。全量高 code 区间阻止普通全量→极简/旧稳定版降级，完整真实极简→全量迁移矩阵尚未专项验证。不要以卸载、清数据或强制降级制造测试基线。版本以 `app/build.gradle.kts` 为准，历史版本见[发布索引](releases/README.md)。
 
@@ -80,7 +80,7 @@ Debug 需要时单独执行，例如 `gradle_one assembleFullBackgroundDebug`。
 
 ## 设备操作与验收预算
 
-本轮 v1.0.3 发布已完成：RC2 平板限定短测，最终全量包手机覆盖安装及身份核对；机主取消手机/Android 16 专项，高成本矩阵后期。维护文档不自动恢复这些测试，详见[验收记录](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)。
+v1.0.3发布轮的取消／延期预算与RC2平板证据保留为[历史验收记录](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md)。v1.0.4新增的手机针对性修复与发布范围见[本版记录](releases/v1.0.4.md)；机主决定其余兼容性由日常使用反馈，OEM歌词输出暂缓、网页引擎缩放已放弃，不自动恢复完整矩阵。
 
 后续任何获准真机更新只用 `adb -s SERIAL install -r APK`，不卸载/清数据/强降；先锁定重要临时环境，保留最新默认浏览器选择。登录、验证码、扫码、解锁、USB 安装权限和系统确认由机主处理，不绕过。测试 YouTube 前告知机主准备代理；`.1` 安装器仍由机主自行测试。设备辅助包不应常驻启用。
 

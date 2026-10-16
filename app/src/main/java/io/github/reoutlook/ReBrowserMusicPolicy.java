@@ -5,6 +5,8 @@ import java.net.URI;
 /** Fixed provider identity. No browser workspace or Outlook Default Profile is borrowed. */
 final class ReBrowserMusicPolicy {
     static final String HOME = "https://music.163.com/st/webplayer";
+    // Same read-only account endpoint used by the pinned official module 15 export Ah.
+    static final String ACCOUNT = "https://music.163.com/api/w/nuser/account/get";
     // Official mobile entry confirmed by the owner, with the site's ordinary return target.
     static final String MOBILE_LOGIN = "https://y.music.163.com/m/login?redirect_url=https%3A%2F%2Fmusic.163.com%2Fst%2Fwebplayer";
     // Same URL produced by the official WebPlayer's module 121 login helper for desktop login.

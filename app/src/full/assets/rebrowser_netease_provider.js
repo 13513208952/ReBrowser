@@ -4,7 +4,8 @@ if (window.top !== window || location.origin !== 'https://music.163.com' || loca
 if (window.__rbNeteaseProviderV1) return;
 // Fixed version-specific facade, not an arbitrary module/action/network bridge.
 const playerDocument = __PLAYER_ALLOWED__;
-let helper=null, api=null, sdk=null, disposed=false, hooked=false;
+let helper=null, api=null, sdk=null, lyricParser=null, disposed=false, hooked=false;
+let lyricRequest=null, lyricResult=null;
 let auth='pending', accountBusy=false, lastAccount=0, accountFailures=0, accountGeneration=0, accountTimer=0;
 let connectionPacket=null, connectionArray=null, connectionAttempts=0, connectionStarted=null, connectionFailed=false, rootRoute='';
 const connectionId='rb_provider_v1';
@@ -14,9 +15,47 @@ function releaseConnection(req){
  if(req){delete req.m[connectionId];delete req.c[connectionId];}
 }
 let allowPlay=false, audioState=0, eventPlayId='', current=0, currentKnown=false, subscriptions=0, lowPaused=false, endedAt=0;
+let seekCompleted=0, seekFailed=0;
+// Weak, numeric-only engine diagnostics; never read/export src, media URLs or buffered bytes.
+let mediaRef=null, mediaTime=-1, mediaPlayResult='none', mediaTrack='', seekResumeArmed=false, resumeRequested=false;
+// Official Howler can internally pause a playing seek and wait for canplaythrough
+// before it calls play again. Continue ONLY the same already-authorized element;
+// the official SDK still owns target/time/rights/events. Never authorize a paused seek.
+function continueSeeking(p,same){
+ if((!seekResumeArmed&&!resumeRequested)||!allowPlay||disposed||auth!=='yes'||!playerDocument||!same||(!resumeRequested&&audioState!==1)||p?.playingState!==2)return;
+ const ref=mediaRef,node=ref?.deref();
+ if(!node||mediaTrack!==String(p.resourceTrackId||'')||!node.paused||(!node.seeking&&node.readyState>=4))return;
+ seekResumeArmed=false;resumeRequested=false;mediaPlayResult='requested';
+ try{
+  const response=nativePlay.call(node);
+  if(response&&typeof response.then==='function')response.then(
+   ()=>{if(mediaRef===ref)mediaPlayResult='resolved';},error=>{if(mediaRef===ref)mediaPlayResult=playFailure(error);});
+ }catch(error){if(mediaRef===ref)mediaPlayResult=playFailure(error);}
+}
+function playFailure(error){return ['NotAllowedError','AbortError','NotSupportedError'].includes(error?.name)?error.name:'other';}
+function engine(){
+ const node=mediaRef?.deref();if(!node)return {known:false,playResult:mediaPlayResult};
+ try{
+  const time=Number(node.currentTime),advancing=Number.isFinite(time)&&mediaTime>=0&&time>mediaTime+.01;
+  mediaTime=Number.isFinite(time)?time:-1;
+  return {known:true,paused:node.paused===true,seeking:node.seeking===true,readyState:node.readyState,
+   networkState:node.networkState,errorCode:node.error?.code||0,advancing,playResult:mediaPlayResult};
+ }catch{return {known:false,playResult:mediaPlayResult};}
+}
 const nativePlay=HTMLMediaElement.prototype.play;
 Object.defineProperty(HTMLMediaElement.prototype,'play',{configurable:true,writable:true,value:function(){
- if(!disposed && playerDocument && auth==='yes' && allowPlay) return nativePlay.call(this);
+ if(!disposed && playerDocument && auth==='yes' && allowPlay){
+  const ref=this?.tagName==='AUDIO'&&typeof WeakRef==='function'?new WeakRef(this):null;
+  if(ref){
+   mediaRef=ref;mediaTime=-1;mediaPlayResult='requested';
+   try{mediaTrack=String(helper?.getStore()?.playing?.resourceTrackId||'');}catch{mediaTrack='';}
+  }
+  let response;try{response=nativePlay.call(this);}catch(error){if(ref&&mediaRef===ref)mediaPlayResult=playFailure(error);throw error;}
+  if(ref&&response&&typeof response.then==='function')response.then(
+   ()=>{if(mediaRef===ref)mediaPlayResult='resolved';},error=>{if(mediaRef===ref)mediaPlayResult=playFailure(error);});
+  return response;
+ }
+ if(!disposed)mediaPlayResult='guarded';
  return Promise.reject(new DOMException('Music starts paused; explicit playback required','NotAllowedError'));
 }});
 function trusted(e){
@@ -31,6 +70,8 @@ function trusted(e){
  if(playIntent||rowDoubleClick||keyPlay){
   let playing=false;try{playing=helper?.getStore()?.playing?.playingState===2;}catch{}
   allowPlay=!/^暂停/.test(label)&&!(keyPlay&&e.key!=='MediaPlay'&&playing);
+  resumeRequested=allowPlay;
+  if(!allowPlay){seekResumeArmed=false;try{const node=mediaRef?.deref();if(node&&!node.paused)node.pause();}catch{}}
  }
 }
 document.addEventListener('pointerup',trusted,true);
@@ -39,11 +80,12 @@ document.addEventListener('keydown',trusted,true);
 function known(){return Array.from(document.scripts||[]).some(s=>{try{const u=new URL(s.src);return u.protocol==='https:'&&u.hostname==='s5.music.126.net'&&u.pathname.endsWith('/hybrid/app.4c9df986.js');}catch{return false;}});}
 function connect(){
  if(disposed||helper||connectionFailed)return;
- if(connectionStarted!==null&&(Date.now()-connectionStarted>=30000||connectionAttempts>=40)){
+ // Include missing/failed bundle bootstrap in the budget, not only registration attempts.
+ if(connectionStarted===null)connectionStarted=Date.now();
+ if(Date.now()-connectionStarted>=30000||connectionAttempts>=40){
   releaseConnection();connectionFailed=true;return;
  }
  if(connectionPacket||!known()||!Array.isArray(window.webpackJsonp))return;
- if(connectionStarted===null)connectionStarted=Date.now();
  connectionAttempts++;
  const entry={};entry[connectionId]=(module,exports,req)=>{try{
   if(disposed||connectionFailed)return;
@@ -51,6 +93,7 @@ function connect(){
   if(h&&typeof h.getStore==='function'&&typeof h.getDispatch==='function'&&typeof a.Ah==='function'
     &&(!playerDocument||typeof s?.AudioPlayer?.subscribePlayStatus==='function')){
    helper=h;api=a;sdk=s?.AudioPlayer;rootRoute=route();
+   if(playerDocument)try{const parser=req(519)?.a;if(typeof parser==='function')lyricParser=parser;}catch{}
   }
  }catch{}finally{releaseConnection(req);}};
  connectionArray=window.webpackJsonp;connectionPacket=[[connectionId],entry,[[connectionId]]];
@@ -65,7 +108,7 @@ function account(){
  const timeout=accountTimer=setTimeout(()=>{if(accountGeneration===epoch){accountTimer=0;accountGeneration++;accountBusy=false;accountFailures++;}},8000);
  Promise.resolve(api.Ah({})).then(s=>{
   if(disposed||epoch!==accountGeneration)return;
-  if(s?.code===200&&positive(s?.profile?.userId)){auth='yes';accountFailures=0;}
+  if(s?.code===200&&positive(s?.profile?.userId)){auth='yes';accountFailures=0;subscribe();}
   else if(s?.code===200||s?.code===301||s?.code===401){auth='no';allowPlay=false;accountFailures++;}
   else accountFailures++;
  }).catch(()=>{if(epoch===accountGeneration)accountFailures++;}).finally(()=>{clearTimeout(timeout);if(accountTimer===timeout)accountTimer=0;if(epoch===accountGeneration)accountBusy=false;});
@@ -79,9 +122,12 @@ function subscribe(){
    let p;try{p=helper.getStore()?.playing;}catch{return;}
    if(!p||e.playId!==p.playId)return;
    if(eventPlayId!==e.playId){eventPlayId=e.playId;current=0;currentKnown=false;audioState=0;}
-   if(type==='playstate'){audioState=e.state===1?1:0;lowPaused=e.state===2;}
-   if(type==='end'){audioState=0;lowPaused=false;endedAt=Date.now();}
-   if(type==='seek'&&e.code!==0)return;
+   if(type==='playstate'){audioState=e.state===1?1:0;lowPaused=e.state===2;if(e.state===1)resumeRequested=false;}
+   if(type==='end'){audioState=0;lowPaused=false;seekResumeArmed=resumeRequested=false;endedAt=Date.now();}
+   if(type==='seek'){
+    if(e.code!==0){seekFailed=Math.min(1000000,seekFailed+1);return;}
+    seekCompleted=Math.min(1000000,seekCompleted+1);seekResumeArmed=allowPlay&&audioState===1;
+   }
    if(type==='playprogress'||type==='seek'){const n=Number(type==='seek'?e.position:e.current);if(Number.isFinite(n)&&n>=0&&n<=86400){current=n;currentKnown=true;}}
   }})).then(ok=>{if(ok===true)subscriptions++;}).catch(()=>{});
  }
@@ -99,14 +145,16 @@ function state(){
  const ready=playerDocument&&auth==='yes'&&!!p&&subscriptions===4;
  if(ready&&!rootRoute)rootRoute=route();
  const id=String(p?.resourceTrackId||'');
+ if(mediaRef&&mediaTrack!==id){mediaRef=null;mediaTime=-1;mediaPlayResult='none';mediaTrack='';seekResumeArmed=resumeRequested=false;}
  const same=eventPlayId!==''&&eventPlayId===p?.playId;
+ continueSeeking(p,same);
  const start=Number(p?.freeTrialInfo?.start)||0;
  const duration=Number(p?.resourceDuration)||0;
  const liked=!!s?.['async:hostResource']?.likeTracksMap?.[p?.onlineResourceId];
  // The official restore resource is authoritative before the engine has loaded audio,
  // including a paused seek. A pause callback alone must not turn restored progress into zero.
  const position=p?.restoreResource?Number(p.restoreResource.current||0)+start:(same&&currentKnown?current+start:0);
- return {auth,ready,unavailable:connectionFailed,
+ return {auth,ready,unavailable:connectionFailed,seekCompleted,seekFailed,engine:engine(),
   buffering:ready&&allowPlay&&(!same||!lowPaused)&&(!same||audioState!==1)&&(p?.playingState===2||p?.isLoadingFirst||Date.now()-endedAt<3000),playing:ready&&same&&audioState===1&&p?.playingState===2,
   track:id.slice(0,128),title:String(p?.resourceName||'').slice(0,240),
   artist:(Array.isArray(p?.resourceArtists)?p.resourceArtists.slice(0,16).map(a=>String(a?.name||'')).join(' / '):'').slice(0,240),
@@ -121,11 +169,16 @@ function command(kind,value,expected){
  if(expected&&String(p.resourceTrackId||'')!==expected)return 'track-changed';
  const dispatch=helper.getDispatch();
  switch(kind){
-  case 'pause':allowPlay=false;dispatch({type:'playing/pause',payload:{}});return 'submitted';
-  case 'resume':allowPlay=true;lowPaused=false;dispatch({type:'playing/resume',payload:{}});return 'submitted';
+  case 'pause':{
+   allowPlay=false;seekResumeArmed=resumeRequested=false;dispatch({type:'playing/pause',payload:{}});
+   // An explicit pause must also cancel our own pending original-element play.
+   try{const node=mediaRef?.deref();if(node&&!node.paused)node.pause();}catch{}
+   return 'submitted';
+  }
+  case 'resume':allowPlay=true;resumeRequested=true;lowPaused=false;dispatch({type:'playing/resume',payload:{}});return 'submitted';
   case 'previous':case 'next':
    if(!Array.isArray(s?.playingList?.curPlayingList)||!s.playingList.curPlayingList.length)return 'unsupported';
-   allowPlay=true;dispatch({type:'playingList/jump2Track',payload:{flag:kind==='next'?1:-1,type:'call'}});return 'submitted';
+   allowPlay=true;seekResumeArmed=resumeRequested=false;dispatch({type:'playingList/jump2Track',payload:{flag:kind==='next'?1:-1,type:'call'}});return 'submitted';
   case 'seek':{
    if(typeof value!=='number'||!Number.isFinite(value)||value<0)return 'invalid-position';
    const seconds=value/1000,start=Number(p.freeTrialInfo?.start)||0,end=Number(p.freeTrialInfo?.end)||Number(p.resourceDuration);
@@ -141,6 +194,54 @@ function command(kind,value,expected){
   }
   default:return 'unsupported';
  }
+}
+// Optional native lyric reader. This never starts playback or changes the official lyric model.
+// API 15.Rf and parser 519.a are pinned to the same known bundle as this facade.
+// A timed-out Promise STILL occupies the sole request slot until it actually settles.
+function lyrics(expected){
+ const unavailable={status:'not-ready',track:''};
+ if(disposed||!playerDocument||auth!=='yes'||!helper||subscriptions!==4)return unavailable;
+ let p;try{p=helper.getStore()?.playing;}catch{return unavailable;}
+ const track=String(p?.resourceTrackId||''),playId=String(p?.playId||'');
+ if(typeof expected!=='string'||expected!==track)return {status:'track-changed',track:''};
+ if(!/^[1-9][0-9]{0,19}$/.test(track)||p?.resourceIsCloudSong||typeof api?.Rf!=='function'||!lyricParser)
+  return {status:'unavailable',track};
+ if(lyricResult&&(lyricResult.track!==track||lyricResult.playId!==playId))lyricResult=null;
+ if(lyricRequest)return {status:Date.now()-lyricRequest.started>=8000?'timeout':'loading',track};
+ if(lyricResult)return lyricResult.data;
+ const request=lyricRequest={track,playId,started:Date.now()};
+ const finish=data=>{
+  if(disposed||lyricRequest!==request)return;
+  let latest;try{latest=helper?.getStore()?.playing;}catch{}
+  if(String(latest?.resourceTrackId||'')===track&&String(latest?.playId||'')===playId){
+   lyricResult={track,playId,data:{...data,track}};
+  }
+ };
+ Promise.resolve().then(()=>api.Rf({id:track,lv:-1,tv:-1,rv:-1,yv:-1})).then(data=>{
+  if(disposed||lyricRequest!==request)return;
+  if(Date.now()-request.started>=8000){finish({status:'timeout'});return;}
+  if(data?.code!==200){finish({status:'unavailable'});return;}
+  let total=0;
+  for(const format of ['lrc','yrc','tlyric','romalrc','yromalrc','ytlrc']){
+   const value=data[format]?.lyric;
+   if(value!==undefined&&typeof value!=='string'){finish({status:'unavailable'});return;}
+   total+=value?.length||0;
+   if(total>262144){finish({status:'too-large'});return;}
+  }
+  const parsed=lyricParser(data),source=parsed?.lyricLines;
+  if(parsed?.displayType==='pure'||!Array.isArray(source)||source.length===0){finish({status:'none'});return;}
+  if(source.length>512){finish({status:'too-large'});return;}
+  const lines=[];
+  for(const line of source){
+   if(typeof line?.lyric!=='string'||line.lyric.length>256){finish({status:'too-large'});return;}
+   // Official parser applies its seconds-based offset. Do not apply it twice.
+   if(typeof line.time==='number'&&Number.isFinite(line.time)&&line.time>=-600&&line.time<=86400)
+    lines.push({time:Math.max(0,Math.round(line.time*1000)),text:line.lyric.replace(/[\u0000-\u001f\u007f]/g,' ')});
+  }
+  lines.sort((a,b)=>a.time-b.time);
+  finish({status:lines.length?'ready':'untimed',lines});
+ }).catch(()=>finish({status:'unavailable'})).finally(()=>{if(lyricRequest===request)lyricRequest=null;});
+ return {status:'loading',track};
 }
 // Only fixed official navigation is exposed; never return the store/history/dispatch objects.
 function route(){try{const path=helper?.getHistory?.()?.location?.pathname;return typeof path==='string'?path.slice(0,512):'';}catch{return '';}}
@@ -194,10 +295,10 @@ function back(){
 }
 function cleanup(){
  if(disposed)return;disposed=true;allowPlay=false;accountGeneration++;clearTimeout(accountTimer);accountTimer=0;accountBusy=false;
- releaseConnection();helper=null;api=null;sdk=null;rootRoute='';
+ releaseConnection();helper=null;api=null;sdk=null;lyricParser=null;lyricRequest=lyricResult=null;mediaRef=null;mediaTime=-1;mediaPlayResult='none';mediaTrack='';seekResumeArmed=resumeRequested=false;rootRoute='';
  for(const type of ['pointerup','dblclick','keydown'])document.removeEventListener(type,trusted,true);
 }
-window.__rbNeteaseProviderV1=Object.freeze({state,command,route,back,recheck:()=>{
+window.__rbNeteaseProviderV1=Object.freeze({state,command,lyrics,route,back,recheck:()=>{
  if(disposed)return;
  releaseConnection();connectionAttempts=0;connectionStarted=null;connectionFailed=false;accountFailures=0;lastAccount=0;
  connect();account();

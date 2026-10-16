@@ -35,6 +35,22 @@ function attach(){if(disposed)return;prune();''')
     # Share only the provider's fixed route/Back facade. No second Webpack registration/closure.
     patch(next(line for line in core.splitlines() if line.startswith('if(Array.isArray(window.webpackJsonp))')), '')
     patch('providerAvailable:!!provider', 'providerAvailable:!!window.__rbNeteaseProviderV1')
+    # Official paused markup omits .play-pause-btn; its stable id is shared by both states.
+    # Keep approved CSS intact and own this narrow corrective stylesheet through normal cleanup.
+    patch('body.append(mask);side.append(close);document.head.append(style);', '''body.append(mask);side.append(close);document.head.append(style);
+const controlsStyle=own('style','rb-music-controls-style');
+controlsStyle.textContent=`
+.rb-music-mobile .DefaultBarWrapper_d1fdcdsp .btns>#btn_pc_minibar_play{
+ flex:0 0 40px!important;width:40px!important;height:40px!important;
+ min-width:40px!important;max-width:40px!important;min-height:40px!important;max-height:40px!important;box-sizing:border-box!important;
+}`;
+document.head.append(controlsStyle);
+const expandedStyle=own('style','rb-music-expanded-style');
+expandedStyle.textContent=`''' + (ROOT / 'tools/music/netease_expanded_portrait.css').read_text(encoding='utf-8') + '''`;
+document.head.append(expandedStyle);
+const homeStyle=own('style','rb-music-home-style');
+homeStyle.textContent=`''' + (ROOT / 'tools/music/netease_home_card.css').read_text(encoding='utf-8') + '''`;
+document.head.append(homeStyle);''')
     patch(next(line for line in core.splitlines() if line.startswith('function cleanup()')), '''function cleanup(){
  if(disposed)return;disposed=true;observer.disconnect();clearInterval(timer);if(frame)cancelAnimationFrame(frame);frame=0;
  for(const b of bindings)b[0].removeEventListener(b[1],b[2],b[3]);bindings.length=0;
@@ -68,7 +84,16 @@ if(window.top!==window || location.origin!=='https://music.163.com' || location.
 if(window.__rbMusicLayoutHostV1)return;
 if(typeof CSS==='undefined'||!CSS.supports('display','grid')||!CSS.supports('selector(:has(*))'))return;
 let portrait=__INITIAL_PORTRAIT__, timer=0, attempts=0, disposed=false;
-const install=()=>{CORE};
+const install=()=>{
+  // Start closed without animating from the original desktop sidebar; later drawer animation is unchanged.
+  const side=document.querySelector('.Container_c1udi5wp');
+  const transition=side.style.getPropertyValue('transition'),priority=side.style.getPropertyPriority('transition');
+  side.style.setProperty('transition','none','important');
+  try{CORE}finally{
+    side.getBoundingClientRect();
+    if(transition)side.style.setProperty('transition',transition,priority);else side.style.removeProperty('transition');
+  }
+};
 function attempt(){
   timer=0;
   if(disposed||!portrait||window.__rbNeteasePortraitLayoutV1)return;
@@ -82,8 +107,13 @@ function setPortrait(value){
   if(!portrait){window.__rbNeteasePortraitLayoutV1?.cleanup();return;}
   attempts=0;attempt();
 }
+function ready(){return !disposed&&(!portrait||!!window.__rbNeteasePortraitLayoutV1);}
+function prepare(){
+  if(disposed||!portrait||window.__rbNeteasePortraitLayoutV1||attempts>=120)return;
+  clearTimeout(timer);timer=0;attempt();
+}
 function cleanup(){disposed=true;clearTimeout(timer);window.__rbNeteasePortraitLayoutV1?.cleanup();delete window.__rbMusicLayoutHostV1;}
-window.__rbMusicLayoutHostV1=Object.freeze({setPortrait,cleanup,back:()=>window.__rbNeteasePortraitLayoutV1?.backResult()||window.__rbNeteaseProviderV1?.back()||'unavailable'});
+window.__rbMusicLayoutHostV1=Object.freeze({setPortrait,ready,prepare,cleanup,back:()=>window.__rbNeteasePortraitLayoutV1?.backResult()||window.__rbNeteaseProviderV1?.back()||'unavailable'});
 setPortrait(portrait);
 })();
 '''.replace('CORE', core)

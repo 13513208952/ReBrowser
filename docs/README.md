@@ -25,6 +25,10 @@
 | [音乐子应用完整设想原文](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md) | 机主整段原话，完整逐字保存，不作整理或改写；压缩交接必读 |
 | [音乐登录前置／UA 硬性要求](NETEASE_MUSIC_LOGIN_REQUIREMENTS.md) | 未登录先手机UA；只有平板完整窗口横屏可主动切扫码；自动认证，有限平板证据不等于完整登录矩阵 |
 | [音乐 Android 开发](NETEASE_MUSIC_ANDROID_DEVELOPMENT.md)、[非横屏布局](NETEASE_MUSIC_PORTRAIT_LAYOUT.md) | 当前正式架构/内存修复、历史Beta观察、不可变布局与限定验收 |
+| [音乐启动优化](MUSIC_STARTUP_OPTIMIZATION.md) | 日常录屏口径、轻量官方认证、等待消除、停止/重开交接与限定证据 |
+| [音乐控件外观修复](MUSIC_CONTROL_UI_FIXES.md) | Android 16 自定义动作心形与通用播放按钮尺寸，旧版保留及真实验证边界 |
+| [完整播放页与歌词](MUSIC_EXPANDED_PLAYER_AND_LYRICS.md) | 竖屏展开页／心形及自身 Profile 取数的单机观察；顶部／正常滚动的机主限定确认 |
+| [桌面歌词三态与系统进度修正](MUSIC_DESKTOP_LYRICS.md) | 同一媒体按钮、拖动边界／记忆、锁定透明且无说明文字；真实引擎等待分支、原元素有界继续及有限手机复验 |
 | [v1.0.3 音乐验收记录](NETEASE_MUSIC_RELEASE_ACCEPTANCE.md) | 修复与限定证据、已完成/取消/后期分开；未实测不算通过 |
 | [管理协议](REBROWSER_ADMIN_CONTROL.md)、[管理员 CLI](../tools/admin/README.md) | 挑战、签名、三级授权、固定命令与数据边界 |
 | [网站权限](REBROWSER_SITE_PERMISSIONS.md) | 单站授权、后台策略及永久禁止能力 |
@@ -41,7 +45,9 @@
 
 [全部发布记录索引](releases/README.md)；更早研究与讨论仅解释历史，不自动恢复实施或测试。
 
-[v1.0.3 正式版记录](releases/v1.0.3.md)：音乐内存/背压修复、三套件签名与自动回归、限定平板证据；手机/Android 16 本轮未专项测试，高成本矩阵后期。
+[v1.0.4 正式版记录](releases/v1.0.4.md)：音乐启动／布局、官方与桌面歌词、系统媒体seek修正、首页双入口卡片；当前手机有限观察和三套件必要验证，未测范围由日常反馈。
+
+[v1.0.3 历史正式版记录](releases/v1.0.3.md)：音乐内存/背压修复、三套件签名与自动回归、限定平板证据；该轮手机/Android16未专项测试，不用后来证据改写历史。
 
 [v1.0.3-beta 测试版记录](releases/v1.0.3-beta.md)：历史三套件音乐测试版；标签/资产保持不变，不以新版结果改写 Beta 证据。
 

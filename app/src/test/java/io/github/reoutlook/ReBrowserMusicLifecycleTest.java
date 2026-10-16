@@ -35,7 +35,7 @@ public final class ReBrowserMusicLifecycleTest {
     }
     @Test public void guestPlayerIsNeverPresentedAsLoginEvenWithAPositiveDomFlag() {
         ReBrowserMusicLifecycle s=new ReBrowserMusicLifecycle();
-        assertEquals(ReBrowserMusicPolicy.HOME,s.destination());
+        assertEquals(ReBrowserMusicPolicy.ACCOUNT,s.destination());
         assertFalse(s.presentLogin(ReBrowserMusicPolicy.MOBILE_LOGIN,true));
         s.account(false);assertEquals(ReBrowserMusicPolicy.MOBILE_LOGIN,s.destination());
         assertFalse(s.presentLogin(ReBrowserMusicPolicy.HOME,true));
@@ -53,10 +53,11 @@ public final class ReBrowserMusicLifecycleTest {
     }
     @Test public void successfulReturnIsAutomaticallyVerifiedWithoutAManualRecheck() {
         ReBrowserMusicLifecycle s=new ReBrowserMusicLifecycle();s.account(false);
-        // Official callback navigates HOME; its account probe, not a DOM marker, releases PLAYER.
+        // The official callback returns HOME; native recheck selects the lightweight account document.
+        assertTrue(s.recheck()); assertEquals(ReBrowserMusicPolicy.ACCOUNT,s.destination()); assertFalse(s.player());
         assertTrue(s.account(true));assertTrue(s.player());assertTrue(s.desktop());assertFalse(s.recheck());
         s.account(false);assertTrue(s.recheck());assertEquals(ReBrowserMusicLifecycle.Stage.CHECKING,s.stage());
-        assertEquals(ReBrowserMusicPolicy.HOME,s.destination());assertFalse(s.desktop());
+        assertEquals(ReBrowserMusicPolicy.ACCOUNT,s.destination());assertFalse(s.desktop());
     }
     @Test public void stopCannotBeRevivedAndNewInstanceStartsChecking() {
         ReBrowserMusicLifecycle s=new ReBrowserMusicLifecycle();s.account(true);s.stop();

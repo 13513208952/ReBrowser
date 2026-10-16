@@ -1,0 +1,140 @@
+/* Android-owned addition for the pinned official bundle. Never reparent React nodes,
+   change player state, or override the page's open/close/comment transforms.
+   Removed with rb-music-mobile when the native window policy selects original layout. */
+.rb-music-mobile .VinylPageContainer_v1ep2mqc .page-header {
+ height:48px!important;padding:8px 16px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .Container_c1m2d5ze .left .close {
+ height:40px!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq {
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ /* Classic lyrics target the WINDOW midpoint, not their own midpoint. Keep the
+    lyric viewport above that anchor; a desktop-height cover makes it negative. */
+ grid-template-rows:minmax(88px,max-content) clamp(100px,20vh,200px) minmax(0,1fr)!important;
+ align-items:start!important;gap:8px!important;height:100%!important;min-width:0!important;
+ padding:8px 18px 146px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.side,
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.center {
+ display:none!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.display {
+ display:contents!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.vinyl {
+ grid-column:1!important;grid-row:2!important;justify-self:center!important;
+ width:min(64vw,20vh,200px)!important;height:100%!important;min-width:0!important;
+}
+.rb-music-mobile .ClassicPageContainer_c1h09pwc .cover-area,
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq .VinylCoverContainer_v1gm9f7r {
+ inset:0!important;width:100%!important;height:100%!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq .TrackTitleContainer_t1s72en4 {
+ grid-column:1!important;grid-row:1!important;min-width:0!important;
+ align-self:start!important;gap:4px!important;
+}
+/* Use the space beside the real close button; credits then use the full width. */
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .one-line,
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .two-line {
+ margin-left:52px!important;min-height:40px!important;align-items:center!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .title {
+ font-size:20px!important;line-height:26px!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .info-line {
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:2px 12px!important;min-width:0!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .info:nth-child(3) {
+ grid-column:1 / -1!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .info {
+ min-width:0!important;width:auto!important;flex:1 1 0!important;
+ overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq .TrackDisplayContainer_t11eiop9 {
+ grid-column:1!important;grid-row:3!important;height:100%!important;min-height:0!important;
+ min-width:0!important;overflow:hidden!important;
+}
+.rb-music-mobile .TrackDisplayContainer_t11eiop9>.tab-group {
+ flex:none!important;max-width:100%!important;white-space:nowrap!important;overflow-x:auto!important;
+}
+.rb-music-mobile .TrackDisplayContainer_t11eiop9>.area {
+ min-height:0!important;min-width:0!important;
+}
+.rb-music-mobile .ClassicPageContainer_c1h09pwc .scroll-tip {
+ display:none!important; /* Desktop wheel hint, not an Android touch control. */
+}
+.rb-music-mobile .LyricDefaultPageContainer_lnd8jru {
+ padding:64px 20px 146px!important;box-sizing:border-box!important;min-width:0!important;
+ font-size:10px!important;
+}
+.rb-music-mobile .LyricDefaultPageContainer_lnd8jru>.track-title,
+.rb-music-mobile .LyricDefaultPageContainer_lnd8jru>.artist {
+ max-width:100%!important;flex-shrink:0!important;
+}
+.rb-music-mobile .LyricDisplayInnerContainer_l1o4576w {
+ min-width:0!important;min-height:0!important;
+}
+.rb-music-mobile .LyricDisplayInnerContainer_l1o4576w .lyric {
+ min-width:0!important;overscroll-behavior:contain;
+}
+.rb-music-mobile .LyricDisplayInnerContainer_l1o4576w .lyric .line {
+ overflow-wrap:anywhere!important; /* Long Latin lines must not form a second column. */
+}
+/* The expanded bar is a separate official component, not DefaultBar.
+   Its real slider remains above this two-row action grid. */
+.rb-music-mobile .VinylPageContainer_v1ep2mqc .page-footer {
+ padding-bottom:8px!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu {
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ grid-template-rows:56px 40px!important;gap:2px 6px!important;
+ height:100px!important;min-width:0!important;padding:0 12px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.middle {
+ grid-row:1!important;grid-column:1 / -1!important;justify-content:center!important;
+ width:100%!important;min-width:0!important;height:56px!important;gap:10px!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.middle>* {
+ flex:0 0 36px!important;width:36px!important;height:40px!important;margin:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.middle>#btn_pc_minibar_play {
+ flex-basis:44px!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.side:not(.right-side) {
+ grid-row:2!important;grid-column:1!important;min-width:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .left {
+ height:40px!important;gap:6px!important;min-width:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .left>button {
+ flex:0 0 28px!important;width:28px!important;height:36px!important;margin:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .left .time {
+ font-size:11px!important;white-space:nowrap!important;flex:none!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .patch {
+ display:none!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.right-side {
+ grid-row:2!important;grid-column:2!important;min-width:0!important;width:auto!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .right {
+ height:40px!important;gap:4px!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .right>* {
+ flex:none!important;margin:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .right button {
+ width:28px!important;height:36px!important;
+}
+@media (max-height:760px) {
+ .rb-music-mobile .VinylPageLayoutContainer_vwagppq {
+  grid-template-rows:minmax(88px,max-content) minmax(0,1fr)!important;gap:6px!important;padding-top:8px!important;
+ }
+ .rb-music-mobile .VinylPageLayoutContainer_vwagppq>.vinyl {display:none!important;}
+ .rb-music-mobile .VinylPageLayoutContainer_vwagppq .TrackDisplayContainer_t11eiop9 {grid-row:2!important;}
+}

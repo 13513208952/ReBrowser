@@ -29,6 +29,12 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
     private final String notificationSession = java.util.UUID.randomUUID().toString();
     private final List<Runnable> observers = new ArrayList<>();
     private ReBrowserMusicRuntime runtime;
+    private final ReBrowserMusicSeekDiagnostics seekDiagnostics = new ReBrowserMusicSeekDiagnostics();
+    private ReBrowserMusicLyricOverlay lyricOverlay;
+    private ReBrowserMusicLyrics lyrics = ReBrowserMusicLyrics.state("", "loading");
+    private String lyricTrack = "";
+    private long lyricGeneration, lastLyricRead;
+    private boolean lyricBusy, lyricsPermissionPending;
     private MediaSession session;
     private PowerManager.WakeLock wake;
     private boolean foreground, stopped;
@@ -55,10 +61,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
             if (stopped) return;
             if (musicTask >= 0) {
                 try {
-                    boolean exists = false;
-                    for (android.app.ActivityManager.AppTask task : getSystemService(android.app.ActivityManager.class).getAppTasks())
-                        if (task.getTaskInfo().taskId == musicTask) { exists = true; break; }
-                    missingTaskChecks = exists ? 0 : missingTaskChecks + 1;
+                    missingTaskChecks = currentTaskPresent() ? 0 : missingTaskChecks + 1;
                     if (missingTaskChecks >= 2) { shutdown(); stopSelf(); return; }
                 } catch (RuntimeException unavailable) { missingTaskChecks = 0; }
             }
@@ -66,6 +69,17 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         }
     };
     void claimTask(int taskId) { if (taskId >= 0) { musicTask = taskId; missingTaskChecks = 0; } }
+    boolean closed() { return stopped; }
+    void releaseTask(int taskId) {
+        if (taskId < 0 || taskId != musicTask) return;
+        shutdown(); stopSelf();
+    }
+    private boolean currentTaskPresent() {
+        if (musicTask < 0) return false;
+        for (android.app.ActivityManager.AppTask task : getSystemService(android.app.ActivityManager.class).getAppTasks())
+            if (task.getTaskInfo().taskId == musicTask) return true;
+        return false;
+    }
 
     static void stopEnabledRuntime() {
         ReBrowserMusicService s = live.get();
@@ -85,6 +99,12 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
                 .setUsage(android.media.AudioAttributes.USAGE_MEDIA).setContentType(android.media.AudioAttributes.CONTENT_TYPE_MUSIC).build());
         session.setSessionActivity(PendingIntent.getActivity(this, 0, new Intent(this, ReBrowserMusicActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
+        lyricOverlay = new ReBrowserMusicLyricOverlay(this, () -> {
+            if (!stopped) {
+                lyricGeneration++; lyricBusy = false; notificationKey = ""; changed(snapshot); notifyObservers();
+                Toast.makeText(this, "系统未允许继续显示桌面歌词，已关闭；位置保留。", Toast.LENGTH_LONG).show();
+            }
+        });
         session.setCallback(new MediaSession.Callback() {
             @Override public void onPlay() { control("resume", 0); }
             @Override public void onPause() { control("pause", 0); }
@@ -94,6 +114,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
             @Override public void onStop() { if (!stopped) { shutdown(); ReBrowserMusicActivity.stopEnabledRuntime(); stopSelf(); } }
             @Override public void onCustomAction(String action, android.os.Bundle extras) {
                 if ("toggle-like".equals(action)) control("like", snapshot.liked ? 0 : 1);
+                else if ("cycle-lyrics".equals(action)) cycleDesktopLyrics();
             }
             @Override public void onSetRating(Rating rating) {
                 if (rating != null && rating.isRated() && rating.getRatingStyle() == Rating.RATING_HEART
@@ -105,9 +126,11 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         noisy = new android.content.BroadcastReceiver() {
             @Override public void onReceive(android.content.Context c, Intent i) {
                 if (android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY.equals(i.getAction())) control("pause", 0);
+                else updateDesktopLyrics();
             }
         };
         android.content.IntentFilter filter = new android.content.IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        filter.addAction(Intent.ACTION_SCREEN_OFF); filter.addAction(Intent.ACTION_SCREEN_ON); filter.addAction(Intent.ACTION_USER_PRESENT);
         if (Build.VERSION.SDK_INT >= 33) registerReceiver(noisy, filter, RECEIVER_NOT_EXPORTED);
         else registerReceiver(noisy, filter);
         try { runtime = new ReBrowserMusicRuntime(this, this); tasks.postDelayed(taskWatch, 3000); }
@@ -120,9 +143,65 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
     void observe(Runnable observer) { if (!observers.contains(observer)) observers.add(observer); observer.run(); }
     void unobserve(Runnable observer) { observers.remove(observer); }
     private void notifyObservers() { for (Runnable r : new ArrayList<>(observers)) r.run(); }
+    boolean takeLyricsPermissionRequest() {
+        if (!lyricsPermissionPending || stopped || runtime == null || !runtime.ready()) return false;
+        lyricsPermissionPending = false; return true;
+    }
+    ReBrowserMusicLyricWindow.Mode lyricsMode() {
+        return lyricOverlay == null ? ReBrowserMusicLyricWindow.Mode.OFF : lyricOverlay.state.mode();
+    }
+    private String lyricsActionLabel() {
+        String extra = lyricsMode() == ReBrowserMusicLyricWindow.Mode.OFF && lyricOverlay != null && !lyricOverlay.allowed() ? "（需授权）" : "";
+        return "桌面歌词：" + lyricsMode().label() + extra + "；点按" + lyricsMode().next().label();
+    }
+    void cycleDesktopLyrics() {
+        if (stopped || runtime == null || !runtime.ready() || lyricOverlay == null) return;
+        if (!lyricOverlay.cycle()) {
+            lyricsPermissionPending = true; notifyObservers();
+            Toast.makeText(this, "桌面歌词需你主动授权：请点媒体卡片回到音乐界面。", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (lyricsMode() == ReBrowserMusicLyricWindow.Mode.OFF) { lyricGeneration++; lyricBusy = false; }
+        notificationKey = ""; changed(snapshot); notifyObservers();
+    }
+    @Override public void lyricsInvalidated() {
+        lyricGeneration++; lyricBusy = false; lastLyricRead = 0; lyricTrack = "";
+        lyrics = ReBrowserMusicLyrics.state("", "loading");
+        if (lyricOverlay != null) lyricOverlay.render("", false);
+    }
+    private void updateDesktopLyrics() {
+        if (stopped || lyricOverlay == null) return;
+        if (!snapshot.track.equals(lyricTrack)) {
+            lyricGeneration++; lyricBusy = false; lastLyricRead = 0; lyricTrack = snapshot.track;
+            lyrics = ReBrowserMusicLyrics.state(lyricTrack, "loading");
+        }
+        boolean ready = snapshot.ready && runtime != null && runtime.ready();
+        lyricOverlay.render(lyrics.textAt(snapshot.position), ready);
+        if (!ready || !lyricOverlay.showing() || lyricsMode() == ReBrowserMusicLyricWindow.Mode.OFF || lyricBusy || !lyrics.pending()) return;
+        long now = android.os.SystemClock.elapsedRealtime();
+        if (now - lastLyricRead < 750) return;
+        lastLyricRead = now; lyricBusy = true;
+        final long generation = lyricGeneration; final String expected = lyricTrack;
+        if (!runtime.readLyrics(expected, value -> {
+            if (stopped || generation != lyricGeneration || !expected.equals(snapshot.track)) return;
+            lyricBusy = false; lyrics = value;
+            if (lyricOverlay != null) lyricOverlay.render(lyrics.textAt(snapshot.position), snapshot.ready && runtime != null && runtime.ready());
+        })) lyricBusy = false;
+    }
+    @Override public void seekResult(String result) { seekDiagnostics.result(result); }
+    @Override public void seekObserved(int completed, int failed) { seekDiagnostics.observed(completed, failed); }
+    @Override public void engineObserved(boolean known, boolean paused, boolean seeking, int ready, int network, int error, boolean advancing, String play) {
+        seekDiagnostics.engine(known, paused, seeking, ready, network, error, advancing, play);
+    }
     void control(String kind, long position) {
-        if (stopped || runtime == null || !runtime.ready()) return;
-        if (("like".equals(kind) && !snapshot.canLike) || ("seek".equals(kind) && !snapshot.canSeek)
+        if ("seek".equals(kind)) seekDiagnostics.received();
+        if (stopped || runtime == null || !runtime.ready()) {
+            if ("seek".equals(kind)) seekDiagnostics.result("runtime-not-ready");
+            return;
+        }
+        if ("lyrics".equals(kind)) { cycleDesktopLyrics(); return; }
+        if ("seek".equals(kind) && !snapshot.canSeek) { seekDiagnostics.result("seek-not-supported"); return; }
+        if (("like".equals(kind) && !snapshot.canLike)
                 || (("previous".equals(kind) || "next".equals(kind)) && !snapshot.canSkip)) return;
         if ("resume".equals(kind) || "previous".equals(kind) || "next".equals(kind)) {
             // A media-button user action needs an FGS before WebView requests focus on API 35+.
@@ -140,6 +219,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
             preparingUntil = android.os.SystemClock.elapsedRealtime() + 15_000;
         if (!observed.playing && !observed.buffering) preparingUntil = 0;
         snapshot = observed;
+        updateDesktopLyrics();
         session.setActive(snapshot.ready);
         long actions = PlaybackState.ACTION_PLAY | PlaybackState.ACTION_PAUSE | PlaybackState.ACTION_STOP;
         if (snapshot.canSkip) actions |= PlaybackState.ACTION_SKIP_TO_PREVIOUS | PlaybackState.ACTION_SKIP_TO_NEXT;
@@ -149,7 +229,8 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
                 snapshot.ready ? (snapshot.playing ? PlaybackState.STATE_PLAYING : snapshot.buffering ? PlaybackState.STATE_BUFFERING : PlaybackState.STATE_PAUSED)
                         : PlaybackState.STATE_NONE, snapshot.position, snapshot.playing ? snapshot.speed : 0f);
         if (snapshot.canLike) state.addCustomAction("toggle-like", snapshot.liked ? "取消喜欢" : "喜欢",
-                android.R.drawable.btn_star_big_on);
+                ReBrowserMusicSystemIcons.like(Build.VERSION.SDK_INT, snapshot.liked));
+        if (snapshot.ready) state.addCustomAction("cycle-lyrics", lyricsActionLabel(), ReBrowserMusicSystemIcons.lyrics(lyricsMode()));
         session.setPlaybackState(state.build());
         String metadata = snapshot.track + "\n" + snapshot.title + "\n" + snapshot.artist + "\n" + snapshot.album + "\n" + snapshot.duration + snapshot.liked;
         String imageKey = snapshot.track + "\n" + snapshot.cover;
@@ -178,7 +259,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
                     .putBitmap(MediaMetadata.METADATA_KEY_ART, artwork).putBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART, artwork)
                     .putRating(MediaMetadata.METADATA_KEY_USER_RATING, Rating.newHeartRating(snapshot.liked)).build());
         }
-        String key = metadata + snapshot.playing + snapshot.buffering + snapshot.liked + snapshot.canLike + snapshot.ready;
+        String key = metadata + snapshot.playing + snapshot.buffering + snapshot.liked + snapshot.canLike + snapshot.ready + lyricsMode();
         try {
             if (snapshot.playing || android.os.SystemClock.elapsedRealtime() < preparingUntil) {
                 Notification notification = notification();
@@ -224,8 +305,9 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
                 .addAction(snapshot.playing || snapshot.buffering ? android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play,
                         snapshot.playing || snapshot.buffering ? "暂停" : "继续", action(snapshot.playing || snapshot.buffering ? "pause" : "resume", 2))
                 .addAction(android.R.drawable.ic_media_next, "下一首", action("next", 3));
-        if (snapshot.canLike) b.addAction(android.R.drawable.btn_star_big_on,
+        if (snapshot.canLike) b.addAction(ReBrowserMusicSystemIcons.like(Build.VERSION.SDK_INT, snapshot.liked),
                 snapshot.liked ? "取消喜欢" : "喜欢", action("like", 4));
+        if (snapshot.ready) b.addAction(ReBrowserMusicSystemIcons.lyrics(lyricsMode()), lyricsActionLabel(), action("lyrics", 5));
         b.setStyle(new Notification.MediaStyle().setMediaSession(session.getSessionToken()).setShowActionsInCompactView(0, 1, 2));
         return b.build();
     }
@@ -235,6 +317,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         // Stale notifications never start/revive a stopped service or task.
     }
     @Override public void stageChanged() { notifyObservers(); }
+    @Override public void loading() { failure = ""; notifyObservers(); }
     @Override public void failure(String reason) {
         failure = reason;
         if (runtime != null && !runtime.ready()) changed(ReBrowserMusicSnapshot.empty());
@@ -245,7 +328,10 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         if (root != null && root.getComponent() != null) {
             String c = root.getComponent().getClassName();
             if (c.equals(getPackageName() + ".ReBrowserMusicActivity") || c.equals(getPackageName() + ".ReBrowserMusicLauncher")) {
-                shutdown(); stopSelf();
+                // Removal of an old task can arrive after a replacement has claimed this service.
+                boolean replacementPresent = false;
+                try { replacementPresent = currentTaskPresent(); } catch (RuntimeException unavailable) { /* Stop safely. */ }
+                if (!replacementPresent) { shutdown(); stopSelf(); }
             }
         }
         super.onTaskRemoved(root);
@@ -253,6 +339,8 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
     void shutdown() {
         if (stopped) return;
         stopped = true; preparingUntil = 0; tasks.removeCallbacksAndMessages(null);
+        lyricsPermissionPending = false; lyricsInvalidated();
+        if (lyricOverlay != null) { lyricOverlay.close(); lyricOverlay = null; }
         if (artworkRequest != null) artworkRequest.cancel(); artworkRequest = null;
         images.close(); imageDeadlines.shutdown();
         artwork = null;
@@ -262,6 +350,17 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         stopForeground(STOP_FOREGROUND_REMOVE); foreground = false;
         getSystemService(NotificationManager.class).cancel(NOTIFICATION);
         notifyObservers();
+    }
+    @Override protected void dump(java.io.FileDescriptor fd, java.io.PrintWriter writer, String[] args) {
+        // Android's DUMP-protected service path only; fixed lifecycle/overlay geometry, no task IDs/account/media/URLs.
+        boolean taskPresent = false;
+        try { taskPresent = currentTaskPresent(); }
+        catch (RuntimeException unavailable) { /* Report presence only when established. */ }
+        writer.println("music stopped=" + stopped + " runtime=" + (runtime != null)
+                + " ready=" + (runtime != null && runtime.ready()) + " taskClaimed=" + (musicTask >= 0)
+                + " taskPresent=" + taskPresent + " stage=" + (runtime == null ? "none" : runtime.lifecycle.stage()));
+        if (lyricOverlay != null) lyricOverlay.dump(writer); // Fixed mode/geometry only, never lyric text.
+        seekDiagnostics.dump(writer); // Fixed result names and counters, no position/account/song identity.
     }
     @Override public void onDestroy() {
         shutdown(); if (noisy != null) unregisterReceiver(noisy);

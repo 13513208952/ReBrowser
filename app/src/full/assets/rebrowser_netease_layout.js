@@ -4,7 +4,12 @@ if(window.top!==window || location.origin!=='https://music.163.com' || location.
 if(window.__rbMusicLayoutHostV1)return;
 if(typeof CSS==='undefined'||!CSS.supports('display','grid')||!CSS.supports('selector(:has(*))'))return;
 let portrait=__INITIAL_PORTRAIT__, timer=0, attempts=0, disposed=false;
-const install=()=>{(() => {
+const install=()=>{
+  // Start closed without animating from the original desktop sidebar; later drawer animation is unchanged.
+  const side=document.querySelector('.Container_c1udi5wp');
+  const transition=side.style.getPropertyValue('transition'),priority=side.style.getPropertyPriority('transition');
+  side.style.setProperty('transition','none','important');
+  try{(() => {
 'use strict';
 if (location.origin !== 'https://music.163.com' || location.pathname !== '/st/webplayer') return {ok:false,reason:'wrong-page'};
 
@@ -144,7 +149,196 @@ const button=(id,label,svg)=>{const b=own('button',id);b.type='button';b.setAttr
 const menu=button('rb-music-menu','展开导航','<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>');
 const close=button('rb-music-close','收起导航','<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>');
 const mask=own('div','rb-music-mask');mask.setAttribute('aria-hidden','true');
-body.append(mask);side.append(close);document.head.append(style);document.documentElement.classList.add('rb-music-mobile');
+body.append(mask);side.append(close);document.head.append(style);
+const controlsStyle=own('style','rb-music-controls-style');
+controlsStyle.textContent=`
+.rb-music-mobile .DefaultBarWrapper_d1fdcdsp .btns>#btn_pc_minibar_play{
+ flex:0 0 40px!important;width:40px!important;height:40px!important;
+ min-width:40px!important;max-width:40px!important;min-height:40px!important;max-height:40px!important;box-sizing:border-box!important;
+}`;
+document.head.append(controlsStyle);
+const expandedStyle=own('style','rb-music-expanded-style');
+expandedStyle.textContent=`/* Android-owned addition for the pinned official bundle. Never reparent React nodes,
+   change player state, or override the page's open/close/comment transforms.
+   Removed with rb-music-mobile when the native window policy selects original layout. */
+.rb-music-mobile .VinylPageContainer_v1ep2mqc .page-header {
+ height:48px!important;padding:8px 16px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .Container_c1m2d5ze .left .close {
+ height:40px!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq {
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ /* Classic lyrics target the WINDOW midpoint, not their own midpoint. Keep the
+    lyric viewport above that anchor; a desktop-height cover makes it negative. */
+ grid-template-rows:minmax(88px,max-content) clamp(100px,20vh,200px) minmax(0,1fr)!important;
+ align-items:start!important;gap:8px!important;height:100%!important;min-width:0!important;
+ padding:8px 18px 146px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.side,
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.center {
+ display:none!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.display {
+ display:contents!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq>.vinyl {
+ grid-column:1!important;grid-row:2!important;justify-self:center!important;
+ width:min(64vw,20vh,200px)!important;height:100%!important;min-width:0!important;
+}
+.rb-music-mobile .ClassicPageContainer_c1h09pwc .cover-area,
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq .VinylCoverContainer_v1gm9f7r {
+ inset:0!important;width:100%!important;height:100%!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq .TrackTitleContainer_t1s72en4 {
+ grid-column:1!important;grid-row:1!important;min-width:0!important;
+ align-self:start!important;gap:4px!important;
+}
+/* Use the space beside the real close button; credits then use the full width. */
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .one-line,
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .two-line {
+ margin-left:52px!important;min-height:40px!important;align-items:center!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .title {
+ font-size:20px!important;line-height:26px!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .info-line {
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:2px 12px!important;min-width:0!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .info:nth-child(3) {
+ grid-column:1 / -1!important;
+}
+.rb-music-mobile .TrackTitleContainer_t1s72en4 .info {
+ min-width:0!important;width:auto!important;flex:1 1 0!important;
+ overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+}
+.rb-music-mobile .VinylPageLayoutContainer_vwagppq .TrackDisplayContainer_t11eiop9 {
+ grid-column:1!important;grid-row:3!important;height:100%!important;min-height:0!important;
+ min-width:0!important;overflow:hidden!important;
+}
+.rb-music-mobile .TrackDisplayContainer_t11eiop9>.tab-group {
+ flex:none!important;max-width:100%!important;white-space:nowrap!important;overflow-x:auto!important;
+}
+.rb-music-mobile .TrackDisplayContainer_t11eiop9>.area {
+ min-height:0!important;min-width:0!important;
+}
+.rb-music-mobile .ClassicPageContainer_c1h09pwc .scroll-tip {
+ display:none!important; /* Desktop wheel hint, not an Android touch control. */
+}
+.rb-music-mobile .LyricDefaultPageContainer_lnd8jru {
+ padding:64px 20px 146px!important;box-sizing:border-box!important;min-width:0!important;
+ font-size:10px!important;
+}
+.rb-music-mobile .LyricDefaultPageContainer_lnd8jru>.track-title,
+.rb-music-mobile .LyricDefaultPageContainer_lnd8jru>.artist {
+ max-width:100%!important;flex-shrink:0!important;
+}
+.rb-music-mobile .LyricDisplayInnerContainer_l1o4576w {
+ min-width:0!important;min-height:0!important;
+}
+.rb-music-mobile .LyricDisplayInnerContainer_l1o4576w .lyric {
+ min-width:0!important;overscroll-behavior:contain;
+}
+.rb-music-mobile .LyricDisplayInnerContainer_l1o4576w .lyric .line {
+ overflow-wrap:anywhere!important; /* Long Latin lines must not form a second column. */
+}
+/* The expanded bar is a separate official component, not DefaultBar.
+   Its real slider remains above this two-row action grid. */
+.rb-music-mobile .VinylPageContainer_v1ep2mqc .page-footer {
+ padding-bottom:8px!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu {
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ grid-template-rows:56px 40px!important;gap:2px 6px!important;
+ height:100px!important;min-width:0!important;padding:0 12px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.middle {
+ grid-row:1!important;grid-column:1 / -1!important;justify-content:center!important;
+ width:100%!important;min-width:0!important;height:56px!important;gap:10px!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.middle>* {
+ flex:0 0 36px!important;width:36px!important;height:40px!important;margin:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.middle>#btn_pc_minibar_play {
+ flex-basis:44px!important;width:44px!important;min-width:44px!important;max-width:44px!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.side:not(.right-side) {
+ grid-row:2!important;grid-column:1!important;min-width:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .left {
+ height:40px!important;gap:6px!important;min-width:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .left>button {
+ flex:0 0 28px!important;width:28px!important;height:36px!important;margin:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .left .time {
+ font-size:11px!important;white-space:nowrap!important;flex:none!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .patch {
+ display:none!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu>.right-side {
+ grid-row:2!important;grid-column:2!important;min-width:0!important;width:auto!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .right {
+ height:40px!important;gap:4px!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .right>* {
+ flex:none!important;margin:0!important;
+}
+.rb-music-mobile .VinylPageBarWrapper_v1xybaiu .right button {
+ width:28px!important;height:36px!important;
+}
+@media (max-height:760px) {
+ .rb-music-mobile .VinylPageLayoutContainer_vwagppq {
+  grid-template-rows:minmax(88px,max-content) minmax(0,1fr)!important;gap:6px!important;padding-top:8px!important;
+ }
+ .rb-music-mobile .VinylPageLayoutContainer_vwagppq>.vinyl {display:none!important;}
+ .rb-music-mobile .VinylPageLayoutContainer_vwagppq .TrackDisplayContainer_t11eiop9 {grid-row:2!important;}
+}
+`;
+document.head.append(expandedStyle);
+const homeStyle=own('style','rb-music-home-style');
+homeStyle.textContent=`/* Android-owned homepage refinement; keep the approved reference immutable.
+   The official rail contains .cards pages: preserve its paging/transform/events.
+   Hide entries2+3 WITHIN a four-entry page, not the pages themselves. */
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .rail-wrapper {
+ align-items:stretch!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y {
+ height:auto!important;min-height:0!important;align-self:stretch!important;
+ padding:10px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y>.card-container {
+ flex:1 1 auto!important;width:100%!important;min-width:0!important;height:auto!important;
+ margin:0!important;padding:10px 0 0!important;box-sizing:border-box!important;
+ align-items:center!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .card-rail {
+ height:auto!important;min-width:0!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .card-rail>.cards {
+ grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:12px!important;width:100%!important;height:auto!important;min-width:0!important;
+ flex:0 0 100%!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards:has(>:nth-child(4))>:not(:nth-child(1)):not(:nth-child(4)) {
+ display:none!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards>.RecentListenCardContainer_r1b6smzd {
+ min-width:0!important;height:0!important;padding-top:100%!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards>.RecentListenCardContainer_r1b6smzd>img.bg {
+ width:100%!important;height:100%!important;max-height:none!important;
+ object-fit:cover!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards>.RecentListenCardContainer_r1b6smzd>img.icon {
+ width:60%!important;height:auto!important;max-height:none!important;
+}
+`;
+document.head.append(homeStyle);document.documentElement.classList.add('rb-music-mobile');
 let viewport=document.querySelector('meta[name="viewport"]'),createdViewport=false,oldViewport;
 if(!viewport){viewport=own('meta','rb-music-mobile-viewport');viewport.name='viewport';document.head.append(viewport);createdViewport=true;}else oldViewport=viewport.getAttribute('content');
 viewport.content='width=device-width,initial-scale=1';
@@ -198,6 +392,10 @@ function backResult(){
 }
 window.__rbNeteasePortraitLayoutV1={toggle,status,cleanup,handleBack,backResult};return status();
 })();
+}finally{
+    side.getBoundingClientRect();
+    if(transition)side.style.setProperty('transition',transition,priority);else side.style.removeProperty('transition');
+  }
 };
 function attempt(){
   timer=0;
@@ -212,7 +410,12 @@ function setPortrait(value){
   if(!portrait){window.__rbNeteasePortraitLayoutV1?.cleanup();return;}
   attempts=0;attempt();
 }
+function ready(){return !disposed&&(!portrait||!!window.__rbNeteasePortraitLayoutV1);}
+function prepare(){
+  if(disposed||!portrait||window.__rbNeteasePortraitLayoutV1||attempts>=120)return;
+  clearTimeout(timer);timer=0;attempt();
+}
 function cleanup(){disposed=true;clearTimeout(timer);window.__rbNeteasePortraitLayoutV1?.cleanup();delete window.__rbMusicLayoutHostV1;}
-window.__rbMusicLayoutHostV1=Object.freeze({setPortrait,cleanup,back:()=>window.__rbNeteasePortraitLayoutV1?.backResult()||window.__rbNeteaseProviderV1?.back()||'unavailable'});
+window.__rbMusicLayoutHostV1=Object.freeze({setPortrait,ready,prepare,cleanup,back:()=>window.__rbNeteasePortraitLayoutV1?.backResult()||window.__rbNeteaseProviderV1?.back()||'unavailable'});
 setPortrait(portrait);
 })();

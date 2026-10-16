@@ -19,26 +19,39 @@ final class ReBrowserMusicRuntime {
     interface Listener {
         void changed(ReBrowserMusicSnapshot snapshot);
         void stageChanged();
+        void loading();
         void failure(String reason);
+        default void lyricsInvalidated() {}
+        default void seekResult(String result) {}
+        default void seekObserved(int completed, int failed) {}
+        default void engineObserved(boolean known, boolean paused, boolean seeking, int ready, int network, int error, boolean advancing, String play) {}
     }
     private final Context application;
     private final MutableContextWrapper context;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Listener listener;
     final ReBrowserMusicLifecycle lifecycle = new ReBrowserMusicLifecycle();
-    private final String providerSource, layoutSource;
+    private final String providerSource, layoutSource, accountSource;
+    private final ReBrowserMusicAccountCheck accountCheck = new ReBrowserMusicAccountCheck();
+    private Runnable accountTimeout, initializationTimeout;
+    private final ReBrowserMusicInitialization initialization = new ReBrowserMusicInitialization();
     private final WebView web;
     private ScriptHandler providerScript, layoutScript;
     private int document;
     private final ReBrowserMusicEvaluation polling = new ReBrowserMusicEvaluation();
     private final ReBrowserMusicEvaluation commanding = new ReBrowserMusicEvaluation();
     private final ReBrowserMusicEvaluation backing = new ReBrowserMusicEvaluation();
+    private final ReBrowserMusicEvaluation lyricReading = new ReBrowserMusicEvaluation();
     private String queuedCommand, queuedTrack;
     private long queuedPosition;
-    private boolean disposed, adapted = true, ready, coldPause, loginVisible, providerFailureReported;
+    private boolean disposed, adapted = true, ready, loginVisible, providerFailureReported;
+    private final ReBrowserMusicPreparation coldPause = new ReBrowserMusicPreparation();
     private static final String LOGIN_PROBE = "JSON.stringify({loginVisible:(()=>{"
             + "const e=document.querySelector('.u-login-page-wrapper,#login-wrapper .n-log2,#login-wrapper iframe');"
             + "return !!e&&e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';})()})";
+    private static final String STATE_PROBE = "JSON.stringify((()=>{"
+            + "const s=window.__rbNeteaseProviderV1?.state()||{auth:'pending'};"
+            + "s.layoutReady=window.__rbMusicLayoutHostV1?.ready()===true;return s;})())";
     private ReBrowserMusicSnapshot snapshot = ReBrowserMusicSnapshot.empty();
     private final Runnable tick = this::poll;
 
@@ -47,6 +60,7 @@ final class ReBrowserMusicRuntime {
         this.listener = listener;
         providerSource = resource(application, "rebrowser_netease_provider.js");
         layoutSource = resource(application, "rebrowser_netease_layout.js");
+        accountSource = resource(application, "rebrowser_netease_account.js");
         web = new WebView(context);
         try {
         WebViewCompat.setProfile(web, ReBrowserMusicPolicy.PROFILE);
@@ -62,21 +76,54 @@ final class ReBrowserMusicRuntime {
         WebViewCompat.addDocumentStartJavaScript(web, ReBrowserPermissionScript.DOCUMENT_START, Set.of("*"));
         web.setWebViewClient(new WebViewClient() {
             @Override public boolean shouldOverrideUrlLoading(WebView view, android.webkit.WebResourceRequest request) {
-                return request.isForMainFrame() && !ReBrowserMusicPolicy.allowsNavigation(request.getUrl().toString());
+                if (!request.isForMainFrame()) return false;
+                String url = request.getUrl().toString(), expected = accountCheck.request();
+                if (expected != null && !expected.equals(url)) {
+                    failAccount(expected); return true;
+                }
+                return !ReBrowserMusicPolicy.allowsNavigation(url);
             }
             @Override public void onPageStarted(WebView view, String url, android.graphics.Bitmap icon) {
-                document++; resetEvaluations(); ready = false; coldPause = false; loginVisible = false;
+                document++; resetEvaluations(); ready = false; coldPause.reset(); loginVisible = false;
                 view.getSettings().setMediaPlaybackRequiresUserGesture(true);
                 if (!ReBrowserMusicPolicy.allowsNavigation(url)) { view.stopLoading(); return; }
+                String expected = accountCheck.request();
+                if (expected != null && !expected.equals(url)) {
+                    view.stopLoading(); failAccount(expected); return;
+                }
+                accountCheck.started(url);
+                // Only the official login callback returning HOME triggers this; never interrupt login input.
+                if (lifecycle.stage() == ReBrowserMusicLifecycle.Stage.LOGIN && ReBrowserMusicPolicy.playerDocument(url)) {
+                    lifecycle.recheck(); accountCheck.restart(); view.stopLoading();
+                    handler.post(() -> { if (!disposed) { load(); listener.stageChanged(); } }); return;
+                }
                 if (ReBrowserMusicPolicy.loginDocument(url) && lifecycle.stage() != ReBrowserMusicLifecycle.Stage.LOGIN) {
-                    boolean wasPlayer = player();
                     lifecycle.account(false); snapshot = ReBrowserMusicSnapshot.empty(); listener.changed(snapshot);
-                    if (wasPlayer) { view.stopLoading(); handler.post(() -> { if (!disposed) load(); }); }
+                    // An unsolicited login redirect must use the default official mobile entry.
+                    view.stopLoading(); handler.post(() -> { if (!disposed) load(); });
                 }
                 listener.stageChanged();
             }
+            @Override public void onPageFinished(WebView view, String url) {
+                if ((url != null && url.equals(view.getUrl()) && accountCheck.finished(url))
+                        || ReBrowserMusicPolicy.playerDocument(url)) wakePoll();
+            }
+            @Override public void onReceivedError(WebView view, android.webkit.WebResourceRequest request,
+                    android.webkit.WebResourceError error) {
+                if (request.isForMainFrame()) {
+                    failAccount(request.getUrl().toString());
+                }
+            }
+            @Override public void onReceivedHttpError(WebView view, android.webkit.WebResourceRequest request,
+                    android.webkit.WebResourceResponse response) {
+                if (request.isForMainFrame()) {
+                    failAccount(request.getUrl().toString());
+                }
+            }
             @Override public void onReceivedSslError(WebView view, android.webkit.SslErrorHandler h,
-                    android.net.http.SslError error) { h.cancel(); }
+                    android.net.http.SslError error) {
+                h.cancel(); failAccount(error.getUrl());
+            }
             @Override public boolean onRenderProcessGone(WebView view, android.webkit.RenderProcessGoneDetail detail) {
                 close(); listener.failure("音乐网页进程已结束，请重新进入；不会自动恢复播放。"); return true;
             }
@@ -90,7 +137,10 @@ final class ReBrowserMusicRuntime {
                 callback.onReceiveValue(null); return true;
             }
         });
-        web.setDownloadListener((url, agent, disposition, type, length) -> listener.failure("音乐模式不支持下载"));
+        web.setDownloadListener((url, agent, disposition, type, length) -> {
+            if (accountCheck.active(url)) failAccount(url);
+            else listener.failure("音乐模式不支持下载");
+        });
         load();
         handler.post(tick);
         } catch (RuntimeException | LinkageError failure) { web.destroy(); throw failure; }
@@ -140,11 +190,14 @@ final class ReBrowserMusicRuntime {
     }
     void checkLogin() {
         if (disposed) return;
-        // Login success returns to HOME through the official redirect_url / targetUrl callback. If it did not,
-        // explicitly re-open that same-origin account probe; never infer auth from the login DOM.
-        if (lifecycle.recheck()) { load(); listener.stageChanged(); }
-        else if (ReBrowserMusicPolicy.playerDocument(web.getUrl())) web.evaluateJavascript(
-                "window.__rbNeteaseProviderV1?.recheck();", null);
+        // Explicit retry never infers authentication from login DOM or stored credentials.
+        if (lifecycle.recheck() || lifecycle.stage() == ReBrowserMusicLifecycle.Stage.CHECKING) {
+            accountCheck.restart(); load(); listener.stageChanged();
+        }
+        else if (player() && !ready) { load(); listener.stageChanged(); }
+        else if (ReBrowserMusicPolicy.playerDocument(web.getUrl())) {
+            web.evaluateJavascript("window.__rbNeteaseProviderV1?.recheck();", null);
+        }
     }
     private void scripts() {
         if (providerScript != null) providerScript.remove();
@@ -155,36 +208,80 @@ final class ReBrowserMusicRuntime {
                 layoutSource.replace("__INITIAL_PORTRAIT__", Boolean.toString(adapted)), Set.of("https://music.163.com"));
     }
     private void resetEvaluations() {
-        polling.reset(); commanding.reset(); backing.reset(); queuedCommand = queuedTrack = null;
-        providerFailureReported = false;
+        polling.reset(); commanding.reset(); backing.reset(); lyricReading.reset(); queuedCommand = queuedTrack = null;
+        providerFailureReported = false; listener.lyricsInvalidated(); listener.seekObserved(0, 0);
+        listener.engineObserved(false, true, false, -1, -1, -1, false, "none");
     }
     private void load() {
         if (disposed) return;
-        document++; resetEvaluations(); ready = false; coldPause = false; loginVisible = false;
+        document++; resetEvaluations(); ready = false; coldPause.reset(); loginVisible = false;
+        if (accountTimeout != null) handler.removeCallbacks(accountTimeout);
+        accountTimeout = null;
+        if (initializationTimeout != null) handler.removeCallbacks(initializationTimeout);
+        long initializationToken = initialization.start();
+        initializationTimeout = () -> {
+            if (!disposed && initialization.expire(initializationToken, ready,
+                    lifecycle.stage() == ReBrowserMusicLifecycle.Stage.LOGIN)) {
+                handler.removeCallbacks(tick);
+                listener.failure("音乐初始化暂未完成，已停止追加检查；点“重新检查”重新载入，登录会保留。");
+            }
+        };
+        handler.postDelayed(initializationTimeout, ReBrowserMusicInitialization.TIMEOUT_MS);
+        boolean checking = lifecycle.stage() == ReBrowserMusicLifecycle.Stage.CHECKING;
+        String probe = accountCheck.begin(checking);
         web.stopLoading(); scripts();
         web.getSettings().setMediaPlaybackRequiresUserGesture(true);
         web.getSettings().setUserAgentString(lifecycle.desktop() ? ReBrowserMusicPolicy.DESKTOP_UA
                 : ReBrowserMusicPolicy.mobileUserAgent(android.webkit.WebSettings.getDefaultUserAgent(application)));
         web.getSettings().setUseWideViewPort(!player() || !adapted);
         web.getSettings().setLoadWithOverviewMode(lifecycle.desktop() && !adapted);
-        web.loadUrl(lifecycle.destination());
+        web.getSettings().setCacheMode(probe != null ? android.webkit.WebSettings.LOAD_NO_CACHE
+                : android.webkit.WebSettings.LOAD_DEFAULT);
+        web.loadUrl(probe != null ? probe : checking ? ReBrowserMusicPolicy.HOME : lifecycle.destination());
+        if (probe != null) {
+            accountTimeout = () -> fallbackAccount(probe);
+            handler.postDelayed(accountTimeout, ReBrowserMusicAccountCheck.TIMEOUT_MS);
+        }
+        listener.loading();
+    }
+    private void failAccount(String expected) {
+        if (!accountCheck.active(expected)) return;
+        // Reject late reads immediately, before the deferred navigation runs.
+        accountCheck.fail(expected); handler.post(() -> fallbackAccount(expected));
+    }
+    private void fallbackAccount(String expected) {
+        if (disposed || lifecycle.stage() != ReBrowserMusicLifecycle.Stage.CHECKING || !accountCheck.fallback(expected)) return;
+        // One old-path retry in this check, without exporting credentials or guessing login failure.
+        load(); listener.stageChanged();
+    }
+    private void wakePoll() { wakePoll(0); }
+    private void wakePoll(long delay) {
+        if (disposed || initialization.expired()) return;
+        // A hint advances only the next fixed read; it never releases an outstanding callback slot.
+        handler.removeCallbacks(tick); handler.postDelayed(tick, delay);
     }
     private void poll() {
-        if (disposed) return;
+        if (disposed || initialization.expired()) return;
         handler.postDelayed(tick, 750);
         boolean loginDocument = ReBrowserMusicPolicy.loginDocument(web.getUrl());
-        if (!loginDocument && !ReBrowserMusicPolicy.playerDocument(web.getUrl())) return;
+        final String expectedAccount = accountCheck.request();
+        boolean accountDocument = accountCheck.active(web.getUrl());
+        if (accountDocument && !accountCheck.readable(web.getUrl())) return;
+        if (!accountDocument && !loginDocument && !ReBrowserMusicPolicy.playerDocument(web.getUrl())) return;
         final int epoch = document, operation = polling.begin();
         if (operation == 0) return;
         Runnable timeout = () -> {
-            if (!disposed && document == epoch && polling.timeout(operation))
-                listener.failure("音乐网页暂未响应，已停止追加检查请求；退出重进会保留登录且保持暂停。");
+            if (!disposed && document == epoch && polling.timeout(operation)) {
+                if (accountDocument) fallbackAccount(expectedAccount);
+                else listener.failure("音乐网页暂未响应，已停止追加检查请求；退出重进会保留登录且保持暂停。");
+            }
         };
         handler.postDelayed(timeout, 2500);
-        web.evaluateJavascript(loginDocument ? LOGIN_PROBE
-                : "JSON.stringify(window.__rbNeteaseProviderV1?.state()||{auth:'pending'})", value -> {
+        web.evaluateJavascript(accountDocument ? accountSource : loginDocument ? LOGIN_PROBE : STATE_PROBE, value -> {
             if (disposed || document != epoch || !polling.finish(operation)) return;
             handler.removeCallbacks(timeout);
+            if (initialization.expired()) return;
+            if (accountDocument && !accountCheck.readable(web.getUrl())) return;
             try {
                 Object decoded = new org.json.JSONTokener(value).nextValue();
                 if (!(decoded instanceof String) || ((String) decoded).length() > 8192) return;
@@ -198,6 +295,9 @@ final class ReBrowserMusicRuntime {
                     listener.failure("官方播放器暂未能初始化，已停止重试；检查网络后可重新检查。");
                 }
                 String auth = state.optString("auth");
+                if (accountDocument && !"yes".equals(auth) && !"no".equals(auth)) {
+                    fallbackAccount(expectedAccount); return;
+                }
                 if ("yes".equals(auth) || "no".equals(auth)) {
                     boolean changed = lifecycle.account("yes".equals(auth));
                     if (changed || "no".equals(auth)) {
@@ -207,23 +307,40 @@ final class ReBrowserMusicRuntime {
                 }
                 ReBrowserMusicSnapshot observed = ReBrowserMusicSnapshot.parse(value);
                 if (player() && observed.ready) {
-                    if (!coldPause) {
-                        web.clearHistory(); // UA/login transitions are not music-page Back destinations.
-                        coldPause = true;
-                        command("pause", 0, "");
+                    listener.seekObserved(state.optInt("seekCompleted", 0), state.optInt("seekFailed", 0));
+                    JSONObject engine = state.optJSONObject("engine");
+                    if (engine != null) listener.engineObserved(engine.optBoolean("known"), engine.optBoolean("paused"),
+                            engine.optBoolean("seeking"), engine.optInt("readyState", -1), engine.optInt("networkState", -1),
+                            engine.optInt("errorCode", -1), engine.optBoolean("advancing"), engine.optString("playResult", "other"));
+                    if (!coldPause.acknowledged()) {
+                        if (coldPause.request()) {
+                            web.clearHistory(); // UA/login transitions are not music-page Back destinations.
+                            command("pause", 0, "");
+                        }
                         return;
+                    }
+                    if (!ready && !coldPause.paused(observed.playing, observed.buffering)) return;
+                    if (!ready && adapted && !state.optBoolean("layoutReady")) {
+                        wakePoll(100); return;
                     }
                     ready = true; snapshot = observed; listener.changed(snapshot); listener.stageChanged();
                 } else if (!player()) listener.stageChanged();
-            } catch (Exception invalid) { /* Untrusted/unavailable state is not a login confirmation. */ }
+            } catch (Exception invalid) {
+                if (accountDocument) fallbackAccount(expectedAccount);
+                // Untrusted/unavailable state is never a login confirmation.
+            }
         });
     }
     void command(String kind, long position, String expectedTrack) {
-        if (disposed || !player() || !ReBrowserMusicPolicy.playerDocument(web.getUrl())) return;
+        if (disposed || !player() || !ReBrowserMusicPolicy.playerDocument(web.getUrl())) {
+            if ("seek".equals(kind)) listener.seekResult("wrong-document");
+            return;
+        }
         if (!Set.of("pause", "resume", "previous", "next", "seek", "like").contains(kind)) return;
-        if (polling.expired()) return;
+        if (polling.expired()) { if ("seek".equals(kind)) listener.seekResult("page-unresponsive"); return; }
         final int epoch = document, operation = commanding.begin();
         if (operation == 0) {
+            if ("seek".equals(kind)) listener.seekResult("queued");
             queuedCommand = kind; queuedPosition = position; queuedTrack = expectedTrack; return;
         }
         // evaluateJavascript does not carry a Chromium user gesture. A real native media
@@ -232,21 +349,50 @@ final class ReBrowserMusicRuntime {
         boolean previousGesture = web.getSettings().getMediaPlaybackRequiresUserGesture();
         web.getSettings().setMediaPlaybackRequiresUserGesture(
                 ReBrowserMusicPlaybackAuthorization.requiresGesture(kind, previousGesture));
-        web.evaluateJavascript("window.__rbNeteaseProviderV1?.command(" + JSONObject.quote(kind) + ","
+        String prepareLayout = "pause".equals(kind) && !coldPause.acknowledged()
+                ? "window.__rbMusicLayoutHostV1?.prepare();" : "";
+        web.evaluateJavascript(prepareLayout + "window.__rbNeteaseProviderV1?.command(" + JSONObject.quote(kind) + ","
                 + position + "," + JSONObject.quote(expectedTrack) + ")", result -> {
             if (disposed || epoch != document || !commanding.finish(operation)) return;
+            if ("seek".equals(kind)) listener.seekResult(ReBrowserMusicSeekDiagnostics.javascriptResult(result));
             if (!"\"submitted\"".equals(result)) {
                 if (!"pause".equals(kind)) web.getSettings().setMediaPlaybackRequiresUserGesture(previousGesture);
-                listener.failure("网页暂不能执行此媒体操作");
+                listener.failure("seek".equals(kind) && "\"outside-playable-range\"".equals(result)
+                        ? "该位置超出网易云官方允许播放／试听的范围。" : "网页暂不能执行此媒体操作");
             }
+            // Advance a genuine read after submission, not an optimistic/fabricated position.
+            if ("seek".equals(kind) && "\"submitted\"".equals(result)) wakePoll();
+            if ("pause".equals(kind) && coldPause.acknowledge("\"submitted\"".equals(result))) wakePoll();
             if (queuedCommand != null) {
                 String next = queuedCommand, track = queuedTrack; long value = queuedPosition;
                 queuedCommand = queuedTrack = null; command(next, value, track);
             }
         });
     }
+    boolean readLyrics(String expected, java.util.function.Consumer<ReBrowserMusicLyrics> result) {
+        if (disposed || !ready() || polling.expired() || !player()
+                || !ReBrowserMusicPolicy.playerDocument(web.getUrl())) return false;
+        final int epoch = document, operation = lyricReading.begin();
+        if (operation == 0) return false;
+        java.util.concurrent.atomic.AtomicBoolean done = new java.util.concurrent.atomic.AtomicBoolean();
+        Runnable timeout = () -> {
+            if (!disposed && document == epoch && lyricReading.timeout(operation) && done.compareAndSet(false, true))
+                result.accept(ReBrowserMusicLyrics.state(expected, "timeout"));
+        };
+        handler.postDelayed(timeout, 2500);
+        web.evaluateJavascript("JSON.stringify(window.__rbNeteaseProviderV1?.lyrics(" + JSONObject.quote(expected) + "))", value -> {
+            if (disposed || epoch != document || !lyricReading.finish(operation)) return;
+            handler.removeCallbacks(timeout);
+            if (!done.compareAndSet(false, true)) return;
+            ReBrowserMusicLyrics parsed;
+            try { parsed = ReBrowserMusicLyrics.parse(value, expected); }
+            catch (Exception invalid) { parsed = ReBrowserMusicLyrics.state(expected, "unavailable"); }
+            result.accept(parsed);
+        });
+        return true;
+    }
     void back(java.util.function.Consumer<String> result) {
-        if (disposed) { result.accept("root"); return; }
+        if (disposed || initialization.expired()) { result.accept("root"); return; }
         final int epoch = document, operation = backing.begin();
         if (operation == 0 || polling.expired()) {
             if (operation != 0) backing.finish(operation);

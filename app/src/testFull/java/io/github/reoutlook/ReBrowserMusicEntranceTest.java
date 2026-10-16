@@ -55,6 +55,23 @@ public final class ReBrowserMusicEntranceTest {
             assertFalse(containsWebView(activity.get().findViewById(android.R.id.content)));
         }
     }
+    @Test public void musicInsetsPreserveSideCutoutsAndUseMaxKeyboardBottomNotSum() {
+        new ReBrowserMusicEntrance(context).setEnabled(true);
+        try(var activity=Robolectric.buildActivity(ReBrowserMusicActivity.class).setup()) {
+            ViewGroup content=activity.get().findViewById(android.R.id.content);
+            View root=content.getChildAt(0);
+            android.view.WindowInsets insets=new android.view.WindowInsets.Builder()
+                    .setInsets(android.view.WindowInsets.Type.systemBars(),android.graphics.Insets.of(0,72,0,36))
+                    .setInsets(android.view.WindowInsets.Type.displayCutout(),android.graphics.Insets.of(120,0,48,0))
+                    .setInsets(android.view.WindowInsets.Type.ime(),android.graphics.Insets.of(0,0,0,800)).build();
+            root.dispatchApplyWindowInsets(insets);
+            assertEquals(120,root.getPaddingLeft()); assertEquals(72,root.getPaddingTop());
+            assertEquals(48,root.getPaddingRight()); assertEquals(800,root.getPaddingBottom());
+            root.dispatchApplyWindowInsets(new android.view.WindowInsets.Builder(insets)
+                    .setInsets(android.view.WindowInsets.Type.ime(),android.graphics.Insets.NONE).build());
+            assertEquals(36,root.getPaddingBottom()); assertEquals(120,root.getPaddingLeft());
+        }
+    }
     @Test public void settingsKeepTheirNativeOnlyBoundaryAndMusicStatusIsRedacted() throws Exception {
         try(var activity=Robolectric.buildActivity(ReBrowserSettingsActivity.class).setup()) {
             assertFalse(containsWebView(activity.get().findViewById(android.R.id.content)));

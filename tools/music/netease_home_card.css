@@ -1,0 +1,36 @@
+/* Android-owned homepage refinement; keep the approved reference immutable.
+   The official rail contains .cards pages: preserve its paging/transform/events.
+   Hide entries2+3 WITHIN a four-entry page, not the pages themselves. */
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .rail-wrapper {
+ align-items:stretch!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y {
+ height:auto!important;min-height:0!important;align-self:stretch!important;
+ padding:10px!important;box-sizing:border-box!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y>.card-container {
+ flex:1 1 auto!important;width:100%!important;min-width:0!important;height:auto!important;
+ margin:0!important;padding:10px 0 0!important;box-sizing:border-box!important;
+ align-items:center!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .card-rail {
+ height:auto!important;min-width:0!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .card-rail>.cards {
+ grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:12px!important;width:100%!important;height:auto!important;min-width:0!important;
+ flex:0 0 100%!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards:has(>:nth-child(4))>:not(:nth-child(1)):not(:nth-child(4)) {
+ display:none!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards>.RecentListenCardContainer_r1b6smzd {
+ min-width:0!important;height:0!important;padding-top:100%!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards>.RecentListenCardContainer_r1b6smzd>img.bg {
+ width:100%!important;height:100%!important;max-height:none!important;
+ object-fit:cover!important;
+}
+.rb-music-mobile .GridCarouselWrapper_gcvcmmp.shorten .RecentListenContainer_r1w1uh6y .cards>.RecentListenCardContainer_r1b6smzd>img.icon {
+ width:60%!important;height:auto!important;max-height:none!important;
+}

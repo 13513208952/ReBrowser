@@ -7,7 +7,11 @@ function realm(player=true,logged=true){
  const icon={getAttribute:n=>n==='title'?'喜欢(Ctrl+L)':''};
  const like={disabled:false,getAttribute:()=>'',querySelector:s=>s==='.cmd-icon[title]'?icon:null,getClientRects:()=>[{}],
   click:()=>{likeClicks++;store['async:hostResource'].likeTracksMap['local-song']=!store['async:hostResource'].likeTracksMap['local-song'];}};
- class Audio{play(){realPlays++;return Promise.resolve();}}
+ class Audio{
+  constructor(){this.tagName='AUDIO';this.paused=true;this.currentTime=0;this.readyState=4;this.networkState=1;this.seeking=false;this.error=null;}
+  play(){realPlays++;this.paused=false;return this.rejectName?Promise.reject(Object.assign(new Error('private fixture detail'),{name:this.rejectName})):Promise.resolve();}
+  pause(){this.paused=true;}
+ }
  const store={playing:{playId:'local-song',resourceTrackId:'local-song',onlineResourceId:'local-song',playingState:1,
   resourceName:'Owned fixture',resourceDuration:300,resourceArtists:[{name:'Fixture artist'}],freeTrialInfo:{start:30,end:60}},
   playingList:{curPlayingList:[{}]},'async:hostResource':{likeTracksMap:{}}};
@@ -28,6 +32,15 @@ function realm(player=true,logged=true){
 }
 async function ready(r){r.api.state();await Promise.resolve();await Promise.resolve();r.api.state();await Promise.resolve();await Promise.resolve();return r.api.state();}
 (async()=>{
+ // Account completion primes subscriptions immediately, not on another native poll 750ms later.
+ const eager=realm();assert.equal(eager.api.state().ready,false);
+ await Promise.resolve();await Promise.resolve();
+ assert.deepEqual(Object.keys(eager.callbacks).sort(),['end','playprogress','playstate','seek']);
+ assert.equal(eager.api.state().ready,true);
+ const checking=realm(false,true);checking.api.state();await Promise.resolve();await Promise.resolve();
+ assert.deepEqual(Object.keys(checking.callbacks),[]); // No playback subscriptions in the login probe.
+ const denied=realm(true,false);denied.api.state();await Promise.resolve();await Promise.resolve();
+ assert.deepEqual(Object.keys(denied.callbacks),[]); // No subscriptions without positive official account.
  const cold=realm();assert.equal((await ready(cold)).ready,true);
  await assert.rejects(new cold.Audio().play(),{name:'NotAllowedError'});assert.equal(cold.plays(),0);
  cold.listeners.pointerup({isTrusted:false});await assert.rejects(new cold.Audio().play());
@@ -47,8 +60,11 @@ async function ready(r){r.api.state();await Promise.resolve();await Promise.reso
  cold.callbacks.playprogress({playId:'local-song',current:'12.25'});assert.equal(cold.api.state().position,42250);
  assert.equal(cold.api.command('seek',29999,'local-song'),'outside-playable-range');
  assert.equal(cold.api.command('seek',45000,'local-song'),'submitted');assert.equal(cold.calls.at(-1).payload.duration,15);
+ cold.callbacks.seek({playId:'wrong-song',code:0,position:15});assert.equal(cold.api.state().seekCompleted,0);
  cold.callbacks.seek({playId:'local-song',code:1,position:15});assert.equal(cold.api.state().position,42250);
+ assert.equal(cold.api.state().seekFailed,1);assert.equal(cold.api.state().seekCompleted,0);
  cold.callbacks.seek({playId:'local-song',code:0,position:15});assert.equal(cold.api.state().position,45000);
+ assert.equal(cold.api.state().seekCompleted,1);assert.equal(cold.api.state().seekFailed,1);
  cold.callbacks.end({playId:'local-song'});assert.equal(cold.api.state().playing,false);assert.equal(cold.api.state().buffering,true);
  cold.callbacks.playstate({playId:'local-song',state:2});assert.equal(cold.api.state().buffering,false);
  assert.equal(cold.api.command('next',0,'stale-song'),'track-changed');
@@ -60,6 +76,29 @@ async function ready(r){r.api.state();await Promise.resolve();await Promise.reso
  cold.like.disabled=true;assert.equal(cold.api.command('like',1,''),'unsupported');
  assert.equal(cold.api.command('pause',0,''),'submitted');await assert.rejects(new cold.Audio().play());
  cold.api.cleanup();assert.equal(cold.api.command('resume',0,''),'not-ready');
+ const media=realm();await ready(media);media.api.command('resume',0,'local-song');
+ const element=new media.Audio();Object.defineProperty(element,'src',{get(){throw Error('media URL must not be read');}});
+ await element.play();let diagnostics=media.api.state().engine;assert.equal(diagnostics.known,true);assert.equal(diagnostics.playResult,'resolved');
+ element.currentTime=10;assert.equal(media.api.state().engine.advancing,true);assert.equal(media.api.state().engine.advancing,false);
+ element.readyState=1;element.seeking=true;element.paused=true;element.networkState=3;element.error={code:2};
+ diagnostics=media.api.state().engine;assert.equal(diagnostics.readyState,1);assert.equal(diagnostics.seeking,true);assert.equal(diagnostics.paused,true);assert.equal(diagnostics.errorCode,2);
+ assert.equal('src' in diagnostics,false);assert.equal('currentTime' in diagnostics,false);assert.equal('position' in diagnostics,false);
+ element.rejectName='NotAllowedError';await assert.rejects(element.play());await Promise.resolve();assert.equal(media.api.state().engine.playResult,'NotAllowedError');
+ element.rejectName='private-token';await assert.rejects(element.play());await Promise.resolve();assert.equal(media.api.state().engine.playResult,'other');
+ media.store.playing.resourceTrackId='replacement-song';assert.equal(media.api.state().engine.known,false); // Never report old-track element as the new track's engine.
+ media.api.cleanup();assert.equal(media.api.state().engine.known,false);
+ const recovering=realm();await ready(recovering);recovering.api.command('resume',0,'local-song');
+ const pending=new recovering.Audio();Object.defineProperty(pending,'src',{get(){throw Error('no media URL access');}});await pending.play();
+ recovering.store.playing.playingState=2;recovering.callbacks.playstate({playId:'local-song',state:1});
+ pending.paused=true;pending.seeking=true;pending.readyState=1;
+ recovering.callbacks.seek({playId:'local-song',code:0,position:15});recovering.api.state();assert.equal(recovering.plays(),2);assert.equal(pending.paused,false);
+ pending.paused=true;recovering.api.state();assert.equal(recovering.plays(),2); // One continuation per genuine seek acknowledgment, never polling flood.
+ recovering.api.command('pause',0,'local-song');recovering.callbacks.playstate({playId:'local-song',state:2});recovering.callbacks.seek({playId:'local-song',code:0,position:20});recovering.api.state();assert.equal(recovering.plays(),2);assert.equal(pending.paused,true);
+ assert.equal(recovering.api.command('resume',0,'stale-track'),'track-changed');recovering.api.state();assert.equal(recovering.plays(),2);
+ recovering.api.command('resume',0,'local-song');recovering.api.state();assert.equal(recovering.plays(),3);assert.equal(pending.paused,false); // Explicit resume after a paused seek may continue the same waiting element.
+ pending.paused=true;recovering.callbacks.seek({playId:'other',code:0,position:20});recovering.api.state();assert.equal(recovering.plays(),3);
+ recovering.callbacks.playstate({playId:'local-song',state:1});recovering.callbacks.seek({playId:'local-song',code:0,position:20});recovering.store.playing.resourceTrackId='new-track';recovering.api.state();assert.equal(recovering.plays(),3); // No old-track continuation.
+ recovering.api.cleanup();
  const restored=realm();await ready(restored);restored.store.playing.playId='';restored.store.playing.restoreResource={current:232};
  assert.equal(restored.api.state().position,262000);
  restored.store.playing.restoreResource.current=155;assert.equal(restored.api.state().position,185000);

@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划工作台 R1
+# GeckoView v2 · 规划工作台 R2
 
 > 状态：需求已记录；设计草案待审查；产品代码、密钥生成、设备登记、安装与发行均未开始。
 
@@ -51,10 +51,10 @@ mindmap
 | [旧版公钥保全](evidence/legacy-public-trust.json) | 公钥、用途、摘要；私钥保管未核实 | v1.0.5源定义 |
 | [上游API证据](evidence/upstream.json) | Gecko158公开API事实，不是能力臆测 | Mozilla原始源码 |
 | [审查记录](records/review-log.json) | 发现、决定、重开原因 | 每次修正留痕 |
-| [规则演算](matrices/authority-cases.csv) | 具体根／最高／中级／授权／名单案例 | 数字和同级规则仍待审查 |
+| [规则演算](matrices/authority-cases.csv) | 具体根／最高／中级／授权／名单案例 | 同级可控已确认；具体等级数字仍待审查 |
 | [旧约束的替代关系](records/supersessions.json) | 防止把已解除的旧兼容约束重新带回 | 后说且明确的机主决定优先 |
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
-| [R1自检结果](reviews/R1-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
+| [R2自检结果](reviews/R2-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
 
 ## 使用约定
 

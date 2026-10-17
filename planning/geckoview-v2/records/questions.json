@@ -1,40 +1,44 @@
 {
   "schema": 1,
-  "revision": "R1",
+  "revision": "R2",
   "questions": [
     {
       "id": "Q01",
       "priority": "blocking-security",
       "question": "同级授权如何处理？原话保证高于必可，但没有明确等于。",
-      "currentTreatment": "暂以严格大于作推演，不把该默认当机主已确认。",
+      "currentTreatment": "已同步表达式、流程图与规则演算，加入相等/不足/缺机主授权对照。",
       "requirements": [
         "R12"
       ],
-      "state": "open"
+      "state": "resolved",
+      "resolution": "O13：相等也允许；统一采用≥。",
+      "resolvedByOwnerSource": "O13"
     },
     {
       "id": "Q02",
       "priority": "blocking-security",
       "question": "编译公钥可从APK提取；名单隔离是否指接口层不可枚举/管理/借用，而不是公钥本身保密？",
-      "currentTreatment": "设备映射不打包；原始公钥公开这一事实不变。",
+      "currentTreatment": "不再把公钥保密作为待确认目标；真实设备标识/映射保护继续作为实现验收。",
       "requirements": [
         "R15",
         "R16",
         "R17"
       ],
-      "state": "open"
+      "state": "resolved",
+      "resolution": "O13：名单的枚举/管理/借用及设备信息隔离；公钥用于匹配管理策略，不直接等同设备信息。",
+      "resolvedByOwnerSource": "O13"
     },
     {
       "id": "Q03",
       "priority": "blocking-security",
-      "question": "辅助包内嵌私钥可复制：接受签名/设备绑定的受限委托替代可复用身份私钥，还是确需允许可复制中级凭据？",
-      "currentTreatment": "不内嵌根私钥；两种模式的有效等级/影响范围都要明确。",
+      "question": "辅助包凭据应是持钥程序通用接入，还是仅指定签名辅助包接入？不是询问等级识别规则。",
+      "currentTreatment": "O13表明原问题未理解，不能视为批准某种凭据设计。私钥证明身份，授权记录决定等级；待说明。",
       "requirements": [
         "R18",
         "R19",
         "R20"
       ],
-      "state": "open"
+      "state": "awaiting-plain-language-clarification"
     },
     {
       "id": "Q04",

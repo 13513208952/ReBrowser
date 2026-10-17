@@ -35,6 +35,11 @@
       "earlier": "保护旧根私钥/旧版维护义务",
       "later": "O09：明确继续保留；可并行建立更合适的新密钥机制",
       "status": "NOT superseded; preserve separately from fresh v2 app"
+    },
+    {
+      "earlier": "R1同级行为未决，暂用严格大于作符号演算",
+      "later": "O13确认相等可控；统一改为≥",
+      "status": "owner-confirmed supersession; R1 review retained only as historical snapshot"
     }
   ]
 }

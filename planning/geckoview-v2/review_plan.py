@@ -32,10 +32,11 @@ def review():
         assert len(data) == message['utf8Bytes']
         assert data.decode('utf-8') and not data.endswith(b'\n'), 'unexpected quote wrapping/newline'
     assert {str(p.relative_to(P)) for p in (P / 'owner-verbatim').glob('O*.txt')} == {m['file'] for m in messages.values()}
-    requirements = indexed(load('records/requirements.json')['requirements'])
+    requirement_record = load('records/requirements.json')
+    requirements = indexed(requirement_record['requirements'])
     for item in requirements.values():
         assert item['ownerSources'] and set(item['ownerSources']) <= messages.keys(), item['id']
-        assert item['implementation'] == 'not-started', 'R1 must not pretend product implementation'
+        assert item['implementation'] == 'not-started', 'Planning must not pretend product implementation'
     decisions = indexed(load('records/decisions.json')['decisions'])
     questions = indexed(load('records/questions.json')['questions'])
     for group in [decisions, questions]:
@@ -93,20 +94,24 @@ def review():
         exempt = list_owner != 'none' and (root or own)
         consent_ok = case['risk'] != 'highest' or exempt or case['owner_grant'] == 'yes'
         identity = int(case['identity_ceiling'])
-        granted = identity if consent_ok else min(identity, int(case['required_threshold']))
+        required = int(case['required_threshold'])
+        assert case['risk'] != 'highest' or required > 0, 'highest-risk threshold must permit an insufficient grant ceiling'
+        granted = identity if consent_ok else min(identity, required - 1)
         effective = min(granted, int(case['credential_ceiling']), int(case['session_ceiling']))
-        actual = 'allow' if scoped and effective > int(case['required_threshold']) and case['authenticated'] == 'yes' else 'deny-or-wait'
+        actual = 'allow' if scoped and effective >= required and case['authenticated'] == 'yes' else 'deny-or-wait'
         assert actual == case['expected'], (case['id'], actual)
     report = {
-        'revision': 'R1', 'result': 'structural-and-symbolic-review-passed',
+        'revision': requirement_record['revision'], 'result': 'structural-and-symbolic-review-passed',
+        'authorityComparison': '>= (confirmed O13)',
         'ownerMessages': len(messages), 'requirements': len(requirements),
         'capabilityGroups': len(capabilities), 'acceptanceCasesPlannedNotRun': len(acceptance),
         'authorityExamplesSymbolicallyChecked': len(authority_cases),
         'mermaidBlocksStructurallyChecked': graph_count,
         'fullMermaidParserOrRenderingValidated': False,
         'productCodeImplementedOrBuilt': False, 'deviceOrPrivateKeyAccess': False,
-        'openQuestions': len(questions),
-        'caveat': 'Hashes prevent subsequent edits; they do not independently prove original transcription. Diagram syntax/rendering and owner semantics require review. Level numbers/comparison examples remain proposals.'
+        'openQuestions': sum(q['state'] != 'resolved' for q in questions.values()),
+        'resolvedOwnerQuestions': sum(q['state'] == 'resolved' for q in questions.values()),
+        'caveat': 'Hashes prevent subsequent edits; they do not independently prove original transcription. Diagram syntax/rendering and unresolved owner semantics require review. Numeric levels remain proposals; >= is owner-confirmed in O13.'
     }
     return report
 

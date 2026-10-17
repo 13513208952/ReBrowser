@@ -1,7 +1,7 @@
 id,category,finding,resolution_gate,requirements,treatment,state
-K01,public-key-secrecy,编译公钥可提取，不能承诺名单公钥绝对隐藏,Q02,R15 R16 R17,API/管理/使用隔离与设备映射隐私单独设计,open
+K01,public-key-secrecy,公钥仅匹配策略，真实设备信息及关联映射仍应防越权枚举,Q02,R15 R16 R17,O13关闭公钥保密疑问；按管理/借用/枚举隔离保护真实设备信息,semantics-resolved-implementation-pending
 K02,extractable-private-key,辅助包内嵌私钥可复制,Q03,R18 R19 R20,凭据风险影响有效等级；签名/安装绑定与撤销,open
-K03,authority-consistency,等级保证、所有权隔离、机主确认存在语义交叉,Q01 Q06,R11 R12 R13 R15 R16,先统一定义有效等级与对应作用域；性质测试,open
+K03,authority-consistency,已确认≥后，机主授权上限不能再设为要求等级，否则错误放行,Q06,R11 R12 R13 R15 R16,同级/高于允许；缺授权时有效上限严格低于要求；保留跨作用域隔离,open
 K04,enrollment-bypass,管理员若可把任意陌生设备加入名单会绕过最高危机主授权,Q04,R11 R14 R17,一次明确登记授权和持钥证明,open
 K05,no-completion,Gecko context删除是void派发,Q09,R23,先验证可靠完成方案；不把提交当成功,open
 K06,wrong-delete-scope,host/baseDomain清理不是context清理,Q10,R23,API拓扑试验与跨子应用标记测试；不全局回退,open

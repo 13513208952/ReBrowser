@@ -86,6 +86,14 @@
       "utf8Bytes": 93,
       "sha256": "6ecbfa5946ccee73ca6125d8f42e8099ffff4f56de9940fee02d08291ee70c85",
       "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O13",
+      "file": "owner-verbatim/O13-equal-level-and-whitelist-privacy.txt",
+      "utf8Bytes": 455,
+      "sha256": "18dfd75b832ec06661e426bc96936b222dc46a9715505be22f6a9fd4d820d8b9",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
     }
-  ]
+  ],
+  "lastAppendedAt": "2026-10-17T22:23:54+08:00"
 }

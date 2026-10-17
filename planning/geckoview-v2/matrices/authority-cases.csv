@@ -12,5 +12,9 @@ A10,delegate-M,none,application,highest,6,6,6,8,yes,yes,deny-or-wait,机主授�
 A11,delegate-M,none,application,normal,6,6,6,3,no,yes,allow,中级在作用域内具备足够等级即可用对应能力
 A12,root,root,application,highest,10,10,10,8,no,no,deny-or-wait,白名单不免管理员认证
 A13,root,root,application,highest,10,3,10,8,no,yes,deny-or-wait,凭据/介入方式可以限制有效等级，不假装已证明完整根身份
-A14,delegate-M,none,application,normal,5,5,5,5,no,yes,deny-or-wait,严格大于模型的同级结果；Q01待机主决定，不是已批准规则
+A14,delegate-M,none,application,normal,5,5,5,5,no,yes,allow,O13已确认：同级允许，≥比较
 A15,root,highest-B,whitelist,highest,10,10,10,9,no,yes,allow,根可管理其他最高管理员名单
+A16,highest-A,highest-A,application,highest,8,8,8,8,no,yes,allow,同级且可用自有白名单例外时允许
+A17,highest-A,none,application,highest,8,8,8,8,no,yes,deny-or-wait,同级但缺机主授权时不得借≥放行
+A18,delegate-M,none,application,normal,4,4,4,5,no,yes,deny-or-wait,低于要求一级必须拒绝
+A19,highest-A,highest-B,whitelist,normal,9,9,9,9,yes,yes,deny-or-wait,等级相等也不能抹去他人名单作用域隔离

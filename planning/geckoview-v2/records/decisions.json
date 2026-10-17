@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R1",
+  "revision": "R2",
   "decisions": [
     {
       "id": "D01",
@@ -143,6 +143,29 @@
       "requirements": [
         "R21",
         "R29"
+      ]
+    },
+    {
+      "id": "D17",
+      "state": "confirmed",
+      "decision": "有效管理等级≥对应能力需求等级即可控制；同级允许。",
+      "requirements": [
+        "R12"
+      ],
+      "ownerSources": [
+        "O13"
+      ]
+    },
+    {
+      "id": "D18",
+      "state": "confirmed",
+      "decision": "白名单隔离保护设备隐私及枚举/管理/借用权限；公钥作为策略匹配标识，不与具体设备资料混为一谈。",
+      "requirements": [
+        "R15",
+        "R17"
+      ],
+      "ownerSources": [
+        "O13"
       ]
     }
   ]

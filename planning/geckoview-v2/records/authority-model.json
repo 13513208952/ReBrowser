@@ -12,13 +12,14 @@
     "root": "Own(root) UNION union(Own(highest_i))",
     "ordinaryHighest": "Own(self) ONLY",
     "otherHighestAgainstRoot": "NO enumerate/manage/use; root exclusive ownership",
-    "enrollment": "Explicit owner authorization + proof of target installation private-key possession; details Q04"
+    "enrollment": "Explicit owner authorization + proof of target installation private-key possession; details Q04",
+    "privacy": "O13: protect unowned whitelist device information and enumeration/manage/use; public keys match policy, not raw device metadata."
   },
   "levelRule": {
-    "guarantee": "AuthorizedScope(a,c) AND FreshAuthenticatedGrant(a,s) AND Effective(a,s,t,i) > Required(c,t,i) => Executable(c)",
-    "equality": "UNRESOLVED Q01",
+    "guarantee": "AuthorizedScope(a,c) AND FreshAuthenticatedGrant(a,s) AND Effective(a,s,t,i) >= Required(c,t,i) => Executable(c)",
+    "equality": "CONFIRMED O13: equal level is permitted (>=)",
     "proposalRequired": "max(capability_base_threshold, transport_risk_floor, intervention_risk_floor)",
-    "proposalEffective": "min(identity_ceiling, delegated_session_ceiling, credential_assurance_ceiling); owner grant activates sufficient ceiling for high risk outside whitelist",
+    "proposalEffective": "min(identity_ceiling, delegated_session_ceiling, credential_assurance_ceiling); before required owner grant exists, active grant ceiling MUST remain strictly BELOW required threshold (not equal), because equality now permits execution.",
     "noHiddenDeny": "Once sufficient effective authority exists within scope, no alternate transport/plugin-specific hardcoded veto may block the same capability.",
     "managementMonotonicity": "Within same scope and session conditions, a higher authority includes all lower-authority operations and eligible management abilities.",
     "scopeVsLevel": "Scope defines the corresponding capability; ordinary-highest ownership isolation is not overridden by numeric level. Q06 review required."
@@ -35,5 +36,6 @@
     "Hidden entry is not authorization",
     "Plugin cannot select its own granted level",
     "Whitelisting does not equal generating keys or proof of ownership"
-  ]
+  ],
+  "revision": "R2"
 }

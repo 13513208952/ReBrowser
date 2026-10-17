@@ -1,6 +1,6 @@
 # ReOutlook 邮件指南
 
-ReOutlook 是 ReBrowser **全量包**内置的邮件子软件（极简不含邮件）：使用 Outlook 官方网页登录和收发邮件，同时将已同步邮件保存在本机供离线阅读。它不是 Microsoft 官方客户端，也不是另外一个 APK。
+ReOutlook是ReBrowser实验性应用环境中已经落地的邮件实践，包含于**全量包**（极简不含邮件；[整体定位](../PROJECT_VISION.md)）：使用 Outlook 官方网页登录和收发邮件，同时将已同步邮件保存在本机供离线阅读。它不是 Microsoft 官方客户端，也不是另外一个 APK。
 
 ## 打开邮件模式
 

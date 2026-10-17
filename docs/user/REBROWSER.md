@@ -1,6 +1,6 @@
 # ReBrowser 使用指南
 
-本指南对应 v1.0.3；发布状态及三套件下载见[首页](../../README.md)。极简只含浏览器；全量另含 [ReOutlook 邮件](REOUTLOOK.md)和[网易云音乐](MUSIC.md)。
+本指南对应v1.0.4的**通用浏览部分**。ReBrowser整体是重新定义浏览器应用能力的[实验性项目](../PROJECT_VISION.md)，不只限于通用浏览；极简提供此部分，全量同时包含[ReOutlook邮件](REOUTLOOK.md)和[网易云音乐](MUSIC.md)。发布状态及三套件下载见[首页](../../README.md)。
 
 ## 搜索和浏览
 

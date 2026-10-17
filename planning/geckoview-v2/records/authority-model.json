@@ -27,7 +27,8 @@
   "consentRule": {
     "exempt": "Authenticated root targeting own OR any highest-admin whitelist; ordinary highest targeting own whitelist",
     "outsideWhitelist": "Highest-risk actions require owner grant even for root; missing grant must be represented as insufficient effective authority, not disguised full authority.",
-    "platformBoundary": "No bypass of Android mandatory grants or remote site authentication/CAPTCHA/rights checks."
+    "platformBoundary": "No bypass of Android mandatory grants or remote site authentication/CAPTCHA/rights checks.",
+    "sourceMismatchException": "O16 four-step data protection: trust/force1 clicks, force2/force3 each fresh Android owner authentication unless truly no lock. No admin/whitelist exemption; business unlock only after confirmed erasure."
   },
   "riskModel": [
     "Compiled public key is public",
@@ -39,7 +40,7 @@
     "High-trust administrator addition must never be smuggled through plugin delegation/import or mutable capability thresholds",
     "Root identity mismatch data guard is not administrator disable; exceptional owner-only flow is not bypassed by administrator whitelist"
   ],
-  "revision": "R3",
+  "revision": "R4",
   "credentialRule": {
     "model": "source-neutral shared proof-of-possession credential",
     "source": "confirmed O14",

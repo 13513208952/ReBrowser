@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R3",
+  "revision": "R4",
   "requirements": [
     {
       "id": "R01",
@@ -340,20 +340,22 @@
     {
       "id": "R33",
       "ownerSources": [
-        "O14"
+        "O14",
+        "O16"
       ],
       "title": "发行签名与根连续性",
-      "rule": "正式APK受发行签名保护；新包v2后续更新须比较前后根身份。不继承旧v1数据。根变化即隔离旧数据，机主亲自许可后可使用不同根的新环境，正确包可在销毁前抢救。",
+      "rule": "来源由正确APK签名身份与根管理员公钥组合决定；保留最后正常来源，不被中间异常包覆写。不同源不能继承旧数据，正确后续包须能跨过异常版本认回可信来源并恢复原数据；仅限新v2更新线。",
       "state": "owner-required",
       "implementation": "not-started"
     },
     {
       "id": "R34",
       "ownerSources": [
-        "O14"
+        "O14",
+        "O16"
       ],
       "title": "三次确认后的私有数据销毁",
-      "rule": "继续不同根且不继承旧数据时，三次确认后销毁目标旧数据；绝不触碰其他软件或公共目录。确认计数/首次许可是否另计/隔离范围与恢复流程需明确，不按启动次数自动擦除。",
+      "rule": "B流程：首次信任来源点击＋连续三次强行使用确认。信任及第一次强行确认无需Android验证；第二/第三次各独立机主验证，确无锁屏密码才免。最终同意后仅销毁旧私有数据，完成后才解锁，不触其他软件/公共目录。",
       "state": "owner-required",
       "implementation": "not-started"
     },
@@ -364,6 +366,36 @@
       ],
       "title": "来源中立的持权证明",
       "rule": "不问请求程序来自哪里，只验证它是否正确证明对应权限；共享私钥代表同一身份。不将调用者APK签名或私钥可能复制额外变成来源否决。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R36",
+      "ownerSources": [
+        "O16"
+      ],
+      "title": "最后正常来源跨异常包保持",
+      "rule": "可信基准是最后正常签名＋根公钥组合，不是紧邻上一个安装包。A正常→B异常→C同源正常后续：最终销毁前C应继承A数据，不把B当新基准再次拦截。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R37",
+      "ownerSources": [
+        "O16"
+      ],
+      "title": "两次独立Android机主校验",
+      "rule": "第二/第三强行确认每次都启动一次新Android锁屏凭据或生物识别验证；取消/失败不计同意，不复用上次成功。只有确实未设置设备锁才可免；验证不可用不等于无锁。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R38",
+      "ownerSources": [
+        "O16"
+      ],
+      "title": "销毁完成后才解锁",
+      "rule": "首次信任及前三步进度不允许正常业务访问或写旧资料；三次强行确认完成后执行确切私有旧集合销毁，成功核对后才解锁新环境。最终销毁前保持正确包救援。",
       "state": "owner-required",
       "implementation": "not-started"
     }

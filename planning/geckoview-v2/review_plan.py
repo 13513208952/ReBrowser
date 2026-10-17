@@ -121,6 +121,52 @@ def review():
     assert continuity['implementation'] == 'not-started'
     assert continuity['confirmed']['destroyOnlyOwnPrivateAppData']
     assert continuity['confirmed']['mismatchRequiresPersonalOwnerPermission']
+    confirmation_cases = rows('matrices/confirmation-cases.csv')
+    for c in confirmation_cases:
+        if c['trusted_same'] == 'yes':
+            actual = 'NORMAL_EXISTING'
+        elif c['trust_click'] != 'yes':
+            actual = 'SOURCE_WARNING_LOCKED'
+        elif c['force1_click'] != 'yes':
+            actual = 'FORCE1_WARNING_LOCKED'
+        elif c['force2_click'] != 'yes':
+            actual = 'FORCE2_WARNING_LOCKED'
+        elif c['lock_at2'] not in ['secure', 'unset']:
+            actual = 'DEVICE_LOCK_STATE_REQUIRED'
+        elif c['lock_at2'] == 'secure' and c['auth_at2'] != 'fresh-success':
+            actual = 'AUTH2_REQUIRED_LOCKED'
+        elif c['force3_click'] != 'yes':
+            actual = 'FORCE3_WARNING_LOCKED'
+        elif c['lock_at3'] not in ['secure', 'unset']:
+            actual = 'DEVICE_LOCK_STATE_REQUIRED'
+        elif c['lock_at3'] == 'secure' and c['auth_at3'] != 'fresh-success':
+            actual = 'AUTH3_REQUIRED_LOCKED'
+        elif c['erasure_verified'] != 'yes':
+            actual = 'ERASURE_PENDING_LOCKED'
+        elif c['new_epoch_committed'] != 'yes':
+            actual = 'COMMIT_NEW_EPOCH_LOCKED'
+        else:
+            actual = 'UNLOCK_NEW_EMPTY'
+        assert actual == c['expected'], (c['id'], actual)
+    source_cases = rows('matrices/source-continuity-cases.csv')
+    for c in source_cases:
+        trusted = (c['trusted_signer'], c['trusted_root'])
+        candidate = (c['candidate_signer'], c['candidate_root'])
+        # Deliberately never use last_seen as the authority, including in A->B->C recovery.
+        if c['platform_update_allowed'] != 'yes':
+            actual = 'PLATFORM_REJECT_PRESERVE'
+        elif not all(trusted):
+            actual = 'LOCK_RECOVERY_REQUIRED' if c['old_epoch_exists'] == 'yes' else 'FIRST_FRESH_SEED'
+        elif trusted != candidate:
+            actual = 'SOURCE_MISMATCH_LOCKED'
+        elif c['old_epoch_destroyed'] == 'yes':
+            actual = 'NORMAL_NEW_EMPTY_NO_OLD_RESCUE'
+        else:
+            actual = 'NORMAL_INHERIT_TRUSTED_EPOCH'
+        assert actual == c['expected'], (c['id'], actual)
+    assert [s['freshAndroidOwnerAuthentication'] for s in continuity['ownerExactWarningExamples']] == [False, False, True, True]
+    assert continuity['confirmed']['businessUnlockOnlyAfterSuccessfulErasure']
+    assert continuity['confirmationProtocol']['noUnlockBeforeErase']
     report = {
         'revision': requirement_record['revision'], 'result': 'structural-and-symbolic-review-passed',
         'authorityComparison': '>= (confirmed O13)',
@@ -129,6 +175,9 @@ def review():
         'authorityExamplesSymbolicallyChecked': len(authority_cases),
         'compiledPrincipalExamplesSymbolicallyChecked': len(principal_cases),
         'rootContinuityCasesPlannedNotRun': len(rows('matrices/root-continuity-cases.csv')),
+        'fourStepConfirmationExamplesSymbolicallyChecked': len(confirmation_cases),
+        'trustedSourceChainExamplesSymbolicallyChecked': len(source_cases),
+        'actualAndroidOwnerAuthenticationPerformed': False,
         'destructionCodeOrExecution': False,
         'mermaidBlocksStructurallyChecked': graph_count,
         'fullMermaidParserOrRenderingValidated': False,

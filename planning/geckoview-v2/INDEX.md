@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划工作台 R3
+# GeckoView v2 · 规划工作台 R4
 
 > 状态：需求已记录；设计草案待审查；产品代码、密钥生成、设备登记、安装与发行均未开始。
 
@@ -44,7 +44,7 @@ mindmap
 | [邮件与登录](views/05-mail-and-auth.md) | AAD／MSA流程、压缩、去重、检索 | R21、R24、历史问题 |
 | [签名与发行](views/06-trust-and-release.md) | 密钥分域、旧根保全、依赖／R8／加密性能 | R07–R09、R28–R30 |
 | [高级静态准入](views/08-compiled-administrators.md) | 仅APK新增高级身份、严格禁用关系、不可禁用根 | R13、R31、R32、R35 |
-| [根连续性与数据](views/09-root-continuity-and-data.md) | 签名、隔离、机主许可、救援及仅私有数据销毁 | R33、R34 |
+| [可信来源与数据](views/09-root-continuity-and-data.md) | 四步确认、两次系统验证、A→异常B→正常C保持可信源、销毁后解锁 | R33、R34、R36–R38 |
 | [实施与验收](views/07-roadmap-and-review.md) | 依赖图、审查闸门、验收矩阵 | P0–P7、测试／风险表 |
 | [需求](records/requirements.json) | 每条规则及原话来源 | 机主原话 |
 | [决定](records/decisions.json) | confirmed / verified-upstream / design-proposal | 不混用状态 |
@@ -58,7 +58,9 @@ mindmap
 | [根连续性案例](matrices/root-continuity-cases.csv) | 不同根、机主许可、正确包抢救、三确认、删除范围 | 全部仅计划，未删除任何资料 |
 | [旧约束的替代关系](records/supersessions.json) | 防止把已解除的旧兼容约束重新带回 | 后说且明确的机主决定优先 |
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
-| [R3自检结果](reviews/R3-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
+| [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
+| [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
+| [R4自检结果](reviews/R4-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
 
 ## 使用约定
 

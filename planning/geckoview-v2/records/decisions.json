@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R3",
+  "revision": "R4",
   "decisions": [
     {
       "id": "D01",
@@ -205,7 +205,7 @@
     },
     {
       "id": "D22",
-      "state": "confirmed",
+      "state": "refined-by-O16",
       "decision": "同新包更新根身份变化时不继承旧数据；先机主许可，保留正确包抢救路径，继续时三确认后销毁仅本应用私有数据。",
       "requirements": [
         "R33",
@@ -213,6 +213,43 @@
       ],
       "ownerSources": [
         "O14"
+      ],
+      "refinement": "首次许可不是立即解锁；精确四步、两次验证、最后正常来源及销毁后解锁由D23-D25明确。"
+    },
+    {
+      "id": "D23",
+      "state": "confirmed",
+      "decision": "B已确认：1次信任点击＋3次连续强行确认；后两次各自系统机主验证，无锁例外。",
+      "requirements": [
+        "R34",
+        "R37"
+      ],
+      "ownerSources": [
+        "O16"
+      ]
+    },
+    {
+      "id": "D24",
+      "state": "confirmed",
+      "decision": "身份源为APK签名＋根公钥组合，保存最后正常源穿越异常中间包；不得用last-installed覆盖。",
+      "requirements": [
+        "R33",
+        "R36"
+      ],
+      "ownerSources": [
+        "O16"
+      ]
+    },
+    {
+      "id": "D25",
+      "state": "confirmed",
+      "decision": "第三次强行确认有效后才销毁旧私有数据，销毁成功后才解锁；之前正确包救援仍成立。",
+      "requirements": [
+        "R34",
+        "R38"
+      ],
+      "ownerSources": [
+        "O16"
       ]
     }
   ]

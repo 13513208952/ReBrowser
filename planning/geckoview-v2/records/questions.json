@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R3",
+  "revision": "R4",
   "questions": [
     {
       "id": "Q01",
@@ -164,23 +164,27 @@
       "id": "Q14",
       "priority": "blocking-security",
       "question": "根身份是公钥指纹还是允许经旧根认证的换钥链？何种签名更新被Android允许？",
-      "currentTreatment": "字符串ID不能证明同一根；首次分叉安装无历史基线；同签名恶意代码不可能只靠自检绝对防御。",
+      "currentTreatment": "不再问单独root ID定义，不拿异常包作前任可信源；同签名恶意代码的既有技术边界不变。",
       "requirements": [
         "R07",
         "R33"
       ],
-      "state": "open"
+      "state": "resolved",
+      "resolvedByOwnerSource": "O16",
+      "resolution": "最后正常APK签名＋根管理员公钥的组合；异常中间包不能覆盖基准。签名轮换/Android验真实现归Q18工程验证。"
     },
     {
       "id": "Q15",
       "priority": "blocking-data-safety",
       "question": "首次不同根的使用许可，与后续三次销毁确认是否分开？三次是同一流程连续确认还是多次使用尝试？",
-      "currentTreatment": "建议独立许可＋同一流程三个明确确认；取消/超时/失败不计，前三次完成前可救援，最终销毁后不能承诺恢复；尚未替机主决定。",
+      "currentTreatment": "首次信任/第1强行不额外要求系统校验；取消或验证失败不算同意，前三次最终完成前保全救援。",
       "requirements": [
         "R33",
         "R34"
       ],
-      "state": "open"
+      "state": "resolved",
+      "resolvedByOwnerSource": "O16",
+      "resolution": "B：信任点击另计，连续3次强行确认；第2/3各新Android机主校验，只有设备无密码可免；成功销毁旧数据后才解锁。"
     },
     {
       "id": "Q16",
@@ -195,12 +199,36 @@
     },
     {
       "id": "Q17",
-      "priority": "blocking-data-safety",
+      "priority": "engineering-spike",
       "question": "根变化后旧数据隔离集合、私有外部目录/备份/Keystore归属、正确恢复包版本策略如何界定？",
-      "currentTreatment": "默认排除公共/共享/其他软件/旧v1包；不使用pm clear或泛化目录删除；正确包必须满足Android签名/版本覆盖条件。",
+      "currentTreatment": "机主已明确只本软件私有旧资料、不触其他软件/公共目录；需工程给出内部目录/密钥清单与恢复版本策略，不让机主重复定义安全范围。",
       "requirements": [
         "R33",
         "R34"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q18",
+      "priority": "engineering-spike",
+      "question": "APK签名可信身份、合法签名轮换和最后正常来源的持久化/恢复如何在Android11+可靠实现？",
+      "currentTreatment": "已确认组合语义，不再交给机主选择算法；真实验证A→异常B→同源C及版本/签名限制。保留同签名任意恶意代码的自检边界。",
+      "requirements": [
+        "R07",
+        "R33",
+        "R36"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q19",
+      "priority": "engineering-spike",
+      "question": "每次系统机主校验、设备确无锁判定、失败/取消/生命周期恢复如何实现与测试？",
+      "currentTreatment": "优先平台API；应用不接触锁屏密码/指纹模板。锁已设置但生物不可用需凭据兜底；未知/错误不能免。每步新请求不能复用。",
+      "requirements": [
+        "R34",
+        "R37",
+        "R38"
       ],
       "state": "open"
     }

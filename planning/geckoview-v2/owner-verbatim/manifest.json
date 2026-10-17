@@ -100,7 +100,21 @@
       "utf8Bytes": 1406,
       "sha256": "49215815d638aa91086a2e270bb5ae2056ae1d006d7681aaf97d29453965f35f",
       "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O15",
+      "file": "owner-verbatim/O15-confirmation-question.txt",
+      "utf8Bytes": 16,
+      "sha256": "bf82bfcc50d357d14b1e2945286979875a25f09c2ad414d7db2e1aa03589f1ae",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O16",
+      "file": "owner-verbatim/O16-four-step-confirmation-and-trusted-source.txt",
+      "utf8Bytes": 1431,
+      "sha256": "c1c793ecf82c5b7b31b49561ff15cf42317e013d157baf09701f46c588ad7565",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
     }
   ],
-  "lastAppendedAt": "2026-10-17T22:36:19+08:00"
+  "lastAppendedAt": "2026-10-17T23:18:59+08:00"
 }

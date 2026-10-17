@@ -39,6 +39,6 @@ C408,admin,预编译信任查询/签名APK更新准备；不能热加高级或�
 C108,outlook,全部本机数据清理,子应用清理界面,7,highest-destructive,outlook,R10 R11 R23,not-started,T-C108
 C207,music,全部本机数据清理,子应用清理界面,7,highest-destructive,music,R10 R11 R23,not-started,T-C207
 C409,admin,禁用严格更低且非Root管理员,管理员管理台,target_level+1,management,strictly-lower-non-root-admin,R13 R32,not-started,T-C409
-C501,continuity,查询根连续性与旧数据隔离状态,根身份变化提示,1,normal,current-installation,R33,not-started,T-C501
-C502,continuity,发起机主新根许可/旧数据销毁确认流程,用户亲自许可与三确认界面,8,owner-personal-flow,private-old-epoch,R33 R34,not-started,T-C502
-C503,continuity,正确根恢复包救援检查,正确包恢复旧数据流程,8,recovery,private-old-epoch-before-destruction,R33 R34,not-started,T-C503
+C501,continuity,查询最后正常签名＋根公钥可信源与旧数据隔离状态,根身份变化提示,1,normal,current-installation,R33 R36,not-started,T-C501
+C502,continuity,仅发起四步本人确认流程；不能由管理员替代后两次系统验证,用户亲自许可与三确认界面,8,owner-personal-flow,private-old-epoch,R33 R34 R37 R38,not-started,T-C502
+C503,continuity,同正常可信源后续包救援检查；不以异常中间包为基准,正确包恢复旧数据流程,8,recovery,private-old-epoch-before-destruction,R33 R34 R36,not-started,T-C503

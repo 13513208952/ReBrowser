@@ -1,12 +1,15 @@
 id,scenario,expected,status
 G01,"same trusted root, normal valid package update",continue owned current data,planned-not-run
 G02,"different root, owner not yet approved",lock old epoch; no inherited data; no erasure,planned-not-run
-G03,owner approves different root use only,fresh new epoch; old encrypted data and rescue keys preserved,planned-not-run
+G03,"owner trusts abnormal source only, before any/all forced confirmations",business remains locked; trusted A baseline and old data/keys preserved; no fresh business access,planned-not-run
 G04,"old-root correct recovery APK before erasure, Android permits update",recover verified old epoch,planned-not-run
 G05,correct old APK version too low or signature invalid,report recovery installation constraint; preserve old data; no uninstall/forced downgrade,planned-not-run
 G06,"0/1/2 explicit confirmations, cancellation, timeout or many launches",no erasure; do not count starts as confirmations,planned-not-run
-G07,"final third confirmation valid, exact owned old target, semantics approved",authorize bounded private erasure only; not performed by this model,planned-not-run
+G07,source trust + F1 + F2 fresh system auth + F3 independent fresh system auth (or OS-confirmed no lock at each step),authorize exact private old erasure; keep locked until deletion verification and new epoch commit; no action performed by model,planned-not-run
 G08,target public Downloads/other package/legacy v1/cloud,never erase; scope rejection,planned-not-run
-G09,root/admin whitelist requests skip personal root-change confirmations,no bypass; no erasure,planned-not-run
+G09,"root/admin whitelist, cached auth success or plugin request attempts to skip owner steps",no bypass; no erasure or business unlock,planned-not-run
 G10,unique data key irreversibly destroyed,do not promise correct package recovery,planned-not-run
 G11,truly fresh new package with no old data; contrasted with missing marker but old epoch exists,"fresh seed only when genuinely no old epoch; otherwise lock and preserve, never auto erase",planned-not-run
+G12,A trusted → B abnormal trusted-click → C normal successor with same source A,"C compares A source, not B; restore A data with no repeat anomaly flow",planned-not-run
+G13,A trusted → B abnormal FORCE2 system auth complete → C normal before FORCE3,old A source/data still retained and recoverable,planned-not-run
+G14,same signer/root; only precompiled high-administrator roster changes via authorized APK update,source pair remains same; adding authorized compiled high identity is not itself root replacement,planned-not-run

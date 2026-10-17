@@ -55,6 +55,11 @@
       "earlier": "普通管理员白名单可免除最高危机主确认",
       "later": "O14根变化时首次亲自许可与销毁三确认属于数据保护专项，不由管理员名单免除",
       "status": "proposed reconciliation; destructive confirmation semantics Q15 requires owner review"
+    },
+    {
+      "earlier": "R3草案：信任不同根后可先用新的空环境，旧数据隔离",
+      "later": "O16：仅同意来源不解锁；连续3次强行确认与两次系统机主校验完成、旧私有数据销毁成功后才解锁",
+      "status": "superseded; do not open new business environment early"
     }
   ]
 }

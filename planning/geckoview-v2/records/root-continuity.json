@@ -1,9 +1,10 @@
 {
   "schema": 1,
-  "revision": "R3",
+  "revision": "R4",
   "state": "design-proposal-under-confirmed-requirements",
   "ownerSources": [
-    "O14"
+    "O14",
+    "O16"
   ],
   "appliesTo": "Updates within NEW io.github.rebrowser v2 line; not migration from io.github.reoutlook v1",
   "confirmed": {
@@ -13,7 +14,9 @@
     "mismatchDoesNotInheritOldData": true,
     "correctPackageRescueBeforeDestruction": true,
     "destructionRequiresThreeConfirmations": true,
-    "destroyOnlyOwnPrivateAppData": true
+    "destroyOnlyOwnPrivateAppData": true,
+    "businessUnlockOnlyAfterSuccessfulErasure": true,
+    "separateOwnerAuthenticationAtForce2And3": true
   },
   "platformFacts": [
     "Android rejects normal same-package replacement by an unrelated signer; lawful signing rotation must follow Android rules.",
@@ -24,32 +27,94 @@
   ],
   "proposedStates": [
     "FIRST_FRESH_INSTALL_NO_OLD_EPOCH",
-    "NORMAL_SAME_ROOT",
-    "ROOT_MISMATCH_OLD_DATA_LOCKED",
-    "OWNER_PERMISSION_FOR_NEW_ROOT",
-    "NEW_ROOT_EMPTY_EPOCH_OLD_DATA_QUARANTINED",
-    "ERASE_CONFIRM_1",
-    "ERASE_CONFIRM_2",
-    "ERASE_CONFIRM_3",
-    "ERASE_OWN_OLD_EPOCH",
-    "OLD_EPOCH_DESTROYED",
-    "CORRECT_ROOT_RECOVERY"
+    "NORMAL_TRUSTED_PAIR",
+    "SOURCE_MISMATCH_OLD_EPOCH_LOCKED",
+    "TRUST_SOURCE_CLICK",
+    "FORCE_1_CLICK",
+    "FORCE_2_ANDROID_AUTH",
+    "FORCE_3_ANDROID_AUTH",
+    "AUTHORIZE_EXACT_PRIVATE_ERASURE",
+    "VERIFY_ERASURE_COMPLETE",
+    "CREATE_EMPTY_EPOCH_AND_COMMIT_ACCEPTED_SOURCE",
+    "UNLOCK_NEW_SOURCE",
+    "CORRECT_SOURCE_RECOVERY"
   ],
   "proposedInvariants": [
     "Check continuity BEFORE any Gecko profile/mail DB/background task/plugin/IPC access to old epoch.",
     "Keep old encrypted data and required keys recoverable until final personally confirmed destructive commit.",
-    "Different-root new-use permission is NOT permission to read old data or automatically destroy it.",
     "No background timer, launch counter, cancellation, failed dialog or administrator exemption substitutes for personal confirmations.",
     "Destroy task binds exact old root/data epoch and app-owned internal paths/keys; never root-folder recursion across packages or shared/public storage.",
     "Never touch old io.github.reoutlook app, public Downloads, exports, media, other apps, or remote/cloud mailbox.",
     "Correct-root rescue must be validated with a real permitted recovery version before release.",
     "After irreversible key destruction do not claim a correct package can still restore lost data.",
-    "Only a truly fresh installation with no old data epoch may seed initial trust. Missing/tampered root marker while old data exists must lock, not silently create a new root or erase data."
+    "Only a truly fresh installation with no old data epoch may seed initial trust. Missing/tampered root marker while old data exists must lock, not silently create a new root or erase data.",
+    "Initial source trust click only advances the warning flow; it does NOT unlock business, access old data, overwrite trusted baseline or authorize erasure.",
+    "Fresh system owner verification is separately required after FORCE_2 and FORCE_3 clicks unless OS positively confirms no screen-lock credential.",
+    "Normal operations unlock only AFTER exact authorized private old-epoch deletion completes and is verified.",
+    "A→abnormal B→normal successor C preserves A trusted source/data through B; C must not be judged against B.",
+    "Treat the owner example wording 上一个包 as last NORMAL trusted source in comparison logic, never overwrite authority with the anomalous predecessor."
   ],
   "unresolved": [
-    "Q14",
-    "Q15",
-    "Q17"
+    "Q17",
+    "Q18",
+    "Q19"
   ],
-  "implementation": "not-started"
+  "implementation": "not-started",
+  "sourceIdentity": "Tuple(actual trusted APK signing identity, compiled root-admin public-key identity)",
+  "trustedBaselineRule": {
+    "authoritative": "lastKnownGoodSource bound to preserved data epoch",
+    "notAuthoritative": "lastInstalled or lastSeen abnormal package",
+    "beforeFinalErasure": "Never overwrite lastKnownGoodSource merely on abnormal package installation, initial trust click, or partial confirmations.",
+    "recovery": "Normal successor with same trusted source compares against lastKnownGoodSource, not intermediate abnormal source.",
+    "afterEraseProposal": "Only after authorized irreversible erasure and successful fresh-epoch creation commit the accepted new source as its new baseline; never promise old-data recovery afterward."
+  },
+  "ownerExactWarningExamples": [
+    {
+      "step": "TRUST_SOURCE",
+      "text": "该软件来源异常，是否信任该来源并使用",
+      "freshAndroidOwnerAuthentication": false,
+      "source": "O16; verbatim example, including original wording"
+    },
+    {
+      "step": "FORCE_1",
+      "text": "当前包与上一个包来源不匹配，强行时候会销毁之前的全部软件数据，是否继续？",
+      "freshAndroidOwnerAuthentication": false,
+      "source": "O16; verbatim example, including original wording"
+    },
+    {
+      "step": "FORCE_2",
+      "text": "强行使用将会丢失此前该软件的所有数据，如果重新安装正确来源的包将仍然可以正常继承使用，确定要强行继续吗？",
+      "freshAndroidOwnerAuthentication": true,
+      "source": "O16; verbatim example, including original wording"
+    },
+    {
+      "step": "FORCE_3",
+      "text": "这是最后一次警告，您可以安装正确来源的包来维持数据继续使用，但是如果您坚持将会丢失全部数据而且不可找回，再次强调这是最后一次机会，您确定要放弃原先的数据吗？",
+      "freshAndroidOwnerAuthentication": true,
+      "source": "O16; verbatim example, including original wording"
+    }
+  ],
+  "confirmationProtocol": {
+    "count": "one TRUST_SOURCE click + three consecutive FORCE confirmations; four clicks total",
+    "ordinaryClicks": [
+      "TRUST_SOURCE",
+      "FORCE_1"
+    ],
+    "authenticateIndependently": [
+      "FORCE_2",
+      "FORCE_3"
+    ],
+    "onlyExemption": "OS positively establishes that the device has no configured lock-screen credential",
+    "notExemptions": [
+      "biometric unavailable",
+      "authenticator hardware missing",
+      "authentication canceled/failed",
+      "device-security state unknown/error",
+      "admin/root whitelist",
+      "previous step auth success"
+    ],
+    "noUnlockBeforeErase": true,
+    "appReceives": "system authentication success/failure only, never password or biometric templates",
+    "interruptionProposal": "No implied consent or launch counter; interrupted flow resets confirmations conservatively while preserving trusted baseline/data. Exact recovery persistence must be tested."
+  }
 }

@@ -2,10 +2,14 @@
 
 ```mermaid
 flowchart TB
-  USER[用户交互] --> UI[原生宿主与子应用界面]
+  USER[用户交互] --> GUARD[可信签名＋根公钥连续性闸门]
+  GUARD --> UI[来源正常才进入原生宿主与子应用]
+  GUARD --> LOCK[来源异常：四步确认/救援；业务保持锁定]
   ADMIN[认证后的调试接入] --> POLICY[身份／等级／作用域／机主授权]
+  POLICY --> GUARD
   UI --> DOMAIN[统一领域动作与查询]
-  POLICY --> DOMAIN
+  GUARD --> GATED[允许访问对应数据epoch]
+  GATED --> DOMAIN
   DOMAIN --> B[ReBrowser]
   DOMAIN --> O[ReOutlook]
   DOMAIN --> M[ReMusic]
@@ -25,7 +29,10 @@ flowchart TB
 ```mermaid
 stateDiagram-v2
   [*] --> NewInstall
-  NewInstall --> Ready: Android11+且自带内核成功启动
+  NewInstall --> SourceGuard: 在初始化旧内核数据之前核对可信来源
+  SourceGuard --> Ready: 来源正常且Android11+自带内核启动
+  SourceGuard --> Locked: 异常来源，业务不启动
+  Locked --> Ready: 正常包救援或四步完成且旧数据销毁核对成功
   Ready --> BrowserSession
   Ready --> OutlookSession
   Ready --> MusicSession

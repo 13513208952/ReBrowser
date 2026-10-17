@@ -22,6 +22,9 @@ K20,high-trust-hot-add,动态委托/导入/低阈值插件可暗中生成高级�
 K21,root-disable,通用禁用或策略导入使Root被禁,P2,R13 R32,严格更高禁更低；Root目标不可禁不依赖mutable禁用表,open
 K22,malicious-same-signer,仅自检无法抵御掌握同一发行签名且任意改代码者,Q14,R07 R33,明确平台签名信任与自检边界；不作万能防御保证,open
 K23,rescue-version,根变化后正确包版本更低/签名不允许覆盖，救援路径不可用,Q17,R33,发布前验证可覆盖的正确恢复构建；不强降、不卸载,open
-K24,destruction-dos,把启动次数/取消/失败当确认，或异根立即删密钥造成不可救援,Q15,R33 R34,先隔离、明确亲自确认、最终提交前保全；不触真实数据,open
+K24,destruction-dos,未按四步及两次独立系统认证，或先解锁、提前销毁、以启动/失败次数作确认,O16 / Q19,R33 R34,已确认B流程；本人四步，后两逐次认证，无锁唯一例外，销毁核对前保持锁定,open
 K25,wrong-erase-scope,递归删除共享目录/旧v1/别的软件/公共导出或误删新epoch,Q17,R34,只授权的本应用私有目标集合，目录白名单和边界测试,open
 K26,false-secure-erasure,承诺物理闪存/系统备份彻底覆写或销毁后仍可救,Q17,R33 R34,区分逻辑删除、密钥销毁、OS备份；不可逆后不承诺恢复,open
+K27,trusted-source-poisoning,把异常B写成lastKnownGood，导致正常后续C无法继承A,Q18,R33 R36,保存最后正常签名＋根公钥及epoch，B只写未可信lastSeen；A-B-C恢复样机,open
+K28,cached-owner-auth,第二次强行认证成功后第三次复用，或缺生物硬件误判无密码,Q19,R34 R37,每步fresh系统认证；有锁需凭据兜底，未知/取消/失败不能免,open
+K29,early-business-unlock,首次信任或部分确认就打开新业务/旧profile，破坏销毁前锁定目标,P2,R34 R38,所有入口先闸门；删除核对/新epoch提交之前不解锁,open

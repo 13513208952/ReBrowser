@@ -1,0 +1,11 @@
+id,trusted_signer,trusted_root,last_seen_signer,last_seen_root,candidate_signer,candidate_root,platform_update_allowed,old_epoch_exists,old_epoch_destroyed,expected,note
+S01,SIG_A,ROOT_A,SIG_A,ROOT_B,SIG_A,ROOT_B,yes,yes,no,SOURCE_MISMATCH_LOCKED,当前B异常，不能把B升为可信源
+S02,SIG_A,ROOT_A,SIG_A,ROOT_B,SIG_A,ROOT_A,yes,yes,no,NORMAL_INHERIT_TRUSTED_EPOCH,A→B→正常C，忽略lastSeen B作基准的诱惑
+S03,SIG_A,ROOT_A,SIG_X,ROOT_X,SIG_A,ROOT_A,yes,yes,no,NORMAL_INHERIT_TRUSTED_EPOCH,异常中间包任意来源也不能污染可信A
+S04,SIG_A,ROOT_A,SIG_A,ROOT_A,SIG_A,ROOT_A,yes,yes,no,NORMAL_INHERIT_TRUSTED_EPOCH,普通同源更新
+S05,SIG_A,ROOT_A,SIG_A,ROOT_B,SIG_OTHER,ROOT_A,no,yes,no,PLATFORM_REJECT_PRESERVE,不同签名不被Android允许覆盖
+S06,SIG_A,ROOT_A,SIG_A,ROOT_B,SIG_A,ROOT_A,no,yes,no,PLATFORM_REJECT_PRESERVE,正确但版本太低不能承诺可直接安装
+S07,,,,,SIG_A,ROOT_A,yes,no,no,FIRST_FRESH_SEED,真正全新且没有旧数据
+S08,,,SIG_A,ROOT_B,SIG_A,ROOT_A,yes,yes,no,LOCK_RECOVERY_REQUIRED,旧数据存在却丢失可信标记，不能当全新安装
+S09,SIG_A,ROOT_B,SIG_A,ROOT_B,SIG_A,ROOT_B,yes,no,yes,NORMAL_NEW_EMPTY_NO_OLD_RESCUE,最终销毁并已提交B新基线后正常用B，不承诺找回旧A
+S10,SIG_A,ROOT_B,SIG_A,ROOT_B,SIG_A,ROOT_A,yes,no,yes,SOURCE_MISMATCH_LOCKED,旧A数据已毁后不能用再次装A虚构恢复

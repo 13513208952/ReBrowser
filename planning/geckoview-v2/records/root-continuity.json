@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "revision": "R3",
+  "state": "design-proposal-under-confirmed-requirements",
+  "ownerSources": [
+    "O14"
+  ],
+  "appliesTo": "Updates within NEW io.github.rebrowser v2 line; not migration from io.github.reoutlook v1",
+  "confirmed": {
+    "signedOfficialApk": true,
+    "comparePreviousAndCurrentRoot": true,
+    "mismatchRequiresPersonalOwnerPermission": true,
+    "mismatchDoesNotInheritOldData": true,
+    "correctPackageRescueBeforeDestruction": true,
+    "destructionRequiresThreeConfirmations": true,
+    "destroyOnlyOwnPrivateAppData": true
+  },
+  "platformFacts": [
+    "Android rejects normal same-package replacement by an unrelated signer; lawful signing rotation must follow Android rules.",
+    "A correct recovery APK must satisfy signature/lineage and non-downgrade version rules; old lower-code APK reinstall is not automatically possible.",
+    "Same-signing-key arbitrary malicious update code can change/remove in-app checks and access the same sandbox; local self-check is not an absolute defense against that threat.",
+    "First install has no previous local root baseline. Official source/certificate verification cannot be bootstrapped by a fork checking its own modified constant.",
+    "Logical delete plus cryptographic key destruction can invalidate owned encrypted data; flash/OS backups cannot be promised physically overwritten by ordinary app code."
+  ],
+  "proposedStates": [
+    "FIRST_FRESH_INSTALL_NO_OLD_EPOCH",
+    "NORMAL_SAME_ROOT",
+    "ROOT_MISMATCH_OLD_DATA_LOCKED",
+    "OWNER_PERMISSION_FOR_NEW_ROOT",
+    "NEW_ROOT_EMPTY_EPOCH_OLD_DATA_QUARANTINED",
+    "ERASE_CONFIRM_1",
+    "ERASE_CONFIRM_2",
+    "ERASE_CONFIRM_3",
+    "ERASE_OWN_OLD_EPOCH",
+    "OLD_EPOCH_DESTROYED",
+    "CORRECT_ROOT_RECOVERY"
+  ],
+  "proposedInvariants": [
+    "Check continuity BEFORE any Gecko profile/mail DB/background task/plugin/IPC access to old epoch.",
+    "Keep old encrypted data and required keys recoverable until final personally confirmed destructive commit.",
+    "Different-root new-use permission is NOT permission to read old data or automatically destroy it.",
+    "No background timer, launch counter, cancellation, failed dialog or administrator exemption substitutes for personal confirmations.",
+    "Destroy task binds exact old root/data epoch and app-owned internal paths/keys; never root-folder recursion across packages or shared/public storage.",
+    "Never touch old io.github.reoutlook app, public Downloads, exports, media, other apps, or remote/cloud mailbox.",
+    "Correct-root rescue must be validated with a real permitted recovery version before release.",
+    "After irreversible key destruction do not claim a correct package can still restore lost data.",
+    "Only a truly fresh installation with no old data epoch may seed initial trust. Missing/tampered root marker while old data exists must lock, not silently create a new root or erase data."
+  ],
+  "unresolved": [
+    "Q14",
+    "Q15",
+    "Q17"
+  ],
+  "implementation": "not-started"
+}

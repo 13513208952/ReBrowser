@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R2",
+  "revision": "R3",
   "requirements": [
     {
       "id": "R01",
@@ -67,7 +67,8 @@
       "id": "R07",
       "ownerSources": [
         "O07",
-        "O09"
+        "O09",
+        "O14"
       ],
       "title": "新正式签名",
       "rule": "允许并建立合适的正式应用签名；与管理员根/设备密钥分离。",
@@ -130,10 +131,11 @@
     {
       "id": "R13",
       "ownerSources": [
-        "O09"
+        "O09",
+        "O14"
       ],
       "title": "管理权限同步扩张",
-      "rule": "管理等级提高时调试与管理权限单调扩张；根可以管理其他最高管理员。",
+      "rule": "管理权限随等级扩张；更高等级可禁用更低等级管理员，同级不能据此禁用对方；根高于全部且不可禁用。高级身份只能预编译，新增必须更新APK。",
       "state": "owner-required",
       "implementation": "not-started"
     },
@@ -182,7 +184,8 @@
     {
       "id": "R18",
       "ownerSources": [
-        "O09"
+        "O09",
+        "O14"
       ],
       "title": "统一多接入授权",
       "rule": "ADB有线/无线、应用内、跨应用接入共同参与等级计算；通道及介入方式可改变要求/有效级别。",
@@ -202,10 +205,11 @@
     {
       "id": "R20",
       "ownerSources": [
-        "O09"
+        "O09",
+        "O14"
       ],
       "title": "辅助包中级能力",
-      "rule": "支持跨应用受委托调试；APK内私钥可提取这一事实必须进入威胁模型，不默认等价于保密管理员身份。",
+      "rule": "辅助包可共享私钥，持有并正确证明有权即作为该管理员身份；不额外按请求程序来源/签名限制。中级只是等级例子，等级仍由授予记录决定，不自报升级。",
       "state": "owner-required",
       "implementation": "not-started"
     },
@@ -310,6 +314,56 @@
       ],
       "title": "R8优化",
       "rule": "正式包R8优化/压缩/代码资源裁剪；JNI/反射/回调/扩展协议保留需最小化并验收。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R31",
+      "ownerSources": [
+        "O14"
+      ],
+      "title": "高级管理员静态准入",
+      "rule": "所有高级管理员（不限最高）身份信息只能预编译；已编译包不允许运行时新增高级身份，根也不能用动态授权绕过包更新。高级范围H及信息字段边界待确认。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R32",
+      "ownerSources": [
+        "O14"
+      ],
+      "title": "分级禁用与不可禁用根",
+      "rule": "更高级可禁用更低级；根高于所有管理员且不可被任何人禁用。禁用后的恢复与生效范围待确认。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R33",
+      "ownerSources": [
+        "O14"
+      ],
+      "title": "发行签名与根连续性",
+      "rule": "正式APK受发行签名保护；新包v2后续更新须比较前后根身份。不继承旧v1数据。根变化即隔离旧数据，机主亲自许可后可使用不同根的新环境，正确包可在销毁前抢救。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R34",
+      "ownerSources": [
+        "O14"
+      ],
+      "title": "三次确认后的私有数据销毁",
+      "rule": "继续不同根且不继承旧数据时，三次确认后销毁目标旧数据；绝不触碰其他软件或公共目录。确认计数/首次许可是否另计/隔离范围与恢复流程需明确，不按启动次数自动擦除。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R35",
+      "ownerSources": [
+        "O14"
+      ],
+      "title": "来源中立的持权证明",
+      "rule": "不问请求程序来自哪里，只验证它是否正确证明对应权限；共享私钥代表同一身份。不将调用者APK签名或私钥可能复制额外变成来源否决。",
       "state": "owner-required",
       "implementation": "not-started"
     }

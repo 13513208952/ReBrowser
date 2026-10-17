@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R2",
+  "revision": "R3",
   "questions": [
     {
       "id": "Q01",
@@ -32,13 +32,15 @@
       "id": "Q03",
       "priority": "blocking-security",
       "question": "辅助包凭据应是持钥程序通用接入，还是仅指定签名辅助包接入？不是询问等级识别规则。",
-      "currentTreatment": "O13表明原问题未理解，不能视为批准某种凭据设计。私钥证明身份，授权记录决定等级；待说明。",
+      "currentTreatment": "移除建议中的强制辅助包签名/设备绑定及由来源可复制性单独降级；等级按已证明身份和明确授权记录。",
       "requirements": [
         "R18",
         "R19",
         "R20"
       ],
-      "state": "awaiting-plain-language-clarification"
+      "state": "resolved",
+      "resolution": "O14：前者，持钥证明即可；允许多个程序共享同一管理员凭据，不以请求程序来源额外限制。",
+      "resolvedByOwnerSource": "O14"
     },
     {
       "id": "Q04",
@@ -66,7 +68,7 @@
       "id": "Q06",
       "priority": "design-review",
       "question": "丰富等级的具体档位、普通/高危/最高危阈值、临时会话时限如何确定？",
-      "currentTreatment": "先用0..10符号模型，数字仅草案；根为特殊角色而非同级默认共享权限。",
+      "currentTreatment": "档位数字仍草案；高级阈值H须与全部需用户信赖的能力阈值一致，运行时委托必须低于H。普通操作≥；禁用关系严格高于目标等级。",
       "requirements": [
         "R11",
         "R12",
@@ -143,6 +145,62 @@
         "R04",
         "R29",
         "R30"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q13",
+      "priority": "blocking-security",
+      "question": "高级管理员范围H、预编译信息字段及设备名单更新边界如何定义？",
+      "currentTreatment": "原则已定；不能把高级改名中级绕过静态准入，运行时低级委托不得触及高级能力。",
+      "requirements": [
+        "R31",
+        "R12",
+        "R17"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q14",
+      "priority": "blocking-security",
+      "question": "根身份是公钥指纹还是允许经旧根认证的换钥链？何种签名更新被Android允许？",
+      "currentTreatment": "字符串ID不能证明同一根；首次分叉安装无历史基线；同签名恶意代码不可能只靠自检绝对防御。",
+      "requirements": [
+        "R07",
+        "R33"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q15",
+      "priority": "blocking-data-safety",
+      "question": "首次不同根的使用许可，与后续三次销毁确认是否分开？三次是同一流程连续确认还是多次使用尝试？",
+      "currentTreatment": "建议独立许可＋同一流程三个明确确认；取消/超时/失败不计，前三次完成前可救援，最终销毁后不能承诺恢复；尚未替机主决定。",
+      "requirements": [
+        "R33",
+        "R34"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q16",
+      "priority": "design-review",
+      "question": "禁用能否恢复、由谁恢复；禁用仅本安装实例还是跨设备策略分发？",
+      "currentTreatment": "仅确认更高禁更低和根不可禁；不能承诺离线设备立即收到全局禁用。",
+      "requirements": [
+        "R13",
+        "R32"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q17",
+      "priority": "blocking-data-safety",
+      "question": "根变化后旧数据隔离集合、私有外部目录/备份/Keystore归属、正确恢复包版本策略如何界定？",
+      "currentTreatment": "默认排除公共/共享/其他软件/旧v1包；不使用pm clear或泛化目录删除；正确包必须满足Android签名/版本覆盖条件。",
+      "requirements": [
+        "R33",
+        "R34"
       ],
       "state": "open"
     }

@@ -19,7 +19,7 @@
     "guarantee": "AuthorizedScope(a,c) AND FreshAuthenticatedGrant(a,s) AND Effective(a,s,t,i) >= Required(c,t,i) => Executable(c)",
     "equality": "CONFIRMED O13: equal level is permitted (>=)",
     "proposalRequired": "max(capability_base_threshold, transport_risk_floor, intervention_risk_floor)",
-    "proposalEffective": "min(identity_ceiling, delegated_session_ceiling, credential_assurance_ceiling); before required owner grant exists, active grant ceiling MUST remain strictly BELOW required threshold (not equal), because equality now permits execution.",
+    "proposalEffective": "min(proven_identity_ceiling, delegated_session_ceiling); no caller-package/signature/source penalty after valid authority proof. Missing required owner grant keeps active ceiling strictly below threshold.",
     "noHiddenDeny": "Once sufficient effective authority exists within scope, no alternate transport/plugin-specific hardcoded veto may block the same capability.",
     "managementMonotonicity": "Within same scope and session conditions, a higher authority includes all lower-authority operations and eligible management abilities.",
     "scopeVsLevel": "Scope defines the corresponding capability; ordinary-highest ownership isolation is not overridden by numeric level. Q06 review required."
@@ -30,12 +30,29 @@
     "platformBoundary": "No bypass of Android mandatory grants or remote site authentication/CAPTCHA/rights checks."
   },
   "riskModel": [
-    "APK-embedded private key is extractable",
     "Compiled public key is public",
     "ADB shell presence is not administrator identity",
     "Hidden entry is not authorization",
     "Plugin cannot select its own granted level",
-    "Whitelisting does not equal generating keys or proof of ownership"
+    "Whitelisting does not equal generating keys or proof of ownership",
+    "Shared/extractable private credential reuse is intentional per O14, not an automatic source-based denial",
+    "High-trust administrator addition must never be smuggled through plugin delegation/import or mutable capability thresholds",
+    "Root identity mismatch data guard is not administrator disable; exceptional owner-only flow is not bypassed by administrator whitelist"
   ],
-  "revision": "R2"
+  "revision": "R3",
+  "credentialRule": {
+    "model": "source-neutral shared proof-of-possession credential",
+    "source": "confirmed O14",
+    "identity": "Valid request signature maps to registered public key and its authorized level/scope; caller need not be an approved helper package.",
+    "replayProtection": "Origin neutrality does not remove freshness, nonce, exact target/action binding or proof verification.",
+    "transport": "Previously confirmed channel/intervention risk rules must be explicit required-level/session-grant rules, not covert source discrimination.",
+    "distributionRisk": "A copied private key carries the same identity and authority by the chosen model; no secret-identity assumption for embedded credentials."
+  },
+  "compiledAdministratorRule": {
+    "highTrustSet": "Immutable inside a built APK; additions require APK update, including when actor is root",
+    "boundary": "H and high-trust metadata fields unresolved Q13; runtime delegation level<H and cannot authorize high-trust capabilities",
+    "disable": "Any authorized strictly higher level may disable a strictly lower non-root identity; not limited to low principals or issuer subtree. Never reveal/borrow target whitelist through this operation. Root target is never disableable.",
+    "root": "Special role above all highest administrators, not peer highest",
+    "enableOrDistribution": "Q16 unresolved"
+  }
 }

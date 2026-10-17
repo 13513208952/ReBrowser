@@ -97,15 +97,39 @@ def review():
         required = int(case['required_threshold'])
         assert case['risk'] != 'highest' or required > 0, 'highest-risk threshold must permit an insufficient grant ceiling'
         granted = identity if consent_ok else min(identity, required - 1)
-        effective = min(granted, int(case['credential_ceiling']), int(case['session_ceiling']))
+        effective = min(granted, int(case['proof_granted_ceiling']), int(case['session_ceiling']))
         actual = 'allow' if scoped and effective >= required and case['authenticated'] == 'yes' else 'deny-or-wait'
         assert actual == case['expected'], (case['id'], actual)
+    # Immutable high-trust admission and strict disable relationship are NOT the >= capability comparison.
+    principal_cases = rows('matrices/principal-policy-cases.csv')
+    for case in principal_cases:
+        op = case['operation']
+        if op == 'add-high':
+            actual = 'allow-admission-path' if case['delivery'] == 'signed-package-update' else 'deny'
+        elif op == 'disable':
+            actual = 'allow' if case['target_role'] != 'root' and int(case['actor_level']) > int(case['target_level']) else 'deny'
+        elif op == 'delegate-low':
+            actual = 'allow' if int(case['grant_level']) < int(case['high_boundary_H']) and int(case['grant_level']) < int(case['actor_level']) else 'deny'
+        elif op == 'mutate-compiled-high':
+            actual = 'deny'
+        else:
+            raise AssertionError('unknown principal example')
+        assert actual == case['expected'], (case['id'], actual)
+    for case in rows('matrices/root-continuity-cases.csv'):
+        assert case['status'] == 'planned-not-run', 'No actual data-destruction test is authorized by a planning model'
+    continuity = load('records/root-continuity.json')
+    assert continuity['implementation'] == 'not-started'
+    assert continuity['confirmed']['destroyOnlyOwnPrivateAppData']
+    assert continuity['confirmed']['mismatchRequiresPersonalOwnerPermission']
     report = {
         'revision': requirement_record['revision'], 'result': 'structural-and-symbolic-review-passed',
         'authorityComparison': '>= (confirmed O13)',
         'ownerMessages': len(messages), 'requirements': len(requirements),
         'capabilityGroups': len(capabilities), 'acceptanceCasesPlannedNotRun': len(acceptance),
         'authorityExamplesSymbolicallyChecked': len(authority_cases),
+        'compiledPrincipalExamplesSymbolicallyChecked': len(principal_cases),
+        'rootContinuityCasesPlannedNotRun': len(rows('matrices/root-continuity-cases.csv')),
+        'destructionCodeOrExecution': False,
         'mermaidBlocksStructurallyChecked': graph_count,
         'fullMermaidParserOrRenderingValidated': False,
         'productCodeImplementedOrBuilt': False, 'deviceOrPrivateKeyAccess': False,

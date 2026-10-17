@@ -1,16 +1,16 @@
-# 管理员权限 · R10–R20 · 设计草案
+# 管理员权限 · R10–R20／R31／R32／R35 · R3
 
 ```mermaid
 flowchart TD
-  ROOT[特殊根管理员] --> HA[最高管理员 A]
-  ROOT --> HB[最高管理员 B]
+  ROOT[特殊根管理员：不可禁用] --> HA[预编译最高管理员 A]
+  ROOT --> HB[预编译最高管理员 B]
   ROOT --> WR[根专有设备名单]
   HA --> WA[A自己的设备名单]
   HB --> WB[B自己的设备名单]
   ROOT -. 可使用 .-> WA
   ROOT -. 可使用 .-> WB
-  HA --> DA[A授出的受限管理员／插件]
-  HB --> DB[B授出的受限管理员／插件]
+  HA --> DA[A可授出的低于高级边界H的凭据]
+  HB --> DB[B可授出的低于高级边界H的凭据]
   HA -. 禁止枚举／管理／借用 .-> WB
   HB -. 禁止枚举／管理／借用 .-> WA
   HA -. 禁止访问 .-> WR
@@ -24,6 +24,8 @@ flowchart TD
 | 白名单外最高危，根与其他最高管理员均需机主授权 | 已确认 | O07／O09 |
 | 等级达到或超过对应能力需求时必须能控；管理权限随等级扩张 | 已确认，采用≥ | O09／O13 |
 | 同等级也允许 | Q01已关闭 | O13明确确认 |
+| 来源中立：持钥证明成立即可，不限定辅助包来源 | Q03已关闭 | O14 |
+| 高级身份仅预编译；新增只能更新APK，Root不可禁用 | 已确认 | O14 |
 | 名单隔离保护设备隐私与枚举／管理／借用权限；公钥用于匹配管理策略 | Q02已关闭 | O13：不把公钥本身与真实设备资料混为一谈 |
 
 ## 等级表达式：提案，不是已确认数字
@@ -35,8 +37,9 @@ HighestAllowedDevices(a) = Own(a)
 Required(c, transport, intervention)
   = max(base_threshold(c), transport_risk_floor, intervention_risk_floor)
 
-Effective(a, session, credential)
-  = min(identity_ceiling, session_grant_ceiling, credential_assurance_ceiling)
+Effective(a, session)
+  = min(proven_identity_ceiling, session_grant_ceiling)
+  已证明的身份不因调用者包名/签名/来源而额外降级。
 
 AuthorizedScope(a,c) ∧ FreshAuthenticatedGrant(a)
 ∧ Effective(a,...) >= Required(c,...)
@@ -69,6 +72,8 @@ flowchart TD
 | “等级充分必可”与机主授权 | 授权先激活足够有效等级；缺授权时上限必须严格低于要求，不能等于要求而被≥放行。不得宣称等级已足够后再加隐藏禁令。 |
 | 白名单免确认 | 不免身份认证／重放防护／目标验证；不是ADB连上就等于根。 |
 | 外部约束 | 管理员可发起用户能发起的流程；Android强制权限、网站验证码／登录／权益不是本应用可以绕过的授权。 |
+| 编译信任边界 | 运行时不存在新增高级身份能力；禁用关系严格ActorLevel>TargetLevel，且根永不可禁。这不同于普通调试能力的≥。 |
+| 根变化数据保护 | 根不可禁用不代表可继承不同根旧数据；专项亲自许可/销毁确认不能被普通白名单免除，细节Q15待确认。 |
 | 覆盖完整性 | 新增用户动作必须登记相应调试能力、阈值、目标、可观察结果与测试；矩阵遗漏视为设计缺陷。 |
 
 [权威表达式](../records/authority-model.json) · [能力注册草案](../matrices/capabilities.csv) · [授权案例](../matrices/acceptance.csv)

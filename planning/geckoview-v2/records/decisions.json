@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R2",
+  "revision": "R3",
   "decisions": [
     {
       "id": "D01",
@@ -166,6 +166,53 @@
       ],
       "ownerSources": [
         "O13"
+      ]
+    },
+    {
+      "id": "D19",
+      "state": "confirmed",
+      "decision": "持钥证明可跨辅助程序使用；私钥可复制是已接受的凭据模型，不额外限定调用者软件来源。",
+      "requirements": [
+        "R20",
+        "R35"
+      ],
+      "ownerSources": [
+        "O14"
+      ]
+    },
+    {
+      "id": "D20",
+      "state": "confirmed",
+      "decision": "高级管理员仅预编译准入；新增高级必须更新包，不能动态增加。",
+      "requirements": [
+        "R31"
+      ],
+      "ownerSources": [
+        "O14"
+      ]
+    },
+    {
+      "id": "D21",
+      "state": "confirmed",
+      "decision": "严格更高级可禁用更低；根不可禁用且高于所有最高管理员。",
+      "requirements": [
+        "R13",
+        "R32"
+      ],
+      "ownerSources": [
+        "O14"
+      ]
+    },
+    {
+      "id": "D22",
+      "state": "confirmed",
+      "decision": "同新包更新根身份变化时不继承旧数据；先机主许可，保留正确包抢救路径，继续时三确认后销毁仅本应用私有数据。",
+      "requirements": [
+        "R33",
+        "R34"
+      ],
+      "ownerSources": [
+        "O14"
       ]
     }
   ]

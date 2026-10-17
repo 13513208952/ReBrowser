@@ -40,6 +40,21 @@
       "earlier": "R1同级行为未决，暂用严格大于作符号演算",
       "later": "O13确认相等可控；统一改为≥",
       "status": "owner-confirmed supersession; R1 review retained only as historical snapshot"
+    },
+    {
+      "earlier": "辅助包强制签名/设备绑定、因内嵌凭据来源降低管理等级的建议",
+      "later": "O14：持钥证明来自任何程序均代表对应身份，不问来源",
+      "status": "rejected proposal; keep request integrity/nonce/target validation"
+    },
+    {
+      "earlier": "最高/高级管理员可由运行时委托或动态注册新增的泛化建议",
+      "later": "O14：所有高级身份必须预编译；新增只通过APK更新；更高只能禁更低且根不可禁",
+      "status": "owner-confirmed immutable high-trust admission"
+    },
+    {
+      "earlier": "普通管理员白名单可免除最高危机主确认",
+      "later": "O14根变化时首次亲自许可与销毁三确认属于数据保护专项，不由管理员名单免除",
+      "status": "proposed reconciliation; destructive confirmation semantics Q15 requires owner review"
     }
   ]
 }

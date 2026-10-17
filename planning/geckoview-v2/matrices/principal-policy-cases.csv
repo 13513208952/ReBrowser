@@ -1,0 +1,13 @@
+id,operation,actor,actor_level,target_role,target_level,grant_level,high_boundary_H,delivery,expected,note
+P01,add-high,root,10,high,9,9,7,runtime,deny,Root不能热加高级
+P02,add-high,root,10,high,9,9,7,signed-package-update,allow-admission-path,仍需签名/根连续性审查
+P03,disable,root,10,root,10,0,7,runtime,deny,Root不能自禁
+P04,disable,root,10,highest,9,0,7,runtime,allow,Root高于最高
+P05,disable,highest,9,delegated,6,0,7,runtime,allow,更高禁更低
+P06,disable,high,7,high,7,0,7,runtime,deny,同级普通能力可控不代表可禁同级
+P07,disable,low,4,high,8,0,7,runtime,deny,低不能禁高
+P08,delegate-low,root,10,low,6,6,7,runtime,allow,H=7仅作推演
+P09,delegate-low,root,10,high,8,8,7,runtime,deny,不许通过低级委托增高
+P10,mutate-compiled-high,root,10,high,8,8,7,runtime,deny,已编译高级身份不能热改
+P11,disable,high,8,high,7,0,7,runtime,allow,高级身份也可被更高级禁用，不是仅最高能禁低级
+P12,disable,invalid-import,99,root,10,0,7,runtime,deny,即使损坏/伪造等级数据也不能使根可禁用

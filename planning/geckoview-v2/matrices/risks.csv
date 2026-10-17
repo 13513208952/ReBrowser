@@ -1,6 +1,6 @@
 id,category,finding,resolution_gate,requirements,treatment,state
 K01,public-key-secrecy,公钥仅匹配策略，真实设备信息及关联映射仍应防越权枚举,Q02,R15 R16 R17,O13关闭公钥保密疑问；按管理/借用/枚举隔离保护真实设备信息,semantics-resolved-implementation-pending
-K02,extractable-private-key,辅助包内嵌私钥可复制,Q03,R18 R19 R20,凭据风险影响有效等级；签名/安装绑定与撤销,open
+K02,extractable-private-key,共享可复制私钥为已选择的身份模型；持钥者均可代表同一身份,O14,R18 R19 R20,接受来源中立；保护根/高级私钥分发，验证授权等级/禁用/重放；不强制来源绑定,semantics-confirmed-implementation-pending
 K03,authority-consistency,已确认≥后，机主授权上限不能再设为要求等级，否则错误放行,Q06,R11 R12 R13 R15 R16,同级/高于允许；缺授权时有效上限严格低于要求；保留跨作用域隔离,open
 K04,enrollment-bypass,管理员若可把任意陌生设备加入名单会绕过最高危机主授权,Q04,R11 R14 R17,一次明确登记授权和持钥证明,open
 K05,no-completion,Gecko context删除是void派发,Q09,R23,先验证可靠完成方案；不把提交当成功,open
@@ -15,6 +15,13 @@ K13,login-entry-loop,换Gecko不会自动修复AAD/MSA业务入口或会话重�
 K14,old-shim-lockin,只包一层旧WebView接口，延续旧限制与补丁,P1,R01 R03,Gecko原生领域建模；只承接用户契约,open
 K15,old-data-destruction,新包全新开始被误实现成卸载旧版/清旧数据,P7,R08,不同namespace；不自动迁移或删除,open
 K16,network-expansion,把无线ADB批准误当公网监听批准,Q07,R18,独立联网入口需明确确认,open
-K17,plugin-self-privilege,内部/隐藏入口或插件自报等级造成旁路,P2,R18 R19 R20,所有入口同策略，系统caller与签名证明,open
+K17,plugin-self-privilege,内部/隐藏入口或插件自报等级造成旁路,P2,R18 R19 R20,所有入口同策略；身份等级来自已验证公钥记录，不来自程序自报或来源判断,open
 K18,revocation-rollback,名单/委托/策略过期、撤销或旧策略重放,P2,R11 R14 R17,新鲜度/版本/撤销/持久化与重放测试,open
 K19,generic-inspection-leak,普通最高借全文件/内存调试接口读取根或他人名单,Q02 Q06,R10 R15 R16,明确保护域与通用调试边界；不能同时承诺无限制原生内存读和名单秘密,open
+K20,high-trust-hot-add,动态委托/导入/低阈值插件可暗中生成高级身份或同等权限,Q13,R31 R35,高级边界/能力阈值须一致，只包更新增加高级,open
+K21,root-disable,通用禁用或策略导入使Root被禁,P2,R13 R32,严格更高禁更低；Root目标不可禁不依赖mutable禁用表,open
+K22,malicious-same-signer,仅自检无法抵御掌握同一发行签名且任意改代码者,Q14,R07 R33,明确平台签名信任与自检边界；不作万能防御保证,open
+K23,rescue-version,根变化后正确包版本更低/签名不允许覆盖，救援路径不可用,Q17,R33,发布前验证可覆盖的正确恢复构建；不强降、不卸载,open
+K24,destruction-dos,把启动次数/取消/失败当确认，或异根立即删密钥造成不可救援,Q15,R33 R34,先隔离、明确亲自确认、最终提交前保全；不触真实数据,open
+K25,wrong-erase-scope,递归删除共享目录/旧v1/别的软件/公共导出或误删新epoch,Q17,R34,只授权的本应用私有目标集合，目录白名单和边界测试,open
+K26,false-secure-erasure,承诺物理闪存/系统备份彻底覆写或销毁后仍可救,Q17,R33 R34,区分逻辑删除、密钥销毁、OS备份；不可逆后不承诺恢复,open

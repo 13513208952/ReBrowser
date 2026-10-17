@@ -93,7 +93,14 @@
       "utf8Bytes": 455,
       "sha256": "18dfd75b832ec06661e426bc96936b222dc46a9715505be22f6a9fd4d820d8b9",
       "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O14",
+      "file": "owner-verbatim/O14-bearer-compiled-admin-root-continuity.txt",
+      "utf8Bytes": 1406,
+      "sha256": "49215815d638aa91086a2e270bb5ae2056ae1d006d7681aaf97d29453965f35f",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
     }
   ],
-  "lastAppendedAt": "2026-10-17T22:23:54+08:00"
+  "lastAppendedAt": "2026-10-17T22:36:19+08:00"
 }

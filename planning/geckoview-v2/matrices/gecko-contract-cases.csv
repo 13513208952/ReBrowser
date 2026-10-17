@@ -1,0 +1,29 @@
+id,contract,scenario,expected,state
+GCT01,GC01,扩展内容变更但version未变,发行检查必须阻断；不假设ensure会按内容重装,planned-not-run
+GCT02,GC01,ensure失败/消息先到delegate后注册,连接器未就绪；一次HELLO、有限等待、旧排队消息仍重验,planned-not-run
+GCT03,GC02,正文消息带假session但sender为另一标签,拒绝写入目标账户，不影响合法其他标签,planned-not-run
+GCT04,GC02,后台sender.session=null冒充当前音乐页面,不能按payload sessionId直接当网页业务来源,planned-not-run
+GCT05,GC02,同一合法管理员证明来自不同辅助包,同一身份和能力，不因调用包/签名不同降级,planned-not-run
+GCT06,GC03,旧port在跨文档导航后发回,拒绝旧文档业务写入；旧真实任务结束仍结算槽,planned-not-run
+GCT07,GC03,SPA导航/BFCache后消息,明确定义同文档续租/恢复握手；不误封正常玩家，不接受旧页面回放,planned-not-run
+GCT08,GC04,UI预算超时但JS Promise未settle,显示未知/等待，真实任务槽仍占用；不叠加请求,planned-not-run
+GCT09,GC04,本地port.disconnect,本地立即作废/释放本地连接；不等自己的onDisconnect，也不假称SDK取消,planned-not-run
+GCT10,GC05,active+feature存在但官网认证未知,等待认证，不直接Gecko play放行,planned-not-run
+GCT11,GC05,原生动作不支持而官方SDK支持,在提交前选择SDK；非等级不足,planned-not-run
+GCT12,GC05,原生next超时，用户未再发动作,不自动追加SDK next造成双切歌,planned-not-run
+GCT13,GC06,seek收到Android125000ms,经校验转125.0秒；void返回仅提交,planned-not-run
+GCT14,GC06,旧歌曲position在新歌曲开始后迟到,丢旧资源进度，不完成新seek,planned-not-run
+GCT15,GC06,播放已到目标状态但无请求关联事件,可报告目标状态已观测，不伪造引擎请求ACK,planned-not-run
+GCT16,GC07,瞬时焦点丢失后用户pause再gain,不得恢复旧播放意图,planned-not-run
+GCT17,GC07,清理/退出后旧焦点gain,已失效租约不再触发播放,planned-not-run
+GCT18,GC08,Activity重建releaseSession,会话仍存在；重新附着，不误当关闭或另建播放器,planned-not-run
+GCT19,GC08,隐藏普通标签,明确设inactive；不是close/clear，也不承诺OS不杀,planned-not-run
+GCT20,GC09,flush返回后立刻进程死亡,只承认最后已提交快照，不能声称新状态已持久化,planned-not-run
+GCT21,GC09,快照JSON损坏/epoch不一致,拒绝恢复，不静默全清，不把重载当已认证,planned-not-run
+GCT22,GC10,把context字符串直接作为cookieStoreId清缓存,拒绝该方案；不能扩大为全局缓存删除,planned-not-run
+GCT23,GC10,helper传入空OA pattern或非登记context,拒绝，绝不回退空pattern/全部清理,planned-not-run
+GCT24,GC10,应用未打开邮箱仍请求占用,候选QMS/缓存聚合不启动邮箱网页；仅在验证通过后可声称支持,planned-not-run
+GCT25,GC10,同一缓存扫描超过UI预算又点刷新,复用同一真实扫描，不叠加；分开有效负载估计/全局物理占用,planned-not-run
+GCT26,GC11,内部callback failedFlags0但缓存evict仅提交,不能宣称磁盘空间已回收；逐组件显示证据等级,planned-not-run
+GCT27,GC11,QMS删除请求失败或其他子应用存储变化,任务失败/隔离回归阻断；不解开成功状态,planned-not-run
+GCT28,GC12,下载拒绝/取消/错误/忽略response,始终关闭body，临时文件按目标清理，无Cookie重建请求,planned-not-run

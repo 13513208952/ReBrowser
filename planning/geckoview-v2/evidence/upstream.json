@@ -1,6 +1,6 @@
 {
   "checkedAt": "2026-10-17T22:08:30+08:00",
-  "status": "official metadata/POM/Java sources and bounded AAR central-directory/manifest/build-metadata inspection; no full AAR download, build or device test",
+  "status": "pinned metadata/POM/Java and selected JS/IDL source review, plus bounded AAR metadata; no full AAR download, build or runtime/device test",
   "stableCoordinate": "org.mozilla.geckoview:geckoview:158.0.20261007201254",
   "metadataUrl": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/maven-metadata.xml",
   "sourceRevision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
@@ -75,6 +75,104 @@
       "id": "E13",
       "api": "Official stable158 manifest services",
       "fact": "Gecko internal media/socket/gpu/crash/content services exist. Single app-owned runtime is NOT a single-OS-process memory guarantee."
+    },
+    {
+      "id": "E14",
+      "api": "WebExtensionController.ensureBuiltIn / GeckoViewWebExtension.ensureBuiltIn",
+      "fact": "Built-in installed from resource://android APK directory, privileged; ensure compares extension ID/version, not content hash. HandlerThread means thread with Handler/Looper, not necessarily a new worker.",
+      "source": "WebExtensionController.java:819-887; GeckoViewWebExtension.sys.mjs:965-990; HandlerThread.java",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E15",
+      "api": "WebExtension.MessageSender / content messaging",
+      "fact": "Content native messages use session-specific delegate; sender exposes actual session, extension, URL, environmentType, isTopLevel(); background sender.session=null. Content messaging requires dedicated privileged manifest permission. No public documentId/frameId in this Java sender.",
+      "source": "WebExtension.java:130-143,175-222,1168-1242; WebExtensionController.java:1658-1740",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E16",
+      "api": "WebExtension.Port",
+      "fact": "UI-thread port callbacks and postMessage/disconnect. Port sender is connection metadata, not fresh navigation proof. Local disconnect implementation unregisters and shuts down dispatcher; do not wait for own onDisconnect to release local ownership. Disconnect is not proof a site network/SDK side effect was cancelled.",
+      "source": "WebExtension.java:408-595",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E17",
+      "api": "MediaSession commands/delegates",
+      "fact": "Active session required; onFeatures reports supported actions; play/pause/stop/seekTo/nextTrack/previousTrack are void dispatch, no per-request completion; seekTo time seconds. onPlay/onPause/onStop/onPositionState are observations, not command IDs.",
+      "source": "MediaSession.java:43-145,221-331,502-527",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E18",
+      "api": "MediaSession.notifySystemAudioFocusChange",
+      "fact": "System-focus interruption/resumption is separate from user play/pause; gain resumes interrupted sources. Must preserve explicit user intent and invalidate stale focus leases.",
+      "source": "MediaSession.java:168-218",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E19",
+      "api": "GeckoView.releaseSession / GeckoSession.setActive",
+      "fact": "releaseSession does not close session and leaves it active. setActive(false) is visibility/memory hint and requests asynchronous state flush; priority HIGH is a hint, not survival guarantee.",
+      "source": "GeckoView.java:496-552; GeckoSession.java:2856-2935",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E20",
+      "api": "SessionState / flushSessionState / restoreState",
+      "fact": "State includes history/scroll/zoom/form data; treat as sensitive. flush is void asynchronous. restore overwrites saved categories, not proof of restored account authentication. fromString can return null.",
+      "source": "GeckoSession.java:2856-2870,3036-3165,3302-3312",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E21",
+      "api": "GeckoResult.cancel",
+      "fact": "Returns GeckoResult<Boolean>; false when already completed or no cancellation delegate found. Calling cancel alone is not successful cancellation.",
+      "source": "GeckoResult.java:1024-1084",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E22",
+      "api": "WebExtension browsingData on Android",
+      "fact": "Android registration uses shared ext-browsingData; cookieStoreId removal allows cookies/IndexedDB and selected localStorage, but rejects cache. Platform delegate only handles downloads/form/history/passwords. Host/global cache route is not a safe context fallback.",
+      "source": "ext-android.json; ExtensionBrowsingData.sys.mjs; ext-browsingData.js:334-360",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E23",
+      "api": "Context clear implementation and failed flags",
+      "fact": "Java path dispatches encoded geckoViewSessionContextId; JS drops optional clear-data callback and separately fires QMS clear. Internal clear-data callback has failedFlags; pattern path skips cleaners without matching method, and network-cache cleaner resolves after void eviction submission. Callback success alone does not prove all physical cache bytes gone.",
+      "source": "GeckoViewStorageController.sys.mjs:103-110,215-282; ClearDataService.sys.mjs:464-505,2499-2532; nsIClearDataService.idl:140-149,428-440",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E24",
+      "api": "Built-in experiment API candidate / QuotaManager",
+      "fact": "Stable source considers builtIn privileged and permits experiment_apis for privileged extensions. QMS getUsage asynchronously yields per-origin storage; pattern clear returns request with resultCode callback. Candidate APK-fixed narrow helper needs real Release validation, not public Java API support or completed cleanup proof.",
+      "source": "Extension.sys.mjs:968-976,1564-1575,2160-2198; nsIQuotaManagerService.idl:242-270,317-334",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E25",
+      "api": "Cache storage visitor candidate",
+      "fact": "asyncVisitAllStorages can visit cache entries; callback carries byte sizes and nsILoadContextInfo with originAttributes. Aggregate-only per-context payload estimates may be possible without opening pages. Global disk consumption is separate; duplicate/storage/overhead/completion semantics still require validation.",
+      "source": "nsICacheStorageService.idl:117-137; nsICacheStorageVisitor.idl; nsILoadContextInfo.idl",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E26",
+      "api": "GeckoWebExecutor / WebRequest / WebResponse",
+      "fact": "Inspected request and inherited builder expose no session/contextId selector; do not assume runtime-level fetch shares partitioned music/mail credentials. WebResponse body is an InputStream and must be closed even when ignored.",
+      "source": "WebRequest.java; WebMessage.java; GeckoWebExecutor.java:95-150; WebResponse.java:39-44",
+      "verification": "pinned-source-inspection-not-runtime-test"
+    },
+    {
+      "id": "E27",
+      "api": "scripting MAIN/ISOLATED world schema",
+      "fact": "Stable scripting schema declares world MAIN/ISOLATED; content scripts otherwise isolated. Schema presence does not prove GeckoView built-in permissions, exact frame targeting, CSP/site SDK interaction work in Release.",
+      "source": "scripting.json:19-51,153-156; extension_types.json:59-62",
+      "verification": "pinned-source-inspection-not-runtime-test"
     }
   ],
   "notProven": [
@@ -96,6 +194,106 @@
       "url": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/158.0.20261007201254/geckoview-158.0.20261007201254-sources.jar",
       "bytes": 890480,
       "sha256": "bb855e43aa84c60193859022cb26fbcbfaece5df34015c8fb7e20f57d3846f2a"
+    },
+    {
+      "sourcePath": "mobile/android/modules/moz.build",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/mobile/android/modules/moz.build",
+      "bytes": 336,
+      "sha256": "342f484aaa0c04054c5d99f9a91ebddfe6314672d8445d9d642c51a05baf1505"
+    },
+    {
+      "sourcePath": "mobile/android/modules/geckoview/moz.build",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/mobile/android/modules/geckoview/moz.build",
+      "bytes": 250,
+      "sha256": "2541eccefa5e31ddfdd708e729b513e87602d031aa1847efc09c21c697377adb"
+    },
+    {
+      "sourcePath": "mobile/shared/modules/geckoview/GeckoViewStorageController.sys.mjs",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/mobile/shared/modules/geckoview/GeckoViewStorageController.sys.mjs",
+      "bytes": 8416,
+      "sha256": "427027c14b47c1904ef75240962b225468e38155d6e34ae86b8f1ef06737913f"
+    },
+    {
+      "sourcePath": "mobile/shared/components/extensions/ExtensionBrowsingData.sys.mjs",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/mobile/shared/components/extensions/ExtensionBrowsingData.sys.mjs",
+      "bytes": 1516,
+      "sha256": "f56a86807a03eca12510e0dd14bd8fb60ca7112f594763bdc130f7d93cb4195b"
+    },
+    {
+      "sourcePath": "mobile/shared/components/extensions/ext-android.json",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/mobile/shared/components/extensions/ext-android.json",
+      "bytes": 1054,
+      "sha256": "ca61a6ac6bcf6d79beba42748a126966ee38fca431983b96876d688fa7f6480d"
+    },
+    {
+      "sourcePath": "mobile/shared/modules/geckoview/GeckoViewWebExtension.sys.mjs",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/mobile/shared/modules/geckoview/GeckoViewWebExtension.sys.mjs",
+      "bytes": 43358,
+      "sha256": "1380237a5997b6dc88345d80ed86de60a502aae2ade893a5bda153a107559037"
+    },
+    {
+      "sourcePath": "toolkit/components/extensions/Extension.sys.mjs",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/toolkit/components/extensions/Extension.sys.mjs",
+      "bytes": 159009,
+      "sha256": "0a14ea52ee601076aff6087d6a5677a4f930768e6f1b516114acdbb1073cedee"
+    },
+    {
+      "sourcePath": "toolkit/components/cleardata/nsIClearDataService.idl",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/toolkit/components/cleardata/nsIClearDataService.idl",
+      "bytes": 17363,
+      "sha256": "29a51957a71f28f0538fbb93a65dab3c96bfc9a8f673173bf7c994366f78af9a"
+    },
+    {
+      "sourcePath": "dom/quota/nsIQuotaManagerService.idl",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/dom/quota/nsIQuotaManagerService.idl",
+      "bytes": 20041,
+      "sha256": "c64319571cfbca3711f2c4de109ee70f595a70a79f0d6c80ce534d6e7560be7d"
+    },
+    {
+      "sourcePath": "toolkit/components/cleardata/ClearDataService.sys.mjs",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/toolkit/components/cleardata/ClearDataService.sys.mjs",
+      "bytes": 78242,
+      "sha256": "0a9bfaea05baabb77530599ae860ad0020dfd997934f3a77ec59fa78c58dff71"
+    },
+    {
+      "sourcePath": "netwerk/cache2/nsICacheStorageService.idl",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/netwerk/cache2/nsICacheStorageService.idl",
+      "bytes": 4800,
+      "sha256": "a1279315530dcd6136e545c8d0ee1a8c02eab0900045ff5f7bcedf79b15051a0"
+    },
+    {
+      "sourcePath": "toolkit/components/extensions/schemas/scripting.json",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/toolkit/components/extensions/schemas/scripting.json",
+      "bytes": 15054,
+      "sha256": "48f8b7c3184d90ae18b98f1ddb387399f890f62f2dc2408305902105b6825fdd"
+    },
+    {
+      "sourcePath": "toolkit/components/extensions/schemas/extension_types.json",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/toolkit/components/extensions/schemas/extension_types.json",
+      "bytes": 6421,
+      "sha256": "f97ddc61f4f8490e0860336ca059c1948b68e781b0647e54954b77254c1bcbb6"
+    },
+    {
+      "sourcePath": "netwerk/cache2/nsICacheStorageVisitor.idl",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/netwerk/cache2/nsICacheStorageVisitor.idl",
+      "bytes": 1130,
+      "sha256": "4f1570db7c8eb43a507b1e43a0a5221c1aa1d862b7f7bcca01c78080320e28e0"
+    },
+    {
+      "sourcePath": "netwerk/base/nsILoadContextInfo.idl",
+      "url": "https://hg.mozilla.org/releases/mozilla-release/raw-file/eb9a6e3a736802c8e080a76c44dc81f409d99d54/netwerk/base/nsILoadContextInfo.idl",
+      "bytes": 2362,
+      "sha256": "e1ab7974f63df787dff3dfaadae9e1fc84a1d795b29a5213642d972e28f3794c"
+    }
+  ],
+  "lastExtendedAt": "2026-10-18T00:23:53+08:00",
+  "currentDocumentationOnly": [
+    {
+      "name": "webextensions-current.html",
+      "url": "https://firefox-source-docs.mozilla.org/mobile/android/geckoview/consumer/web-extensions.html",
+      "bytes": 75203,
+      "sha256": "013bbaf1ddb53657061b82d2cc74142e97b3ce5f8ad6d51965632c6ac43abbb9",
+      "status": "downloaded"
     }
   ]
 }

@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "revision": "R6",
+  "state": "source-reviewed-design-not-runtime-validated",
+  "productCodeImplemented": false,
+  "contracts": [
+    {
+      "id": "GC01",
+      "domain": "A05",
+      "name": "builtin-bootstrap",
+      "evidence": [
+        "E14",
+        "E15"
+      ],
+      "contract": "来源闸门通过→主进程runtime→ensureBuiltIn完成→注册delegate→打开业务页；内容改变须提升扩展version。",
+      "failureBoundary": "安装失败只使连接器不可用，不把业务页当已连接；跨版本消息拒绝后明确重建，不盲重装循环。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC02",
+      "domain": "A05",
+      "name": "connector-routing",
+      "evidence": [
+        "E15",
+        "E16",
+        "E27"
+      ],
+      "contract": "Outlook/Music业务连接器按真实sender.session/extension/origin/topLevel和原生代次路由；后台存储helper单独通道；控制证明走统一管理员协议。",
+      "failureBoundary": "不信payload伪造session/frame/epoch；业务来源校验不是给已证明管理员按辅助包来源降级。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC03",
+      "domain": "A05",
+      "name": "port-generation",
+      "evidence": [
+        "E15",
+        "E16"
+      ],
+      "contract": "Native登记dataEpoch/sessionGeneration/documentLease/port实例，分配握手token；导航/BFCache/重连明确重新协商。",
+      "failureBoundary": "sender.url只是建连时信息；SPA同文档与新文档区分待实验；旧消息不写当前UI/数据库，但真实任务结算仍回收旧槽。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC04",
+      "domain": "A05",
+      "name": "bounded-bridge",
+      "evidence": [
+        "E15",
+        "E16",
+        "E21"
+      ],
+      "contract": "连接器首次仅一次HELLO；等READY后才传数据；主线程轻校验、分块入队；每实际未完成操作占槽。",
+      "failureBoundary": "超时/断端口不释放仍真实运行的任务槽；未知结果不自动换路重放副作用。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC05",
+      "domain": "A08",
+      "name": "music-route",
+      "evidence": [
+        "E17",
+        "E27"
+      ],
+      "contract": "先检查fresh官网认证/玩家绑定/代次；验证过语义且active+feature支持时选Gecko，否则选可用官方SDK路径；一次动作只选一条。",
+      "failureBoundary": "不因一个void返回标成功；超时不再用另一条路径补发；native play不能绕过官方权益。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC06",
+      "domain": "A08",
+      "name": "media-observation",
+      "evidence": [
+        "E17"
+      ],
+      "contract": "提交后等待匹配当前资源/意图代次的真实状态；Android毫秒转换Gecko秒；onPositionState用于观测和受约束UI估计。",
+      "failureBoundary": "事件无requestId：只能报告目标状态已观察到，不编造精确请求回执；缺buffering事件用有限健康检查，不搬整页高频轮询。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC07",
+      "domain": "A08",
+      "name": "focus-lease",
+      "evidence": [
+        "E18"
+      ],
+      "contract": "焦点租约绑定session/资源/播放意图revision；用户pause/stop/清理使恢复资格失效；只有合法当前租约能恢复被打断的播放。",
+      "failureBoundary": "不能把系统gain变成新起播授权；gain与pause竞态需验证；不以修改系统音量/DND处理。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC08",
+      "domain": "A02",
+      "name": "view-session-lifecycle",
+      "evidence": [
+        "E19",
+        "E20"
+      ],
+      "contract": "View分离、不可见提示、session关闭、runtime关闭是四种操作；不可见明确setActive(false)，必要音乐HIGH只是优先提示。",
+      "failureBoundary": "Activity离开不等于结束音乐；releaseSession不等于清理完成；OS仍可杀进程。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC09",
+      "domain": "A02",
+      "name": "snapshot-checkpoint",
+      "evidence": [
+        "E20"
+      ],
+      "contract": "异步flush→合法callback→敏感快照写入→提交revision；恢复核对partition/epoch/格式，凭据输入中不为回收强行关闭。",
+      "failureBoundary": "方法返回不是快照落盘；损坏/未知格式不静默清数据；快照恢复不激活登录或播放授权。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC10",
+      "domain": "A09",
+      "name": "storage-helper-candidate",
+      "evidence": [
+        "E22",
+        "E23",
+        "E24",
+        "E25"
+      ],
+      "contract": "仅APK固定privileged helper候选：没有内容脚本/网页入口；只接已注册context引用，内部聚合QMS/缓存估计，必要清理核对failedFlags/请求结果。",
+      "failureBoundary": "不接受任意OA pattern/路径，不开放Chrome eval，不将contextId当cookieStoreId；无实验证据前不得称方案可用。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC11",
+      "domain": "A09",
+      "name": "cleanup-evidence",
+      "evidence": [
+        "E23",
+        "E24"
+      ],
+      "contract": "停止目标会话/写入与后台任务后，分别记录站点存储、原生文件、缓存驱逐；回执分类为已提交/逻辑完成/失败/回收待确认。",
+      "failureBoundary": "failedFlags0仍不代表每类覆盖或物理缓存已释放；不能用其他无关查询返回当删除屏障；不能退回全局清理。",
+      "runtimeValidated": false
+    },
+    {
+      "id": "GC12",
+      "domain": "A04",
+      "name": "response-stream",
+      "evidence": [
+        "E26"
+      ],
+      "contract": "优先消费原session触发的WebResponse流；有界worker写临时目标，完成/拒绝/取消/失败都关闭body，完成后提交。",
+      "failureBoundary": "不把鉴权下载重构成默认runtime fetch，不导出Cookie拼头；流关闭/EOF/本地提交分开观测。",
+      "runtimeValidated": false
+    }
+  ],
+  "storageHelperAdmission": "candidate-only: builtin privilege supported by pinned source, but packaging/permissions/exact pattern/coverage/overhead/Release behavior must pass isolated experiments before adoption",
+  "notImplemented": [
+    "extension assets",
+    "privileged experiment",
+    "media adapter",
+    "storage deletion",
+    "site login or playback",
+    "device instrumentation"
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R5",
+  "revision": "R6",
   "questions": [
     {
       "id": "Q01",
@@ -114,7 +114,7 @@
       "id": "Q09",
       "priority": "engineering-spike",
       "question": "Gecko上下文删除API无完成回执，如何给出可靠完成判据与范围隔离？",
-      "currentTreatment": "context API是void；不把提交当完成，不退回全局删除。",
+      "currentTreatment": "已核对Java/JS丢失回执，以及内部failedFlags/QMS请求接口；APK固定privileged helper为候选，但缓存驱逐仍可能仅提交，不能宣称清空。见GC10/GC11，需P1实证。",
       "requirements": [
         "R22",
         "R23"
@@ -127,7 +127,7 @@
       "id": "Q10",
       "priority": "engineering-spike",
       "question": "Gecko runtime/profile/context如何兼顾隔离、可统计归属、内存、后台音乐？",
-      "currentTreatment": "不把host清理当context清理；不能仅为统计启动多个重型runtime。",
+      "currentTreatment": "单主runtime候选保留；原生视图release不close、inactive/priority/快照契约已细化。内部聚合统计或可避免多内核，但尚未验证。",
       "requirements": [
         "R01",
         "R03",
@@ -156,7 +156,7 @@
       "id": "Q12",
       "priority": "engineering-spike",
       "question": "Gecko stable158传递依赖/构建工具/ABI与Android11兼容矩阵是否可满足？",
-      "currentTreatment": "只确认元数据/POM/源码；尚未下载AAR、构建或实机验收。",
+      "currentTreatment": "已做有界AAR元数据审查：minSdk26、compileSdk37 minor2、三ABI；未下载完整AAR、未安装新工具链/构建/实机验收。",
       "requirements": [
         "R02",
         "R04",

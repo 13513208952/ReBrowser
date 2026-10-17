@@ -128,7 +128,21 @@
       "utf8Bytes": 126,
       "sha256": "b1443c3c83144204df67bbd2be26b898bfd97516a93b508236a260037af9d277",
       "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O19",
+      "file": "owner-verbatim/O19-continue.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O20",
+      "file": "owner-verbatim/O20-progress-reading-question.txt",
+      "utf8Bytes": 39,
+      "sha256": "f0222c6e1f989240b47941b3bf588bfae95fd659842aeba657989428330e387b",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
     }
   ],
-  "lastAppendedAt": "2026-10-17T23:40:55+08:00"
+  "lastAppendedAt": "2026-10-18T00:27:54+08:00"
 }

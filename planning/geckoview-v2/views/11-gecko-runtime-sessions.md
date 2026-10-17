@@ -79,4 +79,6 @@ Task: requestId, sessionId?, documentGeneration?, partitionId, cancellationState
 | 同context官方登录Popup | 新窗口/返回/取消/重定向真实行为 | 修正状态与路由；不复制Cookie、不创建假认证页面 |
 | 原生显式快照恢复 | session崩溃、进程重建、旧回调迟到 | 有界重试、真实失效重登录；不恢复自动播放授权 |
 
-下一交付：逐个delegate/扩展API参数与线程契约、恢复场景数据及P1实验脚本设计。仍不是已实现的引擎层。
+R6补充：`releaseSession()`不close且仍active；隐藏需要明确`setActive(false)`，这会异步flush，不能把返回当落盘。快照含表单等敏感资料，恢复不等于官网认证有效。具体线程/所有权与失败契约见[GC01–GC09](../records/gecko-contracts.json)及[本轮核对](17-gecko-contract-review.md)。
+
+下一交付：把已核对契约变成SPA/BFCache/崩溃/重建/快照提交的隔离fixture与观察步骤；不再停留在泛称“待研究API”。仍不是已实现的引擎层。

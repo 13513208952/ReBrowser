@@ -63,4 +63,17 @@ stateDiagram-v2
 - 服务/音频焦点/前台通知只按真实播放与Android政策维持，不修改音量、DND、系统超时/旋转，不自主唤醒解锁。
 - 后台无认证/无播放不因进入原生设置就自动启动业务；普通统计不成为启动音乐的理由。
 
-**尚缺：** Gecko158媒体delegate及动作字段逐项映射、官方SDK与原生媒体动作的唯一调度策略、音频焦点/中断/蓝牙事件矩阵、扩展main-world可用性、歌词/图片预算和真实手机/平板对照。没有音频播放或设备测试发生。
+## R6已核对的实际API边界
+
+| API/事件 | 源码契约 | 领域处理 |
+| --- | --- | --- |
+| `onActivated/onDeactivated/onFeatures` | 先激活；不支持动作无效 | 结合官网fresh认证和真实玩家绑定；不能只看有音频就开放业务 |
+| `play/pause/stop/nextTrack/previousTrack` | void提交，无请求完成ID | 提交前选择一条语义已验证路线，超时不再追加SDK路径造成双操作 |
+| `seekTo(time,fast)` | 秒；拖动中可fast，最后一次不fast | Android毫秒需转换；匹配当前资源真实位置，不写假timeupdate |
+| `onPlay/onPause/onStop/onPositionState` | 实际状态观测，无请求ID | 当前资源/意图代次才接纳；目标已观察与精确请求ACK分开 |
+| `notifySystemAudioFocusChange` | gain可恢复被中断源；不同于用户transport | 焦点租约绑定意图revision；用户pause/stop后禁止旧gain恢复 |
+| `Image.getBitmap(size)` | 异步图片结果，鼓励按实例缓存 | 只保留最新有界任务；取消返回值/真实结束不能混淆 |
+
+[GC05–GC07](../records/gecko-contracts.json)为上述路线/状态/焦点的详细候选；[GCT10–GCT17](../matrices/gecko-contract-cases.csv)仅计划场景，不是已通过测试。
+
+**尚缺：** 官网SDK与原生动作语义的真实对照、焦点/中断/蓝牙竞态fixture、扩展MAIN世界权限与玩家可用性、歌词/图片预算和手机/平板对照。媒体API字段已核对，不再笼统写成“全部待查”；没有音频播放或设备测试发生。

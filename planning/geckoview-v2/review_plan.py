@@ -182,10 +182,26 @@ def review():
     for choice in load('records/engineering-choices.json')['choices']:
         assert (P / choice['artifact']).is_file()
         assert choice['revisitWhen'], 'engineering preference needs a withdrawal condition'
+    integration = load('records/gecko-contracts.json')
+    contracts = indexed(integration['contracts'])
+    facts = indexed(load('evidence/upstream.json')['verifiedApiFacts'])
+    for contract in contracts.values():
+        assert contract['domain'] in design_domains
+        assert set(contract['evidence']) <= facts.keys()
+        assert contract['contract'] and contract['failureBoundary']
+        assert contract['runtimeValidated'] is False, 'source review is not runtime validation'
+    integration_cases = rows('matrices/gecko-contract-cases.csv')
+    indexed(integration_cases)
+    assert {case['contract'] for case in integration_cases} == contracts.keys()
+    assert all(case['state'] == 'planned-not-run' and case['expected'] for case in integration_cases)
+    assert integration['productCodeImplemented'] is False
     report = {
         'revision': requirement_record['revision'], 'result': 'structural-and-symbolic-review-passed',
         'authorityComparison': '>= (confirmed O13)',
         'ownerMessages': len(messages), 'requirements': len(requirements),
+        'geckoIntegrationContractsSourceReviewed': len(contracts),
+        'geckoIntegrationCasesPlannedNotRun': len(integration_cases),
+        'geckoIntegrationRuntimeValidated': False,
         'designDomainsAudited': len(design_domains),
         'designDomainsComplete': sum(d['designComplete'] for d in design_domains.values()),
         'overallDesignComplete': completeness['overallDesignComplete'],

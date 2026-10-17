@@ -1,5 +1,5 @@
 {
-  "revision": "R5",
+  "revision": "R6",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -79,6 +79,12 @@
       "time": "2026-10-17T23:56:23+08:00",
       "finding": "整体构建规划缺口通过官方AAR范围读取发现：stable158要求compileSdk37 minor2，而旧工程仅36；实际支持3个ABI，无32bit x86。",
       "resolution": "新增E11–E13/兼容矩阵，不下载完整AAR或构建。minSdk仍30，不把构建SDK要求误说成用户系统要求。明确单runtime不等于单OS进程。"
+    },
+    {
+      "id": "REV14",
+      "time": "2026-10-18T00:23:53+08:00",
+      "finding": "原生媒体方法和flush都是void；releaseSession仍活；扩展建连元数据不是文档授权；取消/清理回调不能当全部完成。",
+      "resolution": "补12项集成契约/28项计划场景。找到APK固定privileged helper＋QMS/缓存visitor候选，拒绝把标准browsingData cookieStoreId当Gecko context缓存清理。仅源码核实，不写产品或扩展实现，不宣称实验通过。"
     }
   ]
 }

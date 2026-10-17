@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "revision": "R8",
+  "state": "detailed-design-host-baseline-only",
+  "productImplemented": false,
+  "AndroidValidated": false,
+  "basis": [
+    "R21",
+    "R22",
+    "R23",
+    "R28",
+    "R29",
+    "GC04",
+    "GC11"
+  ],
+  "accountTopology": {
+    "choice": "one private database + owned payload directory per native account within v2 epoch",
+    "accountId": "native random opaque reference, bound only after validated official account evidence",
+    "dedupScope": "same account only; digest is content integrity/dedup, not authentication",
+    "legacyCompatibility": "no v1 schema/data migration; unknown future schema locks recovery/upgrade, never silently clears"
+  },
+  "objectPlacement": {
+    "smallStoredPayloadMaxBytes": 65536,
+    "small": "SQLite BLOB, not a separate tiny file",
+    "large": "owned immutable payload file keyed by native generated object ref, no caller path",
+    "why": "host tiny-body DB/raw/deflate and file-allocation model show per-message files/always-compress can increase space",
+    "fileAllocationNotClaimed": "4KiB tiny-file number is a model, Android filesystem overhead must be measured"
+  },
+  "codecPolicy": {
+    "enabledInitialTags": {
+      "0": "RAW",
+      "1": "ZLIB-DEFLATE-v1"
+    },
+    "defaultCandidate": "Deflate9 for larger compressible body records, subject to actual Android latency budget; Deflate6 remains fallback when savings insufficient vs cost",
+    "selection": "keep RAW unless compressed representation saves at least max(32 bytes,5 percent) after actual required framing; never compress encrypted/random data blindly",
+    "gzip": "baseline comparison only; separate GZIP wrapper not required for private objects",
+    "zstd": "not added to product; current synthetic host advantage modest and no Android ABI/package/maintenance proof",
+    "optionalFutureAdmission": "meaningful representative extra space or CPU benefit plus Android peak memory/read latency/recovery/ABI/size/license/security evidence, not algorithm name",
+    "dedup": "hash original bytes before compression/encryption, reuse only exact verified existing same-account object",
+    "integrity": "lossless original bytes/length/digest; no whitespace/HTML stripping to improve ratio",
+    "encryption": "compression before selective encryption; encryption framing/key custody/recovery remains separate required design, benchmark excludes it",
+    "decode": "stream with accepted original-size policy and codec tag; reject unknown codec/version/corrupt/truncated/oversize data, never allocate by untrusted declared length"
+  },
+  "tables": [
+    {
+      "id": "account_meta",
+      "primaryKey": [
+        "singleton"
+      ],
+      "fields": [
+        "native_account_ref",
+        "partition_ref",
+        "data_epoch",
+        "format_version",
+        "binding_revision"
+      ],
+      "indexes": [],
+      "constraint": "database opened only after epoch/source gate; account mapping cannot be replaced by payload claims"
+    },
+    {
+      "id": "mail_items",
+      "primaryKey": [
+        "official_item_key"
+      ],
+      "fields": [
+        "server_revision",
+        "conversation_key",
+        "received_millis",
+        "subject",
+        "sender_summary",
+        "flags",
+        "body_object_ref",
+        "local_revision",
+        "sync_generation"
+      ],
+      "indexes": [
+        [
+          "received_millis",
+          "official_item_key"
+        ],
+        [
+          "conversation_key",
+          "received_millis"
+        ]
+      ],
+      "constraint": "body reference same-account object; header data is private, not ordinary telemetry"
+    },
+    {
+      "id": "content_objects",
+      "primaryKey": [
+        "native_object_ref"
+      ],
+      "fields": [
+        "digest_sha256",
+        "codec_tag",
+        "original_bytes",
+        "stored_bytes",
+        "storage_kind",
+        "inline_payload",
+        "owned_file_key",
+        "integrity_version",
+        "encryption_metadata_ref",
+        "refcount"
+      ],
+      "indexes": [
+        [
+          "digest_sha256"
+        ]
+      ],
+      "constraint": "RAW/ZLIB supported tags; INLINE has payload<=65536 and no file key; FILE has native owned key and no inline payload; lengths/refcount nonnegative"
+    },
+    {
+      "id": "attachments",
+      "primaryKey": [
+        "official_item_key",
+        "official_attachment_key"
+      ],
+      "fields": [
+        "object_ref_nullable",
+        "display_name",
+        "mime_hint",
+        "declared_bytes",
+        "observed_bytes",
+        "download_state"
+      ],
+      "indexes": [
+        [
+          "object_ref_nullable"
+        ]
+      ],
+      "constraint": "name/MIME never grants executable/path trust; only admitted local owned target or explicit user save URI"
+    },
+    {
+      "id": "sync_state",
+      "primaryKey": [
+        "stream_key"
+      ],
+      "fields": [
+        "opaque_cursor",
+        "committed_revision",
+        "account_binding_revision",
+        "data_epoch"
+      ],
+      "indexes": [],
+      "constraint": "advance in same DB transaction as item/object refs; cursor is private"
+    },
+    {
+      "id": "maintenance_jobs",
+      "primaryKey": [
+        "native_job_ref"
+      ],
+      "fields": [
+        "kind",
+        "phase",
+        "target_manifest_ref",
+        "epoch",
+        "generation",
+        "last_committed_step"
+      ],
+      "indexes": [
+        [
+          "phase"
+        ]
+      ],
+      "constraint": "exact target journal; no arbitrary recursive public directory deletion"
+    },
+    {
+      "id": "search_policy",
+      "primaryKey": [
+        "singleton"
+      ],
+      "fields": [
+        "index_format",
+        "indexed_revision",
+        "retention_policy"
+      ],
+      "indexes": [],
+      "constraint": "metadata fast query baseline; body search cancellable streaming or justified platform index; index costs included"
+    }
+  ],
+  "writeFlows": {
+    "inline": [
+      "validate account/epoch/revision and stream budget",
+      "hash/compress to bounded staging; choose RAW/DEFLATE",
+      "apply required encryption/integrity framing without truncation",
+      "at serialized commit recheck gate/fence/account revision",
+      "one SQLite transaction inserts/reuses object, switches item refs, counts, index/cursor",
+      "publish success only after commit"
+    ],
+    "external": [
+      "write unique owned staging object, lossless digest/length/codec verification",
+      "finish/flush owned immutable object before DB references it",
+      "transaction switches refs/index/cursor after rechecking generation",
+      "old ref/object retained if failure; newly orphaned object only conservative GC later"
+    ]
+  },
+  "gcRules": [
+    "refcount is a cache, uncertainty never authorizes delete",
+    "verify no message/attachment refs AND no reader/writer/task leases before deleting exact owned object",
+    "decrement refs transactionally; delete object only after reference commit",
+    "source/cleanup fence before reconciliation; process restart does not replay business mutations",
+    "cache clear excludes sole offline originals; all-data scope explicitly includes them with warning"
+  ],
+  "searchAndRead": [
+    "paged metadata query, source private data bound to account",
+    "body decode off UI with bounded caches and per-query cancellation generation",
+    "SQLite FTS/Chinese strategy needs Android feature/size tests, do not silently remove existing searches",
+    "offline HTML no mailbox cookies/scripts/forms or automatic remote loads; export gets verified exact stored content"
+  ],
+  "benchmarkSummary": [
+    {
+      "codec": "deflate-6",
+      "payloadBytesExcludingDuplicateScenario": 4674895,
+      "extraSavedVsDeflate9Fraction": -0.002676,
+      "largeHtmlExtraSavedVsDeflate9Fraction": -0.005419,
+      "singleHostEncodeSeconds": 0.232275,
+      "singleHostDecodeSeconds": 0.020601
+    },
+    {
+      "codec": "deflate-9",
+      "payloadBytesExcludingDuplicateScenario": 4662420,
+      "extraSavedVsDeflate9Fraction": 0.0,
+      "largeHtmlExtraSavedVsDeflate9Fraction": 0.0,
+      "singleHostEncodeSeconds": 0.349061,
+      "singleHostDecodeSeconds": 0.020483
+    },
+    {
+      "codec": "gzip-9",
+      "payloadBytesExcludingDuplicateScenario": 4689492,
+      "extraSavedVsDeflate9Fraction": -0.005806,
+      "largeHtmlExtraSavedVsDeflate9Fraction": -0.001251,
+      "singleHostEncodeSeconds": 0.349619,
+      "singleHostDecodeSeconds": 0.020578
+    },
+    {
+      "codec": "host-zstd-3",
+      "payloadBytesExcludingDuplicateScenario": 4652910,
+      "extraSavedVsDeflate9Fraction": 0.00204,
+      "largeHtmlExtraSavedVsDeflate9Fraction": 0.009607,
+      "singleHostEncodeSeconds": 0.043383,
+      "singleHostDecodeSeconds": 0.015118
+    },
+    {
+      "codec": "host-zstd-9",
+      "payloadBytesExcludingDuplicateScenario": 4564252,
+      "extraSavedVsDeflate9Fraction": 0.021055,
+      "largeHtmlExtraSavedVsDeflate9Fraction": 0.048116,
+      "singleHostEncodeSeconds": 0.174383,
+      "singleHostDecodeSeconds": 0.014235
+    },
+    {
+      "codec": "host-zstd-19",
+      "payloadBytesExcludingDuplicateScenario": 4479184,
+      "extraSavedVsDeflate9Fraction": 0.039301,
+      "largeHtmlExtraSavedVsDeflate9Fraction": 0.084637,
+      "singleHostEncodeSeconds": 1.457822,
+      "singleHostDecodeSeconds": 0.021281
+    }
+  ],
+  "releaseBlockers": [
+    "Android real corpus-shape performance/peak memory",
+    "full schema field types and SQL constraints/transaction fixture validation",
+    "search/index/Chinese behavior and cost",
+    "selective crypto framing and key custody/recovery",
+    "process-death/orphan/refcount reconciliation",
+    "safe HTML reader and attachment/malicious input cases"
+  ],
+  "storageAccounting": {
+    "nativeFileLengths": [
+      "account SQLite DB",
+      "WAL/SHM where present",
+      "owned external objects",
+      "owned unfinished/orphan staging until reclaimed"
+    ],
+    "doNotAddAgain": [
+      "inline payload lengths already inside DB file length",
+      "message original lengths as actual disk usage",
+      "each duplicate message full stored object size"
+    ],
+    "meaning": "native logical file lengths, not guaranteed filesystem physical blocks; original text total a separate logical-content metric"
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R6",
+  "revision": "R8",
   "questions": [
     {
       "id": "Q01",
@@ -142,7 +142,7 @@
       "id": "Q11",
       "priority": "engineering-spike",
       "question": "邮件压缩的目标数据集、压缩率、峰值内存、写入/检索/恢复预算？",
-      "currentTreatment": "使用合成/明确授权样本，不为基准导出现有真实邮箱。",
+      "currentTreatment": "完成11.6MB合成主机压缩往返与小对象SQLite基线，未用真实邮箱/设备。细化账户库/内联对象/RAW回退/去重/事务；Android预算、检索/加密/恢复仍工程验证，不再向机主索要样本。",
       "requirements": [
         "R21",
         "R28",

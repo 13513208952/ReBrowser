@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R7",
+  "revision": "R8",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -276,11 +276,11 @@
     {
       "id": "A07",
       "domain": "邮件压缩库/附件/检索/离线阅读",
-      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "status": "detailed-object-and-transaction-design-host-codec-baseline-complete-Android-pending",
       "designComplete": false,
       "implementationReady": false,
       "need": "真实schema、codec容器、事务/去重/索引/读取和损坏恢复",
-      "existingEvidence": "压缩候选与管线图，不是数据设计",
+      "existingEvidence": "压缩候选与管线图，不是数据设计；R8合成主机11.6MB保真压缩/SQLite布局基线，非Android性能或邮件产品实现",
       "completionDeliverables": [
         "可实现schema",
         "写读崩溃顺序",
@@ -299,7 +299,10 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/14-outlook-offline-design.md"
+        "views/14-outlook-offline-design.md",
+        "records/mail-storage-design.json",
+        "evidence/mail-codec-host-baseline.json",
+        "views/20-mail-storage-and-codec-evidence.md"
       ],
       "requiredReviewAxes": [
         "normal-flow",

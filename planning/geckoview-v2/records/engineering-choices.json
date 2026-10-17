@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R5",
+  "revision": "R8",
   "authoritySource": "O18: majority of engineering decisions delegated; these are engineering proposals/choices, not newly invented owner instructions",
   "choices": [
     {
@@ -27,14 +27,14 @@
     },
     {
       "id": "EC03",
-      "state": "baseline-pending-benchmark",
-      "choice": "平台SQLite/高等级压缩先做基线，正文内容仓库逐对象压缩与账户内去重；codec可版本化扩展",
+      "state": "host-baseline-completed-Android-still-pending",
+      "choice": "平台RAW/Deflate基线；小存储payload内联SQLite、大对象文件、同账户原文摘要去重；不因算法名默认引Zstd",
       "basis": [
         "R21",
         "R29"
       ],
-      "artifact": "views/14-outlook-offline-design.md",
-      "revisitWhen": "Zstd等显著空间收益且内存/体积/时延合格"
+      "artifact": "views/20-mail-storage-and-codec-evidence.md",
+      "revisitWhen": "代表性与Android实测证明别的codec显著空间/CPU收益且许可/ABI/体积/内存/恢复合格"
     },
     {
       "id": "EC04",

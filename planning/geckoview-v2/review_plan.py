@@ -223,8 +223,21 @@ def review():
     assert all(set(j['capabilityGroups'].split()) <= capabilities.keys() for j in journeys)
     assert all(j['state'] == 'design-scenario-not-run' for j in journeys)
     runtime_review = review_runtime_timeline()
+    codec_evidence = load('evidence/mail-codec-host-baseline.json')
+    codec_design = load('records/mail-storage-design.json')
+    assert codec_evidence['kind'] == 'synthetic-host-baseline-not-Android-benchmark'
+    assert codec_evidence['experimentScriptSha256'] == hashlib.sha256((P / codec_evidence['experimentScript']).read_bytes()).hexdigest()
+    assert not codec_evidence['newLibraryInstalled'] and not codec_evidence['productDependencyAdded']
+    assert not codec_evidence['realMailboxOrDeviceRead'] and not codec_evidence['AndroidRuntimeTested']
+    assert not codec_design['productImplemented'] and not codec_design['AndroidValidated']
+    assert codec_design['objectPlacement']['smallStoredPayloadMaxBytes'] == 65536
+    assert all(m['roundTripExact'] for m in codec_evidence['measurements'])
+    assert {m['codec'] for m in codec_evidence['measurements']} >= {'deflate-6', 'deflate-9', 'gzip-9'}
     report = {
         **runtime_review,
+        'hostSyntheticCodecMeasurements': len(codec_evidence['measurements']),
+        'hostSyntheticSourceBytes': codec_evidence['totalSyntheticSourceBytes'],
+        'androidCodecPerformanceTested': False,
         'domainInterfaceComponents': len(interfaces),
         'domainInterfaceMethodsDesigned': len(methods),
         'actionSemanticSlicesDesignedNotImplemented': len(actions),

@@ -26,6 +26,8 @@ final class ReBrowserAdminProtocol {
     static final String OP_OPEN_SETTINGS = "OPEN_SETTINGS";
     static final String OP_GET_SETTINGS_STATUS = "GET_SETTINGS_STATUS";
     static final String OP_GET_APPLICATION_STATUS = "GET_APPLICATION_STATUS";
+    static final String OP_GET_APPLICATION_STORAGE = "GET_APPLICATION_STORAGE";
+    static final String OP_OPEN_APPLICATION_SETTINGS = "OPEN_APPLICATION_SETTINGS";
     static final String OP_GET_RUNTIME_STATUS = "GET_RUNTIME_STATUS";
     static final String OP_OPEN_APPLICATION_MANAGEMENT = "OPEN_APPLICATION_MANAGEMENT";
     static final String OP_OPEN_MODE = "OPEN_MODE";
@@ -77,7 +79,8 @@ final class ReBrowserAdminProtocol {
             OP_OPEN_URL, OP_NEW_WORKSPACE, OP_NEW_CHILD_TAB, OP_SHOW_WORKSPACES,
             OP_SHOW_CHILD_TABS, OP_OPEN_SETTINGS, OP_GET_SETTINGS_STATUS, OP_SWITCH_TO_OUTLOOK, OP_GET_STATE,
             OP_GET_CAPABILITIES, OP_GET_DIAGNOSTICS, OP_GET_LAUNCHER_STATUS,
-            OP_GET_APPLICATION_STATUS, OP_GET_RUNTIME_STATUS, OP_OPEN_APPLICATION_MANAGEMENT, OP_OPEN_MODE,
+            OP_GET_APPLICATION_STATUS, OP_GET_APPLICATION_STORAGE, OP_OPEN_APPLICATION_SETTINGS,
+            OP_GET_RUNTIME_STATUS, OP_OPEN_APPLICATION_MANAGEMENT, OP_OPEN_MODE,
             OP_GET_HISTORY_STATUS, OP_SHOW_HISTORY, OP_GET_AUDIT, OP_VALIDATE_STATE,
             OP_REPAIR_STATE, OP_SET_HOME, OP_SET_PREFERENCE, OP_ACTIVATE_WORKSPACE,
             OP_ACTIVATE_TAB, OP_RELOAD, OP_STOP, OP_GO_BACK, OP_GO_FORWARD, OP_GO_HOME,
@@ -171,6 +174,10 @@ final class ReBrowserAdminProtocol {
         }
         if (OP_OPEN_MODE.equals(operation) && !ReBrowserApplications.validMode(request.opt("mode")))
             throw new SecurityException("Unsupported fixed application mode");
+        boolean applicationOperation = OP_GET_APPLICATION_STORAGE.equals(operation) || OP_OPEN_APPLICATION_SETTINGS.equals(operation);
+        if ((applicationOperation || request.has("applicationId"))
+                && !ReBrowserApplications.validApplication(request.opt("applicationId")))
+            throw new SecurityException("Unsupported fixed subapplication");
         if (OP_SET_PREFERENCE.equals(operation)) validatePreference(request);
         if (OP_DISABLE_SITE_PERMISSION.equals(operation)
                 || OP_CLEAR_SITE_PERMISSION_GRANTS.equals(operation)) {
@@ -199,7 +206,10 @@ final class ReBrowserAdminProtocol {
         JSONArray result = new JSONArray();
         java.util.List<String> sorted = new java.util.ArrayList<>(OPERATIONS);
         java.util.Collections.sort(sorted);
-        for (String operation : sorted) result.put(operation);
+        for (String operation : sorted) {
+            if (!BuildConfig.FULL_SUITE && (OP_GET_APPLICATION_STORAGE.equals(operation) || OP_OPEN_APPLICATION_SETTINGS.equals(operation))) continue;
+            result.put(operation);
+        }
         return result;
     }
 
@@ -297,6 +307,7 @@ final class ReBrowserAdminProtocol {
         entry.put("status", result.optString("status"));
         entry.put("authentication", result.optString("authentication"));
         entry.put("keyId", result.optString("keyId"));
+        if (request.has("applicationId")) entry.put("applicationId", request.getString("applicationId"));
         if (request.has("workspaceId")) entry.put("workspaceId", request.optString("workspaceId"));
         if (request.has("tabId")) entry.put("tabId", request.optString("tabId"));
         if (request.has("downloadId")) {

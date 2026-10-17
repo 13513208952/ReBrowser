@@ -22,6 +22,7 @@
 | [项目状态](PROJECT_STATUS.md) | 当前版本、实现与有限证据、已知限制；不再混入完整历史报告 |
 | [仓库维护与清理](MAINTENANCE.md)、[离线维护工具](../tools/maintenance/README.md) | 文件归属、不可变/私有保留、链接检查、生成物 dry-run 清理 |
 | [设置与应用管理](REBROWSER_SETTINGS.md) | 三页设置、子软件入口、迁移、风味默认与原生回退 |
+| [子应用独立设置（开发中）](SUBAPPLICATION_SETTINGS.md) | 齿轮二级页、音乐源迁移、存储口径与隔离清理、管理员只读扩展及R8审查；公开v1.0.4尚未包含 |
 | [浏览器设计与沿革](REBROWSER_EXPLORATION.md) | 双层标签、Profile、状态与交互背景 |
 | [邮件架构与同步](REOUTLOOK_ARCHITECTURE.md) | 桥、缓存、账号、回填、检查点与迁移 |
 | [音乐子应用完整设想原文](MUSIC_SUBAPPLICATION_OWNER_VISION_VERBATIM.md) | 机主整段原话，完整逐字保存，不作整理或改写；压缩交接必读 |

@@ -36,6 +36,11 @@ public final class ArchiveActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (ReBrowserSubapplicationGate.blocked(this, ReBrowserApplications.OUTLOOK)) {
+            startActivity(ReBrowserApplications.applicationSettingsIntent(this, ReBrowserApplications.OUTLOOK));
+            finish(); return;
+        }
+        ReBrowserSubapplicationGate.register(this, ReBrowserApplications.OUTLOOK);
         database = new MailDatabase(this);
         showList();
     }
@@ -277,8 +282,9 @@ public final class ArchiveActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        ReBrowserSubapplicationGate.unregister(this);
         destroyDetailWebView();
-        database.close();
+        if (database != null) database.close();
         super.onDestroy();
     }
 

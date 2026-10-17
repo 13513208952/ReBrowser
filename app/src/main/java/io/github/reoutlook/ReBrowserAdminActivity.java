@@ -106,6 +106,7 @@ public final class ReBrowserAdminActivity extends Activity {
         if (pendingRequest.has("downloadId")) {
             target += "\n下载任务：" + pendingRequest.optString("downloadId");
         }
+        if (pendingRequest.has("applicationId")) target += "\n子应用：" + ReBrowserApplications.name(pendingRequest.getString("applicationId"));
         status.setText("ADB 请求尚未获得管理员密钥签名。\n\n请求操作：" + operation
                 + "\n授权级别：" + level + target
                 + (level >= 2 ? "\n\n这是会改变或删除浏览器状态的操作。" : "")
@@ -183,6 +184,19 @@ public final class ReBrowserAdminActivity extends Activity {
         commandExecuted = true;
         String authentication = pendingRequest.optString("_authentication");
         String keyId = pendingRequest.optString("_keyId");
+        if (ReBrowserAdminProtocol.OP_GET_APPLICATION_STORAGE.equals(operation)
+                || ReBrowserAdminProtocol.OP_OPEN_APPLICATION_SETTINGS.equals(operation)) {
+            String application = pendingRequest.getString("applicationId");
+            JSONObject details;
+            if (ReBrowserAdminProtocol.OP_GET_APPLICATION_STORAGE.equals(operation))
+                details = ReBrowserSubapplicationStorage.snapshot(this, application);
+            else {
+                startActivity(ReBrowserApplications.applicationSettingsIntent(this, application));
+                details = new JSONObject().put("applicationId", application).put("view", "application-settings");
+            }
+            ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed", authentication, keyId, details, null);
+            finish(); return;
+        }
         if (ReBrowserAdminProtocol.OP_GET_APPLICATION_STATUS.equals(operation)
                 || ReBrowserAdminProtocol.OP_GET_RUNTIME_STATUS.equals(operation)
                 || ReBrowserAdminProtocol.OP_GET_CAPABILITIES.equals(operation)

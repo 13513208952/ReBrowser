@@ -30,6 +30,18 @@ public final class ReBrowserAdminProtocolTest {
                 .edit().clear().commit();
     }
 
+    @Test public void subapplicationOperationsRespectSuiteAndFixedTargets() throws Exception {
+        for (String operation : new String[]{"GET_APPLICATION_STORAGE", "OPEN_APPLICATION_SETTINGS"}) {
+            assertEquals(BuildConfig.FULL_SUITE, ReBrowserAdminProtocol.supportedOperations().toString().contains(operation));
+            JSONObject request = prepared(operation).put("applicationId", "music");
+            if (BuildConfig.FULL_SUITE) {
+                ReBrowserAdminProtocol.prepareExternalRequest(request); assertEquals(1, request.getInt("authorizationLevel"));
+            } else assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(request));
+            for (Object target : new Object[]{"browser", "Default", 42, true, JSONObject.NULL})
+                assertThrows(SecurityException.class, () -> ReBrowserAdminProtocol.prepareExternalRequest(prepared(operation).put("applicationId", target)));
+        }
+    }
+
     @Test public void removedHostZoomOperationsAreRejected() throws Exception {
         for (String operation : new String[]{"SET_PAGE_ZOOM", "GET_PAGE_ZOOM_STATUS"}) {
             JSONObject request = prepared(operation).put("percent", 150);

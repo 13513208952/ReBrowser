@@ -35,6 +35,8 @@ OPERATIONS = {
     "settings": "OPEN_SETTINGS",
     "settings-status": "GET_SETTINGS_STATUS",
     "applications": "GET_APPLICATION_STATUS",
+    "application-storage": "GET_APPLICATION_STORAGE",
+    "application-settings": "OPEN_APPLICATION_SETTINGS",
     "runtime": "GET_RUNTIME_STATUS",
     "application-management": "OPEN_APPLICATION_MANAGEMENT",
     "mode": "OPEN_MODE",
@@ -115,8 +117,15 @@ REBROWSER_PRIVATE_KEY = pathlib.Path(os.environ.get(
     str(HERE / "rebrowser-root-v1-ecdsa-private.pem"))).expanduser()
 
 
+def adb_command(*args: str) -> list[str]:
+    serial = os.environ.get("ANDROID_SERIAL")
+    if serial is not None and (serial.startswith("-") or not re.fullmatch(r"[A-Za-z0-9_.:\[\]-]{1,200}", serial)):
+        raise SystemExit("Invalid ADB serial; no device command was sent")
+    return [ADB, *(["-s", serial] if serial else []), *args]
+
+
 def adb(*args: str) -> str:
-    result = subprocess.run([ADB, *args], check=True, stdout=subprocess.PIPE,
+    result = subprocess.run(adb_command(*args), check=True, stdout=subprocess.PIPE,
                             stderr=subprocess.STDOUT, text=True, timeout=30)
     return result.stdout.strip()
 
@@ -143,10 +152,14 @@ def decode_payload(response: str) -> dict | None:
     return json.loads(raw.decode("utf-8"))
 
 
-def clear_challenge() -> None:
-    subprocess.run([ADB, "shell", "content", "call", "--uri", URI,
-                    "--method", "clearChallenge"],
-                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+def clear_challenge() -> bool:
+    try:
+        result = subprocess.run(adb_command("shell", "content", "call", "--uri", URI,
+                                "--method", "clearChallenge"), timeout=30,
+                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return result.returncode == 0
+    except (OSError, subprocess.TimeoutExpired):
+        return False  # Cleanup failure must not replace the original authorization/transport error.
 
 
 def read_result(request_id: str | None = None) -> dict | None:
@@ -175,6 +188,10 @@ def build_request(args: argparse.Namespace) -> dict:
         if section not in ("general", "isolation", "applications"):
             raise SystemExit("settings accepts general, isolation or applications")
         request["section"] = section
+    if args.command in ("application-storage", "application-settings"):
+        if not values or values[0] not in ("outlook", "music"):
+            raise SystemExit(f"{args.command} requires outlook or music")
+        request["applicationId"] = values.pop(0)
     if args.command == "mode":
         if not values or values[0] not in ("browser", "outlook"):
             raise SystemExit("mode requires browser or outlook")
@@ -309,6 +326,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=tuple(OPERATIONS) + ("clear", "result"))
     parser.add_argument("arguments", nargs="*")
+    parser.add_argument("--serial", help="ADB device serial; also honors ANDROID_SERIAL")
     parser.add_argument("--workspace")
     parser.add_argument("--tab")
     parser.add_argument("--wait", action="store_true")
@@ -319,11 +337,15 @@ def main() -> None:
     parser.add_argument("--private-key")
     parser.add_argument("--compact", action="store_true")
     args = parser.parse_args()
+    if args.serial is not None:
+        os.environ["ANDROID_SERIAL"] = args.serial  # This client process only, including challenge cleanup.
+    adb_command()  # Validate the target before creating any device challenge.
     if not 1 <= args.timeout <= 60:
         raise SystemExit("--timeout must be between 1 and 60 seconds")
     try:
         if args.command == "clear":
-            clear_challenge()
+            if not clear_challenge():
+                raise SystemExit("Challenge cleanup failed or timed out")
             return
         if args.command == "result":
             output_result(read_result(args.arguments[0] if args.arguments else None), args.compact)
@@ -332,6 +354,9 @@ def main() -> None:
         output_result(result, args.compact)
         if result.get("status") != "completed":
             raise SystemExit(2)
+    except subprocess.TimeoutExpired:
+        clear_challenge()
+        raise SystemExit("ADB transport timed out; the operation was not retried. Check its result before resubmitting.")
     except subprocess.CalledProcessError as error:
         clear_challenge()
         sys.stderr.write(error.stdout or str(error))

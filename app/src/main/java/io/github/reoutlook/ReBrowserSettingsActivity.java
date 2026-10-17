@@ -136,6 +136,7 @@ public final class ReBrowserSettingsActivity extends Activity {
         outlookOpenButton.setContentDescription("进入 ReOutlook 模式");
         outlookOpenButton.setOnClickListener(v -> ModeRouter.openOutlook(this));
         applicationRow.addView(outlookOpenButton);
+        applicationRow.addView(applicationSettingsButton(ReBrowserApplications.OUTLOOK));
         applications.addView(applicationRow);
         applications.addView(fieldLabel("开关仅控制桌面入口；隐藏时仍可点击进入。新安装默认隐藏，升级保留已有选择。"));
         LinearLayout musicRow = new LinearLayout(this);
@@ -154,18 +155,8 @@ public final class ReBrowserSettingsActivity extends Activity {
         musicOpenButton = new Button(this); musicOpenButton.setText("进入");
         musicOpenButton.setContentDescription("进入音乐");
         musicOpenButton.setOnClickListener(v -> ModeRouter.openMusic(this)); musicRow.addView(musicOpenButton);
+        musicRow.addView(applicationSettingsButton(ReBrowserApplications.MUSIC));
         applications.addView(musicRow);
-        applications.addView(fieldLabel("音乐工作模式（同时仅一个源运行）"));
-        Spinner source = new Spinner(this);
-        source.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, new String[]{"网易云"}));
-        source.setContentDescription("音乐源工作模式");
-        source.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> p, View v, int position, long id) {
-                new ReBrowserMusicSources(ReBrowserSettingsActivity.this).select(ReBrowserMusicSources.NETEASE);
-            }
-            @Override public void onNothingSelected(AdapterView<?> p) {}
-        });
-        applications.addView(source);
         }
 
         content.addView(sectionTitle("启动与搜索"));
@@ -366,6 +357,19 @@ public final class ReBrowserSettingsActivity extends Activity {
             musicEnabledSwitch.setOnCheckedChangeListener(this::onMusicEnabledChanged);
         }
         if (musicOpenButton != null) musicOpenButton.setEnabled(enabled && ReBrowserRuntime.inspect().browserAvailable());
+    }
+
+    private android.widget.ImageButton applicationSettingsButton(String id) {
+        android.widget.ImageButton button = new android.widget.ImageButton(this);
+        button.setImageResource(R.drawable.ic_rb_settings);
+        button.setImageTintList(android.content.res.ColorStateList.valueOf(Color.rgb(91, 70, 180)));
+        button.setBackground(roundedBackground(Color.WHITE, dp(24)));
+        button.setPadding(dp(12), dp(12), dp(12), dp(12));
+        button.setLayoutParams(new LinearLayout.LayoutParams(dp(48), dp(48)));
+        button.setContentDescription(ReBrowserApplications.name(id) + " 独立设置");
+        button.setFilterTouchesWhenObscured(true);
+        button.setOnClickListener(v -> startActivity(ReBrowserApplications.applicationSettingsIntent(this, id)));
+        return button;
     }
 
     private TextView sectionTitle(String text) {

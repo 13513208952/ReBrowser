@@ -99,6 +99,7 @@ public final class MainActivity extends Activity {
     private final Map<String, SyncWriteState> syncWriteStates = new HashMap<>();
     private boolean activityVisible;
     private boolean structuredCaptureEnabled;
+    private boolean destroying;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,11 @@ public final class MainActivity extends Activity {
         if (!ReBrowserRuntime.inspect().provider) {
             ReBrowserApplications.openManagement(this); finish(); return;
         }
+        if (ReBrowserSubapplicationGate.blocked(this, ReBrowserApplications.OUTLOOK)) {
+            startActivity(ReBrowserApplications.applicationSettingsIntent(this, ReBrowserApplications.OUTLOOK));
+            finish(); return;
+        }
+        ReBrowserSubapplicationGate.register(this, ReBrowserApplications.OUTLOOK);
         SystemBackDispatcher.register(this, this::handleSystemBack);
         // Repair a vendor package-manager override left by an interrupted maintenance test.
         MaintenanceAuthorizer.ensureEntryPointsEnabled(this);
@@ -552,6 +558,7 @@ public final class MainActivity extends Activity {
     }
 
     private void handleBridgeMessage(WebMessageCompat message, JavaScriptReplyProxy replyProxy) {
+        if (destroying) return;
         String payload = message.getData();
         if (payload == null || payload.length() > 1_800_000) return;
         cacheWriter.execute(() -> {
@@ -568,8 +575,7 @@ public final class MainActivity extends Activity {
                     }
                 }
                 if ("account".equals(type)) {
-                    runOnUiThread(() -> statusText.setText(
-                            getString(R.string.local_mail_count, database.count())));
+                    showCachedMailCount();
                 } else if ("mail".equals(type)) {
                     boolean saved = database.upsert(
                             envelope.optString("identity"),
@@ -587,8 +593,7 @@ public final class MainActivity extends Activity {
                         state.receivedCount++;
                         if (!saved) state.writeFailed = true;
                     }
-                    if (saved) runOnUiThread(() -> statusText.setText(
-                            getString(R.string.local_mail_count, database.count())));
+                    if (saved) showCachedMailCount();
                 } else if ("conversationComplete".equals(type)) {
                     String syncToken = envelope.optString("syncToken");
                     int expectedCount = envelope.optInt("expectedMailCount", -1);
@@ -635,6 +640,7 @@ public final class MainActivity extends Activity {
                     decision.put("token", envelope.optString("token"));
                     decision.put("missing", new JSONArray(missing));
                     runOnUiThread(() -> {
+                        if (destroying) return;
                         try {
                             replyProxy.postMessage(decision.toString());
                         } catch (Exception ignored) {
@@ -646,6 +652,11 @@ public final class MainActivity extends Activity {
                 // Outlook response schemas are expected to change; the DOM fallback remains available.
             }
         });
+    }
+
+    private void showCachedMailCount() {
+        int count = database.count();
+        runOnUiThread(() -> { if (!destroying) statusText.setText(getString(R.string.local_mail_count, count)); });
     }
 
     private static boolean isValidSyncToken(String value) {
@@ -801,6 +812,8 @@ public final class MainActivity extends Activity {
 
     @Override
     protected void onDestroy() {
+        destroying = true;
+        ReBrowserSubapplicationGate.unregister(this);
         handler.removeCallbacksAndMessages(null);
         if (pendingFileChooser != null) pendingFileChooser.onReceiveValue(null);
         pendingFileChooser = null;
@@ -811,8 +824,9 @@ public final class MainActivity extends Activity {
             webView.removeAllViews();
             webView.destroy();
         }
+        // Drain accepted writes before releasing the reset fence; never close/reopen behind queued work.
+        if (database != null) cacheWriter.execute(database::close);
         cacheWriter.shutdown();
-        if (database != null) database.close();
         super.onDestroy();
     }
 

@@ -47,6 +47,21 @@ class SettingsCommands(unittest.TestCase):
             with self.assertRaises(SystemExit): request("mode", mode)
         with self.assertRaises(SystemExit): request("mode")
 
+    def test_fixed_subapplication_storage_and_native_settings_routes(self):
+        for command, operation in (("application-storage", "GET_APPLICATION_STORAGE"),
+                                   ("application-settings", "OPEN_APPLICATION_SETTINGS")):
+            for target in ("outlook", "music"):
+                built = request(command, target)
+                self.assertEqual(operation, built["operation"])
+                self.assertEqual(target, built["applicationId"])
+                self.assertNotIn("confirmDelete", built)
+            for target in ("browser", "Default", "../outlook", "file:///private"):
+                with self.assertRaises(SystemExit): request(command, target)
+            with self.assertRaises(SystemExit): request(command)
+            with self.assertRaises(SystemExit): request(command, "music", "extra")
+        for command in ("clear-application-data", "clear-application-cache", "enable-music"):
+            self.assertNotIn(command, admin.OPERATIONS)
+
     def test_bounded_status_request(self):
         self.assertEqual("GET_SETTINGS_STATUS", request("settings-status")["operation"])
         with self.assertRaises(SystemExit):
@@ -92,6 +107,21 @@ class SettingsCommands(unittest.TestCase):
         with mock.patch.object(admin.subprocess, "run", return_value=types.SimpleNamespace(stdout="done")) as run:
             self.assertEqual("done",admin.adb("shell", "echo", "test"))
             self.assertEqual(30,run.call_args.kwargs["timeout"])
+
+    def test_serial_scope_is_shared_by_transport_and_bounded_challenge_cleanup(self):
+        with mock.patch.dict(admin.os.environ, {"ANDROID_SERIAL": "fixture-serial"}), \
+             mock.patch.object(admin.subprocess, "run", return_value=types.SimpleNamespace(stdout="done", returncode=0)) as run:
+            self.assertEqual("done", admin.adb("shell", "echo", "test"))
+            self.assertEqual([admin.ADB, "-s", "fixture-serial"], run.call_args.args[0][:3])
+            self.assertTrue(admin.clear_challenge())
+            self.assertEqual([admin.ADB, "-s", "fixture-serial"], run.call_args.args[0][:3])
+            self.assertEqual(30, run.call_args.kwargs["timeout"])
+        with mock.patch.dict(admin.os.environ, {"ANDROID_SERIAL": "--invalid"}):
+            with self.assertRaises(SystemExit): admin.adb_command("shell", "echo", "test")
+
+    def test_cleanup_timeout_does_not_mask_the_original_failure(self):
+        with mock.patch.object(admin.subprocess, "run", side_effect=admin.subprocess.TimeoutExpired("fixture", 30)):
+            self.assertFalse(admin.clear_challenge())
 
     def test_existing_settings_and_site_permission_commands_remain_compatible(self):
         self.assertEqual("google", request("set-pref", "searchEngine", "google")["value"])

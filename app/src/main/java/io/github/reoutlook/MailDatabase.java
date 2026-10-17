@@ -28,7 +28,7 @@ import java.util.zip.ZipOutputStream;
  * rest; every query is additionally scoped to one Outlook account.
  */
 public final class MailDatabase extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "mail_cache.db";
+    static final String DATABASE_NAME = "mail_cache.db";
     private static final int DATABASE_VERSION = 4;
     private static final String PREFERENCES = "account_preferences";
     private static final String ACTIVE_ACCOUNT = "active_account_key";
@@ -36,12 +36,29 @@ public final class MailDatabase extends SQLiteOpenHelper {
 
     private final SharedPreferences preferences;
     private volatile String activeAccountKey;
+    private final ReBrowserSubapplicationGate.Lease storageLease;
+    private boolean storageClosed;
 
     public MailDatabase(Context context) {
         super(context.getApplicationContext(), DATABASE_NAME, null, DATABASE_VERSION);
-        preferences = context.getApplicationContext()
-                .getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
-        activeAccountKey = preferences.getString(ACTIVE_ACCOUNT, LEGACY_ACCOUNT);
+        storageLease = ReBrowserSubapplicationGate.acquire(context, ReBrowserApplications.OUTLOOK);
+        try {
+            preferences = context.getApplicationContext().getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+            activeAccountKey = preferences.getString(ACTIVE_ACCOUNT, LEGACY_ACCOUNT);
+        } catch (RuntimeException failure) { storageLease.close(); throw failure; }
+    }
+
+    @Override public synchronized SQLiteDatabase getReadableDatabase() {
+        if (storageClosed) throw new IllegalStateException("mail-storage-closed");
+        return super.getReadableDatabase();
+    }
+    @Override public synchronized SQLiteDatabase getWritableDatabase() {
+        if (storageClosed) throw new IllegalStateException("mail-storage-closed");
+        return super.getWritableDatabase();
+    }
+    @Override public synchronized void close() {
+        if (storageClosed) return;
+        super.close(); storageClosed = true; storageLease.close();
     }
 
     @Override

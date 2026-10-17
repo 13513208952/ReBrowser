@@ -13,15 +13,6 @@ import java.util.UUID;
 
 /** One-use ADB authorization with either an administrator signature or owner credential. */
 final class ReBrowserAdminAuthorizer {
-    static final String OP_OPEN_URL = ReBrowserAdminProtocol.OP_OPEN_URL;
-    static final String OP_NEW_WORKSPACE = ReBrowserAdminProtocol.OP_NEW_WORKSPACE;
-    static final String OP_NEW_CHILD_TAB = ReBrowserAdminProtocol.OP_NEW_CHILD_TAB;
-    static final String OP_SHOW_WORKSPACES = ReBrowserAdminProtocol.OP_SHOW_WORKSPACES;
-    static final String OP_SHOW_CHILD_TABS = ReBrowserAdminProtocol.OP_SHOW_CHILD_TABS;
-    static final String OP_OPEN_SETTINGS = ReBrowserAdminProtocol.OP_OPEN_SETTINGS;
-    static final String OP_SWITCH_TO_OUTLOOK = ReBrowserAdminProtocol.OP_SWITCH_TO_OUTLOOK;
-    static final String OP_GET_STATE = ReBrowserAdminProtocol.OP_GET_STATE;
-    static final String OP_SET_HOME = ReBrowserAdminProtocol.OP_SET_HOME;
     private static final String PREFERENCES = "rebrowser_admin_state_v1";
     private static final String INSTALLATION_ID = "installation_id";
     private static final String PENDING_CHALLENGE = "pending_challenge";

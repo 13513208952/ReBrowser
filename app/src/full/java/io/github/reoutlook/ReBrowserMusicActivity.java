@@ -53,6 +53,10 @@ public final class ReBrowserMusicActivity extends Activity {
     }
     @Override protected void onCreate(Bundle state) {
         super.onCreate(state); live = new WeakReference<>(this);
+        if (ReBrowserSubapplicationGate.blocked(this, ReBrowserApplications.MUSIC)) {
+            startActivity(ReBrowserApplications.applicationSettingsIntent(this, ReBrowserApplications.MUSIC));
+            finish(); return;
+        }
         if (!new ReBrowserMusicEntrance(this).enabled()) { ReBrowserApplications.openManagement(this); finish(); return; }
         LinearLayout root = new LinearLayout(this); root.setOrientation(LinearLayout.VERTICAL);
         WindowStyling.apply(this, root);

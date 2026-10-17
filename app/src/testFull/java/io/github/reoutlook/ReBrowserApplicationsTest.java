@@ -60,7 +60,8 @@ public final class ReBrowserApplicationsTest {
                 new Intent().putExtra(ReBrowserSettings.EXTRA_SECTION, "applications")).setup()) {
             String text = labels(tagged("applications", c.get()));
             assertTrue(text.contains("启用音乐及其桌面入口")); assertTrue(text.contains("进入音乐"));
-            assertTrue(text.contains("音乐源工作模式"));
+            assertFalse(text.contains("音乐源工作模式"));
+            assertTrue(text.contains("ReOutlook 独立设置")); assertTrue(text.contains("ReMusic 独立设置"));
             assertFalse(text.contains("音乐需先启用")); assertFalse(text.contains("尚未实机验收"));
             assertFalse(text.contains("后台／系统控制已接入首轮源码"));
         }

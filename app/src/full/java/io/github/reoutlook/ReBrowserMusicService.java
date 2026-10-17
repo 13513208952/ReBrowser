@@ -81,6 +81,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         return false;
     }
 
+    private ReBrowserSubapplicationGate.Lease storageLease;
     static void stopEnabledRuntime() {
         ReBrowserMusicService s = live.get();
         if (s != null) { s.shutdown(); s.stopSelf(); }
@@ -90,6 +91,8 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         if (!BuildConfig.FULL_SUITE || !new ReBrowserMusicEntrance(this).enabled() || !ReBrowserRuntime.inspect().browserAvailable()) {
             stopped = true; stopSelf(); return;
         }
+        try { storageLease = ReBrowserSubapplicationGate.acquire(this, ReBrowserApplications.MUSIC); }
+        catch (IllegalStateException cleanup) { stopped = true; stopSelf(); return; }
         NotificationManager notifications = getSystemService(NotificationManager.class);
         notifications.createNotificationChannel(new NotificationChannel(CHANNEL, "音乐播放", NotificationManager.IMPORTANCE_LOW));
         session = new MediaSession(this, "ReBrowserMusic");
@@ -349,6 +352,7 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
         if (session != null) { session.setActive(false); session.release(); session = null; }
         stopForeground(STOP_FOREGROUND_REMOVE); foreground = false;
         getSystemService(NotificationManager.class).cancel(NOTIFICATION);
+        if (storageLease != null) { storageLease.close(); storageLease = null; }
         notifyObservers();
     }
     @Override protected void dump(java.io.FileDescriptor fd, java.io.PrintWriter writer, String[] args) {

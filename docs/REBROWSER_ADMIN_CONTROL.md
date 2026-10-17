@@ -170,6 +170,14 @@ No default-browser setter, arbitrary Intent/component, launcher setter, install 
 
 `settings.general.defaultBrowser` adds only `registered`, `roleAvailable`, `roleHeld`, and `administratorCanSet=false`. No other browser identity, file location, handoff URI, default-role setter, arbitrary Intent, or installer operation is exposed. The ordinary owner's settings button opens the system default-app UI only on click, including when the app already holds the browser role. The exported `.1` file entry is a separate ordinary Android surface, not an administrator operation; final installation remains a system/user decision. See [Android handoff](REBROWSER_ANDROID_HANDOFF.md).
 
+## Development: subapplication settings and storage metadata
+
+The public v1.0.4 release does not yet include these additions. Current development adds level-one `GET_APPLICATION_STORAGE` / `application-storage outlook|music` and `OPEN_APPLICATION_SETTINGS` / `application-settings outlook|music`. Both require the fixed string `applicationId`, include that target in the signed request/owner confirmation/audit, and execute natively without loading a browser or music runtime. Minimal packages reject and do not advertise these operations.
+
+The CLI additionally accepts `--serial SERIAL` (or `ANDROID_SERIAL`) for a consistent device target across execution, polling and challenge cleanup. Cleanup now has the same 30-second per-ADB-call deadline; a transport timeout does not automatically replay a state-changing operation, and cleanup failure does not replace the original error.
+
+Storage returns only fixed native-byte totals, `null` for unavailable per-Profile web/cache sizes, feature availability and cleanup fence/resource state. It never opens a mail database or returns file paths, account identity, Cookies, tracks or playlists. Opening music settings is a native-settings exception, not access to music business UI, authentication or playback. There is no administrator source/enablement setter or background data/cache-clearing operation; owner confirmation in the native child settings is still required. Root keys, all existing authorization levels and the separate mail-export protocol remain unchanged. See [development design and verification boundary](SUBAPPLICATION_SETTINGS.md).
+
 ## Data boundary
 
 State and diagnostics expose bounded workspace/tab/download IDs, controlled Profile names, titles, page origins, load progress, main-frame errors, lifecycle levels, feature support, non-secret settings, download progress, risk reasons and SHA-256. Page URL paths, queries, and fragments are stripped. Download request locations expose only the HTTP(S) origin; paths, query parameters and fragments are stripped, and Blob/Data payloads are never returned.

@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application>
+        <activity android:name=".ReBrowserSubapplicationSettingsActivity"
+            android:exported="false" android:launchMode="singleTop" />
         <service android:name=".ReBrowserMusicService" android:exported="false"
             android:foregroundServiceType="mediaPlayback" android:stopWithTask="false" />
         <receiver android:name=".ReBrowserMusicControlReceiver" android:exported="false" />

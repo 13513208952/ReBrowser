@@ -63,7 +63,8 @@ public final class ReBrowserSubapplicationSettingsTest {
                     ReBrowserSubapplicationSettingsActivity.class, ReBrowserApplications.applicationSettingsIntent(context, id)).setup()) {
                 String text = labels(c.get().findViewById(android.R.id.content));
                 assertEquals(MUSIC.equals(id), text.contains("音乐源工作模式"));
-                assertTrue(text.contains("清除缓存")); assertTrue(text.contains("清除数据"));
+                assertTrue(text.contains("清除缓存")); assertTrue(text.contains("清除全部数据"));
+                assertTrue(text.contains("缓存估算")); assertTrue(text.contains("不可撤销"));
                 assertFalse(context.getDatabasePath(MailDatabase.DATABASE_NAME).exists());
                 assertFalse(ReBrowserSubapplicationGate.blocked(context, id));
             }
@@ -92,12 +93,15 @@ public final class ReBrowserSubapplicationSettingsTest {
         put("account_preferences");
         try (ActivityController<ReBrowserSubapplicationSettingsActivity> c = Robolectric.buildActivity(
                 ReBrowserSubapplicationSettingsActivity.class, ReBrowserApplications.applicationSettingsIntent(context, MAIL)).setup()) {
-            android.widget.Button clear = button(c.get().findViewById(android.R.id.content), "清除数据");
+            android.widget.Button clear = button(c.get().findViewById(android.R.id.content), "清除全部数据");
             assertFalse(clear.isEnabled());
             // Exercise the dialog in the unsupported-provider fixture; production has no feature override.
             clear.setEnabled(true); clear.performClick();
             android.app.AlertDialog dialog = org.robolectric.shadows.ShadowAlertDialog.getLatestAlertDialog();
             assertNotNull(dialog);
+            String warning = ((android.widget.TextView) dialog.findViewById(android.R.id.message)).getText().toString();
+            assertTrue(warning.contains("不可撤销")); assertTrue(warning.contains("全部本机数据"));
+            assertTrue(warning.length() < 50); assertFalse(warning.contains("WebView"));
             android.widget.Button confirm = dialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE);
             java.util.concurrent.atomic.AtomicInteger clicked = new java.util.concurrent.atomic.AtomicInteger();
             confirm.setOnClickListener(v -> clicked.incrementAndGet()); confirm.layout(0, 0, 200, 100);

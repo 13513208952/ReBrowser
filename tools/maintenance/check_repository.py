@@ -128,10 +128,16 @@ def check_release(root):
     if not re.fullmatch(r'\d+\.\d+\.\d+', version):
         return []
     problems = []
-    readme = (root / 'README.md').read_text(encoding='utf-8')
-    current = next((line for line in readme.splitlines() if line.startswith('当前正式版本：')), '')
-    if f'/releases/tag/v{version})' not in current:
-        problems.append('README.md: current stable link differs from build version')
+    # Owner-authored README is frozen independently of release maintenance.
+    # Keep the same version/link consistency check in the maintained release index.
+    index = root / 'docs/releases/README.md'
+    if not index.is_file():
+        problems.append('docs/releases/README.md: release index missing')
+    else:
+        current = next((line for line in index.read_text(encoding='utf-8').splitlines()
+                        if line.startswith('**当前稳定版：')), '')
+        if f'[v{version}](v{version}.md)' not in current:
+            problems.append('docs/releases/README.md: current stable link differs from build version')
     record = root / f'docs/releases/v{version}.md'
     if not record.is_file():
         problems.append(f'{record.relative_to(root)}: release record missing')

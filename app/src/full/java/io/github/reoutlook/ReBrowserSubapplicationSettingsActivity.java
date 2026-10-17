@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 @SuppressLint("SetTextI18n")
 public final class ReBrowserSubapplicationSettingsActivity extends Activity {
     private String id;
-    private TextView storage, result;
+    private TextView storage, estimate, result;
     private Button cache, data;
     private Spinner source;
     private AlertDialog confirmation;
@@ -44,6 +44,7 @@ public final class ReBrowserSubapplicationSettingsActivity extends Activity {
         super.onNewIntent(intent); setIntent(intent);
         if (confirmation != null) confirmation.dismiss();
         handler.removeCallbacks(poll); showApplication();
+        if (resumed) refreshEstimate();
     }
     private void showApplication() {
         id = getIntent().getStringExtra(ReBrowserApplications.EXTRA_APPLICATION);
@@ -80,10 +81,11 @@ public final class ReBrowserSubapplicationSettingsActivity extends Activity {
             panel.addView(source, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
         }
         panel.addView(label("存储", 17)); storage = label("正在读取本机存储摘要…", 14); panel.addView(storage);
-        panel.addView(button("刷新存储状态", this::refresh));
+        estimate = label("缓存估算：暂无法获取", 14); panel.addView(estimate);
+        panel.addView(button("刷新存储状态", this::refreshEstimate));
         cache = button("清除缓存", () -> confirm(false)); panel.addView(cache);
-        data = button("清除数据", () -> confirm(true)); panel.addView(data);
-        result = label("缓存不主动清除Cookie或持久化站点数据；清数据会清除此子应用的本机资料及网页登录状态。", 14); panel.addView(result);
+        data = button("清除全部数据", () -> confirm(true)); data.setTextColor(Color.rgb(180, 36, 36)); panel.addView(data);
+        result = label("缓存可重新生成；清除全部数据不可撤销。", 14); panel.addView(result);
         setContentView(root); refresh();
     }
     private void refresh() {
@@ -93,8 +95,9 @@ public final class ReBrowserSubapplicationSettingsActivity extends Activity {
             JSONObject info = ReBrowserSubapplicationStorage.snapshot(this, id);
             boolean busy = info.getBoolean("cleanupRunning"), pending = info.getBoolean("dataCleanupPending");
             storage.setText("本机资料：" + Formatter.formatFileSize(this, info.getLong("nativeDataBytes"))
-                    + "（不含网页存储）\n网页缓存／站点数据：由WebView管理，未提供独立容量统计接口"
+                    + "（不含网页存储）"
                     + (busy ? "\n正在清理，此子应用暂不可进入。" : pending ? "\n上次数据清理未完成，请确认继续清除数据。" : ""));
+            renderEstimate(info.optJSONObject("webEstimate"));
             cache.setEnabled(!busy && !pending && info.getBoolean("cacheClearSupported"));
             data.setEnabled(!busy && info.getBoolean("dataClearSupported"));
             if (source != null) source.setEnabled(!busy && !pending);
@@ -103,15 +106,39 @@ public final class ReBrowserSubapplicationSettingsActivity extends Activity {
             storage.setText("暂时无法读取存储摘要，未清理任何内容。"); cache.setEnabled(false); data.setEnabled(false);
         }
     }
+    private void renderEstimate(JSONObject value) {
+        String text = "缓存估算：暂无法获取";
+        try {
+            if (value != null && "ok".equals(value.optString("status"))) {
+                Long caches = ReBrowserStorageEstimate.bytes(value.opt("cacheStorageBytes"));
+                Long usage = ReBrowserStorageEstimate.bytes(value.opt("siteStorageBytes"));
+                if (caches != null) text = "部分缓存估算：约" + Formatter.formatFileSize(this, caches);
+                if (usage != null) text += "\n网页数据估算：约" + Formatter.formatFileSize(this, usage);
+                text += "\n仅当前网站，非预计清理量。";
+            } else text += "\n可打开子应用页面后返回刷新。";
+        } catch (RuntimeException unavailable) { /* Optional estimate must not disable actions. */ }
+        estimate.setText(text);
+    }
+    private void refreshEstimate() {
+        refresh();
+        if (isFinishing() || !ReBrowserApplications.validApplication(id)) return;
+        final String target = id;
+        WeakReference<ReBrowserSubapplicationSettingsActivity> owner = new WeakReference<>(this);
+        try {
+            ReBrowserStorageEstimate.request(getApplicationContext(), target, value -> {
+                ReBrowserSubapplicationSettingsActivity activity = owner.get();
+                if (activity != null && !activity.isDestroyed() && target.equals(activity.id)) activity.refresh();
+            });
+        } catch (RuntimeException unavailable) { estimate.setText("缓存估算：暂无法获取"); }
+    }
     private void confirm(boolean clearData) {
         if (confirmation != null && confirmation.isShowing()) return;
         final String target = id;
         String effects = clearData
-                ? "将关闭此子应用，清除其网页登录、站点数据、本机资料和独立设置。"
-                    + (ReBrowserApplications.OUTLOOK.equals(id) ? "本机离线邮件也会删除。" : "播放恢复信息及歌词位置也会重置。")
-                : "将关闭此子应用并请求清理其网页资源缓存，不主动删除Cookie、持久化站点存储或本机资料。关闭页面会丢失未保存内容及临时会话。";
-        confirmation = new AlertDialog.Builder(this).setTitle("清除" + ReBrowserApplications.name(id) + (clearData ? "数据？" : "缓存？"))
-                .setMessage(effects + "\n\n不影响其他浏览环境或子应用；官网账号、云端内容、应用启用／桌面入口及系统授权保持不变。")
+                ? "将关闭此子应用并删除全部本机数据，包括登录状态。此操作不可撤销。"
+                : "将关闭此子应用并清理缓存。缓存可重新生成。";
+        confirmation = new AlertDialog.Builder(this).setTitle("清除" + ReBrowserApplications.name(id) + (clearData ? "全部数据？" : "缓存？"))
+                .setMessage(effects)
                 .setNegativeButton("取消", null).setPositiveButton("确认清除", (dialog, which) -> {
                     if (!target.equals(id)) return;
                     result.setText("正在停止对应子应用并等待其写入结束…");
@@ -149,7 +176,7 @@ public final class ReBrowserSubapplicationSettingsActivity extends Activity {
         });
     }
     private int dp(int value) { return Math.round(value * getResources().getDisplayMetrics().density); }
-    @Override protected void onResume() { super.onResume(); resumed = true; refresh(); }
+    @Override protected void onResume() { super.onResume(); resumed = true; refreshEstimate(); }
     @Override protected void onPause() { resumed = false; handler.removeCallbacks(poll); super.onPause(); }
     @Override protected void onDestroy() {
         handler.removeCallbacks(poll); if (confirmation != null) confirmation.dismiss(); super.onDestroy();

@@ -13,6 +13,7 @@ export PYTHONDONTWRITEBYTECODE=1
 # PYTHONPATH must include your existing external compression-deps if not installed globally.
 python3 -B tools/maintenance/check_repository.py
 python3 -B tools/tests/test_repository_maintenance.py
+node --max-old-space-size=96 tools/tests/test_rebrowser_storage_estimate.cjs
 node --max-old-space-size=96 tools/tests/test_rebrowser_music_account.cjs
 node --max-old-space-size=96 tools/tests/test_rebrowser_music_provider.cjs
 node --max-old-space-size=96 tools/tests/test_rebrowser_music_lyrics.cjs
@@ -25,14 +26,15 @@ python3 -B tools/tests/test_optimize_apk.py
 
 | 检查 | 实际覆盖 | 不代表 |
 | --- | --- | --- |
-| repository maintenance，18 项夹具 | 本地链接/锚点、不可变参考、版本入口/源集否定；工作树根/清理白名单/跟踪文件/软链接、默认不删/忙碌拒绝，apply只验证临时夹具 | 内容语义审计、秘密扫描、真实仓库删除或设备测试 |
+| repository maintenance，20 项夹具 | 本地链接/锚点、不可变参考、版本入口/源集否定；工作树根/清理白名单/跟踪文件/软链接、默认不删/忙碌拒绝，apply只验证临时夹具 | 内容语义审计、秘密扫描、真实仓库删除或设备测试 |
+| storage estimate fake API | 成功／部分／零值、API缺失、不安全上下文、来源切换、异常／畸形数据、实际Promise单待执行 | HTTP缓存总容量、磁盘清理量、其他真实WebView或子应用 |
 | provider fake SDK/DOM/audio | 固定官方动作/回调关联、登录/播放门禁、seek/喜欢/层级可见性 | 实际官网、音频可听输出、账号/权益 |
 | account reader，41 项夹具 | 官方主文档/完成状态、正数账号 ID、三态及有界解析；只输出认证结果 | 真实账号/网络/失效矩阵 |
 | layout fake DOM，7 场景 | 宿主适配/撤销、方向范围、就绪/安装预算、固定路由及失败关闭 | 所有真实 DOM/窗口/旋转 |
 | memory fake，9 场景 | 1,000 次页面替换/启停；4,800 次健康/故障轮询；单待执行登记、有限重试、延迟取消/旧节点GC | 实机 PSS、官网全部缓存或长期无泄漏 |
 | lyrics reader，18 场景 | fake API/parser；只读门禁、单待执行请求、曲目/playId关联、超时不叠加、迟到/销毁、文本范围 | 当前音乐 Profile 实际取数、原生入口/桌面浮窗/系统或车机歌词 |
 | generation，11 项 | Android生成一致性、批准CSS逐字相同、完整页/短窗规则作用域、经典歌词窗口中线定位算术夹具、心形轮廓、首页嵌套分页／双入口及独立样式清理、固定宿主范围且不 dispatch 播放 | 实际 CSS 引擎几何、全部窗口、生产播放器/布局全验收 |
-| admin CLI，11 项 | 固定请求/偏好类型/越权拒绝/独立任务/期限，mock ADB | 实际管理员授权；不读密钥不调设备 |
+| admin CLI，14 项 | 固定请求/偏好类型/越权拒绝/独立任务/期限，mock ADB | 实际管理员授权；不读密钥不调设备 |
 | optimizer，3 项 | 解压内容/顺序/STORED/Unicode/注释及拒绝签名/原地处理 | 实际最终APK签名/对齐/裁剪，需要另外检查 |
 
 旧 Beta 的仓库外布局/provider 作为内存负对照曾失败；正常测试不自动获取/加载这些旧脚本或真实登录环境。

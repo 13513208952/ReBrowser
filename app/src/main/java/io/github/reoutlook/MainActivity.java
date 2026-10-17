@@ -122,6 +122,7 @@ public final class MainActivity extends Activity {
         database.cleanupLegacyDuplicates();
         setContentView(createContentView());
         configureWebView();
+        ReBrowserStorageEstimate.register(this, ReBrowserApplications.OUTLOOK, webView);
 
         boolean restored = savedInstanceState != null && webView.restoreState(savedInstanceState) != null;
         if (!restored) webView.loadUrl(OUTLOOK_URL);
@@ -813,6 +814,7 @@ public final class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         destroying = true;
+        ReBrowserStorageEstimate.unregister(this, ReBrowserApplications.OUTLOOK, webView);
         ReBrowserSubapplicationGate.unregister(this);
         handler.removeCallbacksAndMessages(null);
         if (pendingFileChooser != null) pendingFileChooser.onReceiveValue(null);
@@ -850,12 +852,15 @@ public final class MainActivity extends Activity {
     private final class BrowserClient extends WebViewClient {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            if (destroying) return;
+            ReBrowserStorageEstimate.navigating(MainActivity.this, ReBrowserApplications.OUTLOOK, view);
             progressBar.setVisibility(View.VISIBLE);
             statusText.setText("正在连接…");
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
+            if (destroying) return;
             progressBar.setVisibility(View.GONE);
             statusText.setText(getString(R.string.local_mail_count, database.count()));
             if (!structuredCaptureEnabled) {

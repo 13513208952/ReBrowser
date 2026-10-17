@@ -80,10 +80,25 @@ class RepositoryMaintenanceTest(unittest.TestCase):
 
     def test_release_link_and_record_must_match_stable_build(self):
         self.write('app/build.gradle.kts', 'versionName = "1.2.3"')
-        self.write('README.md', '当前正式版本：**[v1.2.3](https://example.invalid/releases/tag/v1.2.3)**。')
+        self.write('docs/releases/README.md', '**当前稳定版：[v1.2.3](v1.2.3.md)**。')
         self.write('docs/releases/v1.2.3.md')
         self.assertEqual(checker.check_release(self.root), [])
-        self.write('README.md', '当前正式版本：v1.0.0')
+        self.write('docs/releases/README.md', '**当前稳定版：[v1.0.0](v1.0.0.md)**。')
+        self.assertTrue(checker.check_release(self.root))
+
+    def test_owner_readme_stays_unchanged_independently_of_release_version(self):
+        self.write('app/build.gradle.kts', 'versionName = "1.2.3"')
+        self.write('README.md', '机主原话。当前正式版本：v1.0.0')
+        self.write('docs/releases/README.md', '**当前稳定版：[v1.2.3](v1.2.3.md)**。')
+        self.write('docs/releases/v1.2.3.md')
+        before = (self.root / 'README.md').read_bytes()
+        self.assertEqual(checker.check_release(self.root), [])
+        self.assertEqual(before, (self.root / 'README.md').read_bytes())
+
+    def test_missing_release_index_or_record_is_still_rejected(self):
+        self.write('app/build.gradle.kts', 'versionName = "1.2.3"')
+        self.assertEqual(len(checker.check_release(self.root)), 2)
+        self.write('docs/releases/README.md', '**当前稳定版：[v1.2.3](v1.2.3.md)**。')
         self.assertTrue(checker.check_release(self.root))
 
     def test_development_version_does_not_require_release_record(self):

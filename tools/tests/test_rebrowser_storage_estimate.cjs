@@ -1,0 +1,43 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const source = fs.readFileSync('app/src/main/java/io/github/reoutlook/ReBrowserStorageEstimate.java', 'utf8');
+const get = name => source.match(new RegExp(`static final String ${name} = """\\n([\\s\\S]*?)\\n        """;`))[1];
+const start = get('START'), read = get('READ');
+function page(estimate, secure = true) {
+  const window = {isSecureContext: secure};
+  Object.defineProperty(window, 'document', {get() { throw Error('DOM must not be read'); }});
+  const location = {origin: 'https://music.163.com'};
+  const context = vm.createContext({window, location, navigator: {storage: estimate ? {estimate} : undefined}, Promise, Number, JSON});
+  return {window, location, run: (code, token = 'test') => JSON.parse(vm.runInContext(code.replace('__RB_TOKEN__', JSON.stringify(token)).replace('__RB_ORIGIN__', JSON.stringify('https://music.163.com')), context))};
+}
+const settle = async () => { await Promise.resolve(); await Promise.resolve(); };
+(async () => {
+  let p = page(() => Promise.resolve({usage: 4096, usageDetails: {caches: 1024}}));
+  assert.equal(p.run(start).status, 'pending'); await settle();
+  let result = p.run(read); assert.equal(result.status, 'ok'); assert.equal(result.usage, 4096); assert.equal(result.caches, 1024);
+  assert.equal(p.window.__rbStorageEstimateV1, undefined);
+  p = page(() => Promise.resolve({usage: 0, usageDetails: {}})); p.run(start); await settle();
+  result = p.run(read); assert.equal(result.caches, 0); assert.equal(result.usage, 0);
+  p = page(() => Promise.resolve({usage: 4096, usageDetails: {indexedDB: 4096}})); p.run(start); await settle();
+  result = p.run(read); assert.equal(result.usage, 4096); assert.equal(result.caches, null);
+  p = page(undefined); assert.equal(p.run(start).status, 'unsupported');
+  let calls = 0; p = page(() => { calls++; return Promise.resolve({usage: 0}); }, false);
+  assert.equal(p.run(start).status, 'unsupported'); assert.equal(calls, 0);
+  p = page(() => Promise.reject(Error('private-error-must-not-export'))); p.run(start); await settle();
+  result = p.run(read); assert.equal(result.status, 'unavailable'); assert(!JSON.stringify(result).includes('private-error'));
+  p = page(() => { throw Error('private-sync-error'); }); assert.equal(p.run(start).status, 'unavailable'); assert.equal(p.window.__rbStorageEstimateV1.busy, false);
+  p = page(() => { throw Error('wrong-origin probe must not start'); }); p.location.origin = 'https://y.music.163.com'; assert.equal(p.run(start).status, 'stale');
+  let resolve; calls = 0; p = page(() => { calls++; return new Promise(r => { resolve = r; }); });
+  assert.equal(p.run(start, 'first').status, 'pending');
+  for (let i = 0; i < 100; i++) assert.equal(p.run(start, 'other').status, 'busy');
+  assert.equal(calls, 1); assert.equal(p.run(read, 'first').status, 'pending');
+  resolve({usage: 32, usageDetails: {caches: 16}}); await settle(); assert.equal(p.run(read, 'first').caches, 16);
+  assert.equal(p.run(start, 'next').status, 'pending'); assert.equal(calls, 2);
+  p = page(() => Promise.resolve({get usage() { throw Error('bad-property'); }})); p.run(start); await settle();
+  assert.equal(p.window.__rbStorageEstimateV1.busy, false); assert.equal(p.run(read).status, 'unavailable');
+  p = page(() => Promise.resolve({usage: 1.5, usageDetails: {caches: Number.MAX_SAFE_INTEGER + 1}})); p.run(start); await settle();
+  result = p.run(read); assert.equal(result.status, 'unavailable'); assert.equal(result.usage, null); assert.equal(result.caches, null);
+  console.log('storage estimate: supported/partial/zero/unsupported/insecure/rejected/synchronous failure/actual-promise backpressure/malformed cases passed');
+})().catch(error => { console.error(error); process.exitCode = 1; });

@@ -12,21 +12,21 @@ android {
         targetSdk = 36
         // Minimal codes must remain below the full range forever. Normal Android install
         // rejects full -> minimal as a version downgrade, including newer minimal releases.
-        versionCode = 105
-        versionName = "1.0.4"
+        versionCode = 106
+        versionName = "1.0.5"
     }
 
     flavorDimensions += listOf("suite", "background")
     productFlavors {
         create("minimal") {
             dimension = "suite"
-            versionCode = 105
+            versionCode = 106
             buildConfigField("boolean", "FULL_SUITE", "false")
         }
         create("full") {
             dimension = "suite"
-            // Private music previews used 1_000_105; formal release supersedes them.
-            versionCode = 1_000_106
+            // Private settings previews used 1_000_106; formal release supersedes them.
+            versionCode = 1_000_107
             buildConfigField("boolean", "FULL_SUITE", "true")
         }
         create("lite") { dimension = "background" }

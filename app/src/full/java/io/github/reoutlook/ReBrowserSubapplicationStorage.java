@@ -38,7 +38,7 @@ final class ReBrowserSubapplicationStorage {
     }
     static JSONObject snapshot(Context context, String id) throws Exception {
         if (!ReBrowserApplications.validApplication(id)) throw new IllegalArgumentException("Unsupported fixed application");
-        return new JSONObject().put("applicationId", id).put("name", ReBrowserApplications.name(id))
+        JSONObject value = new JSONObject().put("applicationId", id).put("name", ReBrowserApplications.name(id))
                 .put("nativeDataBytes", nativeBytes(context, id)).put("webCacheBytes", JSONObject.NULL)
                 .put("webDataBytes", JSONObject.NULL).put("completeSizeAvailable", false)
                 .put("cacheClearSupported", supported(false)).put("dataClearSupported", supported(true))
@@ -46,6 +46,9 @@ final class ReBrowserSubapplicationStorage {
                 .put("dataCleanupPending", ReBrowserSubapplicationGate.pendingData(context, id))
                 .put("activeResources", ReBrowserSubapplicationGate.users(context, id))
                 .put("scope", "fixed-subapplication-only").put("administratorCanClear", false);
+        try { value.put("webEstimate", ReBrowserStorageEstimate.snapshot(context, id)); }
+        catch (Exception unavailable) { value.put("webEstimate", new JSONObject().put("status", "unavailable")); }
+        return value;
     }
     static boolean supported(boolean data) {
         return ReBrowserRuntime.inspect().provider && ReBrowserRuntime.feature(WebViewFeature.MULTI_PROFILE)
@@ -91,9 +94,10 @@ final class ReBrowserSubapplicationStorage {
         if (Looper.myLooper() != Looper.getMainLooper()) throw new IllegalStateException("UI thread required");
         if (!ReBrowserApplications.validApplication(id)) throw new IllegalArgumentException("Unsupported fixed application");
         Context app = context.getApplicationContext();
-        if (!backend.supported(data)) { reply.accept("当前WebView不支持安全的独立清理，未清除任何数据。"); return; }
+        if (!backend.supported(data)) { reply.accept("当前环境暂不支持此项清理。"); return; }
         boolean recovering = ReBrowserSubapplicationGate.pendingData(app, id);
         if (!ReBrowserSubapplicationGate.begin(app, id, data)) { reply.accept("该子应用仍在清理，请等待；未重复执行。"); return; }
+        ReBrowserStorageEstimate.invalidate(app, id);
         try {
             if (ReBrowserApplications.MUSIC.equals(id)) ReBrowserMusicActivity.stopEnabledRuntime();
             else ReBrowserSubapplicationGate.closeMailScreens(app);
@@ -126,8 +130,7 @@ final class ReBrowserSubapplicationStorage {
                     if (finished) return;
                     try {
                         if (data) clearNativeData(app, id);
-                        finish(true, data ? "已清除该子应用的本机数据；官网账号与云端内容未改变。"
-                                : "已提交该子应用的网页资源缓存清理请求；未主动清除Cookie、持久化站点存储或本机资料。");
+                        finish(true, data ? "已清除全部本机数据。" : "缓存清理请求已提交。");
                     } catch (RuntimeException failure) { finish(false, "清理尚未完成，请在本页重试清除数据。"); }
                 });
             } catch (RuntimeException failure) { finish(!data, "清理未完成；没有改为全应用清理，请重试。"); }

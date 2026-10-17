@@ -1,0 +1,376 @@
+{
+  "schema": 1,
+  "revision": "R7",
+  "state": "protocol-design-no-implementation",
+  "version": "rebrowser.connector/1",
+  "notTheAdminProofProtocol": "rebrowser.control/1 remains separate; no source restriction added to valid administrator proofs",
+  "applicableContracts": [
+    "GC01",
+    "GC02",
+    "GC03",
+    "GC04",
+    "GC05",
+    "GC10"
+  ],
+  "fields": {
+    "protocol": {
+      "type": "fixed-string",
+      "value": "rebrowser.connector/1"
+    },
+    "requestId": {
+      "type": "opaque-ascii",
+      "pattern": "^r_[0-9a-f]{32}$",
+      "issuer": "native"
+    },
+    "streamId": {
+      "type": "opaque-ascii",
+      "pattern": "^b_[0-9a-f]{32}$",
+      "issuer": "connector declaration, uniqueness checked per native request"
+    },
+    "binding": {
+      "type": "record",
+      "required": [
+        "dataEpoch",
+        "partitionRef",
+        "partitionGeneration",
+        "sessionRef",
+        "sessionGeneration",
+        "documentLease",
+        "portLeaseToken"
+      ],
+      "authority": "native-issued, actualPort checked, never trust merely repeated payload fields"
+    },
+    "safeInteger": {
+      "type": "exact-integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "coercionAllowed": false
+    },
+    "leaseToken": {
+      "type": "random-opaque",
+      "bits": 256,
+      "meaning": "internal document routing/replay defense, NOT an admin identity credential"
+    },
+    "string": {
+      "type": "utf8-strict",
+      "reject": [
+        "invalid UTF8",
+        "unpaired surrogates",
+        "duplicate object keys",
+        "unknown fields",
+        "non-finite numbers",
+        "implicit type coercion"
+      ]
+    }
+  },
+  "envelopes": [
+    {
+      "kind": "HELLO",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "connectorVersion",
+        "documentInstanceHint"
+      ],
+      "semantics": "No caller-supplied partition/session authority. One initial hello, wait READY before pumping.",
+      "boundary": "native sender identifies actual session/extension/environment"
+    },
+    {
+      "kind": "READY",
+      "direction": "native-to-connector",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "limits",
+        "supportedActions"
+      ],
+      "semantics": "Native-issued binding and lease token, strict protocol/version. Document hint is not identity.",
+      "boundary": "store only in isolated connector, never page-world globals or snapshots"
+    },
+    {
+      "kind": "COMMAND",
+      "direction": "native-to-connector",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "requestId",
+        "action",
+        "args"
+      ],
+      "semantics": "Action schema registry, one route selected before dispatch. No arbitrary chrome/native eval.",
+      "boundary": "authority already evaluated by domain; this is internal execution, not proof of administrator identity"
+    },
+    {
+      "kind": "ACCEPTED",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "requestId"
+      ],
+      "semantics": "Accepted by connector only; not successful play/send/clear.",
+      "boundary": "actual slot remains occupied"
+    },
+    {
+      "kind": "RESULT",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "requestId",
+        "outcome",
+        "evidenceKind",
+        "result"
+      ],
+      "semantics": "Only known original request owner can settle work; current target binding additionally required for publication.",
+      "boundary": "unknown/effect-possible does not authorize retry via another route"
+    },
+    {
+      "kind": "EVENT",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "eventSequence",
+        "eventType",
+        "resourceRef",
+        "payload"
+      ],
+      "semantics": "Observation without invented command acknowledgment. Sequence monotonic within port lease.",
+      "boundary": "private account/content fields are classified, ordinary audit records only event type/size"
+    },
+    {
+      "kind": "CANCEL",
+      "direction": "native-to-connector",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "requestId"
+      ],
+      "semantics": "Ask the actual owner; does not imply cancellation or remote rollback.",
+      "boundary": "safety lane, not blocked behind auth/read/effect lane"
+    },
+    {
+      "kind": "CANCEL_STATUS",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "requestId",
+        "cancelState"
+      ],
+      "semantics": "requested/not-supported/confirmed/already-terminal/unknown; confirmed must mean actual local owner settled.",
+      "boundary": "cloud effect unknown is retained even if local work stopped"
+    },
+    {
+      "kind": "STREAM_BEGIN",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "requestId",
+        "streamId",
+        "purpose",
+        "declaredBytes"
+      ],
+      "semantics": "Declaration only. Native decides total budget and target before granting credit.",
+      "boundary": "do not allocate declared size; reject undeclared purpose/negative or unsafe lengths"
+    },
+    {
+      "kind": "STREAM_CREDIT",
+      "direction": "native-to-connector",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "streamId",
+        "nextSequence",
+        "creditBytes",
+        "maxTotalBytes"
+      ],
+      "semantics": "Native grants bounded raw-byte window. Refill after accepted bytes leave bounded staging queue.",
+      "boundary": "credit is not durable DB commit, not authentication"
+    },
+    {
+      "kind": "STREAM_CHUNK",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "streamId",
+        "sequence",
+        "rawBytes",
+        "base64"
+      ],
+      "semantics": "Exact contiguous sequence, raw length matches decoding, cannot exceed credit.",
+      "boundary": "duplicate same sequence may be acknowledged only from recorded digest; different content rejects stream"
+    },
+    {
+      "kind": "STREAM_END",
+      "direction": "connector-to-native",
+      "required": [
+        "protocol",
+        "kind",
+        "binding",
+        "streamId",
+        "totalBytes",
+        "sha256"
+      ],
+      "semantics": "Verify received count/digest, finish staged file, then domain transaction; never publish partial content.",
+      "boundary": "stream success is not sync cursor commit until separate domain persistence succeeds"
+    },
+    {
+      "kind": "ERROR",
+      "direction": "either",
+      "required": [
+        "protocol",
+        "kind",
+        "errorCode",
+        "retryClass"
+      ],
+      "semantics": "Pre-READY error allowed without binding, but no private detail. Post-READY errors bind request/lease.",
+      "boundary": "redacted structured error; no Cookie/token/raw URL/path in ordinary logs"
+    }
+  ],
+  "budgets": {
+    "state": "engineering-initial-budget-not-benchmarked",
+    "maxEnvelopeUtf8Bytes": 65536,
+    "streamChunkRawMaxBytes": 32768,
+    "streamCreditWindowBytes": 65536,
+    "maxOpenStreamsPerDocument": 1,
+    "maxJsonDepth": 12,
+    "maxFieldsPerObject": 64,
+    "maxQueuedIngressEnvelopesPerDocument": 8,
+    "initialHelloCountBeforeReady": 1,
+    "uiWaitBudgetMillis": 3000,
+    "deadlinePolicy": "UI waiting budget ends watcher, never implies execution termination; per-action execution/idle deadlines have separate state",
+    "limitsNotCapabilityDenial": "large legitimate outputs use admitted bounded streams/on-disk jobs; oversize/pressure is resource-limit, never pretend insufficient authority"
+  },
+  "lanes": [
+    {
+      "id": "auth",
+      "actualInFlight": 1,
+      "pending": 1,
+      "coalesce": "identical same-document account check",
+      "neverBlocks": [
+        "safety"
+      ]
+    },
+    {
+      "id": "effect",
+      "actualInFlight": 1,
+      "pending": 8,
+      "coalesce": "only pre-dispatch explicitly idempotent desired-state operations",
+      "neverBlocks": [
+        "safety"
+      ]
+    },
+    {
+      "id": "read",
+      "actualInFlight": 1,
+      "pending": 1,
+      "coalesce": "latest read replaces only not-yet-dispatched read",
+      "neverBlocks": [
+        "effect",
+        "safety"
+      ]
+    },
+    {
+      "id": "safety",
+      "actualInFlight": 1,
+      "pending": 1,
+      "coalesce": "latest safe stop/cancel intent; close dominates when closing epoch",
+      "neverBlocks": []
+    }
+  ],
+  "backgroundStorageHelper": {
+    "protocol": "rebrowser.storage-helper/1",
+    "sessionExpected": null,
+    "nativeApp": "rebrowser_storage",
+    "permissions": "APK-fixed privileged builtin, no nativeMessagingFromContent/content scripts/page entry",
+    "bindingFields": [
+      "dataEpoch",
+      "helperLease",
+      "partitionRegistryRevision"
+    ],
+    "allowedActions": [
+      "QUERY_REGISTERED_USAGE",
+      "QUERY_REGISTERED_CACHE_ESTIMATE",
+      "SUBMIT_REGISTERED_CONTEXT_RESET"
+    ],
+    "rejectedInputs": [
+      "arbitrary paths",
+      "arbitrary originAttributes patterns",
+      "global erase fallback",
+      "privileged eval",
+      "unenrolled context identity"
+    ],
+    "admission": "GC10 remains candidate-only until isolated Release experiments pass"
+  },
+  "actualTaskAxes": {
+    "execution": [
+      "QUEUED",
+      "DISPATCHED",
+      "RUNNING",
+      "SETTLED",
+      "LOCAL_OWNER_DESTROYED"
+    ],
+    "clientView": [
+      "WAITING",
+      "DEADLINE_EXCEEDED",
+      "DETACHED",
+      "RESULT_AVAILABLE"
+    ],
+    "effect": [
+      "NOT_DISPATCHED",
+      "NONE_READ_ONLY",
+      "POSSIBLE",
+      "OBSERVED_DESIRED_STATE",
+      "CONFIRMED_OFFICIAL_RESULT",
+      "UNKNOWN"
+    ],
+    "persistence": [
+      "NOT_REQUIRED",
+      "PENDING",
+      "COMMITTED",
+      "FAILED",
+      "STALE_DISCARDED"
+    ],
+    "terminalPublicationRule": "a successful UI result requires relevant observed/confirmed outcome AND required persistence committed; timeout is not SETTLED"
+  },
+  "slotReleaseEvidence": [
+    "actual execution callback from known original owner",
+    "confirmed cancellation from actual owner",
+    "actual owning document destroyed for document-owned tasks only",
+    "actual helper/runtime/native worker completion appropriate to owner"
+  ],
+  "notSlotReleaseEvidence": [
+    "timer fired",
+    "client gone",
+    "port disconnected",
+    "new document became visible",
+    "unrelated query callback",
+    "context ID retired"
+  ],
+  "streamCommitOrder": [
+    "admit purpose and native budget",
+    "grant credit",
+    "bounded decode/write staging",
+    "verify sequence/size/digest",
+    "close/fsync/atomic object publication as appropriate",
+    "domain transaction commits refs/cursor",
+    "publish domain result"
+  ],
+  "restartPolicy": "leases/tokens never persisted/replayed; durable task/cleanup effects journaled, fresh process obtains new handshake before restoring work",
+  "slotBudgetScope": "actual session incarnation across port/document lease rotation; changing a token never resets outstanding actual work. Auth/effect/read each have a separate bounded lane and a reserved safety lane."
+}

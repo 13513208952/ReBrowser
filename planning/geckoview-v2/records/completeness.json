@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R6",
+  "revision": "R7",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -44,11 +44,11 @@
     {
       "id": "A01",
       "domain": "用户旅程/页面/返回交互",
-      "status": "inventory-only",
+      "status": "navigation-and-journeys-draft-needs-control-and-accessibility-spec",
       "designComplete": false,
       "implementationReady": false,
       "need": "保留哪些现有交互、首次新包体验与新安全页如何串接",
-      "existingEvidence": "18组功能盘点，未逐屏设计",
+      "existingEvidence": "18组功能盘点，未逐屏设计；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "页面导航图",
         "状态显示",
@@ -65,7 +65,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/10-completeness-board.md"
+        "views/10-completeness-board.md",
+        "views/19-user-journeys-and-back.md",
+        "matrices/user-journeys.csv"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -84,7 +86,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "进程所有权、view/session分离、上下文映射与崩溃恢复",
-      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证",
+      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "默认拓扑和退路",
         "持久ID",
@@ -104,7 +106,9 @@
       "blockOwnerNow": false,
       "currentArtifactRefs": [
         "views/11-gecko-runtime-sessions.md",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "records/runtime-traces.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -159,7 +163,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "引擎响应流、权限提示、文件/媒体/安装器生命周期",
-      "existingEvidence": "旧功能清单；少量Gecko delegate源事实；R6补充稳定源码契约与28项计划场景，非运行验证",
+      "existingEvidence": "旧功能清单；少量Gecko delegate源事实；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "逐项delegate映射",
         "流与取消",
@@ -176,7 +180,9 @@
       "blockOwnerNow": false,
       "currentArtifactRefs": [
         "views/12-browser-and-system-boundaries.md",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "records/action-semantics.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -195,7 +201,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "Gecko扩展真实API、页面world、帧身份、消息协议、管理者接口",
-      "existingEvidence": "只提出受控扩展和统一接入概念；R6补充稳定源码契约与28项计划场景，非运行验证",
+      "existingEvidence": "只提出受控扩展和统一接入概念；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "固定应用连接器",
         "管理证明接入分离",
@@ -215,7 +221,9 @@
       "blockOwnerNow": false,
       "currentArtifactRefs": [
         "views/13-control-protocol-contract.md",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/connector-protocol.json",
+        "records/domain-payloads.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -234,7 +242,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "个人/AAD入口、OAuth Popup、重定向、同context恢复与错误分类",
-      "existingEvidence": "历史真实错误与概念状态机",
+      "existingEvidence": "历史真实错误与概念状态机；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "具体状态",
         "入口契约",
@@ -251,7 +259,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/14-outlook-offline-design.md"
+        "views/14-outlook-offline-design.md",
+        "records/domain-interfaces.json",
+        "records/domain-payloads.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -308,7 +318,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "原生Gecko媒体与官网SDK职责、任务/服务、账号与播放授权",
-      "existingEvidence": "既有登录硬规则和功能对照；R6补充稳定源码契约与28项计划场景，非运行验证",
+      "existingEvidence": "既有登录硬规则和功能对照；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "事件状态机",
         "系统动作映射",
@@ -327,7 +337,9 @@
       "blockOwnerNow": false,
       "currentArtifactRefs": [
         "views/15-music-engine-native-design.md",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/action-semantics.json",
+        "records/runtime-traces.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -346,7 +358,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "哪些数据独占、哪些共享、引擎删除能否确认完成",
-      "existingEvidence": "存储管线+API void缺口已核实；R6补充稳定源码契约与28项计划场景，非运行验证",
+      "existingEvidence": "存储管线+API void缺口已核实；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "归属清单",
         "统计快照",
@@ -365,7 +377,9 @@
       "blockOwnerNow": false,
       "currentArtifactRefs": [
         "views/04-storage.md",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/domain-payloads.json",
+        "records/runtime-traces.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -507,7 +521,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "浏览/媒体/压缩/下载/统计并发及资源释放",
-      "existingEvidence": "仅有有界任务原则",
+      "existingEvidence": "仅有有界任务原则；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
       "completionDeliverables": [
         "全局与领域预算",
         "线程",
@@ -527,7 +541,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/16-resources-and-dependencies.md"
+        "views/16-resources-and-dependencies.md",
+        "records/connector-protocol.json",
+        "records/runtime-traces.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

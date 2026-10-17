@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "revision": "R7",
+  "state": "first-action-slice-not-complete-feature-registry",
+  "levels": "capabilityGroupRef is coverage only, final action-level thresholds still to bind; source/OS/official rights are real preconditions, not extra caller-origin vetoes",
+  "actions": [
+    {
+      "id": "music.play",
+      "domainMethod": "DI06.requestStart",
+      "capabilityGroupRef": "C202",
+      "lane": "effect",
+      "siteAuthRequirement": "fresh-current-business-lease",
+      "intent": "new-play-intent",
+      "retryPolicy": "not-auto-retry-after-dispatch",
+      "completionEvidence": "observed-state",
+      "geckoContract": "GC05"
+    },
+    {
+      "id": "music.next",
+      "domainMethod": "DI06.requestStart",
+      "capabilityGroupRef": "C202",
+      "lane": "effect",
+      "siteAuthRequirement": "fresh-current-business-lease",
+      "intent": "new-play-intent",
+      "retryPolicy": "not-idempotent-no-retry",
+      "completionEvidence": "observed-resource-and-state",
+      "geckoContract": "GC05"
+    },
+    {
+      "id": "music.previous",
+      "domainMethod": "DI06.requestStart",
+      "capabilityGroupRef": "C202",
+      "lane": "effect",
+      "siteAuthRequirement": "fresh-current-business-lease",
+      "intent": "new-play-intent",
+      "retryPolicy": "not-idempotent-no-retry",
+      "completionEvidence": "observed-resource-and-state",
+      "geckoContract": "GC05"
+    },
+    {
+      "id": "music.pause",
+      "domainMethod": "DI06.requestSafeStop",
+      "capabilityGroupRef": "C202",
+      "lane": "safety",
+      "siteAuthRequirement": "not-required-for-owned-stop",
+      "intent": "explicit-paused-intent",
+      "retryPolicy": "desired-state-idempotent",
+      "completionEvidence": "observed-paused-or-owner-stopped",
+      "geckoContract": "GC07"
+    },
+    {
+      "id": "music.stop",
+      "domainMethod": "DI06.requestSafeStop",
+      "capabilityGroupRef": "C202",
+      "lane": "safety",
+      "siteAuthRequirement": "not-required-for-owned-stop",
+      "intent": "invalidate-resume-lease",
+      "retryPolicy": "desired-state-idempotent",
+      "completionEvidence": "observed-stopped-or-owner-closed",
+      "geckoContract": "GC07"
+    },
+    {
+      "id": "music.seek",
+      "domainMethod": "DI06.requestSeek",
+      "capabilityGroupRef": "C202",
+      "lane": "effect",
+      "siteAuthRequirement": "current-authorized-player-binding",
+      "intent": "preserve-captured-intent",
+      "retryPolicy": "do-not-switch-route-on-timeout",
+      "completionEvidence": "observed-position-not-fake-ack",
+      "geckoContract": "GC06"
+    },
+    {
+      "id": "music.setLiked",
+      "domainMethod": "DI06.setLiked",
+      "capabilityGroupRef": "C203",
+      "lane": "effect",
+      "siteAuthRequirement": "fresh-current-business-lease",
+      "intent": "desired-boolean-not-toggle",
+      "retryPolicy": "reconcile-fresh-before-retry",
+      "completionEvidence": "official-readback-or-result",
+      "geckoContract": "GC05"
+    },
+    {
+      "id": "music.checkAccount",
+      "domainMethod": "DI06.enterOrRecheck",
+      "capabilityGroupRef": "C201",
+      "lane": "auth",
+      "siteAuthRequirement": "official-HTTPS-read-in-same-context",
+      "intent": "none",
+      "retryPolicy": "coalesce-identical-actual-check",
+      "completionEvidence": "yes/no/unknown",
+      "geckoContract": "GC02"
+    },
+    {
+      "id": "storage.query",
+      "domainMethod": "DI07.getUsage",
+      "capabilityGroupRef": "C301",
+      "lane": "read",
+      "siteAuthRequirement": "no-page-auth-required",
+      "intent": "none",
+      "retryPolicy": "reuse-actual-scan",
+      "completionEvidence": "partial/fresh/stale-component-snapshot",
+      "geckoContract": "GC10"
+    },
+    {
+      "id": "storage.clearCache",
+      "domainMethod": "DI07.executePlan",
+      "capabilityGroupRef": "C107",
+      "lane": "effect",
+      "siteAuthRequirement": "no-fresh-site-login",
+      "intent": "target-specific-cleanup-plan",
+      "retryPolicy": "resume-journal-not-broad-retry",
+      "completionEvidence": "per-component-evidence",
+      "geckoContract": "GC11",
+      "capabilityByTarget": {
+        "outlook": "C107",
+        "music": "C206",
+        "browser-partition": "C002",
+        "shared-engine": "C302"
+      }
+    },
+    {
+      "id": "storage.clearData",
+      "domainMethod": "DI07.executePlan",
+      "capabilityGroupRef": "C108",
+      "lane": "effect",
+      "siteAuthRequirement": "no-fresh-site-login",
+      "intent": "explicit-authorized-irreversible-scope",
+      "retryPolicy": "resume-exact-journal-no-global-fallback",
+      "completionEvidence": "required-evidence-not-just-submitted",
+      "geckoContract": "GC11",
+      "capabilityByTarget": {
+        "outlook": "C108",
+        "music": "C207",
+        "browser-partition": "C002"
+      }
+    },
+    {
+      "id": "mail.syncBatch",
+      "domainMethod": "DI10.appendSyncBatch",
+      "capabilityGroupRef": "C103",
+      "lane": "read",
+      "siteAuthRequirement": "validated-account-binding",
+      "intent": "native-local-commit",
+      "retryPolicy": "revision-idempotent-per-account",
+      "completionEvidence": "durable-refs-and-cursor-commit",
+      "geckoContract": "GC04"
+    },
+    {
+      "id": "download.cancel",
+      "domainMethod": "DI09.cancel",
+      "capabilityGroupRef": "C007",
+      "lane": "safety",
+      "siteAuthRequirement": "no-fresh-site-login",
+      "intent": "close-stream-rollback-temp",
+      "retryPolicy": "desired-state-idempotent",
+      "completionEvidence": "actual-stream-worker-stopped",
+      "geckoContract": "GC12"
+    }
+  ],
+  "safeStopInvariant": "authority to stop own admitted task/session is checked, but no fresh site login is required for pause/stop/cancel/close. These safety operations do not grant access to locked old data or create a new runtime behind the source guard."
+}

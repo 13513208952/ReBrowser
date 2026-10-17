@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from review_runtime_design import review as review_runtime_timeline
 
 P = Path(__file__).resolve().parent
 
@@ -195,7 +196,39 @@ def review():
     assert {case['contract'] for case in integration_cases} == contracts.keys()
     assert all(case['state'] == 'planned-not-run' and case['expected'] for case in integration_cases)
     assert integration['productCodeImplemented'] is False
+    interfaces = indexed(load('records/domain-interfaces.json')['modules'])
+    methods = set()
+    for module in interfaces.values():
+        assert module['domain'] in design_domains
+        assert set(module['geckoContracts']) <= contracts.keys()
+        for method in module['methods']:
+            name = module['id'] + '.' + method['name']
+            assert name not in methods
+            methods.add(name)
+            assert method['capabilityGroupRef'] in capabilities
+            assert method['input'] and method['output'] and method['sideEffectBoundary']
+    actions = indexed(load('records/action-semantics.json')['actions'])
+    payloads = indexed(load('records/domain-payloads.json')['actions'])
+    assert actions.keys() == payloads.keys()
+    for action in actions.values():
+        assert action['domainMethod'] in methods
+        assert action['capabilityGroupRef'] in capabilities
+        assert set(action.get('capabilityByTarget', {}).values()) <= capabilities.keys()
+        assert action['geckoContract'] in contracts
+    for name in ['music.pause', 'music.stop', 'download.cancel']:
+        assert actions[name]['lane'] == 'safety'
+        assert 'fresh-current' not in actions[name]['siteAuthRequirement']
+    journeys = rows('matrices/user-journeys.csv')
+    indexed(journeys)
+    assert all(set(j['capabilityGroups'].split()) <= capabilities.keys() for j in journeys)
+    assert all(j['state'] == 'design-scenario-not-run' for j in journeys)
+    runtime_review = review_runtime_timeline()
     report = {
+        **runtime_review,
+        'domainInterfaceComponents': len(interfaces),
+        'domainInterfaceMethodsDesigned': len(methods),
+        'actionSemanticSlicesDesignedNotImplemented': len(actions),
+        'userJourneysPlannedNotRun': len(journeys),
         'revision': requirement_record['revision'], 'result': 'structural-and-symbolic-review-passed',
         'authorityComparison': '>= (confirmed O13)',
         'ownerMessages': len(messages), 'requirements': len(requirements),

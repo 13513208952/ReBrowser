@@ -1,0 +1,329 @@
+{
+  "schema": 1,
+  "revision": "R7",
+  "state": "typed-design-not-runtime-implementation",
+  "default": "unknown fields rejected, integers exact and boolean is not integer; no type coercion; argument strings never become file paths or privilege",
+  "actions": [
+    {
+      "id": "music.play",
+      "required": {
+        "targetRef": "current|registered-media-ref",
+        "expectedIntentRevision": "safe-integer"
+      },
+      "optional": {},
+      "result": "current-bound resource and observed playing/official failure/unknown"
+    },
+    {
+      "id": "music.next",
+      "required": {
+        "targetRef": "current",
+        "expectedIntentRevision": "safe-integer"
+      },
+      "optional": {},
+      "result": "observed new resource and state; no retry after dispatch"
+    },
+    {
+      "id": "music.previous",
+      "required": {
+        "targetRef": "current",
+        "expectedIntentRevision": "safe-integer"
+      },
+      "optional": {},
+      "result": "observed new resource and state; no retry after dispatch"
+    },
+    {
+      "id": "music.pause",
+      "required": {
+        "targetRef": "current|registered-media-ref"
+      },
+      "optional": {},
+      "result": "paused/already-paused/owned-execution-ended; no fresh site auth"
+    },
+    {
+      "id": "music.stop",
+      "required": {
+        "targetRef": "current|registered-media-ref"
+      },
+      "optional": {},
+      "result": "stopped/closed; resume intent invalidated"
+    },
+    {
+      "id": "music.seek",
+      "required": {
+        "targetRef": "registered-media-ref",
+        "positionSeconds": "finite-number>=0",
+        "expectedIntentRevision": "safe-integer"
+      },
+      "optional": {
+        "phase": "preview|commit-default-commit"
+      },
+      "result": "observed position, actual intent stays captured paused/playing; Native maps preview to fast=true and final commit to fast=false"
+    },
+    {
+      "id": "music.setLiked",
+      "required": {
+        "targetRef": "registered-media-ref",
+        "desired": "strict-boolean",
+        "accountBindingRevision": "safe-integer"
+      },
+      "optional": {},
+      "result": "official desired-state readback/result, never blind toggle"
+    },
+    {
+      "id": "music.checkAccount",
+      "required": {
+        "musicPartitionRef": "registered-partition-ref"
+      },
+      "optional": {},
+      "result": "yes|no|unknown and native-private account evidence; no raw credentials"
+    },
+    {
+      "id": "storage.query",
+      "required": {
+        "targetRef": "registered-storage-target",
+        "freshness": "allow-stale|refresh"
+      },
+      "optional": {},
+      "result": "UsageSnapshot component vector, unknown is null not zero"
+    },
+    {
+      "id": "storage.clearCache",
+      "required": {
+        "cleanupPlanRef": "registered-cleanup-plan-ref",
+        "planRevision": "safe-integer"
+      },
+      "optional": {},
+      "result": "component evidence; no unique offline content in cache scope"
+    },
+    {
+      "id": "storage.clearData",
+      "required": {
+        "cleanupPlanRef": "registered-cleanup-plan-ref",
+        "planRevision": "safe-integer"
+      },
+      "optional": {},
+      "result": "scope-confirmed component evidence; not success on mere submission"
+    },
+    {
+      "id": "mail.syncBatch",
+      "required": {
+        "accountBindingRef": "native-validated-account-ref",
+        "syncRevision": "safe-integer",
+        "items": "bounded-item-header-array",
+        "streamRefs": "registered-stream-ref-array"
+      },
+      "optional": {
+        "nextCursor": "bounded-opaque-private-string"
+      },
+      "result": "native refs and cursor committed atomically or old revision retained"
+    },
+    {
+      "id": "download.cancel",
+      "required": {
+        "downloadTaskRef": "registered-download-task-ref"
+      },
+      "optional": {},
+      "result": "actual stream/worker cancellation and temporary-file disposition"
+    }
+  ],
+  "types": [
+    {
+      "id": "UsageSnapshot",
+      "fields": {
+        "targetRef": "registered-ref",
+        "snapshotRevision": "safe-integer",
+        "capturedAt": "wallclock+monotonic-age-not-auth",
+        "components": "UsageComponent[]",
+        "freshness": "fresh|stale|inflight|unavailable"
+      },
+      "invariant": "partial component data is usable; do not open a page solely for stats"
+    },
+    {
+      "id": "UsageComponent",
+      "fields": {
+        "kind": "native-owned|site-quota|cache-payload|shared-engine-disk",
+        "bytes": "safe-integer|null",
+        "ownership": "exclusive|shared|unknown",
+        "basis": "file-lengths|quota-observation|payload-estimate|disk-consumption|last-snapshot|unavailable",
+        "overlapGroup": "registered-disjointness-group|unknown",
+        "coverage": "bounded-enum-set"
+      },
+      "invariant": "do not sum overlapping/unknown pools; cache payload estimate is not complete disk HTTP cache"
+    },
+    {
+      "id": "CleanupPlan",
+      "fields": {
+        "planRef": "native-opaque-ref",
+        "revision": "safe-integer",
+        "dataEpoch": "native-epoch",
+        "partitionGeneration": "safe-integer",
+        "topologyRevision": "safe-integer",
+        "targetRef": "registered-ref",
+        "mode": "cache-only|all-owned-data",
+        "components": "OwnedObjectRef[]",
+        "irreversibleContentLoss": "strict-boolean",
+        "scopeDigest": "sha256-of-exact-target-manifest"
+      },
+      "invariant": "no external raw path/OA pattern; scope revision revalidated before irreversible step"
+    },
+    {
+      "id": "CleanupEvidence",
+      "fields": {
+        "componentRef": "owned-object-ref",
+        "state": "not-started|submitted|logical-clear-observed|owned-file-absent|failed|unknown|not-covered",
+        "scopeRevision": "safe-integer",
+        "reclaimedBytes": "safe-integer|null",
+        "proofKind": "registered-evidence-class"
+      },
+      "invariant": "one callback/flags0 never marks every component cleared; flash overwrite never implied"
+    },
+    {
+      "id": "QuiescenceTicket",
+      "fields": {
+        "ticketRef": "native-internal-nonserializable-handle",
+        "dataEpoch": "native-epoch",
+        "partitionGeneration": "safe-integer",
+        "fenceRevision": "safe-integer",
+        "worksetRevision": "safe-integer",
+        "closedSessionRevision": "safe-integer",
+        "writerLeaseRevision": "safe-integer"
+      },
+      "invariant": "not accepted from caller payload; only coordinator issues after actual drain"
+    },
+    {
+      "id": "TaskView",
+      "fields": {
+        "taskRef": "native-opaque-ref",
+        "execution": "queued|running|locally-settled|owner-destroyed",
+        "clientView": "waiting|deadline-exceeded|detached|result-available",
+        "effect": "not-dispatched|observed|official-confirmed|possible|unknown",
+        "persistence": "not-required|pending|committed|failed|stale-discarded"
+      },
+      "invariant": "authority/scope rechecked before private results; client timeout is not execution settled"
+    },
+    {
+      "id": "SessionBinding",
+      "fields": {
+        "dataEpoch": "native-epoch",
+        "partitionRef": "native-partition-ref",
+        "partitionGeneration": "safe-integer",
+        "sessionRef": "native-session-ref",
+        "sessionGeneration": "safe-integer",
+        "documentLease": "native-document-ref",
+        "portLeaseToken": "native-random-256bit"
+      },
+      "invariant": "wire echo is not authority; compare actual port+native registry; no lease replay after restart"
+    },
+    {
+      "id": "MediaIntent",
+      "fields": {
+        "intentRevision": "safe-integer",
+        "targetRef": "native-bound-resource-ref",
+        "desiredState": "playing|paused|stopped",
+        "issuerRef": "native-user-action|valid-admin-request|legitimate-system-media-action",
+        "accountBindingRevision": "safe-integer"
+      },
+      "invariant": "caller cannot self-assert issuer; focus gain cannot mint a new play authorization"
+    },
+    {
+      "id": "SnapshotRecord",
+      "fields": {
+        "sessionRef": "registered-ref",
+        "partitionRef": "registered-ref",
+        "dataEpoch": "native-epoch",
+        "sequence": "safe-integer",
+        "formatVersion": "known-version",
+        "blobRef": "private-encrypted-object-ref"
+      },
+      "invariant": "contains sensitive forms/history; restored snapshot never proves fresh account/playing state"
+    }
+  ],
+  "errorCodes": [
+    {
+      "id": "AUTHORITY_INSUFFICIENT",
+      "meaning": "only effective level below action requirement",
+      "boundary": "not a website/OS/runtime error"
+    },
+    {
+      "id": "SCOPE_DENIED",
+      "meaning": "registered target outside valid actor scope",
+      "boundary": "not caller package/signature allowlist"
+    },
+    {
+      "id": "SOURCE_DATA_LOCKED",
+      "meaning": "last-good source/data gate blocks business",
+      "boundary": "owner-confirmed special flow, no old-data access"
+    },
+    {
+      "id": "ACCOUNT_UNKNOWN",
+      "meaning": "fresh applicable account evidence unavailable",
+      "boundary": "not signed-out; preserve cookies and safe stop"
+    },
+    {
+      "id": "SITE_SIGN_IN_REQUIRED",
+      "meaning": "official evidence shows sign-in needed",
+      "boundary": "open official auth, no fake login"
+    },
+    {
+      "id": "SITE_RIGHTS_RESTRICTED",
+      "meaning": "official site denies rights/action",
+      "boundary": "no alternate media engine/URL bypass"
+    },
+    {
+      "id": "PLATFORM_ACTION_PENDING",
+      "meaning": "OS permission/role/picker/user action required",
+      "boundary": "not successful until actual OS result"
+    },
+    {
+      "id": "ACTION_UNAVAILABLE",
+      "meaning": "no supported verified engine/site route",
+      "boundary": "never pretend insufficient identity level"
+    },
+    {
+      "id": "ACTUAL_LANE_BUSY",
+      "meaning": "real work still pending in bounded lane",
+      "boundary": "queue/backpressure; safety lane retained"
+    },
+    {
+      "id": "CLIENT_WAIT_EXPIRED",
+      "meaning": "UI budget elapsed while task may run",
+      "boundary": "not cancellation; do not free slot"
+    },
+    {
+      "id": "CANCEL_UNCONFIRMED",
+      "meaning": "cancel requested but actual owner not stopped",
+      "boundary": "do not report completed cancellation"
+    },
+    {
+      "id": "BINDING_STALE",
+      "meaning": "epoch/account/resource/document changed",
+      "boundary": "discard business write; settle only known original work"
+    },
+    {
+      "id": "RESOURCE_LIMIT",
+      "meaning": "message/memory/disk/stream admission bound",
+      "boundary": "offer bounded streaming/alternative when possible, not authorization denial"
+    },
+    {
+      "id": "PERSISTENCE_FAILED",
+      "meaning": "native transaction or object publication failed",
+      "boundary": "retain old revision; no success cursor"
+    },
+    {
+      "id": "CLEANUP_EVIDENCE_INCOMPLETE",
+      "meaning": "required component evidence missing/failed",
+      "boundary": "no global fallback or all-success"
+    },
+    {
+      "id": "CLEANUP_SCOPE_CHANGED",
+      "meaning": "plan revision/epoch/ownership differs",
+      "boundary": "stop and rebuild exact plan before deletion"
+    },
+    {
+      "id": "PROTOCOL_REJECTED",
+      "meaning": "unknown/duplicate fields, invalid types/length/token",
+      "boundary": "redacted error; no expensive retry pump"
+    }
+  ],
+  "currentResolution": "current target is captured once during authorized admission; later page/track switch cannot silently retarget the pending request"
+}

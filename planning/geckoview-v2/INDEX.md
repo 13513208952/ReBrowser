@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划工作台 R6
+# GeckoView v2 · 规划工作台 R7
 
 > 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。产品代码、密钥生成、设备登记、安装与发行均未开始。
 
@@ -56,6 +56,12 @@ mindmap
 | [本轮集成契约核对](views/17-gecko-contract-review.md) | 已核实的回调/生命周期/媒体/存储候选及明确下一步，避免无边界阅读 | E14–E27、GC01–GC12 |
 | [Gecko集成契约](records/gecko-contracts.json) | 12项来源已审/运行未验的实际约束与失败边界 | 固定stable源码 |
 | [集成验证场景](matrices/gecko-contract-cases.csv) | 28项具体场景；全部planned-not-run | GC01–GC12 |
+| [领域/连接器契约](views/18-domain-and-connector-contracts.md) | 模块输入输出、消息/流、真实任务与持久化轴、安全停止通道 | R7规范与时序例子 |
+| [用户旅程/返回](views/19-user-journeys-and-back.md) | 首装/浏览/子应用/后台/设置和Back优先级 | 18条设计旅程 |
+| [领域接口](records/domain-interfaces.json) | 10个逻辑组件45个方法，不要求拆成Gradle模块 | 明确所有权/线程/能力覆盖 |
+| [连接器协议](records/connector-protocol.json) | 消息/流信用/租约/通道预算的权威定义 | 不等于管理员证明协议 |
+| [动作语义与类型](records/action-semantics.json)／[参数DTO](records/domain-payloads.json) | 首批13动作的字段/完成/重试；其余动作仍待补 | 不是全功能注册表完成 |
+| [任务时序例子](records/runtime-traces.json)／[离线演算器](review_runtime_design.py) | 超时不释放、旧结果结算、独立停止、静默及持久化 | 纯设计模型，非Gecko实测 |
 | [领域设计工作包](matrices/design-backlog.csv) | 16个工作包及真实欠缺项，不是已完成任务清单 | 完整性账本 |
 | [完整性账本](records/completeness.json) | 每领域状态、交付标准、证据和责任 | 整体未完成／未就绪 |
 | [工程选择记录](records/engineering-choices.json) | 助手负责论证的候选与撤回条件，不冒充机主指令 | O18 |
@@ -75,7 +81,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R6自检结果](reviews/R6-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
+| [R7自检结果](reviews/R7-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
 
 ## 使用约定
 

@@ -1,0 +1,875 @@
+{
+  "schema": 1,
+  "revision": "R7",
+  "modelOnly": true,
+  "runtimeTested": false,
+  "modelScope": "actual-dispatch admission/known-owner settlement/publication/quiescence only; no Android scheduling, no SDK/remote-effect guarantee; one generation integer stands for revoked target binding; publication flag refers current business observer, not all permitted internal aggregate caches",
+  "cases": [
+    {
+      "id": "RT01",
+      "scenario": "客户端超时不能释放真实读取槽",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "storage.query",
+          "owner": "helper"
+        },
+        {
+          "op": "ui_timeout",
+          "task": "a"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "storage.query"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "ACTUAL_LANE_BUSY"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": true,
+          "client": "DEADLINE_EXCEEDED",
+          "published": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT02",
+      "scenario": "副作用超时不换路重发next",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "ui_timeout",
+          "task": "a"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.next"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "ACTUAL_LANE_BUSY"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT03",
+      "scenario": "登录状态未知仍可暂停已拥有播放",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "set",
+          "values": {
+            "auth": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.pause"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": true
+        },
+        "b": {
+          "running": true
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT04",
+      "scenario": "未知认证不能新起播",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "auth": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.play"
+        }
+      ],
+      "expectedResults": [
+        "WAIT_AUTH"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT05",
+      "scenario": "未知认证可stop",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "auth": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.stop"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT06",
+      "scenario": "安全停止不绕过管理员/目标范围授权",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "authorized": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.pause"
+        }
+      ],
+      "expectedResults": [
+        "DENY_AUTHORITY"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT07",
+      "scenario": "取消不存在的native目标不能伪造拥有",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "ownedNativeTask": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "download.cancel"
+        }
+      ],
+      "expectedResults": [
+        "NO_OWNED_WORK"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT08",
+      "scenario": "下载取消不要求活GeckoSession",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "ownedSession": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "download.cancel",
+          "owner": "native_worker"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT09",
+      "scenario": "断端口换文档租约不释放实际任务",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "storage.query",
+          "owner": "helper"
+        },
+        {
+          "op": "port_disconnect"
+        },
+        {
+          "op": "rotate_document_lease"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "storage.query"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "ACTUAL_LANE_BUSY"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT10",
+      "scenario": "旧真实结果可结算但不能写新界面",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "rotate_document_lease"
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.next"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": false,
+          "published": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT11",
+      "scenario": "伪造结果不能结算别人的槽",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "actual_result",
+          "task": "a",
+          "ownerMatches": false
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.next"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "ACTUAL_LANE_BUSY"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": true
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT12",
+      "scenario": "取消false仍继续占槽",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "cancel_request",
+          "task": "a"
+        },
+        {
+          "op": "cancel_result",
+          "task": "a",
+          "confirmed": false
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.next"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "ACTUAL_LANE_BUSY"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT13",
+      "scenario": "确认本地取消仍不等于撤销可能外部副作用",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "cancel_request",
+          "task": "a"
+        },
+        {
+          "op": "cancel_result",
+          "task": "a",
+          "confirmed": true
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": false,
+          "effect": "UNKNOWN",
+          "result": "CANCELLED_LOCAL",
+          "published": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT14",
+      "scenario": "实际文档拥有者关闭释放本地但保留外部结果未知",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "fence"
+        },
+        {
+          "op": "close_session_owner"
+        },
+        {
+          "op": "quiescence"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "TICKET"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": false,
+          "effect": "UNKNOWN",
+          "published": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT15",
+      "scenario": "关闭页面不能宣布helper扫描停止",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "storage.query",
+          "owner": "helper"
+        },
+        {
+          "op": "fence"
+        },
+        {
+          "op": "close_session_owner"
+        },
+        {
+          "op": "quiescence"
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "quiescence"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "WAIT_ACTUAL_DRAIN",
+        "TICKET"
+      ],
+      "expectedTasks": {
+        "a": {
+          "published": false,
+          "running": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT16",
+      "scenario": "关闭页面不能宣布native文件任务停止",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "owner": "native_worker"
+        },
+        {
+          "op": "fence"
+        },
+        {
+          "op": "close_session_owner"
+        },
+        {
+          "op": "quiescence"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "WAIT_ACTUAL_DRAIN"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT17",
+      "scenario": "fence拒绝新业务但保留安全停止通道",
+      "events": [
+        {
+          "op": "fence"
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.play"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.pause"
+        }
+      ],
+      "expectedResults": [
+        "FENCED",
+        "DISPATCHED"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT18",
+      "scenario": "无任务仍须目标会话真实关闭才能发静默票据",
+      "events": [
+        {
+          "op": "fence"
+        },
+        {
+          "op": "quiescence"
+        },
+        {
+          "op": "close_session_owner"
+        },
+        {
+          "op": "quiescence"
+        }
+      ],
+      "expectedResults": [
+        "WAIT_ACTUAL_DRAIN",
+        "TICKET"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT19",
+      "scenario": "写租约未排空不能静默",
+      "events": [
+        {
+          "op": "fence"
+        },
+        {
+          "op": "close_session_owner"
+        },
+        {
+          "op": "set",
+          "values": {
+            "writers": 1
+          }
+        },
+        {
+          "op": "quiescence"
+        },
+        {
+          "op": "set",
+          "values": {
+            "writers": 0
+          }
+        },
+        {
+          "op": "quiescence"
+        }
+      ],
+      "expectedResults": [
+        "WAIT_ACTUAL_DRAIN",
+        "TICKET"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT20",
+      "scenario": "源闸门锁定不启动业务；现有拥有者仅可安全停止",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "sourceAllowed": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.play"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.stop"
+        }
+      ],
+      "expectedResults": [
+        "SOURCE_LOCKED",
+        "DISPATCHED"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT21",
+      "scenario": "无拥有者的pause不能触发新建runtime",
+      "events": [
+        {
+          "op": "set",
+          "values": {
+            "ownedSession": false
+          }
+        },
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.pause"
+        }
+      ],
+      "expectedResults": [
+        "NO_OWNED_WORK"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT22",
+      "scenario": "业务返回仍须等待native持久化",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "requiresPersistence": true
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": true,
+          "owner": "native_worker",
+          "waitingPersistence": true,
+          "published": false,
+          "persistence": "PENDING"
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT23",
+      "scenario": "新代次前的写回不得提交到新账户",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "requiresPersistence": true
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "rotate_document_lease"
+        },
+        {
+          "op": "commit_storage",
+          "task": "a"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "running": false,
+          "published": false,
+          "persistence": "STALE_DISCARDED"
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT24",
+      "scenario": "当前代次真实commit后才发布",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "requiresPersistence": true
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "commit_storage",
+          "task": "a"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "published": true,
+          "running": false,
+          "persistence": "COMMITTED"
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT25",
+      "scenario": "数据库失败不发布成功",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "requiresPersistence": true
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "commit_storage",
+          "task": "a",
+          "success": false
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "published": false,
+          "running": false,
+          "persistence": "FAILED"
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT26",
+      "scenario": "清理fence后的持久化回调仍需代次闸门",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "requiresPersistence": true
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "fence"
+        },
+        {
+          "op": "close_session_owner"
+        },
+        {
+          "op": "quiescence"
+        },
+        {
+          "op": "commit_storage",
+          "task": "a"
+        },
+        {
+          "op": "quiescence"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "WAIT_ACTUAL_DRAIN",
+        "TICKET"
+      ],
+      "expectedTasks": {
+        "a": {
+          "persistence": "STALE_DISCARDED",
+          "published": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT27",
+      "scenario": "读取超时不拖死独立媒体/安全通道",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "storage.query",
+          "owner": "helper"
+        },
+        {
+          "op": "ui_timeout",
+          "task": "a"
+        },
+        {
+          "op": "submit",
+          "task": "b",
+          "action": "music.play"
+        },
+        {
+          "op": "submit",
+          "task": "c",
+          "action": "music.pause"
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED",
+        "DISPATCHED",
+        "DISPATCHED"
+      ],
+      "expectedTasks": {},
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT28",
+      "scenario": "完成后的迟到cancel不能改写已观察结果",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "music.next"
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "cancel_result",
+          "task": "a",
+          "confirmed": true
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "result": "OBSERVED_DESIRED_STATE",
+          "published": true,
+          "running": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    },
+    {
+      "id": "RT29",
+      "scenario": "重复commit不再提交/改写结果",
+      "events": [
+        {
+          "op": "submit",
+          "task": "a",
+          "action": "mail.syncBatch",
+          "requiresPersistence": true
+        },
+        {
+          "op": "actual_result",
+          "task": "a"
+        },
+        {
+          "op": "commit_storage",
+          "task": "a"
+        },
+        {
+          "op": "commit_storage",
+          "task": "a",
+          "success": false
+        }
+      ],
+      "expectedResults": [
+        "DISPATCHED"
+      ],
+      "expectedTasks": {
+        "a": {
+          "persistence": "COMMITTED",
+          "published": true,
+          "waitingPersistence": false
+        }
+      },
+      "state": "symbolic-design-example-not-Gecko-test"
+    }
+  ]
+}

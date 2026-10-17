@@ -1,0 +1,473 @@
+{
+  "schema": 1,
+  "revision": "R7",
+  "state": "engineering-design-not-product-stubs",
+  "purpose": "逻辑职责与实际输入/输出/所有权；不是多内核抽象、不是每行一个Gradle模块，亦不是WebView通用适配层。",
+  "numericAuthorityBinding": "capabilityGroupRef is coverage only; mixed-risk groups must be split per action before final level binding. Internal methods are not individually public debug endpoints.",
+  "invariants": [
+    "Source/data gate before engine/DB/connector/job restore; recheck target binding before commit",
+    "UI and administrator actions call same domain method; caller-package identity is not extra permission gate",
+    "Pause/stop/cancel/close of already-owned work do not depend on fresh site login",
+    "Quiescence and actual settlement cannot be supplied as booleans by external clients",
+    "Clock deadlines/port disconnect/retired context do not prove cancelled remote effect or freed disk"
+  ],
+  "modules": [
+    {
+      "id": "DI01",
+      "module": "DataEpochGate",
+      "domain": "A12",
+      "owns": "minimal native control record",
+      "threadAffinity": "call-site synchronous, no Gecko/old business DB",
+      "geckoContracts": [
+        "GC01"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "evaluateBusiness",
+          "input": "AccessIntent + native caller context",
+          "output": "GatePermit | Locked(reason)",
+          "sideEffectBoundary": "read minimal trust metadata only",
+          "capabilityGroupRef": "C501"
+        },
+        {
+          "name": "inspectContinuity",
+          "input": "RedactedQuery",
+          "output": "SourceContinuityView",
+          "sideEffectBoundary": "no account/profile contents",
+          "capabilityGroupRef": "C501"
+        },
+        {
+          "name": "beginPersonalRecoveryUi",
+          "input": "UserFlowRequest",
+          "output": "UiFlowRef",
+          "sideEffectBoundary": "only starts owner flow, not consent/auth success",
+          "capabilityGroupRef": "C502"
+        },
+        {
+          "name": "admitTrustedRescue",
+          "input": "CandidatePackageEvidence",
+          "output": "RescueDecision",
+          "sideEffectBoundary": "lastGood tuple, never lastSeen; no destroy",
+          "capabilityGroupRef": "C503"
+        }
+      ]
+    },
+    {
+      "id": "DI02",
+      "module": "PartitionCatalog",
+      "domain": "A02",
+      "owns": "stable native partition/context ownership records",
+      "threadAffinity": "serialized domain IO, SDK changes scheduled to UI",
+      "geckoContracts": [
+        "GC03",
+        "GC11"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "createPartition",
+          "input": "OwnerDomain + RetentionPolicy + GatePermit",
+          "output": "PartitionRef",
+          "sideEffectBoundary": "generate nonnull opaque context; no raw account names",
+          "capabilityGroupRef": "C002"
+        },
+        {
+          "name": "resolveLease",
+          "input": "PartitionRef + requested scope + GatePermit",
+          "output": "PartitionLease",
+          "sideEffectBoundary": "no arbitrary context string or path from caller",
+          "capabilityGroupRef": "C002"
+        },
+        {
+          "name": "fencePartition",
+          "input": "PartitionRef + cleanup revision",
+          "output": "FenceRef",
+          "sideEffectBoundary": "durable fence before rejecting new business work",
+          "capabilityGroupRef": "C108"
+        },
+        {
+          "name": "retireContext",
+          "input": "PartitionRef + matching quiescence/result evidence",
+          "output": "RetirementReceipt",
+          "sideEffectBoundary": "new context is reset, not old bytes reclaimed",
+          "capabilityGroupRef": "C108"
+        }
+      ]
+    },
+    {
+      "id": "DI03",
+      "module": "GeckoSessionOwner",
+      "domain": "A02",
+      "owns": "actual GeckoSession references and explicit owner/lease",
+      "threadAffinity": "UI for open/attach/release/close; IO for snapshot bytes",
+      "geckoContracts": [
+        "GC08",
+        "GC09"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "createSession",
+          "input": "PartitionLease + SessionOwnerKind + GatePermit",
+          "output": "SessionRef + generation",
+          "sideEffectBoundary": "logical allocation is not page-ready/login",
+          "capabilityGroupRef": "C003"
+        },
+        {
+          "name": "bindDisplay",
+          "input": "SessionRef + ViewOwnerRef + visibility/focus",
+          "output": "DisplayBinding",
+          "sideEffectBoundary": "release previous view first; no Activity retained by registry",
+          "capabilityGroupRef": "C010"
+        },
+        {
+          "name": "updateVisibility",
+          "input": "SessionRef + Visible/Hidden + priority reason",
+          "output": "VisibilityReceipt",
+          "sideEffectBoundary": "explicit setActive(false), not pause/close",
+          "capabilityGroupRef": "C010"
+        },
+        {
+          "name": "requestCheckpoint",
+          "input": "SessionRef + generation",
+          "output": "CheckpointRequestRef",
+          "sideEffectBoundary": "flush asynchronous; wait for callback and storage commit",
+          "capabilityGroupRef": "C002"
+        },
+        {
+          "name": "closeSession",
+          "input": "SessionRef + generation + close reason",
+          "output": "CloseJobRef",
+          "sideEffectBoundary": "unregister display/ports; actual close separate from view detach",
+          "capabilityGroupRef": "C003"
+        }
+      ]
+    },
+    {
+      "id": "DI04",
+      "module": "ConnectorBroker",
+      "domain": "A05",
+      "owns": "APK connector identities + actual ports + document leases",
+      "threadAffinity": "SDK callbacks UI, decode/write work bounded off-UI",
+      "geckoContracts": [
+        "GC01",
+        "GC02",
+        "GC03",
+        "GC04"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "startBuiltin",
+          "input": "CompiledConnectorDefinition + GatePermit",
+          "output": "ConnectorReady | ConnectorError",
+          "sideEffectBoundary": "version checked, delegate before page data pump",
+          "capabilityGroupRef": "C303"
+        },
+        {
+          "name": "acceptHello",
+          "input": "ActualNativeSender + actualPort + Hello",
+          "output": "ReadyLease | Rejection",
+          "sideEffectBoundary": "derive target from registry, never payload claimed session",
+          "capabilityGroupRef": "C303"
+        },
+        {
+          "name": "dispatchTyped",
+          "input": "DocumentLease + known Command + TaskRef",
+          "output": "Accepted | BeforeDispatchError",
+          "sideEffectBoundary": "one request, one selected execution route",
+          "capabilityGroupRef": "C202"
+        },
+        {
+          "name": "acceptEnvelope",
+          "input": "ActualPort + bounded Envelope",
+          "output": "Observation | TaskSettlement | StreamChunk",
+          "sideEffectBoundary": "stale business data ignored, actual old-task settlement still accounted",
+          "capabilityGroupRef": "C303"
+        },
+        {
+          "name": "invalidateLease",
+          "input": "LeaseRef + reason",
+          "output": "LocalInvalidationReceipt",
+          "sideEffectBoundary": "local disconnect immediate, remote cancellation unproven",
+          "capabilityGroupRef": "C303"
+        }
+      ]
+    },
+    {
+      "id": "DI05",
+      "module": "TaskCoordinator",
+      "domain": "A13",
+      "owns": "accepted work set, exact pending owners, idempotency/outcome records",
+      "threadAffinity": "serialized reducer; IO/SDK execution outside reducer",
+      "geckoContracts": [
+        "GC04",
+        "GC05",
+        "GC11"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "submit",
+          "input": "TypedDomainCommand + AuthorizedActor + BoundTarget",
+          "output": "TaskRef | AdmissionError",
+          "sideEffectBoundary": "both UI/admin same action; gate+scope at admission and commit",
+          "capabilityGroupRef": "C405"
+        },
+        {
+          "name": "requestCancel",
+          "input": "TaskRef + authorized scope",
+          "output": "CancelRequested | NotSupported | AlreadyTerminal",
+          "sideEffectBoundary": "not a completed-cancel claim",
+          "capabilityGroupRef": "C405"
+        },
+        {
+          "name": "observeActualSettlement",
+          "input": "KnownWorkRef + original owner evidence",
+          "output": "ActualWorkSettlement",
+          "sideEffectBoundary": "can settle stale original work without writing new UI/data",
+          "capabilityGroupRef": "C405"
+        },
+        {
+          "name": "queryTask",
+          "input": "TaskRef + authorized result privacy",
+          "output": "TaskView",
+          "sideEffectBoundary": "client deadline separate from actual running state",
+          "capabilityGroupRef": "C405"
+        },
+        {
+          "name": "issueQuiescence",
+          "input": "FenceRef + exact target/workset revision",
+          "output": "InternalTicket | Pending",
+          "sideEffectBoundary": "all actual work stopped, session owners closed; not public caller-supplied flag",
+          "capabilityGroupRef": "C108"
+        }
+      ]
+    },
+    {
+      "id": "DI06",
+      "module": "MusicDomain",
+      "domain": "A08",
+      "owns": "auth/player/intent/focus/resource state, service-owned music session",
+      "threadAffinity": "serialized reducer, UI SDK calls, bounded workers",
+      "geckoContracts": [
+        "GC05",
+        "GC06",
+        "GC07"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "enterOrRecheck",
+          "input": "MusicPartition + explicit entry/recheck",
+          "output": "AuthTaskRef",
+          "sideEffectBoundary": "fresh official check; unknown != logout/cookie clearing",
+          "capabilityGroupRef": "C201"
+        },
+        {
+          "name": "requestStart",
+          "input": "Play | Next | Previous + ExplicitIntent + target",
+          "output": "TaskRef",
+          "sideEffectBoundary": "fresh applicable business authorization; official rights preserved",
+          "capabilityGroupRef": "C202"
+        },
+        {
+          "name": "requestSafeStop",
+          "input": "Pause | Stop | Close + owned session",
+          "output": "TaskRef",
+          "sideEffectBoundary": "never require fresh network login to stop already-owned playback",
+          "capabilityGroupRef": "C202"
+        },
+        {
+          "name": "requestSeek",
+          "input": "target seconds + resourceId + captured intentRevision",
+          "output": "TaskRef",
+          "sideEffectBoundary": "finite/range; paused stays paused; no next-route retry after dispatch",
+          "capabilityGroupRef": "C202"
+        },
+        {
+          "name": "setLiked",
+          "input": "resourceId + desiredBoolean",
+          "output": "TaskRef",
+          "sideEffectBoundary": "set desired state, not blind double toggle on retry",
+          "capabilityGroupRef": "C203"
+        },
+        {
+          "name": "setLyricPresentation",
+          "input": "Off | Draggable | Locked + Position",
+          "output": "PresentationState",
+          "sideEffectBoundary": "native overlay permission/OS result explicit",
+          "capabilityGroupRef": "C204"
+        }
+      ]
+    },
+    {
+      "id": "DI07",
+      "module": "StorageDomain",
+      "domain": "A09",
+      "owns": "component ledger, snapshots and target-scoped cleanup journal",
+      "threadAffinity": "serialized job coordinator; helper UI callbacks; file IO worker",
+      "geckoContracts": [
+        "GC10",
+        "GC11"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "getUsage",
+          "input": "RegisteredTarget + freshness preference",
+          "output": "UsageSnapshot | PartialUnavailable",
+          "sideEffectBoundary": "existing scan reused; no site/profile creation only for stats",
+          "capabilityGroupRef": "C301"
+        },
+        {
+          "name": "planCleanup",
+          "input": "RegisteredTarget + CacheOnly/AllOwnedData",
+          "output": "CleanupPlanRef",
+          "sideEffectBoundary": "exact owned components, irreversible offline content flagged",
+          "capabilityGroupRef": "C107"
+        },
+        {
+          "name": "executePlan",
+          "input": "CleanupPlanRef + authorization + internal quiescence",
+          "output": "CleanupJobRef",
+          "sideEffectBoundary": "revalidate generation/scope; no global fallback",
+          "capabilityGroupRef": "C108"
+        },
+        {
+          "name": "reconcilePending",
+          "input": "JournalRef + current generation",
+          "output": "ComponentEvidenceVector",
+          "sideEffectBoundary": "submitted/logical/verified/unknown separate; no all-success from one callback",
+          "capabilityGroupRef": "C108"
+        }
+      ]
+    },
+    {
+      "id": "DI08",
+      "module": "CheckpointRepository",
+      "domain": "A02",
+      "owns": "sensitive versioned snapshot blobs",
+      "threadAffinity": "IO only; callback gives immutable copy/ownership",
+      "geckoContracts": [
+        "GC09"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "stageSnapshot",
+          "input": "SessionRef + binding + sequence + SessionState copy",
+          "output": "StagedSnapshotRef",
+          "sideEffectBoundary": "encrypted bounded storage, no ordinary logs/forms export",
+          "capabilityGroupRef": "C002"
+        },
+        {
+          "name": "commitSnapshot",
+          "input": "StagedSnapshotRef + current binding",
+          "output": "CommittedRevision | StaleDiscard",
+          "sideEffectBoundary": "newer revision wins; callback return not durable commit",
+          "capabilityGroupRef": "C002"
+        },
+        {
+          "name": "loadForRestore",
+          "input": "PartitionLease + epoch + expected schema",
+          "output": "Snapshot | Absent | Incompatible",
+          "sideEffectBoundary": "reject mismatch, do not silently clear data",
+          "capabilityGroupRef": "C002"
+        }
+      ]
+    },
+    {
+      "id": "DI09",
+      "module": "DownloadDomain",
+      "domain": "A04",
+      "owns": "engine response stream, temporary files and explicit save target",
+      "threadAffinity": "stream on worker, lifecycle on reducer, system picker UI",
+      "geckoContracts": [
+        "GC12"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "offerResponse",
+          "input": "SessionBoundWebResponse + task origin",
+          "output": "DownloadOfferRef",
+          "sideEffectBoundary": "hold real engine stream; close even when ignored",
+          "capabilityGroupRef": "C007"
+        },
+        {
+          "name": "approve",
+          "input": "DownloadOfferRef + NativeSaveTargetRef",
+          "output": "DownloadTaskRef",
+          "sideEffectBoundary": "no raw arbitrary app-private path or Cookie reconstruction",
+          "capabilityGroupRef": "C007"
+        },
+        {
+          "name": "cancel",
+          "input": "DownloadTaskRef",
+          "output": "CancellationProgress",
+          "sideEffectBoundary": "close/drain actual stream and rollback owned temporary file",
+          "capabilityGroupRef": "C007"
+        },
+        {
+          "name": "publish",
+          "input": "verified staged bytes + SaveTargetRef",
+          "output": "PublishedTarget | PartialFailure",
+          "sideEffectBoundary": "EOF/digest/write completion and public URI publication distinct",
+          "capabilityGroupRef": "C007"
+        }
+      ]
+    },
+    {
+      "id": "DI10",
+      "module": "MailDomain",
+      "domain": "A06",
+      "owns": "account binding, ordered revisions, offline object/index refs",
+      "threadAffinity": "account-serialized writes, compress/search workers",
+      "geckoContracts": [
+        "GC02",
+        "GC03",
+        "GC04"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "acceptAccountEvidence",
+          "input": "validated official source evidence + epoch",
+          "output": "NativeAccountBinding | Unknown",
+          "sideEffectBoundary": "do not use sender payload accountId alone",
+          "capabilityGroupRef": "C101"
+        },
+        {
+          "name": "appendSyncBatch",
+          "input": "NativeAccountBinding + bounded batch/stream refs",
+          "output": "CommitTaskRef",
+          "sideEffectBoundary": "old generation cannot overwrite current account or advance cursor",
+          "capabilityGroupRef": "C103"
+        },
+        {
+          "name": "readOrSearchOffline",
+          "input": "account scope + cancellable query",
+          "output": "PageResultStream",
+          "sideEffectBoundary": "decode bounded, no main thread whole-mailbox load",
+          "capabilityGroupRef": "C102"
+        },
+        {
+          "name": "exportOwnedItems",
+          "input": "explicit item selection + approved SaveTarget",
+          "output": "ExportJobRef",
+          "sideEffectBoundary": "private/irreversible scope policy and output privacy preserved",
+          "capabilityGroupRef": "C105"
+        },
+        {
+          "name": "requestOfficialCloudAction",
+          "input": "native account binding + typed user-equivalent action",
+          "output": "OfficialActionTaskRef",
+          "sideEffectBoundary": "existing official flow; never fabricate cloud completion",
+          "capabilityGroupRef": "C106"
+        }
+      ]
+    }
+  ]
+}

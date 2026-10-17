@@ -1,5 +1,5 @@
 {
-  "revision": "R6",
+  "revision": "R7",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -85,6 +85,18 @@
       "time": "2026-10-18T00:23:53+08:00",
       "finding": "原生媒体方法和flush都是void；releaseSession仍活；扩展建连元数据不是文档授权；取消/清理回调不能当全部完成。",
       "resolution": "补12项集成契约/28项计划场景。找到APK固定privileged helper＋QMS/缓存visitor候选，拒绝把标准browsingData cookieStoreId当Gecko context缓存清理。仅源码核实，不写产品或扩展实现，不宣称实验通过。"
+    },
+    {
+      "id": "REV15",
+      "time": "2026-10-18T07:48:36+08:00",
+      "finding": "细化接口时发现：把fresh登录门笼统施于所有媒体动作会阻止未知认证下的暂停/停止；单一实际槽还可能使安全停止排在挂起Promise后。",
+      "resolution": "起播与safe-stop分开；auth/effect/read/safety分槽，保持授权/拥有目标校验。明确View/文档关闭不能结算helper/nativeIO；增加持久化提交前后/迟到取消与重复commit规则。"
+    },
+    {
+      "id": "REV16",
+      "time": "2026-10-18T07:48:36+08:00",
+      "finding": "原256KiB业务块与64KiB消息上限冲突；以概念模块框代替接口会隐藏这些问题。",
+      "resolution": "协议权威预算改32KiB原始块/64KiB包与信用窗；45方法输入输出、13首批动作/消息、类型错误表与18旅程纳入可检查设计。阶段完成仍不等于产品实现。"
     }
   ]
 }

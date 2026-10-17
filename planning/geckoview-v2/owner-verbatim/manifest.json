@@ -142,7 +142,21 @@
       "utf8Bytes": 39,
       "sha256": "f0222c6e1f989240b47941b3bf588bfae95fd659842aeba657989428330e387b",
       "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O21",
+      "file": "owner-verbatim/O21-continue-without-routine-reports.txt",
+      "utf8Bytes": 66,
+      "sha256": "5f8bc194c2fbfb0689dce205316201099bea19319cd9e1ff055f0cba9c8d2a70",
+      "provenance": "owner user-message manually transcribed verbatim, without correction or newline"
+    },
+    {
+      "id": "O22",
+      "file": "owner-verbatim/O22-continue.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message manually transcribed verbatim, without correction or newline"
     }
   ],
-  "lastAppendedAt": "2026-10-18T00:27:54+08:00"
+  "lastAppendedAt": "2026-10-18T07:49:28+08:00"
 }

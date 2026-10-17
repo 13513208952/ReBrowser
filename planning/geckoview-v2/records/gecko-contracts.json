@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R6",
+  "revision": "R7",
   "state": "source-reviewed-design-not-runtime-validated",
   "productCodeImplemented": false,
   "contracts": [
@@ -62,7 +62,7 @@
         "E17",
         "E27"
       ],
-      "contract": "先检查fresh官网认证/玩家绑定/代次；验证过语义且active+feature支持时选Gecko，否则选可用官方SDK路径；一次动作只选一条。",
+      "contract": "新业务/起播先检查fresh官网认证、玩家绑定与代次；仅已验证语义且active+feature时选Gecko，否则提交前选可用官方SDK；一次动作一条路线。暂停/停止/取消/关闭已拥有任务不追加fresh登录门，保留独立安全通道。",
       "failureBoundary": "不因一个void返回标成功；超时不再用另一条路径补发；native play不能绕过官方权益。",
       "runtimeValidated": false
     },

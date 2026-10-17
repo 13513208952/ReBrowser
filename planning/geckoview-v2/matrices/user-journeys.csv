@@ -1,0 +1,19 @@
+id,entry,normalPath,mustPreserve,backAndExit,capabilityGroups,state
+UJ01,新包首次启动,SourceGate→原生浏览器新标签,无v1迁移/自动删旧包/自动变默认浏览器；安全壳前不启旧数据,退出本界面，不跳过来源闸门,C501 C003,design-scenario-not-run
+UJ02,双层环境/标签,环境面板→选环境→选/新建标签,上下文明确，标签恢复不串区；父Popup保持正确环境,原生层关闭后按页面历史/环境层级返回,C002 C003,design-scenario-not-run
+UJ03,地址搜索/收藏,原生输入→目标标签加载→添加收藏,搜索提供者/背景/收藏交互承接；不因换内核变大框架,先IME/原生浮层，再网页层级,C005 C003,design-scenario-not-run
+UJ04,历史管理,原生近期/历史→期限/维持/暂停写入,查询/清理/导出各动作有管理对应；认证中间跳转不污染普通访问,回原浏览标签，不另造环境,C006,design-scenario-not-run
+UJ05,网页Popup,网页请求→同partition新session→关闭回父,按E09不重复load、不丢强引用；跨域官方认证允许正常导航,先Popup网页history，再关闭Popup回父,C003,design-scenario-not-run
+UJ06,全屏/选择/网站权限,网页→原生提示/系统选择器→真实结果,OS/网站/context权限分层；取消明确；不伪造系统授予,IME/顶层模态优先，再退出全屏,C008 C010,design-scenario-not-run
+UJ07,下载保存/取消,引擎response→批准→流式临时目标→发布,Cookie不导出重建；拒绝/失败也close流；公共保存URI明确,退出下载页不等于取消；取消需真实任务结束,C007,design-scenario-not-run
+UJ08,子应用管理/设置,主设置→应用管理→48dp子应用齿轮,入口启用保留；音源选择在音乐设置；默认仅含背景全量产品,子设置→管理页→浏览器，不误启动网页来统计,C011 C301,design-scenario-not-run
+UJ09,Outlook首次/失效登录,最近成功入口或个人/学校选择→同context官方认证,不猜邮箱域；不重复切入口/复制Cookie；验证码用户完成,认证Popup回父；离开/重进不等于注销,C101,design-scenario-not-run
+UJ10,Outlook启动错误/网络未知,保留会话→错误分类→明确重查/入口恢复,AadOrMsaRedirRequired不当成必然退出；不自动清数据,回原页面/原生错误说明，不陷无限跳转,C101,design-scenario-not-run
+UJ11,离线邮件/检索,账户范围→列表→按需解压正文→可取消检索,唯一离线正文不当缓存；无脚本/同邮箱Cookie的安全阅读,返回同查询位置/列表，取消后台查询不写新账户,C102 C104,design-scenario-not-run
+UJ12,音乐冷开/登录,手机UA官方登录→fresh检查→真实暂停就绪,历史PLAYER快照不自动起播；只明确平板全窗横屏选择桌面扫码,登录输入中不定时跳走；退出不伪造认证失效,C201 C202,design-scenario-not-run
+UJ13,音乐暂停/系统seek,合法当前玩家→用户/媒体控制→真实观测,账号未知仍可暂停/停止；seek毫秒转秒，暂停seek不偷播,UI离开与服务关闭分开；不再起第二个session,C202 C205,design-scenario-not-run
+UJ14,后台音乐/焦点/重连,同服务session→UI离开→通知/重新附着,不改变音量/DND；用户pause后旧gain不恢复；冷启不续播,普通返回不等于停止，明确关闭才结束任务,C202 C205,design-scenario-not-run
+UJ15,桌面歌词,关闭→可拖动→锁定穿透→关闭,原权限/位置恢复承接；歌词真来源；无权限返回单功能等待,按状态退出浮层，不把锁定误作不可关闭,C204,design-scenario-not-run
+UJ16,子应用占用,原生齿轮→已有快照→异步单扫描更新,显示独占/共享/未知/时间；不能依赖打开网页才有数值,离开设置只结束观察者，不宣称底层统计取消,C301,design-scenario-not-run
+UJ17,清缓存/全部数据,精确清理计划→明确确认→fence/drain→组件证据,缓存只含可重建；唯一邮件/登录丢失要警告；不清其他目标/公共目录,确认前Back=取消；执行中退出不假取消/重新开门,C107 C108 C206 C207,design-scenario-not-run
+UJ18,管理程序/辅助包控制,任意有效持钥程序→统一控制→同领域动作,同权限与目标同结果；不凭辅助包包名否决；系统/官网等待如实返回,取消观察不重放副作用或绕过本人源保护,C405 C406 C303,design-scenario-not-run

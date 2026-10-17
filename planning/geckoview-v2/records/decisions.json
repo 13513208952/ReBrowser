@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R5",
+  "revision": "R7",
   "decisions": [
     {
       "id": "D01",
@@ -261,6 +261,17 @@
       ],
       "ownerSources": [
         "O18"
+      ]
+    },
+    {
+      "id": "D27",
+      "state": "confirmed",
+      "decision": "继续独立推进；不专门主动汇报，机主需要进度时自行询问。真正材料/不可逆授权边界不因此取消。",
+      "requirements": [
+        "R26"
+      ],
+      "ownerSources": [
+        "O21"
       ]
     }
   ]

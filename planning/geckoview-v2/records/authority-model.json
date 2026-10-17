@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "state": "proposal-needs-review",
+  "identityRoles": [
+    "root-special",
+    "highest-domain-admin",
+    "delegated-admin",
+    "owner-user",
+    "unauthenticated"
+  ],
+  "whitelistRule": {
+    "root": "Own(root) UNION union(Own(highest_i))",
+    "ordinaryHighest": "Own(self) ONLY",
+    "otherHighestAgainstRoot": "NO enumerate/manage/use; root exclusive ownership",
+    "enrollment": "Explicit owner authorization + proof of target installation private-key possession; details Q04"
+  },
+  "levelRule": {
+    "guarantee": "AuthorizedScope(a,c) AND FreshAuthenticatedGrant(a,s) AND Effective(a,s,t,i) > Required(c,t,i) => Executable(c)",
+    "equality": "UNRESOLVED Q01",
+    "proposalRequired": "max(capability_base_threshold, transport_risk_floor, intervention_risk_floor)",
+    "proposalEffective": "min(identity_ceiling, delegated_session_ceiling, credential_assurance_ceiling); owner grant activates sufficient ceiling for high risk outside whitelist",
+    "noHiddenDeny": "Once sufficient effective authority exists within scope, no alternate transport/plugin-specific hardcoded veto may block the same capability.",
+    "managementMonotonicity": "Within same scope and session conditions, a higher authority includes all lower-authority operations and eligible management abilities.",
+    "scopeVsLevel": "Scope defines the corresponding capability; ordinary-highest ownership isolation is not overridden by numeric level. Q06 review required."
+  },
+  "consentRule": {
+    "exempt": "Authenticated root targeting own OR any highest-admin whitelist; ordinary highest targeting own whitelist",
+    "outsideWhitelist": "Highest-risk actions require owner grant even for root; missing grant must be represented as insufficient effective authority, not disguised full authority.",
+    "platformBoundary": "No bypass of Android mandatory grants or remote site authentication/CAPTCHA/rights checks."
+  },
+  "riskModel": [
+    "APK-embedded private key is extractable",
+    "Compiled public key is public",
+    "ADB shell presence is not administrator identity",
+    "Hidden entry is not authorization",
+    "Plugin cannot select its own granted level",
+    "Whitelisting does not equal generating keys or proof of ownership"
+  ]
+}

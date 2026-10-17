@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "revision": "R1",
+  "questions": [
+    {
+      "id": "Q01",
+      "priority": "blocking-security",
+      "question": "同级授权如何处理？原话保证高于必可，但没有明确等于。",
+      "currentTreatment": "暂以严格大于作推演，不把该默认当机主已确认。",
+      "requirements": [
+        "R12"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q02",
+      "priority": "blocking-security",
+      "question": "编译公钥可从APK提取；名单隔离是否指接口层不可枚举/管理/借用，而不是公钥本身保密？",
+      "currentTreatment": "设备映射不打包；原始公钥公开这一事实不变。",
+      "requirements": [
+        "R15",
+        "R16",
+        "R17"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q03",
+      "priority": "blocking-security",
+      "question": "辅助包内嵌私钥可复制：接受签名/设备绑定的受限委托替代可复用身份私钥，还是确需允许可复制中级凭据？",
+      "currentTreatment": "不内嵌根私钥；两种模式的有效等级/影响范围都要明确。",
+      "requirements": [
+        "R18",
+        "R19",
+        "R20"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q04",
+      "priority": "blocking-security",
+      "question": "设备加入最高管理员免确认名单时，是否统一要求一次机主明确登记授权＋设备持钥证明？",
+      "currentTreatment": "防止管理员把陌生设备加入名单后绕过机主授权。根的已指明设备也需实际生成设备公钥。",
+      "requirements": [
+        "R11",
+        "R14",
+        "R17"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q05",
+      "priority": "blocking-key-custody",
+      "question": "旧管理员签名私钥及旧导出解密私钥的保管位置/备份/负责人如何交接？v2是否信任旧根还是仅保留旧版维护线？",
+      "currentTreatment": "目前只能核实公钥；不搜索/打印私钥，不宣称私钥已备份。",
+      "requirements": [
+        "R09"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q06",
+      "priority": "design-review",
+      "question": "丰富等级的具体档位、普通/高危/最高危阈值、临时会话时限如何确定？",
+      "currentTreatment": "先用0..10符号模型，数字仅草案；根为特殊角色而非同级默认共享权限。",
+      "requirements": [
+        "R11",
+        "R12",
+        "R13"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q07",
+      "priority": "design-review",
+      "question": "应用内接口控制是否还包含独立LAN/公网直连接口，还是先指本地接口＋无线ADB？",
+      "currentTreatment": "无线ADB/本地跨应用已确认；额外联网监听没有自动获批。",
+      "requirements": [
+        "R18",
+        "R19"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q08",
+      "priority": "design-review",
+      "question": "新APK正式签名与新管理员根的密钥算法、离线保管、恢复/撤销责任如何安排？",
+      "currentTreatment": "先分域再生成；本阶段不生成密钥/白名单公钥。",
+      "requirements": [
+        "R07",
+        "R09",
+        "R17"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q09",
+      "priority": "engineering-spike",
+      "question": "Gecko上下文删除API无完成回执，如何给出可靠完成判据与范围隔离？",
+      "currentTreatment": "context API是void；不把提交当完成，不退回全局删除。",
+      "requirements": [
+        "R22",
+        "R23"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q10",
+      "priority": "engineering-spike",
+      "question": "Gecko runtime/profile/context如何兼顾隔离、可统计归属、内存、后台音乐？",
+      "currentTreatment": "不把host清理当context清理；不能仅为统计启动多个重型runtime。",
+      "requirements": [
+        "R01",
+        "R03",
+        "R22",
+        "R23"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q11",
+      "priority": "engineering-spike",
+      "question": "邮件压缩的目标数据集、压缩率、峰值内存、写入/检索/恢复预算？",
+      "currentTreatment": "使用合成/明确授权样本，不为基准导出现有真实邮箱。",
+      "requirements": [
+        "R21",
+        "R28",
+        "R29"
+      ],
+      "state": "open"
+    },
+    {
+      "id": "Q12",
+      "priority": "engineering-spike",
+      "question": "Gecko stable158传递依赖/构建工具/ABI与Android11兼容矩阵是否可满足？",
+      "currentTreatment": "只确认元数据/POM/源码；尚未下载AAR、构建或实机验收。",
+      "requirements": [
+        "R02",
+        "R04",
+        "R29",
+        "R30"
+      ],
+      "state": "open"
+    }
+  ]
+}

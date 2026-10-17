@@ -1,0 +1,68 @@
+# GeckoView v2 · 规划工作台 R1
+
+> 状态：需求已记录；设计草案待审查；产品代码、密钥生成、设备登记、安装与发行均未开始。
+
+```mermaid
+mindmap
+  root((ReBrowser v2))
+    已确认边界
+      io.github.rebrowser
+      v2.0.0
+      Android11及以上
+      Gecko最新stable
+      全量含背景
+      无旧版兼容和数据迁移
+    用户体验
+      功能与操作承接
+      正常登录不陷循环
+      可用的占用量级估计
+      浏览和播放不明显变慢
+    管理员体系
+      完整查看与控制
+      等级充分性
+      根特殊角色
+      各最高管理员名单隔离
+      多接入和动态生态
+    存储体系
+      子应用归属
+      缓存与全部数据
+      邮件压缩去重
+      共享部分明确标识
+    持续审查
+      原话不可改写
+      决定与建议分离
+      未决项显式登记
+      图表随实现更新
+```
+
+| 视图 | 用途 | 权威输入 |
+| --- | --- | --- |
+| [系统与体验](views/01-system-and-parity.md) | 组件、会话、能力边界 | R01–R10、功能矩阵 |
+| [管理员权限](views/02-authority.md) | 根／最高管理员／名单关系、等级表达式、授权流程 | R10–R20、authority-model |
+| [接入与生态](views/03-entrypoints-and-plugins.md) | 有线／无线／应用内／跨应用／动态介入 | R18–R20、接入矩阵 |
+| [存储与清理](views/04-storage.md) | 归属、估计口径、删除状态机、API缺口 | R22–R25、E01–E05 |
+| [邮件与登录](views/05-mail-and-auth.md) | AAD／MSA流程、压缩、去重、检索 | R21、R24、历史问题 |
+| [签名与发行](views/06-trust-and-release.md) | 密钥分域、旧根保全、依赖／R8／加密性能 | R07–R09、R28–R30 |
+| [实施与验收](views/07-roadmap-and-review.md) | 依赖图、审查闸门、验收矩阵 | P0–P7、测试／风险表 |
+| [需求](records/requirements.json) | 每条规则及原话来源 | 机主原话 |
+| [决定](records/decisions.json) | confirmed / verified-upstream / design-proposal | 不混用状态 |
+| [未决项](records/questions.json) | 需机主确认与工程验证的问题 | 不用猜测填空 |
+| [原话清单](owner-verbatim/manifest.json) | 逐条原文与UTF-8摘要 | 原文独立、只追加 |
+| [旧版公钥保全](evidence/legacy-public-trust.json) | 公钥、用途、摘要；私钥保管未核实 | v1.0.5源定义 |
+| [上游API证据](evidence/upstream.json) | Gecko158公开API事实，不是能力臆测 | Mozilla原始源码 |
+| [审查记录](records/review-log.json) | 发现、决定、重开原因 | 每次修正留痕 |
+| [规则演算](matrices/authority-cases.csv) | 具体根／最高／中级／授权／名单案例 | 数字和同级规则仍待审查 |
+| [旧约束的替代关系](records/supersessions.json) | 防止把已解除的旧兼容约束重新带回 | 后说且明确的机主决定优先 |
+| [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
+| [R1自检结果](reviews/R1-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
+
+## 使用约定
+
+| 原则 | 规则 |
+| --- | --- |
+| 单一事实来源 | 原话→需求／决定／能力注册表→图表；不在多份图里独立重定义权限数字 |
+| 语义分离 | 机主确认 ≠ 设计建议 ≠ 上游已验证 ≠ 实现完成 ≠ 真机通过 |
+| 修改路径 | 需求变化先追加原话；API不符登记证据；重开受影响决定、图、验收项 |
+| 代码准入 | P0关键安全语义审查前不写产品代码；每个用户能力都要有调试对应与测试 |
+| 隐私 | 设备序列号、账号、私钥、原始截图留仓库外；这里仅用设备别名及公开信任材料 |
+| 既有发布 | v1.0.5及旧根维护资料保留；机主README不改；无自动迁移／卸载／清数据 |

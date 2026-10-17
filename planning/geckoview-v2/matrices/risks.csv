@@ -1,0 +1,20 @@
+id,category,finding,resolution_gate,requirements,treatment,state
+K01,public-key-secrecy,编译公钥可提取，不能承诺名单公钥绝对隐藏,Q02,R15 R16 R17,API/管理/使用隔离与设备映射隐私单独设计,open
+K02,extractable-private-key,辅助包内嵌私钥可复制,Q03,R18 R19 R20,凭据风险影响有效等级；签名/安装绑定与撤销,open
+K03,authority-consistency,等级保证、所有权隔离、机主确认存在语义交叉,Q01 Q06,R11 R12 R13 R15 R16,先统一定义有效等级与对应作用域；性质测试,open
+K04,enrollment-bypass,管理员若可把任意陌生设备加入名单会绕过最高危机主授权,Q04,R11 R14 R17,一次明确登记授权和持钥证明,open
+K05,no-completion,Gecko context删除是void派发,Q09,R23,先验证可靠完成方案；不把提交当成功,open
+K06,wrong-delete-scope,host/baseDomain清理不是context清理,Q10,R23,API拓扑试验与跨子应用标记测试；不全局回退,open
+K07,quota-not-total,网页quota不等于完整HTTP缓存或整个子应用,Q10,R22 R25,所有权与估计/共享/未知并列，数量级目标,open
+K08,legacy-key-loss,仅有公钥不能证明私钥备份存在,Q05,R09,旧根/导出密钥保管和恢复交接，不删除旧维护线,open
+K09,compression-cost,过高压缩吞噬低端内存和前台时间,Q11,R21 R28,平台基线/有界任务/可取消/实测收益,open
+K10,dependency-and-r8,Gecko新传递依赖/工具链；R8误剪JNI或扩展入口,Q12,R02 R29 R30,锁版/依赖准入/最小keep/实际Release测试,open
+K11,compatibility-overclaim,Android11基线不等于全ABI/GPU/DRM支持已验证,Q12,R04,矩阵与局部降级；不再用WebView门槛,open
+K12,crypto-theater,整包加密拖慢启动，或密钥与密文一起打包假装安全,Q08,R28,威胁收益/性能预算/密钥分域,open
+K13,login-entry-loop,换Gecko不会自动修复AAD/MSA业务入口或会话重建逻辑,Q10,R24,新状态机与真实重进/失效/取消验收,open
+K14,old-shim-lockin,只包一层旧WebView接口，延续旧限制与补丁,P1,R01 R03,Gecko原生领域建模；只承接用户契约,open
+K15,old-data-destruction,新包全新开始被误实现成卸载旧版/清旧数据,P7,R08,不同namespace；不自动迁移或删除,open
+K16,network-expansion,把无线ADB批准误当公网监听批准,Q07,R18,独立联网入口需明确确认,open
+K17,plugin-self-privilege,内部/隐藏入口或插件自报等级造成旁路,P2,R18 R19 R20,所有入口同策略，系统caller与签名证明,open
+K18,revocation-rollback,名单/委托/策略过期、撤销或旧策略重放,P2,R11 R14 R17,新鲜度/版本/撤销/持久化与重放测试,open
+K19,generic-inspection-leak,普通最高借全文件/内存调试接口读取根或他人名单,Q02 Q06,R10 R15 R16,明确保护域与通用调试边界；不能同时承诺无限制原生内存读和名单秘密,open

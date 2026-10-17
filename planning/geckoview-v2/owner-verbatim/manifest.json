@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-10-17T22:08:30+08:00",
+  "format": "Exact UTF-8 message bodies, without wrapper headings or added terminal newline. New messages append; do not rewrite originals.",
+  "messages": [
+    {
+      "id": "O01",
+      "file": "owner-verbatim/O01-existing-problems.txt",
+      "utf8Bytes": 387,
+      "sha256": "3e2a57efc3e871984e7fd091c8032fcb2b0fa92f262f42c34afa6e2b7e37c82c",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O02",
+      "file": "owner-verbatim/O02-pause-legacy-fix.txt",
+      "utf8Bytes": 252,
+      "sha256": "a7e9240d2701c4a575e6949bdaa5fb7ed9236160d2c9b6b1d850b5639f3c621f",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O03",
+      "file": "owner-verbatim/O03-gecko-native-reimplementation.txt",
+      "utf8Bytes": 630,
+      "sha256": "618fd5a009440c3a0e2385fe6d59651af0f7c19649224f6562e3bb5722e01501",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O04",
+      "file": "owner-verbatim/O04-existing-problem-acceptance.txt",
+      "utf8Bytes": 90,
+      "sha256": "db5b4bf83f58de05755e3eff3818a497ece0e984b796e4417b1607f8f7b42b4c",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O05",
+      "file": "owner-verbatim/O05-android11-baseline.txt",
+      "utf8Bytes": 239,
+      "sha256": "08a063665b7de5654951fd1586293ed1de66e6b725afd8c7bbff574673fdd9b3",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O06",
+      "file": "owner-verbatim/O06-pause-for-requirements.txt",
+      "utf8Bytes": 42,
+      "sha256": "ee89cf476f5455b7cf2953d8e93f1d56ce7cef64e1c288eeb56c59f764b86cb2",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O07",
+      "file": "owner-verbatim/O07-systematic-redesign.txt",
+      "utf8Bytes": 2494,
+      "sha256": "6161f984bdc5ddca1e133c5ff68d6ad34d34ef0a455e3711fbe4663f030aaad7",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O08",
+      "file": "owner-verbatim/O08-diagram-planning.txt",
+      "utf8Bytes": 351,
+      "sha256": "8116d5686687930585becffd68b88742cee6a5ed8f5bf75f2ee2dd0d996cca43",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O09",
+      "file": "owner-verbatim/O09-confirmed-decisions-and-admin-ecosystem.txt",
+      "utf8Bytes": 2637,
+      "sha256": "894d47474263645240154e0e8b1edb6a6d4f6a5fd5ca741b037959dc1ecece58",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O10",
+      "file": "owner-verbatim/O10-mixed-planning.txt",
+      "utf8Bytes": 237,
+      "sha256": "fa1f20e76478dbe8736a88dc5b9845fe62b89d2cdffcf6c293f7cd89c1f3050c",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O11",
+      "file": "owner-verbatim/O11-release-hardening.txt",
+      "utf8Bytes": 150,
+      "sha256": "f3b82b4b767c7d2c9072c33a58a0ec040f947a42b62bfa85f6f94d2bad3795d9",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    },
+    {
+      "id": "O12",
+      "file": "owner-verbatim/O12-dependencies-and-r8.txt",
+      "utf8Bytes": 93,
+      "sha256": "6ecbfa5946ccee73ca6125d8f42e8099ffff4f56de9940fee02d08291ee70c85",
+      "provenance": "owner user-message, manually transcribed verbatim from this conversation; no language/punctuation corrections"
+    }
+  ]
+}

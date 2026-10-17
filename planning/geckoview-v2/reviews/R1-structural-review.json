@@ -1,0 +1,15 @@
+{
+  "revision": "R1",
+  "result": "structural-and-symbolic-review-passed",
+  "ownerMessages": 12,
+  "requirements": 30,
+  "capabilityGroups": 39,
+  "acceptanceCasesPlannedNotRun": 61,
+  "authorityExamplesSymbolicallyChecked": 15,
+  "mermaidBlocksStructurallyChecked": 16,
+  "fullMermaidParserOrRenderingValidated": false,
+  "productCodeImplementedOrBuilt": false,
+  "deviceOrPrivateKeyAccess": false,
+  "openQuestions": 12,
+  "caveat": "Hashes prevent subsequent edits; they do not independently prove original transcription. Diagram syntax/rendering and owner semantics require review. Level numbers/comparison examples remain proposals."
+}

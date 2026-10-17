@@ -1,0 +1,17 @@
+{
+  "purpose": "Resolve pronouns such as 这个包名 in O09; this is assistant proposal context, NOT owner verbatim.",
+  "acceptedBy": "O09",
+  "packageId": "io.github.rebrowser",
+  "initialVersion": "2.0.0",
+  "legacyRootPreservation": "Preservation obligation is confirmed; new v2 trust/key mechanism is allowed, not automatically chosen.",
+  "supersededConstraints": [
+    "Preserve old applicationId/UID/signing as upgrade identity",
+    "Support old storage schemas or migrate old app data",
+    "Produce minimal-lite/minimal-background/full variants by default"
+  ],
+  "stillRequired": [
+    "Owner-authored root README unchanged unless separately authorized",
+    "No automatic removal of old apps/data",
+    "No product coding/build/install during planning-only phase"
+  ]
+}

@@ -1,0 +1,314 @@
+{
+  "schema": 1,
+  "revision": "R1",
+  "requirements": [
+    {
+      "id": "R01",
+      "ownerSources": [
+        "O03"
+      ],
+      "title": "Gecko-native重新实现",
+      "rule": "从Gecko原生能力和生命周期建模；发行端不依赖系统WebView，不照搬旧WebView适配层。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R02",
+      "ownerSources": [
+        "O03"
+      ],
+      "title": "最新stable",
+      "rule": "核实并精确锁定GeckoView stable，不用动态版本或nightly；升级需要回归。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R03",
+      "ownerSources": [
+        "O03",
+        "O07"
+      ],
+      "title": "用户体验承接",
+      "rule": "保留用户可见功能/流程/界面约定；不以新架构为借口静默删功能；不承诺旧数据连续。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R04",
+      "ownerSources": [
+        "O05"
+      ],
+      "title": "Android11+",
+      "rule": "minSdk30；不以系统WebView安装/版本/特性为运行门槛；设备差异局部降级。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R05",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "新标识与版本",
+      "rule": "io.github.rebrowser；v2.0.0；新包全新开始。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R06",
+      "ownerSources": [
+        "O07"
+      ],
+      "title": "发行简化",
+      "rule": "默认只提供含背景全量包；只有明确要求时制作定制包。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R07",
+      "ownerSources": [
+        "O07",
+        "O09"
+      ],
+      "title": "新正式签名",
+      "rule": "允许并建立合适的正式应用签名；与管理员根/设备密钥分离。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R08",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "无旧版兼容迁移",
+      "rule": "不做旧版协议/数据格式兼容及数据迁移；旧应用/数据不自动删除。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R09",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "旧管理员根保全",
+      "rule": "保留上一代根/密钥/工具和协议资料；私钥保管未核实不得标为已备份。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R10",
+      "ownerSources": [
+        "O07",
+        "O09"
+      ],
+      "title": "应用内完整调试能力",
+      "rule": "覆盖宿主与全部子应用全部用户能力；UI与管理员接口共用领域服务；不是只留少数命令。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R11",
+      "ownerSources": [
+        "O07",
+        "O09"
+      ],
+      "title": "风险分级与机主授权",
+      "rule": "高危/隐私操作按等级控制；白名单外根/其他最高管理员最高危均需机主授权。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R12",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "等级充分性保证",
+      "rule": "已授权作用域内有效管理等级高于能力要求时必须可控；不能再被散落硬编码禁令否决；同级含义待确认。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R13",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "管理权限同步扩张",
+      "rule": "管理等级提高时调试与管理权限单调扩张；根可以管理其他最高管理员。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R14",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "显式设备登记",
+      "rule": "只有明确指定的设备可进入对应免确认名单；设备信息不是设备私钥或登记完成证明。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R15",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "最高管理员名单隔离",
+      "rule": "普通最高管理员仅可管理/使用自己的白名单，不能接触其他最高管理员及根专有名单。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R16",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "特殊根管理员",
+      "rule": "根可管理其他最高管理员，可使用自己及所有最高管理员的白名单；其他最高管理员不能使用根专有名单。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R17",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "编译白名单公钥",
+      "rule": "编译可信设备公钥锚；公钥不是秘密，不把序列号哈希冒充公钥；运行时名单更新/撤销机制需设计。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R18",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "统一多接入授权",
+      "rule": "ADB有线/无线、应用内、跨应用接入共同参与等级计算；通道及介入方式可改变要求/有效级别。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R19",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "动态介入生态",
+      "rule": "运行时插件、辅助包、隐藏入口、宿主/子应用接口进入同一体系；隐藏不等于授权。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R20",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "辅助包中级能力",
+      "rule": "支持跨应用受委托调试；APK内私钥可提取这一事实必须进入威胁模型，不默认等价于保密管理员身份。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R21",
+      "ownerSources": [
+        "O07"
+      ],
+      "title": "高压缩离线邮件",
+      "rule": "在合理时延/内存内用时间换空间；压缩、去重、增量、崩溃恢复、检索一起设计。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R22",
+      "ownerSources": [
+        "O07"
+      ],
+      "title": "可用的子应用占用估计",
+      "rule": "优先能区分2MB/50MB/200MB量级；不执着精确；独立于网页当前是否存活，明确共享/估算/未知。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R23",
+      "ownerSources": [
+        "O07"
+      ],
+      "title": "缓存与全部数据管理",
+      "rule": "每子应用查看/清缓存/清全部数据；作用域不能串删，无法确认完成不得报成功。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R24",
+      "ownerSources": [
+        "O01",
+        "O04"
+      ],
+      "title": "ReOutlook登录验收",
+      "rule": "正常授权会话不能因入口/宿主生命周期陷入反复登录或启动错误；AAD/MSA入口分别验证。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R25",
+      "ownerSources": [
+        "O01",
+        "O04"
+      ],
+      "title": "ReOutlook统计验收",
+      "rule": "新实现能展示可用的子应用占用估计；不能再次只剩活页面估算或将局部冒充完整总量。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R26",
+      "ownerSources": [
+        "O08",
+        "O09",
+        "O10"
+      ],
+      "title": "独立混合规划",
+      "rule": "图/表/表达式/少量说明共同表达；独立目录；实现过程中同步修正；不要多份矛盾事实。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R27",
+      "ownerSources": [
+        "O09"
+      ],
+      "title": "原话留存",
+      "rule": "逐条保留原话和已确认决定，按摘要校验；建议/事实/假设/未决项分开。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R28",
+      "ownerSources": [
+        "O11"
+      ],
+      "title": "性能约束下加固",
+      "rule": "正式包可混淆与重点选择性加密；不能明显损伤启动/浏览/播放/阅读；不靠混淆替代授权。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R29",
+      "ownerSources": [
+        "O12"
+      ],
+      "title": "依赖准入",
+      "rule": "不因方便引入库；平台和Gecko能力优先；新增依赖需必要性/许可/体积/ABI/安全/性能依据。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R30",
+      "ownerSources": [
+        "O12"
+      ],
+      "title": "R8优化",
+      "rule": "正式包R8优化/压缩/代码资源裁剪；JNI/反射/回调/扩展协议保留需最小化并验收。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    }
+  ]
+}

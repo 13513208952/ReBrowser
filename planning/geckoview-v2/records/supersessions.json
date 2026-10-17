@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "rules": [
+    {
+      "earlier": "保留旧包名/签名/UID及旧数据升级兼容",
+      "later": "O07/O09：io.github.rebrowser新包/新签名；无兼容/无迁移",
+      "status": "superseded-for-v2; old v1 maintenance still preserved"
+    },
+    {
+      "earlier": "极简/无背景/全量三套件",
+      "later": "O07：默认仅含背景全量，明确要求才定制",
+      "status": "superseded-for-v2"
+    },
+    {
+      "earlier": "先前少量固定管理员命令/音乐业务访问限制",
+      "later": "O07/O09：全应用全部用户能力纳入新分级授权与动态生态",
+      "status": "redesign-required; external OS/site security still applies"
+    },
+    {
+      "earlier": "助手建议仅根身份使用自有名单；先只USB",
+      "later": "O09：普通最高各有隔离名单；根可使用所有最高名单；有线/无线/应用内/跨应用/动态介入都纳入",
+      "status": "owner-confirmed-later-rule"
+    },
+    {
+      "earlier": "O08：规划文件不再文段形式",
+      "later": "O10：允许图表/表达式/文段混合，不拘泥文档主力",
+      "status": "refined; mixed visual planning is current rule"
+    },
+    {
+      "earlier": "单独修补WebView版ReOutlook登录和统计",
+      "later": "O02/O03/O04：暂停旧路线；作为Gecko新实现硬性验收目标",
+      "status": "old drafts retained privately, never integrated"
+    },
+    {
+      "earlier": "保护旧根私钥/旧版维护义务",
+      "later": "O09：明确继续保留；可并行建立更合适的新密钥机制",
+      "status": "NOT superseded; preserve separately from fresh v2 app"
+    }
+  ]
+}

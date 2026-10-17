@@ -1,0 +1,19 @@
+id,user_visible_feature,legacy_reference_NOT_ARCHITECTURE,requirements,phase,state
+F01,双层浏览环境/标签/隔离/保存与恢复,ReBrowserStore/ReBrowserWebController,R03 R10,P3,inventory-only; not implemented/tested
+F02,原生新标签页/背景/搜索/收藏/书签,ReBrowserNewTabView/ReBrowserFavorites,R03 R06,P3,inventory-only; not implemented/tested
+F03,历史期限/维持/暂停写入/原生近期访问,ReBrowserHistory/ReBrowserHistoryView,R03 R10,P3,inventory-only; not implemented/tested
+F04,下载/批准/取消/文件管理/系统安装器交接,ReBrowserDownloads/ReBrowserDownloadController,R03 R10,P3,inventory-only; not implemented/tested
+F05,网站权限/原生剪贴板手势/文件选择,ReBrowserSitePermissions/ReBrowserPermissionScript,R03 R10,P3,inventory-only; not implemented/tested
+F06,Native Back/Popup来源/全屏/设备窗口策略,ReBrowserFullscreenController/ReBrowserDevice,R03 R10,P3,inventory-only; not implemented/tested
+F07,应用管理/子应用入口/背景全量配置,ReBrowserApplications/ReBrowserSettingsActivity,R03 R06 R10,P3,inventory-only; not implemented/tested
+F08,Outlook官方个人/工作学校登录/重进/恢复,MainActivity/历史AAD或MSA启动错误,R03 R24,P4,inventory-only; not implemented/tested
+F09,邮件同步/账户隔离/离线正文/检索/导出,MailDatabase/ArchiveActivity/受控邮件导出,R03 R10 R21,P4,inventory-only; not implemented/tested
+F10,离线邮件压缩/去重/恢复/容量,新设计重点而非旧DB兼容,R21 R22 R23,P4,inventory-only; not implemented/tested
+F11,音乐手机UA认证前置/同上下文/明确桌面扫码例外,NETEASE_MUSIC_LOGIN_REQUIREMENTS,R03 R10,P5,inventory-only; not implemented/tested
+F12,官方播放器/权益/布局/首页/歌词,原官方网页及批准布局参考，不盲搬引擎补丁,R03,P5,inventory-only; not implemented/tested
+F13,MediaSession/通知/合法seek/冷启暂停/后台任务重连,ReBrowserMusicService/Runtime/原系统控制行为,R03 R10,P5,inventory-only; not implemented/tested
+F14,桌面歌词关闭/可拖动/锁定穿透/位置恢复,ReBrowserMusicLyricOverlay/Window,R03 R10,P5,inventory-only; not implemented/tested
+F15,全应用管理员查看控制/多级授权/动态生态,新体系，旧命令仅作覆盖参考,R10 R11 R12 R13 R18 R19,P6,inventory-only; not implemented/tested
+F16,各子应用容量/清缓存/全部数据,新归属与粗略估计目标，非活网页quota替代,R22 R23 R25,P4 P5,inventory-only; not implemented/tested
+F17,Android11+不依赖系统WebView,新引擎启动及ABI/设备降级,R01 R04,P3,inventory-only; not implemented/tested
+F18,新包新签名/无迁移/旧根维护义务,新发行线与旧维护线明确分离,R05 R07 R08 R09,P2 P7,inventory-only; not implemented/tested

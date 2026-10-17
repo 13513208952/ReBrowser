@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-17T22:08:30+08:00",
+  "status": "metadata and official Java source inspection only; not built or device-tested",
+  "stableCoordinate": "org.mozilla.geckoview:geckoview:158.0.20261007201254",
+  "metadataUrl": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/maven-metadata.xml",
+  "sourceRevision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
+  "aarContentLengthObserved": 243921033,
+  "aarDownloaded": false,
+  "verifiedApiFacts": [
+    {
+      "id": "E01",
+      "api": "StorageController.clearData(flags)",
+      "fact": "GeckoResult<Void>; all hosts; not per-subapp context"
+    },
+    {
+      "id": "E02",
+      "api": "clearDataFromHost(host,flags)",
+      "fact": "Host scope; third-party data not included; not context scope"
+    },
+    {
+      "id": "E03",
+      "api": "clearDataFromBaseDomain(baseDomain,flags)",
+      "fact": "Includes associated third-party storage; not subapp context scope"
+    },
+    {
+      "id": "E04",
+      "api": "clearDataForSessionContext(contextId)",
+      "fact": "void dispatch; NO completion result/callback in inspected158 Java API; close sessions first"
+    },
+    {
+      "id": "E05",
+      "api": "GeckoSessionSettings.Builder.contextId",
+      "fact": "Session context supported; not proof of independent physical cache directory or total byte statistics"
+    },
+    {
+      "id": "E06",
+      "api": "Maven POM",
+      "fact": "Kotlin/AndroidX/Media3/FIDO/SnakeYAML transitive dependencies exist; optionality/ABI/minSdk/toolchain not yet verified"
+    }
+  ],
+  "notProven": [
+    "Full context cache byte getter",
+    "Context-scoped cache-only deletion with trustworthy completion",
+    "Independent per-subapp physical cache directories",
+    "All Android11 devices/ABIs working",
+    "Old WebView site login continuity (explicitly not migrated)"
+  ],
+  "officialSourceArtifacts": [
+    {
+      "file": "geckoview-stable.pom",
+      "url": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/158.0.20261007201254/geckoview-158.0.20261007201254.pom",
+      "bytes": 3917,
+      "sha256": "883d0f5d0096cc2fb60168b59364579483539567723efd9de4fd677160b76682"
+    },
+    {
+      "file": "geckoview-stable-sources.jar",
+      "url": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/158.0.20261007201254/geckoview-158.0.20261007201254-sources.jar",
+      "bytes": 890480,
+      "sha256": "bb855e43aa84c60193859022cb26fbcbfaece5df34015c8fb7e20f57d3846f2a"
+    }
+  ]
+}

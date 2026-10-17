@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "revision": "R1",
+  "decisions": [
+    {
+      "id": "D01",
+      "state": "confirmed",
+      "decision": "io.github.rebrowser / v2.0.0",
+      "requirements": [
+        "R05"
+      ]
+    },
+    {
+      "id": "D02",
+      "state": "confirmed",
+      "decision": "Android11(API30)+；系统WebView不作为门槛",
+      "requirements": [
+        "R04"
+      ]
+    },
+    {
+      "id": "D03",
+      "state": "confirmed",
+      "decision": "全量含背景；仅明确要求才定制",
+      "requirements": [
+        "R06"
+      ]
+    },
+    {
+      "id": "D04",
+      "state": "confirmed",
+      "decision": "新包全新开始；无旧版兼容/数据迁移",
+      "requirements": [
+        "R08"
+      ]
+    },
+    {
+      "id": "D05",
+      "state": "confirmed",
+      "decision": "保留旧管理员根/密钥义务；允许新机制新密钥",
+      "requirements": [
+        "R09"
+      ]
+    },
+    {
+      "id": "D06",
+      "state": "confirmed",
+      "decision": "根跨所有最高管理员名单；普通最高管理员名单彼此/与根专有名单隔离",
+      "requirements": [
+        "R15",
+        "R16"
+      ]
+    },
+    {
+      "id": "D07",
+      "state": "confirmed",
+      "decision": "有线/无线ADB、应用内/跨应用/动态介入统一授权",
+      "requirements": [
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "id": "D08",
+      "state": "confirmed",
+      "decision": "高等级充分时必须获得对应能力；管理权限同步扩张",
+      "requirements": [
+        "R12",
+        "R13"
+      ]
+    },
+    {
+      "id": "D09",
+      "state": "confirmed",
+      "decision": "离线邮件高压缩；子应用存储以量级估算优先",
+      "requirements": [
+        "R21",
+        "R22"
+      ]
+    },
+    {
+      "id": "D10",
+      "state": "confirmed",
+      "decision": "混合规划/原话独立留存/持续审查",
+      "requirements": [
+        "R26",
+        "R27"
+      ]
+    },
+    {
+      "id": "D11",
+      "state": "confirmed",
+      "decision": "允许选择性加密/混淆，但性能敏感；依赖节制并R8裁剪",
+      "requirements": [
+        "R28",
+        "R29",
+        "R30"
+      ]
+    },
+    {
+      "id": "D12",
+      "state": "verified-upstream",
+      "decision": "2026-10-17 latest stable: org.mozilla.geckoview:geckoview:158.0.20261007201254",
+      "requirements": [
+        "R02"
+      ]
+    },
+    {
+      "id": "D13",
+      "state": "design-proposal",
+      "decision": "领域动作注册表为UI及全部调试入口的共同执行边界；传输不得直接调用存储/内核",
+      "requirements": [
+        "R10",
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "id": "D14",
+      "state": "design-proposal",
+      "decision": "机主授权提升/激活有效等级，避免等级足够后又被隐藏规则否决",
+      "requirements": [
+        "R11",
+        "R12"
+      ]
+    },
+    {
+      "id": "D15",
+      "state": "design-proposal",
+      "decision": "新密钥按APK签名/管理员身份/设备安装/插件委托/数据加密分域",
+      "requirements": [
+        "R07",
+        "R09",
+        "R17",
+        "R20",
+        "R28"
+      ]
+    },
+    {
+      "id": "D16",
+      "state": "design-proposal",
+      "decision": "先比较平台Deflate/GZIP与可选Zstd等高压缩候选，不先引入压缩库",
+      "requirements": [
+        "R21",
+        "R29"
+      ]
+    }
+  ]
+}

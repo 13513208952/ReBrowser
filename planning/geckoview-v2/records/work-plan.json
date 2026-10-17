@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "revision": "R1",
+  "activePhase": "P0",
+  "codingAuthorizedByPlan": false,
+  "phases": [
+    {
+      "id": "P0",
+      "name": "原话/需求/决策/疑点/图谱初稿与机主审查",
+      "depends": [],
+      "state": "in-progress",
+      "exit": [
+        "原话摘要校验",
+        "关键安全语义机主确认",
+        "体验基线清单逐项归属"
+      ]
+    },
+    {
+      "id": "P1",
+      "name": "官方API/隔离/删除/容量/Android11/ABI验证样机",
+      "depends": [
+        "P0"
+      ],
+      "state": "not-started",
+      "exit": [
+        "不假设context删除有回执",
+        "原生Gecko能力证据",
+        "依赖/许可/构建工具评估"
+      ]
+    },
+    {
+      "id": "P2",
+      "name": "标识/签名/密钥分域/领域命令/审计授权骨架",
+      "depends": [
+        "P0",
+        "P1"
+      ],
+      "state": "not-started",
+      "exit": [
+        "高等级单调性及名单隔离性质测试",
+        "所有入口同策略",
+        "旧根保全交接"
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "Gecko宿主浏览器/窗口/会话/权限/下载/书签历史",
+      "depends": [
+        "P2"
+      ],
+      "state": "not-started",
+      "exit": [
+        "Android11无系统WebView门控",
+        "功能/交互对照",
+        "会话与数据隔离"
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "ReOutlook官方登录/压缩离线库/容量管理",
+      "depends": [
+        "P2",
+        "P3"
+      ],
+      "state": "not-started",
+      "exit": [
+        "AAD/MSA/真实过期/取消/重进/进程重建",
+        "压缩/去重/检索/损坏恢复",
+        "2/50/200MB量级验收"
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "ReMusic官方认证/播放/媒体会话/歌词/后台生命周期",
+      "depends": [
+        "P2",
+        "P3"
+      ],
+      "state": "not-started",
+      "exit": [
+        "原登录UA规则",
+        "无未授权起播",
+        "真实系统控制与有界任务"
+      ]
+    },
+    {
+      "id": "P6",
+      "name": "完整能力注册/多入口/插件委托/动态介入联调",
+      "depends": [
+        "P2",
+        "P3",
+        "P4",
+        "P5"
+      ],
+      "state": "not-started",
+      "exit": [
+        "用户功能与管理员覆盖矩阵无缺项",
+        "越级/跨名单/重放/撤销/断线测试"
+      ]
+    },
+    {
+      "id": "P7",
+      "name": "性能/依赖/R8/资源裁剪/重点加密/发行审查",
+      "depends": [
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "state": "not-started",
+      "exit": [
+        "release实际包回归而非仅debug",
+        "新签名恢复流程",
+        "明确批准后发行v2.0.0"
+      ]
+    }
+  ],
+  "changeLoop": [
+    "实现前更新相关图/能力定义/验收",
+    "API发现不符登记证据并重开设计",
+    "实现后填实测结果，不以计划替代完成",
+    "机主改目标时原话追加、旧决定标superseded，不覆盖历史"
+  ]
+}

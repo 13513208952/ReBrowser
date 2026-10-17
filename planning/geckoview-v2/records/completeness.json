@@ -1,0 +1,645 @@
+{
+  "schema": 1,
+  "revision": "R5",
+  "overallDesignComplete": false,
+  "productImplementationReady": false,
+  "ownerSources": [
+    "O17",
+    "O18"
+  ],
+  "meaning": "需求留存/图表/符号演算不等于完整方案。所有领域至少有输入输出、状态、动作/权限、所有权、故障恢复、资源预算、API证据与验收之后才能称设计可实施。",
+  "domains": [
+    {
+      "id": "A00",
+      "domain": "需求/原话/决定追踪",
+      "status": "baseline-captured",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "跨领域状态与已解除约束留痕",
+      "existingEvidence": "O01..O18和需求/决策/审查已存在",
+      "completionDeliverables": [
+        "持续追加",
+        "来源核对",
+        "避免建议冒充机主确认"
+      ],
+      "requirements": [
+        "R26",
+        "R27"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "records/requirements.json"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A01",
+      "domain": "用户旅程/页面/返回交互",
+      "status": "inventory-only",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "保留哪些现有交互、首次新包体验与新安全页如何串接",
+      "existingEvidence": "18组功能盘点，未逐屏设计",
+      "completionDeliverables": [
+        "页面导航图",
+        "状态显示",
+        "返回优先级",
+        "错误页",
+        "无障碍",
+        "日常用例对照"
+      ],
+      "requirements": [
+        "R03",
+        "R06",
+        "R10"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/10-completeness-board.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A02",
+      "domain": "Gecko运行时/会话/context/进程",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "进程所有权、view/session分离、上下文映射与崩溃恢复",
+      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约",
+      "completionDeliverables": [
+        "默认拓扑和退路",
+        "持久ID",
+        "lease",
+        "恢复epoch",
+        "关闭规则",
+        "内存预算",
+        "接口契约"
+      ],
+      "requirements": [
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/11-gecko-runtime-sessions.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A03",
+      "domain": "浏览器环境/标签/搜索/书签/历史",
+      "status": "inventory-only",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "具体领域命令、状态持久化、Popup归属、环境删除",
+      "existingEvidence": "仅功能与能力分组",
+      "completionDeliverables": [
+        "数据模型",
+        "所有正常与失败动作",
+        "对照验收",
+        "隐私分级",
+        "无痕和临时环境事实边界"
+      ],
+      "requirements": [
+        "R03",
+        "R10",
+        "R22",
+        "R23"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/12-browser-and-system-boundaries.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A04",
+      "domain": "下载/权限/外部导航/系统交接",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "引擎响应流、权限提示、文件/媒体/安装器生命周期",
+      "existingEvidence": "旧功能清单；少量Gecko delegate源事实",
+      "completionDeliverables": [
+        "逐项delegate映射",
+        "流与取消",
+        "授权范围",
+        "系统等待状态",
+        "用户指定公共文件删除与专项销毁分离"
+      ],
+      "requirements": [
+        "R03",
+        "R04",
+        "R10"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/12-browser-and-system-boundaries.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A05",
+      "domain": "内建扩展/网页消息/调试介入",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "Gecko扩展真实API、页面world、帧身份、消息协议、管理者接口",
+      "existingEvidence": "只提出受控扩展和统一接入概念",
+      "completionDeliverables": [
+        "固定应用连接器",
+        "管理证明接入分离",
+        "帧和代次",
+        "有界消息",
+        "无调用来源额外限制",
+        "升级与故障处理"
+      ],
+      "requirements": [
+        "R01",
+        "R10",
+        "R19",
+        "R20",
+        "R35"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/13-control-protocol-contract.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A06",
+      "domain": "Outlook登录/官方会话/同步",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "个人/AAD入口、OAuth Popup、重定向、同context恢复与错误分类",
+      "existingEvidence": "历史真实错误与概念状态机",
+      "completionDeliverables": [
+        "具体状态",
+        "入口契约",
+        "同步消息",
+        "重进重建",
+        "取消失效",
+        "账户分区",
+        "权限与数据边界"
+      ],
+      "requirements": [
+        "R03",
+        "R24"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/14-outlook-offline-design.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A07",
+      "domain": "邮件压缩库/附件/检索/离线阅读",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "真实schema、codec容器、事务/去重/索引/读取和损坏恢复",
+      "existingEvidence": "压缩候选与管线图，不是数据设计",
+      "completionDeliverables": [
+        "可实现schema",
+        "写读崩溃顺序",
+        "基准数据集和预算",
+        "有界解压",
+        "只读安全渲染",
+        "压缩库准入依据"
+      ],
+      "requirements": [
+        "R03",
+        "R21",
+        "R22",
+        "R28",
+        "R29"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/14-outlook-offline-design.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A08",
+      "domain": "Music认证/播放器/媒体服务/歌词",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "原生Gecko媒体与官网SDK职责、任务/服务、账号与播放授权",
+      "existingEvidence": "既有登录硬规则和功能对照",
+      "completionDeliverables": [
+        "事件状态机",
+        "系统动作映射",
+        "冷启暂停",
+        "后台",
+        "恢复",
+        "seek回执",
+        "歌词和布局",
+        "队列预算"
+      ],
+      "requirements": [
+        "R03",
+        "R10"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/15-music-engine-native-design.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A09",
+      "domain": "存储归属/估计/清理/恢复",
+      "status": "concept-partial",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "哪些数据独占、哪些共享、引擎删除能否确认完成",
+      "existingEvidence": "存储管线+API void缺口已核实",
+      "completionDeliverables": [
+        "归属清单",
+        "统计快照",
+        "量级测试",
+        "完成判据",
+        "事务恢复",
+        "共享缓存策略",
+        "API实验计划"
+      ],
+      "requirements": [
+        "R22",
+        "R23",
+        "R25"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/04-storage.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A10",
+      "domain": "管理员等级/完整动作/会话协议",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "数值档位、高级边界H、逐动作schema、错误/幂等/异步结果",
+      "existingEvidence": ">=/禁用关系/名单隔离已符号演算；未形成完整协议",
+      "completionDeliverables": [
+        "等级提案",
+        "动作拆细",
+        "领域",
+        "传输共用契约",
+        "签名字节规则",
+        "重放",
+        "取消",
+        "结果隐私",
+        "兼容版本声明"
+      ],
+      "requirements": [
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R18",
+        "R31",
+        "R32",
+        "R35"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/13-control-protocol-contract.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A11",
+      "domain": "密钥/预编译身份/白名单/撤销",
+      "status": "partial-model",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "密钥算法与保管、设备登记、静态表、禁用恢复/分发",
+      "existingEvidence": "旧公钥归档，新密钥/登记未开始",
+      "completionDeliverables": [
+        "新旧维护线分离",
+        "设备proof",
+        "离线撤销",
+        "Root不可禁",
+        "高级不能热增",
+        "材料交接清单"
+      ],
+      "requirements": [
+        "R07",
+        "R09",
+        "R14",
+        "R15",
+        "R16",
+        "R17",
+        "R31",
+        "R32"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/06-trust-and-release.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A12",
+      "domain": "可信来源/四步/数据抢救",
+      "status": "detailed-model-not-platform-verified",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "签名身份、可信基线密封、两次系统验证、私有集合销毁",
+      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证",
+      "completionDeliverables": [
+        "状态持久化和恢复",
+        "全部入口闸门",
+        "签名轮换",
+        "实际APK恢复样机",
+        "数据清单",
+        "不可逆点与中断测试"
+      ],
+      "requirements": [
+        "R33",
+        "R34",
+        "R36",
+        "R37",
+        "R38"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/09-root-continuity-and-data.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A13",
+      "domain": "任务调度/线程/内存/性能预算",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "浏览/媒体/压缩/下载/统计并发及资源释放",
+      "existingEvidence": "仅有有界任务原则",
+      "completionDeliverables": [
+        "全局与领域预算",
+        "线程",
+        "优先级",
+        "取消",
+        "低内存",
+        "冷暖启动",
+        "量测方法和回归阈值"
+      ],
+      "requirements": [
+        "R03",
+        "R04",
+        "R21",
+        "R22",
+        "R28"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/16-resources-and-dependencies.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A14",
+      "domain": "构建/依赖/ABI/许可/R8/签名发行",
+      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "工具链、AAR/minSdk/ABI、唯一全量包、可复现发布",
+      "existingEvidence": "stable元数据/POM源码已核对，AAR未下载/构建",
+      "completionDeliverables": [
+        "依赖锁",
+        "必要性审查",
+        "许可",
+        "ABI政策",
+        "工具链",
+        "最小keep",
+        "正式包功能与体积性能",
+        "发行及恢复流程"
+      ],
+      "requirements": [
+        "R02",
+        "R04",
+        "R05",
+        "R06",
+        "R07",
+        "R28",
+        "R29",
+        "R30"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/16-resources-and-dependencies.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    },
+    {
+      "id": "A15",
+      "domain": "测试/故障注入/验收与发布闸门",
+      "status": "inventory-only",
+      "designComplete": false,
+      "implementationReady": false,
+      "need": "具体fixture与设备矩阵、任务失败、真实Release覆盖",
+      "existingEvidence": "74项计划和符号例子，不是产品测试",
+      "completionDeliverables": [
+        "测试数据与步骤",
+        "预期可观察结果",
+        "不侵害日常资料",
+        "跨域矩阵",
+        "异常注入",
+        "测量与失败阻断"
+      ],
+      "requirements": [
+        "R03",
+        "R04",
+        "R10",
+        "R21",
+        "R22",
+        "R23",
+        "R24",
+        "R25",
+        "R30"
+      ],
+      "responsible": "assistant-engineering",
+      "blockOwnerNow": false,
+      "currentArtifactRefs": [
+        "views/07-roadmap-and-review.md"
+      ],
+      "requiredReviewAxes": [
+        "normal-flow",
+        "failure-cancel-rebuild",
+        "data-and-scope",
+        "admin-counterpart",
+        "resource-budget",
+        "upstream-api-evidence",
+        "observable-acceptance"
+      ]
+    }
+  ],
+  "ownerMaterialExceptions": [
+    "旧私钥/备份的真实保管交接不能凭空确认，到相关阶段再请求",
+    "真实日常资料的不可逆测试需要独立明确授权，工程选择授权不等于销毁授权"
+  ],
+  "nextOrder": [
+    "A02",
+    "A05",
+    "A03",
+    "A04",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "A14",
+    "A01",
+    "A15"
+  ],
+  "notABlocker": "普通API疑点/参数/方案比较由助手负责，不把每个待研究点变成机主问卷。"
+}

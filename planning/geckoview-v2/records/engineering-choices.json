@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "revision": "R5",
+  "authoritySource": "O18: majority of engineering decisions delegated; these are engineering proposals/choices, not newly invented owner instructions",
+  "choices": [
+    {
+      "id": "EC01",
+      "state": "preferred-pending-spike",
+      "choice": "单应用进程一个GeckoRuntime，业务session显式context；不默认三子应用三内核",
+      "basis": [
+        "E07",
+        "E08"
+      ],
+      "artifact": "views/11-gecko-runtime-sessions.md",
+      "revisitWhen": "隔离/生命周期/资源实证不成立"
+    },
+    {
+      "id": "EC02",
+      "state": "preferred",
+      "choice": "Java与原生Android View基线；Gecko原生delegate与领域层直连，避免为架构换大UI/DI框架",
+      "basis": [
+        "R03",
+        "R29"
+      ],
+      "artifact": "views/16-resources-and-dependencies.md",
+      "revisitWhen": "具体必要能力或测量收益证明需要新依赖"
+    },
+    {
+      "id": "EC03",
+      "state": "baseline-pending-benchmark",
+      "choice": "平台SQLite/高等级压缩先做基线，正文内容仓库逐对象压缩与账户内去重；codec可版本化扩展",
+      "basis": [
+        "R21",
+        "R29"
+      ],
+      "artifact": "views/14-outlook-offline-design.md",
+      "revisitWhen": "Zstd等显著空间收益且内存/体积/时延合格"
+    },
+    {
+      "id": "EC04",
+      "state": "contract-draft",
+      "choice": "签实际明确字节的控制包络，固定协议域/目标/动作/nonce；不依赖JSONObject重排，也不默认新增大协议库",
+      "basis": [
+        "R18",
+        "R29",
+        "R35"
+      ],
+      "artifact": "views/13-control-protocol-contract.md",
+      "revisitWhen": "字节级互操作/严格解析/安全审查发现问题"
+    },
+    {
+      "id": "EC05",
+      "state": "baseline",
+      "choice": "覆盖有线/无线ADB及本地/跨应用控制；默认不新增独立公网监听",
+      "basis": [
+        "R18",
+        "R19"
+      ],
+      "artifact": "views/13-control-protocol-contract.md",
+      "revisitWhen": "实际场景需要新的网络通道再做明确设计"
+    },
+    {
+      "id": "EC06",
+      "state": "security-design",
+      "choice": "插件优先外部程序/隔离接口/受控Gecko扩展，不默认把任意中级插件DEX/native代码载入主进程绕过策略",
+      "basis": [
+        "R19",
+        "R31",
+        "R34"
+      ],
+      "artifact": "views/13-control-protocol-contract.md",
+      "revisitWhen": "明确能力确需额外可信执行模型"
+    },
+    {
+      "id": "EC07",
+      "state": "preferred-pending-api-validation",
+      "choice": "原生媒体delegate/官网SDK事件优先，补充受控连接器；不默认搬旧WebView高频evaluate或Howler补丁",
+      "basis": [
+        "R01",
+        "R03"
+      ],
+      "artifact": "views/15-music-engine-native-design.md",
+      "revisitWhen": "真实Gecko场景证明原生事件不足/旧问题仍在"
+    },
+    {
+      "id": "EC08",
+      "state": "truthful-fallback",
+      "choice": "context退休可阻止重新使用旧数据，但不是磁盘删除完成证据；安全删除缺口不通过全局清理假装解决",
+      "basis": [
+        "E04",
+        "R23"
+      ],
+      "artifact": "views/04-storage.md",
+      "revisitWhen": "发现可验证的公开context删除完成方案"
+    }
+  ]
+}

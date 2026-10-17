@@ -114,7 +114,21 @@
       "utf8Bytes": 1431,
       "sha256": "c1c793ecf82c5b7b31b49561ff15cf42317e013d157baf09701f46c588ad7565",
       "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O17",
+      "file": "owner-verbatim/O17-planning-completeness-question.txt",
+      "utf8Bytes": 84,
+      "sha256": "151176891a058424ebf61b2dcca0cf71d7dd74bef4d8e295c822fbd88927dca1",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
+    },
+    {
+      "id": "O18",
+      "file": "owner-verbatim/O18-independent-planning-pace.txt",
+      "utf8Bytes": 126,
+      "sha256": "b1443c3c83144204df67bbd2be26b898bfd97516a93b508236a260037af9d277",
+      "provenance": "owner user-message, manually transcribed verbatim; no language/punctuation corrections"
     }
   ],
-  "lastAppendedAt": "2026-10-17T23:18:59+08:00"
+  "lastAppendedAt": "2026-10-17T23:40:55+08:00"
 }

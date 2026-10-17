@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R4",
+  "revision": "R5",
   "decisions": [
     {
       "id": "D01",
@@ -250,6 +250,17 @@
       ],
       "ownerSources": [
         "O16"
+      ]
+    },
+    {
+      "id": "D26",
+      "state": "confirmed",
+      "decision": "按助手节奏继续，不着急；绝大多数剩余工程问题由助手研究/论证/决定，不反复询问机主。",
+      "requirements": [
+        "R26"
+      ],
+      "ownerSources": [
+        "O18"
       ]
     }
   ]

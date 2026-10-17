@@ -1,6 +1,6 @@
 {
   "checkedAt": "2026-10-17T22:08:30+08:00",
-  "status": "metadata and official Java source inspection only; not built or device-tested",
+  "status": "official metadata/POM/Java sources and bounded AAR central-directory/manifest/build-metadata inspection; no full AAR download, build or device test",
   "stableCoordinate": "org.mozilla.geckoview:geckoview:158.0.20261007201254",
   "metadataUrl": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/maven-metadata.xml",
   "sourceRevision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
@@ -36,6 +36,45 @@
       "id": "E06",
       "api": "Maven POM",
       "fact": "Kotlin/AndroidX/Media3/FIDO/SnakeYAML transitive dependencies exist; optionality/ABI/minSdk/toolchain not yet verified"
+    },
+    {
+      "id": "E07",
+      "api": "GeckoRuntime.create / shutdown",
+      "fact": "create documentation: existing active Gecko instance makes create throw; bind runtime to process lifetime, not Activity. shutdown invalidates all attached sessions.",
+      "source": "GeckoRuntime.java stable158 lines624-708"
+    },
+    {
+      "id": "E08",
+      "api": "GeckoSessionSettings.Builder.contextId",
+      "fact": "Nonnull differing IDs partition cookies/localStorage; default null removes this isolation; context storage persists until cleared.",
+      "source": "GeckoSessionSettings.java stable158 lines83-100"
+    },
+    {
+      "id": "E09",
+      "api": "NavigationDelegate.onNewSession",
+      "fact": "Return a newly created session, retain it strongly, and do not independently load the supplied informational URI inside this callback.",
+      "source": "GeckoSession.java stable158 lines4892-4910"
+    },
+    {
+      "id": "E10",
+      "api": "ContentDelegate.onCrash/onKill",
+      "fact": "Session already closed/unusable; reopen does not automatically preserve state, restore or reload explicitly.",
+      "source": "GeckoSession.java stable158 lines4205-4226"
+    },
+    {
+      "id": "E11",
+      "api": "Official stable158 AAR central directory / AndroidManifest.xml",
+      "fact": "Contains arm64-v8a, armeabi-v7a, x86_64; declared minSdk26 and required OpenGL ES2.0. No32bit x86 native ABI. Bounded range inspection, not device compatibility proof."
+    },
+    {
+      "id": "E12",
+      "api": "Official stable158 aar-metadata.properties",
+      "fact": "minCompileSdk37, minCompileMinorSdk2; old compileSdk36 insufficient. Build SDK requirement does not raise product minSdk30. Full toolchain compatibility still pending."
+    },
+    {
+      "id": "E13",
+      "api": "Official stable158 manifest services",
+      "fact": "Gecko internal media/socket/gpu/crash/content services exist. Single app-owned runtime is NOT a single-OS-process memory guarantee."
     }
   ],
   "notProven": [

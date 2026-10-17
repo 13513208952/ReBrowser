@@ -167,10 +167,29 @@ def review():
     assert [s['freshAndroidOwnerAuthentication'] for s in continuity['ownerExactWarningExamples']] == [False, False, True, True]
     assert continuity['confirmed']['businessUnlockOnlyAfterSuccessfulErasure']
     assert continuity['confirmationProtocol']['noUnlockBeforeErase']
+    completeness = load('records/completeness.json')
+    design_domains = indexed(completeness['domains'])
+    for domain in design_domains.values():
+        assert set(domain['requirements']) <= requirements.keys()
+        assert domain['completionDeliverables'] and len(domain['requiredReviewAxes']) >= 6
+        assert not domain['implementationReady'] or domain['designComplete']
+        for artifact in domain['currentArtifactRefs']:
+            assert (P / artifact).is_file(), (domain['id'], artifact)
+    if completeness['overallDesignComplete']:
+        assert all(d['designComplete'] for d in design_domains.values())
+    backlog = rows('matrices/design-backlog.csv')
+    assert {r['id'].removeprefix('DES-') for r in backlog} == design_domains.keys()
+    for choice in load('records/engineering-choices.json')['choices']:
+        assert (P / choice['artifact']).is_file()
+        assert choice['revisitWhen'], 'engineering preference needs a withdrawal condition'
     report = {
         'revision': requirement_record['revision'], 'result': 'structural-and-symbolic-review-passed',
         'authorityComparison': '>= (confirmed O13)',
         'ownerMessages': len(messages), 'requirements': len(requirements),
+        'designDomainsAudited': len(design_domains),
+        'designDomainsComplete': sum(d['designComplete'] for d in design_domains.values()),
+        'overallDesignComplete': completeness['overallDesignComplete'],
+        'productImplementationReady': completeness['productImplementationReady'],
         'capabilityGroups': len(capabilities), 'acceptanceCasesPlannedNotRun': len(acceptance),
         'authorityExamplesSymbolicallyChecked': len(authority_cases),
         'compiledPrincipalExamplesSymbolicallyChecked': len(principal_cases),
@@ -183,6 +202,7 @@ def review():
         'fullMermaidParserOrRenderingValidated': False,
         'productCodeImplementedOrBuilt': False, 'deviceOrPrivateKeyAccess': False,
         'openQuestions': sum(q['state'] != 'resolved' for q in questions.values()),
+        'ownerAnswersRequiredNow': sum(q['state'] != 'resolved' and q.get('askOwnerNow', False) for q in questions.values()),
         'resolvedOwnerQuestions': sum(q['state'] == 'resolved' for q in questions.values()),
         'caveat': 'Hashes prevent subsequent edits; they do not independently prove original transcription. Diagram syntax/rendering and unresolved owner semantics require review. Numeric levels remain proposals; >= is owner-confirmed in O13.'
     }

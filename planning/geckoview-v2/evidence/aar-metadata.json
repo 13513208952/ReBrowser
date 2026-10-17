@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-10-17T23:56:23+08:00",
+  "artifact": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/158.0.20261007201254/geckoview-158.0.20261007201254.aar",
+  "version": "158.0.20261007201254",
+  "readMethod": "bounded HTTP ranges: ZIP central directory + two metadata entries only",
+  "fullAarDownloaded": false,
+  "fullArtifactHashVerified": false,
+  "publishedArchiveBytes": 243921033,
+  "nativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "androidMinSdkDeclared": 26,
+  "aarBuildMetadata": {
+    "aarFormatVersion": "1.0",
+    "aarMetadataVersion": "1.0",
+    "minCompileSdk": "37",
+    "minCompileMinorSdk": "2",
+    "minCompileSdkExtension": "0",
+    "minAndroidGradlePluginVersion": "1.0.0",
+    "coreLibraryDesugaringEnabled": "false"
+  },
+  "requiredOpenGlEs": [
+    "0x00020000"
+  ],
+  "metadataEntryDigests": [
+    {
+      "entry": "AndroidManifest.xml",
+      "bytes": 29779,
+      "sha256": "02b9de8342bb328ab40408f958d9d01b31f7d0d98e0bd3a0a3f1bf4ffec0404e"
+    },
+    {
+      "entry": "META-INF/com/android/build/gradle/aar-metadata.properties",
+      "bytes": 178,
+      "sha256": "b196cfaaf1fd0272b016a910b948bf4c633198d911fd4f044ce6a84e2b1eef6f"
+    }
+  ],
+  "meaning": [
+    "Android minSdk26 is compatible with the product minSdk30 baseline; compileSdk37 minor2 is a BUILD TOOLCHAIN requirement, not a requirement that users run Android37.",
+    "Current legacy compileSdk36 is insufficient for this dependency as declared; plan toolchain setup before compilation, do not silently choose an older engine.",
+    "Upstream AAR contains arm64-v8a, armeabi-v7a, x86_64, NOT 32-bit x86. This is not proof all drivers/codecs/devices of these ABIs work.",
+    "Runtime is one primary Gecko instance per app process; AAR declares internal media/socket/gpu/crash/content services; measure process-group memory, not only Java heap.",
+    "Byte-range metadata inspection is not full AAR integrity verification or a successful build/device test."
+  ]
+}

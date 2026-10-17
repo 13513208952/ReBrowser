@@ -1,0 +1,12 @@
+id,dimension,value,upstreamEvidence,productPolicy,verificationState
+K-C01,Android runtime,API30 Android11,Gecko manifest minSdk26,minimum supported; noWebView provider gate,planned-not-tested
+K-C02,Android runtime,API31/33/36 and available newer,public API compatibility must be validated,support matrix including lifecycle/permissions/media,planned-not-tested
+K-C03,ABI,arm64-v8a,present in official AAR E11,include in normal full release,artifact-present-not-device-tested
+K-C04,ABI,armeabi-v7a,present in official AAR E11,include/validate Android11 low-end compatibility,artifact-present-not-device-tested
+K-C05,ABI,x86_64,present in official AAR E11,emulator and supported device validation,artifact-present-not-device-tested
+K-C06,ABI,32bit x86,absent in official AAR E11,do not claim support; no silent old-engine fallback,unsupported-by-this-upstream-artifact
+K-C07,Build SDK,compileSdk37 minor2,required in official AAR E12,provision compatible SDK/toolchain; users still minSdk30,not-provisioned
+K-C08,GPU,OpenGL ES2.0,required in official AAR manifest,verify driver stability; no broad device-model blacklist,declared-not-device-tested
+K-C09,System WebView,missing/old/disabled,not renderer dependency in new design,must not block launch or app functionality,planned-not-tested
+K-C10,Memory,primary + Gecko child processes,AAR service declarations E13,measure whole owned process group and per-domain budgets,planned-not-measured
+K-C11,Optional hardware/GMS,no camera/GPS/biometric/FIDO provider,manifest/POM and OS permission differences,"local feature fallback, not whole-app refusal",planned-not-tested

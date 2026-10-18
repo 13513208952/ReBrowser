@@ -272,6 +272,8 @@
 | 浏览器领域与本机数据 | scoped-browser-background-lifecycle | 浏览器后台关闭只收敛自身页面/任务，不shutdown共享GeckoRuntime，不把关闭页当全部IO停止或零内存<br>`planning/geckoview-v2/records/browser-background-ownership.json` |
 | 统一控制入口与协议 | admitted-production-source-host-tests | O41逐文件准入：ControlEnvelope已实现，真实生产类经独立历史帧/签名负例及不可变性测试；未含JSON/授权/Android<br>`planning/geckoview-v2/records/implementation-readiness.json`<br>`planning/geckoview-v2/run_production_unit_tests.py`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 本机加密与密钥 | canonical-public-key-and-proof-primitives | 精确P256 SPKI/曲线上点及JCA参数、严格正DER标量、规范有界Base64url和SHA；接受s/n-s；两生产文件合跑22HOST JUnit，不生成钥匙、不等于验签授权<br>`planning/geckoview-v2/records/crypto-encoding-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
+| 网站与系统许可 | pinned-geolocation-source-method-host-study | 抽取固定GeckoAppShell四方法体，用纯合成LocationManager16项主机断言；COARSE provider hint不等于站点坐标隐私，global pause非单站撤权回执；无真实位置访问<br>`planning/geckoview-v2/experiments/geolocation_source_host_probe.py`<br>`planning/geckoview-v2/evidence/geolocation-source-host-probe.json` |
+| 领域基础与任务 | production-source-actual-Android-API-compile | 两份生产编码文件实际用SDK37.2 android.jar作bootclasspath编译Java8 bytecode；不是JDK覆盖Android类的普通classpath，也不是API30/Android运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
 
 ### 当前边界
 

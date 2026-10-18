@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R18",
+  "revision": "R19",
   "authority": [
     "O26",
     "O27",
@@ -3184,6 +3184,23 @@
       "paths": [
         "planning/geckoview-v2/records/crypto-encoding-contract.json",
         "planning/geckoview-v2/evidence/production-unit-tests.json"
+      ]
+    },
+    {
+      "group": "permissions",
+      "kind": "pinned-geolocation-source-method-host-study",
+      "summary": "抽取固定GeckoAppShell四方法体，用纯合成LocationManager16项主机断言；COARSE provider hint不等于站点坐标隐私，global pause非单站撤权回执；无真实位置访问",
+      "paths": [
+        "planning/geckoview-v2/experiments/geolocation_source_host_probe.py",
+        "planning/geckoview-v2/evidence/geolocation-source-host-probe.json"
+      ]
+    },
+    {
+      "group": "core",
+      "kind": "production-source-actual-Android-API-compile",
+      "summary": "两份生产编码文件实际用SDK37.2 android.jar作bootclasspath编译Java8 bytecode；不是JDK覆盖Android类的普通classpath，也不是API30/Android运行",
+      "paths": [
+        "planning/geckoview-v2/evidence/production-android-api-compile.json"
       ]
     }
   ],

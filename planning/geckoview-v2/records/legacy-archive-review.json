@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R18",
+  "revision": "R19",
   "authority": [
     "O31",
     "O32"
@@ -474,12 +474,15 @@
       "sha256": "8f4515187edab650b277f5cbb0272071844a7bcac72228a7f230f0b31240c44a",
       "bytes": 1452,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T22:57:35+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读：旧离线管理员RSA签名公钥和独立导出接收方RSA公钥；保留维护/旧加密导出恢复的永久义务。公钥存在不是私钥持有/备份证明；新P256机制不能取代或删旧凭据材料。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/evidence/legacy-public-trust.json",
+        "planning/geckoview-v2/records/key-and-enrollment-design.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

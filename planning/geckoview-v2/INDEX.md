@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划与技术验证工作台 R18
+# GeckoView v2 · 规划与技术验证工作台 R19
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停；O41允许已搞清实现方法的总树文件按文件推进，O42再次明确推送后不自行停工。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
@@ -73,10 +73,12 @@ mindmap
 | [领域/连接器契约](views/18-domain-and-connector-contracts.md) | 模块输入输出、消息/流、真实任务与持久化轴、安全停止通道 | R7规范与时序例子 |
 | [用户旅程/返回](views/19-user-journeys-and-back.md) | 首装/浏览/子应用/后台/设置和Back优先级 | 18条设计旅程 |
 | [固定权限模块主机执行](evidence/permission-module-host-probe.json) | 原模块JS+合成Services/actors运行28项，确认永久/private-session、一次展示通知、上下文读取 | 不是Android或真实权限管理器通过 |
+| [定位提供方源码主机研究](evidence/geolocation-source-host-probe.json) | 4个确切Java方法体＋合成位置管理器16断言；先选最精确缓存再选COARSE，global pause分支不等于单站停止 | 非JNI/Android/站点实际坐标；模糊定位仍阻断 |
 | [浏览器后台所有权](records/browser-background-ownership.json) | 页面退出/OS交接/任务收敛与共享Runtime分开 | 不shutdown全部子应用，不以关页面冒充IO结束 |
 | [Native网站权限契约](records/gecko-permission-design.json)／[来源与API编译](evidence/gecko-permission-api-and-lifetime.json) | clipboard原生回调与context字段已编译；永久engine allow和有限grant期限差异已确认 | 有限期限/粗细定位/停止使用仍待实测，不复制v1补丁 |
 | [四平台动作具体契约](records/platform-action-contracts.json)／[主机DTO演算](review_platform_actions.py) | 参数/原生窗口代次/安装sourceRef/共享方法/完成与取消 | 四个动作子集，不是178动作DTO完成 |
 | [控制请求签名字节契约](records/control-proof-format.json)／[跨实现主机检查](evidence/control-proof-cross-implementation.json) | 17字段帧、895项JCA/独立Python与OpenSSL、重放与新proof幂等规则 | 公开标量1合成材料，非Android授权实现 |
+| [生产源码Android API编译](evidence/production-android-api-compile.json) | 两文件实际SDK37.2 bootclasspath编译，3个Java8类文件 | 编译不等于Android运行，也不宣称API30已测 |
 | [公钥/编码实现契约](records/crypto-encoding-contract.json) | P256 canonical SPKI＋曲线/点、DER正标量、s/n-s等价、规范有界Base64url/SHA | 格式合法不等于验签或取得权限，未生成真实密钥 |
 | [提前arm64过滤证据](evidence/arm64-early-native-filter.json) | 仅merge/strip两阶段，各13库原字节匹配官方AAR | 阶段任务通过，不等于新APK或运行通过 |
 | [领域接口](records/domain-interfaces.json) | 11个逻辑组件50个方法，不要求拆成Gradle模块；平台流程显式归属 | 明确所有权/线程/能力覆盖 |
@@ -104,7 +106,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R18自检结果](reviews/R18-second-production-encoding-slice-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R19自检结果](reviews/R19-geolocation-provider-source-gap-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

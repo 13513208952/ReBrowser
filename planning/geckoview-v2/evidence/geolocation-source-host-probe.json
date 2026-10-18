@@ -1,0 +1,29 @@
+{
+  "scope": "HOST source-method exercise with synthetic Location/LocationManager; NOT actual Android class/JNI/Gecko/OS provider/site behavior",
+  "coordinate": "org.mozilla.geckoview:geckoview:158.0.20261007201254",
+  "sourcePath": "org/mozilla/gecko/GeckoAppShell.java",
+  "sourceSha256": "f17191faae943bdf970d4b3276c855bbbb38c0b50ae51cec7d47f9170181137e",
+  "methods": [
+    "private static float getLocationAccuracy(",
+    "private static Location determineReliableLocation(",
+    "private static @Nullable Location getLastKnownLocation(",
+    "private static synchronized boolean updateLocationListeners("
+  ],
+  "checks": 16,
+  "fixtureSha256": "26639a6490955c7d21f26afd908be3dfb3ccee20a87edb918263537fc1485c4a",
+  "javaMethodBodySha256": [
+    "51a5d162f79f8add668d88101a0d26966d77ee408a1b93efba0175cdce1f3278",
+    "e60cd2c78ada4493cd2efa27ab8039cc88d830afa5e0cba67c71f6be2f9a415e",
+    "e5847df08ec162cfd806f63a1fe4b46f4d5700e0d91e5c04801e7d2d13922386",
+    "ac4295b0c1e066291a817126f854ca9196313950afb7c81c341a58284b88647d"
+  ],
+  "coarseCriteriaDidNotPreventMostAccurateSyntheticCachedObjectPublication": true,
+  "pausedStillRequestedBranchDidNotRemoveSyntheticExistingListener": true,
+  "providerSelectionIsNotCoordinateRedaction": true,
+  "actualSensitiveApiAccess": false,
+  "actualNativeGeckoPrecisionObserved": false,
+  "nativeDownstreamPerRequestRedactionInspected": false,
+  "livePermissionGrantedOrRevoked": false,
+  "temporaryHarnessRemoved": true,
+  "consequence": "Do not equate enableHighAccuracy=false or pauseLocation with per-site approximate privacy or acknowledged active-use termination. Native/OS downstream still requires inspection and separately scoped validation."
+}

@@ -1,0 +1,42 @@
+{
+  "scope": "Actual javac Android37.2 android.jar BOOTCLASSPATH compile for two v2 production files; NOT Android runtime or API30 qualification",
+  "checkedAt": "2026-10-18T23:02:33+08:00",
+  "passed": true,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+      "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
+    }
+  ],
+  "compiler": "existing JDK21.0.10 javac",
+  "commandTemplate": "javac -J-Xmx256m -J-Djava.io.tmpdir=$TMPDIR -source 8 -target 8 -bootclasspath $PRIVATE_SDK/platforms/android-37.2/android.jar -d $OWNED_OUTPUT ControlEnvelope.java CryptoEncoding.java",
+  "bootClasspathSdk": "37.2",
+  "androidJarSha256": "1db2419dbd45457f83b90ef8a7ef41e118174782c9a5c2185b55899df022767f",
+  "classFiles": [
+    {
+      "path": "io/github/rebrowser/control/ControlEnvelope$Field.class",
+      "sha256": "52ade1ae7ea37b5c09b5e0a4c97abea0f038c1eb484a2b698fa2cea472e41031",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ControlEnvelope.class",
+      "sha256": "599ce30b46d7399c71eaf15abd4f49c3d908e83a9c160c12c792dba7845de17f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/CryptoEncoding.class",
+      "sha256": "c1897f4f2ab8b522b65a2baa88619cbf1d72cb5e42aad431ba004eb2f347adbd",
+      "classMajor": 52
+    }
+  ],
+  "diagnostics": "3 source/target8 obsolescence warnings, no errors",
+  "newPeakBudgetBytes": 16777216,
+  "androidRuntimeExecuted": false,
+  "androidApi30RuntimeValidated": false,
+  "productApkBuilt": false,
+  "keystoreOrRealCredentialsAccessed": false
+}

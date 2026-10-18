@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R18",
+  "revision": "R19",
   "authority": [
     "O41",
     "O42"
@@ -40,7 +40,8 @@
         "SPKI/DER验签、密钥身份/权限/挑战/replay/持久化并发",
         "真实IPC入口可用"
       ],
-      "integrationGate": "解析成功只能进入后续验证；在ControlDecoder/ChallengeStore/Dispatcher及全部权限闸门完成前，不挂公开入口、不执行动作"
+      "integrationGate": "解析成功只能进入后续验证；在ControlDecoder/ChallengeStore/Dispatcher及全部权限闸门完成前，不挂公开入口、不执行动作",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
@@ -69,7 +70,8 @@
         "strict JSON/atomic replay and domain execution",
         "large mail-file streaming digest"
       ],
-      "integrationGate": "callers must enforce actual key identity/policy, ECDSA verification and remaining proof admission; no public entrypoints enabled"
+      "integrationGate": "callers must enforce actual key identity/policy, ECDSA verification and remaining proof admission; no public entrypoints enabled",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
     }
   ],
   "parallelPending": [

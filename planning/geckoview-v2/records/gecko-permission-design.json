@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R16",
+  "revision": "R19",
   "state": "native-api-compiled-critical-lifetime-gap-not-implementation-ready",
   "domain": "A04",
   "requirements": [
@@ -76,6 +76,16 @@
       "id": "PF06",
       "finding": "Pinned storage-module SetPermission writes EXPIRE_NEVER for normal state, EXPIRE_SESSION for private state, no completion callback; host executing exact source with mocks observed this",
       "consequence": "private-session lifetime is not arbitrary finite grant lifetime; keeping normal cached allows while only dropping app grant metadata remains unsafe. Host Services are synthetic, not real permission manager validation."
+    },
+    {
+      "id": "PF07",
+      "finding": "GeckoAppShell source first chooses most accurate/recent last-known Location across ALL providers and publishes it before applying COARSE/FINE provider-selection Criteria. AndroidListeners forwards raw coordinates; per-request native downstream not inspected.",
+      "consequence": "enableHighAccuracy=false or Criteria.COARSE is not per-site coordinate redaction/privacy enforcement, especially when app already holds FINE for another scope. Source-method harness16checks confirms synthetic branch only; no actual location precision/OS result observed."
+    },
+    {
+      "id": "PF08",
+      "finding": "Java updateLocationListeners paused=true/requested=true branch returns without removeUpdates; global AndroidListeners callback has no inspected pause filter. No per-site identity in this Java provider path.",
+      "consequence": "Do not use global pauseLocation as one-site expiry or claim it acknowledges existing capture stopped. Native downstream/lifecycle may behave differently and remains unverified."
     }
   ],
   "lifetimePlanCandidatesNotValidated": [
@@ -95,5 +105,17 @@
   ],
   "actualDevicePermissionOrClipboardTestsPerformed": false,
   "productSourceWritten": false,
-  "pinnedModuleHostExecution": "evidence/permission-module-host-probe.json"
+  "pinnedModuleHostExecution": "evidence/permission-module-host-probe.json",
+  "geolocationSourceMethodHostEvidence": "evidence/geolocation-source-host-probe.json",
+  "approximatePrivacyGate": {
+    "state": "blocked-until-per-request-native-enforcement-proven",
+    "notEnough": [
+      "page enableHighAccuracy false",
+      "Criteria.ACCURACY_COARSE provider hint",
+      "an app grant expiry timestamp",
+      "global pauseLocation dispatch"
+    ],
+    "next": "inspect native geolocation delivery/permission lifetime and public supported interception; deny unavailable grants rather than pretend privacy success; no v1 navigator monkeypatch shortcut",
+    "realSensitiveTestsAuthorizedByThisStudy": false
+  }
 }

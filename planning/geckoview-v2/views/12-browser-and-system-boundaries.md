@@ -1,4 +1,8 @@
-# 浏览器与系统边界设计骨架 · A03／A04 · R5
+# 浏览器与系统边界设计骨架 · A03／A04 · R19
+
+当前权限阻断以[Native权限记录](../records/gecko-permission-design.json)为准：
+- 普通引擎许可写EXPIRE_NEVER；自身期限/void撤回派发不能冒充引擎过期或活动使用结束。
+- [固定提供方方法体HOST研究](../evidence/geolocation-source-host-probe.json)显示先发布最精确缓存再选择COARSE provider；`enableHighAccuracy=false`不是单站模糊位置保证，global pause也不是单站停止回执。实际JNI/OS/站点结果仍未测；不因编码层已有源码而跳过该阻断。
 
 ```mermaid
 flowchart LR
@@ -24,8 +28,8 @@ flowchart LR
 | 下载 | Offered/Approved/Streaming/Complete/Cancelled/Failed | 优先使用引擎提供的WebResponse流；onExternalResponse契约需P1验证 | 不把鉴权下载重建成无上下文HTTP；流式写临时文件，完成后原子提交 |
 | 下载取消/删除 | CancelTask/DeleteExactTarget | 取消引擎/关闭流/撤销临时文件；公共保存需用户给出的URI授权 | 只删明确用户目标；普通下载删除与来源保护“只删私有旧数据”是不同作用域 |
 | 文件选择 | Prompt/Picker/Pending/Selected/Cancelled | PromptDelegate→系统选择器/ContentResolver | activity重建/取消不留未决回调；不给网页任意路径读取 |
-| 网站权限 | Ask/Grant/Reject/Expire；context＋origin＋能力 | PermissionDelegate与Android权限分层 | Android授权不等于全网站授权；拒绝单能力不使软件不可运行 |
-| 剪贴板 | 明确用户输入动作或授权管理员能力 | 优先原生Gecko权限/提示；实际OS资格要求照实处理 | 不在网页加载时偷读；旧点击不能绑定新文档；后台OS限制不是管理等级不足 |
+| 网站权限 | Ask/Grant/Reject/Expire；context＋origin＋能力 | PermissionDelegate与Android权限分层 | Android授权不等于全网站授权；有限期限/精度/活动撤回未证前不假授予；拒绝单能力不使软件不可运行 |
+| 剪贴板 | 明确用户输入动作或授权管理员能力 | SelectionActionDelegate独立原生读许可；实际OS资格要求照实处理 | 不在网页加载时偷读；旧点击不能绑定新文档；后台OS限制不是管理等级不足 |
 | 外部链接 | UserRequested/Redirect/Handled/Rejected | NavigationDelegate→明确原生handoff | 外部HTTPS仍遵守临时隔离环境规则；非HTTPS背景跳转不擅自拉起其他软件 |
 | 默认浏览器/安装器 | OpenSystemFlow/Pending/UserCompleted | Android Role/系统安装界面 | 管理者能发起同一流程，不能假称已获OS角色或绕过签名/用户决定 |
 | 全屏/返回 | fullscreen→浮层/提示→网站层级→标签/应用退出 | ContentDelegate及原生窗口控制 | 同步真实页面全屏状态；不写系统旋转/音量/DND来伪装成功 |

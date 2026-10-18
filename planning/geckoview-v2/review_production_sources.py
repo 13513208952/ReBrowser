@@ -34,7 +34,15 @@ def review():
     assert evidence['runtimeSourceFilesCompiled'] == len(implemented)
     assert evidence['junitTestsPassed'] > 0 and evidence['temporaryClassDirectoryRemoved']
     assert not any(evidence[k] for k in ['androidRuntimeTested','productApkBuilt','realKeysUsedOrGenerated','strictArgsJsonOrAdmissionComplete'])
+    api = json.loads((P/'evidence/production-android-api-compile.json').read_text())
+    assert api['passed'] and api['bootClasspathSdk'] == '37.2'
+    assert {s['path'] for s in api['sourceFiles']} == implemented
+    for source in api['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert all(c['classMajor'] == 52 for c in api['classFiles'])
+    assert not any(api[k] for k in ['androidRuntimeExecuted','androidApi30RuntimeValidated','productApkBuilt','keystoreOrRealCredentialsAccessed'])
     return {'productionSourceFilesImplementedHostTested':len(implemented),
+            'productionSourceAndroid37ApiCompiled':len(api['sourceFiles']),
             'productionHostJunitTestsPassed':evidence['junitTestsPassed'],
             'productAndroidIntegrationComplete':False}
 

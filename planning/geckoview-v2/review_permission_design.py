@@ -17,7 +17,15 @@ def review():
     assert hashlib.sha256(source.read_bytes()).hexdigest() == evidence['compile']['sourceSha256']
     assert not evidence['AndroidRuntimeTested'] and not evidence['realLocationOrClipboardRead']
     assert not design['actualDevicePermissionOrClipboardTestsPerformed']
-    assert {'PF01','PF02','PF03','PF04','PF05','PF06'} <= {f['id'] for f in design['criticalFindings']}
+    assert {'PF01','PF02','PF03','PF04','PF05','PF06','PF07','PF08'} <= {f['id'] for f in design['criticalFindings']}
+    geo_probe = json.loads((P/'evidence/geolocation-source-host-probe.json').read_text())
+    geo_fixture = P/'experiments/geolocation_source_host_probe.py'
+    assert hashlib.sha256(geo_fixture.read_bytes()).hexdigest() == geo_probe['fixtureSha256']
+    assert geo_probe['checks'] == 16 and geo_probe['temporaryHarnessRemoved']
+    assert geo_probe['coarseCriteriaDidNotPreventMostAccurateSyntheticCachedObjectPublication']
+    assert geo_probe['pausedStillRequestedBranchDidNotRemoveSyntheticExistingListener']
+    assert not geo_probe['actualSensitiveApiAccess'] and not geo_probe['actualNativeGeckoPrecisionObserved']
+    assert not geo_probe['nativeDownstreamPerRequestRedactionInspected']
     module_probe = json.loads((P/'evidence/permission-module-host-probe.json').read_text())
     assert hashlib.sha256((P/module_probe['fixtureSource']).read_bytes()).hexdigest() == module_probe['fixtureSha256']
     assert module_probe['checks'] == 28 and module_probe['ordinaryPermissionWritesExpireNeverObserved']
@@ -55,6 +63,7 @@ def review():
     assert replies == 1;n += 1
     return {'permissionNativeApiCompileEvidenceChecked':True,
             'pinnedPermissionModuleHostChecks':module_probe['checks'],
+            'geolocationSourceMethodHostChecks':geo_probe['checks'],
             'permissionLifetimeSymbolicBoundaryChecks':n,
             'finitePermissionLeaseEngineExpiryImplemented':False,
             'actualOwnerClipboardLocationOrMediaAccess':False}

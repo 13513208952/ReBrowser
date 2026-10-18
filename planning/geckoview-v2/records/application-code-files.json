@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R19",
+  "revision": "R20",
   "authority": [
     "O26",
     "O27",
@@ -133,6 +133,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java",
+          "kind": "unit-strict-transport-json-syntax",
+          "purpose": "外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入",
+          "state": "host-tested-Android-IPC-and-admission-pending"
         }
       ]
     },
@@ -952,15 +958,16 @@
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
       "group": "control",
       "kind": "native-code",
-      "responsibility": "64KiB外包络/35KiB帧/32KiB参数严格解码；重复键/非法Unicode/多余字段/非规范Base64拒绝",
-      "state": "planned-not-implemented",
+      "responsibility": "严格外包络/重复键/Unicode/Base64；不可变参数JSON语法树，不等于ActionSchemas/验签/准入",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R20 actual production class42combined JUnit,1033independent Python/Java syntax vectors and Android37.2 API compile; unknown action/args schemas/authority/IPC not implemented",
       "runtimePending": true,
-      "testReferenceGroup": "control"
+      "testReferenceGroup": "control",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
@@ -3198,9 +3205,20 @@
     {
       "group": "core",
       "kind": "production-source-actual-Android-API-compile",
-      "summary": "两份生产编码文件实际用SDK37.2 android.jar作bootclasspath编译Java8 bytecode；不是JDK覆盖Android类的普通classpath，也不是API30/Android运行",
+      "summary": "三份生产文件实际SDK37.2 android.jar bootclasspath编译，9个Java8类；不是JDK覆盖Android类的普通classpath，不是API30/Android运行",
       "paths": [
         "planning/geckoview-v2/evidence/production-android-api-compile.json"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "strict-unverified-json-and-independent-parser-crosscheck",
+      "summary": "ControlDecoder生产源码；三文件42JUnit、独立Python JSON/BE编码对Java1033条（1004树/29拒绝）；未知动作/参数schema与真实证明准入仍外部阻断",
+      "paths": [
+        "planning/geckoview-v2/records/control-decoder-contract.json",
+        "planning/geckoview-v2/experiments/ControlJsonDifferential.java",
+        "planning/geckoview-v2/experiments/control_json_differential.py",
+        "planning/geckoview-v2/evidence/control-json-differential.json"
       ]
     }
   ],

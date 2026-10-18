@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 API surface compile and HOST JUnit only; not Android/runtime/admission implementation",
-  "runtimeSourceFilesCompiled": 2,
-  "junitTestsPassed": 24,
-  "junitOutput": "JUnit version 4.13.2\n........................\nTime: 0.423\n\nOK (24 tests)\n\n",
+  "runtimeSourceFilesCompiled": 3,
+  "junitTestsPassed": 42,
+  "junitOutput": "JUnit version 4.13.2\n..........................................\nTime: 0.478\n\nOK (42 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -14,25 +14,35 @@
       "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
       "sha256": "a3a87cbe482080ef23154208909fd0ffa9fdb3b2d299060897d52f48a83f3eb1"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java",
+      "sha256": "fd3a6b5d3e84a25073134ca58dde959c4f0c64e812b92ff4fec6c0fc8dad25df"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java",
       "sha256": "17e7711e3fd7a48252eb2a63559b8b6849bbce45e437a5efbe5bd42d3197129f"
     }
   ],
-  "runnerSha256": "6f3467344e343cd821e4c7b2ceb9fd6c4bc3af72bdf5db509d9b0ca111d71f82",
+  "runnerSha256": "bf904386c081fc66ab603006a24480073be609afe8936c435c8423100f87e7b3",
   "localDependencySha256": {
     "junit": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3",
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1515970560,
-  "memAvailableBefore": 9575936000,
+  "freeBytesBefore": 1513586688,
+  "memAvailableBefore": 9502298112,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,
   "realKeysUsedOrGenerated": false,
-  "strictArgsJsonOrAdmissionComplete": false
+  "unverifiedJsonSyntaxSliceCompiled": true,
+  "actionSpecificArgsSchemasComplete": false,
+  "proofAdmissionComplete": false
 }

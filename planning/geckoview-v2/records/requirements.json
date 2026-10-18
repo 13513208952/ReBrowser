@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R19",
+  "revision": "R20",
   "requirements": [
     {
       "id": "R01",
@@ -494,7 +494,7 @@
       "state": "owner-required",
       "implementation": "partial-source",
       "implementationEvidence": "records/implementation-readiness.json",
-      "implementationMeaning": "one scoped codec source implemented/tested on HOST; not full-domain/product runtime completion"
+      "implementationMeaning": "scoped production files listed in readiness record have source-bound HOST/API evidence; not whole domains/product runtime"
     }
   ]
 }

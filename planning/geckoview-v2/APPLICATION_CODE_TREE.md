@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已编写并通过主机测试：**2文件**；其余 **176文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已编写并通过主机测试：**3文件**；其余 **175文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -92,7 +92,7 @@
                             │   ├── ActionRegistry.java [J][PLAN][?] — 178逐动作定义/处理器/门槛单一注册
                             │   ├── ActionSchemas.java [J][PLAN][?] — 类型/范围/长度/目标/副作用参数
                             │   ├── ControlChallengeStore.java [J][PLAN][?] — 目标/epoch/服务实例/策略revision/动作参数绑定的30秒monotonic挑战；并发一次消费在授权后原子准入
-                            │   ├── ControlDecoder.java [J][PLAN][?] — 64KiB外包络/35KiB帧/32KiB参数严格解码；重复键/非法Unicode/多余字段/非规范Base64拒绝
+                            │   ├── ControlDecoder.java [J][HOST][?] — 严格外包络/重复键/Unicode/Base64；不可变参数JSON语法树，不等于ActionSchemas/验签/准入
                             │   ├── ControlDispatcher.java [J][PLAN][?] — 授权→同领域服务→真实结果，不复制特权路径
                             │   ├── ControlEnvelope.java [J][HOST][?] — 17个长度前缀签名字节字段/固定域版本/目标和原参数，明确DER签名与外包络边界
                             │   ├── ControlResultStream.java [J][PLAN][?] — 私有大结果有界传输
@@ -235,7 +235,7 @@
 | 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限 | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java` |
 | 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路 | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java` |
 | 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
-| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java` |
+| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入 | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java` |
 | Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
@@ -273,7 +273,8 @@
 | 统一控制入口与协议 | admitted-production-source-host-tests | O41逐文件准入：ControlEnvelope已实现，真实生产类经独立历史帧/签名负例及不可变性测试；未含JSON/授权/Android<br>`planning/geckoview-v2/records/implementation-readiness.json`<br>`planning/geckoview-v2/run_production_unit_tests.py`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 本机加密与密钥 | canonical-public-key-and-proof-primitives | 精确P256 SPKI/曲线上点及JCA参数、严格正DER标量、规范有界Base64url和SHA；接受s/n-s；两生产文件合跑22HOST JUnit，不生成钥匙、不等于验签授权<br>`planning/geckoview-v2/records/crypto-encoding-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 网站与系统许可 | pinned-geolocation-source-method-host-study | 抽取固定GeckoAppShell四方法体，用纯合成LocationManager16项主机断言；COARSE provider hint不等于站点坐标隐私，global pause非单站撤权回执；无真实位置访问<br>`planning/geckoview-v2/experiments/geolocation_source_host_probe.py`<br>`planning/geckoview-v2/evidence/geolocation-source-host-probe.json` |
-| 领域基础与任务 | production-source-actual-Android-API-compile | 两份生产编码文件实际用SDK37.2 android.jar作bootclasspath编译Java8 bytecode；不是JDK覆盖Android类的普通classpath，也不是API30/Android运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
+| 领域基础与任务 | production-source-actual-Android-API-compile | 三份生产文件实际SDK37.2 android.jar bootclasspath编译，9个Java8类；不是JDK覆盖Android类的普通classpath，不是API30/Android运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
+| 统一控制入口与协议 | strict-unverified-json-and-independent-parser-crosscheck | ControlDecoder生产源码；三文件42JUnit、独立Python JSON/BE编码对Java1033条（1004树/29拒绝）；未知动作/参数schema与真实证明准入仍外部阻断<br>`planning/geckoview-v2/records/control-decoder-contract.json`<br>`planning/geckoview-v2/experiments/ControlJsonDifferential.java`<br>`planning/geckoview-v2/experiments/control_json_differential.py`<br>`planning/geckoview-v2/evidence/control-json-differential.json` |
 
 ### 当前边界
 

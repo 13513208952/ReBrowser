@@ -33,7 +33,14 @@ def review():
     assert hashlib.sha256((P/'run_production_unit_tests.py').read_bytes()).hexdigest() == evidence['runnerSha256']
     assert evidence['runtimeSourceFilesCompiled'] == len(implemented)
     assert evidence['junitTestsPassed'] > 0 and evidence['temporaryClassDirectoryRemoved']
-    assert not any(evidence[k] for k in ['androidRuntimeTested','productApkBuilt','realKeysUsedOrGenerated','strictArgsJsonOrAdmissionComplete'])
+    assert evidence['unverifiedJsonSyntaxSliceCompiled']
+    assert not any(evidence[k] for k in ['androidRuntimeTested','productApkBuilt','realKeysUsedOrGenerated','actionSpecificArgsSchemasComplete','proofAdmissionComplete'])
+    differential = json.loads((P/'evidence/control-json-differential.json').read_text())
+    assert differential['casesPassed'] == 1033
+    assert differential['validSyntaxTreesMatched'] == 1004 and differential['malformedCasesRejectedByBoth'] == 29
+    for source in differential['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not any(differential[k] for k in ['validCryptographicProofsUsed','actionSpecificSchemasValidated','androidRuntimeExecuted','realKeysOrDeviceDataUsed'])
     api = json.loads((P/'evidence/production-android-api-compile.json').read_text())
     assert api['passed'] and api['bootClasspathSdk'] == '37.2'
     assert {s['path'] for s in api['sourceFiles']} == implemented
@@ -44,6 +51,7 @@ def review():
     return {'productionSourceFilesImplementedHostTested':len(implemented),
             'productionSourceAndroid37ApiCompiled':len(api['sourceFiles']),
             'productionHostJunitTestsPassed':evidence['junitTestsPassed'],
+            'productionJsonDifferentialCasesPassed':differential['casesPassed'],
             'productAndroidIntegrationComplete':False}
 
 

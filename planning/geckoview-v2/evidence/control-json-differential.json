@@ -1,0 +1,34 @@
+{
+  "scope": "independent Python JSON parsing and binary framing versus actual production Java decoder; synthetic syntax only, not valid signature/authority/Android",
+  "casesPassed": 1033,
+  "validSyntaxTreesMatched": 1004,
+  "malformedCasesRejectedByBoth": 29,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+      "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/ControlJsonDifferential.java",
+      "sha256": "2c20474e48f46a0695884e98bdd88d2112af02f7534a3f55a56c8a511592c19a"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/control_json_differential.py",
+      "sha256": "534e077600150cb69033f84abaec3f1f1dd0734f823d19758ccdabf8b0ba1a6c"
+    }
+  ],
+  "caseCorpusSha256": "050c139e9486bc1b31922a31c2494a3c6983bb75074cd2c45cf500c28fc6eb00",
+  "temporaryHarnessRemoved": true,
+  "validCryptographicProofsUsed": false,
+  "actionSpecificSchemasValidated": false,
+  "androidRuntimeExecuted": false,
+  "realKeysOrDeviceDataUsed": false
+}

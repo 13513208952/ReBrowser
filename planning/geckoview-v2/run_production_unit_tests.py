@@ -56,7 +56,8 @@ def run(args):
         'temporaryNewPeakBudgetBytes': 16 * 1024**2, 'freeBytesBefore': free, 'memAvailableBefore':mem,
         'temporaryClassDirectoryRemoved': True,
         'androidRuntimeTested': False, 'productApkBuilt': False, 'realKeysUsedOrGenerated':False,
-        'strictArgsJsonOrAdmissionComplete': False
+        'unverifiedJsonSyntaxSliceCompiled': any(s['path'].endswith('/ControlDecoder.java') for s in slices),
+        'actionSpecificArgsSchemasComplete': False, 'proofAdmissionComplete': False
     }
     return report
 

@@ -1,6 +1,6 @@
 {
-  "scope": "Actual javac Android37.2 android.jar BOOTCLASSPATH compile for two v2 production files; NOT Android runtime or API30 qualification",
-  "checkedAt": "2026-10-18T23:02:33+08:00",
+  "scope": "Actual javac Android37.2 android.jar BOOTCLASSPATH compile for three v2 production files; NOT Android runtime or API30 qualification",
+  "checkedAt": "2026-10-18T23:18:20+08:00",
   "passed": true,
   "sourceFiles": [
     {
@@ -10,13 +10,47 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
       "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
     }
   ],
   "compiler": "existing JDK21.0.10 javac",
-  "commandTemplate": "javac -J-Xmx256m -J-Djava.io.tmpdir=$TMPDIR -source 8 -target 8 -bootclasspath $PRIVATE_SDK/platforms/android-37.2/android.jar -d $OWNED_OUTPUT ControlEnvelope.java CryptoEncoding.java",
+  "commandTemplate": "javac -J-Xmx256m -J-Djava.io.tmpdir=$TMPDIR -source 8 -target 8 -bootclasspath $PRIVATE_SDK/platforms/android-37.2/android.jar -d $OWNED_OUTPUT ControlEnvelope.java CryptoEncoding.java ControlDecoder.java",
   "bootClasspathSdk": "37.2",
   "androidJarSha256": "1db2419dbd45457f83b90ef8a7ef41e118174782c9a5c2185b55899df022767f",
   "classFiles": [
+    {
+      "path": "io/github/rebrowser/control/ControlDecoder$1.class",
+      "sha256": "a98989eda561e35ebe479d5ac1c6417a5d488c589ddcdd640b800d42a0b34ee0",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ControlDecoder$Parser.class",
+      "sha256": "c7cca8636638840091ebab437ef0a7aaf295404e65cc2aea6aad84491a666a97",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ControlDecoder$UnverifiedProof.class",
+      "sha256": "0ca8b71e88bf31801afea4369eeb29b736fada055c3f3cd8697b5202feaedd86",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ControlDecoder$Value$Kind.class",
+      "sha256": "c8a65f92d4fb0c4c2d48b7c4f4bec568e095eb0c9665ee184c97031043d7b347",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ControlDecoder$Value.class",
+      "sha256": "7363bf5c0b04a33655569d4007e0130123f9224513de58c639df18c760b50034",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ControlDecoder.class",
+      "sha256": "7eac3093fff2156c6804c86787e221041ace940eaabde3e038eb9fe8fc3755d6",
+      "classMajor": 52
+    },
     {
       "path": "io/github/rebrowser/control/ControlEnvelope$Field.class",
       "sha256": "52ade1ae7ea37b5c09b5e0a4c97abea0f038c1eb484a2b698fa2cea472e41031",

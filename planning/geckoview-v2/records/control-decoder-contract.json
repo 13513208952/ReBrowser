@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "revision": "R20",
+  "scope": "ControlDecoder strictly parses unverified proof transport and raw args JSON structure; ActionSchemas/authority/challenge/admission remain separate",
+  "research": [
+    "records/control-proof-format.json",
+    "evidence/control-proof-host-vectors.json",
+    "evidence/control-proof-cross-implementation.json",
+    "review_control_proof.py"
+  ],
+  "wire": "<=65536 original strict UTF8 bytes, single JSON object; exactly protocol/frameB64/signatureB64, optional delegationB64; unknown/duplicate decoded keys and all non-string wire values rejected",
+  "frame": "ControlEnvelope validates <=35000B exact binary bytes. Outer protocol must equal fixed frame protocol. No fields duplicated outside signed frame.",
+  "signature": "canonical Base64url <=72B, strict P256 DER syntax via CryptoEncoding; NOT key lookup or ECDSA verification",
+  "delegation": "absent iff all-zero signed digest; if present nonempty<=8192B canonical Base64url with exact signed SHA256 digest; certificate validity/issuer/ceiling still unverified",
+  "args": "parse frame's ORIGINAL <=32768 UTF8 bytes; require object, reject duplicate keys, invalid Unicode, trailing input, coercion/non-JSON numbers. Never reserialize for signature. Unknown action/args fields remain ActionSchemas responsibility.",
+  "jsonBudgets": {
+    "maxContainerDepth": 16,
+    "maxValueNodes": 4096,
+    "maxNumberTokenChars": 128
+  },
+  "numbers": "retain immutable raw number token, never float conversion or string/boolean coercion. Per-action exact integer/range/default/null rules must subsequently be checked.",
+  "unicode": "strict UTF8 decoder REPORT; no BOM; escaped UTF16 high surrogate must be immediately paired with escaped low surrogate; unescaped controls/lone surrogates rejected. No key normalization; escaped aliases of same decoded key count duplicates.",
+  "result": "immutable UnverifiedProof with signed frame, defensive-copy signature/delegation, immutable typed JSON value tree. Name/type deliberately not ActorContext or authorized request.",
+  "error": "generic private-value-free rejection; no partial request callbacks or side effects",
+  "notReadyIntegration": [
+    "ActionSchemas all178 action-specific schemas",
+    "compiled principal/delegation validity and real ECDSA verify",
+    "target/source/epoch/policy/nonce/deadline/grant atomic admission",
+    "Android IPC/thread/provider execution"
+  ],
+  "withdrawWhen": "A reviewed action genuinely needs larger structured JSON; adjust explicit budgets and stress tests rather than dropping bounds or adding coercion",
+  "state": "implemented-host-unit-and-independent-json-tested-not-admitted",
+  "evidence": [
+    "evidence/production-unit-tests.json",
+    "evidence/control-json-differential.json",
+    "evidence/production-android-api-compile.json"
+  ],
+  "historicalContractNote": "R14 control-proof-format.json remains byte-pinned by historical cross-implementation evidence; its implementation-pending text is historical. Current source/status is this R20 contract and implementation-readiness.json, not an edit of old evidence."
+}

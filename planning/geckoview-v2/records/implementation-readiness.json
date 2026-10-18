@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R19",
+  "revision": "R20",
   "authority": [
     "O41",
     "O42"
@@ -72,6 +72,38 @@
       ],
       "integrationGate": "callers must enforce actual key identity/policy, ECDSA verification and remaining proof admission; no public entrypoints enabled",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "state": "implemented-host-tested-not-integrated",
+      "researchCompleteForScope": true,
+      "scope": "strict bounded unverified JSON transport, immutable typed args syntax tree, canonical signature/delegation encoding and signed digest consistency; NOT ActionSchemas or admission",
+      "researchEvidence": [
+        "records/control-decoder-contract.json",
+        "records/control-proof-format.json",
+        "evidence/control-proof-host-vectors.json",
+        "evidence/control-proof-cross-implementation.json"
+      ],
+      "inputOutput": "<=65536B strictUTF8 single fixed-field envelope -> immutable explicitly UnverifiedProof with unchanged signed bytes; maxdepth16/nodes4096/numeric token128",
+      "dependencies": "admitted ControlEnvelope/CryptoEncoding and Java8 standard collections/UTF8; no new library/Android services",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.control.ControlDecoderTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "unknown action/args field/range/default acceptance from ActionSchemas",
+        "ECDSA authenticates against resolved key",
+        "delegation certificate issuer/role/ceiling validity",
+        "source/target/challenge/deadline/grant/nonce/atomic admission",
+        "Android IPC and actual domain effects"
+      ],
+      "integrationGate": "UnverifiedProof must never be treated as ActorContext or executed; every remaining schema/crypto/authority/admission gate must succeed first",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "jsonDifferentialEvidence": "evidence/control-json-differential.json"
     }
   ],
   "parallelPending": [

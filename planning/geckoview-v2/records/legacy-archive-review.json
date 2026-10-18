@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R19",
+  "revision": "R20",
   "authority": [
     "O31",
     "O32"
@@ -547,12 +547,15 @@
       "sha256": "1c5e3e15ca2875279eb01fd2b94c36574b348bc9d415c451da34ff856a783758",
       "bytes": 6569,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T23:19:33+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧请求准备、签名/机主凭据分支、pending持有和消费/审计职责；旧维护控制仍依赖，保留。v2不得把JSONObject宽松类型/解码后才界限、wall-clock挑战或read-check-remove模式直接当严格字节和并发原子准入证据，不承接旧协议数据。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/control-decoder-contract.json",
+        "planning/geckoview-v2/records/control-proof-format.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

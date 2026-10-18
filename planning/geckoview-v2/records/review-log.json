@@ -1,5 +1,5 @@
 {
-  "revision": "R19",
+  "revision": "R20",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -227,6 +227,12 @@
       "time": "2026-10-18T22:57:35+08:00",
       "finding": "R18推送后继续调研A04：不能把enableHighAccuracy=false/Criteria.COARSE或global pause视为站点模糊定位和活动使用停止。",
       "resolution": "固定SDK GeckoAppShell中选取四个确切方法体，只移除nullability注释，以合成LocationManager等类型编译运行16断言：先从所有providers选最准确缓存发布，再选COARSE provider；paused仍requested分支不remove。实际JNI/OS/站点和下游位置处理未测，明确加阻断而非声称漏洞/定位隐私已解决；旧MaintenanceKeys两RSA公钥职责审读保留，私钥备份未证。；同轮两份生产文件实际Android37.2 bootclasspath编译通过（3个major52类），与HOST24JUnit/源码方法体16断言分开，未称API30或Android运行通过。"
+    },
+    {
+      "id": "REV39",
+      "time": "2026-10-18T23:19:33+08:00",
+      "finding": "R19推送后仍继续：固定字节和公钥编码已落地，但宽松JSONObject无法满足重复键/Unicode/不强制转换；未知逐动作schema又不能伪称全准入完成。",
+      "resolution": "按文件边界准入ControlDecoder，先冻结结构/深度16/节点4096/数值token128预算，返回不可变UnverifiedProof。三生产文件真实42JUnit、6000累计固定种子变异、独立Python JSON和二进制编码对Java1033项（1004树+29拒绝）、Android37.2 bootclasspath9类。未知动作/参数字段范围、真正验签/委托/挑战/原子准入仍必须外部通过，未挂入口；旧AdminAuthorizer完整审读仍保留维护价值。；自检拒绝了对R14已绑定SHA的旧契约状态文本修改，已逐字节还原；R20新状态仅放新契约和准入表，不改写历史证据。"
     }
   ]
 }

@@ -1,6 +1,6 @@
-# 实施与审查 · R17逐文件准入
+# 实施与审查 · R20逐文件准入
 
-O41允许已完成本文件调研的总树节点先进入实现，与其余调研和统一L0整理并行；不再要求所有领域统一完成才编写源码。O42明确推送不是停工节点。按[逐文件准入](../records/implementation-readiness.json)记录职责/依赖/边界/测试与未覆盖证据；当前首个ControlEnvelope文件已编写并有HOST JUnit，未接Android/IPC入口。下图P0–P7是完整领域联调/发行依赖，不阻塞独立I0文件准入。
+O41允许已完成本文件调研的总树节点先进入实现，与其余调研和统一L0整理并行；不再要求所有领域统一完成才编写源码。O42明确推送不是停工节点。按[逐文件准入](../records/implementation-readiness.json)记录职责/依赖/边界/测试与未覆盖证据；当前ControlEnvelope/CryptoEncoding/ControlDecoder三文件已有42项HOST JUnit、1033项独立语法对照和Android SDK API编译证据；未接Android/IPC入口，ActionSchemas/真实验签/原子准入未完成。下图P0–P7是完整领域联调/发行依赖，不阻塞独立I0文件准入。
 
 ```mermaid
 flowchart TD

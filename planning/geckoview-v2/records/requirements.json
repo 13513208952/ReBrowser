@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R13",
   "requirements": [
     {
       "id": "R01",
@@ -467,6 +467,17 @@
       "state": "owner-required",
       "implementation": "not-started",
       "verificationRef": "evidence/validation-arm64-apk-static-check.json"
+    },
+    {
+      "id": "R44",
+      "ownerSources": [
+        "O36"
+      ],
+      "title": "旧结构中已完成价值的非主体/非凭据内容可回收站处置",
+      "rule": "继续主任务并并行审查旧结构；旧主体代码仍按O31归档，重要凭据保留；其他确认失去价值的文档/工具等可移到系统回收站，由机主决定彻底删除。不能仅因旧/将重写就判无参考价值，也不清空回收站。",
+      "state": "owner-required",
+      "implementation": "not-started",
+      "executionEvidence": "records/noncode-retirement-review.json"
     }
   ]
 }

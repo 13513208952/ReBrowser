@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R10",
+  "revision": "R13",
   "state": "design-routing-not-runtime-tested",
   "routes": [
     {
@@ -463,7 +463,7 @@
       "action": "host.openInstaller",
       "group": "C009",
       "state": "target-assigned-not-implemented",
-      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/PlatformResultRouter.java",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/ApkHandoffCoordinator.java",
       "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
       "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
     },

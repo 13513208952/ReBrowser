@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "revision": "R13",
+  "authority": ["O31", "O32", "O36"],
+  "parallelWith": ["V0", "T0"],
+  "classification": {
+    "legacyApplicationRuntimeCode": "Only after refactor value exhausted: old_version.zip with original repository-relative paths and verified restoration, never system Trash as a shortcut.",
+    "importantCredentials": "Retain. Never infer key backup/custody from public keys; no disposal under cleanup permission.",
+    "nonApplicationNonCredentialExhaustedMaterial": "After individual review, system Trash with SHA256/original path map/restoration evidence. Owner decides permanent deletion; do not empty Trash.",
+    "documents": "Owner will write new-version documentation; old age, old version or planned rewrite alone does not establish exhausted reference/maintenance/privacy/license value.",
+    "activePrivacyLicensingReleaseOrMaintenanceObligations": "Retain while obligations remain. Published release assets/tags and protected README/approved images are not automatically retired.",
+    "ordinaryOwnRegenerableBuildOutputs": "O33 bounded temporary-workspace policy, separately from source-code archive and document retirement; never silently extend to other software or device data."
+  },
+  "gate": [
+    "read and classify exact candidates; do not select by broad directory or age glob",
+    "confirm no active caller/reference or ongoing maintenance/refactor obligation",
+    "do not change protected README/approved appearance merely to remove a referenced document",
+    "private contents remain protected in Trash; use an own restricted container if existing Trash permissions are broader, without changing unrelated system permissions",
+    "record precise original path mapping and bytes/SHA before move; verify restorable contents after move",
+    "failure stops or restores original locations; never fall back to irreversible deletion",
+    "moving to same-filesystem Trash does not reclaim physical disk space"
+  ],
+  "executionRef": "records/noncode-retirement-review.json",
+  "legacyCodeReviewRef": "records/legacy-archive-review.json",
+  "newVersionUserDocs": "owner will rewrite; this policy is an engineering retirement record, not replacement user documentation"
+}

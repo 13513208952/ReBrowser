@@ -247,6 +247,13 @@
       "utf8Bytes": 68,
       "sha256": "a9c27b1047c9224e80ba562514b073fae282d93607083a637988223077fa5300",
       "provenance": "owner user-message manually transcribed verbatim"
+    },
+    {
+      "id": "O36",
+      "file": "owner-verbatim/O36-retire-exhausted-noncode-to-system-trash.txt",
+      "utf8Bytes": 424,
+      "sha256": "1d14bee30cbc7e4f792cb686761133fb11c89bc3c7ed1a0e1bafda8194f04ad9",
+      "provenance": "owner user-message manually transcribed verbatim"
     }
   ],
   "lastAppendedAt": "2026-10-18T10:28:22+08:00"

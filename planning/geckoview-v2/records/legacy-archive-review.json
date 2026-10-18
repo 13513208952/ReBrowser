@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R13",
   "authority": [
     "O31",
     "O32"
@@ -627,12 +627,15 @@
       "sha256": "f40c2dbbcd3fc5599378ee6a52e0c287cea1c8b340b0a98f5fcb554d79962087",
       "bytes": 4224,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:32:40+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "原.1来源/复制预算/取消/只读provider/系统安装器行为仍须承接；本轮仅补v2文件责任与目标，新实现/验证尚未完成",
+      "evidenceRefs": [
+        "docs/REBROWSER_ANDROID_HANDOFF.md",
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1060,12 +1063,15 @@
       "sha256": "d0a1f4064fc923a09edbd638deb3fd5c2ac3dfc707806e41e939a657c92a2eae",
       "bytes": 6868,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:32:40+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "原.1来源/复制预算/取消/只读provider/系统安装器行为仍须承接；本轮仅补v2文件责任与目标，新实现/验证尚未完成",
+      "evidenceRefs": [
+        "docs/REBROWSER_ANDROID_HANDOFF.md",
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1074,12 +1080,15 @@
       "sha256": "6541e14692cd980b105519988789308313f79bb93d833000fd6af3c13792c0e6",
       "bytes": 3857,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:32:40+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "原.1来源/复制预算/取消/只读provider/系统安装器行为仍须承接；本轮仅补v2文件责任与目标，新实现/验证尚未完成",
+      "evidenceRefs": [
+        "docs/REBROWSER_ANDROID_HANDOFF.md",
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

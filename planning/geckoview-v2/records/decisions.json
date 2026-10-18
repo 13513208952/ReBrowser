@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R13",
   "decisions": [
     {
       "id": "D01",
@@ -326,6 +326,15 @@
       "requirements": [
         "R06",
         "R43"
+      ]
+    },
+    {
+      "id": "D33",
+      "state": "confirmed",
+      "decision": "O36允许非旧主体代码/非重要凭据的价值耗尽内容移入系统回收站，彻底删除由机主决定；未完成参考/维护责任的仍保留，旧主体代码ZIP规则不变。",
+      "requirements": [
+        "R41",
+        "R44"
       ]
     }
   ]

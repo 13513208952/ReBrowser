@@ -285,6 +285,18 @@ def review():
         assert abi['sha256'] == android['artifact']['sha256'] and abi['bytes'] == android['artifact']['bytes']
         abi_report = {'phoneTestApkVerifiedSingleArm64': True, 'formalThreeAbiSplitPolicyOnlyNotBuilt': True}
     archive_review = review_legacy_archive()
+    retirement_report = {}
+    if (P / 'records/noncode-retirement-review.json').exists():
+        retirement = load('records/noncode-retirement-review.json')
+        assert retirement['authority'] == 'O36'
+        assert not any(retirement[k] for k in ['legacyApplicationCodeTrashed', 'importantCredentialsTrashed', 'trashEmptied', 'sourceOrReleaseDocsDeleted'])
+        assert {e['originalWorkspaceFile'] for e in retirement['entries']} == {'create_plan_records.py', 'create_plan_matrices.py'}
+        for e in retirement['entries']:
+            assert e['state'] == 'system-trash-verified-restorable' and len(e['sha256']) == 64
+            assert e['restore'] and e['reason'] and e['bytes'] > 0
+        for doc in retirement['expiredDocsReviewedRetained']:
+            assert (P.parents[1] / doc['path']).is_file() and doc['reason']
+        retirement_report = {'obsoleteNonApplicationUtilitiesInSystemTrash': len(retirement['entries']), 'oldDocumentsReviewedRetained': len(retirement['expiredDocsReviewedRetained']), 'trashEmptiedByAgent': False}
     storage_path = P / 'evidence/temporary-storage-recovery.json'
     storage_report = {}
     if storage_path.exists():
@@ -301,6 +313,7 @@ def review():
     report = {
         **storage_report,
         **abi_report,
+        **retirement_report,
         **runtime_review,
         **archive_review,
         **authority_review,

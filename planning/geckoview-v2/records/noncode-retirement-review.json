@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "revision": "R13",
+  "authority": "O36",
+  "checkedAt": "2026-10-18T14:30:25+08:00",
+  "scope": "owned obsolete noncredential non-application planning utilities only",
+  "entries": [
+    {
+      "sha256": "f7f5c74bf434e301b37b4a51b4c8da3436352cff833c60fd562406acde768c5a",
+      "bytes": 21437,
+      "reason": "initial R1 one-shot scaffolder fully superseded by reviewed canonical records/matrices; no active caller; outdated authority/scheduling defaults no longer useful",
+      "kind": "obsolete-one-shot-planning-utility-not-legacy-application-code",
+      "state": "system-trash-verified-restorable",
+      "originalWorkspaceFile": "create_plan_records.py",
+      "originalLocationClass": "private-restricted-workbench",
+      "restore": "restore mode0700 bundle from system Trash, then use its RESTORE.json original paths/hash map; do not overwrite"
+    },
+    {
+      "sha256": "0afd4e06f74b896311d4e469642aa020b13cb6287590f329e1534b5e1d62fb8f",
+      "bytes": 17210,
+      "reason": "initial R1 one-shot scaffolder fully superseded by reviewed canonical records/matrices; no active caller; outdated authority/scheduling defaults no longer useful",
+      "kind": "obsolete-one-shot-planning-utility-not-legacy-application-code",
+      "state": "system-trash-verified-restorable",
+      "originalWorkspaceFile": "create_plan_matrices.py",
+      "originalLocationClass": "private-restricted-workbench",
+      "restore": "restore mode0700 bundle from system Trash, then use its RESTORE.json original paths/hash map; do not overwrite"
+    }
+  ],
+  "expiredDocsReviewedRetained": [
+    {
+      "path": "docs/REBROWSER_LAYOUT_ZOOM.md",
+      "reason": "owner rejection/no-fake-zoom boundary and active legacy references still meaningful"
+    },
+    {
+      "path": "docs/SCREENSHOT_REVIEW.md",
+      "reason": "privacy/approval/attribution obligations still apply to published assets and future screenshots"
+    },
+    {
+      "path": "docs/REBROWSER_ANDROID_HANDOFF.md",
+      "reason": "default-role and .1 installer behavior remains feature-parity input; new staging/provider ownership still needs explicit design"
+    }
+  ],
+  "legacyApplicationCodeTrashed": false,
+  "importantCredentialsTrashed": false,
+  "trashEmptied": false,
+  "sourceOrReleaseDocsDeleted": false,
+  "privacy": "private bundle0700, no change to existing system Trash permissions",
+  "diskSpaceClaim": "same-filesystem Trash retains bytes; no reclaimed-space claim from these moves"
+}

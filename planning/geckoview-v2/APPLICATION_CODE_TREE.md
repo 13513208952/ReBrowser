@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 这是目标设计，不是已创建的产品源码。已先完成固定Gecko二进制/API编译与隔离Release打包；Android运行/网站兼容尚未验证，`[?]`不得理解为通过。
 
-当前目标：`io.github.rebrowser` · 本体代码 **174文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
+当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
 符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。
 
@@ -192,6 +192,10 @@
                             │   ├── SubapplicationCoordinator.java [J][?] — NativeUI和管理员共享启用/打开/关闭/子设置路由
                             │   └── SubapplicationRegistry.java [J][?] — 固定子应用身份/启用/入口元数据，不包含已搁置容量/清理
                             ├── system/
+                            │   ├── ApkHandoffActivity.java [J][?] — 仅已授权本地.1/APK交接入口与Native生命周期，不转发外部管理员参数
+                            │   ├── ApkHandoffCoordinator.java [J][?] — UI/管理员共同的来源验证、受限stage与明确系统安装器交接；已交接不冒充安装完成
+                            │   ├── ApkStagingProvider.java [J][?] — 不导出只读随机单文件URI，核对授权/归属/期限/规范路径，绝不暴露业务资料
+                            │   ├── ApkStagingStore.java [J][?] — 仅自有随机APK暂存，输入流/队列/实际任务/空间/保留预算及取消结算；不清其他缓存
                             │   ├── DefaultBrowserFlow.java [J][?] — 用户发起Role系统流程，结果如实
                             │   ├── DeviceWindowState.java [J][?] — 窗口/平板/横竖屏事实，不以型号硬门控
                             │   ├── ForegroundPolicy.java [J][?] — Android前台服务/通知许可按实际版本处理
@@ -239,7 +243,7 @@
 | Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java` |
 | 官方音乐与后台 | fresh准入与安全停止分开、单路线/冷启暂停/seek单位、旧焦点gain失效；合成媒体事件后再明确授权官网验证、服务/通知/焦点/任务重连；不擅自播放 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java` |
 | 桌面歌词 | 关闭/拖动/锁定穿透、位置边界、歌词时间与资源代次；系统浮层许可/锁屏/小窗/方向变化/触摸穿透及恢复 | `app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java` |
-| 平台集成 | 版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java` |
+| 平台集成 | 版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功；API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java` |
 | 子应用启用与路由 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回 | `app/src/test/java/io/github/rebrowser/subapps/SubappsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/subapps/SubappsRuntimeTest.java` |
 | 本机设置领域 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回 | `app/src/test/java/io/github/rebrowser/settings/SettingsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/settings/SettingsRuntimeTest.java` |
 
@@ -258,6 +262,7 @@
 | 来源连续性 | minimal-control-record | lastGood/source/epoch控制记录独立于被锁业务Vault，闸门仅能读最小锚；不为解密账号资料先开旧数据库<br>`planning/geckoview-v2/records/root-continuity.json`<br>`planning/geckoview-v2/records/key-and-enrollment-design.json` |
 | 原生浏览器界面 | legacy-behavior-review | 旧加载条/概览选择仅作保留交互输入；新目标文件不是已完成替代，未将旧源码归档<br>`planning/geckoview-v2/records/legacy-archive-review.json`<br>`planning/geckoview-v2/LEGACY_ARCHIVE_REVIEW.md` |
 | Gecko原生宿主 | abi-delivery-policy-and-auxiliary-check | 正式三ABI独立APK，手机临时测试仅arm64；辅助静态ABI/ELF/ZIP对齐检查不是产品源码叶节点<br>`planning/geckoview-v2/records/abi-packaging-policy.json`<br>`planning/geckoview-v2/verify_abi_apks.py`<br>`planning/geckoview-v2/test_abi_packages.py` |
+| 平台集成 | legacy-installer-contract-retained | 旧.1安装器/默认应用文档仍是功能边界参考，新版不是任意文件转发或静默安装；不沿用旧2GiB缓存作为不受约束预算<br>`docs/REBROWSER_ANDROID_HANDOFF.md`<br>`planning/geckoview-v2/records/legacy-archive-review.json`<br>`planning/geckoview-v2/TEMPORARY_STORAGE_POLICY.md` |
 
 ### 当前边界
 

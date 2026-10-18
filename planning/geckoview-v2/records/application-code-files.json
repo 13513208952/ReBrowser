@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R13",
   "authority": [
     "O26",
     "O27"
@@ -336,12 +336,12 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java",
           "kind": "unit-design-contract",
-          "purpose": "版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置"
+          "purpose": "版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功"
         },
         {
           "path": "app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java",
           "kind": "android-runtime",
-          "purpose": "API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路"
+          "purpose": "API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功"
         }
       ]
     },
@@ -2938,6 +2938,62 @@
       "validationMeaning": "旧主体实际审读与固定Gecko进度API来源核对；新控件/多选源码未实现、未编译",
       "runtimePending": true,
       "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "仅已授权本地.1/APK交接入口与Native生命周期，不转发外部管理员参数",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT09"
+      ],
+      "validationMeaning": "旧实际交接源码/文档完整审读，v2代码/真实安装器流程未实现或验证",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffCoordinator.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "UI/管理员共同的来源验证、受限stage与明确系统安装器交接；已交接不冒充安装完成",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT09"
+      ],
+      "validationMeaning": "旧实际交接源码/文档完整审读，v2代码/真实安装器流程未实现或验证",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkStagingStore.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "仅自有随机APK暂存，输入流/队列/实际任务/空间/保留预算及取消结算；不清其他缓存",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT09"
+      ],
+      "validationMeaning": "旧实际交接源码/文档完整审读，v2代码/真实安装器流程未实现或验证",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkStagingProvider.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "不导出只读随机单文件URI，核对授权/归属/期限/规范路径，绝不暴露业务资料",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT09"
+      ],
+      "validationMeaning": "旧实际交接源码/文档完整审读，v2代码/真实安装器流程未实现或验证",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
     }
   ],
   "references": [
@@ -3046,6 +3102,16 @@
         "planning/geckoview-v2/records/abi-packaging-policy.json",
         "planning/geckoview-v2/verify_abi_apks.py",
         "planning/geckoview-v2/test_abi_packages.py"
+      ]
+    },
+    {
+      "group": "system",
+      "kind": "legacy-installer-contract-retained",
+      "summary": "旧.1安装器/默认应用文档仍是功能边界参考，新版不是任意文件转发或静默安装；不沿用旧2GiB缓存作为不受约束预算",
+      "paths": [
+        "docs/REBROWSER_ANDROID_HANDOFF.md",
+        "planning/geckoview-v2/records/legacy-archive-review.json",
+        "planning/geckoview-v2/TEMPORARY_STORAGE_POLICY.md"
       ]
     }
   ],

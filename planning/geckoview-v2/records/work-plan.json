@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R13",
   "activePhase": "V0",
   "codingAuthorizedByPlan": false,
   "phases": [
@@ -178,12 +178,25 @@
       ],
       "name": "旧WebView主体代码价值审查与保原目录归档",
       "depends": [],
-      "state": "seven-semantic-reviews-retained-more-queued-no-approved-moves",
+      "state": "ten-semantic-reviews-retained-more-queued-no-approved-moves",
       "notBlocking": "V0/T0技术验证和应用本体总树；价值确认不能由并行要求省略",
       "refs": [
         "LEGACY_ARCHIVE_REVIEW.md",
         "records/legacy-archive-review.json"
       ]
+    },
+    {
+      "id": "L1",
+      "authority": [
+        "O36"
+      ],
+      "name": "非主体/非凭据的过期结构审查与可恢复回收站处置",
+      "depends": [],
+      "state": "two-obsolete-one-shot-utilities-trashed-three-docs-retained",
+      "refs": [
+        "records/noncode-retirement-review.json"
+      ],
+      "notBlocking": "V0/T0与旧主体ZIP审查；不可逆清空回收站由机主决定"
     }
   ],
   "runtimeSubsetState": "phone-local-Native-ports-MAIN-context-pass; Popup/restore/Keystore/media/sites remain",

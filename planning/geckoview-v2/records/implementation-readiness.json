@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R20",
+  "revision": "R21",
   "authority": [
     "O41",
     "O42"
@@ -104,6 +104,36 @@
       "integrationGate": "UnverifiedProof must never be treated as ActorContext or executed; every remaining schema/crypto/authority/admission gate must succeed first",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
       "jsonDifferentialEvidence": "evidence/control-json-differential.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+      "state": "implemented-host-tested-not-integrated",
+      "researchCompleteForScope": true,
+      "scope": "per-task in-memory monotonic cancellation request versus trusted actual-work-chain end; separate requester/reporter views, no slot release/domain effect/admission",
+      "researchEvidence": [
+        "records/core-cancellation-contract.json",
+        "records/runtime-traces.json",
+        "records/domain-interfaces.json",
+        "records/connector-protocol.json"
+      ],
+      "inputOutput": "request->REQUESTED/ALREADY_REQUESTED/ALREADY_ENDED; trusted actual-end report->first-wins boolean; coherent immutable snapshot",
+      "dependencies": "Java8 AtomicReference/enum only; no clock, executor, reset, Android or new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.core.CoreContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "actual Gecko/IO/network stop adapter semantics",
+        "authenticated reporter/epoch ownership or persistent journal",
+        "work budget release/quiescence ticket",
+        "external effect prevented/known or storage durability"
+      ],
+      "integrationGate": "only trusted coordinator/execution chain retains root/reporter; independently match original owner and account for every native writer. Never accept caller-supplied completion flags or infer end from Future/port/deadline."
     }
   ],
   "parallelPending": [

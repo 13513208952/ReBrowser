@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已编写并通过主机测试：**3文件**；其余 **175文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已编写并通过主机测试：**4文件**；其余 **174文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -100,7 +100,7 @@
                             │   └── PrivateDataController.java [J][PLAN][?] — 受授权应用自有对象检查/导出/重置，不访问无权名单；非子应用清理功能
                             ├── core/
                             │   ├── ActorContext.java [J][PLAN][?] — 正常用户/系统媒体/已验证管理员的明确身份
-                            │   ├── Cancellation.java [J][PLAN][?] — 请求取消和真实停止证据
+                            │   ├── Cancellation.java [J][HOST][?] — 请求取消和真实停止证据
                             │   ├── DomainResult.java [J][PLAN][?] — 结果/错误/等待条件/证据等级
                             │   ├── ResourceBudgets.java [J][PLAN][?] — 队列/块/缓存/优先级和低内存预算
                             │   ├── TargetReferences.java [J][PLAN][?] — 原生目标句柄与epoch/partition/session绑定
@@ -273,8 +273,9 @@
 | 统一控制入口与协议 | admitted-production-source-host-tests | O41逐文件准入：ControlEnvelope已实现，真实生产类经独立历史帧/签名负例及不可变性测试；未含JSON/授权/Android<br>`planning/geckoview-v2/records/implementation-readiness.json`<br>`planning/geckoview-v2/run_production_unit_tests.py`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 本机加密与密钥 | canonical-public-key-and-proof-primitives | 精确P256 SPKI/曲线上点及JCA参数、严格正DER标量、规范有界Base64url和SHA；接受s/n-s；两生产文件合跑22HOST JUnit，不生成钥匙、不等于验签授权<br>`planning/geckoview-v2/records/crypto-encoding-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 网站与系统许可 | pinned-geolocation-source-method-host-study | 抽取固定GeckoAppShell四方法体，用纯合成LocationManager16项主机断言；COARSE provider hint不等于站点坐标隐私，global pause非单站撤权回执；无真实位置访问<br>`planning/geckoview-v2/experiments/geolocation_source_host_probe.py`<br>`planning/geckoview-v2/evidence/geolocation-source-host-probe.json` |
-| 领域基础与任务 | production-source-actual-Android-API-compile | 三份生产文件实际SDK37.2 android.jar bootclasspath编译，9个Java8类；不是JDK覆盖Android类的普通classpath，不是API30/Android运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
+| 领域基础与任务 | production-source-actual-Android-API-compile | 已准入的四生产文件实际SDK37.2 bootclasspath编译；可用现有runner --android-jar复现。不是API30或Android运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
 | 统一控制入口与协议 | strict-unverified-json-and-independent-parser-crosscheck | ControlDecoder生产源码；三文件42JUnit、独立Python JSON/BE编码对Java1033条（1004树/29拒绝）；未知动作/参数schema与真实证明准入仍外部阻断<br>`planning/geckoview-v2/records/control-decoder-contract.json`<br>`planning/geckoview-v2/experiments/ControlJsonDifferential.java`<br>`planning/geckoview-v2/experiments/control_json_differential.py`<br>`planning/geckoview-v2/evidence/control-json-differential.json` |
+| 领域基础与任务 | actual-task-cancellation-versus-end | 生产Cancellation区分Requester/Reporter，不重置/不释放槽；256轮并发及真实HOST忽略interrupt的Future用例。四文件51JUnit+SDK API编译，非Gecko停止证据<br>`planning/geckoview-v2/records/core-cancellation-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 
 ### 当前边界
 

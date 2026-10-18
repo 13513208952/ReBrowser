@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "revision": "R21",
+  "authority": "O41 per-file implementation; R7 task/connector invariant refinement",
+  "file": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+  "researchRefs": [
+    "records/domain-interfaces.json",
+    "records/runtime-traces.json",
+    "records/connector-protocol.json"
+  ],
+  "scope": "one admitted task's in-memory cancellation request versus actual-work-end record; NOT cancellation driver, task admission, owner authentication, resource drain or effect outcome",
+  "ownership": {
+    "root": "created once per actual task by trusted coordinator; never per watcher/document lease",
+    "requesterView": "requestCancellation and immutable snapshot only; cannot report completion",
+    "reporterView": "only trusted execution-chain owner holds reportActualEnd; no external caller-supplied stop boolean",
+    "handoff": "JS/HTTP reply handing work to native persistence is NOT whole task work ended; verify all live owners/writers before reporting"
+  },
+  "requestOutcomes": [
+    "REQUESTED",
+    "ALREADY_REQUESTED",
+    "ALREADY_ENDED"
+  ],
+  "endReasons": [
+    "UNDERLYING_RETURNED",
+    "UNDERLYING_FAILED",
+    "STOP_CONFIRMED"
+  ],
+  "transitions": [
+    "initial requested=false,end=null",
+    "first request before end atomically sets requested=true only",
+    "requests after end are no-op ALREADY_ENDED, never rewrite original snapshot",
+    "first actual end wins; duplicate/conflicting later reports return false without rewriting",
+    "request flag survives natural return/failure; cancellation request never changes end kind to STOP_CONFIRMED"
+  ],
+  "concurrency": "immutable snapshot in single AtomicReference; linearizable monotonic transitions; no callbacks, executor creation, reset, clocks or persistent state",
+  "notCompletionEvidence": [
+    "client timeout",
+    "document/port lease rotation/disconnect",
+    "Future.cancel/isDone",
+    "interrupt request",
+    "stop dispatched",
+    "onPause/onStop",
+    "metadata grant expiry"
+  ],
+  "effectAndDurability": "actual execution chain ending is independent from cloud effect known/unknown and persistence committed/failed; this primitive must not report domain success or quiescence",
+  "tests": [
+    "idempotent requests/end and immutable snapshots",
+    "read-only/requester/reporter capability interfaces",
+    "request-vs-end and conflicting-end races with bounded real HOST threads",
+    "real HOST Future.cancel returns done while interrupted worker continues, end remains unset until worker finally exits"
+  ],
+  "integrationGate": "TaskCoordinator must separately validate exact original work owner/epoch, live-writer chain and publication fence; do not accept Reporter or snapshots from IPC and do not release budgets on request alone",
+  "state": "implemented-host-thread-tested-Android-API-compiled-not-runtime-integrated",
+  "evidence": "evidence/production-unit-tests.json"
+}

@@ -1,5 +1,5 @@
 {
-  "revision": "R20",
+  "revision": "R21",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -233,6 +233,12 @@
       "time": "2026-10-18T23:19:33+08:00",
       "finding": "R19推送后仍继续：固定字节和公钥编码已落地，但宽松JSONObject无法满足重复键/Unicode/不强制转换；未知逐动作schema又不能伪称全准入完成。",
       "resolution": "按文件边界准入ControlDecoder，先冻结结构/深度16/节点4096/数值token128预算，返回不可变UnverifiedProof。三生产文件真实42JUnit、6000累计固定种子变异、独立Python JSON和二进制编码对Java1033项（1004树+29拒绝）、Android37.2 bootclasspath9类。未知动作/参数字段范围、真正验签/委托/挑战/原子准入仍必须外部通过，未挂入口；旧AdminAuthorizer完整审读仍保留维护价值。；自检拒绝了对R14已绑定SHA的旧契约状态文本修改，已逐字节还原；R20新状态仅放新契约和准入表，不改写历史证据。"
+    },
+    {
+      "id": "REV40",
+      "time": "2026-10-19T00:31:45+08:00",
+      "finding": "O43指出应继续执行而非以回复停下；任务取消不能只沿用Future状态或纯模型当真实退出。",
+      "resolution": "完成已调研Cancellation节点的单任务原子状态/Requester-Reporter边界，再写生产源和9项HOST测试含256轮真实并发与Future已done但工作仍运行。四生产源51JUnit、实际Android API17类通过。统一L0完整审读旧LatestTask仍有调度/维护价值，未强归档。"
     }
   ]
 }

@@ -1,7 +1,8 @@
 {
-  "scope": "Actual javac Android37.2 android.jar BOOTCLASSPATH compile for three v2 production files; NOT Android runtime or API30 qualification",
-  "checkedAt": "2026-10-18T23:18:20+08:00",
+  "scope": "Actual Android37.2 android.jar BOOTCLASSPATH compile; NOT Android runtime or API30 qualification",
   "passed": true,
+  "bootClasspathSdk": "37.2",
+  "androidJarSha256": "1db2419dbd45457f83b90ef8a7ef41e118174782c9a5c2185b55899df022767f",
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
@@ -14,12 +15,12 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
       "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+      "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
     }
   ],
-  "compiler": "existing JDK21.0.10 javac",
-  "commandTemplate": "javac -J-Xmx256m -J-Djava.io.tmpdir=$TMPDIR -source 8 -target 8 -bootclasspath $PRIVATE_SDK/platforms/android-37.2/android.jar -d $OWNED_OUTPUT ControlEnvelope.java CryptoEncoding.java ControlDecoder.java",
-  "bootClasspathSdk": "37.2",
-  "androidJarSha256": "1db2419dbd45457f83b90ef8a7ef41e118174782c9a5c2185b55899df022767f",
   "classFiles": [
     {
       "path": "io/github/rebrowser/control/ControlDecoder$1.class",
@@ -62,15 +63,56 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/core/Cancellation$1.class",
+      "sha256": "47c89cbe1094ae9332cd6f8ef70ebea415b5673be890170c7cf84c544a4ed21c",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation$2.class",
+      "sha256": "9af8d8ff799930b46c60a9e735c6916bf6f31d75aeb3d1922c012ddf053c8591",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation$EndReason.class",
+      "sha256": "571e14f546041c798a0c200b485b1654cead27a05c799a1b765b868025225a61",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation$Reporter.class",
+      "sha256": "6d47543371aad1300e9d5352e00591c9f995d7f96f9c297ce00f7bb2cd2387a8",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation$RequestOutcome.class",
+      "sha256": "f308a71a33718a16a5508488028083ed00c2fd0721aa347d812b28abe715cf41",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation$Requester.class",
+      "sha256": "3d557b7d325c4568897dc32a4a46491f427aa164c9e5c265f3047280a5ed4ada",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation$Snapshot.class",
+      "sha256": "12e66ed887b6b2224bea46343837ab542e7b60a72d6cb888871890d7c3a872a3",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/Cancellation.class",
+      "sha256": "7e388b29b189a8d243b1274dfc7f11b36ce60811b54446d0b263c22c693430da",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/crypto/CryptoEncoding.class",
       "sha256": "c1897f4f2ab8b522b65a2baa88619cbf1d72cb5e42aad431ba004eb2f347adbd",
       "classMajor": 52
     }
   ],
-  "diagnostics": "3 source/target8 obsolescence warnings, no errors",
-  "newPeakBudgetBytes": 16777216,
+  "diagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
+  "commandTemplate": "javac -source 8 -target 8 -bootclasspath $PINNED_ANDROID_JAR -d $OWNED_TEMP all admitted production sources",
   "androidRuntimeExecuted": false,
   "androidApi30RuntimeValidated": false,
   "productApkBuilt": false,
-  "keystoreOrRealCredentialsAccessed": false
+  "keystoreOrRealCredentialsAccessed": false,
+  "temporaryClassDirectoryRemoved": true
 }

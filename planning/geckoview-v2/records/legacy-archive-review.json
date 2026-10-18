@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R20",
+  "revision": "R21",
   "authority": [
     "O31",
     "O32"
@@ -163,12 +163,15 @@
       "sha256": "97eff0e57c63bfbbdac322de59482d7c74707f43cbc9ac0708cb26cf29f09ad8",
       "bytes": 1163,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T00:31:45+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读固定单worker+容量1队列/latest替换，旧I/O可忽略interrupt而线程池仍保持真实串行。当前封面/音乐工作依赖，Cancellation状态原语不替代调度/SDK适配；Future.cancel/isDone不证明工作退出。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/core-cancellation-contract.json",
+        "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

@@ -1,8 +1,126 @@
 {
-  "scope": "production v2 source, Java8 API surface compile and HOST JUnit only; not Android/runtime/admission implementation",
-  "runtimeSourceFilesCompiled": 3,
-  "junitTestsPassed": 42,
-  "junitOutput": "JUnit version 4.13.2\n..........................................\nTime: 0.478\n\nOK (42 tests)\n\n",
+  "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
+  "androidApiCompile": {
+    "scope": "Actual Android37.2 android.jar BOOTCLASSPATH compile; NOT Android runtime or API30 qualification",
+    "passed": true,
+    "bootClasspathSdk": "37.2",
+    "androidJarSha256": "1db2419dbd45457f83b90ef8a7ef41e118174782c9a5c2185b55899df022767f",
+    "sourceFiles": [
+      {
+        "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+        "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+        "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+        "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+        "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
+      }
+    ],
+    "classFiles": [
+      {
+        "path": "io/github/rebrowser/control/ControlDecoder$1.class",
+        "sha256": "a98989eda561e35ebe479d5ac1c6417a5d488c589ddcdd640b800d42a0b34ee0",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlDecoder$Parser.class",
+        "sha256": "c7cca8636638840091ebab437ef0a7aaf295404e65cc2aea6aad84491a666a97",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlDecoder$UnverifiedProof.class",
+        "sha256": "0ca8b71e88bf31801afea4369eeb29b736fada055c3f3cd8697b5202feaedd86",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlDecoder$Value$Kind.class",
+        "sha256": "c8a65f92d4fb0c4c2d48b7c4f4bec568e095eb0c9665ee184c97031043d7b347",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlDecoder$Value.class",
+        "sha256": "7363bf5c0b04a33655569d4007e0130123f9224513de58c639df18c760b50034",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlDecoder.class",
+        "sha256": "7eac3093fff2156c6804c86787e221041ace940eaabde3e038eb9fe8fc3755d6",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlEnvelope$Field.class",
+        "sha256": "52ade1ae7ea37b5c09b5e0a4c97abea0f038c1eb484a2b698fa2cea472e41031",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlEnvelope.class",
+        "sha256": "599ce30b46d7399c71eaf15abd4f49c3d908e83a9c160c12c792dba7845de17f",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$1.class",
+        "sha256": "47c89cbe1094ae9332cd6f8ef70ebea415b5673be890170c7cf84c544a4ed21c",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$2.class",
+        "sha256": "9af8d8ff799930b46c60a9e735c6916bf6f31d75aeb3d1922c012ddf053c8591",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$EndReason.class",
+        "sha256": "571e14f546041c798a0c200b485b1654cead27a05c799a1b765b868025225a61",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$Reporter.class",
+        "sha256": "6d47543371aad1300e9d5352e00591c9f995d7f96f9c297ce00f7bb2cd2387a8",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$RequestOutcome.class",
+        "sha256": "f308a71a33718a16a5508488028083ed00c2fd0721aa347d812b28abe715cf41",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$Requester.class",
+        "sha256": "3d557b7d325c4568897dc32a4a46491f427aa164c9e5c265f3047280a5ed4ada",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation$Snapshot.class",
+        "sha256": "12e66ed887b6b2224bea46343837ab542e7b60a72d6cb888871890d7c3a872a3",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/Cancellation.class",
+        "sha256": "7e388b29b189a8d243b1274dfc7f11b36ce60811b54446d0b263c22c693430da",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/crypto/CryptoEncoding.class",
+        "sha256": "c1897f4f2ab8b522b65a2baa88619cbf1d72cb5e42aad431ba004eb2f347adbd",
+        "classMajor": 52
+      }
+    ],
+    "diagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
+    "commandTemplate": "javac -source 8 -target 8 -bootclasspath $PINNED_ANDROID_JAR -d $OWNED_TEMP all admitted production sources",
+    "androidRuntimeExecuted": false,
+    "androidApi30RuntimeValidated": false,
+    "productApkBuilt": false,
+    "keystoreOrRealCredentialsAccessed": false,
+    "temporaryClassDirectoryRemoved": true
+  },
+  "runtimeSourceFilesCompiled": 4,
+  "junitTestsPassed": 51,
+  "junitOutput": "JUnit version 4.13.2\n...................................................\nTime: 0.489\n\nOK (51 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -18,6 +136,10 @@
       "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+      "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
       "sha256": "a3a87cbe482080ef23154208909fd0ffa9fdb3b2d299060897d52f48a83f3eb1"
     },
@@ -26,18 +148,22 @@
       "sha256": "fd3a6b5d3e84a25073134ca58dde959c4f0c64e812b92ff4fec6c0fc8dad25df"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java",
+      "sha256": "c893d15125685c73bfc8855761f3a965a3702b12d444b03a33fed34f60e6551a"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java",
       "sha256": "17e7711e3fd7a48252eb2a63559b8b6849bbce45e437a5efbe5bd42d3197129f"
     }
   ],
-  "runnerSha256": "bf904386c081fc66ab603006a24480073be609afe8936c435c8423100f87e7b3",
+  "runnerSha256": "3a26c1acc70dd7e08b3223c6989aa01ef0e0ed06c811fedb92885d781e4fb127",
   "localDependencySha256": {
     "junit": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3",
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1513586688,
-  "memAvailableBefore": 9502298112,
+  "freeBytesBefore": 1509421056,
+  "memAvailableBefore": 9801064448,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

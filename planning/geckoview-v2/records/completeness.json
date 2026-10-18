@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R20",
+  "revision": "R21",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -550,7 +550,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "浏览/媒体/压缩/下载/统计并发及资源释放",
-      "existingEvidence": "仅有有界任务原则；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
+      "existingEvidence": "仅有有界任务原则；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R21生产Cancellation原语真实HOST并发/忽略interrupt用例；不自动停止/释放槽/证明效果，调度和原始拥有者验证仍待实现",
       "completionDeliverables": [
         "全局与领域预算",
         "线程",
@@ -572,7 +572,10 @@
       "currentArtifactRefs": [
         "views/16-resources-and-dependencies.md",
         "records/connector-protocol.json",
-        "records/runtime-traces.json"
+        "records/runtime-traces.json",
+        "records/core-cancellation-contract.json",
+        "records/implementation-readiness.json",
+        "evidence/production-unit-tests.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

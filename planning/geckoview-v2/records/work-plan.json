@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R20",
+  "revision": "R21",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -180,7 +180,7 @@
       ],
       "name": "统一旧结构审查整理：主体价值耗尽后ZIP；重要凭据保留；其他价值耗尽后系统回收站",
       "depends": [],
-      "state": "in-progress-twenty-two-semantic-source-reviews-retained",
+      "state": "in-progress-twenty-three-semantic-source-reviews-retained",
       "dispositions": [
         "legacy-main-code-original-path-ZIP",
         "important-credentials-retained",
@@ -201,7 +201,7 @@
       ],
       "name": "完成本文件调研后按总树节点实现，与未决调研/统一旧结构审查并行",
       "depends": [],
-      "state": "in-progress-three-production-files-host-and-API-compiled-not-domain-integrated",
+      "state": "in-progress-four-production-files-host-and-API-compiled-not-domain-integrated",
       "gateRef": "records/implementation-readiness.json"
     }
   ],
@@ -220,9 +220,9 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "after R19 push continued into third admitted production ControlDecoder",
-    "immutable UNVERIFIED transport/args syntax only;42combinedJUnit and1033independentJSON cases;three-source actualAndroid37.2 APIcompile",
-    "same L0 complete read oldAdminAuthorizer retained;22retained/75queued/0archive"
+    "fourth admitted production Cancellation with separate request/end capabilities",
+    "four sources51HOST JUnit and17Android-API classfiles; real HOST ignored interrupt remains running after Future done",
+    "same unifiedL0 reviewed LatestTask retained;23retained/74queued/0archive"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -235,5 +235,6 @@
     "T0",
     "I0",
     "L0"
-  ]
+  ],
+  "latestOwnerContinuation": "O43 explicitly asks actual continuation, not another stop/status reply"
 }

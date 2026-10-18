@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R20",
+  "revision": "R21",
   "authority": [
     "O26",
     "O27",
@@ -66,7 +66,8 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java",
           "kind": "unit-design-contract",
-          "purpose": "真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence"
+          "purpose": "真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence",
+          "state": "cancellation-host-thread-tested-remaining-coordinator-contracts-planned"
         },
         {
           "path": "app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java",
@@ -651,13 +652,14 @@
       "group": "core",
       "kind": "native-code",
       "responsibility": "请求取消和真实停止证据",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R21 actual production class/HOST real-thread request/end races and Future.cancel still-running worker; Android37 API compile, not SDK/task ownership integration",
       "runtimePending": true,
-      "testReferenceGroup": "core"
+      "testReferenceGroup": "core",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
@@ -3205,7 +3207,7 @@
     {
       "group": "core",
       "kind": "production-source-actual-Android-API-compile",
-      "summary": "三份生产文件实际SDK37.2 android.jar bootclasspath编译，9个Java8类；不是JDK覆盖Android类的普通classpath，不是API30/Android运行",
+      "summary": "已准入的四生产文件实际SDK37.2 bootclasspath编译；可用现有runner --android-jar复现。不是API30或Android运行",
       "paths": [
         "planning/geckoview-v2/evidence/production-android-api-compile.json"
       ]
@@ -3219,6 +3221,15 @@
         "planning/geckoview-v2/experiments/ControlJsonDifferential.java",
         "planning/geckoview-v2/experiments/control_json_differential.py",
         "planning/geckoview-v2/evidence/control-json-differential.json"
+      ]
+    },
+    {
+      "group": "core",
+      "kind": "actual-task-cancellation-versus-end",
+      "summary": "生产Cancellation区分Requester/Reporter，不重置/不释放槽；256轮并发及真实HOST忽略interrupt的Future用例。四文件51JUnit+SDK API编译，非Gecko停止证据",
+      "paths": [
+        "planning/geckoview-v2/records/core-cancellation-contract.json",
+        "planning/geckoview-v2/evidence/production-unit-tests.json"
       ]
     }
   ],

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R13",
+  "revision": "R14",
   "requirements": [
     {
       "id": "R01",
@@ -436,14 +436,16 @@
       "id": "R41",
       "ownerSources": [
         "O31",
-        "O32"
+        "O32",
+        "O37"
       ],
       "title": "并行逐步归档已完成价值的旧主体代码",
       "rule": "与当前验证/总树任务并行逐文件审查；仅确认重构价值耗尽且后续无额外作用的旧WebView主体代码移入old_version.zip，保留完整原始目录关系和可追溯验证；临时代码不归入，未确认不得提前移动。",
       "state": "owner-required",
       "implementation": "not-started",
       "reviewState": "review-in-progress-no-approved-moves",
-      "implementationMeaning": "product implementation flag; parallel nonproduct archive review state recorded separately"
+      "implementationMeaning": "product implementation flag; parallel nonproduct archive review state recorded separately",
+      "schedulingClarification": "Same unified old-structure task; runs alongside new-version validation/foundation, not a stop/pause milestone"
     },
     {
       "id": "R42",
@@ -471,13 +473,15 @@
     {
       "id": "R44",
       "ownerSources": [
-        "O36"
+        "O36",
+        "O37"
       ],
       "title": "旧结构中已完成价值的非主体/非凭据内容可回收站处置",
       "rule": "继续主任务并并行审查旧结构；旧主体代码仍按O31归档，重要凭据保留；其他确认失去价值的文档/工具等可移到系统回收站，由机主决定彻底删除。不能仅因旧/将重写就判无参考价值，也不清空回收站。",
       "state": "owner-required",
       "implementation": "not-started",
-      "executionEvidence": "records/noncode-retirement-review.json"
+      "executionEvidence": "records/noncode-retirement-review.json",
+      "schedulingClarification": "Same unified old-structure task; runs alongside new-version validation/foundation, not a stop/pause milestone"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R10",
+  "revision": "R14",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -88,7 +88,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "进程所有权、view/session分离、上下文映射与崩溃恢复",
-      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
+      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R11另有授权手机本地Native/port/MAIN/context子集通过，非官网/导航竞态全验证",
       "completionDeliverables": [
         "默认拓扑和退路",
         "持久ID",
@@ -207,7 +207,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "Gecko扩展真实API、页面world、帧身份、消息协议、管理者接口",
-      "existingEvidence": "只提出受控扩展和统一接入概念；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
+      "existingEvidence": "只提出受控扩展和统一接入概念；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R11另有授权手机本地Native/port/MAIN/context子集通过，非官网/导航竞态全验证",
       "completionDeliverables": [
         "固定应用连接器",
         "管理证明接入分离",
@@ -406,11 +406,11 @@
     {
       "id": "A10",
       "domain": "管理员等级/完整动作/会话协议",
-      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "status": "action-policy-and-request-proof-byte-contract-host-reviewed-Android-IPC-pending",
       "designComplete": false,
       "implementationReady": false,
       "need": "数值档位、高级边界H、逐动作schema、错误/幂等/异步结果",
-      "existingEvidence": ">=/禁用关系/名单隔离已符号演算；未形成完整协议",
+      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现",
       "completionDeliverables": [
         "等级提案",
         "动作拆细",
@@ -437,7 +437,9 @@
       "currentArtifactRefs": [
         "views/13-control-protocol-contract.md",
         "APPLICATION_CODE_TREE.md",
-        "records/application-code-files.json"
+        "records/application-code-files.json",
+        "records/control-proof-format.json",
+        "evidence/control-proof-cross-implementation.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -576,7 +578,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "工具链、AAR/minSdk/ABI、唯一全量包、可复现发布",
-      "existingEvidence": "official158完整AAR/SDK37.2/Gradle9.6核对，API javac和AGP9.4离线R8/资源收缩/LintVital无签名验证包通过；非产品或Android运行验证",
+      "existingEvidence": "official158完整AAR/SDK37.2/Gradle9.6核对，API javac和AGP9.4离线R8/资源收缩/LintVital无签名验证包通过；非产品或Android运行验证；R14实际仅merge/strip两阶段提前过滤其它ABI，各13库原字节匹配官方AAR，非新APK/R8运行",
       "completionDeliverables": [
         "依赖锁",
         "必要性审查",
@@ -602,7 +604,8 @@
       "currentArtifactRefs": [
         "views/16-resources-and-dependencies.md",
         "records/technology-validation.json",
-        "evidence/validation-release-package-verification.json"
+        "evidence/validation-release-package-verification.json",
+        "evidence/arm64-early-native-filter.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

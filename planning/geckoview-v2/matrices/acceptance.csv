@@ -78,4 +78,5 @@ T-T00,R40,,application-code-tree-completeness,主树只展开应用自身全部�
 T-LG01,R41,,archive-integrity,并行审查旧版主体代码；值仍未完成的保留；批准后ZIP按原目录恢复逐字节核对，测试/临时源码不归档,资格记录/路径/SHA/恢复与引用处置完整；未满足不得移动,L0,planned-not-run,parallel-O32
 T-RSC01,R42,,host-resource-budget,空间低于峰值+保留时停止新构建；只列举核验自身过期实验产物回收；当前包/源码/记录/私钥/正式发布物保留,正向路径/摘要/前后空间可追溯，不清无关资料；全失败/符号链接/运行中构建分支拒绝越界,V0,planned-not-run,active
 T-ABI01,R43,,abi-package-integrity,正式三APK逐个核对唯一ABI/ELF/签名/资源/JNI；手机临时验证仅arm64，三合一/错ELF/缺库拒绝,每包唯一ABI且实际Native运行证据按目标单独标注；不能把旧三ABI打包当正式交付,P7,planned-not-run,formal-release; phone-arm64-static-subset-checked
-T-RET01,R44,,recoverable-structure-retirement,逐项确认非主体/非重要凭据且价值耗尽；系统回收站保留原路径映射/字节哈希和恢复说明，不清空回收站；仍有参考/维护/隐私义务的文档保留,分类、资格、隐私权限与可恢复核验完整；失败不改永久删除；旧主体仅按ZIP规则,L1,planned-not-run,parallel-O36
+T-RET01,R44,,recoverable-structure-retirement,逐项确认非主体/非重要凭据且价值耗尽；系统回收站保留原路径映射/字节哈希和恢复说明，不清空回收站；仍有参考/维护/隐私义务的文档保留,分类、资格、隐私权限与可恢复核验完整；失败不改永久删除；旧主体仅按ZIP规则,L0,planned-not-run,parallel-O36
+T-PRF01,R10 R18 R31 R35,,control-proof-byte-and-admission,17字段原始字节/严格DER与UTF8/帧越界和尾部/目标策略代次/新证明取旧任务；不同来源同私钥身份一致,主机895JCA/独立Python与OpenSSL子集已核对；Android IPC/并发授权/动作DTO/实际低级委托仍须完整验证,P2,planned-not-run,host-subset-checked; Android-native-integration-pending

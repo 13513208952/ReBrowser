@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R13",
+  "revision": "R14",
   "activePhase": "V0",
   "codingAuthorizedByPlan": false,
   "phases": [
@@ -174,29 +174,24 @@
       "id": "L0",
       "authority": [
         "O31",
-        "O32"
+        "O32",
+        "O36",
+        "O37"
       ],
-      "name": "旧WebView主体代码价值审查与保原目录归档",
+      "name": "统一旧结构审查整理：主体价值耗尽后ZIP；重要凭据保留；其他价值耗尽后系统回收站",
       "depends": [],
-      "state": "ten-semantic-reviews-retained-more-queued-no-approved-moves",
-      "notBlocking": "V0/T0技术验证和应用本体总树；价值确认不能由并行要求省略",
+      "state": "in-progress-thirteen-old-source-reviews-plus-new-proof-contract-and-native-ABI-stage-validation",
+      "dispositions": [
+        "legacy-main-code-original-path-ZIP",
+        "important-credentials-retained",
+        "non-main-noncredential-exhausted-material-system-Trash-owner-decides-deletion"
+      ],
+      "notBlocking": "与新版本V0/T0同轮推进，既不等新版本全部完成，也不因一次归档/回收站动作停止新版本任务",
       "refs": [
-        "LEGACY_ARCHIVE_REVIEW.md",
-        "records/legacy-archive-review.json"
+        "records/legacy-archive-review.json",
+        "records/noncode-retirement-review.json",
+        "records/structure-retirement-policy.json"
       ]
-    },
-    {
-      "id": "L1",
-      "authority": [
-        "O36"
-      ],
-      "name": "非主体/非凭据的过期结构审查与可恢复回收站处置",
-      "depends": [],
-      "state": "two-obsolete-one-shot-utilities-trashed-three-docs-retained",
-      "refs": [
-        "records/noncode-retirement-review.json"
-      ],
-      "notBlocking": "V0/T0与旧主体ZIP审查；不可逆清空回收站由机主决定"
     }
   ],
   "runtimeSubsetState": "phone-local-Native-ports-MAIN-context-pass; Popup/restore/Keystore/media/sites remain",
@@ -208,5 +203,15 @@
     "noGlobalOrDeviceCleanup": true,
     "phoneTestAbi": "arm64-v8a only (O35)"
   },
-  "abiPackagingPolicyRef": "records/abi-packaging-policy.json"
+  "abiPackagingPolicyRef": "records/abi-packaging-policy.json",
+  "supersededTrackAlias": {
+    "L1": "merged-into-L0-by-O37; dispositions differ but task is one"
+  },
+  "workContinuationRule": "complete concrete increments on new-version work and unified legacy review in the same work session; checkpoint is not an owner-requested pause",
+  "currentNewVersionIncrement": [
+    "17-field control proof byte contract and independent host checks",
+    "early arm64 native merge/strip filtering with stage-specific storage preflight",
+    "existing target-code responsibilities refined using old behavior audit"
+  ],
+  "latestCheckpointRequest": "O38 save/push progress, not a pause instruction"
 }

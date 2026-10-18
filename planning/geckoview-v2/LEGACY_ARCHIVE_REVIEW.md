@@ -1,6 +1,6 @@
-# 旧版主体代码归档审查（与当前验证/总树并行）
+# 统一旧结构审查整理 · 主体代码分支
 
-依据原话[O31](owner-verbatim/O31-incrementally-archive-exhausted-legacy-app-code.txt)、[O32](owner-verbatim/O32-parallel-legacy-archive-review-and-current-task.txt)。本轨道并行推进，不等待整轮技术验证结束；但“允许归档”不是“已确认某文件可归档”。
+依据原话[O31](owner-verbatim/O31-incrementally-archive-exhausted-legacy-app-code.txt)、[O32](owner-verbatim/O32-parallel-legacy-archive-review-and-current-task.txt)。按[O37](owner-verbatim/O37-unified-legacy-cleanup-parallel-new-version-keep-working.txt)，主体ZIP与非主体回收站是同一个旧结构任务内的分流，不另设串行任务；该任务与新版本验证/代码基础同轮推进，不等待某一项全部结束，一次整理/保存也不是暂停节点。但“允许归档”不是“已确认某文件可归档”。
 
 ## 可归档边界
 
@@ -19,7 +19,7 @@
 
 ## 第一批实际审查
 
-权威状态：[逐文件台账](records/legacy-archive-review.json)。当前两批共七个已读文件仍有维护/功能参考价值，均保留；其余清点仅路径/摘要，不冒充已读或价值完成。不是把整个旧版宣称审查完毕。其他文件待后续逐批审查。没有合格候选时不创建空ZIP，也不为了展示归档动作硬移代码。
+权威状态：[逐文件台账](records/legacy-archive-review.json)。当前累计十三个已读主体文件仍有维护/功能参考价值，均保留；其余清点仅路径/摘要，不冒充已读或价值完成。不是把整个旧版宣称审查完毕。其他文件待后续逐批审查。没有合格候选时不创建空ZIP，也不为了展示归档动作硬移代码。
 
 - 播放兼容策略：旧WebView运行入口仍引用，v2官网兼容未做真实站点验证；旧授权/来源限制参考仍需保留。
 - 旧管理员公钥：继续承担已发布旧版控制与维护责任，不能因新机制已有设计便判无用。

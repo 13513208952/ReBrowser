@@ -1,5 +1,5 @@
 {
-  "revision": "R13",
+  "revision": "R14",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -173,6 +173,24 @@
       "time": "2026-10-18T14:32:40+08:00",
       "finding": "Android旧交接文档仍有价值：新总树泛化PlatformResultRouter未明确.1输入/受限缓存/只读provider职责，不能假定已有完整行为承接。",
       "resolution": "完整审读三个旧主体交接文件，保留；补四个v2目标文件及共享领域路由/测试需求，不进入真实安装器、不启动新构建、不冒充v2实现完成。"
+    },
+    {
+      "id": "REV30",
+      "time": "2026-10-18T15:04:25+08:00",
+      "finding": "O37指出归档和回收站处置是同一旧结构任务，且须与新版本任务并行；不能把一次整理/保存当停止节点。",
+      "resolution": "合并L0/L1为统一L0并保留分流规则；同轮实际推进新控制协议字节契约和ABI中间产物验证，旧源继续审读，无暂停/无新设备动作授权阻断。"
+    },
+    {
+      "id": "REV31",
+      "time": "2026-10-18T15:04:25+08:00",
+      "finding": "A10只写签名字节候选和JSON重序列化禁令，缺可交叉验证的明确编码。",
+      "resolution": "补17字段BE长度帧、严格DER/原始参数/目标+服务nonce+策略绑定、旧nonce REPLAY与新proof同job；公开标量1产生895主机检查，独立Python/OpenSSL一致，不冒充Android或真实管理员key。"
+    },
+    {
+      "id": "REV32",
+      "time": "2026-10-18T15:04:25+08:00",
+      "finding": "仅最终APK arm64仍让两份AGP native阶段各保留39库509929520B。",
+      "resolution": "源码字节码核对AGP9.4把JNI excludes传MergeNativeLibsTask后，阶段预算预检/离线单worker运行merge与strip；每阶段仅13arm64库176486440B且SHA与官方AAR逐库相同。不改官方AAR、未新打包/装机，不把这组excludes用于正式3ABI交付。"
     }
   ]
 }

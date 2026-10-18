@@ -1,0 +1,176 @@
+{
+  "schema": 1,
+  "revision": "R14",
+  "state": "delegated-engineering-byte-contract-host-validation-not-Android-IPC-implementation",
+  "ownerRulesPreserved": [
+    "same valid key proof maps to same identity from any program",
+    "no caller package/signature/extractability penalty",
+    "compiled high admission",
+    "ordinary >= and stricter disable rule",
+    "owner/source-continuity/platform gates remain"
+  ],
+  "protocol": "rebrowser.control/1",
+  "scope": "request key-possession proof only; not connector messages, enrollment/disable certificates or transport encryption",
+  "wireEnvelope": {
+    "required": [
+      "protocol",
+      "frameB64",
+      "signatureB64"
+    ],
+    "optional": [
+      "delegationB64"
+    ],
+    "maxUtf8Bytes": 65536,
+    "base64": "URL-safe RFC4648, no padding/whitespace, decode then exact re-encode equality",
+    "parse": "strict UTF8, duplicate/unknown fields rejected, no repeated action/target/args shadow fields outside frame",
+    "delegationMaxRawBytes": 8192
+  },
+  "frame": {
+    "magicAscii": "ReBrowser.Control.Proof\u0000",
+    "formatVersionU16BE": 1,
+    "fieldEncoding": "each field below: length U32BE then exact bytes; fixed order, no optional omissions, no trailing bytes",
+    "maxBytes": 35000,
+    "fields": [
+      {
+        "name": "protocol",
+        "kind": "ascii",
+        "max": 32,
+        "fixed": "rebrowser.control/1"
+      },
+      {
+        "name": "applicationId",
+        "kind": "ascii",
+        "max": 128,
+        "fixed": "io.github.rebrowser"
+      },
+      {
+        "name": "principalKeyId",
+        "kind": "ascii",
+        "max": 128
+      },
+      {
+        "name": "targetInstallSpkiSha256",
+        "kind": "bytes",
+        "exact": 32
+      },
+      {
+        "name": "dataEpoch",
+        "kind": "bytes",
+        "exact": 16
+      },
+      {
+        "name": "serverInstanceNonce",
+        "kind": "bytes",
+        "exact": 32
+      },
+      {
+        "name": "compiledPolicySha256",
+        "kind": "bytes",
+        "exact": 32
+      },
+      {
+        "name": "disableRevision",
+        "kind": "u63be",
+        "exact": 8
+      },
+      {
+        "name": "challengeId",
+        "kind": "bytes",
+        "exact": 16
+      },
+      {
+        "name": "nonce",
+        "kind": "bytes",
+        "exact": 32
+      },
+      {
+        "name": "deadlineElapsedMs",
+        "kind": "u63be",
+        "exact": 8
+      },
+      {
+        "name": "requestId",
+        "kind": "bytes",
+        "exact": 16
+      },
+      {
+        "name": "actionId",
+        "kind": "ascii",
+        "max": 128
+      },
+      {
+        "name": "scopeRef",
+        "kind": "ascii",
+        "max": 256
+      },
+      {
+        "name": "ownerGrantRef",
+        "kind": "ascii",
+        "max": 128,
+        "emptyAllowed": true
+      },
+      {
+        "name": "delegationSha256",
+        "kind": "bytes",
+        "exact": 32
+      },
+      {
+        "name": "argsBytes",
+        "kind": "utf8",
+        "max": 32768
+      }
+    ],
+    "asciiRule": "visible ASCII0x21..0x7e only; semantic action/scope/key schemas checked separately",
+    "u63be": "8-byte big-endian, sign bit zero; no floating point/string conversion",
+    "args": "sign the exact original UTF8 JSON bytes; strict single DTO parse rejects duplicate keys/unknown fields/type coercion before dispatch; never JSONObject reserialize for signature"
+  },
+  "signature": {
+    "algorithm": "SHA256withECDSA",
+    "curve": "secp256r1",
+    "publicKey": "strict P256 X509 SPKI from compiled principal registry or validated low delegation",
+    "encoding": "strict DER SEQUENCE of minimal positive INTEGER r,s, each1..n-1; 8..72bytes; signature is outside signed frame",
+    "malleability": "both valid s and n-s represent same key proof; nonce/challenge identity, NOT signature-byte hash, prevents replay. Do not manufacture caller-source distinctions.",
+    "notAuthorization": "successful ECDSA establishes key possession only, never client-claimed level/role/scope"
+  },
+  "challengeAdmission": {
+    "lifetimeMs": 30000,
+    "clock": "target elapsedRealtime and server-issued stored deadline; client cannot extend by changing signed number; serverInstanceNonce changes on control-server restart",
+    "bindStoredChallenge": [
+      "principalKeyId",
+      "targetInstallSpkiSha256",
+      "dataEpoch",
+      "serverInstanceNonce",
+      "compiledPolicySha256",
+      "disableRevision",
+      "actionId",
+      "scopeRef",
+      "ownerGrantRef",
+      "delegationSha256",
+      "args SHA256",
+      "requestId",
+      "challengeId",
+      "nonce",
+      "deadlineElapsedMs"
+    ],
+    "order": [
+      "bounded strict parse/field and curve checks",
+      "verify signature against resolved key",
+      "match actual target/stored challenge and monotonic deadline",
+      "recheck enabled principal/current policy revision/delegation/scope/owner grant/source-data gate",
+      "atomic admission consumes nonce and reserves or returns same idempotency job before dispatch"
+    ],
+    "nonce": "server CSPRNG32bytes, challengeId16bytes; exact nonce consumed once; invalid signature never consumes another principal's challenge",
+    "idempotency": "(principal,target,dataEpoch,requestId) fixes one action/scope/args digest; same content with fresh proof returns original job, different content conflicts; consumed old proof is REPLAY, not an authorization bypass",
+    "unknownEffect": "timeout/disconnect/unknown cloud outcome never starts a second route or repeats effect; query same job with fresh authorized proof",
+    "ownerWait": "highest-risk no-grant request obtains no sufficient authority; owner grant changes proof binding so reissue challenge, not upgrade an already signed frame",
+    "delegation": "all-zero digest iff direct compiled identity/no delegation bundle; otherwise SHA256 exact bounded validated delegation bundle. Certificate byte format remains separate pending work."
+  },
+  "pending": [
+    "Android JCA/Keystore conformance",
+    "strict Android JSON parser implementation",
+    "byte formats for delegation/disable/enrollment receipts",
+    "bounded challenge-store/IPC Binder integration",
+    "complete per-action args/result schemas"
+  ],
+  "dummyVectors": "public scalar1 P256 test fixture only, never a real administrator/release/device credential"
+}

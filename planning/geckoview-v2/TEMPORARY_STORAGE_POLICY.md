@@ -6,7 +6,9 @@
 
 [回收记录](evidence/temporary-storage-recovery.json)：删除已过期的三ABI临时无签名APK（不是正式发布物），以及当前未运行构建的两份可再生native中间产物。约回收1.55GB；记录前后可用空间，不把同时发生的外部空间变化归功于本任务。源码、结果/日志、当前可复用arm64临时签名包、R8映射、SDK/Gradle、固定上游AAR与所有密钥保留。
 
-重要纠正：**arm64-only最终APK并不代表AGP中间目录只有arm64**。实测两份native中间目录各含三ABI、39个库、约510MB，未来构建按真实峰值预算。
+重要纠正：**仅ndk abiFilters得到arm64-only最终APK，并不代表AGP中间目录只有arm64**。原两份native目录各三ABI、39库、509929520B。
+
+R14在手机专用fixture上额外设置JNI输入排除，实际只运行merge/strip阶段验证：[逐库核对](evidence/arm64-early-native-filter.json)。现在两阶段各13个arm64库、176486440B，与官方AAR原字节相同；每阶段比旧配置少333443080B。此结果不是完整APK峰值/签名/运行通过，正式三ABI各自发行不能照搬手机专用excludes。下一构建仍按实际任务峰值预检。
 
 ## 执行规则
 

@@ -1,10 +1,10 @@
-# GeckoView v2 · 规划与技术验证工作台 R13
+# GeckoView v2 · 规划与技术验证工作台 R14
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
 > 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译、隔离R8 Release打包，以及O29授权手机上的[本地合成Native/扩展/MAIN世界/context子集](evidence/validation-android-local-synthetic.json)。**官网、真实播放、本人验证及Popup/恢复等仍未测**；不能宣称产品实现或全部规划完成。
 
-> 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。产品代码、正式密钥、设备登记与发行均未开始；独立临时签名验证包已安装并运行，不是v2产品安装。O31/O32的[旧主体代码归档审查](LEGACY_ARCHIVE_REVIEW.md)与当前任务并行，价值未确认耗尽的仍保留。
+> 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。产品代码、正式密钥、设备登记与发行均未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
 
 ```mermaid
 mindmap
@@ -44,10 +44,10 @@ mindmap
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 主树展开全部目标运行代码文件，数量由清单校验；测试等辅助只概括引用 | O26／O27，首版设计非产品代码 |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
-| [结构清理分流](records/structure-retirement-policy.json)／[回收站处置记录](records/noncode-retirement-review.json) | 旧主体ZIP／凭据保留／其他价值耗尽内容进系统Trash，机主决定彻底删除 | O36；不以文档旧就自动丢弃 |
+| [旧结构审查整理：统一任务](records/structure-retirement-policy.json)／[回收站记录](records/noncode-retirement-review.json) | 主体ZIP／凭据保留／其他价值耗尽进Trash是同任务内分流，与新版本工作并行 | O37；不把一次整理当停止节点 |
 | [ABI分包约束](records/abi-packaging-policy.json)／[当前单arm64验证](evidence/validation-arm64-apk-static-check.json) | 正式三ABI各自独立；手机临时测试仅arm64，校验13个库ELF与ZIP对齐 | O34／O35；不是正式三包已构建 |
 | [临时存储预算](TEMPORARY_STORAGE_POLICY.md)／[本次回收证据](evidence/temporary-storage-recovery.json) | 仅自身过期实验包/可再生中间产物；峰值空间闸门，先低空间审查 | O33；不清设备/正式发布物/无关资料 |
-| [旧主体代码归档审查](LEGACY_ARCHIVE_REVIEW.md)／[逐文件台账](records/legacy-archive-review.json) | 并行审查价值是否已耗尽，合格后原结构移入old_version.zip | O31／O32；临时代码不归档 |
+| [旧结构任务中的主体审查](LEGACY_ARCHIVE_REVIEW.md)／[逐文件台账](records/legacy-archive-review.json) | 主体分支逐文件审查，合格后原结构进old_version.zip | 与上行同一个任务；临时代码不进ZIP |
 | [手机合成运行证据](evidence/validation-android-local-synthetic.json) | 实际R8 Release Native/后台与内容端口/MAIN/context隔离/解绑重绑 | 仅本地合成，非官网或产品验收 |
 | [技术验证状态](records/technology-validation.json) | Artifact/compile/Release包/Android运行分级；存储功能搁置 | 隔离验证，不触日常应用资料 |
 | [完整性看板](views/10-completeness-board.md) | 逐领域缺口、完成标准和推进次序；不把图表数量当完成 | O17／O18、完整性账本 |
@@ -71,6 +71,8 @@ mindmap
 | [集成验证场景](matrices/gecko-contract-cases.csv) | 28项具体场景；全部planned-not-run | GC01–GC12 |
 | [领域/连接器契约](views/18-domain-and-connector-contracts.md) | 模块输入输出、消息/流、真实任务与持久化轴、安全停止通道 | R7规范与时序例子 |
 | [用户旅程/返回](views/19-user-journeys-and-back.md) | 首装/浏览/子应用/后台/设置和Back优先级 | 18条设计旅程 |
+| [控制请求签名字节契约](records/control-proof-format.json)／[跨实现主机检查](evidence/control-proof-cross-implementation.json) | 17字段帧、895项JCA/独立Python与OpenSSL、重放与新proof幂等规则 | 公开标量1合成材料，非Android授权实现 |
+| [提前arm64过滤证据](evidence/arm64-early-native-filter.json) | 仅merge/strip两阶段，各13库原字节匹配官方AAR | 阶段任务通过，不等于新APK或运行通过 |
 | [领域接口](records/domain-interfaces.json) | 10个逻辑组件45个方法，不要求拆成Gradle模块 | 明确所有权/线程/能力覆盖 |
 | [连接器协议](records/connector-protocol.json) | 消息/流信用/租约/通道预算的权威定义 | 不等于管理员证明协议 |
 | [动作语义与类型](records/action-semantics.json)／[参数DTO](records/domain-payloads.json) | 首批13动作的字段/完成/重试；其余动作仍待补 | 不是全功能注册表完成 |
@@ -96,7 +98,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R13自检结果](reviews/R13-retirement-and-handoff-contract-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R14自检结果](reviews/R14-unified-parallel-control-proof-native-filter-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

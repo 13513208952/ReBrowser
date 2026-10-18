@@ -1,8 +1,15 @@
 {
   "schema": 1,
-  "revision": "R13",
-  "authority": ["O31", "O32", "O36"],
-  "parallelWith": ["V0", "T0"],
+  "revision": "R14",
+  "authority": [
+    "O31",
+    "O32",
+    "O36"
+  ],
+  "parallelWith": [
+    "V0",
+    "T0"
+  ],
   "classification": {
     "legacyApplicationRuntimeCode": "Only after refactor value exhausted: old_version.zip with original repository-relative paths and verified restoration, never system Trash as a shortcut.",
     "importantCredentials": "Retain. Never infer key backup/custody from public keys; no disposal under cleanup permission.",
@@ -22,5 +29,6 @@
   ],
   "executionRef": "records/noncode-retirement-review.json",
   "legacyCodeReviewRef": "records/legacy-archive-review.json",
-  "newVersionUserDocs": "owner will rewrite; this policy is an engineering retirement record, not replacement user documentation"
+  "newVersionUserDocs": "owner will rewrite; this policy is an engineering retirement record, not replacement user documentation",
+  "unifiedTask": "L0 under O37; ZIP/Trash/retain are dispositions within one legacy-structure review task"
 }

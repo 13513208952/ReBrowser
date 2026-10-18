@@ -11,6 +11,7 @@ from review_authority_design import review as review_authority_policy
 from review_mail_schema import review as review_mail_sql
 from render_application_tree import render as render_application_tree
 from review_legacy_archive import review as review_legacy_archive
+from review_control_proof import review as review_control_proof
 
 P = Path(__file__).resolve().parent
 
@@ -284,6 +285,17 @@ def review():
         assert abi['onlyExpectedAbi'] and abi['nativeElfMatchesAbi'] and abi['nativeZipAlignment16KiB']
         assert abi['sha256'] == android['artifact']['sha256'] and abi['bytes'] == android['artifact']['bytes']
         abi_report = {'phoneTestApkVerifiedSingleArm64': True, 'formalThreeAbiSplitPolicyOnlyNotBuilt': True}
+    proof_report = review_control_proof()
+    cross = load('evidence/control-proof-cross-implementation.json')
+    assert cross['independentOpenSslVerifiedThisRun'] and not cross['realKeysReadOrGenerated']
+    for source in cross['sourceFiles']:
+        assert hashlib.sha256((P / source['path']).read_bytes()).hexdigest() == source['sha256']
+    early = load('evidence/arm64-early-native-filter.json')
+    assert not early['officialAarModified'] and not early['APKRebuiltOrReinstalled']
+    for stage in early['stages']:
+        assert stage['abis'] == ['arm64-v8a'] and stage['files'] == 13
+        assert stage['eachLibraryMatchesOfficialAar']
+        assert sum(lib['bytes'] for lib in stage['libraries']) == stage['bytes']
     archive_review = review_legacy_archive()
     retirement_report = {}
     if (P / 'records/noncode-retirement-review.json').exists():
@@ -313,6 +325,9 @@ def review():
     report = {
         **storage_report,
         **abi_report,
+        **proof_report,
+        'historicalIndependentOpenSslProofVerificationPassed': True,
+        'phoneOnlyNativeMergeStripEarlyFilterChecked': True,
         **retirement_report,
         **runtime_review,
         **archive_review,

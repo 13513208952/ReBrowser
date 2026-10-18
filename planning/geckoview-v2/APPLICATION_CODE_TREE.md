@@ -71,7 +71,7 @@
                             │   ├── BrowserCoordinator.java [J][?] — 环境/标签/导航/原生页面共同领域动作
                             │   ├── BrowserModels.java [J][?] — 浏览器句柄/状态/不可变快照
                             │   ├── BrowserStore.java [J][?] — 新v2原生环境/标签持久化，非v1迁移
-                            │   ├── ExternalNavigation.java [J][?] — 外部HTTPS临时隔离/非HTTPS用户交接
+                            │   ├── ExternalNavigation.java [J][?] — 拒绝无效/userinfo/控制字符URL，重建私有Intent丢外部extras/selector/ClipData，合法链接入新临时隔离环境
                             │   ├── HistoryStore.java [J][?] — 近期访问/期限/维持/暂停写入
                             │   ├── SearchEngines.java [J][?] — 原生搜索提供者与明确目标加载
                             │   ├── TabCatalog.java [J][?] — 环境子标签/选择/父Popup/关闭
@@ -89,12 +89,12 @@
                             ├── control/
                             │   ├── ActionRegistry.java [J][?] — 178逐动作定义/处理器/门槛单一注册
                             │   ├── ActionSchemas.java [J][?] — 类型/范围/长度/目标/副作用参数
-                            │   ├── ControlChallengeStore.java [J][?] — 目标绑定nonce/新鲜度/一次消费
-                            │   ├── ControlDecoder.java [J][?] — 严格解码/重复字段拒绝/数据量上限
+                            │   ├── ControlChallengeStore.java [J][?] — 目标/epoch/服务实例/策略revision/动作参数绑定的30秒monotonic挑战；并发一次消费在授权后原子准入
+                            │   ├── ControlDecoder.java [J][?] — 64KiB外包络/35KiB帧/32KiB参数严格解码；重复键/非法Unicode/多余字段/非规范Base64拒绝
                             │   ├── ControlDispatcher.java [J][?] — 授权→同领域服务→真实结果，不复制特权路径
-                            │   ├── ControlEnvelope.java [J][?] — 新控制协议签名字节与请求结构
+                            │   ├── ControlEnvelope.java [J][?] — 17个长度前缀签名字节字段/固定域版本/目标和原参数，明确DER签名与外包络边界
                             │   ├── ControlResultStream.java [J][?] — 私有大结果有界传输
-                            │   ├── IdempotencyStore.java [J][?] — 同请求只执行一次与未知效果查询
+                            │   ├── IdempotencyStore.java [J][?] — 同principal/target/epoch/requestId同内容用新证明返回原任务，不同内容冲突；旧nonce重放不再授权
                             │   └── PrivateDataController.java [J][?] — 受授权应用自有对象检查/导出/重置，不访问无权名单；非子应用清理功能
                             ├── core/
                             │   ├── ActorContext.java [J][?] — 正常用户/系统媒体/已验证管理员的明确身份
@@ -180,7 +180,7 @@
                             │   ├── OutlookActivity.java [J][?] — 官方邮箱显示和原生离线入口
                             │   └── OutlookSessionOwner.java [J][?] — 同context邮箱/官方认证Popup生命
                             ├── permissions/
-                            │   ├── ClipboardCoordinator.java [J][?] — 明确用户/授权动作与真实OS前台资格
+                            │   ├── ClipboardCoordinator.java [J][?] — 网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验
                             │   ├── FilePickerCoordinator.java [J][?] — 选择器/ContentResolver/拒绝与重建
                             │   ├── PendingPromptRegistry.java [J][?] — session/document/request绑定且一次结果
                             │   ├── PermissionCoordinator.java [J][?] — 原生网站问询与OS分层流程
@@ -196,7 +196,7 @@
                             │   ├── ApkHandoffCoordinator.java [J][?] — UI/管理员共同的来源验证、受限stage与明确系统安装器交接；已交接不冒充安装完成
                             │   ├── ApkStagingProvider.java [J][?] — 不导出只读随机单文件URI，核对授权/归属/期限/规范路径，绝不暴露业务资料
                             │   ├── ApkStagingStore.java [J][?] — 仅自有随机APK暂存，输入流/队列/实际任务/空间/保留预算及取消结算；不清其他缓存
-                            │   ├── DefaultBrowserFlow.java [J][?] — 用户发起Role系统流程，结果如实
+                            │   ├── DefaultBrowserFlow.java [J][?] — 用户/已授权动作打开系统推荐默认应用页，已持有角色也可打开；只读角色不直接设置默认，不交第三方/合成Resolver
                             │   ├── DeviceWindowState.java [J][?] — 窗口/平板/横竖屏事实，不以型号硬门控
                             │   ├── ForegroundPolicy.java [J][?] — Android前台服务/通知许可按实际版本处理
                             │   ├── MemoryPressurePolicy.java [J][?] — 仅本软件缓存/可恢复session回收，不动其他软件
@@ -233,7 +233,7 @@
 | 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限 | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java` |
 | 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路 | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java` |
 | 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
-| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报 | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java` |
+| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java` |
 | Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
@@ -263,6 +263,7 @@
 | 原生浏览器界面 | legacy-behavior-review | 旧加载条/概览选择仅作保留交互输入；新目标文件不是已完成替代，未将旧源码归档<br>`planning/geckoview-v2/records/legacy-archive-review.json`<br>`planning/geckoview-v2/LEGACY_ARCHIVE_REVIEW.md` |
 | Gecko原生宿主 | abi-delivery-policy-and-auxiliary-check | 正式三ABI独立APK，手机临时测试仅arm64；辅助静态ABI/ELF/ZIP对齐检查不是产品源码叶节点<br>`planning/geckoview-v2/records/abi-packaging-policy.json`<br>`planning/geckoview-v2/verify_abi_apks.py`<br>`planning/geckoview-v2/test_abi_packages.py` |
 | 平台集成 | legacy-installer-contract-retained | 旧.1安装器/默认应用文档仍是功能边界参考，新版不是任意文件转发或静默安装；不沿用旧2GiB缓存作为不受约束预算<br>`docs/REBROWSER_ANDROID_HANDOFF.md`<br>`planning/geckoview-v2/records/legacy-archive-review.json`<br>`planning/geckoview-v2/TEMPORARY_STORAGE_POLICY.md` |
+| 统一控制入口与协议 | control-proof-byte-contract-and-host-evidence | 请求证明17字段已有Java/Python一致与OpenSSL验签；公开标量1测试非真实凭据；Android IPC/JSON实现和收据格式仍待验证<br>`planning/geckoview-v2/records/control-proof-format.json`<br>`planning/geckoview-v2/experiments/ControlProofVectors.java`<br>`planning/geckoview-v2/review_control_proof.py`<br>`planning/geckoview-v2/evidence/control-proof-cross-implementation.json` |
 
 ### 当前边界
 

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R13",
+  "revision": "R14",
   "authority": [
     "O31",
     "O32"
@@ -672,12 +672,14 @@
       "sha256": "8ccc5fde8a31f97ba1efc64ae6b577bbd1787e44b8809582ae8b1ec03a056238",
       "bytes": 3520,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T15:04:25+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "原生单次输入信用与5秒/遮挡/多点/移动/代次失效边界仍要承接；新Gecko剪贴板路径未实现",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -686,12 +688,14 @@
       "sha256": "bfde43f9a562aabff4298bcebc8eade564a548a1c6848e2aaa545132a84babf8",
       "bytes": 3771,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T15:04:25+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "已持有浏览器角色仍能打开系统推荐默认应用页，禁止任意第三方/合成Resolver；只读自身角色不直接设置全局默认，v2行为未验证",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -742,12 +746,14 @@
       "sha256": "1bbd145ff4fb54bbae8d6d15d96fbece7d969eb07ae316cbd27a5391b82af7d3",
       "bytes": 1979,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T15:04:25+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "外部不可信Intent丢弃extras/selector/ClipData，仅重建合法无userinfo HTTP(S)目标与临时隔离环境；新入口尚未实现",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1413,5 +1419,6 @@
     "tools/music/netease_portrait_reference.js",
     "tools/music/netease_expanded_portrait.css",
     "tools/music/netease_home_card.css"
-  ]
+  ],
+  "unifiedTask": "L0 under O37; ZIP/Trash/retain are dispositions within one legacy-structure review task"
 }

@@ -1,4 +1,4 @@
-# 统一控制协议与执行契约 · A05／A10 · R5候选
+# 统一控制协议与执行契约 · A05／A10 · R14字节契约／部分主机验证
 
 ## 程序来源中立，身份与权力证明明确
 
@@ -34,10 +34,13 @@ sequenceDiagram
 签名对象 = 固定协议域标签 || 明确长度的目标/nonce/动作字段 || 参数原始字节
 验证收到的原始字节；不依赖JSONObject重新序列化的字段顺序。
 UTF-8解码严格、长度有上限；重复JSON键、未知字段和类型混淆拒绝。
-具体字节编码/跨语言测试向量仍需完成，不为方便引入大协议库。
+R14采用17字段、逐字段U32BE长度、固定域标签+U16BE版本的明确帧；P256/SHA256严格DER签名。
+字节规范见control-proof-format.json；主机Java与独立Python逐字节相等，已有OpenSSL交叉验签。
+这些不等于Android控制入口/本人授权/Keystore已经实现，不引入协议库。
 
 (requestId, principal, target, parametersDigest) -> one execution/job
-同ID同证明内容的合法重试：返回原结果/任务，不再次执行副作用。
+同ID同动作/范围/参数原始字节，必须用新挑战、新合法证明取得原任务，不再次执行副作用。
+旧签名请求的nonce已消费则REPLAY；不能拿旧签名绕过新的禁用/授权/来源闸门。
 同ID不同内容：拒绝。
 身份已禁用/授权过期后：不能仅凭旧ID重新取得敏感结果。
 ```
@@ -71,9 +74,10 @@ stateDiagram-v2
 ## 必须完成的后续规范
 
 - 每个动作拆到实际参数、返回、风险、幂等、取消及异常恢复，不止当前43组概括。
-- 协议字节级测试向量、证明算法/低级委托/禁用记录/信任表版本与防回滚规范。
+- 请求证明17字段字节格式及主机公开dummy向量已补：[规范](../records/control-proof-format.json)、[895项JCA检查向量](../evidence/control-proof-host-vectors.json)、[独立Python/OpenSSL核对](../evidence/control-proof-cross-implementation.json)。
+- 仍需低级委托/禁用记录/设备登记收据的字节格式、真实Android JCA/严格JSON实现、并发挑战消费与任务事务、动作DTO及防回滚联调。ECDSA验签成功只证明持钥，不证明权限充分。
 - 所有权限门槛与高级边界H的一致映射；本文不偷偷改变已确认的≥、更高禁更低、Root不可禁。
 - Gecko业务消息与控制消息独立类型/权限校验：R6已核对session delegate、sender、port及MAIN/ISOLATED schema；Java sender没有documentId，不能相信payload自报文档身份。大小/频率/队列与真实导航行为继续验证，见[GC01–GC04](../records/gecko-contracts.json)。
 - 来源异常的四步与两次系统验证是专门数据保护流程；控制请求只能发起界面，不能伪造本人同意或提前解锁。
 
-**当前状态：契约草案，未实现接口、未开放监听、未加载插件、未生成密钥。**
+**当前状态：请求证明字节契约与公开标量1的主机检查通过；未实现Android管理员接口、未开放新监听、未加载插件、未生成正式管理员/设备密钥。** R11独立临时签名包的Gecko本地合成结果属于另一验证层，不是这里的控制授权实现。

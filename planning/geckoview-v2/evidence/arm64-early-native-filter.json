@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "revision": "R14",
+  "checkedAt": "2026-10-18T15:02:45+08:00",
+  "authority": [
+    "O33",
+    "O35",
+    "O37"
+  ],
+  "scope": "isolated phone-only fixture native merge/strip tasks, not assembly or device test",
+  "mechanism": "ndk arm64 filter PLUS packaging.jniLibs excludes for other ABI inputs, AGP9.4 CreationAction feeds these excludes into MergeNativeLibsTask",
+  "stages": [
+    {
+      "stage": "merged_native_libs",
+      "abis": [
+        "arm64-v8a"
+      ],
+      "files": 13,
+      "bytes": 176486440,
+      "eachLibraryMatchesOfficialAar": true,
+      "libraries": [
+        {
+          "path": "arm64-v8a/libclearkey.so",
+          "bytes": 135400,
+          "sha256": "836d245bc1a2c31834cfeafbb3fd5732a69f2fd854c8d26c56b00642ebfedd31"
+        },
+        {
+          "path": "arm64-v8a/libcrashhelper.so",
+          "bytes": 3435168,
+          "sha256": "d38e372bd1af446abfb3e9e0e3d3b4e58a2d75b3eb9ceaa6ecc45f9843072d08"
+        },
+        {
+          "path": "arm64-v8a/libcrashtools.so",
+          "bytes": 5949176,
+          "sha256": "4de265f93a808f1d1bf4a4f78aec2ad48e771d80ec34993a9b3fe593e752fd9c"
+        },
+        {
+          "path": "arm64-v8a/libfreebl3.so",
+          "bytes": 854368,
+          "sha256": "208e640ef091aef6cdd119561a21a9524baeaf929ddd61ac9686c54d477b9767"
+        },
+        {
+          "path": "arm64-v8a/libgkcodecs.so",
+          "bytes": 5136272,
+          "sha256": "1755700c080fdb6ba7b361752c952ac2725b534e8d7a305f38c9cb553b18b5e8"
+        },
+        {
+          "path": "arm64-v8a/liblgpllibs.so",
+          "bytes": 167272,
+          "sha256": "21d22924735dce30838e868b299c62e883714e82488133a097242a3ec6c9e3fa"
+        },
+        {
+          "path": "arm64-v8a/libmozavcodec.so",
+          "bytes": 2121336,
+          "sha256": "f33994c18b6b8c89769944c10e9ece8b99ae9960e52dfbb5970bc0307602238a"
+        },
+        {
+          "path": "arm64-v8a/libmozavutil.so",
+          "bytes": 460936,
+          "sha256": "3585a17ab335b15b8ba0d74c0db7f37b2a99e66d347005d99358032f01c1fef7"
+        },
+        {
+          "path": "arm64-v8a/libmozglue.so",
+          "bytes": 1201696,
+          "sha256": "f4dd6348e709d482786b2405278c59abf5cb70dc4803d6f5c0def0f94da8cd65"
+        },
+        {
+          "path": "arm64-v8a/libnss3.so",
+          "bytes": 2878856,
+          "sha256": "3f3c2453865ed99197158cf74d6c55701dc245d7c10247ef5bddf3dd5b97b165"
+        },
+        {
+          "path": "arm64-v8a/libplugin-container.so",
+          "bytes": 4800,
+          "sha256": "946d1558ed7978051366ae83433a29d9b5a63b6d167e9b2e2a1509a48368c0f1"
+        },
+        {
+          "path": "arm64-v8a/libsoftokn3.so",
+          "bytes": 326320,
+          "sha256": "98b955d54934de84cc57c6d64dc983455f91fd5a413889daa128edde1cc26044"
+        },
+        {
+          "path": "arm64-v8a/libxul.so",
+          "bytes": 153814840,
+          "sha256": "4201a0e63d3677f4c04cc986e6f107ff6ded1d053fa3a5b9445661c8ffbfb889"
+        }
+      ]
+    },
+    {
+      "stage": "stripped_native_libs",
+      "abis": [
+        "arm64-v8a"
+      ],
+      "files": 13,
+      "bytes": 176486440,
+      "eachLibraryMatchesOfficialAar": true,
+      "libraries": [
+        {
+          "path": "arm64-v8a/libclearkey.so",
+          "bytes": 135400,
+          "sha256": "836d245bc1a2c31834cfeafbb3fd5732a69f2fd854c8d26c56b00642ebfedd31"
+        },
+        {
+          "path": "arm64-v8a/libcrashhelper.so",
+          "bytes": 3435168,
+          "sha256": "d38e372bd1af446abfb3e9e0e3d3b4e58a2d75b3eb9ceaa6ecc45f9843072d08"
+        },
+        {
+          "path": "arm64-v8a/libcrashtools.so",
+          "bytes": 5949176,
+          "sha256": "4de265f93a808f1d1bf4a4f78aec2ad48e771d80ec34993a9b3fe593e752fd9c"
+        },
+        {
+          "path": "arm64-v8a/libfreebl3.so",
+          "bytes": 854368,
+          "sha256": "208e640ef091aef6cdd119561a21a9524baeaf929ddd61ac9686c54d477b9767"
+        },
+        {
+          "path": "arm64-v8a/libgkcodecs.so",
+          "bytes": 5136272,
+          "sha256": "1755700c080fdb6ba7b361752c952ac2725b534e8d7a305f38c9cb553b18b5e8"
+        },
+        {
+          "path": "arm64-v8a/liblgpllibs.so",
+          "bytes": 167272,
+          "sha256": "21d22924735dce30838e868b299c62e883714e82488133a097242a3ec6c9e3fa"
+        },
+        {
+          "path": "arm64-v8a/libmozavcodec.so",
+          "bytes": 2121336,
+          "sha256": "f33994c18b6b8c89769944c10e9ece8b99ae9960e52dfbb5970bc0307602238a"
+        },
+        {
+          "path": "arm64-v8a/libmozavutil.so",
+          "bytes": 460936,
+          "sha256": "3585a17ab335b15b8ba0d74c0db7f37b2a99e66d347005d99358032f01c1fef7"
+        },
+        {
+          "path": "arm64-v8a/libmozglue.so",
+          "bytes": 1201696,
+          "sha256": "f4dd6348e709d482786b2405278c59abf5cb70dc4803d6f5c0def0f94da8cd65"
+        },
+        {
+          "path": "arm64-v8a/libnss3.so",
+          "bytes": 2878856,
+          "sha256": "3f3c2453865ed99197158cf74d6c55701dc245d7c10247ef5bddf3dd5b97b165"
+        },
+        {
+          "path": "arm64-v8a/libplugin-container.so",
+          "bytes": 4800,
+          "sha256": "946d1558ed7978051366ae83433a29d9b5a63b6d167e9b2e2a1509a48368c0f1"
+        },
+        {
+          "path": "arm64-v8a/libsoftokn3.so",
+          "bytes": 326320,
+          "sha256": "98b955d54934de84cc57c6d64dc983455f91fd5a413889daa128edde1cc26044"
+        },
+        {
+          "path": "arm64-v8a/libxul.so",
+          "bytes": 153814840,
+          "sha256": "4201a0e63d3677f4c04cc986e6f107ff6ded1d053fa3a5b9445661c8ffbfb889"
+        }
+      ]
+    }
+  ],
+  "previousEachStageBytes": 509929520,
+  "eachStageBytesSavedVsPrevious": 333443080,
+  "noLibraryRemovedWithinArm64": true,
+  "officialAarModified": false,
+  "APKRebuiltOrReinstalled": false,
+  "newAndroidRuntimeClaims": false,
+  "freeBytesAfter": 1498750976,
+  "boundary": "do not copy phone-only excludes into formal three-independent-ABI delivery; final APK checks still mandatory"
+}

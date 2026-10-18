@@ -18,6 +18,11 @@ android {
             // No signingConfig: no original/formal keystore is read or created.
         }
     }
+    // Phone-only fixture: filter native merge inputs too, not just final APK ABI selection.
+    // Never copy these excludes into the three-ABI formal delivery configuration.
+    packaging {
+        jniLibs { excludes += ['**/armeabi-v7a/**', '**/x86_64/**'] }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

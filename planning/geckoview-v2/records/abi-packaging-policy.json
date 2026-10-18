@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R14",
   "authority": [
     "O34",
     "O35"
@@ -22,7 +22,8 @@
     "basis": "O35 and authorized actual getprop/installed arm64 fixture",
     "currentFixtureAlreadySingleAbi": true,
     "staticEvidence": "evidence/validation-arm64-apk-static-check.json",
-    "neverBuildAllThreeJustForPhoneTest": true
+    "neverBuildAllThreeJustForPhoneTest": true,
+    "nativeMergeEarlyFilteringVerified": "evidence/arm64-early-native-filter.json"
   },
   "packageGate": [
     "ABI directory set equals exactly one expected ABI",
@@ -32,7 +33,7 @@
     "R8/resources/builtin assets/JNI callbacks validated per actual release APK; packaging alone not runtime proof",
     "three formal APKs must be checked individually, no universal asset silently substituted"
   ],
-  "hostBudget": "single-ABI final APK may still produce three-ABI AGP native intermediates; measured budget and precise retirement required, not cached copies per ABI",
+  "hostBudget": "R14 auxiliary phone-only packaging JNI excludes cause actual native merge/strip to contain only13arm64 libraries (176486440B each); all match original official AAR. Formal3ABI independent delivery must not inherit global arm64-only excludes.",
   "buildScheduling": "serial/offline/max-workers1; no new full build solely to illustrate policy under current disk pressure",
   "toolRef": "verify_abi_apks.py",
   "actualAllThreeFormalPackagesBuilt": false

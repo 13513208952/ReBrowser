@@ -1,0 +1,27 @@
+{
+  "controlProofSignedFields": 17,
+  "controlProofHostJcaChecks": 895,
+  "independentPythonFrameBytesMatch": true,
+  "strictJsonHostNegativeCases": 5,
+  "controlProofAdmissionSymbolicChecks": 7,
+  "independentOpenSslVerifiedThisRun": true,
+  "AndroidControlProofImplemented": false,
+  "checkedAt": "2026-10-18T15:07:25+08:00",
+  "sourceFiles": [
+    {
+      "path": "experiments/ControlProofVectors.java",
+      "sha256": "37b3828f45fdc973cf9ae089c8cbaaf7046a24c6d0dc80f7c1199c4e2fb2fb7a"
+    },
+    {
+      "path": "review_control_proof.py",
+      "sha256": "1d74baae925ee3152fea287eef26139ada2a3f4af97431acf63f915d3792616a"
+    },
+    {
+      "path": "records/control-proof-format.json",
+      "sha256": "28f059ee81fd0e547213d5bc5c184e8ce906b23c363abc64eea1fb22b1b76021"
+    }
+  ],
+  "testKey": "public scalar1 secp256r1 fixture only; not a credential",
+  "realKeysReadOrGenerated": false,
+  "AndroidDeviceAction": false
+}

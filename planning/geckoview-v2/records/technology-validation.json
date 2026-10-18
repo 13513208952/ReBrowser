@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R12",
+  "revision": "R14",
   "authority": [
     "O26",
     "O27",
@@ -83,11 +83,11 @@
   "sourceFiles": [
     {
       "path": "experiments/gecko-api-smoke/README.md",
-      "sha256": "c0570443e8ce6aae7d89e526d7a02f7cbf702eb8cc6a2a3df48fdf7a72acf0dd"
+      "sha256": "e5650712b694afce0df7512d857941eba894b1921e7eac886d20b1cf2c4d5345"
     },
     {
       "path": "experiments/gecko-api-smoke/app/build.gradle",
-      "sha256": "8096890a8beccadf9e5653939c16302885cbfc0431498053ad51ba24abdaed36"
+      "sha256": "ffad02163f371cec25cc37fbb01a523113879eb06838e54291079c8a90cb1f3c"
     },
     {
       "path": "experiments/gecko-api-smoke/app/src/main/AndroidManifest.xml",
@@ -155,5 +155,8 @@
   "next": "refine application-only code tree using limited real Native/port/MAIN/context results; continue legacy archive review in parallel, do not generalize to official sites",
   "treeDraftRef": "APPLICATION_CODE_TREE.md",
   "temporaryArtifactRetirementRef": "evidence/temporary-storage-recovery.json",
-  "abiPackagingPolicyRef": "records/abi-packaging-policy.json"
+  "abiPackagingPolicyRef": "records/abi-packaging-policy.json",
+  "additionalHostProofEvidence": "evidence/control-proof-cross-implementation.json",
+  "nativeIntermediateFilterEvidence": "evidence/arm64-early-native-filter.json",
+  "buildConfigurationDelta": "R14 phone-only excludes changed after R11 signed APK; only merge/strip tasks executed, original R11 APK/hash/runtime evidence remains historical and unchanged"
 }

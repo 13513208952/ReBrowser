@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R13",
+  "revision": "R14",
   "authority": [
     "O26",
     "O27"
@@ -123,12 +123,12 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
           "kind": "unit-design-contract",
-          "purpose": "严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放"
+          "purpose": "严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce"
         },
         {
           "path": "app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java",
           "kind": "android-runtime",
-          "purpose": "ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报"
+          "purpose": "ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce"
         }
       ]
     },
@@ -932,7 +932,7 @@
       "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
       "group": "control",
       "kind": "native-code",
-      "responsibility": "新控制协议签名字节与请求结构",
+      "responsibility": "17个长度前缀签名字节字段/固定域版本/目标和原参数，明确DER签名与外包络边界",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT09",
@@ -946,7 +946,7 @@
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
       "group": "control",
       "kind": "native-code",
-      "responsibility": "严格解码/重复字段拒绝/数据量上限",
+      "responsibility": "64KiB外包络/35KiB帧/32KiB参数严格解码；重复键/非法Unicode/多余字段/非规范Base64拒绝",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT09",
@@ -960,7 +960,7 @@
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
       "group": "control",
       "kind": "native-code",
-      "responsibility": "目标绑定nonce/新鲜度/一次消费",
+      "responsibility": "目标/epoch/服务实例/策略revision/动作参数绑定的30秒monotonic挑战；并发一次消费在授权后原子准入",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT09",
@@ -974,7 +974,7 @@
       "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
       "group": "control",
       "kind": "native-code",
-      "responsibility": "同请求只执行一次与未知效果查询",
+      "responsibility": "同principal/target/epoch/requestId同内容用新证明返回原任务，不同内容冲突；旧nonce重放不再授权",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT09",
@@ -1522,7 +1522,7 @@
       "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
       "group": "browser",
       "kind": "native-code",
-      "responsibility": "外部HTTPS临时隔离/非HTTPS用户交接",
+      "responsibility": "拒绝无效/userinfo/控制字符URL，重建私有Intent丢外部extras/selector/ClipData，合法链接入新临时隔离环境",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT05",
@@ -1919,7 +1919,7 @@
       "path": "app/src/main/java/io/github/rebrowser/permissions/ClipboardCoordinator.java",
       "group": "permissions",
       "kind": "native-code",
-      "responsibility": "明确用户/授权动作与真实OS前台资格",
+      "responsibility": "网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -2532,7 +2532,7 @@
       "path": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
       "group": "system",
       "kind": "native-code",
-      "responsibility": "用户发起Role系统流程，结果如实",
+      "responsibility": "用户/已授权动作打开系统推荐默认应用页，已持有角色也可打开；只读角色不直接设置默认，不交第三方/合成Resolver",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -3112,6 +3112,17 @@
         "docs/REBROWSER_ANDROID_HANDOFF.md",
         "planning/geckoview-v2/records/legacy-archive-review.json",
         "planning/geckoview-v2/TEMPORARY_STORAGE_POLICY.md"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "control-proof-byte-contract-and-host-evidence",
+      "summary": "请求证明17字段已有Java/Python一致与OpenSSL验签；公开标量1测试非真实凭据；Android IPC/JSON实现和收据格式仍待验证",
+      "paths": [
+        "planning/geckoview-v2/records/control-proof-format.json",
+        "planning/geckoview-v2/experiments/ControlProofVectors.java",
+        "planning/geckoview-v2/review_control_proof.py",
+        "planning/geckoview-v2/evidence/control-proof-cross-implementation.json"
       ]
     }
   ],

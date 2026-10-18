@@ -254,6 +254,20 @@
       "utf8Bytes": 424,
       "sha256": "1d14bee30cbc7e4f792cb686761133fb11c89bc3c7ed1a0e1bafda8194f04ad9",
       "provenance": "owner user-message manually transcribed verbatim"
+    },
+    {
+      "id": "O37",
+      "file": "owner-verbatim/O37-unified-legacy-cleanup-parallel-new-version-keep-working.txt",
+      "utf8Bytes": 141,
+      "sha256": "f659ec95549701e46ebded75ec81b220886dec98ef811bf31454d6e6ffb043b1",
+      "provenance": "owner user-message manually transcribed verbatim; original wording retained"
+    },
+    {
+      "id": "O38",
+      "file": "owner-verbatim/O38-push-progress-checkpoint.txt",
+      "utf8Bytes": 33,
+      "sha256": "74b3751aece3181bcb5c2d3b0a181d6fd66575425d550d9187fe4599ac60bdad",
+      "provenance": "owner user-message manually transcribed verbatim"
     }
   ],
   "lastAppendedAt": "2026-10-18T10:28:22+08:00"

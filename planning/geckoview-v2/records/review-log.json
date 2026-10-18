@@ -1,5 +1,5 @@
 {
-  "revision": "R16",
+  "revision": "R17",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -209,6 +209,12 @@
       "time": "2026-10-18T22:10:39+08:00",
       "finding": "仅源码摘要和纯自写模型还不能确认模块路径的实际分支；旧“后台关闭”也不能扩成共享GeckoRuntime关闭。",
       "resolution": "执行官方AAR固定权限/存储JS的受限HOST VM，28项合成actors/Services断言覆盖普通永久/private-session写入、FINE请求、notification无激活拒绝、storage-access分支、notifyShown一次和scoped读取；无真实权限管理器/设备数据访问。完整审读三个旧主体文件仍保留依赖/参考价值。"
+    },
+    {
+      "id": "REV36",
+      "time": "2026-10-18T22:41:16+08:00",
+      "finding": "O41要求已厘清节点不再等待整体调研；旧tree/reviewer把所有文件强制计划/未实现会掩盖真实进展。O42再次禁止把推送当停工点。",
+      "resolution": "先以R14公开固定字节/独立Python/OpenSSL证据准入ControlEnvelope；生产源实际编译Java8 API并通过12项JUnit（含全部433个截断前缀、U32溢出、ASCII/UTF8/原字节不可变及两种旧公开签名）。总树区分PLAN/HOST，主审校验准入和真实源码SHA。严格JSON/权限/挑战/Android未决不假报；继续同L0审读旧协议仍有维护价值。"
     }
   ]
 }

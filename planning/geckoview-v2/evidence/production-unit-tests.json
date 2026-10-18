@@ -1,0 +1,30 @@
+{
+  "scope": "production v2 source, Java8 API surface compile and HOST JUnit only; not Android/runtime/admission implementation",
+  "runtimeSourceFilesCompiled": 1,
+  "junitTestsPassed": 12,
+  "junitOutput": "JUnit version 4.13.2\n............\nTime: 0.095\n\nOK (12 tests)\n\n",
+  "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
+      "sha256": "ca2d38026ebcf7fe66f1f58103e128351f33c382355c0449ec59838a0d3fd2a4"
+    }
+  ],
+  "runnerSha256": "6f3467344e343cd821e4c7b2ceb9fd6c4bc3af72bdf5db509d9b0ca111d71f82",
+  "localDependencySha256": {
+    "junit": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3",
+    "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
+  },
+  "temporaryNewPeakBudgetBytes": 16777216,
+  "freeBytesBefore": 1517441024,
+  "memAvailableBefore": 9595195392,
+  "temporaryClassDirectoryRemoved": true,
+  "androidRuntimeTested": false,
+  "productApkBuilt": false,
+  "realKeysUsedOrGenerated": false,
+  "strictArgsJsonOrAdmissionComplete": false
+}

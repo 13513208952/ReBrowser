@@ -1,15 +1,17 @@
 {
   "schema": 1,
-  "revision": "R16",
+  "revision": "R17",
   "authority": [
     "O26",
-    "O27"
+    "O27",
+    "O41",
+    "O42"
   ],
-  "state": "first-file-complete-application-code-design-after-artifact-build-round; Android-runtime-dependent-details-provisional",
+  "state": "file-gated-source-implementation-alongside-provisional-target-design",
   "scope": "all currently planned application-owned runtime code files; no test/tool/build/document source expanded as code leaves",
   "targetAppId": "io.github.rebrowser",
   "targetVersion": "2.0.0",
-  "implementationStarted": false,
+  "implementationStarted": true,
   "groups": [
     {
       "id": "entry",
@@ -123,7 +125,8 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
           "kind": "unit-design-contract",
-          "purpose": "严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce"
+          "purpose": "严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce",
+          "state": "frame-host-tested-other-contracts-planned"
         },
         {
           "path": "app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java",
@@ -933,14 +936,15 @@
       "group": "control",
       "kind": "native-code",
       "responsibility": "17个长度前缀签名字节字段/固定域版本/目标和原参数，明确DER签名与外包络边界",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R17 actual production source Java8 compile/HOST JUnit; no Android/IPC runtime claim",
       "runtimePending": true,
-      "testReferenceGroup": "control"
+      "testReferenceGroup": "control",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
@@ -3159,6 +3163,16 @@
       "summary": "浏览器后台关闭只收敛自身页面/任务，不shutdown共享GeckoRuntime，不把关闭页当全部IO停止或零内存",
       "paths": [
         "planning/geckoview-v2/records/browser-background-ownership.json"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "admitted-production-source-host-tests",
+      "summary": "O41逐文件准入：ControlEnvelope已实现，真实生产类经独立历史帧/签名负例及不可变性测试；未含JSON/授权/Android",
+      "paths": [
+        "planning/geckoview-v2/records/implementation-readiness.json",
+        "planning/geckoview-v2/run_production_unit_tests.py",
+        "planning/geckoview-v2/evidence/production-unit-tests.json"
       ]
     }
   ],

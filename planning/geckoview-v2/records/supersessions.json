@@ -80,6 +80,11 @@
       "earlier": "助手O26后的初步解释把测试/构建维护/文档逐文件混入主总树",
       "later": "O27明确主总树仅本体代码，其他部分独立存放并概括引用",
       "status": "owner-clarified main-tree scope; all application code still mandatory"
+    },
+    {
+      "earlier": "O26/R10–R16内部顺序：产品代码仍未获准、只做验证和总树",
+      "later": "O41允许完成本文件调研后按总树节点编写；O42不因推送自行停工",
+      "status": "file-gated-implementation-authorized; no blanket domain readiness or release authorization"
     }
   ]
 }

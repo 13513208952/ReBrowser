@@ -282,7 +282,21 @@
       "utf8Bytes": 15,
       "sha256": "10911a504b91aa2487ce878c9bda4e63e4cdb9b3d1f6de891d4353f97eeb8b27",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O41",
+      "file": "owner-verbatim/O41-prepare-parallel-implementation-of-understood-tree-files.txt",
+      "utf8Bytes": 165,
+      "sha256": "c9121c480a04ba2a6e1045fa27c67036d79f903fdae3d66446d28fd6e64748bc",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O42",
+      "file": "owner-verbatim/O42-do-not-stop-after-checkpoints.txt",
+      "utf8Bytes": 87,
+      "sha256": "d16fa707df359de730932dcf8eb5d4b78f5514c4fecf6182f65e4c80fce32928",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-18T10:28:22+08:00"
+  "lastAppendedAt": "2026-10-18T22:29:49+08:00"
 }

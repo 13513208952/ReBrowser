@@ -28,6 +28,23 @@ class ApplicationTreeTests(unittest.TestCase):
         for item in self.manifest['files']:
             self.assertIn(Path(item['path']).name + ' [', code_tree)
 
+    def test_host_marker_matches_implemented_count(self):
+        text, facts = render(self.manifest)
+        expected = sum(f['state'] != 'planned-not-implemented' for f in self.manifest['files'])
+        self.assertEqual(facts['implementedRuntimeCodeFiles'], expected)
+        self.assertEqual(text.count('[HOST][?]'), expected)
+
+    def test_reject_unknown_implementation_state(self):
+        self.manifest['files'][0]['state'] = 'complete-Android-passed'
+        with self.assertRaises(AssertionError):
+            render(self.manifest)
+
+    def test_reject_implemented_file_without_admission(self):
+        item = next(f for f in self.manifest['files'] if f['state'] != 'planned-not-implemented')
+        del item['implementationReadinessRef']
+        with self.assertRaises(AssertionError):
+            render(self.manifest)
+
     def test_reject_test_source_in_main_tree(self):
         self.rejects_path('app/src/test/java/io/github/rebrowser/Fixture.java')
 

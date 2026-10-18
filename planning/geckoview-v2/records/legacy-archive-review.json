@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R16",
+  "revision": "R17",
   "authority": [
     "O31",
     "O32"
@@ -599,12 +599,15 @@
       "sha256": "49f6484c41ed2387a34d724a89c627e43e36f3903d7c8445a85d0831b5315de5",
       "bytes": 22010,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T22:36:18+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧协议版本2、逐操作名单/级别、显式删除确认、有界结果与审计；当前旧控制/维护仍依赖。v2不复制opt类型强制/缺省字段和SharedPreferences异步写当事务；新固定字节帧仅独立边界，不代表旧维护价值耗尽。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/control-proof-format.json",
+        "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

@@ -14,6 +14,7 @@ from review_legacy_archive import review as review_legacy_archive
 from review_control_proof import review as review_control_proof
 from review_platform_actions import review as review_platform_actions
 from review_permission_design import review as review_permission_design
+from review_production_sources import review as review_production_sources
 
 P = Path(__file__).resolve().parent
 
@@ -44,7 +45,9 @@ def review():
     requirements = indexed(requirement_record['requirements'])
     for item in requirements.values():
         assert item['ownerSources'] and set(item['ownerSources']) <= messages.keys(), item['id']
-        assert item['implementation'] == 'not-started', 'Planning must not pretend product implementation'
+        assert item['implementation'] in ['not-started', 'partial-source'], 'No product completion claim'
+        if item['implementation'] == 'partial-source':
+            assert item.get('implementationEvidence') == 'records/implementation-readiness.json'
     decisions = indexed(load('records/decisions.json')['decisions'])
     questions = indexed(load('records/questions.json')['questions'])
     for group in [decisions, questions]:
@@ -67,7 +70,10 @@ def review():
         assert item['implementation'] == 'not-started'
     plan = load('records/work-plan.json')
     phases = indexed(plan['phases'] + plan.get('parallelTracks', []))
-    assert plan['activePhase'] in ['P0', 'V0', 'T0'] and plan['codingAuthorizedByPlan'] is False
+    assert plan['activePhase'] in ['P0', 'V0', 'T0']
+    assert plan['codingAuthorizedByPlan'] and not plan['productCodingStillUnauthorized']
+    assert {'O41','O42'} <= set(plan['codingAuthority'])
+    production_review = review_production_sources()
     if plan['activePhase'] in ['V0', 'T0']:
         assert plan['isolatedValidationCodeAuthorized'] and load('records/validation-scope.json')['authority'] == 'O26'
     done = set()
@@ -345,6 +351,7 @@ def review():
         **authority_review,
         **sql_review,
         **tree_review,
+        **production_review,
         'isolatedUnsignedReleasePackageBuilt': True,
         'AndroidGeckoRuntimeExecuted': android_executed,
         'AndroidScope': 'one authorized local synthetic run; official sites/media/owner-auth not tested' if android_executed else 'not executed',
@@ -378,13 +385,14 @@ def review():
         'destructionCodeOrExecution': False,
         'mermaidBlocksStructurallyChecked': graph_count,
         'fullMermaidParserOrRenderingValidated': False,
-        'productCodeImplementedOrBuilt': False, 'deviceOrPrivateKeyAccess': False,
+        'productSourceImplementationStarted': bool(production_review['productionSourceFilesImplementedHostTested']),
+        'productApkBuilt': False, 'deviceOrPrivateKeyAccess': False,
         'openQuestions': sum(not q['state'].startswith(('resolved', 'deferred')) for q in questions.values()),
         'ownerAnswersRequiredNow': sum(not q['state'].startswith(('resolved', 'deferred')) and q.get('askOwnerNow', False) for q in questions.values()),
         'resolvedOwnerQuestions': sum(q['state'] == 'resolved' for q in questions.values()),
         'resolvedByEngineeringDesign': sum(q['state'] == 'resolved-by-engineering-design' for q in questions.values()),
         'deferredQuestions': sum(q['state'].startswith('deferred') for q in questions.values()),
-        'caveat': 'Owner >=/source-neutral/static-high/source-continuity rules remain confirmed. Numeric scale is delegated engineering design, not a new owner instruction. Host/compile/unsigned R8 package evidence is not Android runtime/site validation. R11 adds actual isolated-package local Native/ports/MAIN/context checks only; not product/site/media validation. Archive inventory is not semantic exhaustion approval. Main-tree files are planned targets, not implemented product code. Full Mermaid rendering not validated.'
+        'caveat': 'Owner >=/source-neutral/static-high/source-continuity rules remain confirmed. Numeric scale is delegated engineering design, not a new owner instruction. Host/compile/unsigned R8 package evidence is not Android runtime/site validation. R11 adds actual isolated-package local Native/ports/MAIN/context checks only; not product/site/media validation. Archive inventory is not semantic exhaustion approval. Main-tree PLAN files remain targets; HOST-marked admitted source files have source-bound JVM evidence only, not Android integration. Full Mermaid rendering not validated.'
     }
     return report
 

@@ -16,6 +16,7 @@ def render(manifest=None):
     assert len(groups) == len(manifest['groups'])
     assert len({f['path'] for f in files}) == len(files)
     nodes = {}
+    implemented = []
     for f in files:
         path = PurePosixPath(f['path'])
         assert not path.is_absolute() and '..' not in path.parts
@@ -25,7 +26,12 @@ def render(manifest=None):
         assert not any(part in ['test', 'androidTest', 'experiments', 'tools'] for part in path.parts)
         assert path.suffix in ['.java', '.kt', '.js', '.css', '.html', '.sql']
         assert f['group'] in groups and f['testReferenceGroup'] in groups
-        assert f['responsibility'] and f['validationRefs'] and f['state'] == 'planned-not-implemented'
+        assert f['responsibility'] and f['validationRefs']
+        assert f['state'] in ['planned-not-implemented', 'implemented-host-tested-not-integrated']
+        if f['state'] != 'planned-not-implemented':
+            assert (P.parents[1] / f['path']).is_file()
+            assert f.get('implementationReadinessRef') == 'records/implementation-readiness.json'
+            implemented.append(f['path'])
         assert f['kind'] in ['native-code', 'script-code', 'style-code', 'sql-code']
         current = nodes
         for part in path.parts[:-1]:
@@ -35,7 +41,8 @@ def render(manifest=None):
     lines = [
         '# 应用本体目标代码总树 · R10首版', '',
         '> O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。',
-        '> 这是目标设计，不是已创建的产品源码。已先完成固定Gecko二进制/API编译与隔离Release打包；Android运行/网站兼容尚未验证，`[?]`不得理解为通过。', '',
+        '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
+        f'当前已编写并通过主机测试：**{len(implemented)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
         f'当前目标：`io.github.rebrowser` · 本体代码 **{len(files)}文件** · {len(groups)}职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。', '',
         '符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。', '',
         '## 本体代码树', '', '```text']
@@ -49,7 +56,8 @@ def render(manifest=None):
             item = items[name]
             if 'responsibility' in item:
                 symbol = {'native-code':'J', 'script-code':'S', 'style-code':'C', 'sql-code':'Q'}[item['kind']]
-                lines.append(prefix + branch + name + ' [' + symbol + '][?] — ' + item['responsibility'])
+                status = '[HOST]' if item['state'] != 'planned-not-implemented' else '[PLAN]'
+                lines.append(prefix + branch + name + ' [' + symbol + ']' + status + '[?] — ' + item['responsibility'])
                 leaf_count += 1
             else:
                 lines.append(prefix + branch + name + '/')
@@ -74,7 +82,9 @@ def render(manifest=None):
               '- `python3 -B planning/geckoview-v2/render_application_tree.py --check`逐叶核对总树，拒绝混入辅助代码、重复路径、通配省略或失去关联。', '']
     return '\n'.join(lines), {'applicationRuntimeCodeLeaves': leaf_count, 'applicationResponsibilityGroups':len(groups),
                                'auxiliaryTestReferences':sum(len(g['testReferences']) for g in groups.values()),
-                               'runtimeFilesImplementedByThisTree':False}
+                               'runtimeFilesImplementedByThisTree':bool(implemented),
+                               'implementedRuntimeCodeFiles':len(implemented),
+                               'productRuntimeIntegrated':False}
 
 
 if __name__ == '__main__':

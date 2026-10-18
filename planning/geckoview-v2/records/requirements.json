@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R14",
+  "revision": "R17",
   "requirements": [
     {
       "id": "R01",
@@ -482,6 +482,19 @@
       "implementation": "not-started",
       "executionEvidence": "records/noncode-retirement-review.json",
       "schedulingClarification": "Same unified old-structure task; runs alongside new-version validation/foundation, not a stop/pause milestone"
+    },
+    {
+      "id": "R45",
+      "ownerSources": [
+        "O41",
+        "O42"
+      ],
+      "title": "按已调研清楚的总树节点并行实现，不因推送自行停工",
+      "rule": "先继续调研，并准备在本文件实现方法已搞清楚后开始编写总树中的对应代码；不强制等待整个项目调研全部结束。实现与未决调研、统一旧结构审查并行；保存或推送不是停工指令。",
+      "state": "owner-required",
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "implementationMeaning": "one scoped codec source implemented/tested on HOST; not full-domain/product runtime completion"
     }
   ]
 }

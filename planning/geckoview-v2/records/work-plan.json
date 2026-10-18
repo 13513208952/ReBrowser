@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "revision": "R16",
+  "revision": "R17",
   "activePhase": "V0",
-  "codingAuthorizedByPlan": false,
+  "codingAuthorizedByPlan": true,
   "phases": [
     {
       "id": "P0",
@@ -154,7 +154,7 @@
     "机主改目标时原话追加、旧决定标superseded，不覆盖历史"
   ],
   "planningCompletenessRef": "records/completeness.json",
-  "executionState": "resumed-by-owner-for-validation-and-file-tree",
+  "executionState": "parallel-file-gated-implementation-and-research",
   "pauseSource": "O25",
   "pauseReviewRef": "PAUSED_REVIEW.md",
   "resumeSource": "O26",
@@ -168,7 +168,7 @@
     "C302"
   ],
   "treeDraftState": "application-runtime-code-complete-first-draft-with-runtime-pending-markers",
-  "productCodingStillUnauthorized": true,
+  "productCodingStillUnauthorized": false,
   "parallelTracks": [
     {
       "id": "L0",
@@ -192,6 +192,17 @@
         "records/noncode-retirement-review.json",
         "records/structure-retirement-policy.json"
       ]
+    },
+    {
+      "id": "I0",
+      "authority": [
+        "O41",
+        "O42"
+      ],
+      "name": "完成本文件调研后按总树节点实现，与未决调研/统一旧结构审查并行",
+      "depends": [],
+      "state": "in-progress-first-production-frame-source-host-tested",
+      "gateRef": "records/implementation-readiness.json"
     }
   ],
   "runtimeSubsetState": "phone-local-Native-ports-MAIN-context-pass; Popup/restore/Keystore/media/sites remain",
@@ -207,11 +218,22 @@
   "supersededTrackAlias": {
     "L1": "merged-into-L0-by-O37; dispositions differ but task is one"
   },
-  "workContinuationRule": "complete concrete increments on new-version work and unified legacy review in the same work session; checkpoint is not an owner-requested pause",
+  "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "execute exact pinned permission/storage JS with synthetic Services and28assertions",
-    "separate finite grant expiry from normal/private engine persistence",
-    "audit browser-owned background lifecycle without shutting down shared runtime"
+    "first admitted ControlEnvelope production source and actual JUnit tests",
+    "extend per-file admission without waiting for all16domains",
+    "continue unresolved permissions and same L0 old-structure review"
   ],
-  "latestCheckpointRequest": "O38 save/push progress, not a pause instruction"
+  "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
+  "codingAuthority": [
+    "O41",
+    "O42"
+  ],
+  "codingScope": "only files individually admitted in implementation-readiness.json; not global design completion or product release",
+  "activeWorkTracks": [
+    "V0",
+    "T0",
+    "I0",
+    "L0"
+  ]
 }

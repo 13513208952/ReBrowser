@@ -1,8 +1,10 @@
-# 实施与审查 · R26／R27 · R4规划草案
+# 实施与审查 · R17逐文件准入
+
+O41允许已完成本文件调研的总树节点先进入实现，与其余调研和统一L0整理并行；不再要求所有领域统一完成才编写源码。O42明确推送不是停工节点。按[逐文件准入](../records/implementation-readiness.json)记录职责/依赖/边界/测试与未覆盖证据；当前首个ControlEnvelope文件已编写并有HOST JUnit，未接Android/IPC入口。下图P0–P7是完整领域联调/发行依赖，不阻塞独立I0文件准入。
 
 ```mermaid
 flowchart TD
-  P0[P0 原话／需求／图谱／安全语义审查：当前] --> P1[P1 官方API与隔离／存储／Android11样机验证]
+  P0[P0 原话／需求／图谱／安全语义审查] --> P1[P1 官方API与隔离／存储／Android11样机验证]
   P0 --> P2[P2 身份签名／领域命令／管理权限与审计骨架]
   P1 --> P2
   P2 --> P3[P3 Gecko宿主浏览器与系统交接]
@@ -15,6 +17,10 @@ flowchart TD
   P4 --> P7
   P5 --> P7
   P6 --> P7
+  FILE[本文件调研／边界／测试设计] --> I0[I0已就绪文件实现与HOST测试]
+  I0 --> INTEGRATE[满足所属领域闸门后集成]
+  INTEGRATE --> P6
+  PARALLEL[V0/T0未决验证与L0统一旧结构审查] -.并行.-> I0
 ```
 
 ```mermaid

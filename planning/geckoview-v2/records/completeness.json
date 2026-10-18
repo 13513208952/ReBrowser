@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R16",
+  "revision": "R17",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -415,7 +415,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "数值档位、高级边界H、逐动作schema、错误/幂等/异步结果",
-      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现",
+      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现；R17首个固定帧生产类已编写/HOST12JUnit，未含JSON/准入/Android；领域仍未完成",
       "completionDeliverables": [
         "等级提案",
         "动作拆细",
@@ -444,7 +444,9 @@
         "APPLICATION_CODE_TREE.md",
         "records/application-code-files.json",
         "records/control-proof-format.json",
-        "evidence/control-proof-cross-implementation.json"
+        "evidence/control-proof-cross-implementation.json",
+        "records/implementation-readiness.json",
+        "evidence/production-unit-tests.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -689,5 +691,6 @@
     "A15"
   ],
   "notABlocker": "普通API疑点/参数/方案比较由助手负责，不把每个待研究点变成机主问卷。",
-  "currentFocus": "O26技术可用性验证后，O27应用本体全代码总树；存储功能先搁置"
+  "currentFocus": "O26技术可用性验证后，O27应用本体全代码总树；存储功能先搁置",
+  "fileScopedImplementationRef": "records/implementation-readiness.json"
 }

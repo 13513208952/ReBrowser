@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "revision": "R17",
+  "authority": ["O41", "O42"],
+  "scope": "按文件完成调研和边界审查后准入；不把一个文件通过扩成整个领域/总项目完成",
+  "gate": [
+    "主树已有明确职责、上下游输入输出和不可承担的权限",
+    "本文件依赖/字节或生命周期语义已有可复现证据；关键未决阻碍不得藏在空实现里",
+    "实现前写清范围/测试需求；主树、清单和真实源文件同时同步",
+    "编译和负例覆盖与实现文件绑定；后续Android/IPC/站点证据另列",
+    "不借此改旧包身份/正式签名/发行，或补做O26延期功能"
+  ],
+  "files": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "state": "implemented-host-tested-not-integrated",
+      "researchCompleteForScope": true,
+      "scope": "17字段固定序二进制签名帧的不可变构造、解析、长度/ASCII/U63/严格UTF8与原始字节保真；不含JSON外包络、签名验证或准入",
+      "researchEvidence": ["records/control-proof-format.json", "evidence/control-proof-host-vectors.json", "evidence/control-proof-cross-implementation.json"],
+      "inputOutput": "输入全部17字段或<=35000B帧；输出不可变帧及类型受限的复制访问；所有格式错误以无私有内容的异常拒绝",
+      "dependencies": "Java8公开标准库，API30支持的ByteBuffer/CharsetDecoder；无Android/UI/数据库/新依赖",
+      "unresolvedWithinScope": [],
+      "hostTestSources": ["app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java"],
+      "junitClasses": ["io.github.rebrowser.control.ControlContractsTest"],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": ["Android运行/ABI APK/Gecko集成", "严格JSON单DTO/重复键检查", "SPKI/DER验签、密钥身份/权限/挑战/replay/持久化并发", "真实IPC入口可用"],
+      "integrationGate": "解析成功只能进入后续验证；在ControlDecoder/ChallengeStore/Dispatcher及全部权限闸门完成前，不挂公开入口、不执行动作"
+    }
+  ],
+  "parallelPending": ["A04引擎权限有限期限/活跃使用撤回", "各动作DTO与资源生命周期", "其他主树节点逐文件准入", "同一个L0旧结构审查任务"],
+  "overallDesignComplete": false,
+  "productApkBuilt": false
+}

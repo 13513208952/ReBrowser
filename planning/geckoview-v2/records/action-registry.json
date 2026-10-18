@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R9",
+  "revision": "R10",
   "state": "engineering-adopted-action-policy-design-not-implementation",
   "scaleRef": "records/authority-scale.json",
   "actions": [
@@ -14,7 +14,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.getHealth",
@@ -26,7 +27,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.getRuntimeMetrics",
@@ -38,7 +40,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.listHandles",
@@ -50,7 +53,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.getDetails",
@@ -62,7 +66,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.create",
@@ -74,7 +79,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.select",
@@ -86,7 +92,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.closeView",
@@ -98,7 +105,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.rename",
@@ -110,7 +118,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.setRetention",
@@ -122,7 +131,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.requestCheckpoint",
@@ -134,7 +144,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.workspaces.removeData",
@@ -146,7 +157,8 @@
       "effect": "destructive",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.listHandles",
@@ -158,7 +170,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.open",
@@ -170,7 +183,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.select",
@@ -182,7 +196,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.load",
@@ -194,7 +209,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.back",
@@ -206,7 +222,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.forward",
@@ -218,7 +235,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.reload",
@@ -230,7 +248,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.stop",
@@ -242,7 +261,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.close",
@@ -254,7 +274,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.popups.close",
@@ -266,7 +287,8 @@
       "effect": "navigation",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.tabs.getNavigationDetails",
@@ -278,7 +300,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.page.readText",
@@ -290,7 +313,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.page.readDom",
@@ -302,7 +326,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.page.capture",
@@ -314,7 +339,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.page.inspectAccessibility",
@@ -326,7 +352,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.page.performUserEquivalentGesture",
@@ -338,7 +365,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.search.getPublicProviders",
@@ -350,7 +378,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.search.setProvider",
@@ -362,7 +391,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.bookmarks.add",
@@ -374,7 +404,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.bookmarks.update",
@@ -386,7 +417,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.bookmarks.remove",
@@ -398,7 +430,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.bookmarks.query",
@@ -410,7 +443,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.search.getPrivateConfiguration",
@@ -422,7 +456,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.bookmarks.export",
@@ -434,7 +469,8 @@
       "effect": "export",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.history.query",
@@ -446,7 +482,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.history.getRules",
@@ -458,7 +495,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.history.setRules",
@@ -470,7 +508,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.history.clearSelected",
@@ -482,7 +521,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.history.clearAll",
@@ -494,7 +534,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.history.export",
@@ -506,7 +547,8 @@
       "effect": "export",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.cancel",
@@ -518,7 +560,8 @@
       "effect": "safety",
       "targetSchema": "owned-download-task",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.approve",
@@ -530,7 +573,8 @@
       "effect": "stream",
       "targetSchema": "registered-download-offer-and-save-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.retryBeforeDispatch",
@@ -542,7 +586,8 @@
       "effect": "stream",
       "targetSchema": "registered-download-offer-and-save-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.query",
@@ -554,7 +599,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.readDetails",
@@ -566,7 +612,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.deleteExactOwnedTarget",
@@ -578,7 +625,8 @@
       "effect": "destructive",
       "targetSchema": "explicit-owned-or-user-granted-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "download.publishExport",
@@ -590,7 +638,8 @@
       "effect": "export",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.permissions.requestOsFlow",
@@ -602,7 +651,8 @@
       "effect": "platform-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.prompts.cancel",
@@ -614,7 +664,8 @@
       "effect": "platform-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.prompts.chooseFile",
@@ -626,7 +677,8 @@
       "effect": "platform-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.permissions.query",
@@ -638,7 +690,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.permissions.setSiteDecision",
@@ -650,7 +703,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.clipboard.read",
@@ -662,7 +716,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "browser.page.enterCredential",
@@ -674,7 +729,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.openDefaultBrowserFlow",
@@ -686,7 +742,8 @@
       "effect": "platform-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.openInstaller",
@@ -698,7 +755,8 @@
       "effect": "platform-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.openPermissionSettings",
@@ -710,7 +768,8 @@
       "effect": "platform-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.window.back",
@@ -722,7 +781,8 @@
       "effect": "local-view",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.window.exitFullscreen",
@@ -734,7 +794,8 @@
       "effect": "local-view",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.window.requestFullscreen",
@@ -746,7 +807,8 @@
       "effect": "local-view",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.window.selectPane",
@@ -758,7 +820,8 @@
       "effect": "local-view",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.subapps.listStatus",
@@ -770,7 +833,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.subapps.enable",
@@ -782,7 +846,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.subapps.disable",
@@ -794,7 +859,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.subapps.open",
@@ -806,7 +872,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.subapps.openSettings",
@@ -818,7 +885,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.settings.setAppearance",
@@ -830,7 +898,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.settings.setBackground",
@@ -842,7 +911,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.subapps.setSource",
@@ -854,7 +924,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.settings.readPrivateDetails",
@@ -866,7 +937,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "host.settings.readBackground",
@@ -878,7 +950,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.openOfficialEntry",
@@ -890,7 +963,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.selectAccountKind",
@@ -902,7 +976,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.recheckAuth",
@@ -914,7 +989,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.getAuthState",
@@ -926,7 +1002,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.listAccounts",
@@ -938,7 +1015,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.query",
@@ -950,7 +1028,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.readItem",
@@ -962,7 +1041,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.readAttachment",
@@ -974,7 +1054,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.search",
@@ -986,7 +1067,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.cancelSearch",
@@ -998,7 +1080,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.syncBatch",
@@ -1010,7 +1093,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.syncStart",
@@ -1022,7 +1106,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.syncCancel",
@@ -1034,7 +1119,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.saveAttachment",
@@ -1046,7 +1132,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.setRetention",
@@ -1058,7 +1145,8 @@
       "effect": "maintenance",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.reindex",
@@ -1070,7 +1158,8 @@
       "effect": "maintenance",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.verifyObjects",
@@ -1082,7 +1171,8 @@
       "effect": "maintenance",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.reconcileObjects",
@@ -1094,7 +1184,8 @@
       "effect": "maintenance",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.setCodecPolicy",
@@ -1106,7 +1197,8 @@
       "effect": "maintenance",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.exportItems",
@@ -1118,7 +1210,8 @@
       "effect": "export-or-import",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.exportAttachments",
@@ -1130,7 +1223,8 @@
       "effect": "export-or-import",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.importVerifiedArchive",
@@ -1142,7 +1236,8 @@
       "effect": "export-or-import",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.official.markRead",
@@ -1154,7 +1249,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.official.move",
@@ -1166,7 +1262,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.official.send",
@@ -1178,7 +1275,8 @@
       "effect": "cloud-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.official.delete",
@@ -1190,7 +1288,8 @@
       "effect": "cloud-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "mail.official.bulkDestructive",
@@ -1202,7 +1301,8 @@
       "effect": "cloud-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "storage.outlook.clearCache",
@@ -1214,7 +1314,8 @@
       "effect": "rebuildable-cache",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "storage.outlook.clearData",
@@ -1226,7 +1327,8 @@
       "effect": "destructive",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "music.open",
@@ -1238,7 +1340,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.selectLoginMode",
@@ -1250,7 +1353,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.checkAccount",
@@ -1262,7 +1366,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.getAuthState",
@@ -1274,7 +1379,8 @@
       "effect": "auth-flow",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.play",
@@ -1286,7 +1392,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.pause",
@@ -1298,7 +1405,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.stop",
@@ -1310,7 +1418,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.next",
@@ -1322,7 +1431,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.previous",
@@ -1334,7 +1444,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.seek",
@@ -1346,7 +1457,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.queue.add",
@@ -1358,7 +1470,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.queue.remove",
@@ -1370,7 +1483,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.queue.clear",
@@ -1382,7 +1496,8 @@
       "effect": "site-action",
       "targetSchema": "owned-music-target-or-explicit-intent",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.queue.read",
@@ -1394,7 +1509,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.setLiked",
@@ -1406,7 +1522,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.playlists.create",
@@ -1418,7 +1535,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.playlists.addItems",
@@ -1430,7 +1548,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.playlists.rename",
@@ -1442,7 +1561,8 @@
       "effect": "site-action",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.playlists.query",
@@ -1454,7 +1574,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.playlists.delete",
@@ -1466,7 +1587,8 @@
       "effect": "cloud-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.playlists.bulkRemove",
@@ -1478,7 +1600,8 @@
       "effect": "cloud-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.lyrics.setMode",
@@ -1490,7 +1613,8 @@
       "effect": "local-view",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.lyrics.setPosition",
@@ -1502,7 +1626,8 @@
       "effect": "local-write",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.getMetadata",
@@ -1514,7 +1639,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.readLyrics",
@@ -1526,7 +1652,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.lyrics.getPosition",
@@ -1538,7 +1665,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.runtime.open",
@@ -1550,7 +1678,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.runtime.reconnect",
@@ -1562,7 +1691,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.runtime.close",
@@ -1574,7 +1704,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "music.runtime.getStatus",
@@ -1586,7 +1717,8 @@
       "effect": "lifecycle",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "storage.music.clearCache",
@@ -1598,7 +1730,8 @@
       "effect": "rebuildable-cache",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "storage.music.clearData",
@@ -1610,7 +1743,8 @@
       "effect": "destructive",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "storage.query",
@@ -1622,7 +1756,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "storage.querySharedPool",
@@ -1634,7 +1769,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "storage.shared.clearRebuildableCache",
@@ -1646,7 +1782,8 @@
       "effect": "shared-rebuildable-cache",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "deferred-O26"
     },
     {
       "id": "engine.getSessions",
@@ -1658,7 +1795,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "engine.getConnectorStatus",
@@ -1670,7 +1808,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "engine.observeRuntime",
@@ -1682,7 +1821,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "RUNTIME_DIAGNOSTIC",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "engine.observeNetwork",
@@ -1694,7 +1834,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "RUNTIME_DIAGNOSTIC",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "engine.inspectRenderer",
@@ -1706,7 +1847,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "RUNTIME_DIAGNOSTIC",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "engine.executeRendererScript",
@@ -1718,7 +1860,8 @@
       "effect": "renderer-intervention",
       "targetSchema": "registered-target",
       "intervention": "ARBITRARY_RENDERER_SCRIPT",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "engine.openPageInspector",
@@ -1730,7 +1873,8 @@
       "effect": "renderer-intervention",
       "targetSchema": "registered-target",
       "intervention": "ARBITRARY_RENDERER_SCRIPT",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "storage.inspectOwnedObjects",
@@ -1742,7 +1886,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "storage.exportPrivateAppData",
@@ -1754,7 +1899,8 @@
       "effect": "destructive-or-export",
       "targetSchema": "owned-v2-data-excluding-other-whitelist-vaults",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "storage.resetOwnedAppData",
@@ -1766,7 +1912,8 @@
       "effect": "destructive-or-export",
       "targetSchema": "owned-v2-data-excluding-other-whitelist-vaults",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "storage.exportRawSiteCredentials",
@@ -1778,7 +1925,8 @@
       "effect": "destructive-or-export",
       "targetSchema": "owned-v2-data-excluding-other-whitelist-vaults",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.delegateLow",
@@ -1790,7 +1938,8 @@
       "effect": "management",
       "targetSchema": "signed-low-grant-below-H",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.ownWhitelist.query",
@@ -1802,7 +1951,8 @@
       "effect": "management",
       "targetSchema": "own-highest-domain-only",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.ownWhitelist.prepareCompiledProposal",
@@ -1814,7 +1964,8 @@
       "effect": "management",
       "targetSchema": "own-highest-domain-only",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.ownWhitelist.revoke",
@@ -1826,7 +1977,8 @@
       "effect": "management",
       "targetSchema": "own-highest-domain-only",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.ownWhitelist.restoreCompiledEntry",
@@ -1838,7 +1990,8 @@
       "effect": "management",
       "targetSchema": "own-highest-domain-only",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.inspectHighest",
@@ -1850,7 +2003,8 @@
       "effect": "management",
       "targetSchema": "root-only-existing-compiled-principals",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.manageHighest",
@@ -1862,7 +2016,8 @@
       "effect": "management",
       "targetSchema": "root-only-existing-compiled-principals",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.useHighestWhitelist",
@@ -1874,7 +2029,8 @@
       "effect": "management",
       "targetSchema": "root-only-existing-compiled-principals",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.queryExclusiveWhitelist",
@@ -1886,7 +2042,8 @@
       "effect": "management",
       "targetSchema": "root-exclusive-domain",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.prepareExclusiveProposal",
@@ -1898,7 +2055,8 @@
       "effect": "management",
       "targetSchema": "root-exclusive-domain",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.revokeExclusiveEntry",
@@ -1910,7 +2068,8 @@
       "effect": "management",
       "targetSchema": "root-exclusive-domain",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.restoreCompiledEntry",
@@ -1922,7 +2081,8 @@
       "effect": "management",
       "targetSchema": "root-exclusive-domain",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.sessions.open",
@@ -1934,7 +2094,8 @@
       "effect": "management",
       "targetSchema": "own-authorized-session",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.sessions.queryOwn",
@@ -1946,7 +2107,8 @@
       "effect": "management",
       "targetSchema": "own-authorized-session",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.sessions.revokeOwn",
@@ -1958,7 +2120,8 @@
       "effect": "management",
       "targetSchema": "own-authorized-session",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.audit.queryPrivate",
@@ -1970,7 +2133,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.helpers.attach",
@@ -1982,7 +2146,8 @@
       "effect": "management",
       "targetSchema": "valid-source-neutral-signed-low-identity",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.helpers.detach",
@@ -1994,7 +2159,8 @@
       "effect": "management",
       "targetSchema": "valid-source-neutral-signed-low-identity",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.capabilities.discover",
@@ -2006,7 +2172,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.plugins.attachWorkflow",
@@ -2018,7 +2185,8 @@
       "effect": "management",
       "targetSchema": "bounded-scope-cannot-add-high-or-native-main-code",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.plugins.detachWorkflow",
@@ -2030,7 +2198,8 @@
       "effect": "management",
       "targetSchema": "bounded-scope-cannot-add-high-or-native-main-code",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.trust.getPublicCatalog",
@@ -2042,7 +2211,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.root.prepareSignedApkPolicy",
@@ -2054,7 +2224,8 @@
       "effect": "management",
       "targetSchema": "no-runtime-high-admission",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.importSignedRevocations",
@@ -2066,7 +2237,8 @@
       "effect": "verified-management-import",
       "targetSchema": "signed-compatible-root-policy-snapshot-no-rollback-no-new-high",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.disable",
@@ -2078,7 +2250,8 @@
       "effect": "management",
       "targetSchema": "strictly-lower-non-root",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "admin.restore",
@@ -2090,7 +2263,8 @@
       "effect": "management",
       "targetSchema": "specific-active-disable-record",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "source.inspectState",
@@ -2102,7 +2276,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "source.getRecoveryConditions",
@@ -2114,7 +2289,8 @@
       "effect": "read",
       "targetSchema": "registered-target",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "source.openPersonalRecoveryFlow",
@@ -2126,7 +2302,8 @@
       "effect": "personal-ui-only",
       "targetSchema": "cannot-consent-authenticate-or-delete-for-owner",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     },
     {
       "id": "source.checkTrustedSuccessor",
@@ -2138,7 +2315,8 @@
       "effect": "readonly-recovery-check",
       "targetSchema": "lastGood-signature-plus-root-before-destruction",
       "intervention": "TYPED_ACTION",
-      "state": "design-not-implemented"
+      "state": "design-not-implemented",
+      "scheduling": "active-or-foundational"
     }
   ],
   "mixedGroups": "old matrices/capabilities.csv is feature coverage, not final per-action threshold; this registry replaces its example numbers",

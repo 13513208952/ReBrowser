@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R8",
+  "revision": "R10",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -67,7 +67,9 @@
       "currentArtifactRefs": [
         "views/10-completeness-board.md",
         "views/19-user-journeys-and-back.md",
-        "matrices/user-journeys.csv"
+        "matrices/user-journeys.csv",
+        "APPLICATION_CODE_TREE.md",
+        "records/application-code-files.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -108,7 +110,9 @@
         "views/11-gecko-runtime-sessions.md",
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
-        "records/runtime-traces.json"
+        "records/runtime-traces.json",
+        "APPLICATION_CODE_TREE.md",
+        "records/application-code-files.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -144,7 +148,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/12-browser-and-system-boundaries.md"
+        "views/12-browser-and-system-boundaries.md",
+        "APPLICATION_CODE_TREE.md",
+        "records/application-code-files.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -223,7 +229,9 @@
         "views/13-control-protocol-contract.md",
         "records/gecko-contracts.json",
         "records/connector-protocol.json",
-        "records/domain-payloads.json"
+        "records/domain-payloads.json",
+        "APPLICATION_CODE_TREE.md",
+        "records/application-code-files.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -357,7 +365,7 @@
     {
       "id": "A09",
       "domain": "存储归属/估计/清理/恢复",
-      "status": "concept-partial",
+      "status": "deferred-by-owner-O26",
       "designComplete": false,
       "implementationReady": false,
       "need": "哪些数据独占、哪些共享、引擎删除能否确认完成",
@@ -392,7 +400,8 @@
         "resource-budget",
         "upstream-api-evidence",
         "observable-acceptance"
-      ]
+      ],
+      "excludedFromCurrentCompletionGate": true
     },
     {
       "id": "A10",
@@ -426,7 +435,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/13-control-protocol-contract.md"
+        "views/13-control-protocol-contract.md",
+        "APPLICATION_CODE_TREE.md",
+        "records/application-code-files.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -561,11 +572,11 @@
     {
       "id": "A14",
       "domain": "构建/依赖/ABI/许可/R8/签名发行",
-      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "status": "artifact-api-and-isolated-R8-package-validated-Android-runtime-pending",
       "designComplete": false,
       "implementationReady": false,
       "need": "工具链、AAR/minSdk/ABI、唯一全量包、可复现发布",
-      "existingEvidence": "stable元数据/POM源码已核对，AAR未下载/构建",
+      "existingEvidence": "official158完整AAR/SDK37.2/Gradle9.6核对，API javac和AGP9.4离线R8/资源收缩/LintVital无签名验证包通过；非产品或Android运行验证",
       "completionDeliverables": [
         "依赖锁",
         "必要性审查",
@@ -589,7 +600,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/16-resources-and-dependencies.md"
+        "views/16-resources-and-dependencies.md",
+        "records/technology-validation.json",
+        "evidence/validation-release-package-verification.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -631,7 +644,9 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/07-roadmap-and-review.md"
+        "views/07-roadmap-and-review.md",
+        "APPLICATION_CODE_TREE.md",
+        "records/application-code-files.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -665,5 +680,6 @@
     "A01",
     "A15"
   ],
-  "notABlocker": "普通API疑点/参数/方案比较由助手负责，不把每个待研究点变成机主问卷。"
+  "notABlocker": "普通API疑点/参数/方案比较由助手负责，不把每个待研究点变成机主问卷。",
+  "currentFocus": "O26技术可用性验证后，O27应用本体全代码总树；存储功能先搁置"
 }

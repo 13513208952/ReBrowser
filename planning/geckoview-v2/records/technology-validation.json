@@ -81,6 +81,10 @@
   ],
   "sourceFiles": [
     {
+      "path": "experiments/gecko-api-smoke/README.md",
+      "sha256": "c24f6dff41506402c9b8f394bef21e1deee23b5b2685c806d74c577fcaa4d96e"
+    },
+    {
       "path": "experiments/gecko-api-smoke/app/build.gradle",
       "sha256": "dc51700f51df930e01c3d248b746618a6f76245ee6702d0a9af91612108dfea3"
     },
@@ -129,7 +133,9 @@
     "formalKeysGenerated": false,
     "newProductSourceWritten": false,
     "currentDiskBudget": "isolation consumed substantial own workspace; no emulator/system-image download or unrelated cleanup",
-    "needs": "authorized disposable Android runtime target for VT04–VT07; no real credentials/playback/cleanup"
+    "needs": "authorized disposable Android runtime target for VT04–VT07; no real credentials/playback/cleanup",
+    "targetAuthorizationQuestion": "Q20"
   },
-  "next": "whole application-code tree may be drafted from compile-backed interfaces with runtime-pending markers; not freeze runtime assumptions as validated"
+  "next": "whole application-code tree may be drafted from compile-backed interfaces with runtime-pending markers; not freeze runtime assumptions as validated",
+  "treeDraftRef": "APPLICATION_CODE_TREE.md"
 }

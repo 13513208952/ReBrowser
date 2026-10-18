@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R9",
+  "revision": "R10",
   "questions": [
     {
       "id": "Q01",
@@ -131,9 +131,13 @@
         "R22",
         "R23"
       ],
-      "state": "open",
+      "state": "deferred-by-owner",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "O26子应用占用/缓存及数据清理搁置，不作当前验证/总树阻断；已核实的API缺口留档，来源异常旧私有数据保护不受此延期影响。",
+      "ownerSources": [
+        "O26"
+      ]
     },
     {
       "id": "Q10",
@@ -278,6 +282,19 @@
       "state": "open",
       "responsible": "assistant-engineering",
       "askOwnerNow": false
+    },
+    {
+      "id": "Q20",
+      "priority": "execution-authorization",
+      "question": "是否允许在机主平板上安装独立临时验证包，只运行本地合成页面/会话/扩展消息，不登录/播放/清理，不动旧包数据？",
+      "currentTreatment": "已询问；不以一般技术验证授权自动选择日常设备/安装。继续无设备的总树/检查工作，设备操作等待确认。",
+      "requirements": [
+        "R39"
+      ],
+      "state": "waiting-execution-authorization",
+      "responsible": "owner-target-permission",
+      "askOwnerNow": true,
+      "protocolRef": "records/runtime-validation-protocol.json"
     }
   ]
 }

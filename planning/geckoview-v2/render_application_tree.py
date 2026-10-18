@@ -8,8 +8,9 @@ P = Path(__file__).resolve().parent
 OUTPUT = P / 'APPLICATION_CODE_TREE.md'
 
 
-def render():
-    manifest = json.loads((P / 'records/application-code-files.json').read_text())
+def render(manifest=None):
+    if manifest is None:
+        manifest = json.loads((P / 'records/application-code-files.json').read_text())
     files = manifest['files']
     groups = {g['id']: g for g in manifest['groups']}
     assert len(groups) == len(manifest['groups'])
@@ -18,12 +19,14 @@ def render():
     for f in files:
         path = PurePosixPath(f['path'])
         assert not path.is_absolute() and '..' not in path.parts
+        assert str(path) == f['path'] and '\\' not in f['path']
         assert '*' not in str(path) and '...' not in str(path) and '…' not in str(path)
         assert str(path).startswith('app/src/main/')
         assert not any(part in ['test', 'androidTest', 'experiments', 'tools'] for part in path.parts)
         assert path.suffix in ['.java', '.kt', '.js', '.css', '.html', '.sql']
         assert f['group'] in groups and f['testReferenceGroup'] in groups
         assert f['responsibility'] and f['validationRefs'] and f['state'] == 'planned-not-implemented'
+        assert f['kind'] in ['native-code', 'script-code', 'style-code', 'sql-code']
         current = nodes
         for part in path.parts[:-1]:
             current = current.setdefault(part, {})

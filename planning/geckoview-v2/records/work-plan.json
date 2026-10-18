@@ -72,7 +72,7 @@
       "exit": [
         "AAD/MSA/真实过期/取消/重进/进程重建",
         "压缩/去重/检索/损坏恢复",
-        "2/50/200MB量级验收"
+        "2/50/200MB量级验收（子应用容量/清理按O26搁置，不作当前闸门）"
       ]
     },
     {
@@ -135,17 +135,16 @@
     {
       "id": "T0",
       "name": "验证后的全项目目标文件树/清单",
-      "depends": [
-        "V0"
-      ],
-      "state": "not-started",
+      "depends": [],
+      "state": "first-draft-under-runtime-validation",
       "exit": [
         "应用本体全部目标代码文件逐个节点，没有省略号代替源码",
         "测试/验证/构建维护等辅助内容独立存放，仅概括引用需求和目标路径",
         "内建实际执行网页/扩展代码属于本体，不能误归辅助而漏列",
         "资源/外部依赖/生成输出/搁置项用明确符号和引用分类",
         "总图叶节点与应用代码清单精确相等、引用有效、新增文件自动覆盖"
-      ]
+      ],
+      "orderingNote": "O26第一轮artifact/compile/R8样机验证已先行完成；当前树带未实测符号，不把Android运行未测方案锁死"
     }
   ],
   "changeLoop": [
@@ -167,5 +166,7 @@
     "C207",
     "C301",
     "C302"
-  ]
+  ],
+  "treeDraftState": "application-runtime-code-complete-first-draft-with-runtime-pending-markers",
+  "productCodingStillUnauthorized": true
 }

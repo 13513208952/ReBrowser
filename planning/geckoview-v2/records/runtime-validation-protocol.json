@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "revision": "R10",
+  "state": "await-specific-runtime-target-permission-preparation-can-continue",
+  "scopeSource": "O26 permits validation; daily-device installation/interaction target still requested explicitly",
+  "proposedTargetAlias": "owner-tablet-candidate",
+  "publicSerial": null,
+  "package": "io.github.rebrowser.validation",
+  "signing": "disposable validation-only key in private workspace after permission, never legacy/formal keystore",
+  "runtimeScope": [
+    "local synthetic pages",
+    "Native/builtin background/content message handshake",
+    "two opaque context cookie/DOM isolation using app-loopback fixture only",
+    "Popup parent/session ownership",
+    "view detach/reattach, document generation/BFCache/stale callbacks",
+    "native process startup and actual Release callbacks"
+  ],
+  "excluded": [
+    "real account credentials",
+    "official login/session interaction",
+    "any audio/media playback",
+    "site/cloud mutations",
+    "subapplication cache/data/occupancy tests deferred by O26",
+    "old package/data/configuration/default-role/volume/DND/rotation/timeouts changes",
+    "device enrollment/compiled whitelist entry/formal signing keys"
+  ],
+  "preflight": [
+    "owner explicitly authorizes target/install scope",
+    "resolve exact private serial, never auto-select first adb device",
+    "freshly verify authorized connection and exact package baseline",
+    "before interactions/capture verify awake/unlocked and known own foreground; never wake/unlock via helper",
+    "check sufficient device/host resources; never free space by clearing other packages"
+  ],
+  "steps": [
+    "build target-ABI validation package only after resource check; retain source/hash/toolchain evidence",
+    "install separate package, no install-r of legacy app, no v1 data migration",
+    "launch only new owned validation Activity with fresh foreground guard",
+    "run deterministic in-app local assertions and collect only structured synthetic result data",
+    "failed runtime assumption remains failed/not-run, do not infer pass from unsigned assembly",
+    "do not uninstall/clear old app; disposal of own synthetic validation package only within owner-authorized cleanup scope"
+  ],
+  "testFixtureBoundary": "If loopback server needed, bind app-local127.0.0.1 ephemeral port only, no public/LAN listener; manifest/host permissions restricted to fixture",
+  "ownerInteraction": "device-credential/biometric prompts and any future media test require distinct clearly scoped owner participation; not part of current no-playback request",
+  "currentState": {
+    "apkSigned": false,
+    "apkInstalled": false,
+    "deviceInteracted": false,
+    "localRuntimeTestsPassed": false
+  }
+}

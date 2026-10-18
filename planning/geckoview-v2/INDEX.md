@@ -41,7 +41,8 @@ mindmap
 
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
-| [应用本体代码总树](APPLICATION_CODE_TREE.md) | 主树全部164个目标运行代码文件；测试等辅助只概括引用 | O26／O27，首版设计非产品代码 |
+| [应用本体代码总树](APPLICATION_CODE_TREE.md) | 主树展开全部目标运行代码文件，数量由清单校验；测试等辅助只概括引用 | O26／O27，首版设计非产品代码 |
+| [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
 | [技术验证状态](records/technology-validation.json) | Artifact/compile/Release包/Android运行分级；存储功能搁置 | 隔离验证，不触日常应用资料 |
 | [完整性看板](views/10-completeness-board.md) | 逐领域缺口、完成标准和推进次序；不把图表数量当完成 | O17／O18、完整性账本 |
@@ -90,7 +91,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R8自检结果](reviews/R8-structural-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
+| [R10自检结果](reviews/R10-structural-and-validation-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
 
 ## 使用约定
 

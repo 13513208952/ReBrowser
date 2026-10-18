@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 import re
 from review_runtime_design import review as review_runtime_timeline
+from review_authority_design import review as review_authority_policy
+from review_mail_schema import review as review_mail_sql
+from render_application_tree import render as render_application_tree
 
 P = Path(__file__).resolve().parent
 
@@ -60,7 +63,9 @@ def review():
         assert item['implementation'] == 'not-started'
     plan = load('records/work-plan.json')
     phases = indexed(plan['phases'])
-    assert plan['activePhase'] == 'P0' and plan['codingAuthorizedByPlan'] is False
+    assert plan['activePhase'] in ['P0', 'V0', 'T0'] and plan['codingAuthorizedByPlan'] is False
+    if plan['activePhase'] in ['V0', 'T0']:
+        assert plan['isolatedValidationCodeAuthorized'] and load('records/validation-scope.json')['authority'] == 'O26'
     done = set()
     def visit(name, active):
         assert name in phases and name not in active, 'unknown/cyclic phase'
@@ -233,8 +238,39 @@ def review():
     assert codec_design['objectPlacement']['smallStoredPayloadMaxBytes'] == 65536
     assert all(m['roundTripExact'] for m in codec_evidence['measurements'])
     assert {m['codec'] for m in codec_evidence['measurements']} >= {'deflate-6', 'deflate-9', 'gzip-9'}
+    authority_review = review_authority_policy()
+    sql_review = review_mail_sql()
+    tree_text, tree_review = render_application_tree()
+    assert (P / 'APPLICATION_CODE_TREE.md').read_text() == tree_text
+    validation = load('records/technology-validation.json')
+    for source in validation['sourceFiles']:
+        assert hashlib.sha256((P / source['path']).read_bytes()).hexdigest() == source['sha256']
+    package = load('evidence/validation-release-package-verification.json')
+    assert package['applicationId'] == 'io.github.rebrowser.validation'
+    assert not package['realKeysOrSigningUsed'] and not package['apkInstalled'] and not package['AndroidRuntimeExecuted']
+    feature_map = indexed(load('records/feature-action-map.json')['features'])
+    action_policy = indexed(load('records/action-registry.json')['actions'])
+    app_paths = {f['path'] for f in load('records/application-code-files.json')['files']}
+    routes = load('records/application-action-routing.json')['routes']
+    assert {r['action'] for r in routes} == action_policy.keys()
+    for route in routes:
+        held = action_policy[route['action']].get('scheduling') == 'deferred-O26'
+        assert (route['targetCodePath'] is None) == held
+        if not held:
+            assert route['targetCodePath'] in app_paths and route['entryPath'] in app_paths
+    assert feature_map.keys() == indexed(rows('matrices/feature-parity.csv')).keys()
+    for feature in feature_map.values():
+        assert feature['actions'] and set(feature['actions']) <= action_policy.keys()
     report = {
         **runtime_review,
+        **authority_review,
+        **sql_review,
+        **tree_review,
+        'isolatedUnsignedReleasePackageBuilt': True,
+        'AndroidGeckoRuntimeExecuted': False,
+        'subapplicationStorageFeatureDeferredByOwner': True,
+        'actionToApplicationFileRoutesChecked': len(routes),
+        'deferredActionRoutes': sum(r['targetCodePath'] is None for r in routes),
         'hostSyntheticCodecMeasurements': len(codec_evidence['measurements']),
         'hostSyntheticSourceBytes': codec_evidence['totalSyntheticSourceBytes'],
         'androidCodecPerformanceTested': False,
@@ -263,10 +299,12 @@ def review():
         'mermaidBlocksStructurallyChecked': graph_count,
         'fullMermaidParserOrRenderingValidated': False,
         'productCodeImplementedOrBuilt': False, 'deviceOrPrivateKeyAccess': False,
-        'openQuestions': sum(q['state'] != 'resolved' for q in questions.values()),
-        'ownerAnswersRequiredNow': sum(q['state'] != 'resolved' and q.get('askOwnerNow', False) for q in questions.values()),
+        'openQuestions': sum(not q['state'].startswith(('resolved', 'deferred')) for q in questions.values()),
+        'ownerAnswersRequiredNow': sum(not q['state'].startswith(('resolved', 'deferred')) and q.get('askOwnerNow', False) for q in questions.values()),
         'resolvedOwnerQuestions': sum(q['state'] == 'resolved' for q in questions.values()),
-        'caveat': 'Hashes prevent subsequent edits; they do not independently prove original transcription. Diagram syntax/rendering and unresolved owner semantics require review. Numeric levels remain proposals; >= is owner-confirmed in O13.'
+        'resolvedByEngineeringDesign': sum(q['state'] == 'resolved-by-engineering-design' for q in questions.values()),
+        'deferredQuestions': sum(q['state'].startswith('deferred') for q in questions.values()),
+        'caveat': 'Owner >=/source-neutral/static-high/source-continuity rules remain confirmed. Numeric scale is delegated engineering design, not a new owner instruction. Host/compile/unsigned R8 package evidence is not Android runtime/site validation. Main-tree files are planned targets, not implemented product code. Full Mermaid rendering not validated.'
     }
     return report
 

@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 这是目标设计，不是已创建的产品源码。已先完成固定Gecko二进制/API编译与隔离Release打包；Android运行/网站兼容尚未验证，`[?]`不得理解为通过。
 
-当前目标：`io.github.rebrowser` · 本体代码 **164文件** · 16职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
+当前目标：`io.github.rebrowser` · 本体代码 **172文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
 符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。
 
@@ -94,7 +94,8 @@
                             │   ├── ControlDispatcher.java [J][?] — 授权→同领域服务→真实结果，不复制特权路径
                             │   ├── ControlEnvelope.java [J][?] — 新控制协议签名字节与请求结构
                             │   ├── ControlResultStream.java [J][?] — 私有大结果有界传输
-                            │   └── IdempotencyStore.java [J][?] — 同请求只执行一次与未知效果查询
+                            │   ├── IdempotencyStore.java [J][?] — 同请求只执行一次与未知效果查询
+                            │   └── PrivateDataController.java [J][?] — 受授权应用自有对象检查/导出/重置，不访问无权名单；非子应用清理功能
                             ├── core/
                             │   ├── ActorContext.java [J][?] — 正常用户/系统媒体/已验证管理员的明确身份
                             │   ├── Cancellation.java [J][?] — 请求取消和真实停止证据
@@ -111,6 +112,8 @@
                             │   ├── KeyPurpose.java [J][?] — 发行/管理员/设备/数据密钥域定义
                             │   ├── ObjectAead.java [J][?] — HKDF派生不可变对象AES-GCM分帧
                             │   └── PrivateRecordSealer.java [J][?] — 原生敏感快照/策略记录封装
+                            ├── data/
+                            │   └── OwnedDataCatalog.java [J][?] — 来源保护/私有对象访问共享的精确v2拥有集合，不接任意文件路径
                             ├── download/
                             │   ├── DownloadCoordinator.java [J][?] — 真实WebResponse流/用户批准/取消/发布
                             │   ├── DownloadHandoff.java [J][?] — 明确系统安装器/文件打开，非自动安装
@@ -119,6 +122,7 @@
                             │   └── SaveTargetRegistry.java [J][?] — 原生拥有或用户授权URI，拒绝任意私有路径
                             ├── engine/
                             │   ├── ContentDelegate.java [J][?] — 崩溃/终止/全屏/外部response
+                            │   ├── DiagnosticCoordinator.java [J][?] — 作用域内页面/网络/会话诊断和renderer脚本，不开无认证全局调试端口
                             │   ├── GeckoHistoryDelegate.java [J][?] — 已提交历史与认证瞬态访问区分
                             │   ├── GeckoMediaBridge.java [J][?] — 实际媒体激活/feature/状态与秒单位
                             │   ├── GeckoRuntimeOwner.java [J][?] — 主进程唯一runtime，原生子进程由SDK管理
@@ -169,6 +173,7 @@
                             │   ├── MailRetentionPolicy.java [J][?] — 原始唯一内容与可重建缓存区分
                             │   ├── MailSearch.java [J][?] — 分页元数据与可取消中文正文跨块检索
                             │   ├── MailSyncCoordinator.java [J][?] — 账户有序批次/引用/游标同事务
+                            │   ├── OfficialMailActions.java [J][?] — 仅已授权官网发信/移动/删除等命令与真实回执；不与本机同步事务混淆
                             │   ├── OfficialMailEntry.java [J][?] — 个人/工作学校/最近成功入口，禁止猜测账户域
                             │   ├── OfflineMailActivity.java [J][?] — 原生离线列表/正文/搜索恢复位置
                             │   ├── OfflineMailRenderer.java [J][?] — 隔离只读HTML，无脚本/邮箱Cookie/自动远程内容
@@ -180,6 +185,12 @@
                             │   ├── PendingPromptRegistry.java [J][?] — session/document/request绑定且一次结果
                             │   ├── PermissionCoordinator.java [J][?] — 原生网站问询与OS分层流程
                             │   └── SiteGrantStore.java [J][?] — origin/partition/能力/期限记录
+                            ├── settings/
+                            │   ├── PersonalizationPolicy.java [J][?] — 批准背景与原生外观资源选择/授权URI归属
+                            │   └── SettingsRepository.java [J][?] — 本机通用/背景/搜索/子设置读写，与Activity分离
+                            ├── subapps/
+                            │   ├── SubapplicationCoordinator.java [J][?] — NativeUI和管理员共享启用/打开/关闭/子设置路由
+                            │   └── SubapplicationRegistry.java [J][?] — 固定子应用身份/启用/入口元数据，不包含已搁置容量/清理
                             ├── system/
                             │   ├── DefaultBrowserFlow.java [J][?] — 用户发起Role系统流程，结果如实
                             │   ├── DeviceWindowState.java [J][?] — 窗口/平板/横竖屏事实，不以型号硬门控
@@ -211,22 +222,24 @@
 
 | 职责 | 测试要求摘要 | 目标文件引用，均为规划路径 |
 | --- | --- | --- |
-| 入口与进程 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java` |
-| 来源连续性 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java` |
-| 领域基础与任务 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java` |
-| 本机加密与密钥 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java` |
-| 管理员政策 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
-| 统一控制入口与协议 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java` |
-| Gecko原生宿主 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
-| APK内建连接器 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
-| 浏览器领域与本机数据 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
-| 原生浏览器界面 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
-| 下载与目标文件 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java` |
-| 网站与系统许可 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
-| Outlook与离线邮件 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java` |
-| 官方音乐与后台 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java` |
-| 桌面歌词 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java` |
-| 平台集成 | 正常/拒绝/取消/过期/代次/失败与有界资源；真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java` |
+| 入口与进程 | 进程角色/幂等启动/所有组件先闸门/无系统WebView条件；API30新安装冷启动及Gecko子进程不重复建主runtime | `app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java` |
+| 来源连续性 | lastGood而非lastSeen、四步计数/取消、精确私有清单与原子epoch；合成A→异常B→正常C、版本/签名限制、两次新系统验证与无锁/取消；不清日常资料 | `app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java` |
+| 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限 | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java` |
+| 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路 | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java` |
+| 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
+| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报 | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java` |
+| Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
+| APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
+| 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
+| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
+| 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发 | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java` |
+| 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
+| Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java` |
+| 官方音乐与后台 | fresh准入与安全停止分开、单路线/冷启暂停/seek单位、旧焦点gain失效；合成媒体事件后再明确授权官网验证、服务/通知/焦点/任务重连；不擅自播放 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java` |
+| 桌面歌词 | 关闭/拖动/锁定穿透、位置边界、歌词时间与资源代次；系统浮层许可/锁屏/小窗/方向变化/触摸穿透及恢复 | `app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java` |
+| 平台集成 | 版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java` |
+| 子应用启用与路由 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回 | `app/src/test/java/io/github/rebrowser/subapps/SubappsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/subapps/SubappsRuntimeTest.java` |
+| 本机设置领域 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回 | `app/src/test/java/io/github/rebrowser/settings/SettingsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/settings/SettingsRuntimeTest.java` |
 
 ## ↪ 其他部分的概括引用（不作为源码分支展开）
 
@@ -240,6 +253,7 @@
 | 统一控制入口与协议 | auxiliary-clients | 辅助CLI/协议文档，调用同控制服务，不是APK本体<br>`tools/admin/`<br>`docs/admin/` |
 | 入口与进程 | legacy-retention | 旧包/发布/密钥维护资料独立保留，不挤入新应用源码<br>`docs/releases/`<br>`tools/maintenance/`<br>`planning/geckoview-v2/evidence/legacy-public-trust.json` |
 | 原生浏览器界面 | deferred-feature | O26：子应用占用/缓存与数据清理搁置，不创建当前实现依赖<br>`planning/geckoview-v2/records/validation-scope.json` |
+| 来源连续性 | minimal-control-record | lastGood/source/epoch控制记录独立于被锁业务Vault，闸门仅能读最小锚；不为解密账号资料先开旧数据库<br>`planning/geckoview-v2/records/root-continuity.json`<br>`planning/geckoview-v2/records/key-and-enrollment-design.json` |
 
 ### 当前边界
 

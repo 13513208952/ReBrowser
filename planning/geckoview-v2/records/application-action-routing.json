@@ -1,0 +1,1431 @@
+{
+  "schema": 1,
+  "revision": "R10",
+  "state": "design-routing-not-runtime-tested",
+  "routes": [
+    {
+      "action": "host.getPublicStatus",
+      "group": "C001",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.getHealth",
+      "group": "C001",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.getRuntimeMetrics",
+      "group": "C001",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.listHandles",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.getDetails",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.create",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.select",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.closeView",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.rename",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.setRetention",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.requestCheckpoint",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.workspaces.removeData",
+      "group": "C002",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.listHandles",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.open",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.select",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.load",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.back",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.forward",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.reload",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.stop",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.close",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.popups.close",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.tabs.getNavigationDetails",
+      "group": "C003",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.page.readText",
+      "group": "C004",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.page.readDom",
+      "group": "C004",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.page.capture",
+      "group": "C004",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.page.inspectAccessibility",
+      "group": "C004",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.page.performUserEquivalentGesture",
+      "group": "C004",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.search.getPublicProviders",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.search.setProvider",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.bookmarks.add",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.bookmarks.update",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.bookmarks.remove",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.bookmarks.query",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.search.getPrivateConfiguration",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.bookmarks.export",
+      "group": "C005",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.history.query",
+      "group": "C006",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.history.getRules",
+      "group": "C006",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.history.setRules",
+      "group": "C006",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.history.clearSelected",
+      "group": "C006",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.history.clearAll",
+      "group": "C006",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.history.export",
+      "group": "C006",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.cancel",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.approve",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.retryBeforeDispatch",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.query",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.readDetails",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.deleteExactOwnedTarget",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "download.publishExport",
+      "group": "C007",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.permissions.requestOsFlow",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.prompts.cancel",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.prompts.chooseFile",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.permissions.query",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.permissions.setSiteDecision",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.clipboard.read",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/permissions/ClipboardCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "browser.page.enterCredential",
+      "group": "C008",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.openDefaultBrowserFlow",
+      "group": "C009",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.openInstaller",
+      "group": "C009",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/PlatformResultRouter.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.openPermissionSettings",
+      "group": "C009",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/PlatformResultRouter.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.window.back",
+      "group": "C010",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.window.exitFullscreen",
+      "group": "C010",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.window.requestFullscreen",
+      "group": "C010",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.window.selectPane",
+      "group": "C010",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.subapps.listStatus",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.subapps.enable",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.subapps.disable",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.subapps.open",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.subapps.openSettings",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.settings.setAppearance",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.settings.setBackground",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.subapps.setSource",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.settings.readPrivateDetails",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "host.settings.readBackground",
+      "group": "C011",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.openOfficialEntry",
+      "group": "C101",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailAuthCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.selectAccountKind",
+      "group": "C101",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailAuthCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.recheckAuth",
+      "group": "C101",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailAuthCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.getAuthState",
+      "group": "C101",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailAuthCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.listAccounts",
+      "group": "C102",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailAccountCatalog.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.query",
+      "group": "C102",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailDatabase.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.readItem",
+      "group": "C102",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailObjectStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.readAttachment",
+      "group": "C102",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailObjectStore.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.search",
+      "group": "C102",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.cancelSearch",
+      "group": "C102",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.syncBatch",
+      "group": "C103",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.syncStart",
+      "group": "C103",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.syncCancel",
+      "group": "C103",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.saveAttachment",
+      "group": "C103",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/AttachmentCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.setRetention",
+      "group": "C104",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.reindex",
+      "group": "C104",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.verifyObjects",
+      "group": "C104",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.reconcileObjects",
+      "group": "C104",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.setCodecPolicy",
+      "group": "C104",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.exportItems",
+      "group": "C105",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailExportCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.exportAttachments",
+      "group": "C105",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailExportCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.importVerifiedArchive",
+      "group": "C105",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/MailExportCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.official.markRead",
+      "group": "C106",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailActions.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.official.move",
+      "group": "C106",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailActions.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.official.send",
+      "group": "C106",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailActions.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.official.delete",
+      "group": "C106",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailActions.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "mail.official.bulkDestructive",
+      "group": "C106",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailActions.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.outlook.clearCache",
+      "group": "C107",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.outlook.clearData",
+      "group": "C108",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.open",
+      "group": "C201",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.selectLoginMode",
+      "group": "C201",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.checkAccount",
+      "group": "C201",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.getAuthState",
+      "group": "C201",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.play",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.pause",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.stop",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.next",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.previous",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.seek",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.queue.add",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.queue.remove",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.queue.clear",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.queue.read",
+      "group": "C202",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.setLiked",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.playlists.create",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.playlists.addItems",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.playlists.rename",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.playlists.query",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.playlists.delete",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.playlists.bulkRemove",
+      "group": "C203",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.lyrics.setMode",
+      "group": "C204",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.lyrics.setPosition",
+      "group": "C204",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.getMetadata",
+      "group": "C204",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.readLyrics",
+      "group": "C204",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.lyrics.getPosition",
+      "group": "C204",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.runtime.open",
+      "group": "C205",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.runtime.reconnect",
+      "group": "C205",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.runtime.close",
+      "group": "C205",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "music.runtime.getStatus",
+      "group": "C205",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.music.clearCache",
+      "group": "C206",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.music.clearData",
+      "group": "C207",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.query",
+      "group": "C301",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.querySharedPool",
+      "group": "C301",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.shared.clearRebuildableCache",
+      "group": "C302",
+      "state": "deferred-O26",
+      "targetCodePath": null,
+      "entryPath": null,
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.getSessions",
+      "group": "C303",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.getConnectorStatus",
+      "group": "C303",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.observeRuntime",
+      "group": "C303",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.observeNetwork",
+      "group": "C303",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.inspectRenderer",
+      "group": "C303",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.executeRendererScript",
+      "group": "C304",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "engine.openPageInspector",
+      "group": "C304",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.inspectOwnedObjects",
+      "group": "C305",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/PrivateDataController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.exportPrivateAppData",
+      "group": "C305",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/PrivateDataController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.resetOwnedAppData",
+      "group": "C305",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/PrivateDataController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "storage.exportRawSiteCredentials",
+      "group": "C305",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/PrivateDataController.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.delegateLow",
+      "group": "C401",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.ownWhitelist.query",
+      "group": "C402",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.ownWhitelist.prepareCompiledProposal",
+      "group": "C402",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.ownWhitelist.revoke",
+      "group": "C402",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.ownWhitelist.restoreCompiledEntry",
+      "group": "C402",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.inspectHighest",
+      "group": "C403",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.manageHighest",
+      "group": "C403",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.useHighestWhitelist",
+      "group": "C403",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.queryExclusiveWhitelist",
+      "group": "C404",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.prepareExclusiveProposal",
+      "group": "C404",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.revokeExclusiveEntry",
+      "group": "C404",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.restoreCompiledEntry",
+      "group": "C404",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.sessions.open",
+      "group": "C405",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.sessions.queryOwn",
+      "group": "C405",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.sessions.revokeOwn",
+      "group": "C405",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.audit.queryPrivate",
+      "group": "C405",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.helpers.attach",
+      "group": "C406",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.helpers.detach",
+      "group": "C406",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.capabilities.discover",
+      "group": "C407",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.plugins.attachWorkflow",
+      "group": "C407",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.plugins.detachWorkflow",
+      "group": "C407",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.trust.getPublicCatalog",
+      "group": "C408",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.root.prepareSignedApkPolicy",
+      "group": "C408",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.importSignedRevocations",
+      "group": "C408",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.disable",
+      "group": "C409",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "admin.restore",
+      "group": "C409",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "source.inspectState",
+      "group": "C501",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "source.getRecoveryConditions",
+      "group": "C501",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "source.openPersonalRecoveryFlow",
+      "group": "C502",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    },
+    {
+      "action": "source.checkTrustedSuccessor",
+      "group": "C503",
+      "state": "target-assigned-not-implemented",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "entryPath": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "rule": "UI/admin share this domain path; classification does not claim code or runtime tests passed"
+    }
+  ]
+}

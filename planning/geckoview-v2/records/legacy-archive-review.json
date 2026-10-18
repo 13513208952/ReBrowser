@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R11",
+  "revision": "R12",
   "authority": [
     "O31",
     "O32"
@@ -851,13 +851,16 @@
       "sha256": "8d549456e5ce6b2e6616709955d890fce4277b5529a04349a8a9d892e5b2ab93",
       "bytes": 4835,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:17:15+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
-      "trackedSourceAtCommit": true
+      "reason": "保留已批准的加载条视觉和旧页/动画终止契约；Gecko158进度签名已核实但新v2控件未实现",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
+      "trackedSourceAtCommit": true,
+      "targetCodeRef": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java"
     },
     {
       "path": "app/src/main/java/io/github/reoutlook/ReBrowserMusicEntrance.java",
@@ -965,13 +968,16 @@
       "sha256": "a0f601f6c9346674beeab3d7d83658dfc9629cd15fa435c78b5cb808622ccdc6",
       "bytes": 2172,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:17:15+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
-      "trackedSourceAtCommit": true
+      "reason": "环境/子标签多选与返回清除选择属于既有交互，不能只列面板而漏瞬态选择所有权",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
+      "trackedSourceAtCommit": true,
+      "targetCodeRef": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java"
     },
     {
       "path": "app/src/main/java/io/github/reoutlook/ReBrowserPageDownloadBridge.java",
@@ -993,13 +999,16 @@
       "sha256": "34463b106d0bbd133ffcc5420a848a4ccb9b78096337be9afd916c7f70cfde78",
       "bytes": 2191,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:17:15+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
-      "trackedSourceAtCommit": true
+      "reason": "单次结果、不可变权限副本及短/长期限约束仍需承接；v2按session/document重绑尚未实现",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
+      "trackedSourceAtCommit": true,
+      "targetCodeRef": "app/src/main/java/io/github/rebrowser/permissions/PendingPromptRegistry.java"
     },
     {
       "path": "app/src/main/java/io/github/reoutlook/ReBrowserPermissionScript.java",
@@ -1205,13 +1214,16 @@
       "sha256": "cf8660b4b2be27fa22dcef1db57742270b1d90a7269ce7436f8d5ce8e8ecf979",
       "bytes": 4832,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T14:17:15+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
-      "trackedSourceAtCommit": true
+      "reason": "普通子应用清理延期不等于可删旧版准入/恢复栅栏；当前旧版入口/DB/音乐service仍引用；新来源保护仍需fail-closed原理但不迁移v1 journal",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
+      "trackedSourceAtCommit": true,
+      "targetCodeRef": "app/src/main/java/io/github/rebrowser/continuity/EpochErasureCoordinator.java"
     },
     {
       "path": "app/src/main/java/io/github/reoutlook/ReBrowserUi.java",

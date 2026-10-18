@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "revision": "R12",
+  "authority": "O33",
+  "checkedAt": "2026-10-18T14:14:22+08:00",
+  "scope": "own isolated validation workspace only",
+  "freeBytesBefore": 432439296,
+  "freeBytesAfter": 1980280832,
+  "reclaimedFreeBytes": 1547841536,
+  "removed": [
+    {
+      "path": "validation/first-3abi-unsigned-release.apk",
+      "bytes": 527601968,
+      "sha256": "d60e747d3a8029b136b63261a4c9ed401e5da8b176ec1ec51f972d10a7508919",
+      "kind": "obsolete-disposable-generated-APK",
+      "retainedEvidence": "evidence/validation-release-package-verification.json"
+    },
+    {
+      "path": "validation/project/app/build/intermediates/merged_native_libs",
+      "bytes": 509929520,
+      "files": 39,
+      "kind": "regenerable-local-validation-native-intermediates",
+      "note": "AGP retained all3ABIs here despite arm64-only packaged APK; budget accordingly"
+    },
+    {
+      "path": "validation/project/app/build/intermediates/stripped_native_libs",
+      "bytes": 509929520,
+      "files": 39,
+      "kind": "regenerable-local-validation-native-intermediates",
+      "note": "AGP retained all3ABIs here despite arm64-only packaged APK; budget accordingly"
+    }
+  ],
+  "retained": [
+    "source and structured/raw validation records",
+    "current signed arm64 lab APK and R8 mappings",
+    "installed isolated SDK/Gradle and official Gecko AAR/local mirror",
+    "legacy/formal artifacts and all keys untouched"
+  ],
+  "deviceActions": false,
+  "unrelatedCachesOrSourceRemoved": false
+}

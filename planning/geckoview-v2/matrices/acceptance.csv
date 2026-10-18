@@ -76,3 +76,5 @@ T-G07,R34 R38,,解锁时机,仅信任/仅F1/仅F2/最终认证完成但销毁未
 T-V00,R39,,isolated-tech-validation,验证已选候选技术，区分编译/打包与Android/网站运行,隔离样机与可复现实验证据；未测如实标记；无日常资料副作用,V0,planned-not-run,active-or-foundational
 T-T00,R40,,application-code-tree-completeness,主树只展开应用自身全部目标代码，辅助测试等独立引用,叶节点与权威本体代码清单精确相等、无辅助混入或省略号、路径引用有效,T0,planned-not-run,active-or-foundational
 T-LG01,R41,,archive-integrity,并行审查旧版主体代码；值仍未完成的保留；批准后ZIP按原目录恢复逐字节核对，测试/临时源码不归档,资格记录/路径/SHA/恢复与引用处置完整；未满足不得移动,L0,planned-not-run,parallel-O32
+T-RSC01,R42,,host-resource-budget,空间低于峰值+保留时停止新构建；只列举核验自身过期实验产物回收；当前包/源码/记录/私钥/正式发布物保留,正向路径/摘要/前后空间可追溯，不清无关资料；全失败/符号链接/运行中构建分支拒绝越界,V0,planned-not-run,active
+T-ABI01,R43,,abi-package-integrity,正式三APK逐个核对唯一ABI/ELF/签名/资源/JNI；手机临时验证仅arm64，三合一/错ELF/缺库拒绝,每包唯一ABI且实际Native运行证据按目标单独标注；不能把旧三ABI打包当正式交付,P7,planned-not-run,formal-release; phone-arm64-static-subset-checked

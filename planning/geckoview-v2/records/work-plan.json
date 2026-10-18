@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R11",
+  "revision": "R12",
   "activePhase": "V0",
   "codingAuthorizedByPlan": false,
   "phases": [
@@ -178,7 +178,7 @@
       ],
       "name": "旧WebView主体代码价值审查与保原目录归档",
       "depends": [],
-      "state": "inventory-and-first-semantic-batch",
+      "state": "seven-semantic-reviews-retained-more-queued-no-approved-moves",
       "notBlocking": "V0/T0技术验证和应用本体总树；价值确认不能由并行要求省略",
       "refs": [
         "LEGACY_ARCHIVE_REVIEW.md",
@@ -186,5 +186,14 @@
       ]
     }
   ],
-  "runtimeSubsetState": "phone-local-Native-ports-MAIN-context-pass; Popup/restore/Keystore/media/sites remain"
+  "runtimeSubsetState": "phone-local-Native-ports-MAIN-context-pass; Popup/restore/Keystore/media/sites remain",
+  "executionBudget": {
+    "authority": "O33",
+    "policyRef": "TEMPORARY_STORAGE_POLICY.md",
+    "mode": "low-disk-source-and-contract-review",
+    "buildGate": "estimated new peak +1GiB reserve; unknown >=3GiB free; MemAvailable>=3GiB",
+    "noGlobalOrDeviceCleanup": true,
+    "phoneTestAbi": "arm64-v8a only (O35)"
+  },
+  "abiPackagingPolicyRef": "records/abi-packaging-policy.json"
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R10",
+  "revision": "R12",
   "authority": [
     "O26",
     "O27"
@@ -215,12 +215,12 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java",
           "kind": "unit-design-contract",
-          "purpose": "每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮"
+          "purpose": "每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板"
         },
         {
           "path": "app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java",
           "kind": "android-runtime",
-          "purpose": "手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照"
+          "purpose": "手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板"
         }
       ]
     },
@@ -2910,6 +2910,34 @@
       "validationMeaning": "操作协议/授权基础已设计，官网实际行为未验证",
       "runtimePending": true,
       "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "旧主体实际审读与固定Gecko进度API来源核对；新控件/多选源码未实现、未编译",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "旧主体实际审读与固定Gecko进度API来源核对；新控件/多选源码未实现、未编译",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
     }
   ],
   "references": [
@@ -2999,6 +3027,25 @@
       "paths": [
         "planning/geckoview-v2/records/root-continuity.json",
         "planning/geckoview-v2/records/key-and-enrollment-design.json"
+      ]
+    },
+    {
+      "group": "ui",
+      "kind": "legacy-behavior-review",
+      "summary": "旧加载条/概览选择仅作保留交互输入；新目标文件不是已完成替代，未将旧源码归档",
+      "paths": [
+        "planning/geckoview-v2/records/legacy-archive-review.json",
+        "planning/geckoview-v2/LEGACY_ARCHIVE_REVIEW.md"
+      ]
+    },
+    {
+      "group": "engine",
+      "kind": "abi-delivery-policy-and-auxiliary-check",
+      "summary": "正式三ABI独立APK，手机临时测试仅arm64；辅助静态ABI/ELF/ZIP对齐检查不是产品源码叶节点",
+      "paths": [
+        "planning/geckoview-v2/records/abi-packaging-policy.json",
+        "planning/geckoview-v2/verify_abi_apks.py",
+        "planning/geckoview-v2/test_abi_packages.py"
       ]
     }
   ],

@@ -273,8 +273,34 @@ def review():
         assert not android['preservation']['credentialsEntered'] and not android['preservation']['playbackStarted']
         assert not android['preservation']['legacyDataAccessedOrCleared']
         assert android['preservation']['legacyPackageVersionUnchanged']
+    abi_report = {}
+    abi_path = P / 'evidence/validation-arm64-apk-static-check.json'
+    if abi_path.exists():
+        abi = load('evidence/validation-arm64-apk-static-check.json')
+        policy = load('records/abi-packaging-policy.json')
+        assert set(policy['formalRelease']['abis']) == {'arm64-v8a', 'armeabi-v7a', 'x86_64'}
+        assert policy['formalRelease']['standaloneApkPerAbi'] and not policy['formalRelease']['universalApk']
+        assert policy['phoneValidation']['abi'] == abi['abi'] == 'arm64-v8a'
+        assert abi['onlyExpectedAbi'] and abi['nativeElfMatchesAbi'] and abi['nativeZipAlignment16KiB']
+        assert abi['sha256'] == android['artifact']['sha256'] and abi['bytes'] == android['artifact']['bytes']
+        abi_report = {'phoneTestApkVerifiedSingleArm64': True, 'formalThreeAbiSplitPolicyOnlyNotBuilt': True}
     archive_review = review_legacy_archive()
+    storage_path = P / 'evidence/temporary-storage-recovery.json'
+    storage_report = {}
+    if storage_path.exists():
+        storage = load('evidence/temporary-storage-recovery.json')
+        assert storage['authority'] == 'O33'
+        assert not storage['deviceActions'] and not storage['unrelatedCachesOrSourceRemoved']
+        assert {r['path'] for r in storage['removed']} == {
+            'validation/first-3abi-unsigned-release.apk',
+            'validation/project/app/build/intermediates/merged_native_libs',
+            'validation/project/app/build/intermediates/stripped_native_libs',
+        }
+        assert storage['reclaimedFreeBytes'] == storage['freeBytesAfter'] - storage['freeBytesBefore'] > 0
+        storage_report = {'ownTemporaryFreeBytesRecovered': storage['reclaimedFreeBytes'], 'temporaryStorageAuthority': 'O33'}
     report = {
+        **storage_report,
+        **abi_report,
         **runtime_review,
         **archive_review,
         **authority_review,

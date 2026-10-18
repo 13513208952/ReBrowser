@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R11",
+  "revision": "R12",
   "decisions": [
     {
       "id": "D01",
@@ -317,6 +317,15 @@
       "requirements": [
         "R39",
         "R41"
+      ]
+    },
+    {
+      "id": "D32",
+      "state": "confirmed",
+      "decision": "O34/O35：正式包三ABI各自独立，禁三合一；手机测试只arm64。全量含背景产品版本约束不变，ABI是交付维度。",
+      "requirements": [
+        "R06",
+        "R43"
       ]
     }
   ]

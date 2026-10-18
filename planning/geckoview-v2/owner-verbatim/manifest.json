@@ -226,6 +226,27 @@
       "utf8Bytes": 81,
       "sha256": "a9dff5eea4c8612f2a7b0abe96bea78f9308142f1fc120e912da49bfe7bdebae",
       "provenance": "owner user-message manually transcribed verbatim"
+    },
+    {
+      "id": "O33",
+      "file": "owner-verbatim/O33-continue-with-temporary-storage-budget.txt",
+      "utf8Bytes": 81,
+      "sha256": "a6901f729a45b1e371468619f62e5f843324d666d286e5a71e28e2160c24ebe3",
+      "provenance": "owner user-message manually transcribed verbatim"
+    },
+    {
+      "id": "O34",
+      "file": "owner-verbatim/O34-separate-three-ABI-packages.txt",
+      "utf8Bytes": 171,
+      "sha256": "90a077f999c51525f11bc3ceccd5ee699f040797f2fcc3b4ad8dd47552cfb6d2",
+      "provenance": "owner user-message manually transcribed verbatim"
+    },
+    {
+      "id": "O35",
+      "file": "owner-verbatim/O35-arm64-only-temporary-phone-test-package.txt",
+      "utf8Bytes": 68,
+      "sha256": "a9c27b1047c9224e80ba562514b073fae282d93607083a637988223077fa5300",
+      "provenance": "owner user-message manually transcribed verbatim"
     }
   ],
   "lastAppendedAt": "2026-10-18T10:28:22+08:00"

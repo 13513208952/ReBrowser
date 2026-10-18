@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 这是目标设计，不是已创建的产品源码。已先完成固定Gecko二进制/API编译与隔离Release打包；Android运行/网站兼容尚未验证，`[?]`不得理解为通过。
 
-当前目标：`io.github.rebrowser` · 本体代码 **172文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
+当前目标：`io.github.rebrowser` · 本体代码 **174文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
 符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。
 
@@ -206,8 +206,10 @@
                                 ├── DownloadsAdapter.java [J][?] — 下载列表与实际阶段显示
                                 ├── HistoryActivity.java [J][?] — 原生历史查询/期限/清理入口
                                 ├── HistoryAdapter.java [J][?] — 有界近期/历史列表
+                                ├── LoadingProgressView.java [J][?] — Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑
                                 ├── NativeDialogs.java [J][?] — 取消/危险确认/平台等待，不默认为同意
                                 ├── NewTabView.java [J][?] — 批准背景/搜索/收藏布局
+                                ├── OverviewSelection.java [J][?] — 每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化
                                 ├── SettingsActivity.java [J][?] — 通用/权限/应用管理入口
                                 ├── SettingsSections.java [J][?] — Native设置项与结果绑定
                                 ├── SitePermissionsActivity.java [J][?] — 网站范围与系统许可状态
@@ -231,7 +233,7 @@
 | Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
-| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
+| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
 | 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发 | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java` |
 | 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
 | Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java` |
@@ -254,6 +256,8 @@
 | 入口与进程 | legacy-retention | 旧包/发布/密钥维护资料独立保留，不挤入新应用源码<br>`docs/releases/`<br>`tools/maintenance/`<br>`planning/geckoview-v2/evidence/legacy-public-trust.json` |
 | 原生浏览器界面 | deferred-feature | O26：子应用占用/缓存与数据清理搁置，不创建当前实现依赖<br>`planning/geckoview-v2/records/validation-scope.json` |
 | 来源连续性 | minimal-control-record | lastGood/source/epoch控制记录独立于被锁业务Vault，闸门仅能读最小锚；不为解密账号资料先开旧数据库<br>`planning/geckoview-v2/records/root-continuity.json`<br>`planning/geckoview-v2/records/key-and-enrollment-design.json` |
+| 原生浏览器界面 | legacy-behavior-review | 旧加载条/概览选择仅作保留交互输入；新目标文件不是已完成替代，未将旧源码归档<br>`planning/geckoview-v2/records/legacy-archive-review.json`<br>`planning/geckoview-v2/LEGACY_ARCHIVE_REVIEW.md` |
+| Gecko原生宿主 | abi-delivery-policy-and-auxiliary-check | 正式三ABI独立APK，手机临时测试仅arm64；辅助静态ABI/ELF/ZIP对齐检查不是产品源码叶节点<br>`planning/geckoview-v2/records/abi-packaging-policy.json`<br>`planning/geckoview-v2/verify_abi_apks.py`<br>`planning/geckoview-v2/test_abi_packages.py` |
 
 ### 当前边界
 

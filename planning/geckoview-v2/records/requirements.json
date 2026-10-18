@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R11",
+  "revision": "R12",
   "requirements": [
     {
       "id": "R01",
@@ -444,6 +444,29 @@
       "implementation": "not-started",
       "reviewState": "review-in-progress-no-approved-moves",
       "implementationMeaning": "product implementation flag; parallel nonproduct archive review state recorded separately"
+    },
+    {
+      "id": "R42",
+      "ownerSources": [
+        "O33"
+      ],
+      "title": "继续任务并控制临时存储",
+      "rule": "存储空间有压力；限制临时文件与构建峰值，复用隔离工具链，仅按精确拥有范围回收过期实验包/可再生产物，不扩成旧版/设备/无关资料清理。",
+      "state": "owner-required",
+      "implementation": "not-started",
+      "executionEvidence": "evidence/temporary-storage-recovery.json"
+    },
+    {
+      "id": "R43",
+      "ownerSources": [
+        "O34",
+        "O35"
+      ],
+      "title": "正式三ABI分包，手机临时验证仅arm64",
+      "rule": "正式全量含背景版本分别提供arm64-v8a、armeabi-v7a、x86_64三个独立APK，不把三ABI塞一包；手机测试临时包仅arm64-v8a，不为该手机重复构建其他ABI。",
+      "state": "owner-required",
+      "implementation": "not-started",
+      "verificationRef": "evidence/validation-arm64-apk-static-check.json"
     }
   ]
 }

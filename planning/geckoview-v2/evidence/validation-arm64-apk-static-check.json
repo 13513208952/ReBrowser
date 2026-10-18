@@ -1,0 +1,10 @@
+{
+  "abi": "arm64-v8a",
+  "nativeLibraries": 13,
+  "bytes": 193925056,
+  "sha256": "79e0e491ecd2680488db79e8c8be2b2cc86980d263bc2bb72f3fe8e4b3ecabe4",
+  "onlyExpectedAbi": true,
+  "nativeElfMatchesAbi": true,
+  "nativeZipAlignment16KiB": true,
+  "scope": "static package check, not ELF segment alignment/signature/runtime qualification"
+}

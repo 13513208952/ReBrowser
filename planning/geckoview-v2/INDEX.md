@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划与技术验证工作台 R11
+# GeckoView v2 · 规划与技术验证工作台 R12
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
@@ -44,6 +44,8 @@ mindmap
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 主树展开全部目标运行代码文件，数量由清单校验；测试等辅助只概括引用 | O26／O27，首版设计非产品代码 |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
+| [ABI分包约束](records/abi-packaging-policy.json)／[当前单arm64验证](evidence/validation-arm64-apk-static-check.json) | 正式三ABI各自独立；手机临时测试仅arm64，校验13个库ELF与ZIP对齐 | O34／O35；不是正式三包已构建 |
+| [临时存储预算](TEMPORARY_STORAGE_POLICY.md)／[本次回收证据](evidence/temporary-storage-recovery.json) | 仅自身过期实验包/可再生中间产物；峰值空间闸门，先低空间审查 | O33；不清设备/正式发布物/无关资料 |
 | [旧主体代码归档审查](LEGACY_ARCHIVE_REVIEW.md)／[逐文件台账](records/legacy-archive-review.json) | 并行审查价值是否已耗尽，合格后原结构移入old_version.zip | O31／O32；临时代码不归档 |
 | [手机合成运行证据](evidence/validation-android-local-synthetic.json) | 实际R8 Release Native/后台与内容端口/MAIN/context隔离/解绑重绑 | 仅本地合成，非官网或产品验收 |
 | [技术验证状态](records/technology-validation.json) | Artifact/compile/Release包/Android运行分级；存储功能搁置 | 隔离验证，不触日常应用资料 |
@@ -93,7 +95,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R11自检结果](reviews/R11-structural-runtime-and-archive-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R12自检结果](reviews/R12-storage-budget-and-continued-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

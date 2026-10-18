@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R11",
+  "revision": "R12",
   "authority": [
     "O26",
     "O27",
@@ -83,7 +83,7 @@
   "sourceFiles": [
     {
       "path": "experiments/gecko-api-smoke/README.md",
-      "sha256": "5c75c28510639f7d73a7ecaaf7c31a56fe2ee3ba25430f8e974212e9235d389c"
+      "sha256": "c0570443e8ce6aae7d89e526d7a02f7cbf702eb8cc6a2a3df48fdf7a72acf0dd"
     },
     {
       "path": "experiments/gecko-api-smoke/app/build.gradle",
@@ -153,5 +153,7 @@
     "temporaryValidationSignerGenerated": true
   },
   "next": "refine application-only code tree using limited real Native/port/MAIN/context results; continue legacy archive review in parallel, do not generalize to official sites",
-  "treeDraftRef": "APPLICATION_CODE_TREE.md"
+  "treeDraftRef": "APPLICATION_CODE_TREE.md",
+  "temporaryArtifactRetirementRef": "evidence/temporary-storage-recovery.json",
+  "abiPackagingPolicyRef": "records/abi-packaging-policy.json"
 }

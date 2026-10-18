@@ -28,6 +28,6 @@
   -PvalidationMozillaRepo="file://$VROOT/maven"
 ```
 
-本fixture现为arm64（约194MB临时签名APK），第一轮三ABI约528MB是历史打包事实，不是正式产品体积。上游native库未做NDK strip，宿主/安装占用不等于APK大小。原三ABI包保留于私有验证工作区。磁盘预备仅移除自己可再生的验证native中间产物；不清产品或无关缓存。
+本fixture现为arm64（约194MB临时签名APK），第一轮三ABI约528MB是历史打包事实，不是正式产品体积。上游native库未做NDK strip，宿主/安装占用不等于APK大小。原三ABI临时包已按O33回收，仅保留来源/摘要/验证记录；当前arm64临时包仍保留。磁盘预备仅移除自己可再生的验证native中间产物；不清产品或无关缓存。
 
 构建教训：AGP9.4要求Gradle≥9.6；minor SDK用`compileSdk { version = release(37) { minorApiLevel = 2 } }`；localhost network config须显式`includeSubdomains=false`，Lint抓到问题后修复，不加baseline绕过。

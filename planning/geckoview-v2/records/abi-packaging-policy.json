@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "revision": "R12",
+  "authority": [
+    "O34",
+    "O35"
+  ],
+  "edition": "full-background only; ABI delivery split is not revival of lite/minimal editions",
+  "formalRelease": {
+    "abis": [
+      "arm64-v8a",
+      "armeabi-v7a",
+      "x86_64"
+    ],
+    "standaloneApkPerAbi": true,
+    "universalApk": false,
+    "commonIdentity": "same io.github.rebrowser/version/formal signer; ABI-specific file names, installation selects matching device ABI",
+    "notStarted": true
+  },
+  "phoneValidation": {
+    "abi": "arm64-v8a",
+    "basis": "O35 and authorized actual getprop/installed arm64 fixture",
+    "currentFixtureAlreadySingleAbi": true,
+    "staticEvidence": "evidence/validation-arm64-apk-static-check.json",
+    "neverBuildAllThreeJustForPhoneTest": true
+  },
+  "packageGate": [
+    "ABI directory set equals exactly one expected ABI",
+    "every native ELF class/machine matches ABI label; fixed Gecko libxul present",
+    "standalone manifest/dex present; signature/manifest/version verified separately",
+    "uncompressed native ZIP offsets 16KiB-aligned; ELF segment alignment requires separate check",
+    "R8/resources/builtin assets/JNI callbacks validated per actual release APK; packaging alone not runtime proof",
+    "three formal APKs must be checked individually, no universal asset silently substituted"
+  ],
+  "hostBudget": "single-ABI final APK may still produce three-ABI AGP native intermediates; measured budget and precise retirement required, not cached copies per ABI",
+  "buildScheduling": "serial/offline/max-workers1; no new full build solely to illustrate policy under current disk pressure",
+  "toolRef": "verify_abi_apks.py",
+  "actualAllThreeFormalPackagesBuilt": false
+}

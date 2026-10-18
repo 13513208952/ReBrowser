@@ -177,7 +177,28 @@
       "utf8Bytes": 75,
       "sha256": "ebd3cf66320b37dd0b7cd21560f989c49a57bbfd3929ad441f3f74312900ea94",
       "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
+    },
+    {
+      "id": "O26",
+      "file": "owner-verbatim/O26-defer-subapp-storage-validate-then-complete-file-tree.txt",
+      "utf8Bytes": 528,
+      "sha256": "8bee84c371daa214c5f6f8adbfce31fa999ff93f95f2f2329342d26a770886ca",
+      "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
+    },
+    {
+      "id": "O27",
+      "file": "owner-verbatim/O27-application-code-only-master-tree.txt",
+      "utf8Bytes": 345,
+      "sha256": "6e955985535404e1305f2a25e8438638e7d80c316ef69ce52d2157d591d9ec0f",
+      "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
+    },
+    {
+      "id": "O28",
+      "file": "owner-verbatim/O28-push-current-progress-and-continue.txt",
+      "utf8Bytes": 57,
+      "sha256": "3b58d2dc5e562a4fd273280d2b6417db20fbb00e0631788d57e1f7755f72857e",
+      "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
     }
   ],
-  "lastAppendedAt": "2026-10-18T09:17:40+08:00"
+  "lastAppendedAt": "2026-10-18T10:10:10+08:00"
 }

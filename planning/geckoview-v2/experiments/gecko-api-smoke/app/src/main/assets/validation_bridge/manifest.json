@@ -1,0 +1,8 @@
+{
+  "manifest_version": 2,
+  "name": "Fixed synthetic validation connector",
+  "version": "1.0",
+  "browser_specific_settings": {"gecko": {"id": "validation@rebrowser.invalid"}},
+  "background": {"scripts": ["background.js"]},
+  "permissions": ["nativeMessaging", "geckoViewAddons", "nativeMessagingFromContent", "scripting"]
+}

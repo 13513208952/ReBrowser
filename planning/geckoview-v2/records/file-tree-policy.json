@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "revision": "R10",
+  "authority": "O26 refined by O27",
+  "state": "authorized-after-technology-validation",
+  "primaryUnit": "one application-runtime-owned target code file per main-tree leaf; no omitted application source files, no auxiliary code expansion",
+  "include": [
+    "application native Java/Kotlin code",
+    "APK-built-in runtime JS/HTML/CSS/SQL or other actual execution code",
+    "application component declarations as needed to explain runtime structure"
+  ],
+  "separateInventories": [
+    "complete application-target source manifest, every main-tree code leaf represented",
+    "auxiliary test/tool/build/documentation manifests outside main tree, referenced by purpose/path",
+    "resource/external/generated inventories or rules, summarized not expanded as application code"
+  ],
+  "symbols": {
+    "code": "[C]",
+    "resource": "[R]",
+    "config": "[B]",
+    "test": "[T]",
+    "tool": "[U]",
+    "document": "[D]",
+    "external": "[E]",
+    "generated": "[G]",
+    "deferred": "[HOLD]",
+    "runtime-not-validated": "[?]"
+  },
+  "checks": [
+    "main-tree leaves equal complete application-runtime source manifest, no ellipsis",
+    "auxiliary/test/build/document files never classified as application-runtime merely because path is under app",
+    "actual built-in extension/script execution code is application code, not mistaken for test helper",
+    "every test reference records coverage goal + target path + validation state",
+    "normalized unique relative paths and resolvable cross references",
+    "new/renamed/retired runtime source updates manifest and tree together",
+    "deferred storage implementation is not silently made an active dependency"
+  ],
+  "notImplemented": "no product files moved/removed/replaced by this policy",
+  "mainTreeExcluded": [
+    "unit/instrumentation/test fixtures",
+    "disposable validation/prototype code",
+    "Gradle/build/R8/helper scripts",
+    "maintenance/admin CLI/generators",
+    "documentation/planning source",
+    "external dependency internal source"
+  ],
+  "referencesInsteadOfExpansion": [
+    "test requirement + exact planned test path at related application node",
+    "build/maintenance/validation location and summary",
+    "resources/assets inventories and manifest/config location when relevant",
+    "legacy maintenance/release assets as external retained-reference summary"
+  ]
+}

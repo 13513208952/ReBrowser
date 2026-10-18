@@ -60,6 +60,26 @@
       "earlier": "R3草案：信任不同根后可先用新的空环境，旧数据隔离",
       "later": "O16：仅同意来源不解锁；连续3次强行确认与两次系统机主校验完成、旧私有数据销毁成功后才解锁",
       "status": "superseded; do not open new business environment early"
+    },
+    {
+      "earlier": "O25暂停等待机主分析",
+      "later": "O26恢复：搁置子应用占用/清理，先技术验证再全文件总树",
+      "status": "resumed-with-specific-validation-and-file-tree-sequence"
+    },
+    {
+      "earlier": "子应用容量/清理作为目前路线硬前置",
+      "later": "O26明确先搁置，不阻断其他验证/规划",
+      "status": "deferred-not-deleted; source continuity data guard not waived"
+    },
+    {
+      "earlier": "P0所有设计完成后才开始隔离验证",
+      "later": "O26明确现在可先做技术验证，再奠基全项目文件树",
+      "status": "owner-authorized sequence supersedes earlier internal ordering; product rewrite/release still not authorized"
+    },
+    {
+      "earlier": "助手O26后的初步解释把测试/构建维护/文档逐文件混入主总树",
+      "later": "O27明确主总树仅本体代码，其他部分独立存放并概括引用",
+      "status": "owner-clarified main-tree scope; all application code still mandatory"
     }
   ]
 }

@@ -1,6 +1,8 @@
-# GeckoView v2 · 规划工作台 R8
+# GeckoView v2 · 规划与技术验证工作台 R10
 
-> **当前已按机主要求暂停。** 本次远端保存包含R8之后尚未全面整合的R9在途设计，请先看[暂停审阅快照](PAUSED_REVIEW.md)。下方R8索引/自检不代表R9已完成。
+> **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
+>
+> 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译和隔离R8 Release样机打包，**未运行Android/官网/真实播放测试**；树中未实证细节明确标记，不能据此宣称全部规划或实现完成。
 
 > 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。产品代码、密钥生成、设备登记、安装与发行均未开始。
 
@@ -39,6 +41,9 @@ mindmap
 
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
+| [应用本体代码总树](APPLICATION_CODE_TREE.md) | 主树全部164个目标运行代码文件；测试等辅助只概括引用 | O26／O27，首版设计非产品代码 |
+| [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
+| [技术验证状态](records/technology-validation.json) | Artifact/compile/Release包/Android运行分级；存储功能搁置 | 隔离验证，不触日常应用资料 |
 | [完整性看板](views/10-completeness-board.md) | 逐领域缺口、完成标准和推进次序；不把图表数量当完成 | O17／O18、完整性账本 |
 | [系统与体验](views/01-system-and-parity.md) | 组件、会话、能力边界 | R01–R10、功能矩阵 |
 | [管理员权限](views/02-authority.md) | 根／最高管理员／名单关系、等级表达式、授权流程 | R10–R20、authority-model |

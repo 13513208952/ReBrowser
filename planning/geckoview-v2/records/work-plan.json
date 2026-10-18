@@ -1,14 +1,14 @@
 {
   "schema": 1,
-  "revision": "R8",
-  "activePhase": "P0",
+  "revision": "R10",
+  "activePhase": "V0",
   "codingAuthorizedByPlan": false,
   "phases": [
     {
       "id": "P0",
       "name": "原话基线/全领域详细规划/完整性与工程自审",
       "depends": [],
-      "state": "paused",
+      "state": "in-progress-not-blocking-owner-authorized-validation",
       "exit": [
         "原话摘要校验",
         "机主已确认目标/关键规则落实；普通工程选择由助手负责",
@@ -119,6 +119,33 @@
         "新签名恢复流程",
         "明确批准后发行v2.0.0"
       ]
+    },
+    {
+      "id": "V0",
+      "name": "机主授权的隔离技术验证，子应用占用与清理搁置",
+      "depends": [],
+      "state": "in-progress",
+      "exit": [
+        "每技术有明确通过/失败/未测判据与证据",
+        "不使用日常设备真实资料、不生成正式签名或登记设备",
+        "区分主机/编译/Release样机/Android运行，未知不冒充通过",
+        "搁置存储功能不误取消来源异常私有数据保护"
+      ]
+    },
+    {
+      "id": "T0",
+      "name": "验证后的全项目目标文件树/清单",
+      "depends": [
+        "V0"
+      ],
+      "state": "not-started",
+      "exit": [
+        "应用本体全部目标代码文件逐个节点，没有省略号代替源码",
+        "测试/验证/构建维护等辅助内容独立存放，仅概括引用需求和目标路径",
+        "内建实际执行网页/扩展代码属于本体，不能误归辅助而漏列",
+        "资源/外部依赖/生成输出/搁置项用明确符号和引用分类",
+        "总图叶节点与应用代码清单精确相等、引用有效、新增文件自动覆盖"
+      ]
     }
   ],
   "changeLoop": [
@@ -128,7 +155,17 @@
     "机主改目标时原话追加、旧决定标superseded，不覆盖历史"
   ],
   "planningCompletenessRef": "records/completeness.json",
-  "executionState": "paused-by-owner",
+  "executionState": "resumed-by-owner-for-validation-and-file-tree",
   "pauseSource": "O25",
-  "pauseReviewRef": "PAUSED_REVIEW.md"
+  "pauseReviewRef": "PAUSED_REVIEW.md",
+  "resumeSource": "O26",
+  "isolatedValidationCodeAuthorized": true,
+  "deferredFeatureGroups": [
+    "C107",
+    "C108",
+    "C206",
+    "C207",
+    "C301",
+    "C302"
+  ]
 }

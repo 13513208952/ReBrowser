@@ -1,0 +1,2842 @@
+{
+  "schema": 1,
+  "revision": "R10",
+  "authority": [
+    "O26",
+    "O27"
+  ],
+  "state": "first-file-complete-application-code-design-after-artifact-build-round; Android-runtime-dependent-details-provisional",
+  "scope": "all currently planned application-owned runtime code files; no test/tool/build/document source expanded as code leaves",
+  "targetAppId": "io.github.rebrowser",
+  "targetVersion": "2.0.0",
+  "implementationStarted": false,
+  "groups": [
+    {
+      "id": "entry",
+      "title": "入口与进程",
+      "featureRefs": [
+        "F01",
+        "F17",
+        "F18"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "continuity",
+      "title": "来源连续性",
+      "featureRefs": [
+        "F18"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "core",
+      "title": "领域基础与任务",
+      "featureRefs": [
+        "F01",
+        "F09",
+        "F13",
+        "F15"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "crypto",
+      "title": "本机加密与密钥",
+      "featureRefs": [
+        "F09",
+        "F18"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "authority",
+      "title": "管理员政策",
+      "featureRefs": [
+        "F15",
+        "F18"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "title": "统一控制入口与协议",
+      "featureRefs": [
+        "F15"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "title": "Gecko原生宿主",
+      "featureRefs": [
+        "F01",
+        "F05",
+        "F06",
+        "F13",
+        "F17"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "title": "APK内建连接器",
+      "featureRefs": [
+        "F08",
+        "F09",
+        "F11",
+        "F12",
+        "F15"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "browser",
+      "title": "浏览器领域与本机数据",
+      "featureRefs": [
+        "F01",
+        "F02",
+        "F03",
+        "F06"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "title": "原生浏览器界面",
+      "featureRefs": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F06",
+        "F07"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "download",
+      "title": "下载与目标文件",
+      "featureRefs": [
+        "F04"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "permissions",
+      "title": "网站与系统许可",
+      "featureRefs": [
+        "F05"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "outlook",
+      "title": "Outlook与离线邮件",
+      "featureRefs": [
+        "F08",
+        "F09",
+        "F10"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "music",
+      "title": "官方音乐与后台",
+      "featureRefs": [
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "lyrics",
+      "title": "桌面歌词",
+      "featureRefs": [
+        "F14"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    },
+    {
+      "id": "system",
+      "title": "平台集成",
+      "featureRefs": [
+        "F06",
+        "F07",
+        "F13",
+        "F17"
+      ],
+      "testReferences": [
+        {
+          "path": "app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java",
+          "kind": "unit-design-contract",
+          "purpose": "正常/拒绝/取消/过期/代次/失败与有界资源"
+        },
+        {
+          "path": "app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java",
+          "kind": "android-runtime",
+          "purpose": "真实平台/进程/窗口/Gecko或服务生命周期，禁止以主机替代"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "group": "entry",
+      "kind": "native-code",
+      "responsibility": "只在正确进程建立应用所有者，不启动被来源闸门锁住的业务",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "entry"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "group": "entry",
+      "kind": "native-code",
+      "responsibility": "识别主/Gecko内部子进程，避免每进程重复初始化",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "entry"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "group": "entry",
+      "kind": "native-code",
+      "responsibility": "来源检查→原生壳→按需内核的启动顺序",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "entry"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "group": "entry",
+      "kind": "native-code",
+      "responsibility": "Activity/Provider/Service/后台入口共同闸门",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "entry"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "APK真实签名锚与合法轮换验证",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "APK编译根公钥/策略身份",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "最后正常来源与数据epoch记录，异常包不覆盖",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "四步/抢救/销毁前锁定/提交新epoch的状态归约",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "来源与确认步骤、失败和不可逆点数据类型",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "每步新Android验证及确无锁判断",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/PrivateEpochManifest.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "仅v2自有旧epoch文件/密钥归属清单",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/EpochErasureCoordinator.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "专项旧私有数据销毁/核对，不是搁置的子应用清理",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/EpochCommitter.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "确认清空后原子提交新epoch/source",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "结果/错误/等待条件/证据等级",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "原生目标句柄与epoch/partition/session绑定",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "正常用户/系统媒体/已验证管理员的明确身份",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "auth/effect/read/safety有界通道及真实工作集",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "副作用/幂等/持久化阶段日志",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "客户端等待与实际执行/效果/持久化分轴",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "请求取消和真实停止证据",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "队列/块/缓存/优先级和低内存预算",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "core"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+      "group": "crypto",
+      "kind": "native-code",
+      "responsibility": "发行/管理员/设备/数据密钥域定义",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "crypto"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/InstallKeyStore.java",
+      "group": "crypto",
+      "kind": "native-code",
+      "responsibility": "安装设备EC密钥持有与目标challenge，不用序列号作凭据",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "crypto"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+      "group": "crypto",
+      "kind": "native-code",
+      "responsibility": "epoch包装密钥/账户用途DEK与版本",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "crypto"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
+      "group": "crypto",
+      "kind": "native-code",
+      "responsibility": "HKDF派生不可变对象AES-GCM分帧",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "crypto"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "group": "crypto",
+      "kind": "native-code",
+      "responsibility": "原生敏感快照/策略记录封装",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "crypto"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+      "group": "crypto",
+      "kind": "native-code",
+      "responsibility": "严格SPKI/DER/长度和摘要编码",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT04",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "crypto"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "预编译全部高级身份与角色",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "H/普通最高/Root与不可变风险下限",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "同作用域>=、通道/介入floor、机主授权激活",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "来源中立私钥证明，不以辅助包签名额外否决",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "低于H的有界委托链和撤销",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "Root联合/各最高自有/专有名单隔离",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "实际目标安装私钥challenge验证",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "精确范围/期限/epoch的本人授权",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "更高禁更低、Root不可禁、恢复和签名快照",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/EnrollmentProposal.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "仅已明确设备/持钥证据的编译名单提案",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "group": "authority",
+      "kind": "native-code",
+      "responsibility": "脱敏审计与受控私有结果",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "authority"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "178逐动作定义/处理器/门槛单一注册",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "类型/范围/长度/目标/副作用参数",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "新控制协议签名字节与请求结构",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "严格解码/重复字段拒绝/数据量上限",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "目标绑定nonce/新鲜度/一次消费",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "同请求只执行一次与未知效果查询",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "授权→同领域服务→真实结果，不复制特权路径",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlResultStream.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "私有大结果有界传输",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlProvider.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "普通持钥辅助包/ADB的公开受认证Provider入口",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
+      "group": "control",
+      "kind": "native-code",
+      "responsibility": "应用内/隐藏控制台，隐藏不是授权",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT09",
+        "VT02"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "主进程唯一runtime，原生子进程由SDK管理",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "稳定非null context和环境/子应用归属",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "session强引用/创建/关闭与代次",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "View附着/分离/可见/focus与session生命分离",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionCheckpointStore.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "异步sessionState与敏感快照提交/恢复",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "加载/外链/新窗与正确父来源",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "提交导航/加载/安全状态/快照事件",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "崩溃/终止/全屏/外部response",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PromptDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "网站提示/文件选择的Native/系统等待",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PermissionDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "context+origin网站许可与OS许可分层",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SelectionDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "网页选择/复制与用户动作",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "实际媒体激活/feature/状态与秒单位",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "已提交历史与认证瞬态访问区分",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ViewportPolicy.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "手机/完整平板/小窗与批准布局策略",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "engine"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BuiltinConnectorManager.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "固定APK扩展安装/版本/注册先于业务数据泵",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/ConnectorBroker.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "真实sender/session/port路由与允许动作",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/DocumentLease.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "页面/port/epoch代次握手与失效",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "HELLO/READY/命令/结果/观测/错误类型",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "64KiB信封/32KiB原始块和有界信用",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeStreamReceiver.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "分块/长度/摘要/临时对象提交",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/MusicConnector.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "官方同context账号/业务SDK类型化命令",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/OutlookConnector.java",
+      "group": "bridge",
+      "kind": "native-code",
+      "responsibility": "官方邮箱账号/邮件DTO校验与有界流",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "环境/标签/导航/原生页面共同领域动作",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "双层环境类型/保留策略/名称",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "环境子标签/选择/父Popup/关闭",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "浏览器句柄/状态/不可变快照",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "新v2原生环境/标签持久化，非v1迁移",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "收藏/书签/搜索设置",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "近期访问/期限/维持/暂停写入",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "原生搜索提供者与明确目标加载",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "外部HTTPS临时隔离/非HTTPS用户交接",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "IME/模态/全屏/浮层/子屏/Popup/history/环境单次返回",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "主窗口和Native/Gecko显示协调",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "原生地址/返回/刷新/输入建议",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "环境列表和双层交互",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "环境内标签选择/新建/关闭",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "批准背景/搜索/收藏布局",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "收藏和书签操作",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "原生历史查询/期限/清理入口",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "有界近期/历史列表",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "批准/取消/任务/文件交接",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "下载列表与实际阶段显示",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "通用/权限/应用管理入口",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "Native设置项与结果绑定",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "子应用启用与48dp设置齿轮",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "子设置/音源/入口；占用清理按O26搁置",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "网站范围与系统许可状态",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SourceWarningActivity.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "仅原生四步/救援，不创建锁定旧业务",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NativeDialogs.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "取消/危险确认/平台等待，不默认为同意",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "group": "ui",
+      "kind": "native-code",
+      "responsibility": "状态栏/全屏/窗口布局，不改用户全局设置",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT05",
+        "VT03"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "ui"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "group": "download",
+      "kind": "native-code",
+      "responsibility": "真实WebResponse流/用户批准/取消/发布",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "download"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/DownloadStore.java",
+      "group": "download",
+      "kind": "native-code",
+      "responsibility": "任务/元数据/保存目标的私有记录",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "download"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/SaveTargetRegistry.java",
+      "group": "download",
+      "kind": "native-code",
+      "responsibility": "原生拥有或用户授权URI，拒绝任意私有路径",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "download"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
+      "group": "download",
+      "kind": "native-code",
+      "responsibility": "有界IO/EOF/关闭流/失败/临时对象",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "download"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/DownloadHandoff.java",
+      "group": "download",
+      "kind": "native-code",
+      "responsibility": "明确系统安装器/文件打开，非自动安装",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "download"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/SiteGrantStore.java",
+      "group": "permissions",
+      "kind": "native-code",
+      "responsibility": "origin/partition/能力/期限记录",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "permissions"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "group": "permissions",
+      "kind": "native-code",
+      "responsibility": "原生网站问询与OS分层流程",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "permissions"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/PendingPromptRegistry.java",
+      "group": "permissions",
+      "kind": "native-code",
+      "responsibility": "session/document/request绑定且一次结果",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "permissions"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/ClipboardCoordinator.java",
+      "group": "permissions",
+      "kind": "native-code",
+      "responsibility": "明确用户/授权动作与真实OS前台资格",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "permissions"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/FilePickerCoordinator.java",
+      "group": "permissions",
+      "kind": "native-code",
+      "responsibility": "选择器/ContentResolver/拒绝与重建",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT05"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "permissions"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "官方邮箱显示和原生离线入口",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookSessionOwner.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "同context邮箱/官方认证Popup生命",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "个人/工作学校/最近成功入口，禁止猜测账户域",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailAuthCoordinator.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "fresh官网证据/网络未知/错误分类/恢复",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailAccountCatalog.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "原生账号归属和绑定revision",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailCaptureValidator.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "真实官方来源/代次/账户/DTO/流校验",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "账户有序批次/引用/游标同事务",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailDatabase.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "执行新账户SQL/事务/约束，源闸门先于打开",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectStore.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "小payload内联/较大不可变文件/同账户去重",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "RAW/zlib与受约束解压、长度/摘要",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "124B头/不可变对象/分帧AEAD",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "分页元数据与可取消中文正文跨块检索",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailReferenceReconciler.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "内部引用/孤儿完整性回收，非子应用清理功能",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/AttachmentCoordinator.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "有界获取/取消/原生对象/明确保存",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "原生离线列表/正文/搜索恢复位置",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailRenderer.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "隔离只读HTML，无脚本/邮箱Cookie/自动远程内容",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailExportCoordinator.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "明确范围/高风险授权的正文附件导出",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
+      "group": "outlook",
+      "kind": "native-code",
+      "responsibility": "原始唯一内容与可重建缓存区分",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT08"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "批准布局及同一个真实播放器session显示",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicService.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "合法前台媒体服务和Native任务/通知所有者",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicSessionOwner.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "UI与服务共享单个music context/session",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "认证/意图/唯一执行路线/资源/真状态归约",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "账号/播放/资源/意图/焦点代次",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "正常手机UA/fresh官方检查/未知不等于退出",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPlaybackAuthorization.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "冷启暂停、明确起播、旧意图失效",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "Android系统动作与Gecko/官网语义对照",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicAudioFocus.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "有效焦点租约，pause后gain不复活",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "真实状态/可用动作，不伪造进度",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "最新请求/有界像素解码/缓存",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "官方歌词有界读取/逐字时间映射",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "官网队列/喜欢/歌单域，不提取URL重建播放器",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "group": "music",
+      "kind": "native-code",
+      "responsibility": "音源/恢复意图/位置的明确本机配置",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "music"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "group": "lyrics",
+      "kind": "native-code",
+      "responsibility": "关闭/可拖动/锁定穿透的唯一状态",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT07",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "lyrics"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "group": "lyrics",
+      "kind": "native-code",
+      "responsibility": "实际浮层视图/触摸/穿透",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT07",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "lyrics"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "group": "lyrics",
+      "kind": "native-code",
+      "responsibility": "位置恢复与窗口边界",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT07",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "lyrics"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
+      "group": "lyrics",
+      "kind": "native-code",
+      "responsibility": "系统浮层权限请求和结果",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT07",
+        "VT04"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "lyrics"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "窗口/平板/横竖屏事实，不以型号硬门控",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "用户发起Role系统流程，结果如实",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "Android前台服务/通知许可按实际版本处理",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/PlatformResultRouter.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "系统选择器/权限/安装器返回归属",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
+      "group": "system",
+      "kind": "native-code",
+      "responsibility": "仅本软件缓存/可恢复session回收，不动其他软件",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT02",
+        "VT04",
+        "VT07"
+      ],
+      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "runtimePending": true,
+      "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/assets/bridge/background.js",
+      "group": "bridge",
+      "kind": "script-code",
+      "responsibility": "固定内建扩展后台和Native路由",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/protocol.js",
+      "group": "bridge",
+      "kind": "script-code",
+      "responsibility": "严格消息/序号/信用/版本",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/content/music.js",
+      "group": "bridge",
+      "kind": "script-code",
+      "responsibility": "隔离世界音乐页面握手与文档路由",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/content/outlook.js",
+      "group": "bridge",
+      "kind": "script-code",
+      "responsibility": "隔离世界邮箱握手/账户/DTO流",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/page/music-api.js",
+      "group": "bridge",
+      "kind": "script-code",
+      "responsibility": "官网MAIN世界受控SDK命令和真实回执",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/page/outlook-api.js",
+      "group": "bridge",
+      "kind": "script-code",
+      "responsibility": "官网MAIN世界只读账号/邮件采集与明确用户动作",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/styles/music-phone.css",
+      "group": "bridge",
+      "kind": "style-code",
+      "responsibility": "批准手机布局适配，不重建播放器",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/styles/music-window.css",
+      "group": "bridge",
+      "kind": "style-code",
+      "responsibility": "非完整平板窗口原约定适配",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/bridge/styles/music-desktop.css",
+      "group": "bridge",
+      "kind": "style-code",
+      "responsibility": "完整平板横屏/显式桌面扫码的边界",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT03",
+        "VT06"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "bridge"
+    },
+    {
+      "path": "app/src/main/assets/offline-mail/reader.html",
+      "group": "outlook",
+      "kind": "script-code",
+      "responsibility": "只读离线安全阅读文档",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT08"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/assets/offline-mail/reader.js",
+      "group": "outlook",
+      "kind": "script-code",
+      "responsibility": "无脚本邮件执行的本机资源交互",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT08"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/assets/offline-mail/reader.css",
+      "group": "outlook",
+      "kind": "style-code",
+      "responsibility": "离线正文可读排版",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT08"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/assets/sql/mail-v1.sql",
+      "group": "outlook",
+      "kind": "sql-code",
+      "responsibility": "新账户实体/引用/修订/事务约束",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT08"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "outlook"
+    },
+    {
+      "path": "app/src/main/assets/sql/browser-v1.sql",
+      "group": "browser",
+      "kind": "sql-code",
+      "responsibility": "环境/标签/历史/书签原生库",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT08"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "browser"
+    },
+    {
+      "path": "app/src/main/assets/sql/control-v1.sql",
+      "group": "control",
+      "kind": "sql-code",
+      "responsibility": "nonce/任务/幂等/审计元数据原生库",
+      "state": "planned-not-implemented",
+      "validationRefs": [
+        "VT08"
+      ],
+      "validationMeaning": "format/API basis only; future source not implemented",
+      "runtimePending": true,
+      "testReferenceGroup": "control"
+    }
+  ],
+  "references": [
+    {
+      "group": "entry",
+      "kind": "runtime-declarations",
+      "summary": "应用标识/Activity/Service/Provider/权限/备份边界",
+      "paths": [
+        "app/src/main/AndroidManifest.xml",
+        "app/src/main/res/xml/backup_rules.xml",
+        "app/src/main/res/xml/data_extraction_rules.xml",
+        "app/src/main/res/xml/network_security_config.xml"
+      ]
+    },
+    {
+      "group": "authority",
+      "kind": "compiled-policy",
+      "summary": "APK不可变的管理员/设备公钥与动作政策；私钥不入包",
+      "paths": [
+        "app/src/main/assets/policy/principals.json",
+        "app/src/main/assets/policy/devices.json",
+        "app/src/main/assets/policy/actions.json"
+      ]
+    },
+    {
+      "group": "bridge",
+      "kind": "builtin-extension-declaration",
+      "summary": "扩展版本/host权限/固定连接器定义，非测试入口",
+      "paths": [
+        "app/src/main/assets/bridge/manifest.json"
+      ]
+    },
+    {
+      "group": "ui",
+      "kind": "resources",
+      "summary": "图标/主题/文案/批准背景等资产独立清单，不当辅助源码展开",
+      "paths": [
+        "app/src/main/res/",
+        "app/src/main/assets/background/"
+      ]
+    },
+    {
+      "group": "entry",
+      "kind": "build-tooling",
+      "summary": "构建/依赖/正式R8/签名公共模板；独立辅助目录",
+      "paths": [
+        "build.gradle.kts",
+        "settings.gradle.kts",
+        "gradle.properties",
+        "gradle/wrapper/gradle-wrapper.properties",
+        "app/build.gradle.kts",
+        "app/proguard-rules.pro",
+        "tools/build/"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "auxiliary-clients",
+      "summary": "辅助CLI/协议文档，调用同控制服务，不是APK本体",
+      "paths": [
+        "tools/admin/",
+        "docs/admin/"
+      ]
+    },
+    {
+      "group": "entry",
+      "kind": "legacy-retention",
+      "summary": "旧包/发布/密钥维护资料独立保留，不挤入新应用源码",
+      "paths": [
+        "docs/releases/",
+        "tools/maintenance/",
+        "planning/geckoview-v2/evidence/legacy-public-trust.json"
+      ]
+    },
+    {
+      "group": "ui",
+      "kind": "deferred-feature",
+      "summary": "O26：子应用占用/缓存与数据清理搁置，不创建当前实现依赖",
+      "paths": [
+        "planning/geckoview-v2/records/validation-scope.json"
+      ]
+    }
+  ],
+  "expansionRule": "new runtime source must be added to this manifest then regenerated; no ellipsis or wildcard replaces actual code leaves",
+  "deferredStorageFeature": "no occupancy/clear-cache/clear-data implementation files included for now; source continuity and internal mail integrity remain",
+  "thirdPartyCode": "Gecko/AndroidX/transitives pinned as external artifacts; their internals are not project-owned application source"
+}

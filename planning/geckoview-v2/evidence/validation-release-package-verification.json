@@ -1,0 +1,35 @@
+{
+  "kind": "isolated-unsigned-release-package-validation",
+  "checkedAt": "2026-10-18T10:03:25+08:00",
+  "applicationId": "io.github.rebrowser.validation",
+  "artifactBytes": 527601968,
+  "sha256": "d60e747d3a8029b136b63261a4c9ed401e5da8b176ec1ec51f972d10a7508919",
+  "nativeAbis": [
+    "arm64-v8a",
+    "armeabi-v7a",
+    "x86_64"
+  ],
+  "r8MinificationExecuted": true,
+  "resourceShrinkingEnabled": true,
+  "nativeLibraryWarnings": "NDK strip tool absent; upstream libraries packaged unchanged, not omitted",
+  "builtinAssetsPresent": true,
+  "realKeysOrSigningUsed": false,
+  "apkInstalled": false,
+  "AndroidRuntimeExecuted": false,
+  "officialAccountOrAudioUsed": false,
+  "toolchain": {
+    "AGP": "9.4.0",
+    "Gradle": "9.6.0",
+    "JDK": "21.0.10",
+    "compileSdk": "37.2",
+    "minSdk": 30,
+    "targetSdk": 37
+  },
+  "notProven": [
+    "native JNI startup/callback at runtime",
+    "content/Main world messaging and frame identity",
+    "session/context actual isolation/recovery",
+    "official Outlook/music compatibility",
+    "Android owner verification/Keystore/media-focus/foreground lifecycle"
+  ]
+}

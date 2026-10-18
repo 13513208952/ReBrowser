@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "revision": "R10",
+  "authority": [
+    "O26",
+    "O27"
+  ],
+  "checkedAt": "2026-10-18T10:04:52+08:00",
+  "state": "first-artifact-compile-package-round-complete-runtime-still-pending",
+  "verdicts": [
+    {
+      "id": "VT01",
+      "technology": "fixed Gecko158 official AAR",
+      "outcome": "artifact-pass",
+      "evidence": "evidence/validation-aar-verification.json",
+      "boundary": "full binary/publisher SHA256+SHA1 verified; public Java API checked, no runtime inference"
+    },
+    {
+      "id": "VT02",
+      "technology": "Java17 Android/Gecko delegate/native port signatures",
+      "outcome": "compile-pass",
+      "evidence": "experiments/gecko-api-smoke/app/src/main/java/io/github/rebrowser/validation/ValidationActivity.java",
+      "boundary": "JDK21 javac --release17 +official Gecko classes +official SDK37.2; no Android execution"
+    },
+    {
+      "id": "VT03",
+      "technology": "AGP9.4 +Gradle9.6 +SDK37.2 +R8/resource shrinking",
+      "outcome": "release-package-pass",
+      "evidence": "evidence/validation-release-package-verification.json",
+      "boundary": "offline Release assembly/LintVital/package assets/3ABI; unsigned disposable application, NOT v2product"
+    },
+    {
+      "id": "VT04",
+      "technology": "Keystore/owner auth/JCA on Android",
+      "outcome": "not-run",
+      "evidence": "records/key-and-enrollment-design.json",
+      "boundary": "host fixed vectors exist; actual Android lock/biometric/Keystore requires authorized runtime target"
+    },
+    {
+      "id": "VT05",
+      "technology": "Gecko session/context/Popup/restore actual lifecycle",
+      "outcome": "not-run",
+      "evidence": "records/gecko-contracts.json",
+      "boundary": "compile API confirmed, native lifecycle/isolation needs Android synthetic fixture"
+    },
+    {
+      "id": "VT06",
+      "technology": "built-in extension native messages/MAIN world/site connector",
+      "outcome": "not-run",
+      "evidence": "records/connector-protocol.json",
+      "boundary": "asset packaging/Java signatures confirmed; content frame and world runtime not proven"
+    },
+    {
+      "id": "VT07",
+      "technology": "native media/foreground service/audio-focus",
+      "outcome": "not-run",
+      "evidence": "records/gecko-contracts.json",
+      "boundary": "media delegate signatures compile; no audio or official account/playback tested"
+    },
+    {
+      "id": "VT08",
+      "technology": "mail lossless codec/SQL/crypto format on host",
+      "outcome": "host-pass",
+      "evidence": "evidence/mail-codec-host-baseline.json",
+      "boundary": "36codec measurements,38in-memorySQL checks,64fixed host format vectors, not Android performance"
+    },
+    {
+      "id": "VT09",
+      "technology": "admin levels/task lanes/replay design properties",
+      "outcome": "host-pass",
+      "evidence": "records/runtime-traces.json",
+      "boundary": "symbolic policy/29timeline examples; actual Android IPC/JCA proof integration pending"
+    },
+    {
+      "id": "VT10",
+      "technology": "subapplication data/cache viewing and cleanup",
+      "outcome": "deferred",
+      "evidence": "records/validation-scope.json",
+      "boundary": "owner O26 expressly deferred; no privileged storage helper prototype needed now"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "experiments/gecko-api-smoke/app/build.gradle",
+      "sha256": "dc51700f51df930e01c3d248b746618a6f76245ee6702d0a9af91612108dfea3"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/AndroidManifest.xml",
+      "sha256": "556959457760e8161200540aedce97ee5d9f91ad012e827ea7a5b55adf0c1708"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/assets/validation_bridge/background.js",
+      "sha256": "0645c8d85e69f3205c8008348c990f9c9ecdc8c59747d1f01991aa9f5aa7e3d0"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/assets/validation_bridge/manifest.json",
+      "sha256": "feb6b4efeda56d36886e396cbe68f2c8a2d83864c71df4a7897b49191270e406"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/java/io/github/rebrowser/validation/ValidationActivity.java",
+      "sha256": "aca91e9ed2a58176e5f7e780aa3a5e5aabcb2e9c4c8c932da8581b46faf11582"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/build.gradle",
+      "sha256": "f82c0c1d8cc57a32792a4b717155d561cddda2499a60aa2cfb56cd670807d251"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/gradle.properties",
+      "sha256": "7ef79f83f67928a82125353b4c25a6cf26e7f3a1c38f71a8a0d1aff11092c3e0"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/settings.gradle",
+      "sha256": "d97f4bffe92ecc616cab31892264c5470fa23ea8af6d8b659b3ffb7a2bb087fb"
+    }
+  ],
+  "toolchainFindings": [
+    "AGP9.4 rejects Gradle9.5 (requires>=9.6), not bypassed",
+    "AGP9.2.1 can configure new SDK DSL but warns tested only37.0; final supported choice9.4/9.6",
+    "SDK37.2 official archive extracted privately, existing globalSDK unchanged; local package metadata derived from existing SDK package schema and official37.2 fields",
+    "shared global Gradle lock avoided with private user/project caches +read-only dependency cache, no global lock deletion",
+    "native library strip warnings preserve upstream .so; no unverified native-file removal",
+    "Guava android variant explicitly mirrored from MavenCentral to avoid offline variant cache miss, no app-level invented dependency",
+    "R8/lint resource pipeline passed offline after separate online dependency preparation"
+  ],
+  "runtimeBoundary": {
+    "emulatorInstalled": false,
+    "dailyDevicesTouched": false,
+    "apkInstalled": false,
+    "formalKeysGenerated": false,
+    "newProductSourceWritten": false,
+    "currentDiskBudget": "isolation consumed substantial own workspace; no emulator/system-image download or unrelated cleanup",
+    "needs": "authorized disposable Android runtime target for VT04–VT07; no real credentials/playback/cleanup"
+  },
+  "next": "whole application-code tree may be drafted from compile-backed interfaces with runtime-pending markers; not freeze runtime assumptions as validated"
+}

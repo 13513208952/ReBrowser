@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R8",
+  "revision": "R10",
   "requirements": [
     {
       "id": "R01",
@@ -226,22 +226,28 @@
     {
       "id": "R22",
       "ownerSources": [
-        "O07"
+        "O07",
+        "O26"
       ],
       "title": "可用的子应用占用估计",
       "rule": "优先能区分2MB/50MB/200MB量级；不执着精确；独立于网页当前是否存活，明确共享/估算/未知。",
       "state": "owner-required",
-      "implementation": "not-started"
+      "implementation": "not-started",
+      "schedulingState": "deferred-by-owner-O26",
+      "deferScope": "subapplication data/cache occupancy viewing and cleanup feature, not internal mail integrity/transaction GC or source-mismatch private-data protection"
     },
     {
       "id": "R23",
       "ownerSources": [
-        "O07"
+        "O07",
+        "O26"
       ],
       "title": "缓存与全部数据管理",
       "rule": "每子应用查看/清缓存/清全部数据；作用域不能串删，无法确认完成不得报成功。",
       "state": "owner-required",
-      "implementation": "not-started"
+      "implementation": "not-started",
+      "schedulingState": "deferred-by-owner-O26",
+      "deferScope": "subapplication data/cache occupancy viewing and cleanup feature, not internal mail integrity/transaction GC or source-mismatch private-data protection"
     },
     {
       "id": "R24",
@@ -258,12 +264,15 @@
       "id": "R25",
       "ownerSources": [
         "O01",
-        "O04"
+        "O04",
+        "O26"
       ],
       "title": "ReOutlook统计验收",
       "rule": "新实现能展示可用的子应用占用估计；不能再次只剩活页面估算或将局部冒充完整总量。",
       "state": "owner-required",
-      "implementation": "not-started"
+      "implementation": "not-started",
+      "schedulingState": "deferred-by-owner-O26",
+      "deferScope": "subapplication data/cache occupancy viewing and cleanup feature, not internal mail integrity/transaction GC or source-mismatch private-data protection"
     },
     {
       "id": "R26",
@@ -399,6 +408,27 @@
       ],
       "title": "销毁完成后才解锁",
       "rule": "首次信任及前三步进度不允许正常业务访问或写旧资料；三次强行确认完成后执行确切私有旧集合销毁，成功核对后才解锁新环境。最终销毁前保持正确包救援。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R39",
+      "ownerSources": [
+        "O26"
+      ],
+      "title": "先做技术可用性验证",
+      "rule": "可开展隔离验证确认已选候选技术可用性；编译/主机验证/Android运行/真实站点结果分开，不把样机当产品实现。",
+      "state": "owner-required",
+      "implementation": "not-started"
+    },
+    {
+      "id": "R40",
+      "ownerSources": [
+        "O26",
+        "O27"
+      ],
+      "title": "以全部目标文件为节点的全项目树状总图",
+      "rule": "全项目总图仅以应用本体目标代码文件构成主树，必须包含全部本体代码文件，含实际运行的原生/内建网页扩展代码；测试/验证/构建维护等辅助代码不混入主树。其他部分独立存放，以测试需求/目标测试路径等在相关节点引用和概括。允许持续增添与非代码强调符号。",
       "state": "owner-required",
       "implementation": "not-started"
     }

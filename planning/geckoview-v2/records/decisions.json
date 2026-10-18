@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R7",
+  "revision": "R10",
   "decisions": [
     {
       "id": "D01",
@@ -272,6 +272,42 @@
       ],
       "ownerSources": [
         "O21"
+      ]
+    },
+    {
+      "id": "D28",
+      "state": "confirmed",
+      "decision": "子应用数据/缓存查看与清理功能先搁置，不作为当前验证/总树前置阻断。来源异常旧私有数据保护和邮件库完整性没有因此取消。",
+      "requirements": [
+        "R22",
+        "R23",
+        "R25"
+      ],
+      "ownerSources": [
+        "O26"
+      ]
+    },
+    {
+      "id": "D29",
+      "state": "confirmed",
+      "decision": "先验证候选技术，再做以目标文件划分且包含全部文件的全项目树；允许增量和非代码强调符号。",
+      "requirements": [
+        "R39",
+        "R40"
+      ],
+      "ownerSources": [
+        "O26"
+      ]
+    },
+    {
+      "id": "D30",
+      "state": "confirmed",
+      "decision": "O27澄清：主总图仅展开软件本体全部代码；测试等辅助代码独立，仅在本体节点概括测试需求和目标路径。",
+      "requirements": [
+        "R40"
+      ],
+      "ownerSources": [
+        "O27"
       ]
     }
   ]

@@ -1,0 +1,34 @@
+plugins { id 'com.android.application' }
+android {
+    namespace = 'io.github.rebrowser.validation'
+    compileSdk { version = release(37) { minorApiLevel = 2 } }
+    defaultConfig {
+        applicationId = 'io.github.rebrowser.validation'
+        minSdk = 30
+        targetSdk = 37
+        versionCode = 1
+        versionName = 'validation-only'
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            // No signingConfig: no original/formal keystore is read or created.
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+dependencies { implementation 'org.mozilla.geckoview:geckoview:158.0.20261007201254' }
+
+// Run online only for dependency preparation; actual assembly remains offline.
+tasks.register('prepareValidationDependencies') {
+    doLast {
+        configurations.releaseCompileClasspath.resolve()
+        configurations.releaseRuntimeClasspath.resolve()
+        configurations.androidLintTool.resolve()
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "revision": "R10",
+  "authority": "O26",
+  "active": true,
+  "storageFeatureDeferred": true,
+  "allowed": [
+    "synthetic host tests",
+    "fixed public crypto/codec/SQL fixtures",
+    "official pinned artifacts metadata/hash/API compilation",
+    "isolated disposable validation source/build separate from v1/v2 product",
+    "propose Android synthetic runtime tests with exact target/resource/authorization boundary"
+  ],
+  "notAutomaticallyAuthorized": [
+    "install/interact on daily phone/tablet without target authorization",
+    "important-data cleanup/login/playback/cloud writes",
+    "formal keys/whitelist enrollment/release",
+    "unrelated system/software changes"
+  ],
+  "workspace": "private geckoview-reimplementation/validation under approved non-tmpfs temp root",
+  "outcomeClasses": [
+    "host-pass",
+    "artifact-pass",
+    "compile-pass",
+    "release-package-pass",
+    "Android-runtime-pass",
+    "site-pass",
+    "failed",
+    "not-run",
+    "deferred"
+  ],
+  "rule": "never infer a stronger outcome from a weaker one; no fake Gecko native runtime under host mocks"
+}

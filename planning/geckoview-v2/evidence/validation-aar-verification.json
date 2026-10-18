@@ -1,0 +1,19 @@
+{
+  "artifact": "https://maven.mozilla.org/maven2/org/mozilla/geckoview/geckoview/158.0.20261007201254/geckoview-158.0.20261007201254.aar",
+  "bytes": 243921033,
+  "sha256": "b33ab7d20c1361ff54ab793a9395aebc223a3fc2756b82a8c661d9739f566d05",
+  "sha1": "95e8fb3efe582ab12bc6b8c6eabd04c11fe2b3eb",
+  "publisherChecksums": [
+    {
+      "algorithm": "sha256",
+      "published": "b33ab7d20c1361ff54ab793a9395aebc223a3fc2756b82a8c661d9739f566d05"
+    },
+    {
+      "algorithm": "sha1",
+      "published": "95e8fb3efe582ab12bc6b8c6eabd04c11fe2b3eb"
+    }
+  ],
+  "checkedAt": "2026-10-18T09:36:35+08:00",
+  "fullAarDownloaded": true,
+  "productBuilt": false
+}

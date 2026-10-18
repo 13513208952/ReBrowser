@@ -1,44 +1,44 @@
-id,domain,capability_group,user_equivalent,historical_group_level_example_NOT_POLICY,risk,scope,requirements,implementation,coverage
-C001,host,状态/健康/性能/版本查询,用户可见状态与管理页,0,normal,application,R10 R18,not-started,T-C001
-C002,browser,环境创建/切换/持久化/删除,双层环境与标签管理,4,destructive,application,R03 R10 R23,not-started,T-C002
-C003,browser,标签加载/返回/前进/刷新/关闭/Popup归属,浏览器全部导航动作,2,normal,application,R03 R10,not-started,T-C003
-C004,browser,页面/DOM/截图/会话内容检查,当前页面可见内容与调试视图,6,private,authorized-session,R10 R11,not-started,T-C004
-C005,browser,书签/收藏/搜索设置读写,原生收藏与搜索配置,2,normal,application,R03 R10,not-started,T-C005
-C006,browser,历史查询/清理/导出/期限规则,历史界面与规则,5,private,application,R03 R10 R11,not-started,T-C006
-C007,browser,下载开始/批准/取消/删除/导出,下载管理与系统交接,4,destructive,application,R03 R10 R11,not-started,T-C007
-C008,browser,站点权限/剪贴板/媒体授权策略,原生权限与用户交互,5,sensitive,authorized-session,R03 R10 R11,not-started,T-C008
-C009,host,默认浏览器/系统安装器/权限界面发起,用户系统交接按钮,3,platform-flow,application,R03 R10,not-started,T-C009
-C010,host,窗口/全屏/设备模式/返回层级控制,用户可操作的窗口策略,2,normal,application,R03 R10,not-started,T-C010
-C011,host,子应用启停/设置/音源/任务切换,应用管理和子应用设置,3,normal,application,R06 R10,not-started,T-C011
-C101,outlook,官方入口选择/登录流程/重进/恢复,个人与工作学校邮箱进入流程,3,auth-flow,outlook,R10 R24,not-started,T-C101
-C102,outlook,已授权邮箱读取/检索/离线阅读,用户邮件阅读与检索,6,private,outlook-account,R03 R10 R11 R21,not-started,T-C102
-C103,outlook,同步/离线缓存/附件保存/取消,用户邮件本机保存动作,5,private,outlook-account,R10 R21 R22,not-started,T-C103
-C104,outlook,压缩/保留策略/索引/修复/回收,离线数据维护界面,5,destructive,outlook-account,R10 R21 R23,not-started,T-C104
-C105,outlook,邮件/附件导出与恢复,用户明确导出读取范围,7,highest-private,outlook-account,R10 R11 R21,not-started,T-C105
-C106,outlook,云端发信/移动/删除等官方用户动作,用户能执行的邮箱写操作,8,highest-destructive,outlook-account,R10 R11,not-started,T-C106
-C107,outlook,只清可重建缓存,子应用清理界面,4,rebuildable-cache,outlook,R10 R11 R23,not-started,T-C107
-C201,music,官方登录/状态检查/入口/UA策略,用户合法登录与异常重试,3,auth-flow,music,R03 R10,not-started,T-C201
-C202,music,播放/暂停/切歌/seek/队列控制,官方播放器和系统控制,3,normal,music-session,R03 R10,not-started,T-C202
-C203,music,喜欢/歌单等官方用户写动作,真实官网已授权动作,6,private-write,music-account,R03 R10 R11,not-started,T-C203
-C204,music,元数据/歌词/浮层位置与显示,用户歌词与浮层控制,4,private,music-session,R03 R10,not-started,T-C204
-C205,music,后台服务/任务/媒体会话启停重连,用户任务生命周期,4,normal,music,R03 R10,not-started,T-C205
-C206,music,只清可重建缓存,子应用清理界面,4,rebuildable-cache,music,R10 R11 R23,not-started,T-C206
-C301,storage,子应用/共享/本机数据占用查询,容量管理页,1,normal,application,R10 R22 R25,not-started,T-C301
-C302,storage,共享内核/宿主缓存清理,明确共享范围的清理动作,5,shared-rebuildable-cache,application,R10 R11 R23,not-started,T-C302
-C303,engine,会话/扩展/RPC/渲染/网络诊断,高级受授权调试视图,7,highest-private,authorized-session,R01 R10 R11,not-started,T-C303
-C304,engine,受授权脚本/检查器/调试介入,高级管理员调试会话,8,highest-private,authorized-session,R10 R11 R19,not-started,T-C304
-C305,storage,应用自有数据检查/导出/重置,用户数据与完整应用维护,8,highest-private,application-excluding-unowned-policy-vaults,R10 R11 R15 R16 R23,not-started,T-C305
-C401,admin,仅低于高级边界H的低级身份委托/授权；不含高级新增,管理员管理台,7,highest-management,delegated-low-only,R10 R13 R31,not-started,T-C401
-C402,admin,最高管理员自有名单登记/修改/撤销/使用,自己的授权设备管理,8,highest-management,own-whitelist,R14 R15 R17,not-started,T-C402
-C403,admin,Root管理既有最高管理员/使用其名单；不含运行时新增高级,特殊根管理台,9,root-management,root-only,R13 R16 R31 R32,not-started,T-C403
-C404,admin,根专有设备名单管理/使用,特殊根自己的设备管理,9,root-management,root-only,R14 R16 R17,not-started,T-C404
-C405,admin,调试会话授权/提升/撤销/审计,机主/管理员授权与风险反馈,6,private-management,authorized-admin-domain,R11 R12 R13 R18,not-started,T-C405
-C406,admin,来源中立辅助凭据/低级动态委托/插件挂接,运行时管理接口,6,sensitive-management,own-admin-subtree,R13 R19 R20 R31 R35,not-started,T-C406
-C407,admin,能力发现/低风险动态扩展；不得修改编译的高级身份与安全门槛,完整调试生态的扩张入口,6,sensitive-management,delegated-registration-scope,R10 R12 R19 R31,not-started,T-C407
-C408,admin,预编译信任查询/签名APK更新准备；不能热加高级或禁用Root,受控最高风险维护,9,root-management,root-only,R07 R09 R16 R31 R32 R33,not-started,T-C408
-C108,outlook,全部本机数据清理,子应用清理界面,7,highest-destructive,outlook,R10 R11 R23,not-started,T-C108
-C207,music,全部本机数据清理,子应用清理界面,7,highest-destructive,music,R10 R11 R23,not-started,T-C207
-C409,admin,禁用严格更低且非Root管理员,管理员管理台,target_level+1,management,strictly-lower-non-root-admin,R13 R32,not-started,T-C409
-C501,continuity,查询最后正常签名＋根公钥可信源与旧数据隔离状态,根身份变化提示,1,normal,current-installation,R33 R36,not-started,T-C501
-C502,continuity,仅发起四步本人确认流程；不能由管理员替代后两次系统验证,用户亲自许可与三确认界面,8,owner-personal-flow,private-old-epoch,R33 R34 R37 R38,not-started,T-C502
-C503,continuity,同正常可信源后续包救援检查；不以异常中间包为基准,正确包恢复旧数据流程,8,recovery,private-old-epoch-before-destruction,R33 R34 R36,not-started,T-C503
+id,domain,capability_group,user_equivalent,historical_group_level_example_NOT_POLICY,risk,scope,requirements,implementation,coverage,scheduling
+C001,host,状态/健康/性能/版本查询,用户可见状态与管理页,0,normal,application,R10 R18,not-started,T-C001,active-or-foundational
+C002,browser,环境创建/切换/持久化/删除,双层环境与标签管理,4,destructive,application,R03 R10 R23,not-started,T-C002,active-or-foundational
+C003,browser,标签加载/返回/前进/刷新/关闭/Popup归属,浏览器全部导航动作,2,normal,application,R03 R10,not-started,T-C003,active-or-foundational
+C004,browser,页面/DOM/截图/会话内容检查,当前页面可见内容与调试视图,6,private,authorized-session,R10 R11,not-started,T-C004,active-or-foundational
+C005,browser,书签/收藏/搜索设置读写,原生收藏与搜索配置,2,normal,application,R03 R10,not-started,T-C005,active-or-foundational
+C006,browser,历史查询/清理/导出/期限规则,历史界面与规则,5,private,application,R03 R10 R11,not-started,T-C006,active-or-foundational
+C007,browser,下载开始/批准/取消/删除/导出,下载管理与系统交接,4,destructive,application,R03 R10 R11,not-started,T-C007,active-or-foundational
+C008,browser,站点权限/剪贴板/媒体授权策略,原生权限与用户交互,5,sensitive,authorized-session,R03 R10 R11,not-started,T-C008,active-or-foundational
+C009,host,默认浏览器/系统安装器/权限界面发起,用户系统交接按钮,3,platform-flow,application,R03 R10,not-started,T-C009,active-or-foundational
+C010,host,窗口/全屏/设备模式/返回层级控制,用户可操作的窗口策略,2,normal,application,R03 R10,not-started,T-C010,active-or-foundational
+C011,host,子应用启停/设置/音源/任务切换,应用管理和子应用设置,3,normal,application,R06 R10,not-started,T-C011,active-or-foundational
+C101,outlook,官方入口选择/登录流程/重进/恢复,个人与工作学校邮箱进入流程,3,auth-flow,outlook,R10 R24,not-started,T-C101,active-or-foundational
+C102,outlook,已授权邮箱读取/检索/离线阅读,用户邮件阅读与检索,6,private,outlook-account,R03 R10 R11 R21,not-started,T-C102,active-or-foundational
+C103,outlook,同步/离线缓存/附件保存/取消,用户邮件本机保存动作,5,private,outlook-account,R10 R21 R22,not-started,T-C103,active-or-foundational
+C104,outlook,压缩/保留策略/索引/修复/回收,离线数据维护界面,5,destructive,outlook-account,R10 R21 R23,not-started,T-C104,active-or-foundational
+C105,outlook,邮件/附件导出与恢复,用户明确导出读取范围,7,highest-private,outlook-account,R10 R11 R21,not-started,T-C105,active-or-foundational
+C106,outlook,云端发信/移动/删除等官方用户动作,用户能执行的邮箱写操作,8,highest-destructive,outlook-account,R10 R11,not-started,T-C106,active-or-foundational
+C107,outlook,只清可重建缓存,子应用清理界面,4,rebuildable-cache,outlook,R10 R11 R23,not-started,T-C107,deferred-O26
+C201,music,官方登录/状态检查/入口/UA策略,用户合法登录与异常重试,3,auth-flow,music,R03 R10,not-started,T-C201,active-or-foundational
+C202,music,播放/暂停/切歌/seek/队列控制,官方播放器和系统控制,3,normal,music-session,R03 R10,not-started,T-C202,active-or-foundational
+C203,music,喜欢/歌单等官方用户写动作,真实官网已授权动作,6,private-write,music-account,R03 R10 R11,not-started,T-C203,active-or-foundational
+C204,music,元数据/歌词/浮层位置与显示,用户歌词与浮层控制,4,private,music-session,R03 R10,not-started,T-C204,active-or-foundational
+C205,music,后台服务/任务/媒体会话启停重连,用户任务生命周期,4,normal,music,R03 R10,not-started,T-C205,active-or-foundational
+C206,music,只清可重建缓存,子应用清理界面,4,rebuildable-cache,music,R10 R11 R23,not-started,T-C206,deferred-O26
+C301,storage,子应用/共享/本机数据占用查询,容量管理页,1,normal,application,R10 R22 R25,not-started,T-C301,deferred-O26
+C302,storage,共享内核/宿主缓存清理,明确共享范围的清理动作,5,shared-rebuildable-cache,application,R10 R11 R23,not-started,T-C302,deferred-O26
+C303,engine,会话/扩展/RPC/渲染/网络诊断,高级受授权调试视图,7,highest-private,authorized-session,R01 R10 R11,not-started,T-C303,active-or-foundational
+C304,engine,受授权脚本/检查器/调试介入,高级管理员调试会话,8,highest-private,authorized-session,R10 R11 R19,not-started,T-C304,active-or-foundational
+C305,storage,应用自有数据检查/导出/重置,用户数据与完整应用维护,8,highest-private,application-excluding-unowned-policy-vaults,R10 R11 R15 R16 R23,not-started,T-C305,active-or-foundational
+C401,admin,仅低于高级边界H的低级身份委托/授权；不含高级新增,管理员管理台,7,highest-management,delegated-low-only,R10 R13 R31,not-started,T-C401,active-or-foundational
+C402,admin,最高管理员自有名单登记/修改/撤销/使用,自己的授权设备管理,8,highest-management,own-whitelist,R14 R15 R17,not-started,T-C402,active-or-foundational
+C403,admin,Root管理既有最高管理员/使用其名单；不含运行时新增高级,特殊根管理台,9,root-management,root-only,R13 R16 R31 R32,not-started,T-C403,active-or-foundational
+C404,admin,根专有设备名单管理/使用,特殊根自己的设备管理,9,root-management,root-only,R14 R16 R17,not-started,T-C404,active-or-foundational
+C405,admin,调试会话授权/提升/撤销/审计,机主/管理员授权与风险反馈,6,private-management,authorized-admin-domain,R11 R12 R13 R18,not-started,T-C405,active-or-foundational
+C406,admin,来源中立辅助凭据/低级动态委托/插件挂接,运行时管理接口,6,sensitive-management,own-admin-subtree,R13 R19 R20 R31 R35,not-started,T-C406,active-or-foundational
+C407,admin,能力发现/低风险动态扩展；不得修改编译的高级身份与安全门槛,完整调试生态的扩张入口,6,sensitive-management,delegated-registration-scope,R10 R12 R19 R31,not-started,T-C407,active-or-foundational
+C408,admin,预编译信任查询/签名APK更新准备；不能热加高级或禁用Root,受控最高风险维护,9,root-management,root-only,R07 R09 R16 R31 R32 R33,not-started,T-C408,active-or-foundational
+C108,outlook,全部本机数据清理,子应用清理界面,7,highest-destructive,outlook,R10 R11 R23,not-started,T-C108,deferred-O26
+C207,music,全部本机数据清理,子应用清理界面,7,highest-destructive,music,R10 R11 R23,not-started,T-C207,deferred-O26
+C409,admin,禁用严格更低且非Root管理员,管理员管理台,target_level+1,management,strictly-lower-non-root-admin,R13 R32,not-started,T-C409,active-or-foundational
+C501,continuity,查询最后正常签名＋根公钥可信源与旧数据隔离状态,根身份变化提示,1,normal,current-installation,R33 R36,not-started,T-C501,active-or-foundational
+C502,continuity,仅发起四步本人确认流程；不能由管理员替代后两次系统验证,用户亲自许可与三确认界面,8,owner-personal-flow,private-old-epoch,R33 R34 R37 R38,not-started,T-C502,active-or-foundational
+C503,continuity,同正常可信源后续包救援检查；不以异常中间包为基准,正确包恢复旧数据流程,8,recovery,private-old-epoch-before-destruction,R33 R34 R36,not-started,T-C503,active-or-foundational

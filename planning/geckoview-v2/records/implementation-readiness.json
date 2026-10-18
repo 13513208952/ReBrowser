@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R21",
+  "revision": "R22",
   "authority": [
     "O41",
     "O42"
@@ -134,6 +134,38 @@
         "external effect prevented/known or storage durability"
       ],
       "integrationGate": "only trusted coordinator/execution chain retains root/reporter; independently match original owner and account for every native writer. Never accept caller-supplied completion flags or infer end from Future/port/deadline."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
+      "state": "implemented-host-tested-not-integrated",
+      "researchCompleteForScope": true,
+      "scope": "stream exact R9 catalog-bound RBMOBJ1 packed bytes with fresh one-shot object IDs, HKDF/AESGCM frames and RAW digest; NOT codec/database/key custody",
+      "researchEvidence": [
+        "records/object-aead-implementation-contract.json",
+        "records/mail-object-format.json",
+        "evidence/mail-object-format-host-vectors.json",
+        "experiments/MailObjectFormatVectors.java"
+      ],
+      "inputOutput": "native-admitted metadata/32B purpose DEK and finite owned streams -> authenticated packed staging; any late failure taints ALL stage; ZLIB still needs original digest/length validation outside",
+      "dependencies": "Java8 stream/JCA SHA256/HmacSHA256/AES256GCM/SecureRandom; no new library, no whole payload allocation",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.crypto.ObjectAeadTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "Android JCA/Keystore actual crypto behavior or performance",
+        "global catalog uniqueness from randomness alone",
+        "ZLIB original-body integrity before codec checks",
+        "source/account authority, private stage abort/commit or mailbox transaction",
+        "best-effort key array wipe erases provider/internal memory"
+      ],
+      "integrationGate": "source/epoch/native key version selection plus unique catalog ID reservation, owned private staging and final codec/digest/fence/DB commit required; never publish output prefix after failure",
+      "interopEvidence": "evidence/object-aead-production-interop.json"
     }
   ],
   "parallelPending": [

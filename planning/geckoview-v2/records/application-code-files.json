@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R21",
+  "revision": "R22",
   "authority": [
     "O26",
     "O27",
@@ -94,6 +94,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java",
+          "kind": "unit-streamed-object-aead",
+          "purpose": "fresh one-shot immutable object IDs/catalog scope/RAW digest/GCM frame tamper/tainted late prefix/cancel/4MiB generated source bounded private staging; ZLIB bytes need separate codec verification",
+          "state": "host-tested-not-Android-crypto-qualified"
         }
       ]
     },
@@ -721,14 +727,15 @@
       "group": "crypto",
       "kind": "native-code",
       "responsibility": "HKDF派生不可变对象AES-GCM分帧",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT04",
         "VT08"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R22 real streaming production class,64combinedHOST JUnit+36old/new exact/bidirectional vectors and64RFC/NIST rerun; actual Android API compile, NOT Android crypto/codec/DB/source admission",
       "runtimePending": true,
-      "testReferenceGroup": "crypto"
+      "testReferenceGroup": "crypto",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
@@ -3207,7 +3214,7 @@
     {
       "group": "core",
       "kind": "production-source-actual-Android-API-compile",
-      "summary": "已准入的四生产文件实际SDK37.2 bootclasspath编译；可用现有runner --android-jar复现。不是API30或Android运行",
+      "summary": "已准入的五生产文件实际SDK37.2 bootclasspath编译；runner --android-jar复现。不是API30或Android JCA运行",
       "paths": [
         "planning/geckoview-v2/evidence/production-android-api-compile.json"
       ]
@@ -3230,6 +3237,17 @@
       "paths": [
         "planning/geckoview-v2/records/core-cancellation-contract.json",
         "planning/geckoview-v2/evidence/production-unit-tests.json"
+      ]
+    },
+    {
+      "group": "crypto",
+      "kind": "streamed-payload-authentication-not-publication",
+      "summary": "RBMOBJ1生产流式封装，64JUnit含4MiB生成源/私有暂存；R9旧原型与新实现双向/逐字节36项+64历史RFC/NIST重跑。ZLIB仅打包字节认证，原文/事务仍外部验证",
+      "paths": [
+        "planning/geckoview-v2/records/object-aead-implementation-contract.json",
+        "planning/geckoview-v2/evidence/object-aead-production-interop.json",
+        "planning/geckoview-v2/experiments/object_aead_interop.py",
+        "planning/geckoview-v2/experiments/ObjectAeadInterop.java"
       ]
     }
   ],

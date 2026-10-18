@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R21",
+  "revision": "R22",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -294,7 +294,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "真实schema、codec容器、事务/去重/索引/读取和损坏恢复",
-      "existingEvidence": "压缩候选与管线图，不是数据设计；R8合成主机11.6MB保真压缩/SQLite布局基线，非Android性能或邮件产品实现",
+      "existingEvidence": "压缩候选与管线图，不是数据设计；R8合成主机11.6MB保真压缩/SQLite布局基线，非Android性能或邮件产品实现；R22流式ObjectAead已实现/64组合JUnit/36双向精确字节对照，单次新对象ID与原生catalog头绑定；ZLIB原文验证/DB提交/Android实际密码学未完成",
       "completionDeliverables": [
         "可实现schema",
         "写读崩溃顺序",
@@ -316,7 +316,10 @@
         "views/14-outlook-offline-design.md",
         "records/mail-storage-design.json",
         "evidence/mail-codec-host-baseline.json",
-        "views/20-mail-storage-and-codec-evidence.md"
+        "views/20-mail-storage-and-codec-evidence.md",
+        "records/object-aead-implementation-contract.json",
+        "evidence/object-aead-production-interop.json",
+        "records/implementation-readiness.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

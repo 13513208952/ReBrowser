@@ -1,10 +1,10 @@
-# GeckoView v2 · 规划与技术验证工作台 R21
+# GeckoView v2 · 规划与技术验证工作台 R22
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停；O41允许已搞清实现方法的总树文件按文件推进，O42再次明确推送后不自行停工。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
 > 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译、隔离R8 Release打包，以及O29授权手机上的[本地合成Native/扩展/MAIN世界/context子集](evidence/validation-android-local-synthetic.json)。**官网、真实播放、本人验证及Popup/恢复等仍未测**；不能宣称完整产品已实现或全部规划完成。
 
-> 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。按O41开始对已完成本文件调研的节点准入实现：当前4个生产基础文件已编写并合跑通过51项HOST JUnit，另有1033项独立JSON对照，未集成Android入口；其余仍是规划。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
+> 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。按O41开始对已完成本文件调研的节点准入实现：当前5个生产基础文件已编写并合跑通过64项HOST JUnit，另有1033项独立JSON对照，未集成Android入口；其余仍是规划。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
 
 ```mermaid
 mindmap
@@ -42,7 +42,7 @@ mindmap
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 全部目标运行代码逐文件展开，区分PLAN与HOST，测试等辅助只概括引用 | O26／O27／O41，HOST不等于Android集成 |
-| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；帧/编码/严格语法＋Cancellation，51项JUnit |
+| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；帧/编码/严格语法＋Cancellation＋ObjectAead，64项JUnit |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
 | [旧结构审查整理：统一任务](records/structure-retirement-policy.json)／[回收站记录](records/noncode-retirement-review.json) | 主体ZIP／凭据保留／其他价值耗尽进Trash是同任务内分流，与新版本工作并行 | O37；不把一次整理当停止节点 |
@@ -78,7 +78,8 @@ mindmap
 | [Native网站权限契约](records/gecko-permission-design.json)／[来源与API编译](evidence/gecko-permission-api-and-lifetime.json) | clipboard原生回调与context字段已编译；永久engine allow和有限grant期限差异已确认 | 有限期限/粗细定位/停止使用仍待实测，不复制v1补丁 |
 | [四平台动作具体契约](records/platform-action-contracts.json)／[主机DTO演算](review_platform_actions.py) | 参数/原生窗口代次/安装sourceRef/共享方法/完成与取消 | 四个动作子集，不是178动作DTO完成 |
 | [控制请求签名字节契约](records/control-proof-format.json)／[跨实现主机检查](evidence/control-proof-cross-implementation.json) | 17字段帧、895项JCA/独立Python与OpenSSL、重放与新proof幂等规则 | 公开标量1合成材料，非Android授权实现 |
-| [生产源码Android API编译](evidence/production-android-api-compile.json) | 四文件实际SDK37.2 bootclasspath编译，17个Java8类文件 | 编译不等于Android运行，也不宣称API30已测 |
+| [生产源码Android API编译](evidence/production-android-api-compile.json) | 五文件实际SDK37.2 bootclasspath编译，24个Java8类文件 | 编译不等于Android运行，也不宣称API30已测 |
+| [流式对象加密边界](records/object-aead-implementation-contract.json)／[新旧互通](evidence/object-aead-production-interop.json) | 新对象一次性ID/canonical catalog头/32KiB认证帧，36双向与精确字节检查 | 不等于ZLIB原文验证、DB提交或Android加密通过 |
 | [请求取消与真实工作结束](records/core-cancellation-contract.json) | 独立Requester/Reporter、原子不可变状态；真实HOST并发和Future已done而worker仍运行 | 不释放槽、不证明远端效果或持久化、不是Gecko停止 |
 | [严格未验证包络解码](records/control-decoder-contract.json)／[独立JSON对照](evidence/control-json-differential.json) | 不可变类型树、重复/Unicode/类型与预算、代理摘要；Python/Java1033项一致 | UnverifiedProof不是身份；逐动作schema/验签/准入仍未完成 |
 | [公钥/编码实现契约](records/crypto-encoding-contract.json) | P256 canonical SPKI＋曲线/点、DER正标量、s/n-s等价、规范有界Base64url/SHA | 格式合法不等于验签或取得权限，未生成真实密钥 |
@@ -108,7 +109,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R21自检结果](reviews/R21-production-cancellation-thread-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R22自检结果](reviews/R22-streamed-object-aead-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

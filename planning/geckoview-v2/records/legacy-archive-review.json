@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R21",
+  "revision": "R22",
   "authority": [
     "O31",
     "O32"
@@ -463,12 +463,15 @@
       "sha256": "6336671e28e553fd5315efb19febbbe967b45a98f7ef57a064819f140d54e8e2",
       "bytes": 2999,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T00:48:35+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧管理员导出：RSA-OAEP-SHA256独立接收方包裹AES256内容键、AAD元数据、CipherOutputStream/数据库流与关闭责任。旧导出/恢复仍依赖，新的账户对象AEAD不是旧导出格式也不是迁移，不能取代或归档其维护责任。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/object-aead-implementation-contract.json",
+        "planning/geckoview-v2/records/key-and-enrollment-design.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

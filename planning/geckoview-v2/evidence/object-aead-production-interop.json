@@ -1,0 +1,40 @@
+{
+  "scope": "HOST R9 independent implementation versus actual production streaming AEAD; fixed PUBLIC dummy DEK only, same JCA provider, not Android crypto/real custody",
+  "historicalRfcNistAndFormatChecksRerun": 64,
+  "bidirectionalAndExactWireChecks": 36,
+  "codecs": [
+    "RAW",
+    "ZLIB-packed"
+  ],
+  "lengths": [
+    0,
+    1,
+    32768,
+    32769,
+    65537,
+    262144
+  ],
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
+      "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/MailObjectFormatVectors.java",
+      "sha256": "533205d6944b8f58b0c96fd069f01e078d0f1cf4163cc3d142d6d8be2e32c48b"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/ObjectAeadInterop.java",
+      "sha256": "4942e0da99a492cd5f09639b21c1f6b0797960267c073c59fc22457f360d49ed"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/object_aead_interop.py",
+      "sha256": "f16657c1495341c312de8ac54916dfec474f82b147de1dcf32244224de948c12"
+    }
+  ],
+  "temporaryHarnessRemoved": true,
+  "realKeyProvisioning": false,
+  "androidProviderValidated": false,
+  "databasePublicationOrSourceAdmissionTested": false,
+  "uniqueRandomObjectIdsAreNotKeys": true
+}

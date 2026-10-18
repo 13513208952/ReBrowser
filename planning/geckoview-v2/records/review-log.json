@@ -1,5 +1,5 @@
 {
-  "revision": "R21",
+  "revision": "R22",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -239,6 +239,12 @@
       "time": "2026-10-19T00:31:45+08:00",
       "finding": "O43指出应继续执行而非以回复停下；任务取消不能只沿用Future状态或纯模型当真实退出。",
       "resolution": "完成已调研Cancellation节点的单任务原子状态/Requester-Reporter边界，再写生产源和9项HOST测试含256轮真实并发与Future已done但工作仍运行。四生产源51JUnit、实际Android API17类通过。统一L0完整审读旧LatestTask仍有调度/维护价值，未强归档。"
+    },
+    {
+      "id": "REV41",
+      "time": "2026-10-19T00:48:35+08:00",
+      "finding": "R9固定对象加密仅主机整数组原型；直接复制会加载整个对象且可能把已验证前缀/压缩字节当完整成功。",
+      "resolution": "先固定流式/原生catalog/私有staging/单次fresh ID和codec边界，再写ObjectAead生产文件，最多32KiB明文帧。五源64JUnit含4MiB生成流；旧原型/新实现36双向与逐字节检查，64历史RFC/NIST重跑；SDK API编译24类。ZLIB原文、唯一目录登记、密钥选择、提交/丢弃仍须上层，不谎称全邮箱或Android加密已完成；旧Exporter完整审读保留。"
     }
   ]
 }

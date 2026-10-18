@@ -19,6 +19,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
       "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
+      "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
     }
   ],
   "classFiles": [
@@ -105,6 +109,41 @@
     {
       "path": "io/github/rebrowser/crypto/CryptoEncoding.class",
       "sha256": "c1897f4f2ab8b522b65a2baa88619cbf1d72cb5e42aad431ba004eb2f347adbd",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead$1.class",
+      "sha256": "d6b403968d7f89d9a16c11ddbe03096f53cc8dca85e8624988ca425e6bf1f874",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead$Codec.class",
+      "sha256": "53ded1e1577355529d4c23e3bf52289e9cfc0d031ad248755dae05b53cdb3ab5",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead$Limits.class",
+      "sha256": "855b0175b9280ac96f809ebac379c12cbbf55f6e3c8f22eb6740e038658d4b2c",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead$Metadata.class",
+      "sha256": "ca47cd920193a15b38d4d9ef3d75d39f844dde885952ada2a85ca3b93762e8f0",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead$Purpose.class",
+      "sha256": "cc6dfc6a1101dc6fbe6931f2637a6051f3cbb87a63c246cf77788f0edb42d43a",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead$WritePlan.class",
+      "sha256": "e300f5e95c4f94baa5f0f49f482323b2547848eb1f0534717239a748e0548e9f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/ObjectAead.class",
+      "sha256": "73b598fe2c4a1d5beb472a4ac1d70cc1913434605732d4f40b2cab98b372040f",
       "classMajor": 52
     }
   ],

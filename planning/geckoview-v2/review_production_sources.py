@@ -41,6 +41,12 @@ def review():
     for source in differential['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not any(differential[k] for k in ['validCryptographicProofsUsed','actionSpecificSchemasValidated','androidRuntimeExecuted','realKeysOrDeviceDataUsed'])
+    object_crypto = json.loads((P/'evidence/object-aead-production-interop.json').read_text())
+    assert object_crypto['historicalRfcNistAndFormatChecksRerun'] == 64
+    assert object_crypto['bidirectionalAndExactWireChecks'] == 36 and object_crypto['temporaryHarnessRemoved']
+    for source in object_crypto['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not any(object_crypto[k] for k in ['realKeyProvisioning','androidProviderValidated','databasePublicationOrSourceAdmissionTested'])
     api = json.loads((P/'evidence/production-android-api-compile.json').read_text())
     assert api['passed'] and api['bootClasspathSdk'] == '37.2'
     assert {s['path'] for s in api['sourceFiles']} == implemented
@@ -52,6 +58,7 @@ def review():
             'productionSourceAndroid37ApiCompiled':len(api['sourceFiles']),
             'productionHostJunitTestsPassed':evidence['junitTestsPassed'],
             'productionJsonDifferentialCasesPassed':differential['casesPassed'],
+            'productionObjectAeadInteropChecksPassed':object_crypto['bidirectionalAndExactWireChecks'],
             'productAndroidIntegrationComplete':False}
 
 

@@ -180,10 +180,10 @@
                             │   ├── OutlookActivity.java [J][?] — 官方邮箱显示和原生离线入口
                             │   └── OutlookSessionOwner.java [J][?] — 同context邮箱/官方认证Popup生命
                             ├── permissions/
-                            │   ├── ClipboardCoordinator.java [J][?] — 网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验
+                            │   ├── ClipboardCoordinator.java [J][?] — 网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验；Native clipboard read走SelectionActionDelegate，不把screenPoint当手势证明
                             │   ├── FilePickerCoordinator.java [J][?] — 选择器/ContentResolver/拒绝与重建
                             │   ├── PendingPromptRegistry.java [J][?] — session/document/request绑定且一次结果
-                            │   ├── PermissionCoordinator.java [J][?] — 原生网站问询与OS分层流程
+                            │   ├── PermissionCoordinator.java [J][?] — Native content/OS/media权限分层与真实prompt；Gecko永久权限缓存和有限native grant时限差异尚待验证，不用定时器冒充回收
                             │   └── SiteGrantStore.java [J][?] — origin/partition/能力/期限记录
                             ├── settings/
                             │   ├── PersonalizationPolicy.java [J][?] — 批准背景与原生外观资源选择/授权URI归属
@@ -264,6 +264,8 @@
 | Gecko原生宿主 | abi-delivery-policy-and-auxiliary-check | 正式三ABI独立APK，手机临时测试仅arm64；辅助静态ABI/ELF/ZIP对齐检查不是产品源码叶节点<br>`planning/geckoview-v2/records/abi-packaging-policy.json`<br>`planning/geckoview-v2/verify_abi_apks.py`<br>`planning/geckoview-v2/test_abi_packages.py` |
 | 平台集成 | legacy-installer-contract-retained | 旧.1安装器/默认应用文档仍是功能边界参考，新版不是任意文件转发或静默安装；不沿用旧2GiB缓存作为不受约束预算<br>`docs/REBROWSER_ANDROID_HANDOFF.md`<br>`planning/geckoview-v2/records/legacy-archive-review.json`<br>`planning/geckoview-v2/TEMPORARY_STORAGE_POLICY.md` |
 | 统一控制入口与协议 | control-proof-byte-contract-and-host-evidence | 请求证明17字段已有Java/Python一致与OpenSSL验签；公开标量1测试非真实凭据；Android IPC/JSON实现和收据格式仍待验证<br>`planning/geckoview-v2/records/control-proof-format.json`<br>`planning/geckoview-v2/experiments/ControlProofVectors.java`<br>`planning/geckoview-v2/review_control_proof.py`<br>`planning/geckoview-v2/evidence/control-proof-cross-implementation.json` |
+| 网站与系统许可 | native-permission-api-source-and-compile-gap | 实际158 Native签名已编译，pinned引擎普通权限EXPIRE_NEVER；有限grant期限/精确粗略定位/停止既有使用未实测，不盲搬v1 navigator猴子补丁<br>`planning/geckoview-v2/records/gecko-permission-design.json`<br>`planning/geckoview-v2/evidence/gecko-permission-api-and-lifetime.json`<br>`planning/geckoview-v2/experiments/GeckoPermissionApiSmoke.java` |
+| 平台集成 | concrete-platform-action-contracts | 四个动作DTO/生命周期与共享WindowPlatformService，交接不等于OS成功，程序Back只作用自身窗口<br>`planning/geckoview-v2/records/platform-action-contracts.json`<br>`planning/geckoview-v2/review_platform_actions.py` |
 
 ### 当前边界
 

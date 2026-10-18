@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R14",
+  "revision": "R15",
   "activePhase": "V0",
   "codingAuthorizedByPlan": false,
   "phases": [
@@ -180,7 +180,7 @@
       ],
       "name": "统一旧结构审查整理：主体价值耗尽后ZIP；重要凭据保留；其他价值耗尽后系统回收站",
       "depends": [],
-      "state": "in-progress-thirteen-old-source-reviews-plus-new-proof-contract-and-native-ABI-stage-validation",
+      "state": "in-progress-fifteen-semantic-old-source-reviews-new-native-permission-platform-contracts",
       "dispositions": [
         "legacy-main-code-original-path-ZIP",
         "important-credentials-retained",
@@ -209,9 +209,9 @@
   },
   "workContinuationRule": "complete concrete increments on new-version work and unified legacy review in the same work session; checkpoint is not an owner-requested pause",
   "currentNewVersionIncrement": [
-    "17-field control proof byte contract and independent host checks",
-    "early arm64 native merge/strip filtering with stage-specific storage preflight",
-    "existing target-code responsibilities refined using old behavior audit"
+    "native permission API compilation and pinned-engine lifetime gap",
+    "four concrete platform action argument/lifecycle contracts and DI11",
+    "unified old-source review continues, no independent cleanup pause"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction"
 }

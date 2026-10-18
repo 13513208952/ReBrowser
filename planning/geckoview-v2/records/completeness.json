@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R14",
+  "revision": "R15",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -165,11 +165,11 @@
     {
       "id": "A04",
       "domain": "下载/权限/外部导航/系统交接",
-      "status": "detailed-draft-fragment-needs-api-and-failure-review",
+      "status": "native-permission-api-compiled-lifetime-gap-and-platform-dtos-reviewed-runtime-pending",
       "designComplete": false,
       "implementationReady": false,
       "need": "引擎响应流、权限提示、文件/媒体/安装器生命周期",
-      "existingEvidence": "旧功能清单；少量Gecko delegate源事实；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
+      "existingEvidence": "R15实际Gecko158权限/clipboard/scoped读写API签名javac通过；pinned模块普通权限EXPIRE_NEVER与v1有限期限冲突已确认；四平台动作具体DTO/返回/取消契约，非Android权限/位置/clipboard实际测试",
       "completionDeliverables": [
         "逐项delegate映射",
         "流与取消",
@@ -188,7 +188,10 @@
         "views/12-browser-and-system-boundaries.md",
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
-        "records/action-semantics.json"
+        "records/action-semantics.json",
+        "records/gecko-permission-design.json",
+        "evidence/gecko-permission-api-and-lifetime.json",
+        "records/platform-action-contracts.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

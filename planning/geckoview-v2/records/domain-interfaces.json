@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R7",
+  "revision": "R15",
   "state": "engineering-design-not-product-stubs",
   "purpose": "逻辑职责与实际输入/输出/所有权；不是多内核抽象、不是每行一个Gradle模块，亦不是WebView通用适配层。",
   "numericAuthorityBinding": "capabilityGroupRef is coverage only; mixed-risk groups must be split per action before final level binding. Internal methods are not individually public debug endpoints.",
@@ -466,6 +466,54 @@
           "output": "OfficialActionTaskRef",
           "sideEffectBoundary": "existing official flow; never fabricate cloud completion",
           "capabilityGroupRef": "C106"
+        }
+      ]
+    },
+    {
+      "id": "DI11",
+      "module": "WindowPlatformService",
+      "domain": "A04",
+      "owns": "own-window platform flow refs, input-source/staging handles and exact pending OS result ownership",
+      "threadAffinity": "Native UI admission/launch/result; bounded worker for actual input/copy IO",
+      "geckoContracts": [
+        "GC12"
+      ],
+      "physicalGradleModuleRequired": false,
+      "methods": [
+        {
+          "name": "openDefaultBrowserFlow",
+          "input": "own windowRef + expectedPresentationRevision",
+          "output": "PlatformFlowReceipt",
+          "sideEffectBoundary": "opens system-recommended page, never assigns role",
+          "capabilityGroupRef": "C009"
+        },
+        {
+          "name": "openPermissionSettings",
+          "input": "own windowRef + expectedPresentationRevision + fixed purpose",
+          "output": "PlatformFlowReceipt",
+          "sideEffectBoundary": "only own-app system page; opening is not permission grant",
+          "capabilityGroupRef": "C009"
+        },
+        {
+          "name": "openInstaller",
+          "input": "own windowRef/revision + optional native sourceRef/revision",
+          "output": "PlatformFlowReceipt",
+          "sideEffectBoundary": "picker/copy/system handoff only, never automatic install success",
+          "capabilityGroupRef": "C009"
+        },
+        {
+          "name": "requestWindowBack",
+          "input": "own windowRef + expectedPresentationRevision",
+          "output": "PlatformFlowReceipt",
+          "sideEffectBoundary": "consume one own layer, never injected global BACK or positive owner consent",
+          "capabilityGroupRef": "C010"
+        },
+        {
+          "name": "queryFlow",
+          "input": "known owned flowRef + current actor/scope",
+          "output": "PlatformFlowReceipt",
+          "sideEffectBoundary": "read own flow evidence only, no relaunch",
+          "capabilityGroupRef": "C009"
         }
       ]
     }

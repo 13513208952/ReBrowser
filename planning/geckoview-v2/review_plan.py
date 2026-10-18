@@ -12,6 +12,8 @@ from review_mail_schema import review as review_mail_sql
 from render_application_tree import render as render_application_tree
 from review_legacy_archive import review as review_legacy_archive
 from review_control_proof import review as review_control_proof
+from review_platform_actions import review as review_platform_actions
+from review_permission_design import review as review_permission_design
 
 P = Path(__file__).resolve().parent
 
@@ -285,6 +287,13 @@ def review():
         assert abi['onlyExpectedAbi'] and abi['nativeElfMatchesAbi'] and abi['nativeZipAlignment16KiB']
         assert abi['sha256'] == android['artifact']['sha256'] and abi['bytes'] == android['artifact']['bytes']
         abi_report = {'phoneTestApkVerifiedSingleArm64': True, 'formalThreeAbiSplitPolicyOnlyNotBuilt': True}
+    platform_report = review_platform_actions()
+    permission_report = review_permission_design()
+    platform_contract = load('records/platform-action-contracts.json')
+    for action in platform_contract['actions']:
+        assert action['id'] in action_policy and action['domainMethod'] in methods
+        assert action['targetCodePath'] in app_paths
+        assert next(r['targetCodePath'] for r in routes if r['action'] == action['id']) == action['targetCodePath']
     proof_report = review_control_proof()
     cross = load('evidence/control-proof-cross-implementation.json')
     assert cross['independentOpenSslVerifiedThisRun'] and not cross['realKeysReadOrGenerated']
@@ -326,6 +335,8 @@ def review():
         **storage_report,
         **abi_report,
         **proof_report,
+        **platform_report,
+        **permission_report,
         'historicalIndependentOpenSslProofVerificationPassed': True,
         'phoneOnlyNativeMergeStripEarlyFilterChecked': True,
         **retirement_report,

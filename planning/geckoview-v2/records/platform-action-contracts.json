@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "revision": "R15",
+  "state": "concrete-parameter-and-lifecycle-contract-not-Android-implementation",
+  "subsetOf": "records/action-registry.json; not a second level policy registry",
+  "target": "native issued own-window/object refs; no arbitrary path, Intent action/component, package or URI supplied in these actions",
+  "unknownFields": "reject",
+  "safeInteger": {"min": 0, "max": 9007199254740991, "booleanIsInteger": false, "coercion": false},
+  "refs": {"windowRef": "^win_[0-9a-f]{32}$", "apkSourceRef": "^apk_[0-9a-f]{32}$"},
+  "actions": [
+    {
+      "id": "host.openDefaultBrowserFlow",
+      "domainMethod": "DI11.openDefaultBrowserFlow",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "required": {"windowRef": "windowRef", "expectedPresentationRevision": "safeInteger"},
+      "optional": {},
+      "lane": "effect",
+      "siteAuthRequirement": "none",
+      "completion": "PlatformFlowReceipt: system handler started or typed unavailable/waiting; always open the system-recommended default-apps page even when already role holder, never report default changed on startActivity",
+      "returnPrivacy": "own role held yes/no/unknown may be observed separately; do not return identity of another default browser",
+      "retry": "same requestId with fresh proof returns existing flow, not relaunch; another explicit open uses new requestId"
+    },
+    {
+      "id": "host.openPermissionSettings",
+      "domainMethod": "DI11.openPermissionSettings",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/PlatformResultRouter.java",
+      "required": {"windowRef": "windowRef", "expectedPresentationRevision": "safeInteger", "purpose": "permissionPurpose"},
+      "optional": {},
+      "lane": "effect",
+      "siteAuthRequirement": "none",
+      "permissionPurpose": ["camera", "microphone", "location", "notifications", "overlay", "install-source"],
+      "completion": "PlatformFlowReceipt for own-application system page; displayed page is not OS permission granted, onResume alone is not consent/result",
+      "retry": "return existing flow for same request; no opening other applications' settings"
+    },
+    {
+      "id": "host.openInstaller",
+      "domainMethod": "DI11.openInstaller",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/system/ApkHandoffCoordinator.java",
+      "required": {"windowRef": "windowRef", "expectedPresentationRevision": "safeInteger"},
+      "optional": {"apkSourceRef": "apkSourceRef", "expectedSourceRevision": "safeInteger"},
+      "conditions": ["apkSourceRef and expectedSourceRevision appear together", "no sourceRef means app-owned OS picker stage, not current page/download guessing", "sourceRef resolves to exact native owned staging/input offer with actual URI read grant, never caller asserted filesystem access"],
+      "lane": "effect",
+      "siteAuthRequirement": "none",
+      "completion": "bounded source/copy/validation then exact system installer HANDOFF_STARTED; not installed/owner consent, failure/return without a trustworthy receipt remains unknown",
+      "cancel": "close own pending InputStream/request actual worker cancellation before releasing copy slot; user leaving OS installer is not proof a submitted installation did not occur",
+      "retry": "fresh proof/same request returns same job/source stage; no automatic second installer launch after timeout"
+    },
+    {
+      "id": "host.window.back",
+      "domainMethod": "DI11.requestWindowBack",
+      "targetCodePath": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+      "required": {"windowRef": "windowRef", "expectedPresentationRevision": "safeInteger"},
+      "optional": {},
+      "lane": "safety",
+      "siteAuthRequirement": "not-required-for-owned-cancel-close",
+      "completion": "one own-window layer consumed or explicit no-op/waiting; revision changes once; never injected global Android BACK against other software/system dialogs",
+      "priority": ["owned IME/modal cancellation", "full-screen exit", "selection clear", "own panel/subscreen close", "owned Popup close", "session history", "workspace fallback"],
+      "sourceProtection": "may cancel/leave an owned source-warning flow; never simulates positive trust/force-use/owner-auth clicks",
+      "retry": "same request returns previous consumed layer; new request with old presentation revision is rejected, not another back"
+    }
+  ],
+  "flowOwnership": {
+    "actualBudget": "one in-flight actual platform handoff per own window; caller timeout/Activity pause does not make slot free",
+    "foreground": "resolve exact own live window, awake/unlocked/actual foreground as needed; WAIT_FOREGROUND instead of waking/unlocking or launching over unrelated software",
+    "dispatch": "current source/data gate and unified authority first; fixed system-handler validation not caller-package whitelist",
+    "systemBoundary": "Android mandatory grants/installer/default choice remain OS/owner decisions, not hidden app authority vetoes",
+    "reconstruction": "journal flow identity/stage; on return/recreate resolve actual state, never assume success/cancel or replay launch"
+  },
+  "PlatformFlowReceipt": {
+    "fields": ["flowRef", "requestId", "windowRef", "presentationRevision", "stage", "systemOutcome", "evidenceKind"],
+    "stage": ["waiting-foreground", "waiting-picker", "copying", "validation", "handler-started", "returned", "failed", "cancel-pending", "settled"],
+    "systemOutcome": ["unknown", "reported-cancelled", "reported-success-only-if-real-OS-receipt"],
+    "notEvidence": ["startActivity returned", "onPause/onResume", "client timeout", "port disconnect"]
+  },
+  "coverageBoundary": "four actions only; 178 policy entries do not imply 178 concrete DTO contracts or handlers complete"
+}

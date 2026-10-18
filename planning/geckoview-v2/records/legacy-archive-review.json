@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R14",
+  "revision": "R15",
   "authority": [
     "O31",
     "O32"
@@ -1025,12 +1025,14 @@
       "sha256": "574f318f0a0d424121bb6e8e662600f77d661e5457c74e29a57e8f845dbbdfb7",
       "bytes": 12961,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T21:18:20+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读揭示旧权限期限/原生输入信用/固定禁用能力与Gecko永久权限缓存不同；需承接行为而非复用WebView monkeypatch，v2替代未验证",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/gecko-permission-design.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1159,12 +1161,14 @@
       "sha256": "299e4b7ced5698c30ef9e8aa65df7b93be67726739202df1b44e7c55cc7451d3",
       "bytes": 15477,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T21:18:20+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读揭示旧权限期限/原生输入信用/固定禁用能力与Gecko永久权限缓存不同；需承接行为而非复用WebView monkeypatch，v2替代未验证",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/gecko-permission-design.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

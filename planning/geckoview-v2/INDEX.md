@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划与技术验证工作台 R14
+# GeckoView v2 · 规划与技术验证工作台 R15
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
@@ -71,9 +71,11 @@ mindmap
 | [集成验证场景](matrices/gecko-contract-cases.csv) | 28项具体场景；全部planned-not-run | GC01–GC12 |
 | [领域/连接器契约](views/18-domain-and-connector-contracts.md) | 模块输入输出、消息/流、真实任务与持久化轴、安全停止通道 | R7规范与时序例子 |
 | [用户旅程/返回](views/19-user-journeys-and-back.md) | 首装/浏览/子应用/后台/设置和Back优先级 | 18条设计旅程 |
+| [Native网站权限契约](records/gecko-permission-design.json)／[来源与API编译](evidence/gecko-permission-api-and-lifetime.json) | clipboard原生回调与context字段已编译；永久engine allow和有限grant期限差异已确认 | 有限期限/粗细定位/停止使用仍待实测，不复制v1补丁 |
+| [四平台动作具体契约](records/platform-action-contracts.json)／[主机DTO演算](review_platform_actions.py) | 参数/原生窗口代次/安装sourceRef/共享方法/完成与取消 | 四个动作子集，不是178动作DTO完成 |
 | [控制请求签名字节契约](records/control-proof-format.json)／[跨实现主机检查](evidence/control-proof-cross-implementation.json) | 17字段帧、895项JCA/独立Python与OpenSSL、重放与新proof幂等规则 | 公开标量1合成材料，非Android授权实现 |
 | [提前arm64过滤证据](evidence/arm64-early-native-filter.json) | 仅merge/strip两阶段，各13库原字节匹配官方AAR | 阶段任务通过，不等于新APK或运行通过 |
-| [领域接口](records/domain-interfaces.json) | 10个逻辑组件45个方法，不要求拆成Gradle模块 | 明确所有权/线程/能力覆盖 |
+| [领域接口](records/domain-interfaces.json) | 11个逻辑组件50个方法，不要求拆成Gradle模块；平台流程显式归属 | 明确所有权/线程/能力覆盖 |
 | [连接器协议](records/connector-protocol.json) | 消息/流信用/租约/通道预算的权威定义 | 不等于管理员证明协议 |
 | [动作语义与类型](records/action-semantics.json)／[参数DTO](records/domain-payloads.json) | 首批13动作的字段/完成/重试；其余动作仍待补 | 不是全功能注册表完成 |
 | [任务时序例子](records/runtime-traces.json)／[离线演算器](review_runtime_design.py) | 超时不释放、旧结果结算、独立停止、静默及持久化 | 纯设计模型，非Gecko实测 |
@@ -98,7 +100,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R14自检结果](reviews/R14-unified-parallel-control-proof-native-filter-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R15自检结果](reviews/R15-permission-lifetime-platform-action-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "revision": "R15",
+  "checkedAt": "2026-10-18T21:18:20+08:00",
+  "sourceCoordinate": "org.mozilla.geckoview:geckoview:158.0.20261007201254",
+  "sourceRevision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
+  "sources": [
+    {
+      "upstreamPath": "org/mozilla/geckoview/GeckoSession.java",
+      "sha256": "9f151109323dd1b69a6e8187b660ceea78c0e8e5510fe37c53a7fab32d2b42f7"
+    },
+    {
+      "upstreamPath": "org/mozilla/geckoview/StorageController.java",
+      "sha256": "758c22b0b5815fb3dd74632231a75abc4c9645032d9b166b32f92d369e19b971"
+    },
+    {
+      "upstreamPath": "official-AAR/assets/omni.ja!modules/GeckoViewPermission.sys.mjs",
+      "sha256": "44199b91bf3e62a54b19c2dcf9c57f18141635c99f58dc8236b69fd5d0c2d35b",
+      "bytes": 7785,
+      "license": "MPL-2.0 upstream; only private source extraction, no product dependency added"
+    }
+  ],
+  "compile": {
+    "source": "experiments/GeckoPermissionApiSmoke.java",
+    "sourceSha256": "a956495992f4e7078d83648d253ce35dda41b39740b15e5034dc9d401e0f2e26",
+    "jdk": "21.0.10",
+    "release": 17,
+    "actualClasses": "official Gecko AAR classes plus official Android SDK37.2 android.jar",
+    "exitCode": 0,
+    "scope": "javac only, no callback invoked or Android permissions/clipboard access"
+  },
+  "facts": [
+    {
+      "id": "PA01",
+      "fact": "Clipboard read prompt is SelectionActionDelegate.onShowClipboardPermissionRequest, not PermissionDelegate content callback; screenPoint optional and not gesture proof"
+    },
+    {
+      "id": "PA02",
+      "fact": "ContentPermission has uri/contextId/privateMode/thirdPartyOrigin and notifyShown; UI must call notifyShown once after shown, not as consent"
+    },
+    {
+      "id": "PA03",
+      "fact": "Pinned engine module stores ordinary permission decisions with Services.perms.EXPIRE_NEVER, except storage-access handled separately",
+      "quote": "Services.perms.addFromPrincipal(principal, perm.type, allowOrDeny, Services.perms.EXPIRE_NEVER)"
+    },
+    {
+      "id": "PA04",
+      "fact": "Geolocation native path requests ACCESS_FINE_LOCATION after content approval; approximate/precise distinction needs actual integration evidence"
+    },
+    {
+      "id": "PA05",
+      "fact": "StorageController getPermissions(uri,contextId,privateMode) exists; setPermission(original,value) is void dispatch, tracking PROMPT ignored; persistent-storage revocation exception documented"
+    },
+    {
+      "id": "PA06",
+      "fact": "Media permission callback must use original source objects/IDs; OS permission denial can coexist with other source categories, so embedder must suppress inappropriate allow UI"
+    }
+  ],
+  "AndroidRuntimeTested": false,
+  "realLocationOrClipboardRead": false,
+  "nativeGrantOrOSDialogInitiated": false,
+  "conclusion": "finite website lease lifetime is a real unresolved engine-boundary constraint, not solved by native timer or UI metadata"
+}

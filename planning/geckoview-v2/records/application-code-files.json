@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R14",
+  "revision": "R15",
   "authority": [
     "O26",
     "O27"
@@ -1889,7 +1889,7 @@
       "path": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
       "group": "permissions",
       "kind": "native-code",
-      "responsibility": "原生网站问询与OS分层流程",
+      "responsibility": "Native content/OS/media权限分层与真实prompt；Gecko永久权限缓存和有限native grant时限差异尚待验证，不用定时器冒充回收",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -1919,7 +1919,7 @@
       "path": "app/src/main/java/io/github/rebrowser/permissions/ClipboardCoordinator.java",
       "group": "permissions",
       "kind": "native-code",
-      "responsibility": "网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验",
+      "responsibility": "网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验；Native clipboard read走SelectionActionDelegate，不把screenPoint当手势证明",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -3123,6 +3123,25 @@
         "planning/geckoview-v2/experiments/ControlProofVectors.java",
         "planning/geckoview-v2/review_control_proof.py",
         "planning/geckoview-v2/evidence/control-proof-cross-implementation.json"
+      ]
+    },
+    {
+      "group": "permissions",
+      "kind": "native-permission-api-source-and-compile-gap",
+      "summary": "实际158 Native签名已编译，pinned引擎普通权限EXPIRE_NEVER；有限grant期限/精确粗略定位/停止既有使用未实测，不盲搬v1 navigator猴子补丁",
+      "paths": [
+        "planning/geckoview-v2/records/gecko-permission-design.json",
+        "planning/geckoview-v2/evidence/gecko-permission-api-and-lifetime.json",
+        "planning/geckoview-v2/experiments/GeckoPermissionApiSmoke.java"
+      ]
+    },
+    {
+      "group": "system",
+      "kind": "concrete-platform-action-contracts",
+      "summary": "四个动作DTO/生命周期与共享WindowPlatformService，交接不等于OS成功，程序Back只作用自身窗口",
+      "paths": [
+        "planning/geckoview-v2/records/platform-action-contracts.json",
+        "planning/geckoview-v2/review_platform_actions.py"
       ]
     }
   ],

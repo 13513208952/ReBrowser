@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R22",
+  "revision": "R23",
   "authority": [
     "O31",
     "O32"
@@ -404,12 +404,15 @@
       "sha256": "70d894052b7ce256fcf42fb07672f3add514422e6e736ecbf8c5c418bcfe29ce",
       "bytes": 25462,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T01:00:00+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读563行：旧storage lease、FK、账户隔离参数化查询、元数据列表/单封正文、会话revision、事务ZIP逻辑导出仍有维护和体验参考。旧legacy adoption/SMTP alias合并、可变activeAccount和v1迁移不照搬v2；原对象codec不取代DB/source/account/refs/cursor原子提交。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/mail-codec-implementation-contract.json",
+        "planning/geckoview-v2/records/mail-storage-design.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

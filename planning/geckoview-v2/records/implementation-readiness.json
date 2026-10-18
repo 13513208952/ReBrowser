@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R22",
+  "revision": "R23",
   "authority": [
     "O41",
     "O42"
@@ -166,6 +166,36 @@
       ],
       "integrationGate": "source/epoch/native key version selection plus unique catalog ID reservation, owned private staging and final codec/digest/fence/DB commit required; never publish output prefix after failure",
       "interopEvidence": "evidence/object-aead-production-interop.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+      "state": "implemented-host-tested-not-integrated",
+      "researchCompleteForScope": true,
+      "scope": "exact-byte RAW/zlib streaming preparation with framed-savings policy and bounded original length/digest decode, private staging only",
+      "researchEvidence": [
+        "records/mail-codec-implementation-contract.json",
+        "records/mail-storage-design.json",
+        "records/mail-object-format.json",
+        "evidence/mail-codec-host-baseline.json"
+      ],
+      "inputOutput": "native-admitted finite stream -> raw/candidate private stages+immutable selected codec/length/hash; native-authenticated expected metadata+packed stream -> verified original private stage",
+      "dependencies": "ObjectAead format constants/codec enum plus platform Deflater/Inflater/SHA256/Java8 streams; no new compression dependency",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.MailObjectCodecTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "HTML sanitization/index/search or mailbox data semantics",
+        "AEAD authentication, source/account authority or current generation checks",
+        "SQLite object refs/cursor/commit or stage publication/disposal",
+        "Android codec latency/real corpus qualification or actual IO termination on cancel"
+      ],
+      "integrationGate": "owned stage/limits and authenticated metadata plus full object AEAD and original digest/length checks, then current fence/account/epoch/SQLite transaction; failed prefix must never publish"
     }
   ],
   "parallelPending": [

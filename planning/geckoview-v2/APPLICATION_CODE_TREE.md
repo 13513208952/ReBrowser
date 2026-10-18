@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已编写并通过主机测试：**5文件**；其余 **173文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已编写并通过主机测试：**6文件**；其余 **172文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -168,7 +168,7 @@
                             │   ├── MailCaptureValidator.java [J][PLAN][?] — 真实官方来源/代次/账户/DTO/流校验
                             │   ├── MailDatabase.java [J][PLAN][?] — 执行新账户SQL/事务/约束，源闸门先于打开
                             │   ├── MailExportCoordinator.java [J][PLAN][?] — 明确范围/高风险授权的正文附件导出
-                            │   ├── MailObjectCodec.java [J][PLAN][?] — RAW/zlib与受约束解压、长度/摘要
+                            │   ├── MailObjectCodec.java [J][HOST][?] — RAW/zlib与受约束解压、长度/摘要
                             │   ├── MailObjectFormat.java [J][PLAN][?] — 124B头/不可变对象/分帧AEAD
                             │   ├── MailObjectStore.java [J][PLAN][?] — 小payload内联/较大不可变文件/同账户去重
                             │   ├── MailReferenceReconciler.java [J][PLAN][?] — 内部引用/孤儿完整性回收，非子应用清理功能
@@ -242,7 +242,7 @@
 | 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
 | 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发 | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java` |
 | 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
-| Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java` |
+| Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更；RAW/zlib选择包含AEAD帧开销，输出/摘要/EOF/字典/资源/取消，prepare->seal/open->decode私有暂存全原文；非DB/官网/Android性能 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java` |
 | 官方音乐与后台 | fresh准入与安全停止分开、单路线/冷启暂停/seek单位、旧焦点gain失效；合成媒体事件后再明确授权官网验证、服务/通知/焦点/任务重连；不擅自播放 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java` |
 | 桌面歌词 | 关闭/拖动/锁定穿透、位置边界、歌词时间与资源代次；系统浮层许可/锁屏/小窗/方向变化/触摸穿透及恢复 | `app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java` |
 | 平台集成 | 版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功；API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java` |
@@ -273,10 +273,11 @@
 | 统一控制入口与协议 | admitted-production-source-host-tests | O41逐文件准入：ControlEnvelope已实现，真实生产类经独立历史帧/签名负例及不可变性测试；未含JSON/授权/Android<br>`planning/geckoview-v2/records/implementation-readiness.json`<br>`planning/geckoview-v2/run_production_unit_tests.py`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 本机加密与密钥 | canonical-public-key-and-proof-primitives | 精确P256 SPKI/曲线上点及JCA参数、严格正DER标量、规范有界Base64url和SHA；接受s/n-s；两生产文件合跑22HOST JUnit，不生成钥匙、不等于验签授权<br>`planning/geckoview-v2/records/crypto-encoding-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 网站与系统许可 | pinned-geolocation-source-method-host-study | 抽取固定GeckoAppShell四方法体，用纯合成LocationManager16项主机断言；COARSE provider hint不等于站点坐标隐私，global pause非单站撤权回执；无真实位置访问<br>`planning/geckoview-v2/experiments/geolocation_source_host_probe.py`<br>`planning/geckoview-v2/evidence/geolocation-source-host-probe.json` |
-| 领域基础与任务 | production-source-actual-Android-API-compile | 已准入的五生产文件实际SDK37.2 bootclasspath编译；runner --android-jar复现。不是API30或Android JCA运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
+| 领域基础与任务 | production-source-actual-Android-API-compile | 已准入的六生产文件实际SDK37.2 bootclasspath编译；runner --android-jar复现。不是API30或Android运行<br>`planning/geckoview-v2/evidence/production-android-api-compile.json` |
 | 统一控制入口与协议 | strict-unverified-json-and-independent-parser-crosscheck | ControlDecoder生产源码；三文件42JUnit、独立Python JSON/BE编码对Java1033条（1004树/29拒绝）；未知动作/参数schema与真实证明准入仍外部阻断<br>`planning/geckoview-v2/records/control-decoder-contract.json`<br>`planning/geckoview-v2/experiments/ControlJsonDifferential.java`<br>`planning/geckoview-v2/experiments/control_json_differential.py`<br>`planning/geckoview-v2/evidence/control-json-differential.json` |
 | 领域基础与任务 | actual-task-cancellation-versus-end | 生产Cancellation区分Requester/Reporter，不重置/不释放槽；256轮并发及真实HOST忽略interrupt的Future用例。四文件51JUnit+SDK API编译，非Gecko停止证据<br>`planning/geckoview-v2/records/core-cancellation-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 本机加密与密钥 | streamed-payload-authentication-not-publication | RBMOBJ1生产流式封装，64JUnit含4MiB生成源/私有暂存；R9旧原型与新实现双向/逐字节36项+64历史RFC/NIST重跑。ZLIB仅打包字节认证，原文/事务仍外部验证<br>`planning/geckoview-v2/records/object-aead-implementation-contract.json`<br>`planning/geckoview-v2/evidence/object-aead-production-interop.json`<br>`planning/geckoview-v2/experiments/object_aead_interop.py`<br>`planning/geckoview-v2/experiments/ObjectAeadInterop.java` |
+| Outlook与离线邮件 | exact-original-bounded-codec-pipeline | 六生产文件75JUnit；流式RAW/zlib候选封顶回退、完整长度/摘要验证和公用虚构key的私有AEAD管线。不是源/epoch/fence/DB提交证据<br>`planning/geckoview-v2/records/mail-codec-implementation-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 
 ### 当前边界
 

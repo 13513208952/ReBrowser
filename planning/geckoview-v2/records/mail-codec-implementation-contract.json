@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "revision": "R23",
+  "file": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+  "researchRefs": [
+    "records/mail-storage-design.json",
+    "records/mail-object-format.json",
+    "evidence/mail-codec-host-baseline.json",
+    "records/object-aead-implementation-contract.json"
+  ],
+  "scope": "bounded streaming RAW/ZLIB preparation and original-byte length/SHA validation; private staging only, no HTML normalization, SQL/index/ref/cursor commit or ordinary cleanup",
+  "prepare": "copy exact original bytes to owned raw stage, SHA256 original and incrementally deflate to bounded candidate. RAW fallback when candidate incomplete/exceeds packed budget or insufficient actual framing-inclusive saving; never truncate originals. Caller retains source/stage ownership.",
+  "selection": "same RBMOBJ1 final size =124+payload+20*max(1,ceil(payload/32768)); choose ZLIB only when full candidate saves at least max(32B,ceil(5% RAW framed size)). If selected RAW exceeds admitted packed limit, report resource limit rather than silently truncate or weaken minimum-saving policy.",
+  "budgets": "native Limits maxOriginal/maxPacked nonnegative <=U32 frame capacity; no allocation by these sizes. fixed32KiB input/output buffers; candidate prefix cannot exceed maxPacked, abandoned candidate must remain unpublished/discarded by native stage owner",
+  "codec": "platform zlib wrapper, Deflater level6 or9 explicit enum, no gzip/zstd/dictionary/new dependency",
+  "decode": "expected codec/original size/packed size/SHA come from native authenticated catalog/frame chain; exact packed EOF, RAW size equality, complete inflater end/no dictionary/no surplus, original bound+exact length+digest required before successful return. Never hand unverified compressed stream straight to public sink.",
+  "failure": "private output may contain prefix/body before a later checksum/EOF/tag/upstream cancellation error: caller must abandon stage and not publish. Codec success is not frame authentication or commit authority.",
+  "cancellation": "cooperative per read/deflate/inflate/write boundary; no assumption it interrupts blocked IO or settles actual task. Outputs/source not closed or flushed by helper; Deflater/Inflater native state always ended.",
+  "resourceNotAuthority": "resource/codec errors are not insufficient administrator level; caller reports bounded policy condition without retrying effects automatically",
+  "requiredTests": [
+    "lossless exact bytes including Unicode/HTML without stripping",
+    "small/random expansion RAW fallback and framed savings threshold",
+    "compressed candidate cap fallback without overrunning cap",
+    "truncated/trailing/dictionary/oversized-output/wrong-digest rejection",
+    "zero-read handling/stream ownership/cancel",
+    "HOST prepare->AEAD seal/open->bounded decode with public dummy key, private stages and no DB publication"
+  ],
+  "integrationGate": "native epoch/account/key/stage ownership, AEAD full framing success, original verification and latest generation/fence/atomic SQLite ref/cursor commit all required before UI/export result; this helper does not perform them",
+  "state": "implemented-host-byte-and-staged-pipeline-tested-not-Android-mailbox-qualified",
+  "evidence": "evidence/production-unit-tests.json"
+}

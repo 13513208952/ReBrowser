@@ -1,5 +1,5 @@
 {
-  "revision": "R22",
+  "revision": "R23",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -245,6 +245,12 @@
       "time": "2026-10-19T00:48:35+08:00",
       "finding": "R9固定对象加密仅主机整数组原型；直接复制会加载整个对象且可能把已验证前缀/压缩字节当完整成功。",
       "resolution": "先固定流式/原生catalog/私有staging/单次fresh ID和codec边界，再写ObjectAead生产文件，最多32KiB明文帧。五源64JUnit含4MiB生成流；旧原型/新实现36双向与逐字节检查，64历史RFC/NIST重跑；SDK API编译24类。ZLIB原文、唯一目录登记、密钥选择、提交/丢弃仍须上层，不谎称全邮箱或Android加密已完成；旧Exporter完整审读保留。"
+    },
+    {
+      "id": "REV42",
+      "time": "2026-10-19T01:00:00+08:00",
+      "finding": "AEAD ZLIB只验证打包字节；仍缺完整原文损失/解压边界、按实际帧开销判断压缩和私有staging失败语义。",
+      "resolution": "R22推送后继续MailObjectCodec生产实现与11项HOST用例，六源75JUnit/Android API31类；候选封顶回RAW而非截断，字典/多流/尾部/原文长度摘要失败拒绝，私有对象管线完整原文字节一致。563行旧MailDatabase审读保留；实际读SQL发现NULL/类型/存储长度等需在runtime新DDL落地前另做验证，不把旧38个通过当完整SQL安全。"
     }
   ]
 }

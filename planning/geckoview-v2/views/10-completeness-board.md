@@ -1,6 +1,6 @@
-# 整体规划完整性看板 · R22
+# 整体规划完整性看板 · R23
 
-O41后允许[完成本文件调研的节点](../records/implementation-readiness.json)先实现；目前5个生产基础类合跑64项HOST JUnit＋1033项独立JSON对照，实际SDK API编译通过，不把它们标成A10/A11或整体领域完成。未决权限/逐动作schema/准入/Android仍分别阻断其自己的集成。
+O41后允许[完成本文件调研的节点](../records/implementation-readiness.json)先实现；目前6个生产基础类合跑75项HOST JUnit＋1033项独立JSON对照，实际SDK API编译通过，不把它们标成A10/A11或整体领域完成。未决权限/逐动作schema/准入/Android仍分别阻断其自己的集成。
 
 **结论：整体规划未完成。** 原话/总体骨架和来源保护模型较充分，不代表浏览器、子应用、内核、数据和发行设计已经可实施。
 
@@ -30,7 +30,7 @@ flowchart TD
 | A04 系统边界 | 原生API/固定模块HOST检查，真实权限期限仍阻断 | EXPIRE_NEVER有限许可撤回；COARSE provider≠站点坐标隐私；global pause≠单站活动停止，需JNI/OS实证 |
 | A05 扩展通信 | 本轮契约草案 | main-world/API可用性、消息分块、实际异步取消验证 |
 | A06 Outlook | 概念状态机 | 官方入口与Popup/同步协议/账户隔离/完整恢复动作 |
-| A07 离线邮件 | 流式对象AEAD已写并主机新旧互通，其他管线仍待实现 | schema/写读事务/索引/codec容器/去重与压缩基准 |
+| A07 离线邮件 | 对象AEAD/原文codec私有管线已写并HOST通过；SQL/账户/事务/安全阅读仍缺 | schema/写读事务/索引/codec容器/去重与压缩基准 |
 | A08 Music | 功能与硬规则盘点 | 官网SDK与Gecko媒体分工、服务/回调/歌词具体设计 |
 | A09 存储 | API缺口已识别 | 可落地归属、可用估计、回收/删除结果判据与事务 |
 | A10 控制协议 | 固定帧/编码/严格未验证语法已写源码并有HOST证据 | 逐动作schema、幂等/取消/隐私返回、等级映射完全一致 |

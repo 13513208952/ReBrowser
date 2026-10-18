@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R22",
+  "revision": "R23",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -180,7 +180,7 @@
       ],
       "name": "统一旧结构审查整理：主体价值耗尽后ZIP；重要凭据保留；其他价值耗尽后系统回收站",
       "depends": [],
-      "state": "in-progress-twenty-four-semantic-source-reviews-retained",
+      "state": "in-progress-twenty-five-semantic-source-reviews-retained",
       "dispositions": [
         "legacy-main-code-original-path-ZIP",
         "important-credentials-retained",
@@ -201,7 +201,7 @@
       ],
       "name": "完成本文件调研后按总树节点实现，与未决调研/统一旧结构审查并行",
       "depends": [],
-      "state": "in-progress-five-production-files-host-and-API-compiled-not-domain-integrated",
+      "state": "in-progress-six-production-files-host-and-API-compiled-not-domain-integrated",
       "gateRef": "records/implementation-readiness.json"
     }
   ],
@@ -220,9 +220,9 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "continued after R21push into fifth production ObjectAead streaming helper",
-    "five-source64HOST JUnit+36bidirectional/exact R9 vectors+64oldRFC/NIST rerun; AndroidAPI24classfiles, noAndroidcrypto proof",
-    "same L0 complete oldMaintenanceExporter retained;24retained/73queued/0archive"
+    "after R22push continued sixth production MailObjectCodec streaming exact-original pipeline",
+    "six source75HOST JUnit/31actualAndroidAPIclassfiles, original codec boundaries not DB publication",
+    "same L0 full563line MailDatabase review retained;25retained/72queued/0archive; investigating R9SQL NULL/type/framed-size gaps before runtime SQL admission"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

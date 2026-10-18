@@ -25,6 +25,10 @@
       {
         "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
         "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+        "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
       }
     ],
     "classFiles": [
@@ -147,6 +151,41 @@
         "path": "io/github/rebrowser/crypto/ObjectAead.class",
         "sha256": "73b598fe2c4a1d5beb472a4ac1d70cc1913434605732d4f40b2cab98b372040f",
         "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec$1.class",
+        "sha256": "7d9036517f18c1a9ab2c894566b184edd13f89cc639a636d5444effd05748bdc",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec$Candidate.class",
+        "sha256": "82df68bc4155e07b84b1026210ed00e9a784a642fe1ed915bac4aa6e9859723f",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec$Level.class",
+        "sha256": "544bb0c06a6d583dcec9dc987295045be9272468d9e04fce3beb2fd7cdb85313",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec$Limits.class",
+        "sha256": "209cb7614ada389796291e2ce37a1dbedbbe81ea2271397d428762473104ecfd",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec$Prepared.class",
+        "sha256": "df7666cd4f8f7bc818f7613c514de8ed0edfd7ad1fe165227d9ffb3d079ae263",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec$Selection.class",
+        "sha256": "9086fb4eb86db3ed9146241c8641288079fb70e444b374620d276a4e531d73a4",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/outlook/MailObjectCodec.class",
+        "sha256": "18431954385b5558bc72def3d23df6c6a4f7ab6e4323c265c1b79e767298e0fe",
+        "classMajor": 52
       }
     ],
     "diagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
@@ -157,9 +196,9 @@
     "keystoreOrRealCredentialsAccessed": false,
     "temporaryClassDirectoryRemoved": true
   },
-  "runtimeSourceFilesCompiled": 5,
-  "junitTestsPassed": 64,
-  "junitOutput": "JUnit version 4.13.2\n................................................................\nTime: 0.69\n\nOK (64 tests)\n\n",
+  "runtimeSourceFilesCompiled": 6,
+  "junitTestsPassed": 75,
+  "junitOutput": "JUnit version 4.13.2\n...........................................................................\nTime: 0.734\n\nOK (75 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -183,6 +222,10 @@
       "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+      "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
       "sha256": "a3a87cbe482080ef23154208909fd0ffa9fdb3b2d299060897d52f48a83f3eb1"
     },
@@ -201,6 +244,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java",
       "sha256": "dad32c625d8f88f64e62459847e481e9003485707135ba000ca61306d7f76b07"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
+      "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
     }
   ],
   "runnerSha256": "3a26c1acc70dd7e08b3223c6989aa01ef0e0ed06c811fedb92885d781e4fb127",
@@ -209,8 +256,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1514131456,
-  "memAvailableBefore": 10799575040,
+  "freeBytesBefore": 1513426944,
+  "memAvailableBefore": 10776621056,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

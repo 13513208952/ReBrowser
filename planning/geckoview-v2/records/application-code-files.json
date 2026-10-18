@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R22",
+  "revision": "R23",
   "authority": [
     "O26",
     "O27",
@@ -297,6 +297,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
+          "kind": "unit-streaming-codec-and-private-pipeline",
+          "purpose": "RAW/zlib选择包含AEAD帧开销，输出/摘要/EOF/字典/资源/取消，prepare->seal/open->decode私有暂存全原文；非DB/官网/Android性能",
+          "state": "host-tested-not-Android-mailbox-qualified"
         }
       ]
     },
@@ -2116,16 +2122,17 @@
       "group": "outlook",
       "kind": "native-code",
       "responsibility": "RAW/zlib与受约束解压、长度/摘要",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
         "VT05",
         "VT06",
         "VT08"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R23 streaming exact-original preparation/decode, framing-inclusive fallback,75combinedHOST JUnit including staged AEAD+codec pipeline and actual Android API compile; noAndroid/DB/source publication",
       "runtimePending": true,
-      "testReferenceGroup": "outlook"
+      "testReferenceGroup": "outlook",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
@@ -3214,7 +3221,7 @@
     {
       "group": "core",
       "kind": "production-source-actual-Android-API-compile",
-      "summary": "已准入的五生产文件实际SDK37.2 bootclasspath编译；runner --android-jar复现。不是API30或Android JCA运行",
+      "summary": "已准入的六生产文件实际SDK37.2 bootclasspath编译；runner --android-jar复现。不是API30或Android运行",
       "paths": [
         "planning/geckoview-v2/evidence/production-android-api-compile.json"
       ]
@@ -3248,6 +3255,15 @@
         "planning/geckoview-v2/evidence/object-aead-production-interop.json",
         "planning/geckoview-v2/experiments/object_aead_interop.py",
         "planning/geckoview-v2/experiments/ObjectAeadInterop.java"
+      ]
+    },
+    {
+      "group": "outlook",
+      "kind": "exact-original-bounded-codec-pipeline",
+      "summary": "六生产文件75JUnit；流式RAW/zlib候选封顶回退、完整长度/摘要验证和公用虚构key的私有AEAD管线。不是源/epoch/fence/DB提交证据",
+      "paths": [
+        "planning/geckoview-v2/records/mail-codec-implementation-contract.json",
+        "planning/geckoview-v2/evidence/production-unit-tests.json"
       ]
     }
   ],

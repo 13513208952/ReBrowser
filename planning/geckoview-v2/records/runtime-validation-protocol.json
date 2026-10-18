@@ -1,9 +1,9 @@
 {
   "schema": 1,
   "revision": "R10",
-  "state": "await-specific-runtime-target-permission-preparation-can-continue",
-  "scopeSource": "O26 permits validation; daily-device installation/interaction target still requested explicitly",
-  "proposedTargetAlias": "owner-tablet-candidate",
+  "state": "first-authorized-phone-local-run-complete-other-runtime-work-pending",
+  "scopeSource": "O26 validation plus O29 connected phone permission; earlier no login/playback/cleanup scope retained",
+  "proposedTargetAlias": "owner-phone-candidate",
   "publicSerial": null,
   "package": "io.github.rebrowser.validation",
   "signing": "disposable validation-only key in private workspace after permission, never legacy/formal keystore",
@@ -42,9 +42,15 @@
   "testFixtureBoundary": "If loopback server needed, bind app-local127.0.0.1 ephemeral port only, no public/LAN listener; manifest/host permissions restricted to fixture",
   "ownerInteraction": "device-credential/biometric prompts and any future media test require distinct clearly scoped owner participation; not part of current no-playback request",
   "currentState": {
-    "apkSigned": false,
-    "apkInstalled": false,
-    "deviceInteracted": false,
-    "localRuntimeTestsPassed": false
-  }
+    "apkSigned": true,
+    "apkInstalled": true,
+    "deviceInteracted": true,
+    "localRuntimeTestsPassed": true,
+    "officialSitesTested": false,
+    "playbackTested": false,
+    "productInstalled": false,
+    "activityFinishedByOwnForegroundBack": true
+  },
+  "targetAuthorization": "O29",
+  "evidenceRef": "evidence/validation-android-local-synthetic.json"
 }

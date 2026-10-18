@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "revision": "R11",
+  "checkedAt": "2026-10-18T14:03:26+08:00",
+  "authorization": "O29",
+  "environment": {
+    "targetAlias": "owner-authorized-phone",
+    "androidApi": 36,
+    "abi": "arm64-v8a",
+    "package": "io.github.rebrowser.validation",
+    "versionCode": 2
+  },
+  "artifact": {
+    "sha256": "79e0e491ecd2680488db79e8c8be2b2cc86980d263bc2bb72f3fe8e4b3ecabe4",
+    "bytes": 193925056,
+    "disposableSigner": true,
+    "formalOrLegacyKeysUsed": false,
+    "R8": true,
+    "resourceShrinking": true,
+    "LintVital": true,
+    "compileSdk": "37.2",
+    "minSdk": 30,
+    "toolchain": "AGP9.4.0/Gradle9.6.0/JDK21.0.10",
+    "buildMode": "offline-single-worker",
+    "extensionVersion": "1.1"
+  },
+  "runtimeResults": {
+    "validationOnly": true,
+    "stage": "COMPLETE",
+    "loopbackOnly": true,
+    "nativeRuntimeCreated": true,
+    "builtinInstalled": true,
+    "backgroundSenderHasNoSession": true,
+    "backgroundNativeMessage": true,
+    "lastLoadSuccess": true,
+    "topLevelContentMessage": true,
+    "mainWorldResult": "MAIN_SYNTHETIC_READY",
+    "aSeedCookie": true,
+    "aSeedLocal": true,
+    "bBeforeCookieEmpty": true,
+    "bBeforeLocalEmpty": true,
+    "bCookie": true,
+    "aCookieSurvivesB": true,
+    "aLocalSurvivesB": true,
+    "releaseDoesNotClose": true,
+    "reattachSameSession": true,
+    "stateCallbackAfterFlush": true,
+    "syntheticPass": true
+  },
+  "memorySnapshot": {
+    "type": "one-warm-synthetic-snapshot-not-performance-qualification",
+    "processes": [
+      {
+        "processRole": "validation",
+        "pssKiB": 250027
+      },
+      {
+        "processRole": "validation:crashhelper_disable_art_image_",
+        "pssKiB": 8125
+      },
+      {
+        "processRole": "validation:gpu_disable_art_image_",
+        "pssKiB": 130451
+      },
+      {
+        "processRole": "validation:tab_disable_art_image_34",
+        "pssKiB": 61049
+      },
+      {
+        "processRole": "validation:tab_disable_art_image_22",
+        "pssKiB": 60660
+      },
+      {
+        "processRole": "validation:tab_disable_art_image_3",
+        "pssKiB": 47910
+      }
+    ],
+    "sumPssKiB": 558222,
+    "scope": "package-prefixed processes; no whole-device memory attribution claim"
+  },
+  "scope": "one cold launch and local synthetic run; not reliability/site/performance qualification",
+  "preservation": {
+    "legacyPackageVersionUnchanged": true,
+    "checkedVolumeDndRotationTimeoutValuesUnchanged": true,
+    "legacyDataAccessedOrCleared": false,
+    "credentialsEntered": false,
+    "playbackStarted": false,
+    "cloudMutation": false,
+    "systemSettingsWritten": false
+  },
+  "notTested": [
+    "Popup/new-session user-gesture route",
+    "SessionState restore/BFCache/process-death",
+    "actual cross-site/frame connector and CSP on official sites",
+    "Keystore/biometric/device-credential flow",
+    "media/audio focus/foreground services",
+    "subapp occupancy/cleanup deferred O26",
+    "release v2 formal identity and signer"
+  ],
+  "testData": "app-loopback synthetic cookie/localStorage in fresh owned context IDs; no global/profile data deletion",
+  "appLeftInstalled": true,
+  "sourceInventoryRef": "records/technology-validation.json",
+  "builtFixtureCodeAssetsAndBuildConfiguration": [
+    {
+      "fixturePath": "app/build.gradle",
+      "sha256": "8096890a8beccadf9e5653939c16302885cbfc0431498053ad51ba24abdaed36"
+    },
+    {
+      "fixturePath": "app/src/main/AndroidManifest.xml",
+      "sha256": "a5f19f014c895dd2bd01386d7d93bc7446d1e7f40426d474c6aad1107e05fc8d"
+    },
+    {
+      "fixturePath": "app/src/main/assets/validation_bridge/background.js",
+      "sha256": "42783bbf46e163e35c1878e5dc979ef86f1f48731263cdadeefbb106d0e34981"
+    },
+    {
+      "fixturePath": "app/src/main/assets/validation_bridge/content.js",
+      "sha256": "b334b93c22d5ef034e6be0fda79108dd7c12802b1ed72efb2925f0b4b3453877"
+    },
+    {
+      "fixturePath": "app/src/main/assets/validation_bridge/manifest.json",
+      "sha256": "7a89578a8bcaf646a0b4752c7843f7e756316fad18f1c76df097d350b6687057"
+    },
+    {
+      "fixturePath": "app/src/main/java/io/github/rebrowser/validation/LocalFixtureServer.java",
+      "sha256": "17237b022161518484e6146dc254e6b875f829050f1e0e197e5eb1f0dbb612d4"
+    },
+    {
+      "fixturePath": "app/src/main/java/io/github/rebrowser/validation/ValidationActivity.java",
+      "sha256": "ea342e32159315df64e4ab4d8eaefeebfb519c64e8a904f5edbbd1536694c626"
+    },
+    {
+      "fixturePath": "app/src/main/res/xml/local_test_network.xml",
+      "sha256": "9a0da6f3b8128045a95f435ac6e83ed610a862687254b6d81f995af477b4cfc0"
+    },
+    {
+      "fixturePath": "build.gradle",
+      "sha256": "f82c0c1d8cc57a32792a4b717155d561cddda2499a60aa2cfb56cd670807d251"
+    },
+    {
+      "fixturePath": "gradle.properties",
+      "sha256": "7ef79f83f67928a82125353b4c25a6cf26e7f3a1c38f71a8a0d1aff11092c3e0"
+    },
+    {
+      "fixturePath": "settings.gradle",
+      "sha256": "d97f4bffe92ecc616cab31892264c5470fa23ea8af6d8b659b3ffb7a2bb087fb"
+    }
+  ],
+  "activityReturnedToLauncherAfterGuardedBack": true
+}

@@ -10,6 +10,7 @@ from review_runtime_design import review as review_runtime_timeline
 from review_authority_design import review as review_authority_policy
 from review_mail_schema import review as review_mail_sql
 from render_application_tree import render as render_application_tree
+from review_legacy_archive import review as review_legacy_archive
 
 P = Path(__file__).resolve().parent
 
@@ -62,7 +63,7 @@ def review():
         assert item['coverage'] in acceptance and acceptance[item['coverage']]['capability'] == item['id']
         assert item['implementation'] == 'not-started'
     plan = load('records/work-plan.json')
-    phases = indexed(plan['phases'])
+    phases = indexed(plan['phases'] + plan.get('parallelTracks', []))
     assert plan['activePhase'] in ['P0', 'V0', 'T0'] and plan['codingAuthorizedByPlan'] is False
     if plan['activePhase'] in ['V0', 'T0']:
         assert plan['isolatedValidationCodeAuthorized'] and load('records/validation-scope.json')['authority'] == 'O26'
@@ -261,13 +262,27 @@ def review():
     assert feature_map.keys() == indexed(rows('matrices/feature-parity.csv')).keys()
     for feature in feature_map.values():
         assert feature['actions'] and set(feature['actions']) <= action_policy.keys()
+    android_path = P / 'evidence/validation-android-local-synthetic.json'
+    android_executed = android_path.exists()
+    if android_executed:
+        android = load('evidence/validation-android-local-synthetic.json')
+        assert android['authorization'] == 'O29'
+        assert android['environment']['package'] == 'io.github.rebrowser.validation'
+        assert android['artifact']['disposableSigner'] and not android['artifact']['formalOrLegacyKeysUsed']
+        assert android['runtimeResults']['syntheticPass']
+        assert not android['preservation']['credentialsEntered'] and not android['preservation']['playbackStarted']
+        assert not android['preservation']['legacyDataAccessedOrCleared']
+        assert android['preservation']['legacyPackageVersionUnchanged']
+    archive_review = review_legacy_archive()
     report = {
         **runtime_review,
+        **archive_review,
         **authority_review,
         **sql_review,
         **tree_review,
         'isolatedUnsignedReleasePackageBuilt': True,
-        'AndroidGeckoRuntimeExecuted': False,
+        'AndroidGeckoRuntimeExecuted': android_executed,
+        'AndroidScope': 'one authorized local synthetic run; official sites/media/owner-auth not tested' if android_executed else 'not executed',
         'subapplicationStorageFeatureDeferredByOwner': True,
         'actionToApplicationFileRoutesChecked': len(routes),
         'deferredActionRoutes': sum(r['targetCodePath'] is None for r in routes),
@@ -304,7 +319,7 @@ def review():
         'resolvedOwnerQuestions': sum(q['state'] == 'resolved' for q in questions.values()),
         'resolvedByEngineeringDesign': sum(q['state'] == 'resolved-by-engineering-design' for q in questions.values()),
         'deferredQuestions': sum(q['state'].startswith('deferred') for q in questions.values()),
-        'caveat': 'Owner >=/source-neutral/static-high/source-continuity rules remain confirmed. Numeric scale is delegated engineering design, not a new owner instruction. Host/compile/unsigned R8 package evidence is not Android runtime/site validation. Main-tree files are planned targets, not implemented product code. Full Mermaid rendering not validated.'
+        'caveat': 'Owner >=/source-neutral/static-high/source-continuity rules remain confirmed. Numeric scale is delegated engineering design, not a new owner instruction. Host/compile/unsigned R8 package evidence is not Android runtime/site validation. R11 adds actual isolated-package local Native/ports/MAIN/context checks only; not product/site/media validation. Archive inventory is not semantic exhaustion approval. Main-tree files are planned targets, not implemented product code. Full Mermaid rendering not validated.'
     }
     return report
 

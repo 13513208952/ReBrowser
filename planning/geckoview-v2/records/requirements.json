@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R10",
+  "revision": "R11",
   "requirements": [
     {
       "id": "R01",
@@ -431,6 +431,19 @@
       "rule": "全项目总图仅以应用本体目标代码文件构成主树，必须包含全部本体代码文件，含实际运行的原生/内建网页扩展代码；测试/验证/构建维护等辅助代码不混入主树。其他部分独立存放，以测试需求/目标测试路径等在相关节点引用和概括。允许持续增添与非代码强调符号。",
       "state": "owner-required",
       "implementation": "not-started"
+    },
+    {
+      "id": "R41",
+      "ownerSources": [
+        "O31",
+        "O32"
+      ],
+      "title": "并行逐步归档已完成价值的旧主体代码",
+      "rule": "与当前验证/总树任务并行逐文件审查；仅确认重构价值耗尽且后续无额外作用的旧WebView主体代码移入old_version.zip，保留完整原始目录关系和可追溯验证；临时代码不归入，未确认不得提前移动。",
+      "state": "owner-required",
+      "implementation": "not-started",
+      "reviewState": "review-in-progress-no-approved-moves",
+      "implementationMeaning": "product implementation flag; parallel nonproduct archive review state recorded separately"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R10",
+  "revision": "R11",
   "decisions": [
     {
       "id": "D01",
@@ -308,6 +308,15 @@
       ],
       "ownerSources": [
         "O27"
+      ]
+    },
+    {
+      "id": "D31",
+      "state": "confirmed",
+      "decision": "O29允许当前连接的机主手机用于已说明的独立合成验证；O31/O32旧主体代码归档审查与当前任务并行，满足价值已完成条件才移入ZIP，不含临时代码。",
+      "requirements": [
+        "R39",
+        "R41"
       ]
     }
   ]

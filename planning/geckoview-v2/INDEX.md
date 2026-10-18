@@ -1,10 +1,10 @@
-# GeckoView v2 · 规划与技术验证工作台 R10
+# GeckoView v2 · 规划与技术验证工作台 R11
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
-> 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译和隔离R8 Release样机打包，**未运行Android/官网/真实播放测试**；树中未实证细节明确标记，不能据此宣称全部规划或实现完成。
+> 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译、隔离R8 Release打包，以及O29授权手机上的[本地合成Native/扩展/MAIN世界/context子集](evidence/validation-android-local-synthetic.json)。**官网、真实播放、本人验证及Popup/恢复等仍未测**；不能宣称产品实现或全部规划完成。
 
-> 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。产品代码、密钥生成、设备登记、安装与发行均未开始。
+> 状态：**整体规划未完成**。需求基线、图谱与部分领域蓝图已建立；按16领域继续补齐可实施设计。普通工程选择由助手研究决定。产品代码、正式密钥、设备登记与发行均未开始；独立临时签名验证包已安装并运行，不是v2产品安装。O31/O32的[旧主体代码归档审查](LEGACY_ARCHIVE_REVIEW.md)与当前任务并行，价值未确认耗尽的仍保留。
 
 ```mermaid
 mindmap
@@ -44,6 +44,8 @@ mindmap
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 主树展开全部目标运行代码文件，数量由清单校验；测试等辅助只概括引用 | O26／O27，首版设计非产品代码 |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
+| [旧主体代码归档审查](LEGACY_ARCHIVE_REVIEW.md)／[逐文件台账](records/legacy-archive-review.json) | 并行审查价值是否已耗尽，合格后原结构移入old_version.zip | O31／O32；临时代码不归档 |
+| [手机合成运行证据](evidence/validation-android-local-synthetic.json) | 实际R8 Release Native/后台与内容端口/MAIN/context隔离/解绑重绑 | 仅本地合成，非官网或产品验收 |
 | [技术验证状态](records/technology-validation.json) | Artifact/compile/Release包/Android运行分级；存储功能搁置 | 隔离验证，不触日常应用资料 |
 | [完整性看板](views/10-completeness-board.md) | 逐领域缺口、完成标准和推进次序；不把图表数量当完成 | O17／O18、完整性账本 |
 | [系统与体验](views/01-system-and-parity.md) | 组件、会话、能力边界 | R01–R10、功能矩阵 |
@@ -91,7 +93,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R10自检结果](reviews/R10-structural-and-validation-review.json) | 结构与符号演算结果，明确未测内容 | 不冒充图形渲染或真机通过 |
+| [R11自检结果](reviews/R11-structural-runtime-and-archive-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

@@ -75,3 +75,4 @@ T-G06,R34 R37,,机主校验,设备设锁但无指纹/验证失败/取消/状态�
 T-G07,R34 R38,,解锁时机,仅信任/仅F1/仅F2/最终认证完成但销毁未核对/新epoch未提交/一切完成,完成销毁与新环境提交前不解锁；取消/失败不删旧数据；最终不可逆后不承诺救援,P7,planned-not-run,active-or-foundational
 T-V00,R39,,isolated-tech-validation,验证已选候选技术，区分编译/打包与Android/网站运行,隔离样机与可复现实验证据；未测如实标记；无日常资料副作用,V0,planned-not-run,active-or-foundational
 T-T00,R40,,application-code-tree-completeness,主树只展开应用自身全部目标代码，辅助测试等独立引用,叶节点与权威本体代码清单精确相等、无辅助混入或省略号、路径引用有效,T0,planned-not-run,active-or-foundational
+T-LG01,R41,,archive-integrity,并行审查旧版主体代码；值仍未完成的保留；批准后ZIP按原目录恢复逐字节核对，测试/临时源码不归档,资格记录/路径/SHA/恢复与引用处置完整；未满足不得移动,L0,planned-not-run,parallel-O32

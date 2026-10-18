@@ -1,12 +1,13 @@
 {
   "schema": 1,
-  "revision": "R10",
+  "revision": "R11",
   "authority": [
     "O26",
-    "O27"
+    "O27",
+    "O29"
   ],
-  "checkedAt": "2026-10-18T10:04:52+08:00",
-  "state": "first-artifact-compile-package-round-complete-runtime-still-pending",
+  "checkedAt": "2026-10-18T14:03:26+08:00",
+  "state": "first-phone-synthetic-runtime-subset-passed-other-runtime-and-sites-pending",
   "verdicts": [
     {
       "id": "VT01",
@@ -20,14 +21,14 @@
       "technology": "Java17 Android/Gecko delegate/native port signatures",
       "outcome": "compile-pass",
       "evidence": "experiments/gecko-api-smoke/app/src/main/java/io/github/rebrowser/validation/ValidationActivity.java",
-      "boundary": "JDK21 javac --release17 +official Gecko classes +official SDK37.2; no Android execution"
+      "boundary": "actual 37.2 API compilation and selected native callbacks in phone R8 Release fixture; not every future application file compiled"
     },
     {
       "id": "VT03",
       "technology": "AGP9.4 +Gradle9.6 +SDK37.2 +R8/resource shrinking",
       "outcome": "release-package-pass",
       "evidence": "evidence/validation-release-package-verification.json",
-      "boundary": "offline Release assembly/LintVital/package assets/3ABI; unsigned disposable application, NOT v2product"
+      "boundary": "historical 3ABI unsigned Release plus actual signed arm64 R8/resource-shrunk local runtime fixture; formal product not built"
     },
     {
       "id": "VT04",
@@ -39,16 +40,16 @@
     {
       "id": "VT05",
       "technology": "Gecko session/context/Popup/restore actual lifecycle",
-      "outcome": "not-run",
-      "evidence": "records/gecko-contracts.json",
-      "boundary": "compile API confirmed, native lifecycle/isolation needs Android synthetic fixture"
+      "outcome": "runtime-subset-pass",
+      "evidence": "evidence/validation-android-local-synthetic.json",
+      "boundary": "two unique contextId cookie/localStorage separation, A survives B; release keeps session open/reattach, state callback after flush observed. Popup/restore/BFCache/kill not tested; flush itself still void not persistence ACK"
     },
     {
       "id": "VT06",
       "technology": "built-in extension native messages/MAIN world/site connector",
-      "outcome": "not-run",
-      "evidence": "records/connector-protocol.json",
-      "boundary": "asset packaging/Java signatures confirmed; content frame and world runtime not proven"
+      "outcome": "runtime-local-subset-pass",
+      "evidence": "evidence/validation-android-local-synthetic.json",
+      "boundary": "builtin background and per-session top-level content native port; loopback MAIN executeScript marker returned. Not official pages/login/CSP/frame/navigation-race proof"
     },
     {
       "id": "VT07",
@@ -82,27 +83,39 @@
   "sourceFiles": [
     {
       "path": "experiments/gecko-api-smoke/README.md",
-      "sha256": "c24f6dff41506402c9b8f394bef21e1deee23b5b2685c806d74c577fcaa4d96e"
+      "sha256": "5c75c28510639f7d73a7ecaaf7c31a56fe2ee3ba25430f8e974212e9235d389c"
     },
     {
       "path": "experiments/gecko-api-smoke/app/build.gradle",
-      "sha256": "dc51700f51df930e01c3d248b746618a6f76245ee6702d0a9af91612108dfea3"
+      "sha256": "8096890a8beccadf9e5653939c16302885cbfc0431498053ad51ba24abdaed36"
     },
     {
       "path": "experiments/gecko-api-smoke/app/src/main/AndroidManifest.xml",
-      "sha256": "556959457760e8161200540aedce97ee5d9f91ad012e827ea7a5b55adf0c1708"
+      "sha256": "a5f19f014c895dd2bd01386d7d93bc7446d1e7f40426d474c6aad1107e05fc8d"
     },
     {
       "path": "experiments/gecko-api-smoke/app/src/main/assets/validation_bridge/background.js",
-      "sha256": "0645c8d85e69f3205c8008348c990f9c9ecdc8c59747d1f01991aa9f5aa7e3d0"
+      "sha256": "42783bbf46e163e35c1878e5dc979ef86f1f48731263cdadeefbb106d0e34981"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/assets/validation_bridge/content.js",
+      "sha256": "b334b93c22d5ef034e6be0fda79108dd7c12802b1ed72efb2925f0b4b3453877"
     },
     {
       "path": "experiments/gecko-api-smoke/app/src/main/assets/validation_bridge/manifest.json",
-      "sha256": "feb6b4efeda56d36886e396cbe68f2c8a2d83864c71df4a7897b49191270e406"
+      "sha256": "7a89578a8bcaf646a0b4752c7843f7e756316fad18f1c76df097d350b6687057"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/java/io/github/rebrowser/validation/LocalFixtureServer.java",
+      "sha256": "17237b022161518484e6146dc254e6b875f829050f1e0e197e5eb1f0dbb612d4"
     },
     {
       "path": "experiments/gecko-api-smoke/app/src/main/java/io/github/rebrowser/validation/ValidationActivity.java",
-      "sha256": "aca91e9ed2a58176e5f7e780aa3a5e5aabcb2e9c4c8c932da8581b46faf11582"
+      "sha256": "ea342e32159315df64e4ab4d8eaefeebfb519c64e8a904f5edbbd1536694c626"
+    },
+    {
+      "path": "experiments/gecko-api-smoke/app/src/main/res/xml/local_test_network.xml",
+      "sha256": "9a0da6f3b8128045a95f435ac6e83ed610a862687254b6d81f995af477b4cfc0"
     },
     {
       "path": "experiments/gecko-api-smoke/build.gradle",
@@ -128,14 +141,17 @@
   ],
   "runtimeBoundary": {
     "emulatorInstalled": false,
-    "dailyDevicesTouched": false,
-    "apkInstalled": false,
+    "dailyDevicesTouched": true,
+    "apkInstalled": true,
     "formalKeysGenerated": false,
     "newProductSourceWritten": false,
     "currentDiskBudget": "isolation consumed substantial own workspace; no emulator/system-image download or unrelated cleanup",
-    "needs": "authorized disposable Android runtime target for VT04–VT07; no real credentials/playback/cleanup",
-    "targetAuthorizationQuestion": "Q20"
+    "needs": "Popup/restore and separately scoped owner-auth/media/real-site evidence remain; no account/playback/cleanup authorization inferred",
+    "targetAuthorizationQuestion": "Q20",
+    "nativeSyntheticRunExecuted": true,
+    "targetAuthorization": "O29",
+    "temporaryValidationSignerGenerated": true
   },
-  "next": "whole application-code tree may be drafted from compile-backed interfaces with runtime-pending markers; not freeze runtime assumptions as validated",
+  "next": "refine application-only code tree using limited real Native/port/MAIN/context results; continue legacy archive review in parallel, do not generalize to official sites",
   "treeDraftRef": "APPLICATION_CODE_TREE.md"
 }

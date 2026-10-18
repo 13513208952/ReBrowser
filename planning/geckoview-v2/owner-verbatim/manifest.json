@@ -198,7 +198,35 @@
       "utf8Bytes": 57,
       "sha256": "3b58d2dc5e562a4fd273280d2b6417db20fbb00e0631788d57e1f7755f72857e",
       "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
+    },
+    {
+      "id": "O29",
+      "file": "owner-verbatim/O29-authorize-connected-phone-validation.txt",
+      "utf8Bytes": 66,
+      "sha256": "afd5bafbae98b200a2fa4dbbb8634daba2380829dd0d94fc261959ffbd08f93c",
+      "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
+    },
+    {
+      "id": "O30",
+      "file": "owner-verbatim/O30-continue-phone-validation.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O31",
+      "file": "owner-verbatim/O31-incrementally-archive-exhausted-legacy-app-code.txt",
+      "utf8Bytes": 535,
+      "sha256": "c32a2d5b93e6ea94e96826faee7dc82a04368c3b7457643eba26f14456fc3eab",
+      "provenance": "owner user-message manually transcribed verbatim"
+    },
+    {
+      "id": "O32",
+      "file": "owner-verbatim/O32-parallel-legacy-archive-review-and-current-task.txt",
+      "utf8Bytes": 81,
+      "sha256": "a9dff5eea4c8612f2a7b0abe96bea78f9308142f1fc120e912da49bfe7bdebae",
+      "provenance": "owner user-message manually transcribed verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-18T10:10:10+08:00"
+  "lastAppendedAt": "2026-10-18T10:28:22+08:00"
 }

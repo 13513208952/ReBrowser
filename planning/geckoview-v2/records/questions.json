@@ -291,10 +291,12 @@
       "requirements": [
         "R39"
       ],
-      "state": "waiting-execution-authorization",
+      "state": "resolved",
       "responsible": "owner-target-permission",
-      "askOwnerNow": true,
-      "protocolRef": "records/runtime-validation-protocol.json"
+      "askOwnerNow": false,
+      "protocolRef": "records/runtime-validation-protocol.json",
+      "resolution": "O29明确改用当前已连接的机主手机，可按需要执行先前说明的独立合成验证；不扩成登录/播放/清理/旧包修改。",
+      "resolvedByOwnerSource": "O29"
     }
   ]
 }

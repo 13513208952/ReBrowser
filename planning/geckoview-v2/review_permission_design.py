@@ -17,7 +17,12 @@ def review():
     assert hashlib.sha256(source.read_bytes()).hexdigest() == evidence['compile']['sourceSha256']
     assert not evidence['AndroidRuntimeTested'] and not evidence['realLocationOrClipboardRead']
     assert not design['actualDevicePermissionOrClipboardTestsPerformed']
-    assert {f['id'] for f in design['criticalFindings']} == {'PF01','PF02','PF03','PF04','PF05'}
+    assert {'PF01','PF02','PF03','PF04','PF05','PF06'} <= {f['id'] for f in design['criticalFindings']}
+    module_probe = json.loads((P/'evidence/permission-module-host-probe.json').read_text())
+    assert hashlib.sha256((P/module_probe['fixtureSource']).read_bytes()).hexdigest() == module_probe['fixtureSha256']
+    assert module_probe['checks'] == 28 and module_probe['ordinaryPermissionWritesExpireNeverObserved']
+    assert not module_probe['setPermissionDispatchCompletionCallbackObserved']
+    assert not module_probe['realPermissionOrClipboardLocationAccess']
     # Symbolic source-backed counterexample: metadata/timer expiry is not engine revocation.
     n = 0; expires = 300000
     engine_state = 'allow-never'; own_grant_active = lambda now: now < expires
@@ -49,6 +54,7 @@ def review():
         if not settled: settled = True;replies += 1
     assert replies == 1;n += 1
     return {'permissionNativeApiCompileEvidenceChecked':True,
+            'pinnedPermissionModuleHostChecks':module_probe['checks'],
             'permissionLifetimeSymbolicBoundaryChecks':n,
             'finitePermissionLeaseEngineExpiryImplemented':False,
             'actualOwnerClipboardLocationOrMediaAccess':False}

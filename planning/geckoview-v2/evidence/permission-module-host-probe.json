@@ -1,0 +1,23 @@
+{
+  "scope": "HOST executes pinned Mozilla module bodies with synthetic actors/Services; no Android/real Gecko permission-manager claim",
+  "checks": 28,
+  "sourceModuleSha256": [
+    "44199b91bf3e62a54b19c2dcf9c57f18141635c99f58dc8236b69fd5d0c2d35b",
+    "427027c14b47c1904ef75240962b225468e38155d6e34ae86b8f1ef06737913f"
+  ],
+  "ordinaryPermissionWritesExpireNeverObserved": true,
+  "scopedSyntheticReadbackObserved": true,
+  "setPermissionDispatchCompletionCallbackObserved": false,
+  "notifyShownCountOnceObserved": true,
+  "realPermissionOrClipboardLocationAccess": false,
+  "checkedAt": "2026-10-18T22:07:14+08:00",
+  "fixtureSource": "experiments/permission_module_host_probe.cjs",
+  "fixtureSha256": "f3fa1734ad1f8e3c3e8f04f3f3afe3a96b81be71a39f1efbab7af0b029ba0b7b",
+  "mozillaCoordinate": "org.mozilla.geckoview:geckoview:158.0.20261007201254",
+  "sourceModulePaths": [
+    "assets/omni.ja!modules/GeckoViewPermission.sys.mjs",
+    "assets/omni.ja!modules/GeckoViewStorageController.sys.mjs"
+  ],
+  "runtimeBoundary": "actual pinned JS bodies in Node VM; actors/Services/principals synthetic, not native permission manager or Android",
+  "temporarySourceExtractionBytes": 16201
+}

@@ -1,5 +1,5 @@
 {
-  "revision": "R15",
+  "revision": "R16",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -203,6 +203,12 @@
       "time": "2026-10-18T21:24:28+08:00",
       "finding": "正式178政策条目仍不等于每动作有精确参数和平台回执，不能把开启系统页当OS设置/安装完成。",
       "resolution": "补DI11与四个具体平台动作DTO/窗口代次/原生source handle、返回证据/取消/新proof幂等；仍是子集，不执行默认/许可/安装器操作。旧两份权限主体完整审读仍保留价值。"
+    },
+    {
+      "id": "REV35",
+      "time": "2026-10-18T22:10:39+08:00",
+      "finding": "仅源码摘要和纯自写模型还不能确认模块路径的实际分支；旧“后台关闭”也不能扩成共享GeckoRuntime关闭。",
+      "resolution": "执行官方AAR固定权限/存储JS的受限HOST VM，28项合成actors/Services断言覆盖普通永久/private-session写入、FINE请求、notification无激活拒绝、storage-access分支、notifyShown一次和scoped读取；无真实权限管理器/设备数据访问。完整审读三个旧主体文件仍保留依赖/参考价值。"
     }
   ]
 }

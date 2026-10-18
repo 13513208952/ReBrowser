@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R15",
+  "revision": "R16",
   "authority": [
     "O31",
     "O32"
@@ -1105,12 +1105,15 @@
       "sha256": "90fda15b6d8f62bb2a553b760740a09de4065bc87b915a1a5cb0177bdc2d13b5",
       "bytes": 2751,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T22:10:39+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读确认旧provider/feature能力门槛；v2不得沿用WebView依赖门槛，但旧版当前健康/入口维护仍使用",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/gecko-permission-design.json",
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1177,12 +1180,15 @@
       "sha256": "b6bbf9c29bff462a3ffbee58749585ecc56f8c57f8d89d482bf0fecb08b2d8ee",
       "bytes": 565,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T22:10:39+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "旧兼容路由仍有manifest/Robolectric用例依赖；新包不承接v1组件兼容，但当前旧维护构建仍需保留，不因类小直接归档",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/gecko-permission-design.json",
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1191,12 +1197,15 @@
       "sha256": "54bf8687d7306b9ee41c9619631497332e922abebbcf8bc42cf617292ce7d079",
       "bytes": 7039,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T22:10:39+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "设置说明确认启用不等于授权、仅本次/期限、永久禁用和仅浏览器页面后台策略；新Native有限权限生命周期尚未验证",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/gecko-permission-design.json",
+        "planning/geckoview-v2/records/application-code-files.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

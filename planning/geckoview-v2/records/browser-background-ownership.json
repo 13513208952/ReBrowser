@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "revision": "R16",
+  "state": "scoped-lifecycle-design-not-runtime-verified",
+  "legacyObserved": {
+    "source": "app/src/main/java/io/github/reoutlook/ReBrowserActivity.java onPause/onStop/onResume",
+    "behavior": "Browser-owned WebViews are saved/closed when background runtime disabled, except pending own Android permission/file-picker handoff. Existing system DownloadManager tasks may continue.",
+    "notGlobal": "This is not permission for one browser Activity to destroy unrelated subapp sessions or shared host runtime."
+  },
+  "geckoSource": {
+    "class": "GeckoRuntime",
+    "create": "SDK recommends binding to process lifetime; create throws while another Gecko instance active",
+    "shutdown": "invalidates ALL attached sessions and force-quits Gecko thread; not a per-browser-page background operation",
+    "boundary": "No shutdown/recreate or process-death runtime test inferred from source."
+  },
+  "v2Ownership": {
+    "scope": "own browser session group/window and its admitted page tasks",
+    "normalHide": "release view only when needed and setActive(false) explicitly; this alone does not close session or prove work ended",
+    "backgroundDisabled": [
+      "identify actual own-window/own-OS-flow transition, not merely any Activity onPause",
+      "invalidate page admissions/gesture credits and cancel obsolete prompts by exact generations",
+      "request bounded checkpoint only under current epoch/persistence/privacy policy; no silent claim latest state saved",
+      "cancel or settle browser-page-owned transfer work, retaining actual slot until underlying work ends",
+      "close browser-owned GeckoSessions, do not shut down shared GeckoRuntime",
+      "leave separately owned Outlook/music/system published downloads subject to their own explicit policies"
+    ],
+    "platformWait": "Do not mistake own OS permission/file-picker Activity transition for leaving the app; keep exact outstanding result ownership, no late result into a new page.",
+    "restart": "Reattach/create only after source/data and permission-expiry reconciliation gates, using latest committed admissible snapshot; never reset autoplay/fresh login or owner grant.",
+    "memoryClaim": "Closing browser sessions is not zero process-group memory or deletion of Gecko profile data."
+  },
+  "pendingCases": ["own permission/file picker while background setting off", "switch browser to music versus app background", "checkpoint callback late/failure and still stopping private page work", "underlying IO outlives page close", "close only browser group while other subapp plays under existing explicit playback grant", "resume cannot inherit expired engine permission allow"],
+  "realDeviceTransitionsPerformed": false,
+  "noNewPlaybackOrPermissionDialogAuthorizationInferred": true
+}

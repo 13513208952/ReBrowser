@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R15",
+  "revision": "R16",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -112,7 +112,8 @@
         "records/domain-interfaces.json",
         "records/runtime-traces.json",
         "APPLICATION_CODE_TREE.md",
-        "records/application-code-files.json"
+        "records/application-code-files.json",
+        "records/browser-background-ownership.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -169,7 +170,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "引擎响应流、权限提示、文件/媒体/安装器生命周期",
-      "existingEvidence": "R15实际Gecko158权限/clipboard/scoped读写API签名javac通过；pinned模块普通权限EXPIRE_NEVER与v1有限期限冲突已确认；四平台动作具体DTO/返回/取消契约，非Android权限/位置/clipboard实际测试",
+      "existingEvidence": "R15实际Gecko158权限/clipboard/scoped读写API签名javac通过；pinned模块普通权限EXPIRE_NEVER与v1有限期限冲突已确认；四平台动作具体DTO/返回/取消契约，非Android权限/位置/clipboard实际测试；R16执行固定SDK模块JS+合成Services/actors的28项主机断言，不等于真实权限管理器或Android",
       "completionDeliverables": [
         "逐项delegate映射",
         "流与取消",
@@ -191,7 +192,8 @@
         "records/action-semantics.json",
         "records/gecko-permission-design.json",
         "evidence/gecko-permission-api-and-lifetime.json",
-        "records/platform-action-contracts.json"
+        "records/platform-action-contracts.json",
+        "evidence/permission-module-host-probe.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

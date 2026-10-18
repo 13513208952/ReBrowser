@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R15",
+  "revision": "R16",
   "activePhase": "V0",
   "codingAuthorizedByPlan": false,
   "phases": [
@@ -180,7 +180,7 @@
       ],
       "name": "统一旧结构审查整理：主体价值耗尽后ZIP；重要凭据保留；其他价值耗尽后系统回收站",
       "depends": [],
-      "state": "in-progress-fifteen-semantic-old-source-reviews-new-native-permission-platform-contracts",
+      "state": "in-progress-eighteen-semantic-old-source-reviews-and-pinned-module-host-exercise",
       "dispositions": [
         "legacy-main-code-original-path-ZIP",
         "important-credentials-retained",
@@ -209,9 +209,9 @@
   },
   "workContinuationRule": "complete concrete increments on new-version work and unified legacy review in the same work session; checkpoint is not an owner-requested pause",
   "currentNewVersionIncrement": [
-    "native permission API compilation and pinned-engine lifetime gap",
-    "four concrete platform action argument/lifecycle contracts and DI11",
-    "unified old-source review continues, no independent cleanup pause"
+    "execute exact pinned permission/storage JS with synthetic Services and28assertions",
+    "separate finite grant expiry from normal/private engine persistence",
+    "audit browser-owned background lifecycle without shutting down shared runtime"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction"
 }

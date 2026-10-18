@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R15",
+  "revision": "R16",
   "authority": [
     "O26",
     "O27"
@@ -3142,6 +3142,23 @@
       "paths": [
         "planning/geckoview-v2/records/platform-action-contracts.json",
         "planning/geckoview-v2/review_platform_actions.py"
+      ]
+    },
+    {
+      "group": "permissions",
+      "kind": "exact-pinned-engine-module-host-exercise",
+      "summary": "固定官方Gecko权限/存储模块实际JS在受限Node VM中运行28断言；Services/actors完全合成，非Android；旧设置后台策略只影响拥有的浏览器页面，不应shutdown共享Runtime",
+      "paths": [
+        "planning/geckoview-v2/evidence/permission-module-host-probe.json",
+        "planning/geckoview-v2/experiments/permission_module_host_probe.cjs"
+      ]
+    },
+    {
+      "group": "browser",
+      "kind": "scoped-browser-background-lifecycle",
+      "summary": "浏览器后台关闭只收敛自身页面/任务，不shutdown共享GeckoRuntime，不把关闭页当全部IO停止或零内存",
+      "paths": [
+        "planning/geckoview-v2/records/browser-background-ownership.json"
       ]
     }
   ],

@@ -266,6 +266,8 @@
 | 统一控制入口与协议 | control-proof-byte-contract-and-host-evidence | 请求证明17字段已有Java/Python一致与OpenSSL验签；公开标量1测试非真实凭据；Android IPC/JSON实现和收据格式仍待验证<br>`planning/geckoview-v2/records/control-proof-format.json`<br>`planning/geckoview-v2/experiments/ControlProofVectors.java`<br>`planning/geckoview-v2/review_control_proof.py`<br>`planning/geckoview-v2/evidence/control-proof-cross-implementation.json` |
 | 网站与系统许可 | native-permission-api-source-and-compile-gap | 实际158 Native签名已编译，pinned引擎普通权限EXPIRE_NEVER；有限grant期限/精确粗略定位/停止既有使用未实测，不盲搬v1 navigator猴子补丁<br>`planning/geckoview-v2/records/gecko-permission-design.json`<br>`planning/geckoview-v2/evidence/gecko-permission-api-and-lifetime.json`<br>`planning/geckoview-v2/experiments/GeckoPermissionApiSmoke.java` |
 | 平台集成 | concrete-platform-action-contracts | 四个动作DTO/生命周期与共享WindowPlatformService，交接不等于OS成功，程序Back只作用自身窗口<br>`planning/geckoview-v2/records/platform-action-contracts.json`<br>`planning/geckoview-v2/review_platform_actions.py` |
+| 网站与系统许可 | exact-pinned-engine-module-host-exercise | 固定官方Gecko权限/存储模块实际JS在受限Node VM中运行28断言；Services/actors完全合成，非Android；旧设置后台策略只影响拥有的浏览器页面，不应shutdown共享Runtime<br>`planning/geckoview-v2/evidence/permission-module-host-probe.json`<br>`planning/geckoview-v2/experiments/permission_module_host_probe.cjs` |
+| 浏览器领域与本机数据 | scoped-browser-background-lifecycle | 浏览器后台关闭只收敛自身页面/任务，不shutdown共享GeckoRuntime，不把关闭页当全部IO停止或零内存<br>`planning/geckoview-v2/records/browser-background-ownership.json` |
 
 ### 当前边界
 

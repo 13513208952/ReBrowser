@@ -1,9 +1,15 @@
 {
   "schema": 1,
-  "revision": "R15",
+  "revision": "R16",
   "state": "native-api-compiled-critical-lifetime-gap-not-implementation-ready",
   "domain": "A04",
-  "requirements": ["R01", "R03", "R10", "R11", "R30"],
+  "requirements": [
+    "R01",
+    "R03",
+    "R10",
+    "R11",
+    "R30"
+  ],
   "sourceEvidenceRef": "evidence/gecko-permission-api-and-lifetime.json",
   "prefer": "Gecko native PermissionDelegate/SelectionActionDelegate and Android capabilities; do not blindly port v1's navigator/prototype replacement script",
   "nativeRoutes": {
@@ -16,8 +22,19 @@
     "permissionUpdate": "StorageController.setPermission(originalPermission, value) is VOID; not completion proof and not proof active capture/watch ended"
   },
   "identityAndScope": {
-    "native": ["actual GeckoSession object", "dataEpoch", "partition/session/document generation", "original permission object's uri/contextId/privateMode", "thirdPartyOrigin when storage access"],
-    "forbidden": ["caller-supplied context or forged ContentPermission JSON", "treating screenPoint as fresh user gesture proof", "treating stored site grant as native clipboard input credit", "returning media sources reconstructed from caller DTO instead of original SDK objects"],
+    "native": [
+      "actual GeckoSession object",
+      "dataEpoch",
+      "partition/session/document generation",
+      "original permission object's uri/contextId/privateMode",
+      "thirdPartyOrigin when storage access"
+    ],
+    "forbidden": [
+      "caller-supplied context or forged ContentPermission JSON",
+      "treating screenPoint as fresh user gesture proof",
+      "treating stored site grant as native clipboard input credit",
+      "returning media sources reconstructed from caller DTO instead of original SDK objects"
+    ],
     "topLevelRule": "Pinned Gecko module uses topLevelPrincipal except storage-access; Native UI must not silently display requesting frame as if it is the top-level principal",
     "siteVsAdmin": "A page/connector is not an administrator. Valid key proof source-neutral policy still applies to explicit administrator actions, separately from OS foreground/privacy requirements."
   },
@@ -30,11 +47,36 @@
     "caveat": "exact native implementation preserving these user behaviors is not proven by source inspection"
   },
   "criticalFindings": [
-    {"id": "PF01", "finding": "Pinned GeckoViewPermission.sys.mjs stores ordinary content allow/deny/prompt with Services.perms.EXPIRE_NEVER; storage-access takes separate path", "consequence": "Native5minute/3hour/15day grant expiry alone cannot revoke cached engine allow. Do not claim finite expiry works or mark PermissionCoordinator ready."},
-    {"id": "PF02", "finding": "StorageController.setPermission is void dispatch, readback is separate", "consequence": "submitted revocation remains pending; timer/UI invalidation is not engine acknowledgement. Background/process-death cases need bounded reconciliation before opening affected business sessions."},
-    {"id": "PF03", "finding": "Geolocation module asks Android ACCESS_FINE_LOCATION after content approval; Native API has one geolocation type", "consequence": "Existing approximate/precise distinction and coarse-only OS state need actual synthetic/native validation; never claim FINE granted merely because COARSE exists or show precision not observed."},
-    {"id": "PF04", "finding": "persistent-storage grant cannot be revoked per SDK documentation; tracking VALUE_PROMPT update is ignored", "consequence": "Do not expose fictitious reversible switches or use a universal reset-to-PROMPT function for every permission type."},
-    {"id": "PF05", "finding": "ContentPermission.notifyShown exists and requires a live prompt; restored JSON permissions have no live request id", "consequence": "Notify once only after Native UI actually shown, never on queue/admission or as permission consent."}
+    {
+      "id": "PF01",
+      "finding": "Pinned GeckoViewPermission.sys.mjs stores ordinary content allow/deny/prompt with Services.perms.EXPIRE_NEVER; storage-access takes separate path",
+      "consequence": "Native5minute/3hour/15day grant expiry alone cannot revoke cached engine allow. Do not claim finite expiry works or mark PermissionCoordinator ready."
+    },
+    {
+      "id": "PF02",
+      "finding": "StorageController.setPermission is void dispatch, readback is separate",
+      "consequence": "submitted revocation remains pending; timer/UI invalidation is not engine acknowledgement. Background/process-death cases need bounded reconciliation before opening affected business sessions."
+    },
+    {
+      "id": "PF03",
+      "finding": "Geolocation module asks Android ACCESS_FINE_LOCATION after content approval; Native API has one geolocation type",
+      "consequence": "Existing approximate/precise distinction and coarse-only OS state need actual synthetic/native validation; never claim FINE granted merely because COARSE exists or show precision not observed."
+    },
+    {
+      "id": "PF04",
+      "finding": "persistent-storage grant cannot be revoked per SDK documentation; tracking VALUE_PROMPT update is ignored",
+      "consequence": "Do not expose fictitious reversible switches or use a universal reset-to-PROMPT function for every permission type."
+    },
+    {
+      "id": "PF05",
+      "finding": "ContentPermission.notifyShown exists and requires a live prompt; restored JSON permissions have no live request id",
+      "consequence": "Notify once only after Native UI actually shown, never on queue/admission or as permission consent."
+    },
+    {
+      "id": "PF06",
+      "finding": "Pinned storage-module SetPermission writes EXPIRE_NEVER for normal state, EXPIRE_SESSION for private state, no completion callback; host executing exact source with mocks observed this",
+      "consequence": "private-session lifetime is not arbitrary finite grant lifetime; keeping normal cached allows while only dropping app grant metadata remains unsafe. Host Services are synthetic, not real permission manager validation."
+    }
   ],
   "lifetimePlanCandidatesNotValidated": [
     "Native monotonic grant journal + scoped engine permission readback/reconcile before resumed/restored business sessions; never create missing business runtime solely to scan all permissions",
@@ -52,5 +94,6 @@
     "non-bypass of autoplay authorization/cold-paused intent when permission cache exists"
   ],
   "actualDevicePermissionOrClipboardTestsPerformed": false,
-  "productSourceWritten": false
+  "productSourceWritten": false,
+  "pinnedModuleHostExecution": "evidence/permission-module-host-probe.json"
 }

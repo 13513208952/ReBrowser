@@ -1,4 +1,4 @@
-# GeckoView v2 · 规划与技术验证工作台 R15
+# GeckoView v2 · 规划与技术验证工作台 R16
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
@@ -71,6 +71,8 @@ mindmap
 | [集成验证场景](matrices/gecko-contract-cases.csv) | 28项具体场景；全部planned-not-run | GC01–GC12 |
 | [领域/连接器契约](views/18-domain-and-connector-contracts.md) | 模块输入输出、消息/流、真实任务与持久化轴、安全停止通道 | R7规范与时序例子 |
 | [用户旅程/返回](views/19-user-journeys-and-back.md) | 首装/浏览/子应用/后台/设置和Back优先级 | 18条设计旅程 |
+| [固定权限模块主机执行](evidence/permission-module-host-probe.json) | 原模块JS+合成Services/actors运行28项，确认永久/private-session、一次展示通知、上下文读取 | 不是Android或真实权限管理器通过 |
+| [浏览器后台所有权](records/browser-background-ownership.json) | 页面退出/OS交接/任务收敛与共享Runtime分开 | 不shutdown全部子应用，不以关页面冒充IO结束 |
 | [Native网站权限契约](records/gecko-permission-design.json)／[来源与API编译](evidence/gecko-permission-api-and-lifetime.json) | clipboard原生回调与context字段已编译；永久engine allow和有限grant期限差异已确认 | 有限期限/粗细定位/停止使用仍待实测，不复制v1补丁 |
 | [四平台动作具体契约](records/platform-action-contracts.json)／[主机DTO演算](review_platform_actions.py) | 参数/原生窗口代次/安装sourceRef/共享方法/完成与取消 | 四个动作子集，不是178动作DTO完成 |
 | [控制请求签名字节契约](records/control-proof-format.json)／[跨实现主机检查](evidence/control-proof-cross-implementation.json) | 17字段帧、895项JCA/独立Python与OpenSSL、重放与新proof幂等规则 | 公开标量1合成材料，非Android授权实现 |
@@ -100,7 +102,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R15自检结果](reviews/R15-permission-lifetime-platform-action-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R16自检结果](reviews/R16-pinned-permission-module-background-ownership-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

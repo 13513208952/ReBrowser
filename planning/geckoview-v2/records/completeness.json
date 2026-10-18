@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R17",
+  "revision": "R18",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -465,7 +465,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "密钥算法与保管、设备登记、静态表、禁用恢复/分发",
-      "existingEvidence": "旧公钥归档，新密钥/登记未开始",
+      "existingEvidence": "旧公钥归档，新密钥/登记未开始；R18编码层生产文件HOST通过，密钥生成/保管/登记/名单仍未做",
       "completionDeliverables": [
         "新旧维护线分离",
         "设备proof",
@@ -487,7 +487,10 @@
       "responsible": "assistant-engineering",
       "blockOwnerNow": false,
       "currentArtifactRefs": [
-        "views/06-trust-and-release.md"
+        "views/06-trust-and-release.md",
+        "records/crypto-encoding-contract.json",
+        "records/implementation-readiness.json",
+        "evidence/production-unit-tests.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

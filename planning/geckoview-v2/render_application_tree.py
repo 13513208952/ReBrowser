@@ -65,7 +65,7 @@ def render(manifest=None):
     walk(nodes)
     assert leaf_count == len(files)
     lines += ['```', '', '## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）', '',
-              '| 职责 | 测试要求摘要 | 目标文件引用，均为规划路径 |', '| --- | --- | --- |']
+              '| 职责 | 测试要求摘要 | 目标文件引用，实施/证据另看准入记录 |', '| --- | --- | --- |']
     for group in manifest['groups']:
         refs = '<br>'.join('`'+t['path']+'`' for t in group['testReferences'])
         purposes = '；'.join(dict.fromkeys(t['purpose'] for t in group['testReferences']))

@@ -1,7 +1,10 @@
 {
   "schema": 1,
-  "revision": "R17",
-  "authority": ["O41", "O42"],
+  "revision": "R18",
+  "authority": [
+    "O41",
+    "O42"
+  ],
   "scope": "按文件完成调研和边界审查后准入；不把一个文件通过扩成整个领域/总项目完成",
   "gate": [
     "主树已有明确职责、上下游输入输出和不可承担的权限",
@@ -16,18 +19,65 @@
       "state": "implemented-host-tested-not-integrated",
       "researchCompleteForScope": true,
       "scope": "17字段固定序二进制签名帧的不可变构造、解析、长度/ASCII/U63/严格UTF8与原始字节保真；不含JSON外包络、签名验证或准入",
-      "researchEvidence": ["records/control-proof-format.json", "evidence/control-proof-host-vectors.json", "evidence/control-proof-cross-implementation.json"],
+      "researchEvidence": [
+        "records/control-proof-format.json",
+        "evidence/control-proof-host-vectors.json",
+        "evidence/control-proof-cross-implementation.json"
+      ],
       "inputOutput": "输入全部17字段或<=35000B帧；输出不可变帧及类型受限的复制访问；所有格式错误以无私有内容的异常拒绝",
       "dependencies": "Java8公开标准库，API30支持的ByteBuffer/CharsetDecoder；无Android/UI/数据库/新依赖",
       "unresolvedWithinScope": [],
-      "hostTestSources": ["app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java"],
-      "junitClasses": ["io.github.rebrowser.control.ControlContractsTest"],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.control.ControlContractsTest"
+      ],
       "hostEvidence": "evidence/production-unit-tests.json",
-      "notClaimed": ["Android运行/ABI APK/Gecko集成", "严格JSON单DTO/重复键检查", "SPKI/DER验签、密钥身份/权限/挑战/replay/持久化并发", "真实IPC入口可用"],
+      "notClaimed": [
+        "Android运行/ABI APK/Gecko集成",
+        "严格JSON单DTO/重复键检查",
+        "SPKI/DER验签、密钥身份/权限/挑战/replay/持久化并发",
+        "真实IPC入口可用"
+      ],
       "integrationGate": "解析成功只能进入后续验证；在ControlDecoder/ChallengeStore/Dispatcher及全部权限闸门完成前，不挂公开入口、不执行动作"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+      "state": "implemented-host-tested-not-integrated",
+      "researchCompleteForScope": true,
+      "scope": "canonical bounded Base64url/SHA256, exact uncompressed P256 SPKI+point/curve check and strict positive DER scalars; not verifier/admission/private-key storage",
+      "researchEvidence": [
+        "records/crypto-encoding-contract.json",
+        "records/control-proof-format.json",
+        "evidence/control-proof-host-vectors.json",
+        "evidence/control-proof-cross-implementation.json"
+      ],
+      "inputOutput": "<=65536-byte snapshots with per-field limits; canonical EC public key or raw digest/validated DER syntax; no private input values in errors",
+      "dependencies": "Java8 Base64/BigInteger/EC KeyFactory/SHA256; no generated keys or new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.crypto.CryptoContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "Android provider/Keystore",
+        "signature verification grants any authority",
+        "strict JSON/atomic replay and domain execution",
+        "large mail-file streaming digest"
+      ],
+      "integrationGate": "callers must enforce actual key identity/policy, ECDSA verification and remaining proof admission; no public entrypoints enabled"
     }
   ],
-  "parallelPending": ["A04引擎权限有限期限/活跃使用撤回", "各动作DTO与资源生命周期", "其他主树节点逐文件准入", "同一个L0旧结构审查任务"],
+  "parallelPending": [
+    "A04引擎权限有限期限/活跃使用撤回",
+    "各动作DTO与资源生命周期",
+    "其他主树节点逐文件准入",
+    "同一个L0旧结构审查任务"
+  ],
   "overallDesignComplete": false,
   "productApkBuilt": false
 }

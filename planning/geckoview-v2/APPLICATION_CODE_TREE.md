@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已编写并通过主机测试：**1文件**；其余 **177文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已编写并通过主机测试：**2文件**；其余 **176文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -108,7 +108,7 @@
                             │   ├── TaskJournal.java [J][PLAN][?] — 副作用/幂等/持久化阶段日志
                             │   └── TaskSnapshot.java [J][PLAN][?] — 客户端等待与实际执行/效果/持久化分轴
                             ├── crypto/
-                            │   ├── CryptoEncoding.java [J][PLAN][?] — 严格SPKI/DER/长度和摘要编码
+                            │   ├── CryptoEncoding.java [J][HOST][?] — 严格SPKI/DER/长度和摘要编码
                             │   ├── DataKeyVault.java [J][PLAN][?] — epoch包装密钥/账户用途DEK与版本
                             │   ├── InstallKeyStore.java [J][PLAN][?] — 安装设备EC密钥持有与目标challenge，不用序列号作凭据
                             │   ├── KeyPurpose.java [J][PLAN][?] — 发行/管理员/设备/数据密钥域定义
@@ -228,7 +228,7 @@
 
 ## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）
 
-| 职责 | 测试要求摘要 | 目标文件引用，均为规划路径 |
+| 职责 | 测试要求摘要 | 目标文件引用，实施/证据另看准入记录 |
 | --- | --- | --- |
 | 入口与进程 | 进程角色/幂等启动/所有组件先闸门/无系统WebView条件；API30新安装冷启动及Gecko子进程不重复建主runtime | `app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java` |
 | 来源连续性 | lastGood而非lastSeen、四步计数/取消、精确私有清单与原子epoch；合成A→异常B→正常C、版本/签名限制、两次新系统验证与无锁/取消；不清日常资料 | `app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java` |
@@ -271,6 +271,7 @@
 | 网站与系统许可 | exact-pinned-engine-module-host-exercise | 固定官方Gecko权限/存储模块实际JS在受限Node VM中运行28断言；Services/actors完全合成，非Android；旧设置后台策略只影响拥有的浏览器页面，不应shutdown共享Runtime<br>`planning/geckoview-v2/evidence/permission-module-host-probe.json`<br>`planning/geckoview-v2/experiments/permission_module_host_probe.cjs` |
 | 浏览器领域与本机数据 | scoped-browser-background-lifecycle | 浏览器后台关闭只收敛自身页面/任务，不shutdown共享GeckoRuntime，不把关闭页当全部IO停止或零内存<br>`planning/geckoview-v2/records/browser-background-ownership.json` |
 | 统一控制入口与协议 | admitted-production-source-host-tests | O41逐文件准入：ControlEnvelope已实现，真实生产类经独立历史帧/签名负例及不可变性测试；未含JSON/授权/Android<br>`planning/geckoview-v2/records/implementation-readiness.json`<br>`planning/geckoview-v2/run_production_unit_tests.py`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
+| 本机加密与密钥 | canonical-public-key-and-proof-primitives | 精确P256 SPKI/曲线上点及JCA参数、严格正DER标量、规范有界Base64url和SHA；接受s/n-s；两生产文件合跑22HOST JUnit，不生成钥匙、不等于验签授权<br>`planning/geckoview-v2/records/crypto-encoding-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 
 ### 当前边界
 

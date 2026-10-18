@@ -92,6 +92,18 @@
       ],
       "artifact": "views/04-storage.md",
       "revisitWhen": "发现可验证的公开context删除完成方案"
+    },
+    {
+      "id": "EC09",
+      "state": "adopted-file-scoped",
+      "choice": "新P256公钥传输仅canonical91B named-curve SPKI/uncompressed point；DER验签前拒绝ASN1别名但接受合法s/n-s，Base64url先界限后规范重编码",
+      "basis": [
+        "R35",
+        "O41",
+        "R14 public host vectors"
+      ],
+      "artifact": "records/crypto-encoding-contract.json",
+      "revisitWhen": "新增互通需要其他公钥编码时，先定义规范化和同钥同身份的测试，不以调用程序来源设限"
     }
   ]
 }

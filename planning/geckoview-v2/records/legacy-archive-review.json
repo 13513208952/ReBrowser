@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R17",
+  "revision": "R18",
   "authority": [
     "O31",
     "O32"
@@ -443,12 +443,15 @@
       "sha256": "59b62d8d82ecbfe650fbc0946e010b67b5d8a40df0dc7249da28729492fbf669",
       "bytes": 6394,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-18T22:48:56+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧RSA导出挑战、活动账户绑定、机主验证后消费、维护入口恢复；仍承担旧账户导出/保留维护义务。v2 P256助手不能替代旧RSA身份/导出接收方，也不把旧wall-clock/SharedPreferences消费直接移植为新并发准入。",
+      "evidenceRefs": [
+        "planning/geckoview-v2/records/key-and-enrollment-design.json",
+        "planning/geckoview-v2/records/crypto-encoding-contract.json"
+      ],
       "trackedSourceAtCommit": true
     },
     {

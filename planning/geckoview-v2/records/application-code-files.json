@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R17",
+  "revision": "R18",
   "authority": [
     "O26",
     "O27",
@@ -86,7 +86,8 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java",
           "kind": "unit-design-contract",
-          "purpose": "公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本"
+          "purpose": "公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本",
+          "state": "encoding-host-tested-keystore-aead-contracts-planned"
         },
         {
           "path": "app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java",
@@ -740,14 +741,15 @@
       "group": "crypto",
       "kind": "native-code",
       "responsibility": "严格SPKI/DER/长度和摘要编码",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT04",
         "VT08"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R18 production source Java8 compile/HOST JUnit for canonical Base64url/P256 SPKI/DER/digest; Android provider/authority not tested",
       "runtimePending": true,
-      "testReferenceGroup": "crypto"
+      "testReferenceGroup": "crypto",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
@@ -3172,6 +3174,15 @@
       "paths": [
         "planning/geckoview-v2/records/implementation-readiness.json",
         "planning/geckoview-v2/run_production_unit_tests.py",
+        "planning/geckoview-v2/evidence/production-unit-tests.json"
+      ]
+    },
+    {
+      "group": "crypto",
+      "kind": "canonical-public-key-and-proof-primitives",
+      "summary": "精确P256 SPKI/曲线上点及JCA参数、严格正DER标量、规范有界Base64url和SHA；接受s/n-s；两生产文件合跑22HOST JUnit，不生成钥匙、不等于验签授权",
+      "paths": [
+        "planning/geckoview-v2/records/crypto-encoding-contract.json",
         "planning/geckoview-v2/evidence/production-unit-tests.json"
       ]
     }

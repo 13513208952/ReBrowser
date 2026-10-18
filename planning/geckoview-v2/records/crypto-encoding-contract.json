@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "revision": "R18",
+  "authority": "engineering refinement of R14 strict P256/SPKI/DER and canonical encoding; O41 per-file gate",
+  "scope": "CryptoEncoding primitives, not signature verification/identity/admission or key custody",
+  "canonicalBase64Url": {
+    "maxRawBytes": 65536,
+    "rule": "URL alphabet only, no padding/whitespace; exact decode/reencode equality; size rejected before decode allocation",
+    "empty": "primitive permits empty; caller required-field schemas reject empties where forbidden"
+  },
+  "p256Spki": {
+    "rule": "exact91-byte DER SubjectPublicKeyInfo with id-ecPublicKey + prime256v1 and65-byte uncompressed point; no BER/explicit curves/compressed alternate wire representation",
+    "point": "unsigned32-byte X/Y each<p, y^2=x^3-3x+b modp; finite and on P256 cofactor1 curve; JCA public factory result must retain canonical encoded bytes/point/curve/order/cofactor",
+    "fingerprint": "SHA256 exact validated canonical SPKI bytes; never caller app/signature/serial as administrator identity",
+    "withdrawWhen": "an approved provider/interop requirement needs alternate public-key transport; specify canonical normalization and identity tests before expanding parser, never silently accept ASN1 aliases"
+  },
+  "ecdsaDer": {
+    "rule": "8..72bytes, short definite DER sequence length, exactly two minimal positive integer scalars in1..n-1, no suffix",
+    "equivalence": "accept both valid s and n-s; format validity is not successful signature verification; no low-S identity split"
+  },
+  "digest": "SHA256 bounded<=65536-byte snapshot, hex lowercase64 characters; large mail objects require separate streaming digest, not whole-object buffering in this primitive",
+  "nonGoals": [
+    "keypair generation/real key reading",
+    "private-key encryption or storage",
+    "JCA ECDSA verify/authority",
+    "strict JSON parsing/challenge/nonce/atomic admission",
+    "Android provider conformance"
+  ],
+  "researchRefs": [
+    "records/control-proof-format.json",
+    "records/key-and-enrollment-design.json",
+    "evidence/control-proof-host-vectors.json",
+    "evidence/control-proof-cross-implementation.json"
+  ],
+  "status": "implemented-host-tested-not-Android-provider-validated",
+  "hostEvidence": "evidence/production-unit-tests.json"
+}

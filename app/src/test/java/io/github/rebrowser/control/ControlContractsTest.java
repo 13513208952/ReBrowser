@@ -13,6 +13,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.EnumMap;
+import java.util.Random;
 import org.junit.Test;
 
 /** Pure Java production-frame tests. No challenge/JSON/authorization/Android coverage claimed. */
@@ -177,6 +178,24 @@ public final class ControlContractsTest {
         byte[] output=decoded.signedBytes();Arrays.fill(output,(byte)0);
         byte[] args=decoded.bytes(Field.ARGS_BYTES);Arrays.fill(args,(byte)0);
         assertArrayEquals(original,decoded.signedBytes());assertArrayEquals(fields().get(Field.ARGS_BYTES),decoded.bytes(Field.ARGS_BYTES));
+    }
+
+    @Test public void seededMalformedFramesNeverEscapeBoundsOrChangeSignedBytes() {
+        Random random=new Random(0x52425632L);byte[] good=ControlEnvelope.fromFields(fields()).signedBytes();
+        for(int i=0;i<2000;i++) {
+            byte[] candidate=i%2==0?good.clone():new byte[random.nextInt(600)];
+            if(i%2==0) candidate[random.nextInt(candidate.length)]^=(byte)(1+random.nextInt(255));
+            else random.nextBytes(candidate);
+            try {
+                ControlEnvelope decoded=ControlEnvelope.decode(candidate);
+                assertArrayEquals(candidate,decoded.signedBytes());
+                EnumMap<Field,byte[]> recovered=new EnumMap<>(Field.class);
+                for(Field f:Field.values())recovered.put(f,decoded.bytes(f));
+                assertArrayEquals(candidate,ControlEnvelope.fromFields(recovered).signedBytes());
+            } catch(IllegalArgumentException expected) {
+                assertEquals("Invalid control proof frame",expected.getMessage());
+            }
+        }
     }
 
     @Test public void maximumArgsAndTypedAccessorsRemainBounded() {

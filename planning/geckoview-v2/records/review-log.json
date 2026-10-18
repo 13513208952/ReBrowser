@@ -1,5 +1,5 @@
 {
-  "revision": "R17",
+  "revision": "R18",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -215,6 +215,12 @@
       "time": "2026-10-18T22:41:16+08:00",
       "finding": "O41要求已厘清节点不再等待整体调研；旧tree/reviewer把所有文件强制计划/未实现会掩盖真实进展。O42再次禁止把推送当停工点。",
       "resolution": "先以R14公开固定字节/独立Python/OpenSSL证据准入ControlEnvelope；生产源实际编译Java8 API并通过12项JUnit（含全部433个截断前缀、U32溢出、ASCII/UTF8/原字节不可变及两种旧公开签名）。总树区分PLAN/HOST，主审校验准入和真实源码SHA。严格JSON/权限/挑战/Android未决不假报；继续同L0审读旧协议仍有维护价值。"
+    },
+    {
+      "id": "REV37",
+      "time": "2026-10-18T22:48:56+08:00",
+      "finding": "R17推送不是停工点；固定帧还需严格的公钥/DER/规范编码基础，不能以JCA宽松ASN1解析或任意base64当已验证身份。",
+      "resolution": "推送后继续准入CryptoEncoding；先细化exact91B named-P256 SPKI及有限点/群参数、短DER正标量、非低S强制和有界规范Base64url/SHA。两生产文件实际Java8编译合跑24HOST JUnit，旧公开R14帧及两种有效签名交叉验证；无真实key/Android。完整审读旧MaintenanceAuthorizer保留旧RSA导出与机主校验维护价值。；追加4000个固定种子帧/DER变异用例，接受的编码仍需JCA真实性验证，非授权。"
     }
   ]
 }

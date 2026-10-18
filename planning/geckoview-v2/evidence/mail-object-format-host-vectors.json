@@ -1,0 +1,10 @@
+{
+  "hostFixedCryptoAndFormatChecks": 64,
+  "headerBytes": 124,
+  "realKeysProvisioned": false,
+  "AndroidCryptoValidated": false,
+  "scope": "HOST JCA public RFC5869/NIST dummy vectors and bounded binary-format fixtures, not Android/Keystore/performance or product implementation",
+  "source": "experiments/MailObjectFormatVectors.java",
+  "sourceSha256": "533205d6944b8f58b0c96fd069f01e078d0f1cf4163cc3d142d6d8be2e32c48b",
+  "checkedAt": "2026-10-18T09:14:54+08:00"
+}

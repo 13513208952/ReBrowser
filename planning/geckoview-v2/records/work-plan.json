@@ -8,7 +8,7 @@
       "id": "P0",
       "name": "原话基线/全领域详细规划/完整性与工程自审",
       "depends": [],
-      "state": "in-progress",
+      "state": "paused",
       "exit": [
         "原话摘要校验",
         "机主已确认目标/关键规则落实；普通工程选择由助手负责",
@@ -127,5 +127,8 @@
     "实现后填实测结果，不以计划替代完成",
     "机主改目标时原话追加、旧决定标superseded，不覆盖历史"
   ],
-  "planningCompletenessRef": "records/completeness.json"
+  "planningCompletenessRef": "records/completeness.json",
+  "executionState": "paused-by-owner",
+  "pauseSource": "O25",
+  "pauseReviewRef": "PAUSED_REVIEW.md"
 }

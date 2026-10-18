@@ -1,4 +1,4 @@
-id,domain,capability_group,user_equivalent,proposed_base_threshold_NOT_FINAL,risk,scope,requirements,implementation,coverage
+id,domain,capability_group,user_equivalent,historical_group_level_example_NOT_POLICY,risk,scope,requirements,implementation,coverage
 C001,host,状态/健康/性能/版本查询,用户可见状态与管理页,0,normal,application,R10 R18,not-started,T-C001
 C002,browser,环境创建/切换/持久化/删除,双层环境与标签管理,4,destructive,application,R03 R10 R23,not-started,T-C002
 C003,browser,标签加载/返回/前进/刷新/关闭/Popup归属,浏览器全部导航动作,2,normal,application,R03 R10,not-started,T-C003

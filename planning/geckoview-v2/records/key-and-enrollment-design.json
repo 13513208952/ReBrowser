@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "revision": "R9",
+  "state": "engineering-adopted-design-no-keys-generated",
+  "keyDomains": [
+    {
+      "id": "APK_SIGN",
+      "algorithm": "RSA3072 / SHA256 APK v2+v3, minSdk30, no v1 needed",
+      "custody": "new release PKCS12 offline owner-controlled encrypted storage; never overwrite legacy keystore",
+      "publicIdentity": "initial trusted certificate anchor plus verified Android proof-of-rotation only; different Root public key is not legitimized merely by signer lineage",
+      "rotation": "plan forward versionCode and valid signing lineage; Android11 rescue test before real release; no forced downgrade/uninstall"
+    },
+    {
+      "id": "ADMIN_ROOT",
+      "algorithm": "ECDSA P256 with SHA256, X509 SPKI public key pinned in APK",
+      "custody": "offline private key, not embedded in APK/helper, independent from APK signing",
+      "rotation": "Root SPKI changes invoke owner-confirmed source-continuity protection; signed note alone does not inherit old data"
+    },
+    {
+      "id": "ADMIN_HIGH",
+      "algorithm": "ECDSA P256 SHA256, all level>=5 identities/roles/ceilings precompiled",
+      "custody": "holders keep private material; additions only signed APK update",
+      "rotation": "new public key is new high identity requiring compiled policy update"
+    },
+    {
+      "id": "ADMIN_LOW",
+      "algorithm": "ECDSA P256 SHA256, signed bounded delegation certificate below H5",
+      "custody": "may intentionally be shared/embedded across helper programs by owner bearer model",
+      "rotation": "issuer-signed lower-scope/level certificate; no caller-package/signature allowlist, no source-extractability downgrade"
+    },
+    {
+      "id": "DEVICE_INSTALL",
+      "algorithm": "Android Keystore EC P256, per v2 installation, target possession challenge",
+      "custody": "nonexportable platform key; StrongBox optional, not availability gate",
+      "rotation": "new install/key needs explicit owner enrollment receipt and new compiled device key; serial/model/UID/APK certificate never substitute"
+    },
+    {
+      "id": "DATA_WRAP",
+      "algorithm": "Android Keystore AES256 GCM, epoch-owned wrapping keys",
+      "custody": "key alias manifest per v2 epoch/purpose; no arbitrary alias enumeration/deletion",
+      "rotation": "wrap account/purpose DEKs; correct normal package same install must still unwrap old epoch before final destruction"
+    },
+    {
+      "id": "DATA_OBJECT",
+      "algorithm": "random AES256 DEK per account/purpose, wrapped under DATA_WRAP; standard platform AEAD",
+      "custody": "bounded plaintext key lifetime; no repeated lockscreen prompts for routine mail/music; authenticated encryption framing still must be specified/tested",
+      "rotation": "new objects use new version; old retained until references safely migrated/recovered; no promises after irreversible key destruction"
+    }
+  ],
+  "legacyLine": {
+    "v2TrustsLegacyRootsAutomatically": false,
+    "retained": [
+      "old APK release tags/assets and signing maintenance",
+      "old administrator CLI/protocol/key identity",
+      "old export recipient/decryption obligations"
+    ],
+    "privateCustody": "UNVERIFIED; public SPKI archive is not private backup proof",
+    "materialHandoff": "at P2 signing/custody stage verify actual possession/restore procedure without printing keys or passwords; do not block engineering design on a questionnaire now"
+  },
+  "backupPlan": {
+    "newOfflinePrivateKeys": "two independent encrypted offline copies with owner-held passphrase/recovery inventory; verify restore using signatures against public fingerprint, never expose private bytes",
+    "state": "PLANNED, not created or backed up",
+    "applicationDataBackup": "exclude old private data epochs/lease tokens/keystore-dependent vaults from automatic cross-device OS backup unless explicit later recovery design; logical deletion not physical flash/backup overwrite guarantee"
+  },
+  "enrollmentFlow": [
+    "start trusted v2 source under NEW formal package and signing identity; no v1 UID/signature migration",
+    "create DEVICE_INSTALL key only in explicitly authorized enrollment stage; return limited public challenge",
+    "owner locally grants exact device/administrator/target public-key enrollment, platform owner check with true-no-lock handling",
+    "prove target installation private-key possession over fresh nonce and proposal digest; independently match displayed public fingerprint",
+    "highest may prepare only own list proposal; Root may aggregate all highest/root lists, no unowned raw device enumeration",
+    "release authority compiles accepted key/owner/consent-receipt digest; no runtime new device key or high identity admission",
+    "same v2 package/signer update preserves this installation Keystore key; whitelist exemption activates only with possession proof and enabled compiled entry"
+  ],
+  "bootstrapCircularity": "initial enrollment build must share final v2 appId/formal signer if that key is to survive; separate test app or old v1 cannot supply transferable Android Keystore possession. Before compiled exemption, normal highest-risk requires real owner grant.",
+  "deviceInformationPrivacy": "compile public keys/owner mapping/minimal receipt digests only, no serial/model/account/raw screenshots; mutable detailed owner receipts remain private and scoped",
+  "freshInstall": "no historic trust baseline on genuinely empty install; marker missing with existing data locks recovery, never reseeds or erases",
+  "knownLimits": [
+    "compromised APK release signer plus arbitrary malicious same-signer code can remove self-check",
+    "hardware attestation optional; do not claim every Android11 device key provably unclonable",
+    "an intentionally shared administrator key means shared identity; key possession/source neutrality does not remove nonce/action/target/scope validation"
+  ],
+  "generatedKeys": false,
+  "deviceEnrollmentPerformed": false,
+  "rootWhitelistCompiledEntries": []
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "state": "proposal-needs-review",
+  "state": "engineering-design-adopted-unimplemented",
   "identityRoles": [
     "root-special",
     "highest-domain-admin",
@@ -22,7 +22,7 @@
     "proposalEffective": "min(proven_identity_ceiling, delegated_session_ceiling); no caller-package/signature/source penalty after valid authority proof. Missing required owner grant keeps active ceiling strictly below threshold.",
     "noHiddenDeny": "Once sufficient effective authority exists within scope, no alternate transport/plugin-specific hardcoded veto may block the same capability.",
     "managementMonotonicity": "Within same scope and session conditions, a higher authority includes all lower-authority operations and eligible management abilities.",
-    "scopeVsLevel": "Scope defines the corresponding capability; ordinary-highest ownership isolation is not overridden by numeric level. Q06 review required."
+    "scopeVsLevel": "Scope defines corresponding capability, with compiled whitelist ownership isolation; scale0..10/H5 adopted underO18"
   },
   "consentRule": {
     "exempt": "Authenticated root targeting own OR any highest-admin whitelist; ordinary highest targeting own whitelist",
@@ -40,7 +40,7 @@
     "High-trust administrator addition must never be smuggled through plugin delegation/import or mutable capability thresholds",
     "Root identity mismatch data guard is not administrator disable; exceptional owner-only flow is not bypassed by administrator whitelist"
   ],
-  "revision": "R4",
+  "revision": "R9",
   "credentialRule": {
     "model": "source-neutral shared proof-of-possession credential",
     "source": "confirmed O14",
@@ -51,9 +51,10 @@
   },
   "compiledAdministratorRule": {
     "highTrustSet": "Immutable inside a built APK; additions require APK update, including when actor is root",
-    "boundary": "H and high-trust metadata fields unresolved Q13; runtime delegation level<H and cannot authorize high-trust capabilities",
+    "boundary": "H5, static fields and revocation-only runtime changes defined in authority-scale.json",
     "disable": "Any authorized strictly higher level may disable a strictly lower non-root identity; not limited to low principals or issuer subtree. Never reveal/borrow target whitelist through this operation. Root target is never disableable.",
     "root": "Special role above all highest administrators, not peer highest",
-    "enableOrDistribution": "Q16 unresolved"
-  }
+    "enableOrDistribution": "local signed journal +explicit compatible signed distribution; re-enable own issuer or strictly higher than disabling issuer; no offline instant-global revocation claim"
+  },
+  "numericAuthority": "records/authority-scale.json and records/action-registry.json are normative engineering design; old group/example numbers illustrative only"
 }

@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "revision": "R9",
+  "state": "engineering-adopted-under-O18-not-new-owner-numeric-instruction",
+  "highTrustBoundary": 5,
+  "dynamicMaximum": 4,
+  "highestLevel": 9,
+  "rootLevel": 10,
+  "levels": [
+    {
+      "level": 0,
+      "name": "公开控制面",
+      "meaning": "有限挑战/版本/来源状态，不含设备名单或个人内容",
+      "precompiledRequired": false
+    },
+    {
+      "level": 1,
+      "name": "低敏只读",
+      "meaning": "健康/性能/容量/不含名称内容的对象句柄",
+      "precompiledRequired": false
+    },
+    {
+      "level": 2,
+      "name": "基础导航",
+      "meaning": "环境/标签/窗口/返回等明确目标控制",
+      "precompiledRequired": false
+    },
+    {
+      "level": 3,
+      "name": "普通业务控制",
+      "meaning": "官方登录界面、合法媒体控制、正常配置和系统流程发起",
+      "precompiledRequired": false
+    },
+    {
+      "level": 4,
+      "name": "本机配置与可重建缓存",
+      "meaning": "非敏感批量配置/生命周期/安全缓存；仍属可动态委托低级",
+      "precompiledRequired": false
+    },
+    {
+      "level": 5,
+      "name": "信任读取",
+      "meaning": "个人页面/元数据/截图/配置详情；及以上管理员均预编译",
+      "precompiledRequired": true
+    },
+    {
+      "level": 6,
+      "name": "信任数据操作",
+      "meaning": "邮箱读取同步、站点权限、账户数据维护及普通官网写动作",
+      "precompiledRequired": true
+    },
+    {
+      "level": 7,
+      "name": "高隐私与局部不可逆",
+      "meaning": "私密批量导出/子应用全数据清理；最高危标签另需机主或适用名单",
+      "precompiledRequired": true
+    },
+    {
+      "level": 8,
+      "name": "最高危执行",
+      "meaning": "任意页面脚本、原始凭据、云端不可逆操作、应用全数据操作",
+      "precompiledRequired": true
+    },
+    {
+      "level": 9,
+      "name": "普通最高管理员",
+      "meaning": "自有设备名单管理；更低身份管理；不能读用其他最高/Root名单",
+      "precompiledRequired": true
+    },
+    {
+      "level": 10,
+      "name": "特殊Root",
+      "meaning": "高于所有其他管理员；跨最高管理与名单联合；不可禁用",
+      "precompiledRequired": true
+    }
+  ],
+  "ordinaryComparison": ">=",
+  "disableComparison": "> with target != Root",
+  "required": "max(action base, native-stamped channel floor, intervention floor); symbolic target-relative management formulas resolved before comparison",
+  "scope": "ordinary highest own whitelist only; Root own plus all highest; explicit valid delegation scope may narrow corresponding actions, never caller-package source penalty",
+  "highestRisk": "per-action label, not every action of a numerically high identity; outside applicable whitelist requires bounded owner grant even for Root. Missing grant caps effective below that action requirement.",
+  "compiledFields": [
+    "principal id",
+    "public SPKI/key id/algorithm",
+    "level",
+    "role",
+    "high-trust flag",
+    "max-low-delegation ceiling",
+    "root identity",
+    "high-risk floors and static action admission",
+    "device public keys and owning highest/root mapping"
+  ],
+  "runtimeMutableOnly": [
+    "disable/reinstate records for already compiled identities under strict rules",
+    "below-H signed low delegations within issuer scope",
+    "revocation/reinstatement of already compiled device exemptions, never new device key/owner mapping",
+    "short owner grants and session records"
+  ],
+  "channelFloors": {
+    "SIGNED_IPC": 1,
+    "ADB_UNATTRIBUTED": 1,
+    "APP_INTERNAL_ADMIN": 1,
+    "HIDDEN_ADMIN_ENTRY": 1
+  },
+  "channelBoundary": "Native adapter stamps channel; client cannot claim USB to lower floor. App cannot reliably distinguish physical/wireless ADB from shell UID. Equal valid proof on equivalent signed channel has equal authority regardless helper package/signature.",
+  "interventionFloors": {
+    "TYPED_ACTION": 0,
+    "PRIVATE_EVENT_SUBSCRIPTION": 5,
+    "RUNTIME_DIAGNOSTIC": 7,
+    "ARBITRARY_RENDERER_SCRIPT": 8
+  },
+  "ownerGrant": {
+    "lifetimeSeconds": 300,
+    "boundTo": [
+      "principal key id",
+      "target installation challenge",
+      "data epoch",
+      "explicit action set",
+      "target object scope",
+      "grant revision"
+    ],
+    "freshSystemOwnerCheck": "platform credential/biometric when lock configured, OS-positive no-lock exception plus explicit local consent otherwise; no caller-crafted success",
+    "scopeExpansion": "never raises identity beyond its registered/delegated level or adds high identity"
+  },
+  "sourceContinuityException": "R4 four-step personal source guard remains mandatory, with two separate fresh checks; no admin/whitelist bypass, no business unlock before verified old-private erasure/new epoch commit",
+  "disableLedger": {
+    "local": "signed installation-local monotonic journal, survives ordinary same-source updates",
+    "distribution": "export/import signed revocation snapshots explicitly; no claim offline devices instantly know changes; no default public listener",
+    "disable": "any actor strictly above target, target not Root; no issuer-subtree-only limitation",
+    "restore": "same enabled issuer may withdraw own record if still above target; other actor must be strictly above original disabling issuer (thus above target)",
+    "multipleRecords": "all applicable active disable records must be cleared, never one restore silently erases peer records",
+    "issuerLaterDisabled": "previous valid disable records remain; disabling issuer does not automatically resurrect targets",
+    "corruptState": "fail closed for affected non-root management, retain compiled Root route; malformed root-disable ignored/rejected, never disable Root"
+  },
+  "revisit": "change numeric thresholds only in reviewed signed APK policy update; never runtime lower H or raise low principals into high capabilities",
+  "actionRegistry": "records/action-registry.json"
+}

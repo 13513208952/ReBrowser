@@ -1,0 +1,7 @@
+{
+  "hostSyntheticSqlChecks": 38,
+  "mailSchemaSha256": "6d8d11564fbb5af00f51c273b970331efa809fde7775ed02b840c94676177bb1",
+  "hostSQLiteVersion": "3.46.1",
+  "androidSQLiteValidated": false,
+  "realDatabaseOpenedOrFilesDeleted": false
+}

@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "revision": "R9",
+  "state": "engineering-container-format-design-not-product-implementation",
+  "name": "RBMOBJ1",
+  "header": {
+    "binaryFormatBigEndian": ">8sHHHHI16s16s16sQQII32s",
+    "fixedBytes": 124,
+    "fields": [
+      "magic8=RBMOBJ1\\0",
+      "versionU16=1",
+      "flagsU16=1 AEAD required",
+      "codecU16=0 RAW or1 ZLIB",
+      "purposeU16=1 BODY,2 ATTACHMENT,3 SEARCHTEXT",
+      "accountKeyVersionU32",
+      "dataEpoch16",
+      "nativeAccountId16",
+      "immutableObjectId16",
+      "originalLengthU64",
+      "compressedLengthU64",
+      "framePlainMaxU32=32768",
+      "frameCountU32=max(1,ceil(compressedLength/32768))",
+      "originalSha256_32"
+    ],
+    "allLengths": "exact bounded integers, not allocation sizes; compare registered object metadata and admitted resource policy before decode"
+  },
+  "keyDerivation": {
+    "algorithm": "RFC5869 HKDF-SHA256",
+    "IKM": "account/purpose DEK256",
+    "salt": "dataEpoch16",
+    "info": "ASCII RBMOBJ1-KEY\\0 || nativeAccountId16 || immutableObjectId16 || purposeU16 || versionU16",
+    "length": 32,
+    "rule": "new random immutable objectId for EVERY new representation; never reuse objectId/key+nonce for recompression/overwrite. Dedup reuses immutable existing bytes only."
+  },
+  "frames": {
+    "algorithm": "AES256-GCM tag128",
+    "nonce": "eight zero bytes || frameIndexU32 big endian, safe only under unique derived immutable object key",
+    "aad": "ASCII RBMOBJ1-AAD\\0 || exact full header124 || frameIndexU32 || framePlainLengthU32",
+    "wire": "ciphertextAndTagLengthU32 || ciphertext || tag16; nonce derived, not stored",
+    "count": "exact header count, strict sequence from0; empty content still one zero-plaintext authenticated frame",
+    "limits": "plain frame<=32768, ciphertext size=plain+16, no trailing bytes/duplicate/missing/reordered frames; overall expected stored length checked"
+  },
+  "writeOrder": [
+    "receive/hash/compress exact admitted plaintext into owned private staging, record final lengths/digest",
+    "build fixed header, choose new immutable objectId, derive object key",
+    "encrypt bounded frames; publish owned object or inline final blob only after all frames written/validated",
+    "commit DB refs/cursor under current epoch/account/fence recheck",
+    "never expose unfinished staged object as valid message"
+  ],
+  "readOrder": [
+    "validate fixed header/version/purpose/account/epoch/object identity and bounds against native catalog",
+    "derive key using registered account key version, not arbitrary caller key",
+    "authenticate each complete frame BEFORE giving decrypted compressed bytes to bounded inflater",
+    "verify total original length and digest before final successful read/export result",
+    "on any failure mark object corrupt/unavailable, retain other messages, do not auto delete whole account"
+  ],
+  "privacyLimits": [
+    "metadata/Gecko profile and temporary staging may rely on Android app-private/FBE rather than application AEAD; do not claim whole-install crypto erase",
+    "private staging included exact epoch erasure/GC ownership manifest",
+    "selective encryption is not authentication or a substitute for source guard",
+    "ordinary UI browsing does not require repeated Android biometric prompts"
+  ],
+  "testsRequired": [
+    "RFC5869 fixed public vector",
+    "NIST AES256-GCM fixed public vector",
+    "zero-length authentication",
+    "chunk boundary32768/32769",
+    "header/account/epoch/object/purpose changes fail authentication",
+    "tag flip/frame swap/truncation/trailing bytes rejected",
+    "bomb/length bounds, missing key version, no silent clear",
+    "Android Keystore/JCA actual Release throughput and restoration"
+  ],
+  "realKeysGenerated": false,
+  "AndroidValidated": false,
+  "hostVectorEvidence": "evidence/mail-object-format-host-vectors.json"
+}

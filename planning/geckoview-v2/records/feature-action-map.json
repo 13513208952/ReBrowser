@@ -1,0 +1,383 @@
+{
+  "schema": 1,
+  "revision": "R9",
+  "state": "design-coverage-not-runtime-passed",
+  "features": [
+    {
+      "id": "F01",
+      "groups": [
+        "C002",
+        "C003"
+      ],
+      "actions": [
+        "browser.workspaces.listHandles",
+        "browser.workspaces.getDetails",
+        "browser.workspaces.create",
+        "browser.workspaces.select",
+        "browser.workspaces.closeView",
+        "browser.workspaces.rename",
+        "browser.workspaces.setRetention",
+        "browser.workspaces.requestCheckpoint",
+        "browser.workspaces.removeData",
+        "browser.tabs.listHandles",
+        "browser.tabs.open",
+        "browser.tabs.select",
+        "browser.tabs.load",
+        "browser.tabs.back",
+        "browser.tabs.forward",
+        "browser.tabs.reload",
+        "browser.tabs.stop",
+        "browser.tabs.close",
+        "browser.popups.close",
+        "browser.tabs.getNavigationDetails"
+      ]
+    },
+    {
+      "id": "F02",
+      "groups": [
+        "C005",
+        "C011"
+      ],
+      "actions": [
+        "browser.search.getPublicProviders",
+        "browser.search.setProvider",
+        "browser.bookmarks.add",
+        "browser.bookmarks.update",
+        "browser.bookmarks.remove",
+        "browser.bookmarks.query",
+        "browser.search.getPrivateConfiguration",
+        "browser.bookmarks.export",
+        "host.subapps.listStatus",
+        "host.subapps.enable",
+        "host.subapps.disable",
+        "host.subapps.open",
+        "host.subapps.openSettings",
+        "host.settings.setAppearance",
+        "host.settings.setBackground",
+        "host.subapps.setSource",
+        "host.settings.readPrivateDetails",
+        "host.settings.readBackground"
+      ]
+    },
+    {
+      "id": "F03",
+      "groups": [
+        "C006"
+      ],
+      "actions": [
+        "browser.history.query",
+        "browser.history.getRules",
+        "browser.history.setRules",
+        "browser.history.clearSelected",
+        "browser.history.clearAll",
+        "browser.history.export"
+      ]
+    },
+    {
+      "id": "F04",
+      "groups": [
+        "C007",
+        "C009"
+      ],
+      "actions": [
+        "download.cancel",
+        "download.approve",
+        "download.retryBeforeDispatch",
+        "download.query",
+        "download.readDetails",
+        "download.deleteExactOwnedTarget",
+        "download.publishExport",
+        "host.openDefaultBrowserFlow",
+        "host.openInstaller",
+        "host.openPermissionSettings"
+      ]
+    },
+    {
+      "id": "F05",
+      "groups": [
+        "C008"
+      ],
+      "actions": [
+        "browser.permissions.requestOsFlow",
+        "browser.prompts.cancel",
+        "browser.prompts.chooseFile",
+        "browser.permissions.query",
+        "browser.permissions.setSiteDecision",
+        "browser.clipboard.read",
+        "browser.page.enterCredential"
+      ]
+    },
+    {
+      "id": "F06",
+      "groups": [
+        "C003",
+        "C010"
+      ],
+      "actions": [
+        "browser.tabs.listHandles",
+        "browser.tabs.open",
+        "browser.tabs.select",
+        "browser.tabs.load",
+        "browser.tabs.back",
+        "browser.tabs.forward",
+        "browser.tabs.reload",
+        "browser.tabs.stop",
+        "browser.tabs.close",
+        "browser.popups.close",
+        "browser.tabs.getNavigationDetails",
+        "host.window.back",
+        "host.window.exitFullscreen",
+        "host.window.requestFullscreen",
+        "host.window.selectPane"
+      ]
+    },
+    {
+      "id": "F07",
+      "groups": [
+        "C011"
+      ],
+      "actions": [
+        "host.subapps.listStatus",
+        "host.subapps.enable",
+        "host.subapps.disable",
+        "host.subapps.open",
+        "host.subapps.openSettings",
+        "host.settings.setAppearance",
+        "host.settings.setBackground",
+        "host.subapps.setSource",
+        "host.settings.readPrivateDetails",
+        "host.settings.readBackground"
+      ]
+    },
+    {
+      "id": "F08",
+      "groups": [
+        "C101"
+      ],
+      "actions": [
+        "mail.openOfficialEntry",
+        "mail.selectAccountKind",
+        "mail.recheckAuth",
+        "mail.getAuthState"
+      ]
+    },
+    {
+      "id": "F09",
+      "groups": [
+        "C102",
+        "C103",
+        "C105",
+        "C106"
+      ],
+      "actions": [
+        "mail.listAccounts",
+        "mail.query",
+        "mail.readItem",
+        "mail.readAttachment",
+        "mail.search",
+        "mail.cancelSearch",
+        "mail.syncBatch",
+        "mail.syncStart",
+        "mail.syncCancel",
+        "mail.saveAttachment",
+        "mail.exportItems",
+        "mail.exportAttachments",
+        "mail.importVerifiedArchive",
+        "mail.official.markRead",
+        "mail.official.move",
+        "mail.official.send",
+        "mail.official.delete",
+        "mail.official.bulkDestructive"
+      ]
+    },
+    {
+      "id": "F10",
+      "groups": [
+        "C104",
+        "C301",
+        "C108"
+      ],
+      "actions": [
+        "mail.setRetention",
+        "mail.reindex",
+        "mail.verifyObjects",
+        "mail.reconcileObjects",
+        "mail.setCodecPolicy",
+        "storage.outlook.clearData",
+        "storage.query",
+        "storage.querySharedPool"
+      ]
+    },
+    {
+      "id": "F11",
+      "groups": [
+        "C201"
+      ],
+      "actions": [
+        "music.open",
+        "music.selectLoginMode",
+        "music.checkAccount",
+        "music.getAuthState"
+      ]
+    },
+    {
+      "id": "F12",
+      "groups": [
+        "C202",
+        "C203",
+        "C204"
+      ],
+      "actions": [
+        "music.play",
+        "music.pause",
+        "music.stop",
+        "music.next",
+        "music.previous",
+        "music.seek",
+        "music.queue.add",
+        "music.queue.remove",
+        "music.queue.clear",
+        "music.queue.read",
+        "music.setLiked",
+        "music.playlists.create",
+        "music.playlists.addItems",
+        "music.playlists.rename",
+        "music.playlists.query",
+        "music.playlists.delete",
+        "music.playlists.bulkRemove",
+        "music.lyrics.setMode",
+        "music.lyrics.setPosition",
+        "music.getMetadata",
+        "music.readLyrics",
+        "music.lyrics.getPosition"
+      ]
+    },
+    {
+      "id": "F13",
+      "groups": [
+        "C202",
+        "C205"
+      ],
+      "actions": [
+        "music.play",
+        "music.pause",
+        "music.stop",
+        "music.next",
+        "music.previous",
+        "music.seek",
+        "music.queue.add",
+        "music.queue.remove",
+        "music.queue.clear",
+        "music.queue.read",
+        "music.runtime.open",
+        "music.runtime.reconnect",
+        "music.runtime.close",
+        "music.runtime.getStatus"
+      ]
+    },
+    {
+      "id": "F14",
+      "groups": [
+        "C204"
+      ],
+      "actions": [
+        "music.lyrics.setMode",
+        "music.lyrics.setPosition",
+        "music.getMetadata",
+        "music.readLyrics",
+        "music.lyrics.getPosition"
+      ]
+    },
+    {
+      "id": "F15",
+      "groups": [
+        "C401",
+        "C402",
+        "C403",
+        "C404",
+        "C405",
+        "C406",
+        "C407",
+        "C408",
+        "C409"
+      ],
+      "actions": [
+        "admin.delegateLow",
+        "admin.ownWhitelist.query",
+        "admin.ownWhitelist.prepareCompiledProposal",
+        "admin.ownWhitelist.revoke",
+        "admin.ownWhitelist.restoreCompiledEntry",
+        "admin.root.inspectHighest",
+        "admin.root.manageHighest",
+        "admin.root.useHighestWhitelist",
+        "admin.root.queryExclusiveWhitelist",
+        "admin.root.prepareExclusiveProposal",
+        "admin.root.revokeExclusiveEntry",
+        "admin.root.restoreCompiledEntry",
+        "admin.sessions.open",
+        "admin.sessions.queryOwn",
+        "admin.sessions.revokeOwn",
+        "admin.audit.queryPrivate",
+        "admin.helpers.attach",
+        "admin.helpers.detach",
+        "admin.capabilities.discover",
+        "admin.plugins.attachWorkflow",
+        "admin.plugins.detachWorkflow",
+        "admin.trust.getPublicCatalog",
+        "admin.root.prepareSignedApkPolicy",
+        "admin.importSignedRevocations",
+        "admin.disable",
+        "admin.restore"
+      ]
+    },
+    {
+      "id": "F16",
+      "groups": [
+        "C107",
+        "C108",
+        "C206",
+        "C207",
+        "C301",
+        "C302"
+      ],
+      "actions": [
+        "storage.outlook.clearCache",
+        "storage.outlook.clearData",
+        "storage.music.clearCache",
+        "storage.music.clearData",
+        "storage.query",
+        "storage.querySharedPool",
+        "storage.shared.clearRebuildableCache"
+      ]
+    },
+    {
+      "id": "F17",
+      "groups": [
+        "C001"
+      ],
+      "actions": [
+        "host.getPublicStatus",
+        "host.getHealth",
+        "host.getRuntimeMetrics"
+      ]
+    },
+    {
+      "id": "F18",
+      "groups": [
+        "C408",
+        "C501",
+        "C502",
+        "C503"
+      ],
+      "actions": [
+        "admin.trust.getPublicCatalog",
+        "admin.root.prepareSignedApkPolicy",
+        "admin.importSignedRevocations",
+        "source.inspectState",
+        "source.getRecoveryConditions",
+        "source.openPersonalRecoveryFlow",
+        "source.checkTrustedSuccessor"
+      ]
+    }
+  ]
+}

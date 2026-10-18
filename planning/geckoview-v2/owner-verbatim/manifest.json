@@ -156,7 +156,28 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message manually transcribed verbatim, without correction or newline"
+    },
+    {
+      "id": "O23",
+      "file": "owner-verbatim/O23-planning-completion-question.txt",
+      "utf8Bytes": 18,
+      "sha256": "1da6c4f51a41eff631539887c629ab1fad456e6c451bab972ef934382795cd05",
+      "provenance": "owner user-message manually transcribed verbatim, no correction or wrapping"
+    },
+    {
+      "id": "O24",
+      "file": "owner-verbatim/O24-keep-working-without-pausing.txt",
+      "utf8Bytes": 42,
+      "sha256": "c668978b25a13948a24691112a0b70ed3f47cb956400b8a292619824a126d152",
+      "provenance": "owner user-message manually transcribed verbatim, no correction or wrapping"
+    },
+    {
+      "id": "O25",
+      "file": "owner-verbatim/O25-pause-and-push-for-owner-analysis.txt",
+      "utf8Bytes": 75,
+      "sha256": "ebd3cf66320b37dd0b7cd21560f989c49a57bbfd3929ad441f3f74312900ea94",
+      "provenance": "owner user-message manually transcribed verbatim, no correction/wrapping"
     }
   ],
-  "lastAppendedAt": "2026-10-18T07:49:28+08:00"
+  "lastAppendedAt": "2026-10-18T09:17:40+08:00"
 }

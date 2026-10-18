@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R8",
+  "revision": "R9",
   "questions": [
     {
       "id": "Q01",
@@ -52,9 +52,12 @@
         "R14",
         "R17"
       ],
-      "state": "open",
+      "state": "resolved-by-engineering-design",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "明确定向owner本地登记+target Keystore持钥challenge+编译下一兼容APK；普通最高仅自有提案，Root可汇总。实际登记未执行。",
+      "resolutionAuthority": "O18 delegated engineering",
+      "validationRemaining": "implementation and relevant isolated platform/property tests; not owner question"
     },
     {
       "id": "Q05",
@@ -79,9 +82,12 @@
         "R12",
         "R13"
       ],
-      "state": "open",
+      "state": "resolved-by-engineering-design",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "采用0..10/H5，低级最高4，普通最高9，Root10；逐动作registry取代混合组数字，owner grant300s精确范围。",
+      "resolutionAuthority": "O18 delegated engineering",
+      "validationRemaining": "implementation and relevant isolated platform/property tests; not owner question"
     },
     {
       "id": "Q07",
@@ -92,9 +98,12 @@
         "R18",
         "R19"
       ],
-      "state": "open",
+      "state": "resolved-by-engineering-design",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "默认不独立开LAN/公网监听，ADB有线/无线与签名本地IPC满足当前场景；新网络通道仅作未来适配设计。",
+      "resolutionAuthority": "O18 delegated engineering",
+      "validationRemaining": "implementation and relevant isolated platform/property tests; not owner question"
     },
     {
       "id": "Q08",
@@ -106,9 +115,12 @@
         "R09",
         "R17"
       ],
-      "state": "open",
+      "state": "resolved-by-engineering-design",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "APK RSA3072、管理员/设备EC P256、数据AES分域；备份/恢复计划明确，实际材料交接和生成属于P2，不假称已保管。",
+      "resolutionAuthority": "O18 delegated engineering",
+      "validationRemaining": "implementation and relevant isolated platform/property tests; not owner question"
     },
     {
       "id": "Q09",
@@ -177,9 +189,12 @@
         "R12",
         "R17"
       ],
-      "state": "open",
+      "state": "resolved-by-engineering-design",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "所有>=5身份/等级/角色/公钥和名单设备公钥映射随APK；低级<=4委托；运行期仅已编译项撤销/复位及低级证书。",
+      "resolutionAuthority": "O18 delegated engineering",
+      "validationRemaining": "implementation and relevant isolated platform/property tests; not owner question"
     },
     {
       "id": "Q14",
@@ -216,9 +231,12 @@
         "R13",
         "R32"
       ],
-      "state": "open",
+      "state": "resolved-by-engineering-design",
       "responsible": "assistant-engineering",
-      "askOwnerNow": false
+      "askOwnerNow": false,
+      "resolution": "本安装有序签名禁用账本，可显式导入兼容签名快照；恢复为同有效禁用者撤回或严格更高者，跨设备离线不声称即时生效。",
+      "resolutionAuthority": "O18 delegated engineering",
+      "validationRemaining": "implementation and relevant isolated platform/property tests; not owner question"
     },
     {
       "id": "Q17",

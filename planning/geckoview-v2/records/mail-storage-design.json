@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R8",
+  "revision": "R9",
   "state": "detailed-design-host-baseline-only",
   "productImplemented": false,
   "AndroidValidated": false,
@@ -202,10 +202,12 @@
     "cache clear excludes sole offline originals; all-data scope explicitly includes them with warning"
   ],
   "searchAndRead": [
-    "paged metadata query, source private data bound to account",
-    "body decode off UI with bounded caches and per-query cancellation generation",
-    "SQLite FTS/Chinese strategy needs Android feature/size tests, do not silently remove existing searches",
-    "offline HTML no mailbox cookies/scripts/forms or automatic remote loads; export gets verified exact stored content"
+    "Metadata paged indexed date/conversation query; LIKE/Unicode literal subject filtering, no required FTS dependency",
+    "Body search uses separately compressed/encrypted visible-text object purpose3 captured alongside body when possible; search size included, not free",
+    "Searchtext optional pending-index state, never claim zero matches while missing; fallback bounded isolated offline safe extraction, no scripts/network",
+    "Incremental decoder and query-length carry preserve Chinese/UTF8 matches across chunks; query max256Unicode codepoints with visible resource-limit rather than truncation",
+    "Scan/decompress worker cancellable per query+account generation, initial result/progress within500ms target; do not load entire mailbox",
+    "Platform FTS remains optional only after Android feature/size tests justify it; native UI search capability must remain available"
   ],
   "benchmarkSummary": [
     {
@@ -259,11 +261,12 @@
   ],
   "releaseBlockers": [
     "Android real corpus-shape performance/peak memory",
-    "full schema field types and SQL constraints/transaction fixture validation",
     "search/index/Chinese behavior and cost",
-    "selective crypto framing and key custody/recovery",
     "process-death/orphan/refcount reconciliation",
-    "safe HTML reader and attachment/malicious input cases"
+    "safe HTML reader and attachment/malicious input cases",
+    "Android SQLite/JCA conformance to fixed schema/container/host vectors",
+    "Keystore actual lifecycle and private custody/restore verification",
+    "representative Chinese/HTML extraction/search/cancellation fixtures"
   ],
   "storageAccounting": {
     "nativeFileLengths": [
@@ -278,5 +281,7 @@
       "each duplicate message full stored object size"
     ],
     "meaning": "native logical file lengths, not guaranteed filesystem physical blocks; original text total a separate logical-content metric"
-  }
+  },
+  "objectFormatRef": "records/mail-object-format.json",
+  "schemaDesignRef": "schemas/mail-v1.sql"
 }

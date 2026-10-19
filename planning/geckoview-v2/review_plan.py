@@ -337,6 +337,13 @@ def review():
         }
         assert storage['reclaimedFreeBytes'] == storage['freeBytesAfter'] - storage['freeBytesBefore'] > 0
         storage_report = {'ownTemporaryFreeBytesRecovered': storage['reclaimedFreeBytes'], 'temporaryStorageAuthority': 'O33'}
+    recovery = load('evidence/temporary-storage-recovery-R35.json')
+    assert recovery['deletionComplete'] and recovery['authority'] == ['O33', 'O54']
+    assert [(e['files'], e['logicalBytes']) for e in recovery['entries']] == [(13, 176486440), (2935, 291269899)]
+    assert len(recovery['preserved']) >= 7
+    storage_report.update(ownHistoricalOutputLogicalBytesRemovedR35=sum(e['logicalBytes'] for e in recovery['entries']),
+                          ownHistoricalOutputAllocatedBytesRemovedR35=sum(e['allocatedBytesBefore'] for e in recovery['entries']),
+                          r35FreeByteDeltaNotExclusivelyAttributed=True)
     report = {
         **storage_report,
         **abi_report,

@@ -1,5 +1,7 @@
 # 浏览器与系统边界设计骨架 · A03／A04 · R19
 
+R35已实现[响应流Worker](../records/response-stream-implementation-contract.json)：只复制到未发布私有stage，32KiB bulk读取、原始字节上限/长度/EOF/SHA、取消与全部关闭路径；10项HOST合成流测试。固定Gecko Java的单字节read()实际读四字节，故连EOF探测也只用bulk；忽略interrupt的阻塞流测试证明Future.done不代表实际结束。未执行Gecko/JNI/Android流，也未接通ContentDelegate、下载准入、目标选择或发布。
+
 当前权限阻断以[Native权限记录](../records/gecko-permission-design.json)为准：
 - 普通引擎许可写EXPIRE_NEVER；自身期限/void撤回派发不能冒充引擎过期或活动使用结束。
 - [固定提供方方法体HOST研究](../evidence/geolocation-source-host-probe.json)显示先发布最精确缓存再选择COARSE provider；`enableHighAccuracy=false`不是单站模糊位置保证，global pause也不是单站停止回执。实际JNI/OS/站点结果仍未测；不因编码层已有源码而跳过该阻断。

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R34",
+  "revision": "R35",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -207,12 +207,16 @@
   ],
   "runtimeSubsetState": "phone-local-Native-ports-MAIN-context-pass; Popup/restore/Keystore/media/sites remain",
   "executionBudget": {
-    "authority": "O33",
+    "authority": [
+      "O33",
+      "O54"
+    ],
     "policyRef": "TEMPORARY_STORAGE_POLICY.md",
     "mode": "low-disk-source-and-contract-review",
     "buildGate": "estimated new peak +1GiB reserve; unknown >=3GiB free; MemAvailable>=3GiB",
     "noGlobalOrDeviceCleanup": true,
-    "phoneTestAbi": "arm64-v8a only (O35)"
+    "phoneTestAbi": "arm64-v8a only (O35)",
+    "latestRecoveryRef": "evidence/temporary-storage-recovery-R35.json"
   },
   "abiPackagingPolicyRef": "records/abi-packaging-policy.json",
   "supersededTrackAlias": {
@@ -220,10 +224,10 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "continuedafterR33push:actualGecko ProgressDelegate callbacks/currentSourcepartition gating andcheckpointoffer ownership",
-    "36actualmainJava/174mainHOST unchanged=164pure+10Androidclasspure;22HOST/14API-WIP; newdelegateAPIonlynotexecuted",
-    "unknowncapture receiver retainsownedcredit untilactualnativeend; invalidationnotsettlement/pageStopnotdomaincompletion",
-    "mainSource/OwnerAuth/LastGood/erasure stillnotready; noOS/device/networknewoperation"
+    "O54先精确回收两处历史生成输出：467756339B逻辑内容；保留当前工具链、APK、证据与凭据，不清回收站/全局缓存",
+    "ResponseStreamWorker实际有界同步owned-copy/discard：bulk-only EOF、长度/SHA、取消检查及所有关闭路径；10 HOST tests",
+    "37 actual main Java /184 main HOST =174 pure +10 Android-class metadata; 23 HOST /14 API-WIP; no Gecko/OS download execution",
+    "Source continuity, bounded NativeTask/DownloadCoordinator, Content/Navigation delegates and full browser UI remain missing"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -238,7 +242,7 @@
     "I0",
     "L0"
   ],
-  "latestOwnerContinuation": "O51continue，O50推送后继续工作/机主远端分析不暂停",
+  "latestOwnerContinuation": "O54先回收可再生历史文件，保留源码/发布物/凭据；O53继续实现",
   "primaryFocus": {
     "authority": "O45",
     "work": "formal main-program and administrator mechanism source implementation",

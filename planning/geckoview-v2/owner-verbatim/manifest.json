@@ -359,7 +359,28 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O52",
+      "file": "owner-verbatim/O52-continue-native-stream-work.txt",
+      "utf8Bytes": 18,
+      "sha256": "a38fc09ac174bf67c6412312492b117feb59fddb21181941a15dfa9598306e19",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O53",
+      "file": "owner-verbatim/O53-continue-owned-response-worker.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O54",
+      "file": "owner-verbatim/O54-reclaim-recyclable-history-with-limited-space.txt",
+      "utf8Bytes": 105,
+      "sha256": "e82e51036aef74035fc0d0acd5ea8901069299a58f09a7323fb40e0e39b905d5",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-19T17:03:04+08:00"
+  "lastAppendedAt": "2026-10-19T19:02:26+08:00"
 }

@@ -84,6 +84,10 @@ def review():
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not any(tasks[k] for k in ['androidSQLiteMethodsExecuted','actualNativeCoordinatorAndPolicyAtomicityTested','realDataOrKeysUsed'])
     assert not app['geckoDelegateCallbacksExecuted']
+    assert app['responseStreamWorkerHostTests'] == 10 and not app['actualGeckoResponseStreamsExecuted']
+    stream = json.loads((P/'records/response-stream-implementation-contract.json').read_text())
+    assert not stream['sourceInspection']['productUpstreamModified']
+    assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.download.ResponseStreamWorkerTest')['tests'] == 10
     assert app['ownerBiometricPermissionDeclared']
     assert not app['ownerAuthenticationPromptOrTicketConsumeExecuted'] and not app['ownerAuthenticationControlFlowHostExecuted']
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])

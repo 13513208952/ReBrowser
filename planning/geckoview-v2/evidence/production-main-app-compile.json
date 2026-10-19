@@ -3,6 +3,10 @@
   "project": "rebrowser",
   "sourceFiles": [
     {
+      "path": "app/build.gradle.kts",
+      "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
       "sha256": "c4d4fe3f5920a0abeca23581acf6ca048e2b59217024333c6ade932a9e896ee3"
     },
@@ -115,6 +119,10 @@
       "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
+      "sha256": "07516fbd723b392d1ff1af894ebc29c0b8602c6f9946cf52d8ebbf53690cc8cb"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
       "sha256": "a28cddfbf5fd81ddb27c059f11cd69321e250af29b86473967eaf23101130c28"
     },
@@ -215,6 +223,10 @@
       "sha256": "dad32c625d8f88f64e62459847e481e9003485707135ba000ca61306d7f76b07"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java",
+      "sha256": "f2540eec7e5ee8858e0df94431a007c07bcd96ad09ddb0b5cefa001123b1d868"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java",
       "sha256": "c13d0a270635e17162f48655de260d578ab6a0cfd911125c23aec495d23e38c8"
     },
@@ -227,8 +239,12 @@
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
     },
     {
-      "path": "rebrowser/settings.gradle",
-      "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
+      "path": "rebrowser/app/build.gradle",
+      "sha256": "f28d1c6e48d658f8c6fbd4b008cb73e777ec8a654a0ce69f6b71663bd96410d2"
+    },
+    {
+      "path": "rebrowser/app/src/main/AndroidManifest.xml",
+      "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
     },
     {
       "path": "rebrowser/build.gradle",
@@ -239,60 +255,16 @@
       "sha256": "1cd886683a2f0d99f8beab66f665478b2dd20291dc94277e3125099600893647"
     },
     {
-      "path": "rebrowser/app/build.gradle",
-      "sha256": "f28d1c6e48d658f8c6fbd4b008cb73e777ec8a654a0ce69f6b71663bd96410d2"
-    },
-    {
-      "path": "rebrowser/app/src/main/AndroidManifest.xml",
-      "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
-    },
-    {
-      "path": "app/build.gradle.kts",
-      "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
+      "path": "rebrowser/settings.gradle",
+      "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
     }
   ],
-  "productionJavaSourceFiles": 36,
-  "compiledClassFiles": 133,
+  "productionJavaSourceFiles": 37,
+  "compiledClassFiles": 135,
   "unitTests": [
-    {
-      "class": "io.github.rebrowser.continuity.SigningIdentityTest",
-      "tests": 4,
-      "failures": 0,
-      "errors": 0
-    },
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
       "tests": 9,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.crypto.ObjectAeadTest",
-      "tests": 13,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.browser.SearchEnginesTest",
-      "tests": 11,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.control.IdempotencyIdentityTest",
-      "tests": 3,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.control.ControlDecoderTest",
-      "tests": 18,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.control.ControlChallengeStoreTest",
-      "tests": 14,
       "failures": 0,
       "errors": 0
     },
@@ -303,7 +275,67 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.browser.BrowserCatalogTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.browser.SearchEnginesTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.CompiledSourceIdentityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.ContinuityStateTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.continuity.OwnerAuthenticationBindingTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.SigningIdentityTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ActionSchemasTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ControlChallengeStoreTest",
+      "tests": 14,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ControlContractsTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ControlDecoderTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.IdempotencyIdentityTest",
       "tests": 3,
       "failures": 0,
       "errors": 0
@@ -321,26 +353,20 @@
       "errors": 0
     },
     {
-      "class": "io.github.rebrowser.continuity.ContinuityStateTest",
-      "tests": 3,
+      "class": "io.github.rebrowser.crypto.CryptoContractsTest",
+      "tests": 11,
       "failures": 0,
       "errors": 0
     },
     {
-      "class": "io.github.rebrowser.control.ControlContractsTest",
+      "class": "io.github.rebrowser.crypto.ObjectAeadTest",
       "tests": 13,
       "failures": 0,
       "errors": 0
     },
     {
-      "class": "io.github.rebrowser.browser.BrowserCatalogTest",
-      "tests": 14,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.outlook.MailObjectCodecTest",
-      "tests": 11,
+      "class": "io.github.rebrowser.download.ResponseStreamWorkerTest",
+      "tests": 10,
       "failures": 0,
       "errors": 0
     },
@@ -357,29 +383,17 @@
       "errors": 0
     },
     {
-      "class": "io.github.rebrowser.crypto.CryptoContractsTest",
+      "class": "io.github.rebrowser.outlook.MailObjectCodecTest",
       "tests": 11,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.control.ActionSchemasTest",
-      "tests": 7,
-      "failures": 0,
-      "errors": 0
-    },
-    {
-      "class": "io.github.rebrowser.continuity.CompiledSourceIdentityTest",
-      "tests": 3,
       "failures": 0,
       "errors": 0
     }
   ],
-  "unitTestsPassed": 174,
+  "unitTestsPassed": 184,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
-  "mergedManifestSha256": "4723750f9f909dc36caca7db6d2cfdf6a3d7eb411244fa4cf9efde3f2d499d78",
+  "mergedManifestSha256": "8aa507019dd1fec2c2e3b3debbd01ae431890ff93a2a6171cf4741da0027580b",
   "tasks": [
     "compileDebugJavaWithJavac",
     "processDebugMainManifest",
@@ -416,5 +430,7 @@
   "ownerAuthenticationPromptOrTicketConsumeExecuted": false,
   "ownerAuthenticationControlFlowHostExecuted": false,
   "progressAndCheckpointDelegateApiAdded": true,
-  "geckoDelegateCallbacksExecuted": false
+  "geckoDelegateCallbacksExecuted": false,
+  "responseStreamWorkerHostTests": 10,
+  "actualGeckoResponseStreamsExecuted": false
 }

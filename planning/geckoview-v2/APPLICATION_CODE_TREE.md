@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**36文件**；其中HOST测试切片 **22文件**，API编译/实现中 **14文件**；其余 **142文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**37文件**；其中HOST测试切片 **23文件**，API编译/实现中 **14文件**；其余 **141文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -120,7 +120,7 @@
                             │   ├── DownloadCoordinator.java [J][PLAN][?] — 真实WebResponse流/用户批准/取消/发布
                             │   ├── DownloadHandoff.java [J][PLAN][?] — 明确系统安装器/文件打开，非自动安装
                             │   ├── DownloadStore.java [J][PLAN][?] — 任务/元数据/保存目标的私有记录
-                            │   ├── ResponseStreamWorker.java [J][PLAN][?] — 有界IO/EOF/关闭流/失败/临时对象
+                            │   ├── ResponseStreamWorker.java [J][HOST][?] — 有界IO/EOF/关闭流/失败/临时对象
                             │   └── SaveTargetRegistry.java [J][PLAN][?] — 原生拥有或用户授权URI，拒绝任意私有路径
                             ├── engine/
                             │   ├── ContentDelegate.java [J][PLAN][?] — 崩溃/终止/全屏/外部response
@@ -240,7 +240,7 @@
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区；14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore；11HOST queries4providers/strictHTTP/userinfo/UTF16/UnicodeIDNpreservation/IPv6/ports/noSecretSearchFallback/URLbounds+fixedpoint;notGecko/DNS orOSIntent；12HOST real reducer/synthetic layer priority/revision/pending/unknown/stalepublication/thread/reentrancy/sourceLockedcancel, notAndroidactualBack | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BackCoordinatorTest.java` |
 | 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
-| 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发 | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java` |
+| 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发；10 HOST bulk-only EOF, byte length/SHA, all close/error paths, tainted prefix, cancel and interrupt-ignoring worker; not Gecko runtime | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java` |
 | 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
 | Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更；RAW/zlib选择包含AEAD帧开销，输出/摘要/EOF/字典/资源/取消，prepare->seal/open->decode私有暂存全原文；非DB/官网/Android性能 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java` |
 | 官方音乐与后台 | fresh准入与安全停止分开、单路线/冷启暂停/seek单位、旧焦点gain失效；合成媒体事件后再明确授权官网验证、服务/通知/焦点/任务重连；不擅自播放 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java` |

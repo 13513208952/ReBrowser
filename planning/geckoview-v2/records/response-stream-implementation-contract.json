@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "revision": "R35",
+  "scope": "actual synchronous owned response stream copy/discard; caller must supply bounded native IO lane and private unpublished stage",
+  "sourceInspection": {
+    "class": "org.mozilla.geckoview.GeckoInputStream",
+    "revision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
+    "sha256": "26ff1c334cdb967327e9e6d3dba421d9564bf7991f0ab1b5b4dd33f7f0af707e",
+    "facts": [
+      "pinned Java read() fills Integer.SIZE/8 bytes and returns ByteBuffer.getInt, not a one-byte API",
+      "bulk read waits and ignores InterruptedException; close sets mClosed and dispatches Support.close, no Java notifyAll there",
+      "native Support.close/JNI behavior UNINSPECTED; no runtime hang/leak/stop claim from Java source alone"
+    ],
+    "productUpstreamModified": false
+  },
+  "implementation": [
+    "bulk reads ONLY including exact-length/quota EOF sentinel; no available/single-byte fallback",
+    "32KiB buffer, native <=1TiB delivered-original-byte limit plus optional exact length; zero-progress loop cap",
+    "check cancellation request/interrupt before and after read and before/after private-stage flush",
+    "both non-null streams transfer ownership at entry; all paths attempt close; result only after both close calls return normally",
+    "partial/error/cancel/late-close failure leaves a TAINTED PRIVATE STAGE; no publish/fsync/DB/remote completion/whole-work-slot release"
+  ],
+  "integration": "Native DownloadCoordinator must admit the exact owned engine response on a bounded IO lane; validate target/source/epoch and fresh cancellation before publication; reserve physical-stage overhead separately. No cookie re-fetch or ignored-body drain fallback. Copy result is not a commit fence. Close/Future.done/client timeout is not an underlying-stop receipt."
+}

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "revision": "R35",
+  "authority": [
+    "O33",
+    "O54"
+  ],
+  "checkedAt": "2026-10-19T19:02:28+08:00",
+  "scope": "two exact obsolete task-owned generated output directories ONLY",
+  "entries": [
+    {
+      "pathRelativeToPrivateWorkspace": "validation/project/app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out",
+      "files": 13,
+      "logicalBytes": 176486440,
+      "allocatedBytesBefore": 176525312,
+      "manifestSha256": "fd76e5e4e705bb7602cf63b73afdf11a6b6b3ff25e3147b66fc2d1877d787676",
+      "reason": "obsolete task-owned reproducible build output; no active file user; current Gradle9.6 home untouched",
+      "regeneration": "R14 fixture mergeReleaseNativeLibs from retained pinned AAR"
+    },
+    {
+      "pathRelativeToPrivateWorkspace": "validation/gradle-user-final/caches/9.5.0/transforms",
+      "files": 2935,
+      "logicalBytes": 291269899,
+      "allocatedBytesBefore": 299999232,
+      "manifestSha256": "7b6c4be04dde480486159a9c998b0480904af2942f6068da9098bfd318df2f80",
+      "reason": "obsolete task-owned reproducible build output; no active file user; current Gradle9.6 home untouched",
+      "regeneration": "historical Gradle9.5/AGP transforms; replay original toolchain only if separately needed"
+    }
+  ],
+  "freeBytesBefore": 2839859200,
+  "deletionComplete": true,
+  "preserved": [
+    "current source and historical evidence/logs",
+    "formal v1 releases and all credentials/user originals",
+    "current lab APK verified SHA256",
+    "fixed upstream AAR verified SHA256; two AAR paths already hardlinked, not counted as recoverable duplicates",
+    "other native stripped copy",
+    "active Gradle9.6 home/project caches and SDK/Gradle installs",
+    "all global caches, unrelated projects/processes, system Trash"
+  ],
+  "notClaimed": [
+    "full APK build now authorized",
+    "source/archive or user-data cleanup",
+    "physical flash secure erasure",
+    "exact free-space delta exclusively attributable to this process"
+  ],
+  "freeBytesAfter": 3322392576,
+  "observedFreeByteDelta": 482533376
+}

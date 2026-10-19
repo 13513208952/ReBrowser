@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R34",
+  "revision": "R35",
   "authority": [
     "O41",
     "O42",
@@ -1047,6 +1047,37 @@
         "mainbrowserUI/Sourceepochrestore integration"
       ],
       "integrationGate": "NativeobservermustnotcaptureActivity/log/exposeSessionState. OnlyexactboundcurrentNativecallbacks; epoch/fence/session checkedagainbeforecommittedsnapshotpublication. Source/delegateinvalidationsneverreleaseoutstandingcheckpointcredit; falseacceptance meansnoretainedwork, unknownreceiverthrow retainsuntilnativeactualendack. SDKsnapshotmemorynotclaimedstrictlyboundedhere;receiverenforcesstream/bytebudget."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual bounded synchronousowned-stream copy/discard, exactdeliveredbytes SHA/length/EOF, cancel checks, bothstreamclose andtaintedstage failure; bulkONLYforpinnedGeckoInputStream",
+      "researchEvidence": [
+        "records/response-stream-implementation-contract.json",
+        "records/domain-interfaces.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "nativeownedInputStream+privateunpublishedOutputStream+limits/cancel view -> immutablecount/digest onlyafterclose orfailure; NEVER publicfile/publish/wholeworkend",
+      "dependencies": "actualCancellation.Java8streams/SHA, no newlib/Android/Geckocode patch",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.download.ResponseStreamWorkerTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "actualGeckoInputStream/nativeJNI/OSread-close runtimebehavior",
+        "Source/account/epoch admission orpublicsave/DBdurability",
+        "close/future.cancel provingremoteeffect orquiescence",
+        "completeDownloadCoordinator/ContentDelegate/targetpicker"
+      ],
+      "integrationGate": "BoundednativeIOlane ONLY. Inputbody ownership closes evenignored, noCookieRefetch fallback. ActualTaskCoordinator retainsworkslot whileblocked/closing; helperreturn/closefailure notpartitionerasureproof. Stagefile/physicaloverhead/revisionpublication separatelynativevalidated."
     }
   ],
   "parallelPending": [

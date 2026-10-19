@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R34",
+  "revision": "R35",
   "authority": [
     "O26",
     "O27",
@@ -336,6 +336,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java",
+          "kind": "unit-owned-stream-worker",
+          "purpose": "10 HOST bulk-only EOF, byte length/SHA, all close/error paths, tainted prefix, cancel and interrupt-ignoring worker; not Gecko runtime",
+          "state": "host-tested-not-native-integrated"
         }
       ]
     },
@@ -1984,14 +1990,20 @@
       "group": "download",
       "kind": "native-code",
       "responsibility": "有界IO/EOF/关闭流/失败/临时对象",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
         "VT05"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "actual source-bound HOST stream/close/cancel tests + Android37.2 bootclasspath compile; NOT native Gecko flow or download integration",
       "runtimePending": true,
-      "testReferenceGroup": "download"
+      "testReferenceGroup": "download",
+      "implementationEvidence": [
+        "records/response-stream-implementation-contract.json",
+        "evidence/production-unit-tests.json",
+        "evidence/production-android-api-compile.json"
+      ],
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/download/DownloadHandoff.java",

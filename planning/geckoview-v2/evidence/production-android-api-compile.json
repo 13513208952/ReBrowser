@@ -91,6 +91,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
       "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
+      "sha256": "07516fbd723b392d1ff1af894ebc29c0b8602c6f9946cf52d8ebbf53690cc8cb"
     }
   ],
   "classFiles": [
@@ -557,6 +561,21 @@
     {
       "path": "io/github/rebrowser/crypto/ObjectAead.class",
       "sha256": "73b598fe2c4a1d5beb472a4ac1d70cc1913434605732d4f40b2cab98b372040f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/download/ResponseStreamWorker$1.class",
+      "sha256": "a22f30927d46e9e50c2ff8a69d7342f185ab88e77081a7ec474c72846068e15e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/download/ResponseStreamWorker$CopiedStage.class",
+      "sha256": "7f8c9dd3e8222d34c58f7b0dfd64ede5ada98a2bd28bbc9f6512ac49217179c3",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/download/ResponseStreamWorker.class",
+      "sha256": "07d6bb8397e1b154e89299eed6c4fc9a4cdf088106724e0561c4b0a7ce5cc6c6",
       "classMajor": 52
     },
     {

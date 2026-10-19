@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**35文件**；其中HOST测试切片 **22文件**，API编译/实现中 **13文件**；其余 **143文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**36文件**；其中HOST测试切片 **22文件**，API编译/实现中 **14文件**；其余 **142文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -132,7 +132,7 @@
                             │   ├── NavigationDelegate.java [J][PLAN][?] — 加载/外链/新窗与正确父来源
                             │   ├── PartitionCatalog.java [J][HOST][?] — 稳定非null context和环境/子应用归属
                             │   ├── PermissionDelegate.java [J][PLAN][?] — context+origin网站许可与OS许可分层
-                            │   ├── ProgressDelegate.java [J][PLAN][?] — 提交导航/加载/安全状态/快照事件
+                            │   ├── ProgressDelegate.java [J][API/WIP][?] — 提交导航/加载/安全状态/快照事件
                             │   ├── PromptDelegate.java [J][PLAN][?] — 网站提示/文件选择的Native/系统等待
                             │   ├── SelectionDelegate.java [J][PLAN][?] — 网页选择/复制与用户动作
                             │   ├── SessionCheckpointStore.java [J][PLAN][?] — 异步sessionState与敏感快照提交/恢复
@@ -287,6 +287,7 @@
 | 浏览器领域与本机数据 | actual-navigation-input-and-Android-link-boundary | SearchEngines/ExternalNavigation正式源码，选定环境/标签/revision检查后NativeCoordinator.loadUri调用；Nativeinitializer在open前拿真实Tabowner。无系统receiver激活/Source解锁/正确Checkpoint/Android实机动作；加载提交不等于网页成功，不回滚代次重放。<br>`app/src/main/java/io/github/rebrowser/browser/SearchEngines.java`<br>`app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java`<br>`app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java` |
 | 来源连续性 | actual-source-metadata-and-owned-back | R32按总树补BackCoordinator/SigningIdentity/CompiledSourceIdentity。原生Back只一层，未知不落下一层，原执行者迟到结算不发布新代；来源只读自身OS签名和APK编译Root元数据，Startup仍UNCONFIGURED/LOCKED，不写lastGood/不解锁。<br>`app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java`<br>`app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java`<br>`app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java`<br>`app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java` |
 | 来源连续性 | actual-fresh-system-owner-authentication-source | R32push后继续补确认数据和Android机主验证源码，严格Force2/3分次，只有系统明确无锁才免验证，取消/未知不产成功票据。35源码174HOST，OwnerAuthentication仅API-WIP；OS验证/四步归约/LastGood/精确销毁/业务解锁均未完成。<br>`app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java`<br>`app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
+| Gecko原生宿主 | actual-Gecko-progress-checkpoint-observer | R33push后继续写ProgressDelegate：实际SDK回调、同源session/partition准入、类型化进度/安全观测与单占位敏感快照转交。Native仅API编译，无新增HOST数/无Gecko实测，不把加载停止/未知接收/失效当实际work结束。<br>`app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
 
 ### 当前边界
 

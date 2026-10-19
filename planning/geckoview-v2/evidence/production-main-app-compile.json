@@ -127,6 +127,10 @@
       "sha256": "b56ab8aceec452fe719e2ee1f66b5e1476be77c30c6bc9e9b30639f7c0976693"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",
+      "sha256": "81890073cef691535b35a01d29272b1c7097f3a8e976e8967acb7fffd5ac659b"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
       "sha256": "bcac978402078733c05f3cdaf986f3d047c836325ff47aaca030cc282802afe9"
     },
@@ -247,8 +251,8 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 35,
-  "compiledClassFiles": 127,
+  "productionJavaSourceFiles": 36,
+  "compiledClassFiles": 133,
   "unitTests": [
     {
       "class": "io.github.rebrowser.continuity.SigningIdentityTest",
@@ -410,5 +414,7 @@
   "sourceRootOrBackUiActivated": false,
   "ownerBiometricPermissionDeclared": true,
   "ownerAuthenticationPromptOrTicketConsumeExecuted": false,
-  "ownerAuthenticationControlFlowHostExecuted": false
+  "ownerAuthenticationControlFlowHostExecuted": false,
+  "progressAndCheckpointDelegateApiAdded": true,
+  "geckoDelegateCallbacksExecuted": false
 }

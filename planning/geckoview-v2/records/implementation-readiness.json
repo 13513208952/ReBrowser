@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R33",
+  "revision": "R34",
   "authority": [
     "O41",
     "O42",
@@ -1021,6 +1021,32 @@
         "formalkeyprovision orsourcebusinessunlock"
       ],
       "integrationGate": "ActualOS tests needseparateownerpromptauthorization. Only nativeSourceCoordinator buildsbindingsafterreal4clicks/currentSignerRootepochchecks; FORCE2/3 freshindependentrequests; unknown/cancel/failure NEVERno-lockexemption orsuccess. Consumeoncewhenownedforegroundreturns, thenrecheckactualsource/epoch/step. NoRoot/whitelistbypass, noCLItrust, noold-dataaccess/deletionhere."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual directGecko progress/security callbacks andsingle-outstanding sensitivecheckpoint offer, ownednative source/partition binding, no fabricateddocument/job receipt",
+      "researchEvidence": [
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "evidence/upstream.json"
+      ],
+      "inputOutput": "actualboundGeckoSession/currentnativeSource+partition -> typednativeobservations;privateSessionStatecopyoffer toboundednativecheckpointreceiver",
+      "dependencies": "actualGecko158ProgressDelegate/SessionStatecopyconstructor, ComponentGate/PartitionCatalog, UIthreadNativeOwner",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "anyactualGecko delegate/capture/writer/DOM/event runtime execution",
+        "completebounded encryptedcheckpointStore/nativeIOsettlement",
+        "document/principal/login/jobcompletion/quiescence inferredfromprogress/pageStop",
+        "mainbrowserUI/Sourceepochrestore integration"
+      ],
+      "integrationGate": "NativeobservermustnotcaptureActivity/log/exposeSessionState. OnlyexactboundcurrentNativecallbacks; epoch/fence/session checkedagainbeforecommittedsnapshotpublication. Source/delegateinvalidationsneverreleaseoutstandingcheckpointcredit; falseacceptance meansnoretainedwork, unknownreceiverthrow retainsuntilnativeactualendack. SDKsnapshotmemorynotclaimedstrictlyboundedhere;receiverenforcesstream/bytebudget."
     }
   ],
   "parallelPending": [

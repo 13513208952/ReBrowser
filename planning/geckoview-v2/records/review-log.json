@@ -1,5 +1,5 @@
 {
-  "revision": "R33",
+  "revision": "R34",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -305,6 +305,12 @@
       "time": "2026-10-19T17:29:14+08:00",
       "finding": "O16要求首次信任/首次强行直接点击，第二/第三次强行各自新系统验证；生物识别不可用/取消/未知不能当无锁。真实OS动作尚未获运行授权，不能用元数据测试冒充身份验证通过。",
       "resolution": "R32push后继续实现精确4文案及NativeBiometricStrong|DeviceCredential/KeyguardpositiveNoLock、源/epoch/Force2-3独立Binding/私有30s一次Ticket。取消/未知保留原OS待办、闭窗/绑定失效阻止票据使用，不读密码/模板/旧DB、不自动销毁解锁。实际SDK编译发现两项非公开常量不可用，改null/type公开白名单及公开取消错误，不用私有API/魔数绕过。174主工程HOST(164pure)仅6新文案/绑定测试；明确没有认证/消费/控制流HOST或OS运行。"
+    },
+    {
+      "id": "REV52",
+      "time": "2026-10-19T17:43:12+08:00",
+      "finding": "Gecko进度/安全与SessionState回调需要实际Native文件承接，但SDK无每请求/文档ID，PageStop(success)不能变成任务完成或数据提交。快照包含表单等隐私，接收者异常也不能换路重试或重置信用。",
+      "resolution": "直接写ProgressDelegate，准确SDKcopyconstructor转交敏感SessionState、1outstandingNativecapture、同session+当前Source/partition检查、privateWorker一次转移和actual-endack。局部observation序号不是documentlease，安全字段不含certificate/origin导出，失效不释放旧writer。36源码AGP编译/174既有HOST通过，无新增delegate/Gecko执行测试；不把API编译当校验完整checkpoint或真实界面。"
     }
   ]
 }

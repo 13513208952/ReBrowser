@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R33",
+  "revision": "R34",
   "authority": [
     "O26",
     "O27",
@@ -1275,7 +1275,7 @@
       "group": "engine",
       "kind": "native-code",
       "responsibility": "提交导航/加载/安全状态/快照事件",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1283,9 +1283,10 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R34 actualGecko callback/Statecopyoffer source andAGP APIcompile;NoGecko callback/runtime/HOSTcontrolflow executed. PageStopnotjobend,1outstandingcheckpointnotreleasedonSourceinvalidate/receiverunknown.",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
@@ -3464,6 +3465,15 @@
       "paths": [
         "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
         "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+        "planning/geckoview-v2/evidence/production-main-app-compile.json"
+      ]
+    },
+    {
+      "group": "engine",
+      "kind": "actual-Gecko-progress-checkpoint-observer",
+      "summary": "R33push后继续写ProgressDelegate：实际SDK回调、同源session/partition准入、类型化进度/安全观测与单占位敏感快照转交。Native仅API编译，无新增HOST数/无Gecko实测，不把加载停止/未知接收/失效当实际work结束。",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",
         "planning/geckoview-v2/evidence/production-main-app-compile.json"
       ]
     }

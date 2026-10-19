@@ -83,6 +83,7 @@ def review():
     for source in tasks['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not any(tasks[k] for k in ['androidSQLiteMethodsExecuted','actualNativeCoordinatorAndPolicyAtomicityTested','realDataOrKeysUsed'])
+    assert not app['geckoDelegateCallbacksExecuted']
     assert app['ownerBiometricPermissionDeclared']
     assert not app['ownerAuthenticationPromptOrTicketConsumeExecuted'] and not app['ownerAuthenticationControlFlowHostExecuted']
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])

@@ -71,6 +71,10 @@
       "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+      "sha256": "bc720145110db3b74b9e246d7f7cb8c70222f81dad4bea0b962aacf7c5232c3e"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
       "sha256": "f95000b2315f069a5fe54f71af39c564040eb58a17349967754c83036478b8bb"
     },
@@ -179,6 +183,10 @@
       "sha256": "be0049f101b214dac57ead9719371f5edebc5485aaee314220af111f0208ddae"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/LastGoodSourceStoreTest.java",
+      "sha256": "99665ca3eb5390f7eaf0c050c5c7dea255ad11913ef8a645824a6fae02aabc2a"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java",
       "sha256": "8d27ddf4109dafacf68709f1f54d75304866e019a401246fd7ded142f5495aec"
     },
@@ -259,8 +267,8 @@
       "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
     }
   ],
-  "productionJavaSourceFiles": 37,
-  "compiledClassFiles": 135,
+  "productionJavaSourceFiles": 38,
+  "compiledClassFiles": 144,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -295,6 +303,12 @@
     {
       "class": "io.github.rebrowser.continuity.ContinuityStateTest",
       "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.LastGoodSourceStoreTest",
+      "tests": 17,
       "failures": 0,
       "errors": 0
     },
@@ -389,7 +403,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 184,
+  "unitTestsPassed": 201,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -432,5 +446,9 @@
   "progressAndCheckpointDelegateApiAdded": true,
   "geckoDelegateCallbacksExecuted": false,
   "responseStreamWorkerHostTests": 10,
-  "actualGeckoResponseStreamsExecuted": false
+  "actualGeckoResponseStreamsExecuted": false,
+  "lastGoodSourceHostFilesystemTests": 17,
+  "lastGoodSourceAndroidFilesystemExecuted": false,
+  "lastGoodSourcePowerLossOrProcessDeathExecuted": false,
+  "lastGoodSourceCoordinatorOrUnlockIntegrated": false
 }

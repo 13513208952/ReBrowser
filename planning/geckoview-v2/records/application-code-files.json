@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R35",
+  "revision": "R36",
   "authority": [
     "O26",
     "O27",
@@ -75,6 +75,12 @@
           "kind": "unit-native-owner-binding-metadata",
           "purpose": "3HOST epochcopy/steprestriction/freshchallenge/privateTicketconstructor, NOownerprompt/noLockproof/ticketmintconsume/controlflowexecution",
           "state": "main-project-HOST-binding-only"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/LastGoodSourceStoreTest.java",
+          "kind": "unit-last-good-metadata-filesystem",
+          "purpose": "17 actual HOST metadata IO/reopen/A-B-abort-A and explicit-empty-B, lock/CAS, corrupt/pending/symlink/directory identity rejection; synthetic fences, not owner authentication or erasure",
+          "state": "host-filesystem-tested-not-Android-integrated"
         }
       ]
     },
@@ -586,13 +592,19 @@
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "最后正常来源与数据epoch记录，异常包不覆盖",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "actual 17 HOST private temporary-filesystem tests and SDK37.2 bootclasspath compile; NOT Android filesystem/power-loss/source authority/erasure",
       "runtimePending": true,
-      "testReferenceGroup": "continuity"
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/last-good-source-store-contract.json",
+        "evidence/production-unit-tests.json",
+        "evidence/production-android-api-compile.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "revision": "R36",
+  "scope": "Native bootstrap METADATA DAO, not source authority, user consent, erasure, fresh-install detection or business unlock",
+  "authority": ["O14", "O16", "O55"],
+  "inputs": "Native trusted existing no-backup directory ONLY; no IPC path. Public signing/Root fingerprints and 16-byte epochs. Package-private mutations require a synchronous side-effect-free current native coordinator fence.",
+  "phases": ["STABLE", "PREPARED_OLD_DATA_PRESERVED", "DESTRUCTION_MAY_HAVE_STARTED", "EMPTY_EPOCH_VERIFIED"],
+  "invariants": [
+    "Installing/observing B alone never writes baseline A; no lastSeen API or automatic seeding",
+    "Pending B retains A signer/Root/epoch until explicit verified-empty replacement commit; abort allowed only before destruction-may-have-started",
+    "Missing/corrupt/unfinished metadata is NOT evidence of a fresh install. Native coordinator must separately inspect exact owned old-data inventory before seed",
+    "Progress markers are native coordinator claims, not evidence that erasure/authentication actually ran; phase alone never authorizes an effect",
+    "Fixed <=216B frame, explicit version/phase/revision, SHA256 corruption checksum NOT MAC/trust, canonical zero pending fields in stable record",
+    "Nonblocking fixed file lock, exact-view CAS and monotonic revisions; no concurrent/foreign/stale overwrite",
+    "Anchor live store to identifiable native directory fileKey; changed directory or unavailable provider identity fails closed. All native owners must preserve the bootstrap directory and lock inode while operating; this ledger is excluded from old-epoch erasure until new source commit",
+    "Exclusive private stage, file force, repeated native fence, atomic rename ONLY, directory force and readback; unsupported filesystem or IO failure stays locked/unknown, no weaker fallback",
+    "Read never repairs or deletes. Interrupted stage blocks mutations until explicit exact-view discard; no directory traversal or arbitrary file cleanup"
+  ],
+  "validationPlanned": "Actual bounded HOST temporary-filesystem operations: persistence/reopen, A-B-abort-A and A-B-empty-B, strict corruption/length/revision, stale/foreign CAS, real file-lock contention, rejected symlinks and replaced directory, fence failure after stage force, controlled interrupted-stage discard. SDK bootclasspath compilation separately; Android filesystem/power-loss/source coordinator/UI/auth/erasure NOT executed.",
+  "integrationGate": "Keep business UNCONFIGURED/LOCKED. Future native ContinuityCoordinator alone supplies actual source/old-data/auth/erasure evidence and serializes source changes with replacement; no DAO result is a BusinessPermit. No v1 data/profile access, no backup/flash overwrite claim. Compromised same-UID signed code remains outside self-check protection."
+}

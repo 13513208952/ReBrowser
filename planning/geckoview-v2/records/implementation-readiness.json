@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R35",
+  "revision": "R36",
   "authority": [
     "O41",
     "O42",
@@ -1078,6 +1078,38 @@
         "completeDownloadCoordinator/ContentDelegate/targetpicker"
       ],
       "integrationGate": "BoundednativeIOlane ONLY. Inputbody ownership closes evenignored, noCookieRefetch fallback. ActualTaskCoordinator retainsworkslot whileblocked/closing; helperreturn/closefailure notpartitionerasureproof. Stagefile/physicaloverhead/revisionpublication separatelynativevalidated."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual small native bootstrap metadata ledger: preserved last-good signer/Root/epoch across pending candidate; explicit phase transitions, strict 216B format, nonblocking lock/exact-view CAS, force/atomic rename/directory force and readback; not source authority",
+      "researchEvidence": [
+        "records/last-good-source-store-contract.json",
+        "records/root-continuity.json",
+        "owner-verbatim/O16-four-step-confirmation-and-trusted-source.txt"
+      ],
+      "inputOutput": "trusted existing native no-backup directory -> bounded metadata View or explicit IO/conflict failure; package-private transitions only, no IPC path/consent/trust/erase/business permit",
+      "dependencies": "existing Java8 public NIO/FileChannel/FileLock/Posix attributes and JCA SHA256, API30 supports declared APIs; filesystem implementation still requires actual Android validation",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/continuity/LastGoodSourceStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.continuity.LastGoodSourceStoreTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "Android filesystem/power-loss/crash process qualification",
+        "NativeFence supplies actual owner authentication/source or erasure evidence",
+        "metadata SHA checksum is authentication/Root trust",
+        "missing marker proves fresh installation",
+        "complete continuity coordinator, UI, erasure or business unlock"
+      ],
+      "integrationGate": "NOT wired. Keep formal Root empty and business gate locked. Native coordinator alone verifies actual signer/Root/old-data inventory, two fresh auth tickets, exact erasure and fresh epoch; serialize changes with write and recheck before effects. Stable metadata is not BusinessPermit. Failure can be unknown; inspect without alternate non-atomic route."
     }
   ],
   "parallelPending": [

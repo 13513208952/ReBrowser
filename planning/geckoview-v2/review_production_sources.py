@@ -88,6 +88,9 @@ def review():
     stream = json.loads((P/'records/response-stream-implementation-contract.json').read_text())
     assert not stream['sourceInspection']['productUpstreamModified']
     assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.download.ResponseStreamWorkerTest')['tests'] == 10
+    assert app['lastGoodSourceHostFilesystemTests'] == 17
+    assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.continuity.LastGoodSourceStoreTest')['tests'] == 17
+    assert not any(app[k] for k in ['lastGoodSourceAndroidFilesystemExecuted','lastGoodSourcePowerLossOrProcessDeathExecuted','lastGoodSourceCoordinatorOrUnlockIntegrated'])
     assert app['ownerBiometricPermissionDeclared']
     assert not app['ownerAuthenticationPromptOrTicketConsumeExecuted'] and not app['ownerAuthenticationControlFlowHostExecuted']
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])

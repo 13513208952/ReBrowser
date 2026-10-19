@@ -95,6 +95,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
       "sha256": "07516fbd723b392d1ff1af894ebc29c0b8602c6f9946cf52d8ebbf53690cc8cb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+      "sha256": "bc720145110db3b74b9e246d7f7cb8c70222f81dad4bea0b962aacf7c5232c3e"
     }
   ],
   "classFiles": [
@@ -341,6 +345,56 @@
     {
       "path": "io/github/rebrowser/continuity/ContinuityState.class",
       "sha256": "b93f4efe3a58b1a57f5812049b40d899ce6a17c4e077c58703226686fd1905c0",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$1.class",
+      "sha256": "234cc39ea27c2e00574fd4a1e5e4d925d0d9dfe707737b4651459734ac30ae09",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Blob.class",
+      "sha256": "6f5410a63bd007a61c86fe18542df569bd2a2bb35287f1cf97c6133a1f7d7c34",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Kind.class",
+      "sha256": "abaed5e8469a26db57b6dd02243f4850879375fe618708e1631b1de7282c98e1",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Locked.class",
+      "sha256": "2b6ee9f42130e3cc22a148fe9e62967228f93afd70f4eab496c073d8b676da2e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$NativeFence.class",
+      "sha256": "9ef48d39045209e5ca47cbc5a315f031c614df4b6aa5c6a0c2a58e5adfc3bc2a",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Phase.class",
+      "sha256": "9ec962f6bc90fb308d9212b114bbba5559b5c843937940ebc034a5d9b2a77764",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Record.class",
+      "sha256": "bb368dd02634f64290b0dda525543a205b0e24885491a8eb150571d6f0be07b7",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$SourceEpoch.class",
+      "sha256": "fae105ef208145d8510b1aa5dd14a314e0d2e94380beb9c72c6cbd6e913d7a5f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$View.class",
+      "sha256": "ddb71ffa3df37640ae1cb9e6d6c331f64b3c89e46f81f1d668c5c69afff27491",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore.class",
+      "sha256": "76a508aafa87b9d1f78716966eb3daa29790a21237487f2f3f04eed8a0f1b64a",
       "classMajor": 52
     },
     {

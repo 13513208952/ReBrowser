@@ -1,0 +1,199 @@
+{
+  "scope": "actual standalone ReBrowser MAIN APP Gradle Java/resources/manifest compilation and HOST unit tests; NOT APK/runtime/formal delivery",
+  "project": "rebrowser",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "sha256": "c4d4fe3f5920a0abeca23581acf6ca048e2b59217024333c6ade932a9e896ee3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "sha256": "a5dde0224dd7cad10012abb65bc889780de158597e0997c510ad6b366194cf78"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
+      "sha256": "484fe039b8aada90a40bff0d2df2db428d5acc1a6467163baa104bbc6c32d173"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "sha256": "e9fe02a58f3f1f0ac7cd95466c641a197aa391cd8a601560f5d490a51c7dbaf1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "64d7f3e5c49c25afeaa0bf6838d144394505fefa4df1cc4ce986d10cdb6ec350"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "sha256": "a89815ff49431d33e1e6cb0124731c518f42994a44b43df37c5792107130d727"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "98f1756f5e9a9ccf9037b82e2d8e92d7e96944dfec9d0754fae7700d56fe7e66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+      "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+      "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
+      "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "sha256": "a28cddfbf5fd81ddb27c059f11cd69321e250af29b86473967eaf23101130c28"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
+      "sha256": "c800928593b30db20f73a10236e9122f48c2a79add0c2bebf00ac25bb46dd5b3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+      "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "sha256": "f273097224db240a6c1f7815edafef059b1419661e0cef1cf351feacee1dc99a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
+      "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
+      "sha256": "a3a87cbe482080ef23154208909fd0ffa9fdb3b2d299060897d52f48a83f3eb1"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java",
+      "sha256": "fd3a6b5d3e84a25073134ca58dde959c4f0c64e812b92ff4fec6c0fc8dad25df"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java",
+      "sha256": "c893d15125685c73bfc8855761f3a965a3702b12d444b03a33fed34f60e6551a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java",
+      "sha256": "17e7711e3fd7a48252eb2a63559b8b6849bbce45e437a5efbe5bd42d3197129f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java",
+      "sha256": "dad32c625d8f88f64e62459847e481e9003485707135ba000ca61306d7f76b07"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java",
+      "sha256": "07f3da7b31bcc3c5d7c8f13d9a369291dc26fe67b9762e2955c40b9378209f7a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
+      "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
+    },
+    {
+      "path": "rebrowser/settings.gradle",
+      "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
+    },
+    {
+      "path": "rebrowser/build.gradle",
+      "sha256": "e2d485470c7a131cd54aa168a62d303d6eac25739f37e8bfcd27b0b6b9e4ca81"
+    },
+    {
+      "path": "rebrowser/gradle.properties",
+      "sha256": "1cd886683a2f0d99f8beab66f665478b2dd20291dc94277e3125099600893647"
+    },
+    {
+      "path": "rebrowser/app/build.gradle",
+      "sha256": "f28d1c6e48d658f8c6fbd4b008cb73e777ec8a654a0ce69f6b71663bd96410d2"
+    },
+    {
+      "path": "rebrowser/app/src/main/AndroidManifest.xml",
+      "sha256": "7362f56ffcbddeab994329c05f3e3b1e9afa7c46f2b6d8ca9bf997759839e32f"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
+    }
+  ],
+  "productionJavaSourceFiles": 16,
+  "compiledClassFiles": 44,
+  "unitTests": [
+    {
+      "class": "io.github.rebrowser.authority.AuthorityContractsTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.crypto.ObjectAeadTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ControlDecoderTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.core.CoreContractsTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ControlContractsTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.outlook.MailObjectCodecTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.entry.EntryContractsTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.crypto.CryptoContractsTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "unitTestsPassed": 89,
+  "mergedManifestPackage": "io.github.rebrowser.development",
+  "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
+  "adminActivityExported": "false",
+  "mergedManifestSha256": "4723750f9f909dc36caca7db6d2cfdf6a3d7eb411244fa4cf9efde3f2d499d78",
+  "tasks": [
+    "compileDebugJavaWithJavac",
+    "processDebugMainManifest",
+    "testDebugUnitTest"
+  ],
+  "toolchain": "AGP9.4.0/Gradle9.6.0/JDK21/SDK37.2",
+  "offline": true,
+  "selectedAbi": "arm64-v8a",
+  "nativeMergeDexR8OrApkExecuted": false,
+  "androidRuntimeExecuted": false,
+  "formalKeysProvisioned": false,
+  "formalRootConfigured": false,
+  "businessSourceGate": "UNCONFIGURED/LOCKED until real continuity integration; no debug bypass",
+  "commandAdmissionOrEffectsImplemented": false,
+  "oldApplicationOrDataModified": false,
+  "legacySourceIsolation": "old main/test Java source sets exclude io/github/rebrowser/**; standalone v2 only imports that package root"
+}

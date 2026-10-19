@@ -1,9 +1,10 @@
 {
   "schema": 1,
-  "revision": "R23",
+  "revision": "R25",
   "authority": [
     "O41",
-    "O42"
+    "O42",
+    "O45"
   ],
   "scope": "按文件完成调研和边界审查后准入；不把一个文件通过扩成整个领域/总项目完成",
   "gate": [
@@ -196,6 +197,276 @@
         "Android codec latency/real corpus qualification or actual IO termination on cancel"
       ],
       "integrationGate": "owned stage/limits and authenticated metadata plus full object AEAD and original digest/length checks, then current fence/account/epoch/SQLite transaction; failed prefix must never publish"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "ordinary>=/disable>/Root不可禁的固定APK等级规则",
+      "researchEvidence": [
+        "records/authority-model.json",
+        "records/control-proof-format.json",
+        "records/domain-interfaces.json"
+      ],
+      "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
+      "dependencies": "existing production control/crypto code and Java8 only",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.AuthorityContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "effective disabled/delegated/whitelist/owner-grant authority",
+        "target/source/challenge/atomic action admission or Android runtime",
+        "formal key provisioning"
+      ],
+      "integrationGate": "source/epoch/policy/enabled identity and exact action/target/grant/nonce/atomic admission still required; KeyProof is not ActorContext"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "只读APK编译身份表、角色等级/规范P256键、同键不分裂；当前正式表为空拒绝全部管理员",
+      "researchEvidence": [
+        "records/authority-model.json",
+        "records/control-proof-format.json",
+        "records/domain-interfaces.json"
+      ],
+      "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
+      "dependencies": "existing production control/crypto code and Java8 only",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.AuthorityContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "effective disabled/delegated/whitelist/owner-grant authority",
+        "target/source/challenge/atomic action admission or Android runtime",
+        "formal key provisioning"
+      ],
+      "integrationGate": "source/epoch/policy/enabled identity and exact action/target/grant/nonce/atomic admission still required; KeyProof is not ActorContext"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "实际P256/SHA256编译身份持钥验签；有效s/n-s同身份，不以调用程序签名/包名额外否决",
+      "researchEvidence": [
+        "records/authority-model.json",
+        "records/control-proof-format.json",
+        "records/domain-interfaces.json"
+      ],
+      "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
+      "dependencies": "existing production control/crypto code and Java8 only",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.AuthorityContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "effective disabled/delegated/whitelist/owner-grant authority",
+        "target/source/challenge/atomic action admission or Android runtime",
+        "formal key provisioning"
+      ],
+      "integrationGate": "source/epoch/policy/enabled identity and exact action/target/grant/nonce/atomic admission still required; KeyProof is not ActorContext"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "主进程与Gecko/辅助进程识别，未知不初始化主业务",
+      "researchEvidence": [
+        "records/authority-model.json",
+        "records/control-proof-format.json",
+        "records/domain-interfaces.json"
+      ],
+      "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
+      "dependencies": "existing production control/crypto code and Java8 only",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.entry.EntryContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "effective disabled/delegated/whitelist/owner-grant authority",
+        "target/source/challenge/atomic action admission or Android runtime",
+        "formal key provisioning"
+      ],
+      "integrationGate": "source/epoch/policy/enabled identity and exact action/target/grant/nonce/atomic admission still required; KeyProof is not ActorContext"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "原生壳和业务来源闸门分离；gate绑定不透明permit每次重新检查，不接外部bool",
+      "researchEvidence": [
+        "records/authority-model.json",
+        "records/control-proof-format.json",
+        "records/domain-interfaces.json"
+      ],
+      "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
+      "dependencies": "existing production control/crypto code and Java8 only",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.entry.EntryContractsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "effective disabled/delegated/whitelist/owner-grant authority",
+        "target/source/challenge/atomic action admission or Android runtime",
+        "formal key provisioning"
+      ],
+      "integrationGate": "source/epoch/policy/enabled identity and exact action/target/grant/nonce/atomic admission still required; KeyProof is not ActorContext"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "主程序Application；只在精确主进程创建原生Startup，不自动启动Gecko/DB",
+      "researchEvidence": [
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "evidence/validation-android-local-synthetic.json"
+      ],
+      "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
+      "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "full browser/tab/site UX/runtime",
+        "formal Root/key custody or continuous source rescue/auth/erasure implementation",
+        "command admission/IPC/effects or Android device execution"
+      ],
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED",
+      "researchEvidence": [
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "evidence/validation-android-local-synthetic.json"
+      ],
+      "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
+      "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "full browser/tab/site UX/runtime",
+        "formal Root/key custody or continuous source rescue/auth/erasure implementation",
+        "command admission/IPC/effects or Android device execution"
+      ],
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "应用进程单一按需GeckoRuntime，permit重查；失败不自动第二次初始化，页面隐藏不shutdown全局runtime",
+      "researchEvidence": [
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "evidence/validation-android-local-synthetic.json"
+      ],
+      "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
+      "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "full browser/tab/site UX/runtime",
+        "formal Root/key custody or continuous source rescue/auth/erasure implementation",
+        "command admission/IPC/effects or Android device execution"
+      ],
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "主程序原生入口壳与内部管理员导航，完整浏览器领域/批准布局尚在接入",
+      "researchEvidence": [
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "evidence/validation-android-local-synthetic.json"
+      ],
+      "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
+      "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "full browser/tab/site UX/runtime",
+        "formal Root/key custody or continuous source rescue/auth/erasure implementation",
+        "command admission/IPC/effects or Android device execution"
+      ],
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "内部原生管理员控制台，实际严格协议/持钥验签反馈；明确不执行尚未完成准入的动作",
+      "researchEvidence": [
+        "records/gecko-contracts.json",
+        "records/domain-interfaces.json",
+        "evidence/validation-android-local-synthetic.json"
+      ],
+      "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
+      "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "full browser/tab/site UX/runtime",
+        "formal Root/key custody or continuous source rescue/auth/erasure implementation",
+        "command admission/IPC/effects or Android device execution"
+      ],
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
     }
   ],
   "parallelPending": [

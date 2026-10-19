@@ -29,9 +29,94 @@
       {
         "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
         "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
+        "sha256": "484fe039b8aada90a40bff0d2df2db428d5acc1a6467163baa104bbc6c32d173"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+        "sha256": "e9fe02a58f3f1f0ac7cd95466c641a197aa391cd8a601560f5d490a51c7dbaf1"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+        "sha256": "a5dde0224dd7cad10012abb65bc889780de158597e0997c510ad6b366194cf78"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+        "sha256": "a89815ff49431d33e1e6cb0124731c518f42994a44b43df37c5792107130d727"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+        "sha256": "64d7f3e5c49c25afeaa0bf6838d144394505fefa4df1cc4ce986d10cdb6ec350"
       }
     ],
     "classFiles": [
+      {
+        "path": "io/github/rebrowser/authority/AdminProofVerifier$1.class",
+        "sha256": "0efeac0ab6f14fe0a9cd3587f2f609bd461f3ba4fc8383d70c1eec635b1c947b",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/authority/AdminProofVerifier$KeyProof.class",
+        "sha256": "095989cd766bdaa872042b1ff2cd6a3dc105b1c2f7f3102095e5e545fc5a3c61",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/authority/AdminProofVerifier.class",
+        "sha256": "18b3796fb4b8fd3b77d79465e3c31314289d65e7bf34bd16d210c2db7e8c272d",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/authority/AuthorityScale.class",
+        "sha256": "ffe3b5ec45384ecc2e0bdfe78f052b8134d498d98a04c41bd80944fb2ce8ab1c",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/authority/CompiledPrincipals$Entry.class",
+        "sha256": "b22231c77b4e28d4598d01f20020d435cd2fa96bec7a73111631c09379a1f384",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/authority/CompiledPrincipals$Role.class",
+        "sha256": "d6a77c0fe00844ff60882d617f3923f65864ead65acb411883487505b39f89f1",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/authority/CompiledPrincipals.class",
+        "sha256": "507893e341ef42aadf538d733d110976300d1295ea255a6ab830161a50ee4636",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/bootstrap/ComponentGate$1.class",
+        "sha256": "a014de519025efeff41c9aeab9f4bfeca881d475172fc01d9037828692ff5893",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/bootstrap/ComponentGate$BusinessPermit.class",
+        "sha256": "ff75133517351b994ba07cbac37152ced2a492353aac155902f9bfe403863762",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/bootstrap/ComponentGate$SourceEvaluator.class",
+        "sha256": "6241873c78677c3d2db542f004ecd1625f7f6ba7219aa170a54c1b49a08fbb21",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/bootstrap/ComponentGate$SourceState.class",
+        "sha256": "ede0b3d895954751e13d522dcc260ddc575aff8a65ea613fce04cfbafa460c3c",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/bootstrap/ComponentGate.class",
+        "sha256": "85a962a020a3cc46ae2352c5c90b03c892ed6ef9e5bd96944e4c191a62d85150",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/bootstrap/ProcessRole.class",
+        "sha256": "55db0335d0f13961ea5e0c6581dc6475992d7d2ec9cf15c8b717b1d3a0dfc475",
+        "classMajor": 52
+      },
       {
         "path": "io/github/rebrowser/control/ControlDecoder$1.class",
         "sha256": "a98989eda561e35ebe479d5ac1c6417a5d488c589ddcdd640b800d42a0b34ee0",
@@ -196,9 +281,9 @@
     "keystoreOrRealCredentialsAccessed": false,
     "temporaryClassDirectoryRemoved": true
   },
-  "runtimeSourceFilesCompiled": 6,
-  "junitTestsPassed": 75,
-  "junitOutput": "JUnit version 4.13.2\n...........................................................................\nTime: 0.734\n\nOK (75 tests)\n\n",
+  "runtimeSourceFilesCompiled": 11,
+  "junitTestsPassed": 89,
+  "junitOutput": "JUnit version 4.13.2\n.........................................................................................\nTime: 1.955\n\nOK (89 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -226,6 +311,30 @@
       "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
+      "sha256": "484fe039b8aada90a40bff0d2df2db428d5acc1a6467163baa104bbc6c32d173"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "sha256": "e9fe02a58f3f1f0ac7cd95466c641a197aa391cd8a601560f5d490a51c7dbaf1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "sha256": "a5dde0224dd7cad10012abb65bc889780de158597e0997c510ad6b366194cf78"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "sha256": "a89815ff49431d33e1e6cb0124731c518f42994a44b43df37c5792107130d727"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "64d7f3e5c49c25afeaa0bf6838d144394505fefa4df1cc4ce986d10cdb6ec350"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
+      "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
       "sha256": "a3a87cbe482080ef23154208909fd0ffa9fdb3b2d299060897d52f48a83f3eb1"
     },
@@ -246,18 +355,22 @@
       "sha256": "dad32c625d8f88f64e62459847e481e9003485707135ba000ca61306d7f76b07"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java",
+      "sha256": "07f3da7b31bcc3c5d7c8f13d9a369291dc26fe67b9762e2955c40b9378209f7a"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
     }
   ],
-  "runnerSha256": "3a26c1acc70dd7e08b3223c6989aa01ef0e0ed06c811fedb92885d781e4fb127",
+  "runnerSha256": "d8c072bea4c3d235606c32bd451ef3aecf806b56147b0a9cd3cfcabb8a2dad20",
   "localDependencySha256": {
     "junit": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3",
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1513426944,
-  "memAvailableBefore": 10776621056,
+  "freeBytesBefore": 1431871488,
+  "memAvailableBefore": 8220069888,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

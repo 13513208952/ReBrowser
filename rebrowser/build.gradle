@@ -1,0 +1,11 @@
+plugins {
+    id 'com.android.application' version '9.4.0' apply false
+}
+
+// Formal source/root/signing/enrollment integration is not provisioned yet.
+// Fail before any Release APK packaging; no property silently bypasses this guard.
+gradle.taskGraph.whenReady { graph ->
+    if (graph.allTasks.any { it.name in ['assembleRelease', 'bundleRelease', 'packageRelease'] }) {
+        throw new GradleException('Formal ReBrowser delivery is not enabled: source continuity, compiled Root and signing custody must be completed first.')
+    }
+}

@@ -1,11 +1,12 @@
 {
   "schema": 1,
-  "revision": "R23",
+  "revision": "R25",
   "authority": [
     "O26",
     "O27",
     "O41",
-    "O42"
+    "O42",
+    "O45"
   ],
   "state": "file-gated-source-implementation-alongside-provisional-target-design",
   "scope": "all currently planned application-owned runtime code files; no test/tool/build/document source expanded as code leaves",
@@ -413,56 +414,60 @@
       "group": "entry",
       "kind": "native-code",
       "responsibility": "只在正确进程建立应用所有者，不启动被来源闸门锁住的业务",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
-      "testReferenceGroup": "entry"
+      "testReferenceGroup": "entry",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
       "group": "entry",
       "kind": "native-code",
       "responsibility": "识别主/Gecko内部子进程，避免每进程重复初始化",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
-      "testReferenceGroup": "entry"
+      "testReferenceGroup": "entry",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
       "group": "entry",
       "kind": "native-code",
       "responsibility": "来源检查→原生壳→按需内核的启动顺序",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
-      "testReferenceGroup": "entry"
+      "testReferenceGroup": "entry",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
       "group": "entry",
       "kind": "native-code",
       "responsibility": "Activity/Provider/Service/后台入口共同闸门",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
-      "testReferenceGroup": "entry"
+      "testReferenceGroup": "entry",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
@@ -777,28 +782,30 @@
       "group": "authority",
       "kind": "native-code",
       "responsibility": "预编译全部高级身份与角色",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
-      "testReferenceGroup": "authority"
+      "testReferenceGroup": "authority",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
       "group": "authority",
       "kind": "native-code",
       "responsibility": "H/普通最高/Root与不可变风险下限",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
-      "testReferenceGroup": "authority"
+      "testReferenceGroup": "authority",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
@@ -819,14 +826,15 @@
       "group": "authority",
       "kind": "native-code",
       "responsibility": "来源中立私钥证明，不以辅助包签名额外否决",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
-      "testReferenceGroup": "authority"
+      "testReferenceGroup": "authority",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
@@ -1059,21 +1067,22 @@
       "group": "control",
       "kind": "native-code",
       "responsibility": "应用内/隐藏控制台，隐藏不是授权",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
-      "testReferenceGroup": "control"
+      "testReferenceGroup": "control",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
       "group": "engine",
       "kind": "native-code",
       "responsibility": "主进程唯一runtime，原生子进程由SDK管理",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1081,9 +1090,10 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
@@ -1581,14 +1591,15 @@
       "group": "ui",
       "kind": "native-code",
       "responsibility": "主窗口和Native/Gecko显示协调",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
@@ -3264,6 +3275,18 @@
       "paths": [
         "planning/geckoview-v2/records/mail-codec-implementation-contract.json",
         "planning/geckoview-v2/evidence/production-unit-tests.json"
+      ]
+    },
+    {
+      "group": "entry",
+      "kind": "standalone-v2-main-program-and-admin-console",
+      "summary": "O45收敛调研转主程序/管理员代码；独立rebrowser项目，Application/进程/共享来源闸门/单Gecko owner/原生窗口与控制台实际编译，89HOST测试。正式身份未配置保持锁定，不以验签当命令准入",
+      "paths": [
+        "rebrowser/README.md",
+        "rebrowser/settings.gradle",
+        "rebrowser/app/build.gradle",
+        "rebrowser/app/src/main/AndroidManifest.xml",
+        "planning/geckoview-v2/evidence/production-main-app-compile.json"
       ]
     }
   ],

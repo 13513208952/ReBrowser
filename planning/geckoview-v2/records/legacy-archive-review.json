@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R23",
+  "revision": "R25",
   "authority": [
     "O31",
     "O32"
@@ -665,12 +665,16 @@
       "sha256": "0d5982f77a5b07de68d8917f0dc4b80d481a545d8a6472e3fe6f95a20cb15760",
       "bytes": 1042,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T09:35:00+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧最小/全量入口迁移与旧SharedPreferences标记，旧Application维护仍需保留。新v2独立Application主/Gecko子进程分离，不调用旧迁移；旧main/test源集排除新namespace以免Gecko代码破坏旧维护编译。",
+      "evidenceRefs": [
+        "rebrowser/app/build.gradle",
+        "rebrowser/app/src/main/AndroidManifest.xml",
+        "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

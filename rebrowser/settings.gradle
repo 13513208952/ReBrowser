@@ -1,0 +1,22 @@
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == 'com.android.application') useModule('com.android.tools.build:gradle:' + requested.version)
+        }
+    }
+    repositories { google(); mavenCentral(); gradlePluginPortal() }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        maven {
+            url = uri(providers.gradleProperty('rebrowserMozillaRepo').orElse('https://maven.mozilla.org/maven2').get())
+            content { includeGroup('org.mozilla.geckoview'); includeGroup('com.google.guava') }
+            metadataSources { mavenPom(); artifact(); ignoreGradleMetadataRedirection() }
+        }
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = 'ReBrowserV2'
+include ':app'

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "revision": "R24",
+  "file": "app/src/main/assets/sql/mail-v1.sql",
+  "scope": "fresh native v2 per-account runtime DDL, no v1/prototype database migration; NOT database opening authority or an implemented Android store",
+  "researchRefs": [
+    "schemas/mail-v1.sql",
+    "review_mail_schema.py",
+    "records/mail-storage-design.json",
+    "records/object-aead-implementation-contract.json",
+    "evidence/mail-schema-r9-counterexamples.json"
+  ],
+  "historicalFindings": "Actual HOST SQLite accepted6 invalid R9 design states: null file key, TEXT IDs/digests, incorrect framed size, RAW original/packed mismatch, fractional key version, delete/rebind account with old objects. Historical R9 fixture/evidence stays unchanged; runtime DDL fixes are separate.",
+  "runtimeChanges": [
+    "explicit BLOB/INTEGER checks for binary identities/digests and exact counters, U32 key/frame limits",
+    "file branch requires non-null exact lowercase object-ID key; inline payload is BLOB with exact final length",
+    "stored_bytes equals actual RBMOBJ1 header+packed bytes+per-frame length/tag; RAW original==packed",
+    "immutable account identity cannot be deleted/reinserted to bypass update guard",
+    "object-ID reservation registry persisted before encryption; never delete/reuse reservations, one representation claim. Failed/restarted writes need new fresh plan except adoption of exact already-written immutable bytes before claim",
+    "object representation immutable; corrupt/ready state cannot regress; FK/refcount/actual-reference and cursor/epoch checks retained"
+  ],
+  "objectIdSequence": "native source/account gate -> fresh ObjectAead.WritePlan -> commit unique reservation -> encrypt once to private stage -> authenticate/codec verify -> one transaction inserts immutable object (claims reservation), refs/index/cursor after latest fence check. Deleting unreferenced content never frees nonce identity.",
+  "statementFormat": "APK-owned literal SQL blocks separated by exact '-- rebrowser:statement' line. Native initializer executes each whole block, not split on ';' inside triggers. Host tests execute each block with sqlite3.execute, not a permissive entire-script shortcut.",
+  "foreignKeys": "PRAGMA foreign_keys=ON before business transaction; future Android SQLiteOpenHelper must also setForeignKeyConstraintsEnabled(true) in onConfigure, because PRAGMA inside a transaction cannot enable it",
+  "notProvenBySql": [
+    "private object bytes authenticated or codec verified",
+    "actual reader/writer/task leases drained",
+    "source/owner authority or safe filesystem erasure",
+    "journal/fsync/publication ordering",
+    "Android API30 SQLite runtime/version/performance"
+  ],
+  "integrationGate": "native trusted per-account DB path/epoch binding, exact catalog handles, schema version fail-closed and transaction admission required; no external raw SQL and no automatic unknown-schema clear",
+  "tests": "replay prior constraint/ref/cursor/rollback semantics plus6 real historical loopholes, reservation/nonce reuse, binary types, size arithmetic, whole trigger statement loading; fresh in-memory synthetic database only",
+  "state": "candidate-held-not-admitted-following-O45-main-app-admin-focus",
+  "candidatePath": "planning/geckoview-v2/experiments/runtime-mail-schema-candidate.sql",
+  "originalCandidateSha256BeforeHoldHeader": "9a14aafd385b3c93f70492d284833dc6b74f1b7e1913e6b096e839aa162cff6e"
+}

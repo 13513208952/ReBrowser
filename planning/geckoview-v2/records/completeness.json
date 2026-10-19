@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R23",
+  "revision": "R25",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -48,7 +48,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "保留哪些现有交互、首次新包体验与新安全页如何串接",
-      "existingEvidence": "18组功能盘点，未逐屏设计；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过",
+      "existingEvidence": "18组功能盘点，未逐屏设计；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成",
       "completionDeliverables": [
         "页面导航图",
         "状态显示",
@@ -69,7 +69,8 @@
         "views/19-user-journeys-and-back.md",
         "matrices/user-journeys.csv",
         "APPLICATION_CODE_TREE.md",
-        "records/application-code-files.json"
+        "records/application-code-files.json",
+        "evidence/production-main-app-compile.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -88,7 +89,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "进程所有权、view/session分离、上下文映射与崩溃恢复",
-      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R11另有授权手机本地Native/port/MAIN/context子集通过，非官网/导航竞态全验证",
+      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R11另有授权手机本地Native/port/MAIN/context子集通过，非官网/导航竞态全验证；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成",
       "completionDeliverables": [
         "默认拓扑和退路",
         "持久ID",
@@ -113,7 +114,8 @@
         "records/runtime-traces.json",
         "APPLICATION_CODE_TREE.md",
         "records/application-code-files.json",
-        "records/browser-background-ownership.json"
+        "records/browser-background-ownership.json",
+        "evidence/production-main-app-compile.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -420,7 +422,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "数值档位、高级边界H、逐动作schema、错误/幂等/异步结果",
-      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现；R17首个固定帧生产类已编写/HOST12JUnit，未含JSON/准入/Android；领域仍未完成；R20严格语法/不可变UnverifiedProof生产类，三文件合跑42JUnit+1033独立JSON对照和实际Android API编译；逐动作schema、真实验签/委托、并发准入/IPC仍未完成",
+      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现；R17首个固定帧生产类已编写/HOST12JUnit，未含JSON/准入/Android；领域仍未完成；R20严格语法/不可变UnverifiedProof生产类，三文件合跑42JUnit+1033独立JSON对照和实际Android API编译；逐动作schema、真实验签/委托、并发准入/IPC仍未完成；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成",
       "completionDeliverables": [
         "等级提案",
         "动作拆细",
@@ -453,7 +455,8 @@
         "records/implementation-readiness.json",
         "evidence/production-unit-tests.json",
         "records/control-decoder-contract.json",
-        "evidence/control-json-differential.json"
+        "evidence/control-json-differential.json",
+        "evidence/production-main-app-compile.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -472,7 +475,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "密钥算法与保管、设备登记、静态表、禁用恢复/分发",
-      "existingEvidence": "旧公钥归档，新密钥/登记未开始；R18编码层生产文件HOST通过，密钥生成/保管/登记/名单仍未做",
+      "existingEvidence": "旧公钥归档，新密钥/登记未开始；R18编码层生产文件HOST通过，密钥生成/保管/登记/名单仍未做；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成",
       "completionDeliverables": [
         "新旧维护线分离",
         "设备proof",
@@ -497,7 +500,8 @@
         "views/06-trust-and-release.md",
         "records/crypto-encoding-contract.json",
         "records/implementation-readiness.json",
-        "evidence/production-unit-tests.json"
+        "evidence/production-unit-tests.json",
+        "evidence/production-main-app-compile.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",
@@ -704,6 +708,6 @@
     "A15"
   ],
   "notABlocker": "普通API疑点/参数/方案比较由助手负责，不把每个待研究点变成机主问卷。",
-  "currentFocus": "O26技术可用性验证后，O27应用本体全代码总树；存储功能先搁置",
+  "currentFocus": "O45 main-program/admin implementation; on-demand research",
   "fileScopedImplementationRef": "records/implementation-readiness.json"
 }

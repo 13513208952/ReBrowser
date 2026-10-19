@@ -83,3 +83,4 @@ T-PRF01,R10 R18 R31 R35,,control-proof-byte-and-admission,17字段原始字节/�
 T-PERM01,R01 R03 R10 R30,C008,native-permission-lifetime,Gecko永久allow与有限网站grant在前台/后台/Doze/进程重建/失效重进；clipboard独立原生回调/一次输入/拒绝；COARSE/FINE与存储特殊权限,expiry元数据不冒充engine到期或既有使用停止；正确context/原SDK对象/真实prompt一次结算；已编译API不能替代实际权限验证,V0,planned-not-run,source-and-API-compile-checked; runtime-permission-access-not-authorized-by-local-page-tests
 T-PLT01,R03 R10 R18,C009,platform-action-dto-and-results,四平台动作类型/字段/window代次/sourceRef与实际流；同请求新证明不重复交接/Back，后台不抢其他软件前台,主机42例不是Android通过；打开/暂停/恢复不冒充授权/安装/默认变更；未知不自动重试,P3,planned-not-run,host-subset-checked; Android-platform-flow-pending
 AC-R45,R45,,file-admission,逐文件调研准入/真实源码与主机测试绑定，未决领域不假报完成；推送后仍推进下一具体增量,逐文件调研准入/真实源码与主机测试绑定，未决领域不假报完成；推送后仍推进下一具体增量,I0,planned-not-run,I0与V0/T0/L0并行；全范围验收待后续
+AC-R46,R46,,implementation-focus,主程序与管理员机制进入正式源码迭代，具体阻碍再按需调查,可核对的主程序/管理入口和领域代码、实际编译与边界测试；不以新一轮宽泛研究替代编码,I0,planned-not-run,O45主线；全浏览器/真实准入验收未完成

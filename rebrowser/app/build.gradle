@@ -1,0 +1,54 @@
+plugins { id 'com.android.application' }
+
+def abis = ['arm64-v8a', 'armeabi-v7a', 'x86_64']
+def selectedAbi = providers.gradleProperty('rebrowserAbi').orElse('arm64-v8a').get()
+if (!abis.contains(selectedAbi)) throw new GradleException('Unsupported ReBrowser ABI')
+
+android {
+    namespace = 'io.github.rebrowser'
+    compileSdk { version = release(37) { minorApiLevel = 2 } }
+    defaultConfig {
+        applicationId = 'io.github.rebrowser'
+        minSdk = 30
+        targetSdk = 37
+        versionCode = 2_000_000
+        versionName = '2.0.0'
+        ndk { abiFilters selectedAbi }
+    }
+    sourceSets {
+        main.java.setSrcDirs(['../../app/src/main/java/io/github/rebrowser'])
+        test.java.setSrcDirs(['../../app/src/test/java/io/github/rebrowser'])
+        // Runtime assets are admitted explicitly when their owning feature is wired.
+        // Never import the old WebView assets or legacy io.github.reoutlook sources.
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix '.development'
+            signingConfig = null // do not create/read a global debug keystore
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            signingConfig = null // formal signing must be separately provisioned
+        }
+    }
+    packaging {
+        // Per invocation ABI selection: each formal APK is standalone, never universal.
+        // Filter merge inputs too; do NOT permanently hard-code phone-only exclusions.
+        jniLibs { excludes += abis.findAll { it != selectedAbi }.collect { '**/' + it + '/**' } }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+dependencies {
+    implementation 'org.mozilla.geckoview:geckoview:158.0.20261007201254'
+    testImplementation 'junit:junit:4.13.2'
+}
+tasks.withType(Test).configureEach {
+    maxHeapSize = '256m'
+    maxParallelForks = 1
+    systemProperty 'java.io.tmpdir', System.getProperty('java.io.tmpdir')
+}

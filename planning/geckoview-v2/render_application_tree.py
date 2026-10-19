@@ -27,7 +27,7 @@ def render(manifest=None):
         assert path.suffix in ['.java', '.kt', '.js', '.css', '.html', '.sql']
         assert f['group'] in groups and f['testReferenceGroup'] in groups
         assert f['responsibility'] and f['validationRefs']
-        assert f['state'] in ['planned-not-implemented', 'implemented-host-tested-not-integrated']
+        assert f['state'] in ['planned-not-implemented', 'implemented-host-tested-not-integrated', 'source-in-progress-api-compiled']
         if f['state'] != 'planned-not-implemented':
             assert (P.parents[1] / f['path']).is_file()
             assert f.get('implementationReadinessRef') == 'records/implementation-readiness.json'
@@ -42,7 +42,7 @@ def render(manifest=None):
         '# 应用本体目标代码总树 · R10首版', '',
         '> O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。',
         '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
-        f'当前已编写并通过主机测试：**{len(implemented)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
+        f'当前已创建本体源码：**{len(implemented)}文件**；其中HOST测试切片 **{sum(f["state"] == "implemented-host-tested-not-integrated" for f in files)}文件**，API编译/实现中 **{sum(f["state"] == "source-in-progress-api-compiled" for f in files)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
         f'当前目标：`io.github.rebrowser` · 本体代码 **{len(files)}文件** · {len(groups)}职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。', '',
         '符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。', '',
         '## 本体代码树', '', '```text']
@@ -56,7 +56,8 @@ def render(manifest=None):
             item = items[name]
             if 'responsibility' in item:
                 symbol = {'native-code':'J', 'script-code':'S', 'style-code':'C', 'sql-code':'Q'}[item['kind']]
-                status = '[HOST]' if item['state'] != 'planned-not-implemented' else '[PLAN]'
+                status = {'planned-not-implemented':'[PLAN]', 'implemented-host-tested-not-integrated':'[HOST]',
+                          'source-in-progress-api-compiled':'[API/WIP]'}[item['state']]
                 lines.append(prefix + branch + name + ' [' + symbol + ']' + status + '[?] — ' + item['responsibility'])
                 leaf_count += 1
             else:
@@ -83,7 +84,9 @@ def render(manifest=None):
     return '\n'.join(lines), {'applicationRuntimeCodeLeaves': leaf_count, 'applicationResponsibilityGroups':len(groups),
                                'auxiliaryTestReferences':sum(len(g['testReferences']) for g in groups.values()),
                                'runtimeFilesImplementedByThisTree':bool(implemented),
-                               'implementedRuntimeCodeFiles':len(implemented),
+                               'runtimeSourceFilesCreated':len(implemented),
+                               'implementedRuntimeCodeFiles':sum(f['state'] == 'implemented-host-tested-not-integrated' for f in files),
+                               'apiCompiledRuntimeSourcesInProgress':sum(f['state'] == 'source-in-progress-api-compiled' for f in files),
                                'productRuntimeIntegrated':False}
 
 

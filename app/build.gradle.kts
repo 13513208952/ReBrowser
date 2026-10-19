@@ -64,6 +64,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    // v2 is built by the independent rebrowser project. Keep the maintained v1
+    // source set free of Gecko/v2 classes and tests; package/data/signing stay v1.
+    sourceSets {
+        getByName("main").java.exclude("io/github/rebrowser/**")
+        getByName("test").java.exclude("io/github/rebrowser/**")
+    }
+
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }

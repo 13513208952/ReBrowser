@@ -30,9 +30,12 @@ class ApplicationTreeTests(unittest.TestCase):
 
     def test_host_marker_matches_implemented_count(self):
         text, facts = render(self.manifest)
-        expected = sum(f['state'] != 'planned-not-implemented' for f in self.manifest['files'])
+        expected = sum(f['state'] == 'implemented-host-tested-not-integrated' for f in self.manifest['files'])
         self.assertEqual(facts['implementedRuntimeCodeFiles'], expected)
         self.assertEqual(text.count('[HOST][?]'), expected)
+        wip = sum(f['state'] == 'source-in-progress-api-compiled' for f in self.manifest['files'])
+        self.assertEqual(text.count('[API/WIP][?]'), wip)
+        self.assertEqual(facts['runtimeSourceFilesCreated'], expected + wip)
 
     def test_reject_unknown_implementation_state(self):
         self.manifest['files'][0]['state'] = 'complete-Android-passed'

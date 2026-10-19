@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已编写并通过主机测试：**6文件**；其余 **172文件**仍为规划。准入依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**16文件**；其中HOST测试切片 **11文件**，API编译/实现中 **5文件**；其余 **162文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -41,13 +41,13 @@
                 └── io/
                     └── github/
                         └── rebrowser/
-                            ├── ReBrowserApplication.java [J][PLAN][?] — 只在正确进程建立应用所有者，不启动被来源闸门锁住的业务
+                            ├── ReBrowserApplication.java [J][API/WIP][?] — 只在正确进程建立应用所有者，不启动被来源闸门锁住的业务
                             ├── authority/
                             │   ├── AdminAudit.java [J][PLAN][?] — 脱敏审计与受控私有结果
-                            │   ├── AdminProofVerifier.java [J][PLAN][?] — 来源中立私钥证明，不以辅助包签名额外否决
+                            │   ├── AdminProofVerifier.java [J][HOST][?] — 来源中立私钥证明，不以辅助包签名额外否决
                             │   ├── AuthorityPolicy.java [J][PLAN][?] — 同作用域>=、通道/介入floor、机主授权激活
-                            │   ├── AuthorityScale.java [J][PLAN][?] — H/普通最高/Root与不可变风险下限
-                            │   ├── CompiledPrincipals.java [J][PLAN][?] — 预编译全部高级身份与角色
+                            │   ├── AuthorityScale.java [J][HOST][?] — H/普通最高/Root与不可变风险下限
+                            │   ├── CompiledPrincipals.java [J][HOST][?] — 预编译全部高级身份与角色
                             │   ├── DeviceWhitelist.java [J][PLAN][?] — Root联合/各最高自有/专有名单隔离
                             │   ├── DisableLedger.java [J][PLAN][?] — 更高禁更低、Root不可禁、恢复和签名快照
                             │   ├── EnrollmentProposal.java [J][PLAN][?] — 仅已明确设备/持钥证据的编译名单提案
@@ -55,9 +55,9 @@
                             │   ├── OwnerGrantStore.java [J][PLAN][?] — 精确范围/期限/epoch的本人授权
                             │   └── TargetPossessionProof.java [J][PLAN][?] — 实际目标安装私钥challenge验证
                             ├── bootstrap/
-                            │   ├── ComponentGate.java [J][PLAN][?] — Activity/Provider/Service/后台入口共同闸门
-                            │   ├── ProcessRole.java [J][PLAN][?] — 识别主/Gecko内部子进程，避免每进程重复初始化
-                            │   └── StartupCoordinator.java [J][PLAN][?] — 来源检查→原生壳→按需内核的启动顺序
+                            │   ├── ComponentGate.java [J][HOST][?] — Activity/Provider/Service/后台入口共同闸门
+                            │   ├── ProcessRole.java [J][HOST][?] — 识别主/Gecko内部子进程，避免每进程重复初始化
+                            │   └── StartupCoordinator.java [J][API/WIP][?] — 来源检查→原生壳→按需内核的启动顺序
                             ├── bridge/
                             │   ├── BridgeBudget.java [J][PLAN][?] — 64KiB信封/32KiB原始块和有界信用
                             │   ├── BridgeMessages.java [J][PLAN][?] — HELLO/READY/命令/结果/观测/错误类型
@@ -127,7 +127,7 @@
                             │   ├── DiagnosticCoordinator.java [J][PLAN][?] — 作用域内页面/网络/会话诊断和renderer脚本，不开无认证全局调试端口
                             │   ├── GeckoHistoryDelegate.java [J][PLAN][?] — 已提交历史与认证瞬态访问区分
                             │   ├── GeckoMediaBridge.java [J][PLAN][?] — 实际媒体激活/feature/状态与秒单位
-                            │   ├── GeckoRuntimeOwner.java [J][PLAN][?] — 主进程唯一runtime，原生子进程由SDK管理
+                            │   ├── GeckoRuntimeOwner.java [J][API/WIP][?] — 主进程唯一runtime，原生子进程由SDK管理
                             │   ├── GeckoSessionOwner.java [J][PLAN][?] — session强引用/创建/关闭与代次
                             │   ├── NavigationDelegate.java [J][PLAN][?] — 加载/外链/新窗与正确父来源
                             │   ├── PartitionCatalog.java [J][PLAN][?] — 稳定非null context和环境/子应用归属
@@ -139,7 +139,7 @@
                             │   ├── SessionDisplayBinding.java [J][PLAN][?] — View附着/分离/可见/focus与session生命分离
                             │   └── ViewportPolicy.java [J][PLAN][?] — 手机/完整平板/小窗与批准布局策略
                             ├── entrypoints/
-                            │   ├── AdminControlActivity.java [J][PLAN][?] — 应用内/隐藏控制台，隐藏不是授权
+                            │   ├── AdminControlActivity.java [J][API/WIP][?] — 应用内/隐藏控制台，隐藏不是授权
                             │   └── AdminControlProvider.java [J][PLAN][?] — 普通持钥辅助包/ADB的公开受认证Provider入口
                             ├── lyrics/
                             │   ├── LyricOverlayController.java [J][PLAN][?] — 关闭/可拖动/锁定穿透的唯一状态
@@ -206,7 +206,7 @@
                             └── ui/
                                 ├── ApplicationsActivity.java [J][PLAN][?] — 子应用启用与48dp设置齿轮
                                 ├── BookmarkView.java [J][PLAN][?] — 收藏和书签操作
-                                ├── BrowserActivity.java [J][PLAN][?] — 主窗口和Native/Gecko显示协调
+                                ├── BrowserActivity.java [J][API/WIP][?] — 主窗口和Native/Gecko显示协调
                                 ├── BrowserToolbar.java [J][PLAN][?] — 原生地址/返回/刷新/输入建议
                                 ├── DownloadsActivity.java [J][PLAN][?] — 批准/取消/任务/文件交接
                                 ├── DownloadsAdapter.java [J][PLAN][?] — 下载列表与实际阶段显示
@@ -278,6 +278,7 @@
 | 领域基础与任务 | actual-task-cancellation-versus-end | 生产Cancellation区分Requester/Reporter，不重置/不释放槽；256轮并发及真实HOST忽略interrupt的Future用例。四文件51JUnit+SDK API编译，非Gecko停止证据<br>`planning/geckoview-v2/records/core-cancellation-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 本机加密与密钥 | streamed-payload-authentication-not-publication | RBMOBJ1生产流式封装，64JUnit含4MiB生成源/私有暂存；R9旧原型与新实现双向/逐字节36项+64历史RFC/NIST重跑。ZLIB仅打包字节认证，原文/事务仍外部验证<br>`planning/geckoview-v2/records/object-aead-implementation-contract.json`<br>`planning/geckoview-v2/evidence/object-aead-production-interop.json`<br>`planning/geckoview-v2/experiments/object_aead_interop.py`<br>`planning/geckoview-v2/experiments/ObjectAeadInterop.java` |
 | Outlook与离线邮件 | exact-original-bounded-codec-pipeline | 六生产文件75JUnit；流式RAW/zlib候选封顶回退、完整长度/摘要验证和公用虚构key的私有AEAD管线。不是源/epoch/fence/DB提交证据<br>`planning/geckoview-v2/records/mail-codec-implementation-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
+| 入口与进程 | standalone-v2-main-program-and-admin-console | O45收敛调研转主程序/管理员代码；独立rebrowser项目，Application/进程/共享来源闸门/单Gecko owner/原生窗口与控制台实际编译，89HOST测试。正式身份未配置保持锁定，不以验签当命令准入<br>`rebrowser/README.md`<br>`rebrowser/settings.gradle`<br>`rebrowser/app/build.gradle`<br>`rebrowser/app/src/main/AndroidManifest.xml`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
 
 ### 当前边界
 

@@ -1,0 +1,33 @@
+{
+  "scope": "HOST synthetic in-memory counterexamples against historical R9 DDL; no deployed app/database claim",
+  "historicalSchemaSha256": "6d8d11564fbb5af00f51c273b970331efa809fde7775ed02b840c94676177bb1",
+  "cases": [
+    {
+      "case": "file-key-null",
+      "acceptedByHistoricalDesignDdl": true
+    },
+    {
+      "case": "text-object-id-and-digest",
+      "acceptedByHistoricalDesignDdl": true
+    },
+    {
+      "case": "wrong-framed-size",
+      "acceptedByHistoricalDesignDdl": true
+    },
+    {
+      "case": "raw-size-mismatch",
+      "acceptedByHistoricalDesignDdl": true
+    },
+    {
+      "case": "fractional-key-version",
+      "acceptedByHistoricalDesignDdl": true
+    },
+    {
+      "case": "account-delete-rebind",
+      "acceptedByHistoricalDesignDdl": true
+    }
+  ],
+  "actualProductionDatabaseOpened": false,
+  "historicalDdlChanged": false,
+  "sqliteVersion": "3.46.1"
+}

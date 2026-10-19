@@ -1,5 +1,5 @@
 {
-  "revision": "R23",
+  "revision": "R25",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -251,6 +251,12 @@
       "time": "2026-10-19T01:00:00+08:00",
       "finding": "AEAD ZLIB只验证打包字节；仍缺完整原文损失/解压边界、按实际帧开销判断压缩和私有staging失败语义。",
       "resolution": "R22推送后继续MailObjectCodec生产实现与11项HOST用例，六源75JUnit/Android API31类；候选封顶回RAW而非截断，字典/多流/尾部/原文长度摘要失败拒绝，私有对象管线完整原文字节一致。563行旧MailDatabase审读保留；实际读SQL发现NULL/类型/存储长度等需在runtime新DDL落地前另做验证，不把旧38个通过当完整SQL安全。"
+    },
+    {
+      "id": "REV43",
+      "time": "2026-10-19T09:32:30+08:00",
+      "finding": "O45要求收敛广泛研究，直接聚焦主程序和管理员调试代码；不能继续只推进协议/SQL候选而不建立正式主程序。",
+      "resolution": "暂停SQL候选扩展并保留到树外；新增独立rebrowser Android工程，复用已准入源码但排除旧包/旧资产，原生Application/进程与来源闸门/Gecko owner/主窗口/管理员控制台实际编译。加入APK编译身份和实际P256验签、等级规则；production正式表为空且来源未接通保持锁定，签名有效不执行命令。离线Gradle编译/manifest/89HOST测试通过，无JNI/dex/APK/装机/真实key。主树用API/WIP诚实标应用迭代中。；旧Application完整审读保留，旧main/test加入仅排除新namespace的源集隔离，避免新增Gecko imports破坏v1维护；未声称已重跑旧672测试。"
     }
   ]
 }

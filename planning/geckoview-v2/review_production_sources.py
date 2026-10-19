@@ -20,18 +20,23 @@ def review():
     actual_native = {str(p.relative_to(ROOT)) for p in (ROOT/'app/src/main/java/io/github/rebrowser').rglob('*')
                      if p.is_file() and p.suffix in ['.java','.kt']}
     assert actual_native == {p for p in implemented if p.endswith(('.java','.kt'))}, 'unlisted/mislabelled actual v2 sources'
+    jvm_entries = {p:f for p,f in entries.items() if f.get('validationMode','jvm') == 'jvm'}
+    android_entries = {p:f for p,f in entries.items() if f.get('validationMode','jvm') == 'android-app'}
+    assert set(jvm_entries) | set(android_entries) == implemented
     for item in entries.values():
-        assert item['state'] == 'implemented-host-tested-not-integrated'
+        assert item['state'] in ['implemented-host-tested-not-integrated','source-in-progress-api-compiled']
+        if item['state'] == 'source-in-progress-api-compiled':
+            assert item['validationMode'] == 'android-app' and not item['fullResponsibilityComplete']
         assert item['researchCompleteForScope'] and not item['unresolvedWithinScope']
         assert item['scope'] and item['integrationGate'] and item['notClaimed']
         for ref in item['researchEvidence']:
             assert (P/ref).is_file()
     bound = {f['path'] for f in evidence['sourceFiles']}
-    assert bound == implemented | {t for f in entries.values() for t in f['hostTestSources']}
+    assert bound == set(jvm_entries) | {t for f in jvm_entries.values() for t in f['hostTestSources']}
     for source in evidence['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert hashlib.sha256((P/'run_production_unit_tests.py').read_bytes()).hexdigest() == evidence['runnerSha256']
-    assert evidence['runtimeSourceFilesCompiled'] == len(implemented)
+    assert evidence['runtimeSourceFilesCompiled'] == len(jvm_entries)
     assert evidence['junitTestsPassed'] > 0 and evidence['temporaryClassDirectoryRemoved']
     assert evidence['unverifiedJsonSyntaxSliceCompiled']
     assert not any(evidence[k] for k in ['androidRuntimeTested','productApkBuilt','realKeysUsedOrGenerated','actionSpecificArgsSchemasComplete','proofAdmissionComplete'])
@@ -49,12 +54,28 @@ def review():
     assert not any(object_crypto[k] for k in ['realKeyProvisioning','androidProviderValidated','databasePublicationOrSourceAdmissionTested'])
     api = json.loads((P/'evidence/production-android-api-compile.json').read_text())
     assert api['passed'] and api['bootClasspathSdk'] == '37.2'
-    assert {s['path'] for s in api['sourceFiles']} == implemented
+    assert {s['path'] for s in api['sourceFiles']} == set(jvm_entries)
     for source in api['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert all(c['classMajor'] == 52 for c in api['classFiles'])
     assert not any(api[k] for k in ['androidRuntimeExecuted','androidApi30RuntimeValidated','productApkBuilt','keystoreOrRealCredentialsAccessed'])
-    return {'productionSourceFilesImplementedHostTested':len(implemented),
+    app = json.loads((P/'evidence/production-main-app-compile.json').read_text())
+    for source in app['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert implemented <= {s['path'] for s in app['sourceFiles']}
+    assert app['productionJavaSourceFiles'] == len(implemented)
+    assert app['mergedManifestPackage'] == 'io.github.rebrowser.development'
+    assert app['mergedApplicationClass'] == 'io.github.rebrowser.ReBrowserApplication'
+    assert app['adminActivityExported'] == 'false' and app['unitTestsPassed'] == evidence['junitTestsPassed']
+    assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])
+    legacy_build = (ROOT/'app/build.gradle.kts').read_text()
+    assert 'getByName("main").java.exclude("io/github/rebrowser/**")' in legacy_build
+    assert 'getByName("test").java.exclude("io/github/rebrowser/**")' in legacy_build
+    return {'productionSourceFilesImplementedHostTested':len(jvm_entries),
+            'productionRuntimeSourceFilesStarted':len(implemented),
+            'productionAndroidApiOnlyFilesInProgress':len(android_entries),
+            'standaloneMainAppCompiled':True,
+            'standaloneMainAppHostTests':app['unitTestsPassed'],
             'productionSourceAndroid37ApiCompiled':len(api['sourceFiles']),
             'productionHostJunitTestsPassed':evidence['junitTestsPassed'],
             'productionJsonDifferentialCasesPassed':differential['casesPassed'],

@@ -33,7 +33,8 @@ def run(args):
     assert free >= 16 * 1024**2 + 1024**3 and mem >= 3 * 1024**3
     java, javac = (args.java_home / 'bin' / name for name in ['java', 'javac'])
     assert all(p.is_file() for p in [java, javac, args.junit, args.hamcrest])
-    slices = json.loads((P / 'records/implementation-readiness.json').read_text())['files']
+    slices = [s for s in json.loads((P / 'records/implementation-readiness.json').read_text())['files']
+              if s.get('validationMode', 'jvm') == 'jvm']
     sources = [ROOT / s['path'] for s in slices]
     tests = sorted({ROOT / test for s in slices for test in s['hostTestSources']})
     classes = sorted({name for s in slices for name in s['junitClasses']})

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "revision": "R37",
+  "authority": ["O16", "O45", "O59"],
+  "scope": "Actual native four-step continuity flow/owner-verification lifecycle and one-use limited erasure-consent capability; NOT erasure, epoch commit, startup rescue or business unlock",
+  "context": "Only a current intact native LastGoodSourceStore view in STABLE/PREPARED phase plus candidate signer/Root. Prepared candidate must match; destructive/empty/corrupt/missing states require native recovery, not replay. Native CurrentSourceGuard revalidates actual source/epoch/ledger/policy with no side effects or IO on UI thread.",
+  "invariants": [
+    "Exact O16 TRUST_SOURCE/FORCE1 ordinary native clicks; FORCE2/FORCE3 each reserves a DIFFERENT private owner attempt and needs fresh native OS-ticket consumption",
+    "Revision/step/thread/current-context checks; no double click, ordinary-click shortcut, stale/foreign attempt/ticket or source/epoch swap",
+    "A reserved attempt is not submitted OS work. Unknown submission/retirement/cancel never settle actual OS work; original attempt can observe actual end without publishing consent",
+    "Only private native OwnerAuthentication bridge may report verification success in production; no public Boolean/key/Root exemption or client result API",
+    "Bridge checks actual compiled Root/own Android signer before constructing a flow, binds exact owned window/attempt, waits foreground before one-use OS-ticket consume, never accepts generic Binding tickets",
+    "Monotonic clock rollback poisons eligibility. Final private consent <=30s, same context/window/flow, single consume; retirement revokes eligibility",
+    "No store mutation or inherited business read by this reducer; consent still requires bounded workset quiescence, actual source/epoch/owner-grant fence, verified exact erasure/new-epoch commit in future native backend"
+  ],
+  "testScope": "Execute actual pure production reducer with explicit synthetic package-private native signals and toy context/clock; distinguish this from Android OwnerAuthentication/OS prompt/ticket/control-flow execution. No real system prompt is authorized by current local-synthetic phone scope.",
+  "integrationGate": "Keep production Root unconfigured/business locked. Future real SourceWarningActivity/ContinuityCoordinator bootstrap adapter must deliver native snapshots/current guard, marshal main/IO boundaries, and never regard the limited consent object or phase as BusinessPermit. EpochErasureCoordinator/EpochCommitter/source rescue and full source UI remain separate missing implementations."
+}

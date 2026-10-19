@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R36",
+  "revision": "R37",
   "authority": [
     "O41",
     "O42",
@@ -1000,11 +1000,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "actual Android freshBiometricStrong/deviceCredential andpositiveOSnoLock wrapper forFORCE2/3, distinctsource/epoch/step bindings andprivate30sone-use native tickets",
+      "scope": "actual Android freshBiometricStrong/deviceCredential andpositiveOSnoLock wrapper forFORCE2/3, distinctsource/epoch/step bindings andprivate30sone-use native tickets; R37 actual native four-step bridge: own signer/compiled Root/window factory, one pending exact attempt/binding, private ticket held until native foreground, actual consume then reducer callback, cancellation/unknown ownership preserved",
       "researchEvidence": [
         "records/root-continuity.json",
         "owner-verbatim/O16-four-step-confirmation-and-trusted-source.txt",
-        "records/key-and-enrollment-design.json"
+        "records/key-and-enrollment-design.json",
+        "records/continuity-coordinator-contract.json"
       ],
       "inputOutput": "nativeownedforegroundActivity+currentcandidateSigner/Root/oldepoch+FORCE2or3binding -> OS-callbackprivateTicket orfixedtypedfailure/pending; NOTerasureauthorizationorbusinessunlock",
       "dependencies": "actual AndroidAPI30+BiometricPrompt/Keyguard/Power/Looper/elapsedRealtime; ContinuityState; noextraauthlibrary",
@@ -1018,7 +1019,8 @@
         "actualOSownerprompt/no-lock/readiness/consume/timeout/cancelruntime executed",
         "positiveOwnerAuthentication ornativecontrolflowvalidatedbyHOSTmetadata",
         "LastGood/epoch/four-clickSourceCoordinator/exacterasurecommit implemented",
-        "formalkeyprovision orsourcebusinessunlock"
+        "formalkeyprovision orsourcebusinessunlock",
+        "new continuity bridge control-flow/OS execution (API compilation only)"
       ],
       "integrationGate": "ActualOS tests needseparateownerpromptauthorization. Only nativeSourceCoordinator buildsbindingsafterreal4clicks/currentSignerRootepochchecks; FORCE2/3 freshindependentrequests; unknown/cancel/failure NEVERno-lockexemption orsuccess. Consumeoncewhenownedforegroundreturns, thenrecheckactualsource/epoch/step. NoRoot/whitelistbypass, noCLItrust, noold-dataaccess/deletionhere."
     },
@@ -1110,6 +1112,38 @@
         "complete continuity coordinator, UI, erasure or business unlock"
       ],
       "integrationGate": "NOT wired. Keep formal Root empty and business gate locked. Native coordinator alone verifies actual signer/Root/old-data inventory, two fresh auth tickets, exact erasure and fresh epoch; serialize changes with write and recheck before effects. Stable metadata is not BusinessPermit. Failure can be unknown; inspect without alternate non-atomic route."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual thread/revision/current-context four-step reducer, separate opaque owner attempts, unknown/actual-end separation, native-ticket bridge hook and private <=30s one-use erasure-consent; no IO/erasure/trust/unlock",
+      "researchEvidence": [
+        "records/continuity-coordinator-contract.json",
+        "records/root-continuity.json",
+        "records/last-good-source-store-contract.json",
+        "owner-verbatim/O16-four-step-confirmation-and-trusted-source.txt"
+      ],
+      "inputOutput": "native current ledger/candidate metadata + own window/source guard/clock and actual native owner-auth bridge -> immutable step/work view or limited private consent; not BusinessPermit",
+      "dependencies": "existing ContinuityState/LastGoodSourceStore pure metadata; production factory/native success bridge in actual OwnerAuthentication Android class",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/continuity/ContinuityCoordinatorTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.continuity.ContinuityCoordinatorTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "synthetic reducer signals validate OS authentication or ticket consume",
+        "actual Android OwnerAuthentication bridge/control-flow execution",
+        "source authority from metadata alone, actual erasure/epoch commit/quiescence",
+        "complete bootstrap/source UI/rescue or business unlock"
+      ],
+      "integrationGate": "NOT startup/UI wired. Production construction only OwnerAuthentication factory with actual own signer/compiled Root/window. Only its private OS-ticket consumption bridge completes attempts; native guards still validate actual source/epoch/ledger. EpochErasureCoordinator/EpochCommitter exact data workset backend required before effect; keep business locked."
     }
   ],
   "parallelPending": [

@@ -91,6 +91,9 @@ def review():
     assert app['lastGoodSourceHostFilesystemTests'] == 17
     assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.continuity.LastGoodSourceStoreTest')['tests'] == 17
     assert not any(app[k] for k in ['lastGoodSourceAndroidFilesystemExecuted','lastGoodSourcePowerLossOrProcessDeathExecuted','lastGoodSourceCoordinatorOrUnlockIntegrated'])
+    assert app['continuityReducerHostTests'] == 24
+    assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.continuity.ContinuityCoordinatorTest')['tests'] == 24
+    assert not app['continuityNativeOwnerBridgeHostExecuted'] and not app['continuityOwnerPromptOrConsentConsumeAndroidExecuted']
     assert app['ownerBiometricPermissionDeclared']
     assert not app['ownerAuthenticationPromptOrTicketConsumeExecuted'] and not app['ownerAuthenticationControlFlowHostExecuted']
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])

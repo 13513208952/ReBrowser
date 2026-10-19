@@ -1,10 +1,12 @@
 # 可信来源跨版本保持、四步确认与私有数据保护 · R33／R34／R36–R38 · R4
 
-## 当前实现切片（R36，以下状态图仍为总体设计）
+## 当前实现切片（R37，以下状态图仍为总体设计）
+
+R37增加实际`ContinuityCoordinator`四步reducer及`OwnerAuthentication`私有票据桥接源码：Source/epoch/窗口/步骤/代次与时钟检查，Force2/3各不同attempt，退休不结算原OS请求，最终consent一次性且30秒。24项HOST执行的是reducer加合成Native验证信号；Android桥接、OS提示与票据消费仍未执行，不能扩成整个来源流程完成。正式根缺失时桥接工厂拒绝创建来源确认流；consent不执行擦除或解锁。
 
 `continuity/LastGoodSourceStore.java` 已实现最后正常来源的216B元数据账本：候选B始终保留A的签名/Root/epoch，只有原生协调器显式记录已核验空epoch后才允许替换；破坏可能开始后不接受简单撤回。文件锁、精确快照CAS、私有stage/fsync/仅原子rename/目录fsync/读回，以及异常stage、损坏/缺失marker、目录身份变化的拒绝，已有17项真实HOST临时文件系统测试。
 
-**这些测试没有执行Android文件系统、系统认证、实际擦除或跨APK救援。** SHA只检错；记录中的进度是原生调用者声明，不是本人同意或擦除证据。Missing不代表首次安装，必须另查旧数据清单。完整ContinuityCoordinator、实际四步UI/两次票据消费、精确擦除核验与业务解锁仍未实现；当前正式Root未配置、业务锁定。bootstrap账本/锁目录必须在旧epoch擦除期间保留至新来源提交，不能随普通数据递归删除。
+**这些测试没有执行Android文件系统、系统认证、实际擦除或跨APK救援。** SHA只检错；记录中的进度是原生调用者声明，不是本人同意或擦除证据。Missing不代表首次安装，必须另查旧数据清单。完整来源bootstrap、实际四步UI/两次票据消费、精确擦除核验与业务解锁仍未实现；当前正式Root未配置、业务锁定。bootstrap账本/锁目录必须在旧epoch擦除期间保留至新来源提交，不能随普通数据递归删除。
 
 ```mermaid
 stateDiagram-v2

@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
-  "runtimeSourceFilesCompiled": 24,
-  "junitTestsPassed": 191,
-  "junitOutput": "JUnit version 4.13.2\n...............................................................................................................................................................................................\nTime: 1.148\n\nOK (191 tests)\n\n",
+  "runtimeSourceFilesCompiled": 25,
+  "junitTestsPassed": 215,
+  "junitOutput": "JUnit version 4.13.2\n.......................................................................................................................................................................................................................\nTime: 1.15\n\nOK (215 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -102,6 +102,10 @@
       "sha256": "bc720145110db3b74b9e246d7f7cb8c70222f81dad4bea0b962aacf7c5232c3e"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "sha256": "0e353205d8197b1358363fd305779901d70060aadd0ddf18ac7d53745c647da1"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
     },
@@ -120,6 +124,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java",
       "sha256": "d422ba2e524c7e47d90ef056a7dfa33afc530d69633ba9c89186a15cba5d99a9"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityCoordinatorTest.java",
+      "sha256": "5c9c5528d9469b0ed62c6462091a7fd0aeaa3873a4123cfb8f37b2bcebf75049"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java",
@@ -184,8 +192,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 2964267008,
-  "memAvailableBefore": 3604152320,
+  "freeBytesBefore": 2959802368,
+  "memAvailableBefore": 3641450496,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

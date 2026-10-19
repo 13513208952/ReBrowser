@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R36",
+  "revision": "R37",
   "authority": [
     "O26",
     "O27",
@@ -81,6 +81,12 @@
           "kind": "unit-last-good-metadata-filesystem",
           "purpose": "17 actual HOST metadata IO/reopen/A-B-abort-A and explicit-empty-B, lock/CAS, corrupt/pending/symlink/directory identity rejection; synthetic fences, not owner authentication or erasure",
           "state": "host-filesystem-tested-not-Android-integrated"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityCoordinatorTest.java",
+          "kind": "unit-native-four-step-reducer",
+          "purpose": "24 HOST synthetic-native outcome cases, exact order/revision/window/context/clock/consent and retained unknown native work; not OS bridge/authentication",
+          "state": "host-reducer-tested-Android-bridge-not-executed"
         }
       ]
     },
@@ -611,13 +617,18 @@
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "四步/抢救/销毁前锁定/提交新epoch的状态归约",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "24 actual pure reducer HOST tests with synthetic native verification signals + SDK37.2 compile; not real OS/ticket bridge/erasure/unlock",
       "runtimePending": true,
-      "testReferenceGroup": "continuity"
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/continuity-coordinator-contract.json",
+        "evidence/production-unit-tests.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",

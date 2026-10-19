@@ -408,7 +408,14 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O59",
+      "file": "owner-verbatim/O59-continue-without-casual-stopping.txt",
+      "utf8Bytes": 36,
+      "sha256": "e95d9dac64ef1e768dd503565b02d0ea17efa534a2be503c7377aede04fab8ae",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-19T21:34:35+08:00"
+  "lastAppendedAt": "2026-10-19T22:17:00+08:00"
 }

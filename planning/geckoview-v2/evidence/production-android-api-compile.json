@@ -99,6 +99,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
       "sha256": "bc720145110db3b74b9e246d7f7cb8c70222f81dad4bea0b962aacf7c5232c3e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "sha256": "0e353205d8197b1358363fd305779901d70060aadd0ddf18ac7d53745c647da1"
     }
   ],
   "classFiles": [
@@ -325,6 +329,51 @@
     {
       "path": "io/github/rebrowser/continuity/CompiledSourceIdentity.class",
       "sha256": "11e95fc70e535dcb8993c9ada5fa2a37bbe37c03b43e36bfb29f54ec398e6131",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$1.class",
+      "sha256": "cfea861e12028c7eeaaae681e246a6417b101b7a3868f8d5b37ab94b5fc9f875",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$Clock.class",
+      "sha256": "1903be1f2e3758fa60e6a6fde7932bcea64a97f61f7e87f6c3b7483068f4dd9e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$Consent.class",
+      "sha256": "e2c8c341a6ff57c0c80094ce8f27f65188a2801a1578417237346db9dfe142a7",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$Context.class",
+      "sha256": "603ca840633a755dd68163778ab5349d0ff6ec85d69907fc66cad1d3a592609f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$CurrentSourceGuard.class",
+      "sha256": "9a5ebba221aa33b41a26e24f4d670a22116d552b4493b57f748645884323c2c5",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$OwnerAttempt.class",
+      "sha256": "c0d866b283824aaacf55ddda58ea05829d7d9c00fb5757f8d6c75eefc21217ed",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$Stage.class",
+      "sha256": "11070583a9469294fd0dc5990f1400a95b05c1f2a7eb6cd47de665ec2b41fb54",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator$View.class",
+      "sha256": "4fc427843610748638fd81b19f9bd7cefb648338a69cb2597f3a1b3ad07de436",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityCoordinator.class",
+      "sha256": "0f141e3c36575f46320f99d1c066d0c86734bcfe2ba232862c226321d93985e3",
       "classMajor": 52
     },
     {

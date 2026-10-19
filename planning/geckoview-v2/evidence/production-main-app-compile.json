@@ -67,6 +67,10 @@
       "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "sha256": "0e353205d8197b1358363fd305779901d70060aadd0ddf18ac7d53745c647da1"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
       "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
     },
@@ -76,7 +80,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
-      "sha256": "f95000b2315f069a5fe54f71af39c564040eb58a17349967754c83036478b8bb"
+      "sha256": "dbf8d97126f34ac8c92c3243f4cf5d6e9b7aaf5c6f16b46096c283a676389685"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
@@ -179,6 +183,10 @@
       "sha256": "d422ba2e524c7e47d90ef056a7dfa33afc530d69633ba9c89186a15cba5d99a9"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityCoordinatorTest.java",
+      "sha256": "5c9c5528d9469b0ed62c6462091a7fd0aeaa3873a4123cfb8f37b2bcebf75049"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java",
       "sha256": "be0049f101b214dac57ead9719371f5edebc5485aaee314220af111f0208ddae"
     },
@@ -267,8 +275,8 @@
       "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
     }
   ],
-  "productionJavaSourceFiles": 38,
-  "compiledClassFiles": 144,
+  "productionJavaSourceFiles": 39,
+  "compiledClassFiles": 154,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -297,6 +305,12 @@
     {
       "class": "io.github.rebrowser.continuity.CompiledSourceIdentityTest",
       "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.ContinuityCoordinatorTest",
+      "tests": 24,
       "failures": 0,
       "errors": 0
     },
@@ -403,7 +417,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 201,
+  "unitTestsPassed": 225,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -450,5 +464,8 @@
   "lastGoodSourceHostFilesystemTests": 17,
   "lastGoodSourceAndroidFilesystemExecuted": false,
   "lastGoodSourcePowerLossOrProcessDeathExecuted": false,
-  "lastGoodSourceCoordinatorOrUnlockIntegrated": false
+  "lastGoodSourceCoordinatorOrUnlockIntegrated": false,
+  "continuityReducerHostTests": 24,
+  "continuityNativeOwnerBridgeHostExecuted": false,
+  "continuityOwnerPromptOrConsentConsumeAndroidExecuted": false
 }

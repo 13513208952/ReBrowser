@@ -73,11 +73,84 @@ public final class OwnerAuthentication {
         Attempt(Binding binding,Callback callback){this.binding=binding;this.callback=callback;}
     }
     private final Activity activity;
+    private final Object nativeWindow=new Object();
+    private ContinuityCoordinator.OwnerAttempt continuityAttempt;
+    private Binding continuityBinding;
+    private Ticket continuityTicket;
+    private ContinuityListener continuityListener;
+    public interface ContinuityListener { void stateChanged(); }
     private Attempt active;
     private boolean closed,starting;
     public OwnerAuthentication(Activity actualOwnedActivity){mainThread();if(actualOwnedActivity==null)throw invalid();activity=actualOwnedActivity;}
+    /** Native source UI factory; metadata/context must come from bootstrap, NEVER caller extras. */
+    public ContinuityCoordinator newContinuityFlow(ContinuityCoordinator.Context context,ContinuityCoordinator.CurrentSourceGuard nativeGuard)throws SigningIdentity.Unavailable{
+        mainThread();if(closed || active!=null || continuityAttempt!=null)throw new IllegalStateException("Owner verification already owned");
+        if(context==null || nativeGuard==null)throw invalid();CompiledSourceIdentity compiled=CompiledSourceIdentity.current();
+        if(!compiled.configured() || !compiled.requireRootSpkiSha256().equals(context.candidateRootSha256()))throw new SecurityException("Formal source Root unavailable or changed");
+        SigningIdentity.Identity actual=SigningIdentity.inspectOwn(activity.getApplication());
+        if(!actual.currentCertificateSha256().equals(context.candidateSignerSha256()))throw new SecurityException("Own installed signer changed");
+        LastGoodSourceStore.SourceEpoch old=context.nativeBaselineView().record().lastGood();
+        if(compiled.rootMatchesLastGood(old.rootSha256()) && actual.acceptsLastGoodSigner(old.signingSha256()))throw new SecurityException("Correct source requires native rescue, not destructive warnings");
+        nativeGuard.checkCurrent(context);
+        return new ContinuityCoordinator(context,nativeWindow,nativeGuard,new ContinuityCoordinator.Clock(){@Override public long elapsedMs(){return SystemClock.elapsedRealtime();}});
+    }
+    /** Reserve before real OS call. WAIT_FOREGROUND keeps this same unstarted attempt/binding. */
+    public Start beginContinuityVerification(ContinuityCoordinator.OwnerAttempt expected,ContinuityListener listener){
+        mainThread();if(closed || expected==null || listener==null || !expected.windowMatches(nativeWindow))throw invalid();
+        try{expected.checkBeforeNativeBegin();}
+        catch(RuntimeException stale){
+            // A positively unstarted binding owns no OS request. Never apply this to unknown/submitted work.
+            if(continuityAttempt==expected && !continuityBinding.started){continuityBinding.valid=false;expected.nativeTerminal(false);clearContinuitySlot();}
+            throw stale;
+        }
+        if(continuityAttempt==null){
+            if(active!=null)throw new IllegalStateException("Owner verification already pending");
+            continuityAttempt=expected;ContinuityCoordinator.Context context=expected.context();
+            continuityBinding=new Binding(context.oldEpoch(),context.candidateSignerSha256(),context.candidateRootSha256(),expected.step());continuityListener=listener;
+        }else if(continuityAttempt!=expected || continuityListener!=listener)throw new IllegalStateException("Different native owner attempt or observer");
+        if(!foregroundReady())return Start.WAIT_FOREGROUND;
+        Binding original=continuityBinding;expected.nativeWorkMayStart();
+        try{
+            Start started=begin(original,result->receiveContinuityResult(expected,original,result));
+            if(started==Start.WAIT_FOREGROUND && !original.started)expected.nativeNoSubmissionYet();
+            if(started==Start.SUBMISSION_UNKNOWN)expected.nativeSubmissionUnknown();return started;
+        }catch(RuntimeException failure){
+            if(active!=null && active.binding==original)expected.nativeSubmissionUnknown();
+            else{expected.nativeTerminal(false);if(continuityAttempt==expected && continuityTicket==null)clearContinuitySlot();}
+            throw failure;
+        }
+    }
+    /** Call after own foreground returns; a raw OS callback is not consent to delete. */
+    public boolean tryConsumeContinuityVerification(){
+        mainThread();if(continuityAttempt==null || continuityTicket==null)return false;
+        ContinuityCoordinator.OwnerAttempt expected=continuityAttempt;Binding binding=continuityBinding;ContinuityListener listener=continuityListener;
+        // A held private ticket already has an observed terminal OS result; retirement may discard it without new foreground.
+        if(closed || expected.isFlowRetired()){binding.valid=false;clearContinuitySlot();return false;}
+        if(!foregroundReady())return false;
+        try{
+            if(closed || !expected.windowMatches(nativeWindow))throw new SecurityException("Owner window changed");
+            expected.checkBeforeNativeTicketConsume();
+            if(continuityTicket.issuer!=this || continuityTicket.binding!=binding)throw new SecurityException("Wrong native verification ticket");
+            continuityTicket.consume(binding);expected.verifiedAfterNativeTicketConsume();binding.valid=false;clearContinuitySlot();
+        }catch(RuntimeException stale){
+            expected.retireFlow();binding.valid=false;clearContinuitySlot();
+            try{listener.stateChanged();}catch(RuntimeException publish){stale.addSuppressed(publish);}throw stale;
+        }
+        listener.stateChanged();return true;
+    }
+    public boolean hasPendingContinuityVerification(){mainThread();return continuityAttempt!=null;}
+    private void receiveContinuityResult(ContinuityCoordinator.OwnerAttempt expected,Binding binding,Result result){
+        mainThread();
+        if(continuityAttempt!=expected || continuityBinding!=binding){expected.retireFlow();if(result.outcome!=Outcome.SUBMISSION_UNKNOWN)expected.nativeTerminal(false);return;}
+        ContinuityListener listener=continuityListener;
+        if(result.outcome==Outcome.SUBMISSION_UNKNOWN){expected.nativeSubmissionUnknown();listener.stateChanged();return;}
+        if(result.hasTicket() && !expected.isFlowRetired()){continuityTicket=result.ticket();expected.nativeTerminal(true);}
+        else{expected.nativeTerminal(false);binding.valid=false;clearContinuitySlot();}
+        listener.stateChanged(); // thrown publication does not retry/release a still-owned ticket or OS request
+    }
+    private void clearContinuitySlot(){continuityAttempt=null;continuityBinding=null;continuityTicket=null;continuityListener=null;}
     public Start begin(Binding binding,Callback callback){
-        mainThread();if(closed || starting || active!=null)throw new IllegalStateException("Owner authentication unavailable or already pending");
+        mainThread();if(closed || starting || active!=null || (continuityAttempt!=null && binding!=continuityBinding))throw new IllegalStateException("Owner authentication unavailable or already pending");
         if(binding==null || callback==null || binding.started || !binding.valid)throw invalid();
         if(!foregroundReady())return Start.WAIT_FOREGROUND;
         starting=true;binding.started=true;Attempt attempt=new Attempt(binding,callback);active=attempt;
@@ -126,8 +199,16 @@ public final class OwnerAuthentication {
         }finally{starting=false;}
     }
     /** Stops eligibility immediately, but cancellation request is not actual OS completion. */
-    public void cancel(){mainThread();if(active!=null){active.binding.valid=false;active.cancellationRequested=true;active.signal.cancel();}}
-    public void invalidate(Binding binding){mainThread();if(binding==null)throw invalid();binding.valid=false;if(active!=null && active.binding==binding)cancel();}
+    public void cancel(){
+        mainThread();
+        if(continuityAttempt!=null){continuityAttempt.retireFlow();continuityBinding.valid=false;if(active==null || active.binding!=continuityBinding)clearContinuitySlot();}
+        if(active!=null){active.binding.valid=false;active.cancellationRequested=true;active.signal.cancel();}
+    }
+    public void invalidate(Binding binding){
+        mainThread();if(binding==null)throw invalid();binding.valid=false;
+        if(binding==continuityBinding && continuityAttempt!=null){continuityAttempt.retireFlow();if(active==null || active.binding!=binding)clearContinuitySlot();}
+        if(active!=null && active.binding==binding)cancel();
+    }
     public void close(){mainThread();closed=true;cancel();}
     public boolean hasPendingOsRequest(){mainThread();return active!=null;}
     private void finish(Attempt attempt,Outcome outcome,Ticket ticket){

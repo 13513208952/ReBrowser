@@ -87,6 +87,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
       "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+      "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
     }
   ],
   "classFiles": [
@@ -313,6 +317,26 @@
     {
       "path": "io/github/rebrowser/continuity/CompiledSourceIdentity.class",
       "sha256": "11e95fc70e535dcb8993c9ada5fa2a37bbe37c03b43e36bfb29f54ec398e6131",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityState$Confirmation.class",
+      "sha256": "eae54a9a06a3b4bedd1b8c3857c99c9a33c3964935791e95366f2346f16408f7",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityState$Phase.class",
+      "sha256": "bb85f6d96f6c7cb571b0f3afdc4de3205829f9073ceac1a9c1f61ed12e0679e1",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityState$Recoverability.class",
+      "sha256": "56c91714a9e698a46aa8d93b257d271002352b986aae301afdf13ef6c3dba388",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/continuity/ContinuityState.class",
+      "sha256": "b93f4efe3a58b1a57f5812049b40d899ce6a17c4e077c58703226686fd1905c0",
       "classMajor": 52
     },
     {

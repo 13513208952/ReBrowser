@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R32",
+  "revision": "R33",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -220,10 +220,10 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "continuedafterR31push:actualBackCoordinator singleownedlayer +SigningIdentity ownOSmetadata +CompiledSourceIdentity Rootmetadata",
-    "33mainsources168mainHOST=161pure+7Androidclasspure;21HOST/12API-WIP, noAndroidBack/signinginfo execution orRoottrustunlock",
-    "Startup usescompiledsourceRoot metadata/ownsigner accessor butstillUNCONFIGURED/LOCKED, noLastGoodstorewrites/ownerAuth/erasure",
-    "L0oldSystemBackDispatcher fullreadretained;32retained65queued0archived; known32MiBincrementalcompile only"
+    "continuedafterR32push into actualContinuityState/OwnerAuthentication files perexactO16",
+    "35actualmainJava/174mainHOST=164pure+10Androidclasspure,22HOST/13API-WIP",
+    "OwnerAuth APIs compiled withdeclarednormalUSE_BIOMETRIC; noAPK/install/OSprompt/OSno-lock/consume/controlflowexecution; explicitsourceGate stayslocked",
+    "NativeOS errors/cancel/unknown notnolocksuccess; finalstepbindings distinct. FullSourceCoordinator/LastGood/erasure remainmissing; no olddata/key action"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

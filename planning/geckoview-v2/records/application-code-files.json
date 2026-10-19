@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R32",
+  "revision": "R33",
   "authority": [
     "O26",
     "O27",
@@ -63,6 +63,18 @@
           "kind": "unit-signing-metadata-only",
           "purpose": "4HOST publicTOYoctet hash/history/bounds/immutability;notcertificates/AndroidOS/privatekey custody",
           "state": "main-project-HOST-pure-metadata-only"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java",
+          "kind": "unit-exact-owner-confirmation-vocabulary",
+          "purpose": "3HOST exact4O16warninghashes andForce2/3freshauthpositions;notOwnerAuthorTrust",
+          "state": "host-tested-data-only"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java",
+          "kind": "unit-native-owner-binding-metadata",
+          "purpose": "3HOST epochcopy/steprestriction/freshchallenge/privateTicketconstructor, NOownerprompt/noLockproof/ticketmintconsume/controlflowexecution",
+          "state": "main-project-HOST-binding-only"
         }
       ]
     },
@@ -594,26 +606,28 @@
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "来源与确认步骤、失败和不可逆点数据类型",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R33 exactO16fourwarningSHA/Force2-3authposition/phasevocabulary3HOST; NOTstateCoordinator/consent/erasure/unlock",
       "runtimePending": true,
-      "testReferenceGroup": "continuity"
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "每步新Android验证及确无锁判断",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R33 actualAndroidBiometricStrong/deviceCredential/positiveKeyguardnolock/sourceStepBinding/privatefreshTicket source/APIcompile;3HOST binding-onlytests, noOSprompt/consume/cancel/verificationcontrolflowexecuted",
       "runtimePending": true,
-      "testReferenceGroup": "continuity"
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/PrivateEpochManifest.java",
@@ -3441,6 +3455,16 @@
         "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
         "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
         "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java"
+      ]
+    },
+    {
+      "group": "continuity",
+      "kind": "actual-fresh-system-owner-authentication-source",
+      "summary": "R32push后继续补确认数据和Android机主验证源码，严格Force2/3分次，只有系统明确无锁才免验证，取消/未知不产成功票据。35源码174HOST，OwnerAuthentication仅API-WIP；OS验证/四步归约/LastGood/精确销毁/业务解锁均未完成。",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
+        "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+        "planning/geckoview-v2/evidence/production-main-app-compile.json"
       ]
     }
   ],

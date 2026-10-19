@@ -89,6 +89,10 @@
       {
         "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
         "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+        "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
       }
     ],
     "classFiles": [
@@ -315,6 +319,26 @@
       {
         "path": "io/github/rebrowser/continuity/CompiledSourceIdentity.class",
         "sha256": "11e95fc70e535dcb8993c9ada5fa2a37bbe37c03b43e36bfb29f54ec398e6131",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/continuity/ContinuityState$Confirmation.class",
+        "sha256": "eae54a9a06a3b4bedd1b8c3857c99c9a33c3964935791e95366f2346f16408f7",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/continuity/ContinuityState$Phase.class",
+        "sha256": "bb85f6d96f6c7cb571b0f3afdc4de3205829f9073ceac1a9c1f61ed12e0679e1",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/continuity/ContinuityState$Recoverability.class",
+        "sha256": "56c91714a9e698a46aa8d93b257d271002352b986aae301afdf13ef6c3dba388",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/continuity/ContinuityState.class",
+        "sha256": "b93f4efe3a58b1a57f5812049b40d899ce6a17c4e077c58703226686fd1905c0",
         "classMajor": 52
       },
       {
@@ -606,9 +630,9 @@
     "keystoreOrRealCredentialsAccessed": false,
     "temporaryClassDirectoryRemoved": true
   },
-  "runtimeSourceFilesCompiled": 21,
-  "junitTestsPassed": 161,
-  "junitOutput": "JUnit version 4.13.2\n.................................................................................................................................................................\nTime: 0.83\n\nOK (161 tests)\n\n",
+  "runtimeSourceFilesCompiled": 22,
+  "junitTestsPassed": 164,
+  "junitOutput": "JUnit version 4.13.2\n....................................................................................................................................................................\nTime: 0.871\n\nOK (164 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -696,6 +720,10 @@
       "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+      "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
     },
@@ -714,6 +742,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java",
       "sha256": "d422ba2e524c7e47d90ef056a7dfa33afc530d69633ba9c89186a15cba5d99a9"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java",
+      "sha256": "be0049f101b214dac57ead9719371f5edebc5485aaee314220af111f0208ddae"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java",
@@ -766,8 +798,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1150578688,
-  "memAvailableBefore": 4992397312,
+  "freeBytesBefore": 1144975360,
+  "memAvailableBefore": 5436125184,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

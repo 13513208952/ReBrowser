@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**33文件**；其中HOST测试切片 **21文件**，API编译/实现中 **12文件**；其余 **145文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**35文件**；其中HOST测试切片 **22文件**，API编译/实现中 **13文件**；其余 **143文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -81,11 +81,11 @@
                             ├── continuity/
                             │   ├── CompiledSourceIdentity.java [J][HOST][?] — APK编译根公钥/策略身份
                             │   ├── ContinuityCoordinator.java [J][PLAN][?] — 四步/抢救/销毁前锁定/提交新epoch的状态归约
-                            │   ├── ContinuityState.java [J][PLAN][?] — 来源与确认步骤、失败和不可逆点数据类型
+                            │   ├── ContinuityState.java [J][HOST][?] — 来源与确认步骤、失败和不可逆点数据类型
                             │   ├── EpochCommitter.java [J][PLAN][?] — 确认清空后原子提交新epoch/source
                             │   ├── EpochErasureCoordinator.java [J][PLAN][?] — 专项旧私有数据销毁/核对，不是搁置的子应用清理
                             │   ├── LastGoodSourceStore.java [J][PLAN][?] — 最后正常来源与数据epoch记录，异常包不覆盖
-                            │   ├── OwnerAuthentication.java [J][PLAN][?] — 每步新Android验证及确无锁判断
+                            │   ├── OwnerAuthentication.java [J][API/WIP][?] — 每步新Android验证及确无锁判断
                             │   ├── PrivateEpochManifest.java [J][PLAN][?] — 仅v2自有旧epoch文件/密钥归属清单
                             │   └── SigningIdentity.java [J][API/WIP][?] — APK真实签名锚与合法轮换验证
                             ├── control/
@@ -231,7 +231,7 @@
 | 职责 | 测试要求摘要 | 目标文件引用，实施/证据另看准入记录 |
 | --- | --- | --- |
 | 入口与进程 | 进程角色/幂等启动/所有组件先闸门/无系统WebView条件；API30新安装冷启动及Gecko子进程不重复建主runtime | `app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java` |
-| 来源连续性 | lastGood而非lastSeen、四步计数/取消、精确私有清单与原子epoch；合成A→异常B→正常C、版本/签名限制、两次新系统验证与无锁/取消；不清日常资料；actualunconfiguredRoot/strictfingerprints/noDynamicRegistrationAPI;3HOSTtestsnottrustunlock；4HOST publicTOYoctet hash/history/bounds/immutability;notcertificates/AndroidOS/privatekey custody | `app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java` |
+| 来源连续性 | lastGood而非lastSeen、四步计数/取消、精确私有清单与原子epoch；合成A→异常B→正常C、版本/签名限制、两次新系统验证与无锁/取消；不清日常资料；actualunconfiguredRoot/strictfingerprints/noDynamicRegistrationAPI;3HOSTtestsnottrustunlock；4HOST publicTOYoctet hash/history/bounds/immutability;notcertificates/AndroidOS/privatekey custody；3HOST exact4O16warninghashes andForce2/3freshauthpositions;notOwnerAuthorTrust；3HOST epochcopy/steprestriction/freshchallenge/privateTicketconstructor, NOownerprompt/noLockproof/ticketmintconsume/controlflowexecution | `app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java` |
 | 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限；112phase/work/effect combinations,14valid; timeout/cancel/stale neverendwork; observed outcome/workend/durability independent；235HOST SQLite constraints/196transitionpairs/recovery/pairedtransaction rollback,reopen/2writeronce;NOTAndroidDAO | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java`<br>`planning/geckoview-v2/experiments/task_journal_sql.py` |
 | 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路；fresh one-shot immutable object IDs/catalog scope/RAW digest/GCM frame tamper/tainted late prefix/cancel/4MiB generated source bounded private staging; ZLIB bytes need separate codec verification | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java` |
 | 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
@@ -286,6 +286,7 @@
 | 浏览器领域与本机数据 | actual-browser-domain-and-Gecko-ownership | R30按总树编写7个缺失本体文件：工作区/标签/不可变模型及分区/Session/View所有权和Native协调器。真实模型测试与GeckoAPI编译分层；主窗口尚未接通、永久存储/正确恢复/A04未完成，不以外壳冒充可用浏览器。<br>`app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java`<br>`app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java`<br>`app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
 | 浏览器领域与本机数据 | actual-navigation-input-and-Android-link-boundary | SearchEngines/ExternalNavigation正式源码，选定环境/标签/revision检查后NativeCoordinator.loadUri调用；Nativeinitializer在open前拿真实Tabowner。无系统receiver激活/Source解锁/正确Checkpoint/Android实机动作；加载提交不等于网页成功，不回滚代次重放。<br>`app/src/main/java/io/github/rebrowser/browser/SearchEngines.java`<br>`app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java`<br>`app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java` |
 | 来源连续性 | actual-source-metadata-and-owned-back | R32按总树补BackCoordinator/SigningIdentity/CompiledSourceIdentity。原生Back只一层，未知不落下一层，原执行者迟到结算不发布新代；来源只读自身OS签名和APK编译Root元数据，Startup仍UNCONFIGURED/LOCKED，不写lastGood/不解锁。<br>`app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java`<br>`app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java`<br>`app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java`<br>`app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java` |
+| 来源连续性 | actual-fresh-system-owner-authentication-source | R32push后继续补确认数据和Android机主验证源码，严格Force2/3分次，只有系统明确无锁才免验证，取消/未知不产成功票据。35源码174HOST，OwnerAuthentication仅API-WIP；OS验证/四步归约/LastGood/精确销毁/业务解锁均未完成。<br>`app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java`<br>`app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
 
 ### 当前边界
 

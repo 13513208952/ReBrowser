@@ -63,6 +63,14 @@
       "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+      "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
+      "sha256": "f95000b2315f069a5fe54f71af39c564040eb58a17349967754c83036478b8bb"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
       "sha256": "c6a1c3363be09ebe0d4137966f81300b36f1e448aefed4182a1fc964834be229"
     },
@@ -155,6 +163,14 @@
       "sha256": "d422ba2e524c7e47d90ef056a7dfa33afc530d69633ba9c89186a15cba5d99a9"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java",
+      "sha256": "be0049f101b214dac57ead9719371f5edebc5485aaee314220af111f0208ddae"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java",
+      "sha256": "8d27ddf4109dafacf68709f1f54d75304866e019a401246fd7ded142f5495aec"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java",
       "sha256": "2134c0ce9f67dee1b83ac7e6d81a2857895ea0c5f92ed1c5c7295db9b3472ea5"
     },
@@ -224,15 +240,15 @@
     },
     {
       "path": "rebrowser/app/src/main/AndroidManifest.xml",
-      "sha256": "7362f56ffcbddeab994329c05f3e3b1e9afa7c46f2b6d8ca9bf997759839e32f"
+      "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
     },
     {
       "path": "app/build.gradle.kts",
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 33,
-  "compiledClassFiles": 113,
+  "productionJavaSourceFiles": 35,
+  "compiledClassFiles": 127,
   "unitTests": [
     {
       "class": "io.github.rebrowser.continuity.SigningIdentityTest",
@@ -283,6 +299,12 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.continuity.OwnerAuthenticationBindingTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.core.CoreContractsTest",
       "tests": 9,
       "failures": 0,
@@ -291,6 +313,12 @@
     {
       "class": "io.github.rebrowser.core.TaskSnapshotTest",
       "tests": 5,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.ContinuityStateTest",
+      "tests": 3,
       "failures": 0,
       "errors": 0
     },
@@ -343,7 +371,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 168,
+  "unitTestsPassed": 174,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -367,7 +395,7 @@
   "processLocalChallengeAdmissionImplemented": true,
   "durableJobAdmissionOrEffectDispatchImplemented": false,
   "androidSQLiteMethodsExecuted": false,
-  "hostAndroidClassPureIdentityTests": 7,
+  "hostAndroidClassPureIdentityTests": 10,
   "durableRequestTaskPairCodeImplemented": true,
   "fullPolicyCoordinatorAndEffectDispatchImplemented": false,
   "concreteActionArgumentSchemasImplemented": 4,
@@ -379,5 +407,8 @@
   "externalIntentReceiverActivated": false,
   "browserSourceUnlockAndUiReady": false,
   "ownAndroidSignerMethodsExecuted": false,
-  "sourceRootOrBackUiActivated": false
+  "sourceRootOrBackUiActivated": false,
+  "ownerBiometricPermissionDeclared": true,
+  "ownerAuthenticationPromptOrTicketConsumeExecuted": false,
+  "ownerAuthenticationControlFlowHostExecuted": false
 }

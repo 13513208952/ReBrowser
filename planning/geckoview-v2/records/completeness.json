@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R32",
+  "revision": "R33",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -522,7 +522,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "签名身份、可信基线密封、两次系统验证、私有集合销毁",
-      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证；R32实际BackCoordinator/SigningIdentity/CompiledSourceIdentity及Startup只读身份接入；33主源码168HOST，单层Back及signer/Root元数据不是OS实机/四步来源授权/解锁完成",
+      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证；R32实际BackCoordinator/SigningIdentity/CompiledSourceIdentity及Startup只读身份接入；33主源码168HOST，单层Back及signer/Root元数据不是OS实机/四步来源授权/解锁完成；R33实际ContinuityState精确O16文案/次序和OwnerAuthentication Android源码/NormalUSE_BIOMETRIC声明；35源174HOST仅含绑定元数据，未运行OS认证/票据consume，LastGood/真实四步协调/销毁/解锁仍缺",
       "completionDeliverables": [
         "状态持久化和恢复",
         "全部入口闸门",

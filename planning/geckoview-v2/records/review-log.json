@@ -1,5 +1,5 @@
 {
-  "revision": "R32",
+  "revision": "R33",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -299,6 +299,12 @@
       "time": "2026-10-19T17:12:00+08:00",
       "finding": "Source警告Back不能模拟正向确认；窗口/客户端消失不是原生层动作实际结束。应用自身来源签名与管理员调用方来源也必须分开，合法签名轮换不自动认可不同Root。",
       "resolution": "R31push后继续补3本体文件：Back一次选择并预留presentation revision，pending/unknown不落下一层，ownerReporter迟到结算不发布新UI；ownSigning API限自身包/UID/单签名及OS历史，CompiledRoot只读当前APK表。Startup仍锁定无lastGood写/OwnerAuth/删除。168主工程HOST(161pure+7Nativeclass纯元数据)不冒充Android签名/Back/真实证书执行；旧systemBack入口维护保留。"
+    },
+    {
+      "id": "REV51",
+      "time": "2026-10-19T17:29:14+08:00",
+      "finding": "O16要求首次信任/首次强行直接点击，第二/第三次强行各自新系统验证；生物识别不可用/取消/未知不能当无锁。真实OS动作尚未获运行授权，不能用元数据测试冒充身份验证通过。",
+      "resolution": "R32push后继续实现精确4文案及NativeBiometricStrong|DeviceCredential/KeyguardpositiveNoLock、源/epoch/Force2-3独立Binding/私有30s一次Ticket。取消/未知保留原OS待办、闭窗/绑定失效阻止票据使用，不读密码/模板/旧DB、不自动销毁解锁。实际SDK编译发现两项非公开常量不可用，改null/type公开白名单及公开取消错误，不用私有API/魔数绕过。174主工程HOST(164pure)仅6新文案/绑定测试；明确没有认证/消费/控制流HOST或OS运行。"
     }
   ]
 }

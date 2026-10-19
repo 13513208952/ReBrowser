@@ -43,6 +43,10 @@
       "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "2a1cc5dadb4b847d26d39245ab5b96365741100a15650dba84b4849be280ecfe"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
       "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
     },
@@ -76,7 +80,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
-      "sha256": "fd097ff2cb10699838df4eccb65854c0884e5305638d6354c8418979193074b1"
+      "sha256": "f23dc4444d0152a142ed47cbdc9b819a2dbcee4ca0d81d1af4b6001f2d91ac61"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
@@ -85,6 +89,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java",
       "sha256": "fd3a6b5d3e84a25073134ca58dde959c4f0c64e812b92ff4fec6c0fc8dad25df"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/IdempotencyIdentityTest.java",
+      "sha256": "d91a0b83466d892b286c8005999f9a7ab7e3bcd37694ccb618f3db8c45e0ad5a"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java",
@@ -131,8 +139,8 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 17,
-  "compiledClassFiles": 51,
+  "productionJavaSourceFiles": 18,
+  "compiledClassFiles": 56,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -143,6 +151,12 @@
     {
       "class": "io.github.rebrowser.crypto.ObjectAeadTest",
       "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.IdempotencyIdentityTest",
+      "tests": 3,
       "failures": 0,
       "errors": 0
     },
@@ -189,7 +203,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 101,
+  "unitTestsPassed": 104,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -211,5 +225,7 @@
   "oldApplicationOrDataModified": false,
   "legacySourceIsolation": "old main/test Java source sets exclude io/github/rebrowser/**; standalone v2 only imports that package root",
   "processLocalChallengeAdmissionImplemented": true,
-  "durableJobAdmissionOrEffectDispatchImplemented": false
+  "durableJobAdmissionOrEffectDispatchImplemented": false,
+  "androidSQLiteMethodsExecuted": false,
+  "hostAndroidClassPureIdentityTests": 3
 }

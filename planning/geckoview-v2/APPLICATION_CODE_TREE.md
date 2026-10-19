@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**17文件**；其中HOST测试切片 **12文件**，API编译/实现中 **5文件**；其余 **161文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**18文件**；其中HOST测试切片 **12文件**，API编译/实现中 **6文件**；其余 **160文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -96,7 +96,7 @@
                             │   ├── ControlDispatcher.java [J][PLAN][?] — 授权→同领域服务→真实结果，不复制特权路径
                             │   ├── ControlEnvelope.java [J][HOST][?] — 17个长度前缀签名字节字段/固定域版本/目标和原参数，明确DER签名与外包络边界
                             │   ├── ControlResultStream.java [J][PLAN][?] — 私有大结果有界传输
-                            │   ├── IdempotencyStore.java [J][PLAN][?] — 同principal/target/epoch/requestId同内容用新证明返回原任务，不同内容冲突；旧nonce重放不再授权
+                            │   ├── IdempotencyStore.java [J][API/WIP][?] — 同principal/target/epoch/requestId同内容用新证明返回原任务，不同内容冲突；旧nonce重放不再授权
                             │   └── PrivateDataController.java [J][PLAN][?] — 受授权应用自有对象检查/导出/重置，不访问无权名单；非子应用清理功能
                             ├── core/
                             │   ├── ActorContext.java [J][PLAN][?] — 正常用户/系统媒体/已验证管理员的明确身份
@@ -235,7 +235,7 @@
 | 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限 | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java` |
 | 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路；fresh one-shot immutable object IDs/catalog scope/RAW digest/GCM frame tamper/tainted late prefix/cancel/4MiB generated source bounded private staging; ZLIB bytes need separate codec verification | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java` |
 | 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
-| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入；30s exact-frame/context/nonce, replay/expiry, authorize failure/unknown reservation burn,16concurrent/reentrant attempts,1MiB retained-frame cap/clock rollback; no actual effects/durable journal | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java` |
+| 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入；30s exact-frame/context/nonce, replay/expiry, authorize failure/unknown reservation burn,16concurrent/reentrant attempts,1MiB retained-frame cap/clock rollback; no actual effects/durable journal；fresh nonce/policy/grant same content identity; action/scope/raw args change conflicts, immutable digest/schema arrays; Android SQLite methods separately pending | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java`<br>`app/src/test/java/io/github/rebrowser/control/IdempotencyIdentityTest.java` |
 | Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
@@ -280,6 +280,7 @@
 | Outlook与离线邮件 | exact-original-bounded-codec-pipeline | 六生产文件75JUnit；流式RAW/zlib候选封顶回退、完整长度/摘要验证和公用虚构key的私有AEAD管线。不是源/epoch/fence/DB提交证据<br>`planning/geckoview-v2/records/mail-codec-implementation-contract.json`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
 | 入口与进程 | standalone-v2-main-program-and-admin-console | O45收敛调研转主程序/管理员代码；独立rebrowser项目，Application/进程/共享来源闸门/单Gecko owner/原生窗口与控制台实际编译，89HOST测试。正式身份未配置保持锁定，不以验签当命令准入<br>`rebrowser/README.md`<br>`rebrowser/settings.gradle`<br>`rebrowser/app/build.gradle`<br>`rebrowser/app/src/main/AndroidManifest.xml`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
 | 统一控制入口与协议 | native-challenge-and-process-local-admission | 实际17字段服务器challenge/30s/1MiB内存界限/每身份容量，授权重查后一次消费并调用原生job reservation；异常未知不重放。101HOST测试，真实持久化/效果调度仍待接入<br>`app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
+| 统一控制入口与协议 | actual-native-idempotency-ledger | SQLite请求->job不可变绑定、SourcePermit/原生target-epoch检查；同内容新证明复用原job，内容变更冲突。实际类DDL在HOST SQLite39检查/磁盘重开，非Android事务或效果执行<br>`app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java`<br>`planning/geckoview-v2/evidence/admin-idempotency-host-sql.json`<br>`planning/geckoview-v2/experiments/admin_journal_sql.py` |
 
 ### 当前边界
 

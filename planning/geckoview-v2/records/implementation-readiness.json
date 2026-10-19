@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R26",
+  "revision": "R27",
   "authority": [
     "O41",
     "O42",
@@ -498,6 +498,35 @@
         "complete low delegation/disable/owner-grant/action schema implementation"
       ],
       "integrationGate": "trusted native coordinator must serialize live policy and durable idempotent job transaction; effects only after successful receipt/current domain gate. Reservation exceptions burn proof and require fresh authorized query, never route replay; no public endpoint until full admission complete"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "native SQLite immutable request/job ledger and actual original-content key; current source/target/epoch guard and same-job/conflict/native row cap; not dispatch journal or complete admission coordinator",
+      "researchEvidence": [
+        "records/control-proof-format.json",
+        "records/domain-interfaces.json",
+        "records/implementation-readiness.json"
+      ],
+      "inputOutput": "trusted dedicated v2 SQLiteDatabase+gate+native target/epoch -> initialize known schema and reserve/reuse job after authorization; no raw client SQL/path",
+      "dependencies": "actual Android SQLite/ContentValues/Cursor and existing KeyProof/gate, no new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/control/IdempotencyIdentityTest.java"
+      ],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "hostSqlEvidence": "evidence/admin-idempotency-host-sql.json",
+      "notClaimed": [
+        "actual Android SQLite transaction runtime or crash recovery",
+        "full SQLite+policy+nonce+TaskJournal atomicity",
+        "effect execution or automatic restart replay",
+        "authority/grant/target installation key provisioning"
+      ],
+      "integrationGate": "trusted native coordinator must open dedicated source-bound DB and combine durable task record/current policy fence before effect dispatch. Unknown commit burns challenge; fresh proof retrieves same immutable request/job. No table clear/migration fallback."
     }
   ],
   "parallelPending": [

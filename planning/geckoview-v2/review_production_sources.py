@@ -66,7 +66,14 @@ def review():
     assert app['productionJavaSourceFiles'] == len(implemented)
     assert app['mergedManifestPackage'] == 'io.github.rebrowser.development'
     assert app['mergedApplicationClass'] == 'io.github.rebrowser.ReBrowserApplication'
-    assert app['adminActivityExported'] == 'false' and app['unitTestsPassed'] == evidence['junitTestsPassed']
+    assert app['adminActivityExported'] == 'false'
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0)
+    ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
+    assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
+    for source in ledger['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not ledger['androidSQLiteExecuted'] and not ledger['actualPolicyAndSqliteAtomicityTested']
+    assert not ledger['realDataOrKeysUsed']
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])
     legacy_build = (ROOT/'app/build.gradle.kts').read_text()
     assert 'getByName("main").java.exclude("io/github/rebrowser/**")' in legacy_build
@@ -76,6 +83,7 @@ def review():
             'productionAndroidApiOnlyFilesInProgress':len(android_entries),
             'standaloneMainAppCompiled':True,
             'standaloneMainAppHostTests':app['unitTestsPassed'],
+            'nativeIdempotencyDdlHostSqlChecks':ledger['hostSqlChecks'],
             'productionSourceAndroid37ApiCompiled':len(api['sourceFiles']),
             'productionHostJunitTestsPassed':evidence['junitTestsPassed'],
             'productionJsonDifferentialCasesPassed':differential['casesPassed'],

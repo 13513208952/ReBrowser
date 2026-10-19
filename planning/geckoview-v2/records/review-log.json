@@ -1,5 +1,5 @@
 {
-  "revision": "R26",
+  "revision": "R27",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -263,6 +263,12 @@
       "time": "2026-10-19T09:56:37+08:00",
       "finding": "主程序与编译身份验签已写，但不能把签名有效直接当命令准入；挑战必须服务器字段、时间/策略绑定和并发一次使用，未知job提交结果不换路重放。",
       "resolution": "直接实现ControlChallengeStore及12项HOST测试：30s精确签名字节、native context、授权重查、单次job回调、spent保留、回调异常烧nonce、并发/重入和1MiB签名帧保留预算。17主源码实际Gradle/manifest/101HOST通过。明确进程monitor不证明SQLite/policy跨存储原子性，未接外部Provider/效果执行；Android bootclasspath不提供lambda metafactory的具体编译阻碍改小循环后通过，未绕过验证。旧Provider审读保留。"
+    },
+    {
+      "id": "REV45",
+      "time": "2026-10-19T10:09:58+08:00",
+      "finding": "挑战一次使用不等于持久化请求幂等；新证明不能因为nonce/policy/owner-grant更新变成新业务动作，SQL REPLACE也不能驱逐旧请求绑定。",
+      "resolution": "直接写Android IdempotencyStore：原生source/target/epoch检查、SQLite事务内同content取同job/不同content冲突/配额、不可变及防REPLACE DDL、未知schema不清空；原始内容键只绑定action/scope/rawargs，proof更新不改操作。18源码实际AGP编译/104HOST测试，生产class DDL在HOST SQLite39约束/回滚/磁盘重开检查。明确还缺AndroidSQLite实际执行、统一TaskJournal+policy原子性和效果调度；不开放外部入口。"
     }
   ]
 }

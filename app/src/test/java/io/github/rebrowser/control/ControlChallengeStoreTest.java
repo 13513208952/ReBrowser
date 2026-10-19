@@ -30,7 +30,7 @@ public final class ControlChallengeStoreTest {
         Constructor<CompiledPrincipals> registry=CompiledPrincipals.class.getDeclaredConstructor(CompiledPrincipals.Entry[].class);registry.setAccessible(true);
         return new AdminProofVerifier(registry.newInstance((Object)new CompiledPrincipals.Entry[]{e}));
     }
-    private static AdminProofVerifier.KeyProof sign(ControlEnvelope frame)throws Exception{
+    static AdminProofVerifier.KeyProof sign(ControlEnvelope frame)throws Exception{
         AlgorithmParameters p=AlgorithmParameters.getInstance("EC");p.init(new ECGenParameterSpec("secp256r1"));
         PrivateKey PUBLIC_SCALAR_ONE=KeyFactory.getInstance("EC").generatePrivate(new ECPrivateKeySpec(BigInteger.ONE,p.getParameterSpec(ECParameterSpec.class)));
         Signature signer=Signature.getInstance("SHA256withECDSA");signer.initSign(PUBLIC_SCALAR_ONE);signer.update(frame.signedBytes());

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R26",
+  "revision": "R27",
   "authority": [
     "O26",
     "O27",
@@ -153,6 +153,12 @@
           "kind": "unit-real-challenge-admission-boundary",
           "purpose": "30s exact-frame/context/nonce, replay/expiry, authorize failure/unknown reservation burn,16concurrent/reentrant attempts,1MiB retained-frame cap/clock rollback; no actual effects/durable journal",
           "state": "host-tested-native-durable-admission-pending"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/control/IdempotencyIdentityTest.java",
+          "kind": "unit-original-request-identity",
+          "purpose": "fresh nonce/policy/grant same content identity; action/scope/raw args change conflicts, immutable digest/schema arrays; Android SQLite methods separately pending",
+          "state": "main-project-HOST-tested-not-Android-SQLite-qualified"
         }
       ]
     },
@@ -1018,14 +1024,15 @@
       "group": "control",
       "kind": "native-code",
       "responsibility": "同principal/target/epoch/requestId同内容用新证明返回原任务，不同内容冲突；旧nonce重放不再授权",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "actual main-app Android SQLite API compile +3HOST content-key tests and39HOST actual production DDL SQLite checks; Android transaction/crash/complete dispatch not tested",
       "runtimePending": true,
-      "testReferenceGroup": "control"
+      "testReferenceGroup": "control",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
@@ -3303,6 +3310,16 @@
       "paths": [
         "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
         "planning/geckoview-v2/evidence/production-main-app-compile.json"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "actual-native-idempotency-ledger",
+      "summary": "SQLite请求->job不可变绑定、SourcePermit/原生target-epoch检查；同内容新证明复用原job，内容变更冲突。实际类DDL在HOST SQLite39检查/磁盘重开，非Android事务或效果执行",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+        "planning/geckoview-v2/evidence/admin-idempotency-host-sql.json",
+        "planning/geckoview-v2/experiments/admin_journal_sql.py"
       ]
     }
   ],

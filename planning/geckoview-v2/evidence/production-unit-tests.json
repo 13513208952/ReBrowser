@@ -327,7 +327,7 @@
   },
   "runtimeSourceFilesCompiled": 12,
   "junitTestsPassed": 101,
-  "junitOutput": "JUnit version 4.13.2\n.....................................................................................................\nTime: 0.886\n\nOK (101 tests)\n\n",
+  "junitOutput": "JUnit version 4.13.2\n.....................................................................................................\nTime: 1.406\n\nOK (101 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -384,7 +384,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
-      "sha256": "fd097ff2cb10699838df4eccb65854c0884e5305638d6354c8418979193074b1"
+      "sha256": "f23dc4444d0152a142ed47cbdc9b819a2dbcee4ca0d81d1af4b6001f2d91ac61"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
@@ -421,8 +421,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1392656384,
-  "memAvailableBefore": 8187473920,
+  "freeBytesBefore": 1380102144,
+  "memAvailableBefore": 7106433024,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

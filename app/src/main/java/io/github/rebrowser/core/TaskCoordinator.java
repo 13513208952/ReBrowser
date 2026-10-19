@@ -27,20 +27,33 @@ public final class TaskCoordinator implements AutoCloseable {
     public interface NativeBody { void run(Owner actualOwner)throws Exception; }
     public interface NativeStopper { void requestOwnedStop()throws Exception; }
     interface JournalBackend {
-        Object start(String job,ComponentGate.BusinessPermit permit);
-        void dispatch(Object ticket,ComponentGate.BusinessPermit permit);
-        void observe(Object ticket,TaskSnapshot.Effect effect,ComponentGate.BusinessPermit permit);
-        void end(Object ticket,ComponentGate.BusinessPermit permit);
-        void endQueued(String job,ComponentGate.BusinessPermit permit);
+        Object start(String job,ComponentGate.BusinessPermit permit,CommitFence fence);
+        void dispatch(Object ticket,ComponentGate.BusinessPermit permit,CommitFence fence);
+        void observe(Object ticket,TaskSnapshot.Effect effect,ComponentGate.BusinessPermit permit,CommitFence fence);
+        void end(Object ticket,ComponentGate.BusinessPermit permit,CommitFence fence);
+        void endQueued(String job,ComponentGate.BusinessPermit permit,CommitFence fence);
+    }
+    private enum FenceUse { WORK, NEW_EFFECT, OBSERVATION, SETTLEMENT }
+    /** Synchronous native DAO check only; private issuer/operation/thread, no escaped/async reuse. */
+    public static final class CommitFence implements TaskJournal.NativeFence {
+        private final TaskCoordinator issuer;private final Entry entry;private final FenceUse use;private final Thread thread;
+        private boolean active=true,checking;private int checks;
+        private CommitFence(TaskCoordinator issuer,Entry entry,FenceUse use){this.issuer=issuer;this.entry=entry;this.use=use;thread=Thread.currentThread();}
+        @Override public void checkCurrent(){
+            if(Thread.currentThread()!=thread || !active || checking)throw new SecurityException("Inactive or foreign native task commit fence");
+            checking=true;try{if(use==FenceUse.NEW_EFFECT)issuer.beforeNewEffect(entry);else if(use==FenceUse.SETTLEMENT)issuer.current(entry);else issuer.currentWork(entry);checks++;}finally{checking=false;}
+        }
+        private void requireNativeChecks(){if(Thread.currentThread()!=thread || !active || checks<2)throw new SecurityException("Native journal skipped current commit fences");}
+        private void retire(){active=false;}
     }
     private static final class NativeJournal implements JournalBackend {
         final TaskJournal journal;
         NativeJournal(TaskJournal journal){if(journal==null)throw invalid();this.journal=journal;}
-        public Object start(String job,ComponentGate.BusinessPermit p){return journal.startWorkAfterAuthorization(job,p);}
-        public void dispatch(Object t,ComponentGate.BusinessPermit p){journal.commitDispatchIntentAfterAuthorization((TaskJournal.ExecutionTicket)t,p);}
-        public void observe(Object t,TaskSnapshot.Effect e,ComponentGate.BusinessPermit p){journal.observe((TaskJournal.ExecutionTicket)t,e,p);}
-        public void end(Object t,ComponentGate.BusinessPermit p){journal.actualWorkEnded((TaskJournal.ExecutionTicket)t,p);}
-        public void endQueued(String job,ComponentGate.BusinessPermit p){journal.endQueuedWithoutStartingAfterAuthorization(job,p);}
+        public Object start(String job,ComponentGate.BusinessPermit p,CommitFence f){return journal.startWorkAfterAuthorization(job,p,f);}
+        public void dispatch(Object t,ComponentGate.BusinessPermit p,CommitFence f){journal.commitDispatchIntentAfterAuthorization((TaskJournal.ExecutionTicket)t,p,f);}
+        public void observe(Object t,TaskSnapshot.Effect e,ComponentGate.BusinessPermit p,CommitFence f){journal.observe((TaskJournal.ExecutionTicket)t,e,p,f);}
+        public void end(Object t,ComponentGate.BusinessPermit p,CommitFence f){journal.actualWorkEnded((TaskJournal.ExecutionTicket)t,p,f);}
+        public void endQueued(String job,ComponentGate.BusinessPermit p,CommitFence f){journal.endQueuedWithoutStartingAfterAuthorization(job,p,f);}
     }
     public static final class Snapshot {
         private final Phase phase;
@@ -143,7 +156,7 @@ public final class TaskCoordinator implements AutoCloseable {
         try{
             synchronized(monitor){e.phase=Phase.STARTING;}
             if(e.cancellation.requester().snapshot().cancellationRequested()){synchronized(monitor){e.nativeEnd=Cancellation.EndReason.STOP_CONFIRMED;}return;}
-            currentWork(e);Object ticket=journal.start(e.job,e.permit);if(ticket==null)throw new IllegalStateException("Native journal start returned no owner");
+            currentWork(e);Object ticket=startJournal(e);if(ticket==null)throw new IllegalStateException("Native journal start returned no owner");
             synchronized(monitor){e.ticket=ticket;}currentWork(e);
             if(e.cancellation.requester().snapshot().cancellationRequested()){synchronized(monitor){e.nativeEnd=Cancellation.EndReason.STOP_CONFIRMED;}return;}
             synchronized(monitor){if(!accepting || e.cancellation.requester().snapshot().cancellationRequested()){e.nativeEnd=Cancellation.EndReason.STOP_CONFIRMED;return;}e.bodyEntered=true;e.phase=Phase.BODY_ENTERED;}
@@ -153,6 +166,9 @@ public final class TaskCoordinator implements AutoCloseable {
         }finally{
             synchronized(monitor){e.invocationReturned=true;if(!e.finalizerScheduled)e.phase=Phase.WAITING_NATIVE_END;maybeFinalize(e);}
         }
+    }
+    private Object startJournal(Entry e){
+        CommitFence fence=new CommitFence(this,e,FenceUse.WORK);try{Object ticket=journal.start(e.job,e.permit,fence);fence.requireNativeChecks();return ticket;}finally{fence.retire();}
     }
     private void current(Entry e){gate.checkCurrent(e.permit);context.checkCurrent(e.job);gate.checkCurrent(e.permit);}
     private void currentWork(Entry e){
@@ -165,12 +181,14 @@ public final class TaskCoordinator implements AutoCloseable {
     }
     private void endNativeCall(Entry e){synchronized(monitor){e.nativeCalls--;maybeFinalize(e);}}
     private void commitDispatch(Entry e){
-        beginNativeCall(e,true);try{beforeNewEffect(e);journal.dispatch(e.ticket,e.permit);beforeNewEffect(e);synchronized(monitor){e.dispatchCommitted=true;}}catch(RuntimeException unknown){synchronized(monitor){e.unknown=true;}throw unknown;}finally{endNativeCall(e);}
+        CommitFence fence=new CommitFence(this,e,FenceUse.NEW_EFFECT);
+        beginNativeCall(e,true);try{beforeNewEffect(e);journal.dispatch(e.ticket,e.permit,fence);fence.requireNativeChecks();beforeNewEffect(e);synchronized(monitor){e.dispatchCommitted=true;}}catch(RuntimeException unknown){synchronized(monitor){e.unknown=true;}throw unknown;}finally{fence.retire();endNativeCall(e);}
     }
     private void observe(Entry e,TaskSnapshot.Effect effect){
         if(effect!=TaskSnapshot.Effect.OBSERVED_SUCCESS && effect!=TaskSnapshot.Effect.OBSERVED_FAILURE)throw invalid();
         synchronized(monitor){if(!e.dispatchCommitted)throw new IllegalStateException("No current committed native dispatch intent");}
-        beginNativeCall(e,false);try{currentWork(e);journal.observe(e.ticket,effect,e.permit);}catch(RuntimeException unknown){synchronized(monitor){e.unknown=true;}throw unknown;}finally{endNativeCall(e);}
+        CommitFence fence=new CommitFence(this,e,FenceUse.OBSERVATION);
+        beginNativeCall(e,false);try{currentWork(e);journal.observe(e.ticket,effect,e.permit,fence);fence.requireNativeChecks();}catch(RuntimeException unknown){synchronized(monitor){e.unknown=true;}throw unknown;}finally{fence.retire();endNativeCall(e);}
     }
     private Cancellation.RequestOutcome cancel(Entry e){
         Cancellation.RequestOutcome outcome=e.cancellation.requester().requestCancellation();synchronized(monitor){scheduleStop(e);}return outcome;
@@ -194,9 +212,10 @@ public final class TaskCoordinator implements AutoCloseable {
         executors.get(Lane.SAFETY).execute(new Runnable(){@Override public void run(){finalizeOwned(e);}});
     }
     private void finalizeOwned(Entry e){
-        Persistence result;
-        try{current(e);if(e.ticket==null)journal.endQueued(e.job,e.permit);else journal.end(e.ticket,e.permit);result=Persistence.COMMITTED;}
+        Persistence result;CommitFence fence=new CommitFence(this,e,FenceUse.SETTLEMENT);
+        try{current(e);if(e.ticket==null)journal.endQueued(e.job,e.permit,fence);else journal.end(e.ticket,e.permit,fence);fence.requireNativeChecks();result=Persistence.COMMITTED;}
         catch(Exception blockedOrUnknown){result=Persistence.BLOCKED_OR_UNKNOWN;}
+        finally{fence.retire();}
         synchronized(monitor){
             e.persistence=result;e.cancellation.reporter().reportActualEnd(e.nativeEnd);e.settled=true;e.phase=Phase.SETTLED;e.body=null;e.stopper=null;e.ticket=null;
             live.remove(e.job);counts.put(e.lane,counts.get(e.lane)-1);monitor.notifyAll();shutdownIfDrained();

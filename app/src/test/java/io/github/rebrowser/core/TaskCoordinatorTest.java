@@ -15,13 +15,15 @@ public final class TaskCoordinatorTest {
         final AtomicInteger starts=new AtomicInteger(),dispatches=new AtomicInteger(),observations=new AtomicInteger(),ends=new AtomicInteger(),queuedEnds=new AtomicInteger();
         final List<String> order=Collections.synchronizedList(new ArrayList<>());
         final Set<String> startedJobs=ConcurrentHashMap.newKeySet();
-        volatile boolean failStart,failDispatch,failEnd;
+        volatile boolean failStart,failDispatch,failEnd,skipStartChecks,skipDispatchChecks,skipEndChecks;
+        volatile TaskCoordinator.CommitFence lastStartFence,lastDispatchFence;
+        private void check(TaskCoordinator.CommitFence f,boolean skip){if(!skip)f.checkCurrent();}
         volatile CountDownLatch startEntered,startRelease,dispatchEntered,dispatchRelease,endEntered,endRelease;
-        public Object start(String job,ComponentGate.BusinessPermit p){starts.incrementAndGet();order.add("start");signal(startEntered);waitUninterruptibly(startRelease);if(!startedJobs.add(job))throw new IllegalStateException("synthetic original durable task no longer RESERVED");if(failStart)throw new IllegalStateException("synthetic start commit unknown");return new Object();}
-        public void dispatch(Object t,ComponentGate.BusinessPermit p){assertNotNull(t);dispatches.incrementAndGet();order.add("dispatch");signal(dispatchEntered);waitUninterruptibly(dispatchRelease);if(failDispatch)throw new IllegalStateException("synthetic dispatch commit unknown");}
-        public void observe(Object t,TaskSnapshot.Effect effect,ComponentGate.BusinessPermit p){assertNotNull(t);observations.incrementAndGet();order.add("observe");}
-        public void end(Object t,ComponentGate.BusinessPermit p){assertNotNull(t);ends.incrementAndGet();signal(endEntered);waitUninterruptibly(endRelease);if(failEnd)throw new IllegalStateException("synthetic end commit unknown");}
-        public void endQueued(String job,ComponentGate.BusinessPermit p){queuedEnds.incrementAndGet();if(!startedJobs.add(job))throw new IllegalStateException("synthetic task no longer queued");if(failEnd)throw new IllegalStateException("synthetic queued end unknown");}
+        public Object start(String job,ComponentGate.BusinessPermit p,TaskCoordinator.CommitFence f){lastStartFence=f;check(f,skipStartChecks);starts.incrementAndGet();order.add("start");signal(startEntered);waitUninterruptibly(startRelease);check(f,skipStartChecks);if(!startedJobs.add(job))throw new IllegalStateException("synthetic original durable task no longer RESERVED");if(failStart)throw new IllegalStateException("synthetic start commit unknown");return new Object();}
+        public void dispatch(Object t,ComponentGate.BusinessPermit p,TaskCoordinator.CommitFence f){lastDispatchFence=f;assertNotNull(t);check(f,skipDispatchChecks);dispatches.incrementAndGet();order.add("dispatch");signal(dispatchEntered);waitUninterruptibly(dispatchRelease);check(f,skipDispatchChecks);if(failDispatch)throw new IllegalStateException("synthetic dispatch commit unknown");}
+        public void observe(Object t,TaskSnapshot.Effect effect,ComponentGate.BusinessPermit p,TaskCoordinator.CommitFence f){assertNotNull(t);f.checkCurrent();observations.incrementAndGet();order.add("observe");f.checkCurrent();}
+        public void end(Object t,ComponentGate.BusinessPermit p,TaskCoordinator.CommitFence f){assertNotNull(t);check(f,skipEndChecks);ends.incrementAndGet();signal(endEntered);waitUninterruptibly(endRelease);check(f,skipEndChecks);if(failEnd)throw new IllegalStateException("synthetic end commit unknown");}
+        public void endQueued(String job,ComponentGate.BusinessPermit p,TaskCoordinator.CommitFence f){check(f,skipEndChecks);check(f,skipEndChecks);queuedEnds.incrementAndGet();if(!startedJobs.add(job))throw new IllegalStateException("synthetic task no longer queued");if(failEnd)throw new IllegalStateException("synthetic queued end unknown");}
     }
     private static void signal(CountDownLatch latch){if(latch!=null)latch.countDown();}
     private static void waitUninterruptibly(CountDownLatch latch){if(latch==null)return;while(true)try{latch.await();return;}catch(InterruptedException ignored){}}
@@ -30,10 +32,10 @@ public final class TaskCoordinatorTest {
     private static String job(int n){return "j_"+String.format(Locale.ROOT,"%032x",n);}
     private static final class Fixture implements AutoCloseable {
         final AtomicReference<ComponentGate.SourceState> state=new AtomicReference<>(ComponentGate.SourceState.TRUSTED);
-        final ComponentGate gate=new ComponentGate(ProcessRole.MAIN,state::get);final Journal journal=new Journal();final AtomicBoolean current=new AtomicBoolean(true);
+        final ComponentGate gate=new ComponentGate(ProcessRole.MAIN,state::get);final Journal journal=new Journal();final AtomicBoolean current=new AtomicBoolean(true);final AtomicReference<Runnable> currentHook=new AtomicReference<>();
         final TaskCoordinator tasks;final List<TaskCoordinator.Submission> submitted=new ArrayList<>();int next;
         Fixture(int capacity)throws Exception{
-            Constructor<TaskCoordinator> ctor=TaskCoordinator.class.getDeclaredConstructor(ComponentGate.class,TaskCoordinator.JournalBackend.class,TaskCoordinator.CurrentContext.class,int.class);assertTrue(Modifier.isPrivate(ctor.getModifiers()));ctor.setAccessible(true);tasks=ctor.newInstance(gate,journal,(TaskCoordinator.CurrentContext)j->{if(!current.get())throw new SecurityException("synthetic epoch/policy revoked");},capacity);
+            Constructor<TaskCoordinator> ctor=TaskCoordinator.class.getDeclaredConstructor(ComponentGate.class,TaskCoordinator.JournalBackend.class,TaskCoordinator.CurrentContext.class,int.class);assertTrue(Modifier.isPrivate(ctor.getModifiers()));ctor.setAccessible(true);tasks=ctor.newInstance(gate,journal,(TaskCoordinator.CurrentContext)j->{if(!current.get())throw new SecurityException("synthetic epoch/policy revoked");Runnable hook=currentHook.get();if(hook!=null)hook.run();},capacity);
         }
         TaskCoordinator.Submission submit(TaskCoordinator.Lane lane,TaskCoordinator.NativeBody body){TaskCoordinator.Submission s=tasks.submitNativeReserved(job(++next),lane,gate.requireBusiness(),body);submitted.add(s);return s;}
         @Override public void close()throws Exception{
@@ -189,6 +191,46 @@ public final class TaskCoordinatorTest {
         try(Fixture f=new Fixture(1)){
             TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.READ,o->{assertThrows(IllegalStateException.class,()->f.tasks.awaitOwnedExecutorExit(2,TimeUnit.SECONDS));o.reportActualDomainChainEnd(Cancellation.EndReason.UNDERLYING_RETURNED);});settled(s);
         }
+    }
+    @Test public void revokedStartFenceAfterSyntheticWriterWaitPreventsPreparationAndCommit()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            f.journal.startEntered=new CountDownLatch(1);f.journal.startRelease=new CountDownLatch(1);AtomicInteger bodies=new AtomicInteger();TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.READ,o->bodies.incrementAndGet());reached(f.journal.startEntered);f.current.set(false);f.journal.startRelease.countDown();settled(s);assertEquals(0,bodies.get());assertTrue(f.journal.startedJobs.isEmpty());assertEquals(TaskCoordinator.Persistence.BLOCKED_OR_UNKNOWN,s.client().snapshot().journalFinalization());
+        }
+    }
+    @Test public void retiredFenceCannotBeReusedEvenByOriginalThreadInBody()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.READ,o->{assertThrows(SecurityException.class,f.journal.lastStartFence::checkCurrent);o.reportActualDomainChainEnd(Cancellation.EndReason.UNDERLYING_RETURNED);});settled(s);assertThrows(SecurityException.class,f.journal.lastStartFence::checkCurrent);
+        }
+    }
+    @Test public void activeFenceRejectsForeignThreadAndCannotEscapeDao()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            f.journal.dispatchEntered=new CountDownLatch(1);f.journal.dispatchRelease=new CountDownLatch(1);TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.EFFECT,o->{o.commitBeforeExternalDispatch();o.reportActualDomainChainEnd(Cancellation.EndReason.UNDERLYING_RETURNED);});reached(f.journal.dispatchEntered);try{assertThrows(SecurityException.class,f.journal.lastDispatchFence::checkCurrent);}finally{f.journal.dispatchRelease.countDown();}settled(s);assertThrows(SecurityException.class,f.journal.lastDispatchFence::checkCurrent);
+        }
+    }
+    @Test public void backendSkippingStartFenceCannotEnterNativeBody()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            f.journal.skipStartChecks=true;AtomicInteger body=new AtomicInteger();TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.READ,o->body.incrementAndGet());settled(s);assertEquals(0,body.get());assertTrue(s.client().snapshot().routeOrLifecycleOutcomeUnknown());assertEquals(TaskCoordinator.Persistence.BLOCKED_OR_UNKNOWN,s.client().snapshot().journalFinalization());
+        }
+    }
+    @Test public void skippedIntentFenceNeverHandsOffOrAllowsAlternateDispatch()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            f.journal.skipDispatchChecks=true;AtomicInteger handoff=new AtomicInteger();TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.EFFECT,o->{assertThrows(SecurityException.class,o::commitBeforeExternalDispatch);assertThrows(IllegalStateException.class,o::commitBeforeExternalDispatch);o.reportActualDomainChainEnd(Cancellation.EndReason.UNDERLYING_FAILED);});settled(s);assertEquals(0,handoff.get());assertEquals(1,f.journal.dispatches.get());
+        }
+    }
+    @Test public void skippedSettlementFencesCannotClaimCommittedButStillSettleMemory()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            f.journal.skipEndChecks=true;TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.READ,o->o.reportActualDomainChainEnd(Cancellation.EndReason.UNDERLYING_RETURNED));settled(s);assertEquals(TaskCoordinator.Persistence.BLOCKED_OR_UNKNOWN,s.client().snapshot().journalFinalization());assertTrue(s.client().snapshot().cancellation().workEnded());
+        }
+    }
+    @Test public void reentrantNativeFenceIsRejectedWithoutRecursiveAuthorityOrBody()throws Exception{
+        try(Fixture f=new Fixture(1)){
+            f.currentHook.set(()->{TaskCoordinator.CommitFence active=f.journal.lastStartFence;if(active!=null)active.checkCurrent();});AtomicInteger body=new AtomicInteger();TaskCoordinator.Submission s=f.submit(TaskCoordinator.Lane.READ,o->body.incrementAndGet());settled(s);assertEquals(0,body.get());assertEquals(0,f.journal.starts.get());assertTrue(s.client().snapshot().routeOrLifecycleOutcomeUnknown());assertTrue(s.client().snapshot().cancellation().workEnded());
+        }
+    }
+    @Test public void journalTopLevelDataOperationsRequireNativeFenceNotOnlySourcePermit(){
+        Set<String> required=new HashSet<>(Arrays.asList("initialize","startWorkAfterAuthorization","commitDispatchIntentAfterAuthorization","observe","markOutcomeUnknown","actualWorkEnded","endQueuedWithoutStartingAfterAuthorization","reconcileLostProcess","queryAfterAuthorization"));
+        for(Method method:TaskJournal.class.getDeclaredMethods())if(Modifier.isPublic(method.getModifiers()) && required.contains(method.getName())){assertEquals(TaskJournal.NativeFence.class,method.getParameterTypes()[method.getParameterCount()-1]);required.remove(method.getName());}assertTrue(required.isEmpty());
+        for(Constructor<?> constructor:TaskCoordinator.CommitFence.class.getDeclaredConstructors())assertFalse(Modifier.isPublic(constructor.getModifiers()));
     }
     @Test public void publicConstructorOnlyAcceptsRealNativeJournalNotFakeBackend(){
         for(Constructor<?> constructor:TaskCoordinator.class.getConstructors())for(Class<?> parameter:constructor.getParameterTypes())assertNotEquals(TaskCoordinator.JournalBackend.class,parameter);

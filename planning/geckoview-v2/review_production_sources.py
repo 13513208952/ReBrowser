@@ -2,6 +2,7 @@
 """Verify per-file admission and source-bound HOST test evidence; does not run tests."""
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 P = Path(__file__).resolve().parent
@@ -80,8 +81,11 @@ def review():
     assert tasks['hostSqlChecks'] == 235 and tasks['validStateTriples'] == 14
     assert tasks['transitionPairsTested'] == 196 and tasks['acceptedTransitionPairs'] == 45
     assert tasks['concurrentHostSqlWriters'] == 2 and tasks['temporaryDbAndHarnessRemoved']
+    task_checkpoint = json.loads((P/app['taskJournalHistoricalSqlCheckpointRef']).read_text())
+    assert task_checkpoint['sourceCommit'] == 'b87ab85e6ccca5f931b0eb162deb8a5fb3c59dbf' and task_checkpoint['report'] == tasks
     for source in tasks['sourceFiles']:
-        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+        historical = subprocess.run(['git','show',task_checkpoint['sourceCommit']+':'+source['path']],cwd=ROOT,capture_output=True,check=True).stdout
+        assert hashlib.sha256(historical).hexdigest() == source['sha256']
     assert not any(tasks[k] for k in ['androidSQLiteMethodsExecuted','actualNativeCoordinatorAndPolicyAtomicityTested','realDataOrKeysUsed'])
     assert not app['geckoDelegateCallbacksExecuted']
     assert app['hostAndroidClassNavigationPolicyTests'] == 12 and app['navigationPolicyAndSdkDtoHostExecuted']
@@ -102,9 +106,15 @@ def review():
         assert standalone[gate]['memAvailableBytes'] >= minimum_ram*1024**2
         assert standalone[gate]['freeBytes'] >= 16*1024**2+1024**3
     changed_api = standalone['changedSourcesAndroidBootclasspathCompile']
-    assert len(changed_api['sourceFiles']) == 4 and changed_api['classFiles'] and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
+    assert len(changed_api['sourceFiles']) == 5 and changed_api['classFiles'] and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
     assert not changed_api['androidRuntimeExecuted']
-    for name,count,flag in [('TaskCoordinator',29,'actualOwnedExecutorAndWorksetMethodsExecuted'),('ResourceBudgets',10,'actualCounterAndTrimPolicyMethodsExecuted')]:
+    schema = json.loads((P/'evidence/task-journal-current-schema-equivalence.json').read_text())
+    assert schema['actualCurrentCompiledSchemaExtracted'] and not schema['historical235SqlChecksRerun'] and not schema['androidSqliteMethodsExecuted']
+    assert schema['currentCompiledDdlAndRecoverySha256'] == standalone['taskJournalCurrentCompiledSchemaSha256'] == tasks['ddlAndRecoverySha256']
+    for source in schema['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not standalone['historical235SqlChecksRerun'] and not app['taskJournalNativeFenceAndroidExecuted']
+    for name,count,flag in [('TaskCoordinator',37,'actualOwnedExecutorAndWorksetMethodsExecuted'),('ResourceBudgets',10,'actualCounterAndTrimPolicyMethodsExecuted')]:
         ref = 'task-coordinator-host-execution' if name == 'TaskCoordinator' else 'resource-budgets-host-execution'
         host = json.loads((P/('evidence/'+ref+'.json')).read_text())
         assert host['hostTestsPassed'] == count and host[flag] and host['temporaryOwnedClassFilesRemoved']

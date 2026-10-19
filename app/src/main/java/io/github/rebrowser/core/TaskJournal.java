@@ -22,6 +22,13 @@ import io.github.rebrowser.core.TaskSnapshot.Effect;
  * lock: the idempotency bridge already holds that lock when registering a task.
  */
 public final class TaskJournal {
+    /** Native read-only current source/epoch/policy/scope check, not a grant consumer.
+     * Called BEFORE waiting, AFTER SQLite writer-lock acquisition and just before commit.
+     * Must not reenter this DB, mutate authority, escape asynchronously or perform UI IO.
+     * Coordinator supplies an operation/same-thread bound capability; not an IPC input.
+     * Does not itself serialize policy mutations with commit or prove whole-app quiescence.
+     */
+    public interface NativeFence { void checkCurrent(); }
     private static final String TABLE="task_journal_v1";
     private static final String RUN=newToken(); // process/classloader lifetime, NOT per journal instance
     private static final String CREATE="CREATE TABLE task_journal_v1 ("
@@ -88,14 +95,14 @@ public final class TaskJournal {
     }
     public static String[] schemaStatements(){return new String[]{CREATE,INSERT_GUARD,DELETE_GUARD,UPDATE_GUARD};}
     public static String lostProcessRecoveryStatement(){return RECOVER;}
-    public void initialize(ComponentGate.BusinessPermit permit){
-        initialized=false;begin(permit,false);
-        try{
+    public void initialize(ComponentGate.BusinessPermit permit,NativeFence fence){
+        initialized=false;begin(permit,false,fence);
+        try{check(permit,fence);
             if(db.getVersion()!=1)throw new IllegalStateException("Initialize the native administrator DB first");
             boolean exists;try(Cursor c=db.rawQuery("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",new String[]{TABLE})){exists=c.moveToFirst();}
             if(!exists)for(String sql:schemaStatements())db.execSQL(sql);
             requireSchema("table",TABLE,CREATE);requireSchema("trigger","task_no_replace",INSERT_GUARD);requireSchema("trigger","task_no_delete",DELETE_GUARD);requireSchema("trigger","task_monotonic",UPDATE_GUARD);
-            commit(permit);
+            commit(permit,fence);
         }finally{db.endTransaction();}
         initialized=true;
     }
@@ -113,50 +120,50 @@ public final class TaskJournal {
         ContentValues v=new ContentValues();v.put("job_ref",job);v.put("target_fp",target);v.put("data_epoch",epoch);v.put("binding_sha256",binding);v.put("phase",0);v.put("work",0);v.put("effect",0);v.put("owner_run","");v.put("execution_token","");v.put("revision",0);db.insertOrThrow(TABLE,null,v);
     }
     /** Starts the whole owned execution chain, including preparatory workers; no effects yet. */
-    public ExecutionTicket startWorkAfterAuthorization(String job,ComponentGate.BusinessPermit permit){
-        validateJob(job);String token=newToken();begin(permit,true);
-        try{ContentValues v=state(1,1,0);v.put("owner_run",RUN);v.put("execution_token",token);update(job,v,"phase=0",null);commit(permit);}finally{db.endTransaction();}
+    public ExecutionTicket startWorkAfterAuthorization(String job,ComponentGate.BusinessPermit permit,NativeFence fence){
+        validateJob(job);String token=newToken();begin(permit,true,fence);
+        try{check(permit,fence);ContentValues v=state(1,1,0);v.put("owner_run",RUN);v.put("execution_token",token);update(job,v,"phase=0",null);commit(permit,fence);}finally{db.endTransaction();}
         return new ExecutionTicket(this,job,token);
     }
     /** Must return successfully BEFORE any selected external route receives the command. */
-    public void commitDispatchIntentAfterAuthorization(ExecutionTicket ticket,ComponentGate.BusinessPermit permit){
-        own(ticket);begin(permit,true);
-        try{updateOwned(ticket,state(2,1,1),"phase=1 AND work=1");commit(permit);}finally{db.endTransaction();}
+    public void commitDispatchIntentAfterAuthorization(ExecutionTicket ticket,ComponentGate.BusinessPermit permit,NativeFence fence){
+        own(ticket);begin(permit,true,fence);
+        try{check(permit,fence);updateOwned(ticket,state(2,1,1),"phase=1 AND work=1");commit(permit,fence);}finally{db.endTransaction();}
     }
     /** First trusted domain observation wins. Failure may include partial external effects. */
-    public void observe(ExecutionTicket ticket,Effect observation,ComponentGate.BusinessPermit permit){
-        own(ticket);if(observation!=Effect.OBSERVED_SUCCESS && observation!=Effect.OBSERVED_FAILURE)throw invalid();begin(permit,true);
-        try{Record before=requireOwned(ticket);if(before.phase!=Phase.DISPATCH_INTENT && before.phase!=Phase.OUTCOME_UNKNOWN)throw new IllegalStateException("Effect outcome already fixed or no dispatch intent");updateOwned(ticket,state(3,before.work.code(),observation.code()),"phase IN(2,5)");commit(permit);}finally{db.endTransaction();}
+    public void observe(ExecutionTicket ticket,Effect observation,ComponentGate.BusinessPermit permit,NativeFence fence){
+        own(ticket);if(observation!=Effect.OBSERVED_SUCCESS && observation!=Effect.OBSERVED_FAILURE)throw invalid();begin(permit,true,fence);
+        try{check(permit,fence);Record before=requireOwned(ticket);if(before.phase!=Phase.DISPATCH_INTENT && before.phase!=Phase.OUTCOME_UNKNOWN)throw new IllegalStateException("Effect outcome already fixed or no dispatch intent");updateOwned(ticket,state(3,before.work.code(),observation.code()),"phase IN(2,5)");commit(permit,fence);}finally{db.endTransaction();}
     }
     /** Trusted route lost outcome certainty; NOT a client deadline and NOT actual end. */
-    public void markOutcomeUnknown(ExecutionTicket ticket,ComponentGate.BusinessPermit permit){
-        own(ticket);begin(permit,true);
-        try{Record before=requireOwned(ticket);if(before.phase!=Phase.DISPATCH_INTENT)throw new IllegalStateException("No pending dispatch outcome");updateOwned(ticket,state(5,before.work.code(),1),"phase=2");commit(permit);}finally{db.endTransaction();}
+    public void markOutcomeUnknown(ExecutionTicket ticket,ComponentGate.BusinessPermit permit,NativeFence fence){
+        own(ticket);begin(permit,true,fence);
+        try{check(permit,fence);Record before=requireOwned(ticket);if(before.phase!=Phase.DISPATCH_INTENT)throw new IllegalStateException("No pending dispatch outcome");updateOwned(ticket,state(5,before.work.code(),1),"phase=2");commit(permit,fence);}finally{db.endTransaction();}
     }
     /** Whole chain has REALLY ended, not Future.done/interrupt/port close/timeout. */
-    public void actualWorkEnded(ExecutionTicket ticket,ComponentGate.BusinessPermit permit){
-        own(ticket);begin(permit,true);
+    public void actualWorkEnded(ExecutionTicket ticket,ComponentGate.BusinessPermit permit,NativeFence fence){
+        own(ticket);begin(permit,true,fence);
         try{
-            Record before=requireOwned(ticket);if(before.work!=Work.RUNNING)throw new IllegalStateException("Actual end already recorded or owner lost");
+            check(permit,fence);Record before=requireOwned(ticket);if(before.work!=Work.RUNNING)throw new IllegalStateException("Actual end already recorded or owner lost");
             int phase=before.phase==Phase.WORK_STARTED?4:before.phase==Phase.DISPATCH_INTENT?5:before.phase.code();
-            updateOwned(ticket,state(phase,2,before.effect.code()),"work=1");commit(permit);
+            updateOwned(ticket,state(phase,2,before.effect.code()),"work=1");commit(permit,fence);
         }finally{db.endTransaction();}
     }
     /** Queued task never handed to a worker: atomic with startWork's RESERVED transition. */
-    public void endQueuedWithoutStartingAfterAuthorization(String job,ComponentGate.BusinessPermit permit){
-        validateJob(job);begin(permit,true);try{update(job,state(4,2,0),"phase=0",null);commit(permit);}finally{db.endTransaction();}
+    public void endQueuedWithoutStartingAfterAuthorization(String job,ComponentGate.BusinessPermit permit,NativeFence fence){
+        validateJob(job);begin(permit,true,fence);try{check(permit,fence);update(job,state(4,2,0),"phase=0",null);commit(permit,fence);}finally{db.endTransaction();}
     }
     /** No replay/slot release. Old running chain becomes UNKNOWN; observed outcome survives. */
-    public int reconcileLostProcess(ComponentGate.BusinessPermit permit){
-        begin(permit,true);int count;
+    public int reconcileLostProcess(ComponentGate.BusinessPermit permit,NativeFence fence){
+        begin(permit,true,fence);int count;
         try{
-            db.execSQL(RECOVER,new Object[]{target,epoch,RUN});
-            try(Cursor c=db.rawQuery("SELECT changes()",null)){if(!c.moveToFirst())throw new IllegalStateException("Missing journal update count");count=c.getInt(0);}commit(permit);
+            check(permit,fence);db.execSQL(RECOVER,new Object[]{target,epoch,RUN});
+            try(Cursor c=db.rawQuery("SELECT changes()",null)){if(!c.moveToFirst())throw new IllegalStateException("Missing journal update count");count=c.getInt(0);}commit(permit,fence);
         }finally{db.endTransaction();}
         return count;
     }
-    public Record queryAfterAuthorization(String job,ComponentGate.BusinessPermit permit){
-        validateJob(job);gate.checkCurrent(permit);ready();if(db.inTransaction())throw new IllegalStateException("Uncommitted task view forbidden");Record r=read(job);gate.checkCurrent(permit);return r;
+    public Record queryAfterAuthorization(String job,ComponentGate.BusinessPermit permit,NativeFence fence){
+        validateJob(job);check(permit,fence);ready();if(db.inTransaction())throw new IllegalStateException("Uncommitted task view forbidden");Record r=read(job);check(permit,fence);return r;
     }
     private Record read(String job){
         try(Cursor c=db.query(TABLE,new String[]{"binding_sha256","phase","work","effect","revision"},"job_ref=? AND target_fp=? AND data_epoch=?",new String[]{job,target,epoch},null,null,null,"1")){
@@ -176,8 +183,9 @@ public final class TaskJournal {
         String[] args=new String[3+(extra==null?0:extra.length)];args[0]=job;args[1]=target;args[2]=epoch;if(extra!=null)System.arraycopy(extra,0,args,3,extra.length);
         if(db.update(TABLE,values,"job_ref=? AND target_fp=? AND data_epoch=? AND "+condition,args)!=1)throw new IllegalStateException("Stale task transition");
     }
-    private void begin(ComponentGate.BusinessPermit permit,boolean requireInitialized){gate.checkCurrent(permit);if(requireInitialized)ready();if(db.inTransaction())throw new IllegalStateException("Nested journal transaction forbidden");db.beginTransactionNonExclusive();}
-    private void commit(ComponentGate.BusinessPermit permit){gate.checkCurrent(permit);db.setTransactionSuccessful();}
+    private void begin(ComponentGate.BusinessPermit permit,boolean requireInitialized,NativeFence fence){check(permit,fence);if(requireInitialized)ready();if(db.inTransaction())throw new IllegalStateException("Nested journal transaction forbidden");db.beginTransactionNonExclusive();}
+    private void commit(ComponentGate.BusinessPermit permit,NativeFence fence){check(permit,fence);db.setTransactionSuccessful();}
+    private void check(ComponentGate.BusinessPermit permit,NativeFence fence){if(fence==null)throw invalid();gate.checkCurrent(permit);fence.checkCurrent();gate.checkCurrent(permit);}
     private void ready(){if(!initialized)throw new IllegalStateException("Task journal not initialized");}
     private void own(ExecutionTicket t){if(t==null || t.issuer!=this)throw new SecurityException("Wrong native execution ticket");}
     private static ContentValues state(int phase,int work,int effect){ContentValues v=new ContentValues();v.put("phase",phase);v.put("work",work);v.put("effect",effect);return v;}

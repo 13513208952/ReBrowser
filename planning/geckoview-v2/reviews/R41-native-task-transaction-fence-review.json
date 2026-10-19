@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "revision": "R41",
+  "continuation": "After R40 actual TaskCoordinator/ResourceBudgets commit and push, continued concrete TaskJournal transaction-boundary implementation; O63 is exact continue instruction, not a pause.",
+  "implementation": [
+    "Nine top-level TaskJournal transaction/read methods require NativeFence, no source-permit-only overload; read-only checks before waiting, after SQLite writer lock within try/finally before data work, before successful commit; query checks before and after read",
+    "TaskCoordinator real NativeJournal adapter forwards exact private operation/thread CommitFence; retired/recursive/foreign/skipped native checks reject; attempted dispatch never reroutes",
+    "Native actual memory settlement remains possible after source lock or blocked/unknown final journal commit; task-chain/quiescence and durability stay separate"
+  ],
+  "validation": {
+    "actualMainSourceFiles": 42,
+    "actualMainClasses": 200,
+    "actualHostTests": 312,
+    "actualTaskCoordinatorHostThreadAndFenceTestsWithSyntheticBackend": 37,
+    "changedNativeSdkBootclasspathSources": 5,
+    "currentCompiledNineSqlStatementsSha256": "491f3443983feea8fb42f8ff21fa493a962fc1b96681a0376068b4bb188fde93",
+    "historicalSql235ChecksRerun": false,
+    "historicalSqlSourceSnapshotRef": "evidence/task-journal-host-sql-R40-checkpoint.json",
+    "currentSqlEquivalenceRef": "evidence/task-journal-current-schema-equivalence.json",
+    "mainSourceEvidenceRef": "evidence/production-main-standalone-jvm-checks.json",
+    "lastCompleteAgpRemains": "R38"
+  },
+  "limits": [
+    "Actual Android SQLite transactions/rollback/crash/power-loss still unexecuted; HOST fake backend is explicit synthetic boundary",
+    "Read-only transaction fences do not alone serialize concurrent policy/source/epoch/grant mutation or authorize a domain effect; native policy serialization, source bootstrap/full dispatcher still missing",
+    "No whole-app/engine/system writer coverage or epoch erasure quiescence claim",
+    "No new Gradle/JNI/dex/R8/APK/sign/install/device/owner prompt/data/key access; Root remains unconfigured and business locked",
+    "Historical235 SQL source/evidence unchanged, anchored to existing R40 git source commit, with current compiled schema separately compared"
+  ]
+}

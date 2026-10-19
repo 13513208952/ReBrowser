@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "revision": "R41",
+  "scope": "Actual TaskJournal transaction/read fencing source and TaskCoordinator concrete native adapter. Not full policy serialization, grant consumption, Android SQLite execution or all-domain admission.",
+  "invariants": [
+    "Every top-level TaskJournal data transaction now REQUIRES explicit NativeFence; no gate-only overload remains. Paired reservation stays within IdempotencyStore's existing enclosing native commit-fenced transaction",
+    "Check native source/epoch/policy/context BEFORE SQLite writer waiting; after acquired lock inside try/finally BEFORE reads/writes; immediately before setTransactionSuccessful; caller checks again after physical commit before external handoff",
+    "Check is read-only, no grant consumption, DB reentry, UI IO or asynchronous escape",
+    "Coordinator's private-issued CommitFence exact operation/use/current thread, rejects recursive/foreign/retired checks. Every normal backend return requires at least two DAO checks; counting alone does not prove correct check placement",
+    "Real native adapter passes same bound fence through actual TaskJournal methods. HOST backend explicitly synthetic and models waiting/checks/unknown commit, not Android SQLite",
+    "Source lock or failed settlement fence never prevents actual old MEMORY settlement, and never fabricates durable END",
+    "Attempted intent remains spent on unknown/denied/skipped fence; no alternate route or observation-as-success",
+    "DDL/recovery byte-for-byte unchanged, no DB schema migration. Historical235 HOST SQL checks retained against original source checkpoint; separately execute CURRENT compiled schema extractor and compare exact9 statements SHA256"
+  ],
+  "pending": [
+    "Actual Android transaction/read/rollback/power-loss qualification",
+    "Native serialization of concurrent source/policy/grant/target changes with transaction and selected domain dispatch; read-only fences alone do not make those changes atomic",
+    "Full actor/result-scope authorization, complete domain registration and Application/dispatcher wiring"
+  ],
+  "historicalSqlSourceCommit": "b87ab85e6ccca5f931b0eb162deb8a5fb3c59dbf",
+  "historicalSqlRef": "evidence/task-journal-host-sql-R40-checkpoint.json",
+  "currentSchemaRef": "evidence/task-journal-current-schema-equivalence.json"
+}

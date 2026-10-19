@@ -112,11 +112,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
-      "sha256": "cfca848ac3780fa1c410a2545a17d35236b04edc45a5f272b632fe5a4c52567a"
+      "sha256": "f2a0361849bce667b97e2f4fae898dd6a9a17b37a3ec7f017ce3d510af6ee604"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
-      "sha256": "c7367edc772bf1a2ef07108e15802ad0540897e59babedc409c11586a135491c"
+      "sha256": "6654a01a7c195ed0c538f77362236b5c5793aa577d8a6868cad82933ccf974e4"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
@@ -244,7 +244,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
-      "sha256": "55b4dce83c713ded1416b915069db043a4d84c723c1f1d60842f621e9b96ebab"
+      "sha256": "9d03317cd8937f1a8248361a6589e3027004e393a10bf6c5eb2e34aa8425de36"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java",
@@ -280,7 +280,7 @@
     }
   ],
   "productionJavaSourceFiles": 42,
-  "compiledClassFiles": 197,
+  "compiledClassFiles": 200,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -392,7 +392,7 @@
     },
     {
       "class": "io.github.rebrowser.core.TaskCoordinatorTest",
-      "tests": 29,
+      "tests": 37,
       "failures": 0,
       "errors": 0
     },
@@ -445,7 +445,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 304,
+  "unitTestsPassed": 312,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -512,12 +512,15 @@
     "processDebugMainManifest",
     "testDebugUnitTest"
   ],
-  "hostAndroidClassTaskCoordinatorTests": 29,
+  "hostAndroidClassTaskCoordinatorTests": 37,
   "hostAndroidClassResourceBudgetTests": 10,
   "taskCoordinatorOwnedHostThreadsExecuted": true,
   "taskCoordinatorAndroidSqliteAdapterExecuted": false,
   "taskCoordinatorCommandDispatcherIntegrated": false,
   "globalEpochQuiescenceEstablished": false,
   "resourceBudgetsCounterHostExecuted": true,
-  "resourceBudgetsOwnAndroidMemoryFactoryExecuted": false
+  "resourceBudgetsOwnAndroidMemoryFactoryExecuted": false,
+  "taskJournalNativeFenceSourceAdded": true,
+  "taskJournalNativeFenceAndroidExecuted": false,
+  "taskJournalHistoricalSqlCheckpointRef": "evidence/task-journal-host-sql-R40-checkpoint.json"
 }

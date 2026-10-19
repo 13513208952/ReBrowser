@@ -6,6 +6,7 @@ is unavailable. JDK17 java.base + pinned SDK classpath is NOT Android bootclassp
 No download/Gradle/JNI/dex/R8/APK/device/key provisioning. Owned temporary outputs only.
 """
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -90,7 +91,7 @@ def run(args):
         classes.mkdir()
         harness = temporary/'BoundedMainHostRunner.java'
         harness.write_text(HARNESS)
-        compiler = subprocess.run([str(javac), *['-J'+flag for flag in limits], '--release', '17', '-proc:none', '-encoding', 'UTF-8', '-cp', classpath, '-d', str(classes), *map(str, main+tests+[harness])], cwd=ROOT, text=True, capture_output=True, timeout=75)
+        compiler = subprocess.run([str(javac), *['-J'+flag for flag in limits], '--release', '17', '-proc:none', '-encoding', 'UTF-8', '-cp', classpath, '-d', str(classes), *map(str, main+tests+[harness,P/'experiments/DumpTaskJournalSchema.java'])], cwd=ROOT, text=True, capture_output=True, timeout=75)
         if compiler.returncode:
             raise RuntimeError('Standalone compile failed:\n'+compiler.stdout+compiler.stderr)
         middle = next_sequential_admission(work, minimum_ram)
@@ -110,12 +111,19 @@ def run(args):
         # The full main compile above intentionally uses JDK java.base, not Android boot.
         api_output = temporary/'changed-android-api'
         api_output.mkdir()
-        changed = [ROOT/'app/src/main/java/io/github/rebrowser'/name for name in ['engine/NavigationDelegate.java','engine/GeckoSessionOwner.java','core/TaskCoordinator.java','core/ResourceBudgets.java']]
+        changed = [ROOT/'app/src/main/java/io/github/rebrowser'/name for name in ['engine/NavigationDelegate.java','engine/GeckoSessionOwner.java','core/TaskCoordinator.java','core/ResourceBudgets.java','core/TaskJournal.java']]
         next_sequential_admission(work, minimum_ram)
         actual_api = subprocess.run([str(javac), *['-J'+flag for flag in limits], '-source', '8', '-target', '8', '-proc:none', '-encoding', 'UTF-8', '-bootclasspath', str(args.android_jar.resolve()), '-cp', str(classes)+os.pathsep+classpath, '-d', str(api_output), *map(str, changed)], cwd=ROOT, text=True, capture_output=True, timeout=45)
         if actual_api.returncode:
             raise RuntimeError('Changed SDK bootclasspath compile failed:\n'+actual_api.stdout+actual_api.stderr)
-        changed_api = {'scope':'four changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification', 'sourceFiles':[{'path':str(p.relative_to(ROOT)),'sha256':sha(p)} for p in changed], 'classFiles':[{'path':str(p.relative_to(api_output)),'sha256':sha(p),'classMajor':int.from_bytes(p.read_bytes()[6:8],'big')} for p in sorted(api_output.rglob('*.class'))], 'diagnostics':actual_api.stderr, 'androidRuntimeExecuted':False}
+        changed_api = {'scope':'five changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification', 'sourceFiles':[{'path':str(p.relative_to(ROOT)),'sha256':sha(p)} for p in changed], 'classFiles':[{'path':str(p.relative_to(api_output)),'sha256':sha(p),'classMajor':int.from_bytes(p.read_bytes()[6:8],'big')} for p in sorted(api_output.rglob('*.class'))], 'diagnostics':actual_api.stderr, 'androidRuntimeExecuted':False}
+        next_sequential_admission(work, minimum_ram)
+        schema_result = subprocess.run([str(java),*limits,'-cp',str(classes)+os.pathsep+classpath,'DumpTaskJournalSchema'],cwd=ROOT,text=True,capture_output=True,timeout=30,check=True)
+        assert len(schema_result.stdout) < 32768
+        sql = [base64.urlsafe_b64decode(s+'='*((-len(s))%4)).decode() for s in schema_result.stdout.splitlines()]
+        assert len(sql) == 9
+        schema_sha = hashlib.sha256('\n'.join(sql).encode()).hexdigest()
+        assert schema_sha == json.loads((P/'evidence/task-journal-host-sql.json').read_text())['ddlAndRecoverySha256'], 'no schema drift under historical SQL evidence'
         generated_bytes = sum(p.stat().st_size for p in temporary.rglob('*') if p.is_file())
         assert generated_bytes < 16 * 1024**2
     return {
@@ -124,6 +132,9 @@ def run(args):
         'sourceFiles': [{'path':str(p.relative_to(ROOT)), 'sha256':sha(p)} for p in main+tests],
         'productionJavaSourceFiles':len(main), 'compiledMainClassFiles':main_classes, 'mainAndTestClassFiles':len(all_classes),
         'changedSourcesAndroidBootclasspathCompile':changed_api,
+        'taskJournalCurrentCompiledSchemaSha256':schema_sha,
+        'taskJournalSchemaExtractor':{'path':str((P/'experiments/DumpTaskJournalSchema.java').relative_to(ROOT)),'sha256':sha(P/'experiments/DumpTaskJournalSchema.java')},
+        'historical235SqlChecksRerun':False,
         'unitTestsPassed':unit['tests'], 'unitTests':unit['classes'],
         'localDependencies':[{'name':p.name, 'sha256':sha(p)} for p in dependencies],
         'validationResourceProfile':'compact-192m' if args.compact else 'standard-256m', 'minimumMemAvailableMiB':minimum_ram,

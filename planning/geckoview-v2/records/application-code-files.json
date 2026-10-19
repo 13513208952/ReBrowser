@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R40",
+  "revision": "R41",
   "authority": [
     "O26",
     "O27",
@@ -132,7 +132,7 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
           "kind": "host-actual-native-control-synthetic-boundary",
-          "purpose": "29 actual HOST tests, no real Android platform/SQLite execution",
+          "purpose": "37 actual HOST tests, no real Android platform/SQLite execution",
           "state": "main-HOST-tested-Android-integration-pending"
         },
         {
@@ -769,14 +769,16 @@
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "29 actual HOST tests of production methods with synthetic journal/platform observations; actual SDK37.2 bootclasspath compile, NOT Android/SQLite/OS integration",
+      "validationMeaning": "37 actual HOST tests of production methods with synthetic journal/platform observations; actual SDK37.2 bootclasspath compile, NOT Android/SQLite/OS integration",
       "runtimePending": true,
       "testReferenceGroup": "core",
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/task-coordinator-contract.json",
         "evidence/production-main-standalone-jvm-checks.json",
-        "evidence/changed-native-android-api-compile.json"
+        "evidence/changed-native-android-api-compile.json",
+        "records/task-journal-native-fence-contract.json",
+        "evidence/task-journal-current-schema-equivalence.json"
       ]
     },
     {
@@ -791,7 +793,11 @@
       "validationMeaning": "R28 actual Android SQLite source/AGP API compile; actual-class DDL/recovery235HOST SQL checks including196transition pairs/paired commit/reopen/2writers; Android DAO/runtime not executed",
       "runtimePending": true,
       "testReferenceGroup": "core",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/task-journal-native-fence-contract.json",
+        "evidence/task-journal-current-schema-equivalence.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",

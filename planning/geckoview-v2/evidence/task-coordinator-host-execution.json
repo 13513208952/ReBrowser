@@ -1,16 +1,16 @@
 {
   "schema": 1,
-  "revision": "R40",
-  "hostTestsPassed": 29,
+  "revision": "R41",
+  "hostTestsPassed": 37,
   "scope": "Actual production methods on HOST with explicitly synthetic journal/platform observations; not Android OS/SQLite/runtime evidence",
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
-      "sha256": "cfca848ac3780fa1c410a2545a17d35236b04edc45a5f272b632fe5a4c52567a"
+      "sha256": "f2a0361849bce667b97e2f4fae898dd6a9a17b37a3ec7f017ce3d510af6ee604"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
-      "sha256": "55b4dce83c713ded1416b915069db043a4d84c723c1f1d60842f621e9b96ebab"
+      "sha256": "9d03317cd8937f1a8248361a6589e3027004e393a10bf6c5eb2e34aa8425de36"
     }
   ],
   "actualOwnedExecutorAndWorksetMethodsExecuted": true,
@@ -21,5 +21,6 @@
   "globalEpochQuiescenceEstablished": false,
   "temporaryOwnedClassFilesRemoved": true,
   "realKeysDeviceOrUserDataUsed": false,
-  "mainValidationRef": "evidence/production-main-standalone-jvm-checks.json"
+  "mainValidationRef": "evidence/production-main-standalone-jvm-checks.json",
+  "operationBoundCommitFenceHostExecuted": true
 }

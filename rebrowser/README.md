@@ -19,4 +19,4 @@ $GRADLE_96/bin/gradle -p rebrowser :app:compileDebugJavaWithJavac \
 
 SDK、Gradle 用户目录、项目缓存及 `java.io.tmpdir` 使用既有隔离环境；不要改动全局 SDK/缓存。代码/清单编译通过不等于 APK、Android运行或网站验证。
 
-R40补上TaskCoordinator有界执行通道/实际工作集和ResourceBudgets内存预算。[独立限额Java检查](../planning/geckoview-v2/run_bounded_main_jvm_checks.py)实际编译42份本体源码并运行304项HOST测试（新增29项真实线程调度、10项资源计数/策略，使用合成journal/平台观测）。本轮compact JVM192MiB，未启动Gradle；JDK java.base和SDK类型类路径**不是新的AGP/manifest或全量Android bootclasspath证明**；四个改动原生文件另实际SDK bootclasspath编译。完整AGP/清单最近结果仍R38。TaskCoordinator尚未接入管理员派发器，Android SQLite适配器及实际内存工厂未执行，注册工作集不能证明所有Gecko/系统写者静默。
+R40补上TaskCoordinator有界执行通道/实际工作集和ResourceBudgets内存预算。[独立限额Java检查](../planning/geckoview-v2/run_bounded_main_jvm_checks.py)实际编译42份本体源码并运行312项HOST测试（37项真实线程调度/事务fence、10项资源计数/策略，使用合成journal/平台观测）。本轮compact JVM192MiB，未启动Gradle；JDK java.base和SDK类型类路径**不是新的AGP/manifest或全量Android bootclasspath证明**；五个改动原生文件另实际SDK bootclasspath编译。R41继续将同一原操作/线程fence接进TaskJournal获锁后和提交前检查，当前SQL格式不变；历史235 SQL检查未重跑，当前编译DDL独立对比相等。完整AGP/清单最近结果仍R38。TaskCoordinator尚未接入管理员派发器，Android SQLite适配器及实际内存工厂未执行，注册工作集不能证明所有Gecko/系统写者静默。

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R40",
+  "revision": "R41",
   "authority": [
     "O41",
     "O42",
@@ -562,11 +562,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "native durable work/intent/outcome/actual-end ledger, original owner ticket and paired request/task commit",
+      "scope": "native durable work/intent/outcome/actual-end ledger, original owner ticket and paired request/task commit; R41 mandatory operation-bound read-only NativeFence in transaction after writer waiting and before commit, not complete policy serialization",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/runtime-traces.json",
-        "records/control-proof-format.json"
+        "records/control-proof-format.json",
+        "records/task-journal-native-fence-contract.json"
       ],
       "inputOutput": "dedicated nativeSQLite/gate/target/epoch -> exact schema, current-transaction reservation, private owner ticket before whole work; intent committed before route handoff",
       "dependencies": "actual Android SQLite, TaskSnapshot/ComponentGate; policy fence/actual domain dispatch still required",
@@ -583,7 +584,8 @@
         "actual effect execution/slot/quiescence release",
         "trust in external completion/owner booleans"
       ],
-      "integrationGate": "Initialize source-owned DB first; paired request/task in one top-level commit; Native coordinator serializes policy writers/current checks before effects. Lost process UNKNOWN not retry/end; old owners settle memory even if source lock forbidsDB publication."
+      "integrationGate": "Initialize source-owned DB first; paired request/task in one top-level commit; Native coordinator serializes policy writers/current checks before effects. Lost process UNKNOWN not retry/end; old owners settle memory even if source lock forbidsDB publication.",
+      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
@@ -1188,9 +1190,10 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Actual bounded AUTH/EFFECT/READ executors and reserved SAFETY, exact registered workset, durable-start/intent/settlement concrete TaskJournal adapter; actual memory settlement after source lock. NOT authority or global work coverage",
+      "scope": "Actual bounded AUTH/EFFECT/READ executors and reserved SAFETY, exact registered workset, durable-start/intent/settlement concrete TaskJournal adapter; actual memory settlement after source lock. NOT authority or global work coverage; R41 mandatory operation-bound read-only NativeFence in transaction after writer waiting and before commit, not complete policy serialization",
       "researchEvidence": [
-        "records/task-coordinator-contract.json"
+        "records/task-coordinator-contract.json",
+        "records/task-journal-native-fence-contract.json"
       ],
       "inputOutput": "Native-only owned inputs -> bounded lifecycle/usage snapshots and private owner capabilities; no IPC enrollment or positive authority",
       "dependencies": "Actual existing ComponentGate/Cancellation/TaskJournal and Android SDK/standard Java8; no new dependencies",

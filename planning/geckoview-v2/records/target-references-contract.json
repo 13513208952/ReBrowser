@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "revision": "R42",
+  "scope": "Native issued WINDOW references for four existing host action schemas: actual own Activity/Application/window identity + immutable epoch, presentation revision, read-only current native scope check. Other account/partition/session/document/APK targets remain unimplemented; no effective authorization or OS effect from a handle alone.",
+  "invariants": [
+    "Only public production constructor takes own Application and installs private Android window probe; only Activity accepted by public registration; private Object/probe constructor/methods reflected by explicitly SYNTHETIC HOST fixtures",
+    "Owner/main thread, current issuing ComponentGate permit and native epoch guard; exact own Application/window identity, live nonfinishing/nondestroyed window. This is own-window ownership, NOT caller-package/signature privilege",
+    "Bounded issued count includes tombstones; opaque fresh win_128bithex matches ActionSchemas syntax, collision bounded16 attempts; never retarget/reuse an old handle",
+    "Weak Activity AND weak Window refs; retirement clears both, no strong UI retention. Caller still owns UI lifetime; GC/stale is unavailable, not permission to reopen",
+    "Each resolution AND final native activity handoff repeats current epoch/source/scope/window/revision; typed lease not replay/result authority; current caller scope callback mandatory and read-only, not an IPC supplied boolean",
+    "Native presentation change invalidates prior revision even while source locked; retirement exact issuing Registration allowed while locked; neither operation performs positive UI action or certifies task-chain end",
+    "Read-only guard/probe/scope callbacks cannot reenter positive registry operations; stale/exception fails closed, no external Intent or owner consent"
+  ],
+  "pending": "Actual Android Activity/Window lifecycle execution, native authority ActorContext/result-scope service, MainWindowController/Application wiring, APK-source and epoch/partition/session/document target kinds. Root/gate still unconfigured/locked; full master-file responsibility incomplete."
+}

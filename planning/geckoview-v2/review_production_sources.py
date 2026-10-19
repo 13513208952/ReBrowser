@@ -70,7 +70,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     for source in ledger['sourceFiles']:
@@ -106,7 +106,7 @@ def review():
         assert standalone[gate]['memAvailableBytes'] >= minimum_ram*1024**2
         assert standalone[gate]['freeBytes'] >= 16*1024**2+1024**3
     changed_api = standalone['changedSourcesAndroidBootclasspathCompile']
-    assert len(changed_api['sourceFiles']) == 5 and changed_api['classFiles'] and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
+    assert len(changed_api['sourceFiles']) == 6 and changed_api['classFiles'] and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
     assert not changed_api['androidRuntimeExecuted']
     schema = json.loads((P/'evidence/task-journal-current-schema-equivalence.json').read_text())
     assert schema['actualCurrentCompiledSchemaExtracted'] and not schema['historical235SqlChecksRerun'] and not schema['androidSqliteMethodsExecuted']
@@ -121,6 +121,13 @@ def review():
         assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.core.'+name+'Test')['tests'] == count
         for source in host['sourceFiles']:
             assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    window_targets = json.loads((P/'evidence/window-target-references-host-execution.json').read_text())
+    assert window_targets['hostTestsPassed'] == app['hostAndroidClassWindowTargetTests'] == 18
+    assert window_targets['actualRegistryAndLeaseMethodsExecuted'] and window_targets['privateSyntheticProbe']
+    assert not any(window_targets[k] for k in ['androidWindowProbeExecuted','dispatcherIntegrated','partitionSessionDocumentOrApkTargetsImplemented','realUserDataOrDeviceUsed'])
+    for source in window_targets['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not app['windowTargetAndroidActivityOrWindowProbeExecuted'] and not app['windowTargetRegistryDispatcherIntegrated']
     assert not any(app[k] for k in ['taskCoordinatorAndroidSqliteAdapterExecuted','taskCoordinatorCommandDispatcherIntegrated','globalEpochQuiescenceEstablished','resourceBudgetsOwnAndroidMemoryFactoryExecuted'])
     agp_checkpoint = json.loads((P/app['lastFullAgpCheckpointRef']).read_text())
     assert agp_checkpoint['sourceCommit'] == 'b911bb6fc33a4f07a5160fa68d2a64968b795384'

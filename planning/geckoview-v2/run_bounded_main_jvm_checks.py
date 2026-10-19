@@ -111,12 +111,12 @@ def run(args):
         # The full main compile above intentionally uses JDK java.base, not Android boot.
         api_output = temporary/'changed-android-api'
         api_output.mkdir()
-        changed = [ROOT/'app/src/main/java/io/github/rebrowser'/name for name in ['engine/NavigationDelegate.java','engine/GeckoSessionOwner.java','core/TaskCoordinator.java','core/ResourceBudgets.java','core/TaskJournal.java']]
+        changed = [ROOT/'app/src/main/java/io/github/rebrowser'/name for name in ['engine/NavigationDelegate.java','engine/GeckoSessionOwner.java','core/TaskCoordinator.java','core/ResourceBudgets.java','core/TaskJournal.java','core/TargetReferences.java']]
         next_sequential_admission(work, minimum_ram)
         actual_api = subprocess.run([str(javac), *['-J'+flag for flag in limits], '-source', '8', '-target', '8', '-proc:none', '-encoding', 'UTF-8', '-bootclasspath', str(args.android_jar.resolve()), '-cp', str(classes)+os.pathsep+classpath, '-d', str(api_output), *map(str, changed)], cwd=ROOT, text=True, capture_output=True, timeout=45)
         if actual_api.returncode:
             raise RuntimeError('Changed SDK bootclasspath compile failed:\n'+actual_api.stdout+actual_api.stderr)
-        changed_api = {'scope':'five changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification', 'sourceFiles':[{'path':str(p.relative_to(ROOT)),'sha256':sha(p)} for p in changed], 'classFiles':[{'path':str(p.relative_to(api_output)),'sha256':sha(p),'classMajor':int.from_bytes(p.read_bytes()[6:8],'big')} for p in sorted(api_output.rglob('*.class'))], 'diagnostics':actual_api.stderr, 'androidRuntimeExecuted':False}
+        changed_api = {'scope':'six changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification', 'sourceFiles':[{'path':str(p.relative_to(ROOT)),'sha256':sha(p)} for p in changed], 'classFiles':[{'path':str(p.relative_to(api_output)),'sha256':sha(p),'classMajor':int.from_bytes(p.read_bytes()[6:8],'big')} for p in sorted(api_output.rglob('*.class'))], 'diagnostics':actual_api.stderr, 'androidRuntimeExecuted':False}
         next_sequential_admission(work, minimum_ram)
         schema_result = subprocess.run([str(java),*limits,'-cp',str(classes)+os.pathsep+classpath,'DumpTaskJournalSchema'],cwd=ROOT,text=True,capture_output=True,timeout=30,check=True)
         assert len(schema_result.stdout) < 32768

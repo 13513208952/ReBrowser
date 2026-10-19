@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R41",
+  "revision": "R42",
   "authority": [
     "O26",
     "O27",
@@ -140,6 +140,12 @@
           "kind": "host-actual-native-control-synthetic-boundary",
           "purpose": "10 actual HOST tests, no real Android platform/SQLite execution",
           "state": "main-HOST-tested-Android-integration-pending"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java",
+          "kind": "host-native-window-reference-synthetic-probe",
+          "purpose": "18actualHOST current native epoch/window identity/revision/weak lifetime/retire/scope negative cases; not Android Window or UI effects",
+          "state": "main-HOST-tested-Android-and-dispatcher-pending"
         }
       ]
     },
@@ -739,13 +745,19 @@
       "group": "core",
       "kind": "native-code",
       "responsibility": "原生目标句柄与epoch/partition/session绑定",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "18actualHOST registry/lease cases with PRIVATE SYNTHETIC window probe; actual SDK37.2 bootclasspath compiled, NO actual Android windows/actor authority/partition-session-document target execution",
       "runtimePending": true,
-      "testReferenceGroup": "core"
+      "testReferenceGroup": "core",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/target-references-contract.json",
+        "evidence/window-target-references-host-execution.json",
+        "evidence/changed-native-android-api-compile.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",

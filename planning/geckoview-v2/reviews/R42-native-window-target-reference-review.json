@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "revision": "R42",
+  "continuation": "After R40 missing task/budget nodes and R41 transaction-fence pushes, continued another missing master-tree runtime file: core/TargetReferences.java WINDOW slice.",
+  "actualSourceScope": [
+    "Actual own Application/Activity/Window native probe source, owner/main thread, immutable epoch/current issuing business permit; native-window ownership not caller-package privilege",
+    "Opaque win_128bithex compatible with existing ActionSchemas, bounded tombstones/no retargeting, weak Activity AND Window lifetime, native revision retirement even while source locked",
+    "Mandatory read-only native actor-scope callback, current source/epoch/live native window/revision checked on lookup and before activity handoff; rejects foreign/stale/unknown/reentrant/collected targets",
+    "Only WINDOW target implemented, no account/partition/session/document/APK or full ActorContext/authority service"
+  ],
+  "actualValidation": {
+    "mainJavaSources": 43,
+    "mainClasses": 209,
+    "mainHostTests": 330,
+    "newRegistryHostTestsWithPrivateSyntheticWindowProbe": 18,
+    "changedNativeSdkBootclasspathSources": 6,
+    "sourceEvidenceRef": "evidence/production-main-standalone-jvm-checks.json",
+    "windowEvidenceRef": "evidence/window-target-references-host-execution.json",
+    "wholeMainExecutor": "bounded standalone JDK java.base + SDK type classpath; not AGP/full Android bootclasspath/runtime",
+    "lastFullAgpCheckpoint": "R38"
+  },
+  "negativeClaims": [
+    "AndroidWindowProbe/real Activity-Application-Window/public Activity handoff cast NOT executed; HOST Object helpers share actual registry implementation but are not Android window evidence",
+    "Native scope callback/lease/reference is NOT effective authorization or owner consent; full actor/policy/grant/target serialization and dispatcher still missing",
+    "Application/MainWindowController actual lifecycle wiring, complete browser UI/Outlook/music and source commit/unlock still missing",
+    "No actual device/OS prompt/network/login/keys/user data, Gradle/JNI/dex/R8/APK/sign/install, ordinary data cleanup or new legacy removal"
+  ],
+  "resourcePolicy": "Compact sequential heap192/meta96/code48/fresh2048MiB RAM+16MiB disk/1GiB reserve, original Android3GiB gate unchanged; own temporary class stages removed. Current compiled9SQL hash unchanged; historical235 checks not rerun."
+}

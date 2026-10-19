@@ -111,6 +111,10 @@
       "sha256": "d2670bf4d3136dc8daf9ad8c151bb8fa9fa21436fb95929c29b619e7f7d1a1ac"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "sha256": "a93def2c36d28cdbbbfb272351d78b7234976f71bafe6bc707975cc5647ac94c"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
       "sha256": "f2a0361849bce667b97e2f4fae898dd6a9a17b37a3ec7f017ce3d510af6ee604"
     },
@@ -243,6 +247,10 @@
       "sha256": "811ea2337a31eafa2676c372718b1f0788619c73cde13f55b16e5a62939c8669"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java",
+      "sha256": "d0acb633a573806af4a4594ef19443681ab89d549e23b6f398683f412d5e973d"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
       "sha256": "9d03317cd8937f1a8248361a6589e3027004e393a10bf6c5eb2e34aa8425de36"
     },
@@ -279,11 +287,11 @@
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
     }
   ],
-  "productionJavaSourceFiles": 42,
-  "compiledMainClassFiles": 200,
-  "mainAndTestClassFiles": 273,
+  "productionJavaSourceFiles": 43,
+  "compiledMainClassFiles": 209,
+  "mainAndTestClassFiles": 285,
   "changedSourcesAndroidBootclasspathCompile": {
-    "scope": "five changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification",
+    "scope": "six changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification",
     "sourceFiles": [
       {
         "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
@@ -304,6 +312,10 @@
       {
         "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
         "sha256": "6654a01a7c195ed0c538f77362236b5c5793aa577d8a6868cad82933ccf974e4"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+        "sha256": "a93def2c36d28cdbbbfb272351d78b7234976f71bafe6bc707975cc5647ac94c"
       }
     ],
     "classFiles": [
@@ -345,6 +357,56 @@
       {
         "path": "io/github/rebrowser/core/ResourceBudgets.class",
         "sha256": "ac9fc5c26caa5a4f2b530fad2fedccae1268bbc8e425ed5e7d561636d1737300",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$1.class",
+        "sha256": "0cacc8ad29c8b19954069e250e360d7204ee2b2aac0c1c0bbef378460f2f8162",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$AndroidWindowProbe.class",
+        "sha256": "7d49bfbe1c99f79e41a263934a1bce267b18a1a59a207fbca19bfc3e2461cd57",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$CurrentEpoch.class",
+        "sha256": "91b6e0283f8aaa07878b2ce9ae902d733a2bed1d1586a34f1f359f01233031ff",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$CurrentWindowScope.class",
+        "sha256": "de45fc5ea1d7309226e64523ecb78ddba0d00b51be8cbfb020185fbf22bcbc6d",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$Registration.class",
+        "sha256": "143475320f38474e32ff2075f8f5b102dc15a623dc80c88e8b2989e5f5321dcd",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$Slot.class",
+        "sha256": "4c8d0b8f48f2e61feb41ccf0aeea9b02485049d5440125ff751e7ba607741399",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$WindowLease.class",
+        "sha256": "fdb1d5f74674444c2f2737cb4b725e7098a6d9dd6482fb1113aed1e70293d522",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$WindowProbe.class",
+        "sha256": "bdc5b4a8c443f06ec9c728b49f02ef49dbf5693988b13c9650c2d74881611f8c",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences$WindowState.class",
+        "sha256": "11fb6119bc8e8e5f9f068f3db770484c9e8280d3ac0eb49f8fdcb451f81ebba2",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TargetReferences.class",
+        "sha256": "b41927adf6732071d0a73eceac64a952eb211414929fd54ef3889390fea09152",
         "classMajor": 52
       },
       {
@@ -552,7 +614,7 @@
     "sha256": "330ab922abd3ba8f029d40dbe99a9b2d17ebdd7009d2830b0ca1f8a295734dba"
   },
   "historical235SqlChecksRerun": false,
-  "unitTestsPassed": 312,
+  "unitTestsPassed": 330,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -663,6 +725,12 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.core.TargetReferencesTest",
+      "tests": 18,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.core.TaskCoordinatorTest",
       "tests": 37,
       "failures": 0,
@@ -750,18 +818,18 @@
     "-Djava.io.tmpdir=/home/zhao/temp/re_outlook/geckoview-reimplementation/jvm"
   ],
   "resourceBeforeCompile": {
-    "freeBytes": 2855043072,
-    "memAvailableBytes": 2701279232
+    "freeBytes": 2853859328,
+    "memAvailableBytes": 2163245056
   },
   "resourceBeforeTests": {
-    "freeBytes": 2853355520,
-    "memAvailableBytes": 2705215488
+    "freeBytes": 2852093952,
+    "memAvailableBytes": 2155876352
   },
-  "generatedBytesBeforeRemoval": 1019349,
+  "generatedBytesBeforeRemoval": 1077213,
   "temporaryClassDirectoryRemoved": true,
-  "hostAndAdditionalApiElapsedSeconds": 2.36,
+  "hostAndAdditionalApiElapsedSeconds": 2.41,
   "compilerDiagnostics": "注: 某些输入文件使用或覆盖了已过时的 API。\n注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。\n",
-  "runnerSha256": "5851c6edf61f8a830bb9a26ca0faa5be13f8cfad843794ce59a879f6aa3ae365",
+  "runnerSha256": "44f47c6f499f12a82cdfa88ea135d406fdd8903102e8b9cffc805a7e77189c0f",
   "harnessSha256": "00a0faa4d95432ab0ba3c829fc47c41d51d3683a561ddcb5208d6d2886baebad",
   "jdkJavaBaseNotAndroidBootclasspath": true,
   "currentIncrementAgpTasksExecuted": false,

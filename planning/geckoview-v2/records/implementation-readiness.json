@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R41",
+  "revision": "R42",
   "authority": [
     "O41",
     "O42",
@@ -1242,6 +1242,36 @@
         "persistent cache/data cleanup or forcing foreground/media work end"
       ],
       "integrationGate": "TaskCoordinator can accept native limits; Application/caches not yet wired. Only actual native allocation owner releases after free, never client cancellation. Trim advice does not erase files or stop owned media."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Native WINDOW target handle/revision/epoch/own Activity-Application-Window binding, weak UI refs/tombstones, mandatory fresh native scope and final handoff lease checks; NOT actor authority or other target kinds",
+      "researchEvidence": [
+        "records/target-references-contract.json",
+        "records/platform-action-contracts.json"
+      ],
+      "inputOutput": "Native own Activity + current gate/epoch -> opaque win_128bithex registration, immutable lease bound to exact revision; unresolved/stale/foreign targets reject",
+      "dependencies": "Actual Android Activity/Application/Looper and Java8 WeakReference/SecureRandom/ComponentGate; no new dependency",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.core.TargetReferencesTest"
+      ],
+      "hostEvidence": "evidence/window-target-references-host-execution.json",
+      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json",
+      "hostControlFlowExecutedWithSyntheticPlatform": true,
+      "notClaimed": [
+        "actual Android Activity/Window lifecycle probe or UI effect",
+        "real actor/scope/grant authorization and command dispatcher",
+        "account/partition/session/document/APK target kinds or complete master-file responsibility"
+      ],
+      "integrationGate": "Source/Root stays unconfigured/locked; future native MainWindowController must register/retire and invalidate revision on actual lifecycle, actual actor service supplies read-only current scope. Handle alone never grants authority. No exported receiver/command enabled."
     }
   ],
   "parallelPending": [

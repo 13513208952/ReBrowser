@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R37",
+  "revision": "R38",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -522,7 +522,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "签名身份、可信基线密封、两次系统验证、私有集合销毁",
-      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证；R32实际BackCoordinator/SigningIdentity/CompiledSourceIdentity及Startup只读身份接入；33主源码168HOST，单层Back及signer/Root元数据不是OS实机/四步来源授权/解锁完成；R33实际ContinuityState精确O16文案/次序和OwnerAuthentication Android源码/NormalUSE_BIOMETRIC声明；35源174HOST仅含绑定元数据，未运行OS认证/票据consume，LastGood/真实四步协调/销毁/解锁仍缺；R36 LastGoodSourceStore实际小元数据DAO/17HOST文件系统测试，候选B不覆盖A、force/原子替换/文件锁/CAS；尚未接入Android来源协调/本人票据消费/擦除和解锁；R37四步/原生验证桥接源码+24纯reducer HOST合成Native信号测试，未执行OS/桥接/擦除/解锁",
+      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证；R32实际BackCoordinator/SigningIdentity/CompiledSourceIdentity及Startup只读身份接入；33主源码168HOST，单层Back及signer/Root元数据不是OS实机/四步来源授权/解锁完成；R33实际ContinuityState精确O16文案/次序和OwnerAuthentication Android源码/NormalUSE_BIOMETRIC声明；35源174HOST仅含绑定元数据，未运行OS认证/票据consume，LastGood/真实四步协调/销毁/解锁仍缺；R36 LastGoodSourceStore实际小元数据DAO/17HOST文件系统测试，候选B不覆盖A、force/原子替换/文件锁/CAS；尚未接入Android来源协调/本人票据消费/擦除和解锁；R37四步/原生验证桥接源码+24纯reducer HOST合成Native信号测试，未执行OS/桥接/擦除/解锁；R38实际OwnerAuthentication控制器/私有票据/桥接方法在HOST合成平台28测试，仍非AndroidPlatform/真实OS/擦除/解锁",
       "completionDeliverables": [
         "状态持久化和恢复",
         "全部入口闸门",
@@ -544,7 +544,9 @@
         "views/09-root-continuity-and-data.md",
         "records/last-good-source-store-contract.json",
         "evidence/production-main-app-compile.json",
-        "records/continuity-coordinator-contract.json"
+        "records/continuity-coordinator-contract.json",
+        "records/owner-auth-host-control-contract.json",
+        "evidence/owner-auth-synthetic-platform-host.json"
       ],
       "requiredReviewAxes": [
         "normal-flow",

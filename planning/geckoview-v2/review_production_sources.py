@@ -69,7 +69,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0)
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0) + app.get('hostAndroidClassNativeControlTests',0)
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     for source in ledger['sourceFiles']:
@@ -93,16 +93,24 @@ def review():
     assert not any(app[k] for k in ['lastGoodSourceAndroidFilesystemExecuted','lastGoodSourcePowerLossOrProcessDeathExecuted','lastGoodSourceCoordinatorOrUnlockIntegrated'])
     assert app['continuityReducerHostTests'] == 24
     assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.continuity.ContinuityCoordinatorTest')['tests'] == 24
-    assert not app['continuityNativeOwnerBridgeHostExecuted'] and not app['continuityOwnerPromptOrConsentConsumeAndroidExecuted']
-    assert app['ownerBiometricPermissionDeclared']
-    assert not app['ownerAuthenticationPromptOrTicketConsumeExecuted'] and not app['ownerAuthenticationControlFlowHostExecuted']
+    assert app['continuityNativeOwnerBridgeHostExecuted'] and not app['continuityOwnerPromptOrConsentConsumeAndroidExecuted']
+    owner_host = json.loads((P/'evidence/owner-auth-synthetic-platform-host.json').read_text())
+    assert owner_host['hostTestsPassed'] == app['hostAndroidClassNativeControlTests'] == 28
+    assert len(owner_host['testCases']) == 28 and owner_host['testPlatformInjectionConstructorPrivate']
+    for source in owner_host['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert owner_host['actualControllerAndPrivateTicketMethodsExecuted'] and owner_host['temporaryFixturesRemoved']
+    assert not any(owner_host[k] for k in ['androidPlatformAdapterExecuted','ownAndroidSignerInspectionExecuted','realKeyguardBiometricOrOwnerPromptExecuted','realCredentialsOrDeviceDataUsed','erasureOrBusinessUnlockExecuted'])
+    assert app['ownerBiometricPermissionDeclared'] and not app['ownerAuthenticationAndroidPlatformExecuted']
+    assert not app['ownerAuthenticationPromptOrTicketConsumeExecuted'] and app['ownerAuthenticationControlFlowHostExecuted'] and app['ownerAuthenticationNativeTicketConsumeHostExecuted']
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])
     legacy_build = (ROOT/'app/build.gradle.kts').read_text()
     assert 'getByName("main").java.exclude("io/github/rebrowser/**")' in legacy_build
     assert 'getByName("test").java.exclude("io/github/rebrowser/**")' in legacy_build
     return {'productionSourceFilesImplementedHostTested':len(jvm_entries),
             'productionRuntimeSourceFilesStarted':len(implemented),
-            'productionAndroidApiOnlyFilesInProgress':len(android_entries),
+            'productionAndroidBoundFilesInProgress':len(android_entries),
+            'productionAndroidBoundFilesWithSyntheticHostControlTests':sum(f.get('hostControlFlowExecutedWithSyntheticPlatform',False) for f in android_entries.values()),
             'standaloneMainAppCompiled':True,
             'standaloneMainAppHostTests':app['unitTestsPassed'],
             'concreteTypedActionSchemasImplemented':app['concreteActionArgumentSchemasImplemented'],

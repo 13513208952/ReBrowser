@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R37",
+  "revision": "R38",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -224,10 +224,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "ContinuityCoordinator actual four-step reducer plus real OwnerAuthentication private-ticket bridge source; factory checks compiled Root/own signer, preserves exact pending binding and owned foreground consumption",
-    "24 pure reducer HOST cases use explicitly synthetic native signals, not OS/ticket bridge execution; final private consent one-use <=30s, native old work settles after retirement without eligibility",
-    "39 actual main Java /225 main HOST =215 pure +10 Android-class metadata;25 HOST/14API-WIP; production Source remains UNCONFIGURED/LOCKED, no erasure/epoch commit/UI integration",
-    "Next continue native auth control-flow validation without device prompts; checkpoints are not pauses per O59"
+    "AFTER R37 push continued actual OwnerAuthentication native-platform separation and controller/bridge HOST execution, not a checkpoint stop",
+    "Activity-only production constructor, PRIVATE platform injection for explicit HOST fixtures; positive no-lock recheck/strong credential result/one-use foreground tickets remain",
+    "28 actual controller/private-ticket/bridge tests with SYNTHETIC platform; 253 main HOST =215 pure +10 metadata +28 control-flow;39 Java/25HOST+14API-WIP unchanged",
+    "Native cancellation allocation before binding start; clock failure in actual terminal success callback records FAILED and settles actual owner instead of stranding credit",
+    "No AndroidPlatform/OS/signing inspection/auth prompt/erasure/source unlock executed; source UI/bootstrap/erasure/backend integration still pending"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

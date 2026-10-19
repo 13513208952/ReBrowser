@@ -1,10 +1,10 @@
-# ReBrowser v2 · 主程序与管理员系统实现 R37
+# ReBrowser v2 · 主程序与管理员系统实现 R38
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停；O41允许已搞清实现方法的总树文件按文件推进，O42再次明确推送后不自行停工。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
 > 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译、隔离R8 Release打包，以及O29授权手机上的[本地合成Native/扩展/MAIN世界/context子集](evidence/validation-android-local-synthetic.json)。**官网、真实播放、本人验证及Popup/恢复等仍未测**；不能宣称完整产品已实现或全部规划完成。
 
-> 状态：**主线已按O45转为主程序与管理员系统代码实现，调查只按具体阻碍开展**。独立 `rebrowser` Android 工程、Application/原生主窗口/内部管理员控制台/来源闸门/Gecko owner和编译身份验签已开始真实编码；39个本体源码已创建，其中25个HOST切片、14个API/WIP。主程序Gradle编译、清单合并及225项主工程HOST测试通过；另有1033项独立JSON对照。正式来源/根未配置保持业务锁定，完整浏览器和命令准入仍未完成。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
+> 状态：**主线已按O45转为主程序与管理员系统代码实现，调查只按具体阻碍开展**。独立 `rebrowser` Android 工程、Application/原生主窗口/内部管理员控制台/来源闸门/Gecko owner和编译身份验签已开始真实编码；39个本体源码已创建，其中25个HOST切片、14个API/WIP。主程序Gradle编译、清单合并及253项主工程HOST测试通过（含28项合成平台的认证控制器/私有票据/桥接执行，不是真实OS验证）；另有1033项独立JSON对照。正式来源/根未配置保持业务锁定，完整浏览器和命令准入仍未完成。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
 
 ```mermaid
 mindmap
@@ -41,9 +41,9 @@ mindmap
 
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
-| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、25 HOST与14 API/WIP，225项主程序HOST测试 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
+| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、25 HOST与14 API/WIP，253项主程序HOST测试 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 全部目标运行代码逐文件展开，区分PLAN与HOST，测试等辅助只概括引用 | O26／O27／O41，HOST不等于Android集成 |
-| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，225项主工程JUnit（JVM切片215项） |
+| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，253项主工程JUnit（JVM切片215项，另10项元数据及28项合成平台控制流） |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
 | [旧结构审查整理：统一任务](records/structure-retirement-policy.json)／[回收站记录](records/noncode-retirement-review.json) | 主体ZIP／凭据保留／其他价值耗尽进Trash是同任务内分流，与新版本工作并行 | O37；不把一次整理当停止节点 |
@@ -83,8 +83,9 @@ mindmap
 | [原文字节codec](records/mail-codec-implementation-contract.json) | RAW/zlib选择算实际帧开销；有界inflate/完整原文摘要、私有对象管线HOST通过 | 不是DB引用/游标提交或官网同步完成 |
 | [流式对象加密边界](records/object-aead-implementation-contract.json)／[新旧互通](evidence/object-aead-production-interop.json) | 新对象一次性ID/canonical catalog头/32KiB认证帧，36双向与精确字节检查 | 不等于ZLIB原文验证、DB提交或Android加密通过 |
 | [Gecko进度/快照回调](../../app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java) | 实际SDK加载/安全观测、Source/session/partition检查和单占位敏感SessionState copy转交 | 仅API编译，没有新增回调/Gecko测试；PageStop非任务完成、失效不释放旧writer、observer未知不重试、无明文快照日志 |
-| [确认状态/原话](../../app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java)／[系统机主验证源码](../../app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java) | O16精确4文案/Force2和3各新Android验证、positiveOSnoLock、绑定源/epoch/步骤的私有票据；实际API编译 | HOST只测文案/绑定；没有OS验证/票据消费/认证控制流测试。LastGood存储和下行四步reducer已有切片；整体来源协调/销毁/解锁未完成，权限声明不等于实际验证 |
-| [四步来源协调](../../app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java)／[边界](records/continuity-coordinator-contract.json) | 原生步骤/代次、两独立私有验证attempt、未知工作保留、30秒一次性最终consent；24项纯reducer HOST测试 | 验证信号为合成Native输入；OwnerAuthentication实际桥接仅API编译，非OS认证/擦除/epoch提交/解锁 |
+| [确认状态/原话](../../app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java)／[系统机主验证源码](../../app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java) | O16精确4文案/Force2和3各新Android验证、positiveOSnoLock、绑定源/epoch/步骤的私有票据；实际API编译 | 文案/绑定及28项合成平台控制器/私有票据/桥接方法已测；没有真实AndroidPlatform/OS验证。LastGood存储和下行四步reducer已有切片；整体来源协调/销毁/解锁未完成，权限声明不等于实际验证 |
+| [四步来源协调](../../app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java)／[边界](records/continuity-coordinator-contract.json) | 原生步骤/代次、两独立私有验证attempt、未知工作保留、30秒一次性最终consent；24项纯reducer HOST测试 | reducer信号为合成Native输入；OwnerAuthentication另28项实际方法HOST合成平台执行，非OS认证/擦除/epoch提交/解锁 |
+| [认证控制流HOST边界](evidence/owner-auth-synthetic-platform-host.json)／[契约](records/owner-auth-host-control-contract.json) | 实际OwnerAuthentication控制器/私有Ticket消费/桥接，反射私有构造注入合成平台；28项HOST | 生产公开构造仍仅Activity；未执行AndroidPlatform/真实锁屏/生物认证/实际签名读取，不能当系统身份凭据 |
 | [最后正常来源存储](../../app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java)／[范围契约](records/last-good-source-store-contract.json) | 保留A的signer/Root/epoch跨pending B，独立阶段/严格216B帧/文件锁/CAS/force/原子替换/读回；17项真实HOST临时文件系统测试 | 非Android文件系统/掉电/实际C包救援；checksum和进度记录不是授权、已验证销毁或解锁；缺失marker不是首次安装证据 |
 | [原生Back](../../app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java)／[自身签名身份](../../app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java)／[编译Root](../../app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java) | 只消费一层/原执行者待办/代次失效不假结束；实际自身包+UID签名API及编译Root只读元数据 | HOST层回调/TOY元数据不是AndroidBack/签名实测；不写lastGood/不解锁，不把合法signer轮换当不同Root可信 |
 | [实际导航输入](../../app/src/main/java/io/github/rebrowser/browser/SearchEngines.java)／[Android外链边界](../../app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java) | 4固定搜索入口/结构化HTTP目标/不透传Intent extras/grants，选中Tab/revision后SDKloadUri；11新HOST测试 | 不把URL结构当实际origin/权限；Native外链receiver未激活、主窗口仍锁定，不代表已运行浏览 |
@@ -122,7 +123,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R37自检结果](reviews/R37-native-continuity-flow-source-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R38自检结果](reviews/R38-owner-auth-synthetic-platform-control-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

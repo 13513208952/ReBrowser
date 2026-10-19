@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "revision": "R38",
+  "authority": ["O16", "O45", "O59"],
+  "scope": "Actual OwnerAuthentication controller/private ticket/continuity bridge methods executed on HOST with an explicitly synthetic native platform; NOT AndroidPlatform, PackageManager, KeyguardManager, BiometricPrompt, sensors or real owner authentication",
+  "productionBoundary": "Only public constructor still requires actual Android Activity and creates private AndroidPlatform. Internal Platform injection constructor is PRIVATE, reached by reflection in HOST test only; no runtime registration/provider or public Boolean/result bypass added.",
+  "preservedRules": [
+    "Only positive native NO_LOCK state exempts; null/UNKNOWN/error/build failure/cancel never no-lock",
+    "Native strong-biometric or device-credential result only; unknown/null auth kind fails",
+    "Binding/window/step/30s one-use ticket, positive no-lock state rechecked at consumption, foreground and native current-source guard before/after consumption",
+    "Unknown authenticate/cancel outcome, close or UI retirement retains original active request until actual terminal callback; no alternate prompt/timeout release",
+    "Source bridge holds exact private ticket until own foreground, two distinct attempts/tickets for FORCE2/FORCE3, nativeRoot/ownSigner factory still production-only",
+    "Native terminal success callback with clock failure must settle as FAILED, not strand actual ended OS owner or mint a ticket",
+    "Cancellation handle allocation failure occurs BEFORE binding start/starting flag, so positively unsubmitted preparation cannot strand owner or permit authentication"
+  ],
+  "testScope": "Direct actual controller methods with private reflected synthetic Platform/owned window. Synthetic callbacks and fake lock/foreground/clock are NOT system evidence. Source factory Root-unconfigured branch may execute; positive actual Android signer/Root validation and Android adapter mapping remain API-only.",
+  "integrationGate": "Business remains UNCONFIGURED/LOCKED. No device prompts authorized by prior local synthetic Gecko scope. Source UI/bootstrap/data quiescence/exact erasure/new epoch commit still required; HOST success is not product/source unlock."
+}

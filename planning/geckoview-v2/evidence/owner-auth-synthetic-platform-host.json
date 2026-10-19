@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "revision": "R38",
+  "scope": "ACTUAL production OwnerAuthentication controller/private-ticket/continuity bridge methods on HOST with PRIVATE reflected SYNTHETIC platform; NOT system authentication",
+  "hostTestsPassed": 28,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
+      "sha256": "0d886efd68a8c2f70aa905bd8d9126c1198f62b426cc2afb8c4fa5caca1356ba"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "sha256": "0e353205d8197b1358363fd305779901d70060aadd0ddf18ac7d53745c647da1"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationControlTest.java",
+      "sha256": "609c1bfc9d129cf578be4314b52044cef5957220c559884aaf9e03747676e747"
+    }
+  ],
+  "testCases": [
+    "cancelAndCloseDoNotSettleActiveRequestBeforeTerminalCallback",
+    "wrongBindingCannotRecoverSpentTicketWithCorrectBinding",
+    "changedOrUnknownNoLockStateAtConsumptionRejectsAndSpendsTicket",
+    "actualTerminalSuccessWithUnavailableClockFailsButSettlesOwner",
+    "synchronousSuccessThenSubmissionThrowKeepsFirstActualTerminalOutcome",
+    "promptConstructionFailureIsNotAuthenticationOrNoLock",
+    "unknownNullAndErrorSecurityNeverBecomeNoLockExemption",
+    "nativeBridgeNoLockRecheckAndRetiredTicketNeverYieldConsent",
+    "productionRootUnconfiguredFactoryCannotStartSyntheticOrRealSourceFlow",
+    "cancellationAllocationFailureDoesNotStrandStartingOrStartBinding",
+    "bridgeObserverExceptionRetainsTicketNotAlternatePrompt",
+    "expiryAndRollbackRejectNativeTickets",
+    "securePromptAndPrivateTicketMustWaitOwnForeground",
+    "twoRealControllerBridgeAttemptsNeedSeparatePrivateTicketConsumption",
+    "noPublicPlatformInjectionConstructorExists",
+    "observerExceptionAfterActualEndDoesNotLeaveFalseOsWorkPending",
+    "wrongThreadCannotSettleOrConsumeNativeTicket",
+    "unknownSubmissionKeepsOriginalNativeOwnerUntilActualError",
+    "nativeBridgeWaitForegroundRevocationClearsOnlyKnownUnstartedSlot",
+    "cancelFailureAlsoCannotReleaseUnknownRequest",
+    "nativeBridgeUnknownCancellationRetainsActualOldWorkAfterRetirement",
+    "positiveNoLockMintsOneUseTicketWithoutBuildingPrompt",
+    "terminalCallbackDuringCancellationSettlesWithoutSpuriousUnknownOutcome",
+    "foregroundWaitDoesNotStartOrConsumeBinding",
+    "lateDuplicateCallbacksCannotMintSecondOutcome",
+    "nativeBridgeCurrentSourceRevokedBeforeConsumeCannotAdvanceForce2",
+    "nativeBridgeRejectsForeignWindowBeforePrompt",
+    "unknownOrNullAuthenticationKindFailsWithoutTicket"
+  ],
+  "productionPublicConstructorStillActivityOnly": true,
+  "testPlatformInjectionConstructorPrivate": true,
+  "actualControllerAndPrivateTicketMethodsExecuted": true,
+  "androidPlatformAdapterExecuted": false,
+  "ownAndroidSignerInspectionExecuted": false,
+  "realKeyguardBiometricOrOwnerPromptExecuted": false,
+  "realCredentialsOrDeviceDataUsed": false,
+  "erasureOrBusinessUnlockExecuted": false,
+  "temporaryFixturesRemoved": true,
+  "qualification": "Fake foreground/security/clock/prompt results exercise logic but are NOT evidence of actual OS lock state, authenticator behavior, device freshness or system callbacks."
+}

@@ -2,7 +2,7 @@
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
   "runtimeSourceFilesCompiled": 25,
   "junitTestsPassed": 215,
-  "junitOutput": "JUnit version 4.13.2\n.......................................................................................................................................................................................................................\nTime: 1.15\n\nOK (215 tests)\n\n",
+  "junitOutput": "JUnit version 4.13.2\n.......................................................................................................................................................................................................................\nTime: 1.123\n\nOK (215 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -192,8 +192,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 2959802368,
-  "memAvailableBefore": 3641450496,
+  "freeBytesBefore": 2957111296,
+  "memAvailableBefore": 3544449024,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

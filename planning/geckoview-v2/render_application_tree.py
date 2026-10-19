@@ -41,7 +41,7 @@ def render(manifest=None):
     lines = [
         '# 应用本体目标代码总树 · R10首版', '',
         '> O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。',
-        '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
+        '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
         f'当前已创建本体源码：**{len(implemented)}文件**；其中HOST测试切片 **{sum(f["state"] == "implemented-host-tested-not-integrated" for f in files)}文件**，API编译/实现中 **{sum(f["state"] == "source-in-progress-api-compiled" for f in files)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
         f'当前目标：`io.github.rebrowser` · 本体代码 **{len(files)}文件** · {len(groups)}职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。', '',
         '符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。', '',

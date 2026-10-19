@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R37",
+  "revision": "R38",
   "authority": [
     "O41",
     "O42",
@@ -1000,29 +1000,35 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "actual Android freshBiometricStrong/deviceCredential andpositiveOSnoLock wrapper forFORCE2/3, distinctsource/epoch/step bindings andprivate30sone-use native tickets; R37 actual native four-step bridge: own signer/compiled Root/window factory, one pending exact attempt/binding, private ticket held until native foreground, actual consume then reducer callback, cancellation/unknown ownership preserved",
+      "scope": "actual Android freshBiometricStrong/deviceCredential andpositiveOSnoLock wrapper forFORCE2/3, distinctsource/epoch/step bindings andprivate30sone-use native tickets; R37 actual native four-step bridge: own signer/compiled Root/window factory, one pending exact attempt/binding, private ticket held until native foreground, actual consume then reducer callback, cancellation/unknown ownership preserved; R38 private native platform boundary keeps Activity-only public constructor; actual controller/private-ticket/bridge body HOST tested with reflected synthetic platform, Android adapter still unexecuted",
       "researchEvidence": [
         "records/root-continuity.json",
         "owner-verbatim/O16-four-step-confirmation-and-trusted-source.txt",
         "records/key-and-enrollment-design.json",
-        "records/continuity-coordinator-contract.json"
+        "records/continuity-coordinator-contract.json",
+        "records/owner-auth-host-control-contract.json"
       ],
       "inputOutput": "nativeownedforegroundActivity+currentcandidateSigner/Root/oldepoch+FORCE2or3binding -> OS-callbackprivateTicket orfixedtypedfailure/pending; NOTerasureauthorizationorbusinessunlock",
       "dependencies": "actual AndroidAPI30+BiometricPrompt/Keyguard/Power/Looper/elapsedRealtime; ContinuityState; noextraauthlibrary",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java"
+        "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java",
+        "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationControlTest.java"
       ],
-      "junitClasses": [],
+      "junitClasses": [
+        "io.github.rebrowser.continuity.OwnerAuthenticationBindingTest",
+        "io.github.rebrowser.continuity.OwnerAuthenticationControlTest"
+      ],
       "hostEvidence": "evidence/production-main-app-compile.json",
       "notClaimed": [
-        "actualOSownerprompt/no-lock/readiness/consume/timeout/cancelruntime executed",
-        "positiveOwnerAuthentication ornativecontrolflowvalidatedbyHOSTmetadata",
-        "LastGood/epoch/four-clickSourceCoordinator/exacterasurecommit implemented",
-        "formalkeyprovision orsourcebusinessunlock",
-        "new continuity bridge control-flow/OS execution (API compilation only)"
+        "Synthetic HOST platform is not actual owner identity, OS no-lock/hardware state or device freshness evidence",
+        "AndroidPlatform, KeyguardManager/BiometricPrompt and positive own-Android-signer/Root source factory have not executed",
+        "Complete bootstrap/rescue, actual source UI, bounded data workset quiescence, exact erasure/new-epoch commit and business unlock",
+        "Formal keys provisioned or real credentials/private data accessed"
       ],
-      "integrationGate": "ActualOS tests needseparateownerpromptauthorization. Only nativeSourceCoordinator buildsbindingsafterreal4clicks/currentSignerRootepochchecks; FORCE2/3 freshindependentrequests; unknown/cancel/failure NEVERno-lockexemption orsuccess. Consumeoncewhenownedforegroundreturns, thenrecheckactualsource/epoch/step. NoRoot/whitelistbypass, noCLItrust, noold-dataaccess/deletionhere."
+      "integrationGate": "ActualOS tests needseparateownerpromptauthorization. Only nativeSourceCoordinator buildsbindingsafterreal4clicks/currentSignerRootepochchecks; FORCE2/3 freshindependentrequests; unknown/cancel/failure NEVERno-lockexemption orsuccess. Consumeoncewhenownedforegroundreturns, thenrecheckactualsource/epoch/step. NoRoot/whitelistbypass, noCLItrust, noold-dataaccess/deletionhere.",
+      "hostControlFlowExecutedWithSyntheticPlatform": true,
+      "hostControlFlowEvidence": "evidence/owner-auth-synthetic-platform-host.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",

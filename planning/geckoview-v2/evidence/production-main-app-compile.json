@@ -80,7 +80,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
-      "sha256": "dbf8d97126f34ac8c92c3243f4cf5d6e9b7aaf5c6f16b46096c283a676389685"
+      "sha256": "0d886efd68a8c2f70aa905bd8d9126c1198f62b426cc2afb8c4fa5caca1356ba"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
@@ -199,6 +199,10 @@
       "sha256": "8d27ddf4109dafacf68709f1f54d75304866e019a401246fd7ded142f5495aec"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationControlTest.java",
+      "sha256": "609c1bfc9d129cf578be4314b52044cef5957220c559884aaf9e03747676e747"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java",
       "sha256": "2134c0ce9f67dee1b83ac7e6d81a2857895ea0c5f92ed1c5c7295db9b3472ea5"
     },
@@ -276,7 +280,7 @@
     }
   ],
   "productionJavaSourceFiles": 39,
-  "compiledClassFiles": 154,
+  "compiledClassFiles": 165,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -329,6 +333,12 @@
     {
       "class": "io.github.rebrowser.continuity.OwnerAuthenticationBindingTest",
       "tests": 3,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.OwnerAuthenticationControlTest",
+      "tests": 28,
       "failures": 0,
       "errors": 0
     },
@@ -417,7 +427,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 225,
+  "unitTestsPassed": 253,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -456,7 +466,7 @@
   "sourceRootOrBackUiActivated": false,
   "ownerBiometricPermissionDeclared": true,
   "ownerAuthenticationPromptOrTicketConsumeExecuted": false,
-  "ownerAuthenticationControlFlowHostExecuted": false,
+  "ownerAuthenticationControlFlowHostExecuted": true,
   "progressAndCheckpointDelegateApiAdded": true,
   "geckoDelegateCallbacksExecuted": false,
   "responseStreamWorkerHostTests": 10,
@@ -466,6 +476,14 @@
   "lastGoodSourcePowerLossOrProcessDeathExecuted": false,
   "lastGoodSourceCoordinatorOrUnlockIntegrated": false,
   "continuityReducerHostTests": 24,
-  "continuityNativeOwnerBridgeHostExecuted": false,
-  "continuityOwnerPromptOrConsentConsumeAndroidExecuted": false
+  "continuityNativeOwnerBridgeHostExecuted": true,
+  "continuityOwnerPromptOrConsentConsumeAndroidExecuted": false,
+  "hostAndroidClassNativeControlTests": 28,
+  "ownerAuthenticationNativeTicketConsumeHostExecuted": true,
+  "ownerAuthenticationAndroidPlatformExecuted": false,
+  "executionFlagDefinitions": {
+    "ownerAuthenticationPromptOrTicketConsumeExecuted": "ACTUAL ANDROID OS execution only; false. HOST controller/private ticket and synthetic platform tracked by separate explicit HOST fields.",
+    "continuityNativeOwnerBridgeHostExecuted": "actual production bridge methods with explicit SYNTHETIC platform; not AndroidPlatform/real OS verification",
+    "hostAndroidClassPureIdentityTests": "legacy10 metadata-only extra tests, separate from 28 synthetic-platform control-flow tests"
+  }
 }

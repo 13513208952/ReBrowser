@@ -1,8 +1,10 @@
 # 可信来源跨版本保持、四步确认与私有数据保护 · R33／R34／R36–R38 · R4
 
-## 当前实现切片（R37，以下状态图仍为总体设计）
+## 当前实现切片（R38，以下状态图仍为总体设计）
 
-R37增加实际`ContinuityCoordinator`四步reducer及`OwnerAuthentication`私有票据桥接源码：Source/epoch/窗口/步骤/代次与时钟检查，Force2/3各不同attempt，退休不结算原OS请求，最终consent一次性且30秒。24项HOST执行的是reducer加合成Native验证信号；Android桥接、OS提示与票据消费仍未执行，不能扩成整个来源流程完成。正式根缺失时桥接工厂拒绝创建来源确认流；consent不执行擦除或解锁。
+R38继续执行实际`OwnerAuthentication`控制器/私有票据/桥接方法：私有构造反射注入明确的HOST合成平台，28测试覆盖正向no-lock重查、独立Force2/3消费、前台/超时/错误/未知提交/实际终态、退休/重复回调和源变化拒绝。生产公开入口仍只有Activity+私有AndroidPlatform，未增加公开认证替代provider。**这些信号不是OS证据，Android适配器/实际签名读取/真实本人验证仍未执行。** 已实际执行HOST私有Ticket.consume，不再把此项错写成只有绑定元数据测试。
+
+R37增加实际`ContinuityCoordinator`四步reducer及`OwnerAuthentication`私有票据桥接源码：Source/epoch/窗口/步骤/代次与时钟检查，Force2/3各不同attempt，退休不结算原OS请求，最终consent一次性且30秒。24项HOST执行的是reducer加合成Native验证信号；桥接/私有票据方法在R38有独立HOST合成平台执行，但Android适配器、OS提示和真实认证票据仍未执行，不能扩成整个来源流程完成。正式根缺失时桥接工厂拒绝创建来源确认流；consent不执行擦除或解锁。
 
 `continuity/LastGoodSourceStore.java` 已实现最后正常来源的216B元数据账本：候选B始终保留A的签名/Root/epoch，只有原生协调器显式记录已核验空epoch后才允许替换；破坏可能开始后不接受简单撤回。文件锁、精确快照CAS、私有stage/fsync/仅原子rename/目录fsync/读回，以及异常stage、损坏/缺失marker、目录身份变化的拒绝，已有17项真实HOST临时文件系统测试。
 

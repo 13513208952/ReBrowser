@@ -22,6 +22,54 @@ public final class OwnerAuthentication {
     public enum Outcome { VERIFIED, NO_LOCK_CONFIGURED, CANCELLED, FAILED, UNAVAILABLE, SUBMISSION_UNKNOWN }
     public enum Start { WAIT_FOREGROUND, TERMINAL_DELIVERED, PROMPT_SUBMITTED, SUBMISSION_UNKNOWN }
     public interface Callback {void result(Result result);}
+    // Internal platform boundary; NO public injection/alternate authenticator constructor.
+    // HOST tests reflect the private constructor with explicit synthetic platform signals.
+    enum SecurityState { NO_LOCK, SECURE, UNKNOWN }
+    enum AuthKind { BIOMETRIC, DEVICE_CREDENTIAL, UNKNOWN }
+    enum NativeError { CANCELLED, FAILED }
+    interface NativeCancel { void cancel(); }
+    interface NativeListener { void success(AuthKind kind); void error(NativeError error); }
+    interface NativePrompt { void authenticate(NativeCancel cancellation,NativeListener listener); }
+    interface Platform {
+        void requireOwnerThread();long elapsedMs();boolean foregroundReady();SecurityState securityState();
+        NativeCancel newCancellation();NativePrompt buildPrompt(ContinuityState.Confirmation step);
+    }
+    private static final class AndroidCancel implements NativeCancel {
+        final CancellationSignal signal=new CancellationSignal();
+        @Override public void cancel(){signal.cancel();}
+    }
+    private static final class AndroidPlatform implements Platform {
+        private final Activity activity;
+        AndroidPlatform(Activity activity){if(activity==null)throw invalid();this.activity=activity;}
+        @Override public void requireOwnerThread(){if(Looper.myLooper()!=Looper.getMainLooper())throw new IllegalStateException("Android owner UI thread required");}
+        @Override public long elapsedMs(){return SystemClock.elapsedRealtime();}
+        @Override public boolean foregroundReady(){
+            try{KeyguardManager keyguard=activity.getSystemService(KeyguardManager.class);PowerManager power=activity.getSystemService(PowerManager.class);
+                return !activity.isFinishing() && !activity.isDestroyed() && activity.hasWindowFocus() && keyguard!=null && !keyguard.isKeyguardLocked() && !keyguard.isDeviceLocked() && power!=null && power.isInteractive();
+            }catch(RuntimeException unavailable){return false;}
+        }
+        @Override public SecurityState securityState(){KeyguardManager keyguard=activity.getSystemService(KeyguardManager.class);return keyguard==null?SecurityState.UNKNOWN:keyguard.isDeviceSecure()?SecurityState.SECURE:SecurityState.NO_LOCK;}
+        @Override public NativeCancel newCancellation(){return new AndroidCancel();}
+        @Override public NativePrompt buildPrompt(ContinuityState.Confirmation step){
+            final BiometricPrompt prompt=new BiometricPrompt.Builder(activity).setTitle("ReBrowser 来源验证")
+                .setSubtitle(step==ContinuityState.Confirmation.FORCE_2?"第二次强行使用确认":"第三次强行使用确认")
+                .setDescription("验证只用于当前来源和数据代次，不是数据已删除或业务已解锁的回执。")
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG|BiometricManager.Authenticators.DEVICE_CREDENTIAL).build();
+            return new NativePrompt(){@Override public void authenticate(NativeCancel cancellation,final NativeListener listener){
+                if(!(cancellation instanceof AndroidCancel))throw invalid();
+                prompt.authenticate(((AndroidCancel)cancellation).signal,activity.getMainExecutor(),new BiometricPrompt.AuthenticationCallback(){
+                    @Override public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result){
+                        AuthKind kind=AuthKind.UNKNOWN;
+                        if(result!=null)try{int type=result.getAuthenticationType();kind=type==BiometricPrompt.AUTHENTICATION_RESULT_TYPE_BIOMETRIC?AuthKind.BIOMETRIC:type==BiometricPrompt.AUTHENTICATION_RESULT_TYPE_DEVICE_CREDENTIAL?AuthKind.DEVICE_CREDENTIAL:AuthKind.UNKNOWN;}
+                        catch(RuntimeException unavailableType){/* actual terminal event still maps to failed, never stuck/pseudo-success */}
+                        listener.success(kind);
+                    }
+                    @Override public void onAuthenticationError(int code,CharSequence ignoredSystemText){listener.error(code==BiometricPrompt.BIOMETRIC_ERROR_CANCELED || code==BiometricPrompt.BIOMETRIC_ERROR_USER_CANCELED?NativeError.CANCELLED:NativeError.FAILED);}
+                    // Failed biometric attempt is not terminal; system UI owns further attempts.
+                });
+            }};
+        }
+    }
     public static final class Binding {
         private final byte[] epoch;
         private final String signer,root,challenge;
@@ -55,24 +103,25 @@ public final class OwnerAuthentication {
         private final Evidence evidence;
         private final long issued;
         private boolean consumed;
-        private Ticket(OwnerAuthentication issuer,Binding binding,Evidence evidence){this.issuer=issuer;this.binding=binding;this.evidence=evidence;issued=SystemClock.elapsedRealtime();}
+        private Ticket(OwnerAuthentication issuer,Binding binding,Evidence evidence){this.issuer=issuer;this.binding=binding;this.evidence=evidence;issued=issuer.platform.elapsedMs();if(issued<0)throw new IllegalStateException("Owner verification clock unavailable");}
         /** Wait for own window foreground after OS dialog dismiss; never treat callback as consent to delete. */
         public Evidence consume(Binding expectedCurrentNativeBinding){
-            mainThread();if(consumed)throw new SecurityException("Owner verification already consumed");consumed=true;
-            long now=SystemClock.elapsedRealtime();
+            issuer.mainThread();if(consumed)throw new SecurityException("Owner verification already consumed");consumed=true;
+            long now=issuer.platform.elapsedMs();
             if(expectedCurrentNativeBinding!=binding || !binding.valid || issuer.closed || now<issued || now-issued>30_000 || !issuer.foregroundReady())throw new SecurityException("Stale or wrong owner verification binding");
-            if(evidence==Evidence.OS_CONFIRMED_NO_LOCK){KeyguardManager keyguard=issuer.activity.getSystemService(KeyguardManager.class);if(keyguard==null || keyguard.isDeviceSecure())throw new SecurityException("Screen-lock state changed");}
+            if(evidence==Evidence.OS_CONFIRMED_NO_LOCK && issuer.platform.securityState()!=SecurityState.NO_LOCK)throw new SecurityException("Screen-lock state changed");
             return evidence; // caller still rechecks actual signer/Root/epoch/flow step before irreversible action
         }
     }
     private static final class Attempt {
         final Binding binding;
         final Callback callback;
-        final CancellationSignal signal=new CancellationSignal();
+        final NativeCancel signal;
         boolean cancellationRequested,terminal,submitted;
-        Attempt(Binding binding,Callback callback){this.binding=binding;this.callback=callback;}
+        Attempt(Binding binding,Callback callback,NativeCancel signal){this.binding=binding;this.callback=callback;this.signal=signal;}
     }
     private final Activity activity;
+    private final Platform platform;
     private final Object nativeWindow=new Object();
     private ContinuityCoordinator.OwnerAttempt continuityAttempt;
     private Binding continuityBinding;
@@ -81,18 +130,21 @@ public final class OwnerAuthentication {
     public interface ContinuityListener { void stateChanged(); }
     private Attempt active;
     private boolean closed,starting;
-    public OwnerAuthentication(Activity actualOwnedActivity){mainThread();if(actualOwnedActivity==null)throw invalid();activity=actualOwnedActivity;}
+    public OwnerAuthentication(Activity actualOwnedActivity){this(actualOwnedActivity,new AndroidPlatform(actualOwnedActivity));}
+    private OwnerAuthentication(Activity activity,Platform platform){if(platform==null)throw invalid();platform.requireOwnerThread();this.activity=activity;this.platform=platform;}
+    private OwnerAuthentication(Platform syntheticPlatform){this(null,syntheticPlatform);}
     /** Native source UI factory; metadata/context must come from bootstrap, NEVER caller extras. */
     public ContinuityCoordinator newContinuityFlow(ContinuityCoordinator.Context context,ContinuityCoordinator.CurrentSourceGuard nativeGuard)throws SigningIdentity.Unavailable{
         mainThread();if(closed || active!=null || continuityAttempt!=null)throw new IllegalStateException("Owner verification already owned");
         if(context==null || nativeGuard==null)throw invalid();CompiledSourceIdentity compiled=CompiledSourceIdentity.current();
         if(!compiled.configured() || !compiled.requireRootSpkiSha256().equals(context.candidateRootSha256()))throw new SecurityException("Formal source Root unavailable or changed");
+        if(activity==null)throw new SecurityException("Actual Android source inspection required");
         SigningIdentity.Identity actual=SigningIdentity.inspectOwn(activity.getApplication());
         if(!actual.currentCertificateSha256().equals(context.candidateSignerSha256()))throw new SecurityException("Own installed signer changed");
         LastGoodSourceStore.SourceEpoch old=context.nativeBaselineView().record().lastGood();
         if(compiled.rootMatchesLastGood(old.rootSha256()) && actual.acceptsLastGoodSigner(old.signingSha256()))throw new SecurityException("Correct source requires native rescue, not destructive warnings");
         nativeGuard.checkCurrent(context);
-        return new ContinuityCoordinator(context,nativeWindow,nativeGuard,new ContinuityCoordinator.Clock(){@Override public long elapsedMs(){return SystemClock.elapsedRealtime();}});
+        return new ContinuityCoordinator(context,nativeWindow,nativeGuard,new ContinuityCoordinator.Clock(){@Override public long elapsedMs(){return platform.elapsedMs();}});
     }
     /** Reserve before real OS call. WAIT_FOREGROUND keeps this same unstarted attempt/binding. */
     public Start beginContinuityVerification(ContinuityCoordinator.OwnerAttempt expected,ContinuityListener listener){
@@ -153,34 +205,29 @@ public final class OwnerAuthentication {
         mainThread();if(closed || starting || active!=null || (continuityAttempt!=null && binding!=continuityBinding))throw new IllegalStateException("Owner authentication unavailable or already pending");
         if(binding==null || callback==null || binding.started || !binding.valid)throw invalid();
         if(!foregroundReady())return Start.WAIT_FOREGROUND;
-        starting=true;binding.started=true;Attempt attempt=new Attempt(binding,callback);active=attempt;
+        NativeCancel cancellation=platform.newCancellation();if(cancellation==null)throw new IllegalStateException("Native cancellation unavailable");
+        starting=true;binding.started=true;Attempt attempt=new Attempt(binding,callback,cancellation);active=attempt;
         try{
-            KeyguardManager keyguard=activity.getSystemService(KeyguardManager.class);
-            if(keyguard==null){finish(attempt,Outcome.UNAVAILABLE,null);return Start.TERMINAL_DELIVERED;}
-            if(!keyguard.isDeviceSecure()){
+            SecurityState security=platform.securityState();
+            if(security==null || security==SecurityState.UNKNOWN){finish(attempt,Outcome.UNAVAILABLE,null);return Start.TERMINAL_DELIVERED;}
+            if(security==SecurityState.NO_LOCK){
                 finish(attempt,Outcome.NO_LOCK_CONFIGURED,new Ticket(this,binding,Evidence.OS_CONFIRMED_NO_LOCK));return Start.TERMINAL_DELIVERED;
             }
-            final BiometricPrompt prompt;
-            try{
-                prompt=new BiometricPrompt.Builder(activity).setTitle("ReBrowser 来源验证")
-                    .setSubtitle(binding.step==ContinuityState.Confirmation.FORCE_2?"第二次强行使用确认":"第三次强行使用确认")
-                    .setDescription("验证只用于当前来源和数据代次，不是数据已删除或业务已解锁的回执。")
-                    .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG|BiometricManager.Authenticators.DEVICE_CREDENTIAL).build();
-            }catch(RuntimeException beforeSubmission){finish(attempt,Outcome.UNAVAILABLE,null);return Start.TERMINAL_DELIVERED;}
+            final NativePrompt prompt;
+            try{prompt=platform.buildPrompt(binding.step);if(prompt==null)throw new IllegalStateException("Native prompt unavailable");}
+            catch(RuntimeException beforeSubmission){finish(attempt,Outcome.UNAVAILABLE,null);return Start.TERMINAL_DELIVERED;}
             attempt.submitted=true;
             try{
-                prompt.authenticate(attempt.signal,activity.getMainExecutor(),new BiometricPrompt.AuthenticationCallback(){
-                    @Override public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result){
-                        if(result==null){finish(attempt,Outcome.FAILED,null);return;}
-                        int type=result.getAuthenticationType();
-                        if(type!=BiometricPrompt.AUTHENTICATION_RESULT_TYPE_BIOMETRIC && type!=BiometricPrompt.AUTHENTICATION_RESULT_TYPE_DEVICE_CREDENTIAL){finish(attempt,Outcome.FAILED,null);return;}
-                        finish(attempt,Outcome.VERIFIED,new Ticket(OwnerAuthentication.this,attempt.binding,Evidence.SYSTEM_AUTHENTICATED));
+                prompt.authenticate(attempt.signal,new NativeListener(){
+                    @Override public void success(AuthKind kind){
+                        mainThread();if(active!=attempt || attempt.terminal)return;
+                        if(kind!=AuthKind.BIOMETRIC && kind!=AuthKind.DEVICE_CREDENTIAL){finish(attempt,Outcome.FAILED,null);return;}
+                        final Ticket ticket;
+                        try{ticket=new Ticket(OwnerAuthentication.this,attempt.binding,Evidence.SYSTEM_AUTHENTICATED);}
+                        catch(RuntimeException unavailableClock){finish(attempt,Outcome.FAILED,null);return;} // actual terminal callback still settles owner
+                        finish(attempt,Outcome.VERIFIED,ticket);
                     }
-                    @Override public void onAuthenticationError(int code,CharSequence ignoredSystemText){
-                        boolean cancelled=attempt.cancellationRequested || code==BiometricPrompt.BIOMETRIC_ERROR_CANCELED || code==BiometricPrompt.BIOMETRIC_ERROR_USER_CANCELED;
-                        finish(attempt,cancelled?Outcome.CANCELLED:Outcome.FAILED,null);
-                    }
-                    // A failed biometric attempt is NOT terminal; system UI owns further attempts.
+                    @Override public void error(NativeError error){mainThread();finish(attempt,attempt.cancellationRequested || error==NativeError.CANCELLED?Outcome.CANCELLED:Outcome.FAILED,null);}
                 });
                 return active==attempt?Start.PROMPT_SUBMITTED:Start.TERMINAL_DELIVERED;
             }catch(RuntimeException unknownSubmission){
@@ -216,12 +263,8 @@ public final class OwnerAuthentication {
         if(closed || attempt.cancellationRequested || !attempt.binding.valid){outcome=Outcome.CANCELLED;ticket=null;}
         attempt.terminal=true;active=null;attempt.callback.result(new Result(outcome,ticket));
     }
-    private boolean foregroundReady(){
-        try{KeyguardManager keyguard=activity.getSystemService(KeyguardManager.class);PowerManager power=activity.getSystemService(PowerManager.class);
-            return !activity.isFinishing() && !activity.isDestroyed() && activity.hasWindowFocus() && keyguard!=null && !keyguard.isKeyguardLocked() && !keyguard.isDeviceLocked() && power!=null && power.isInteractive();
-        }catch(RuntimeException unavailable){return false;}
-    }
-    private static void mainThread(){if(Looper.myLooper()!=Looper.getMainLooper())throw new IllegalStateException("Android owner UI thread required");}
+    private boolean foregroundReady(){try{return platform.foregroundReady();}catch(RuntimeException unavailable){return false;}}
+    private void mainThread(){platform.requireOwnerThread();}
     private static boolean fingerprint(String value){return value!=null && value.matches("[0-9a-f]{64}");}
     private static String randomChallenge(){byte[] bytes=new byte[32];new SecureRandom().nextBytes(bytes);StringBuilder b=new StringBuilder(64);for(byte value:bytes){b.append("0123456789abcdef".charAt((value&255)>>>4));b.append("0123456789abcdef".charAt(value&15));}return b.toString();}
     private static IllegalArgumentException invalid(){return new IllegalArgumentException("Invalid native owner authentication binding");}

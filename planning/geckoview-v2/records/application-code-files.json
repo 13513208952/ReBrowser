@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R37",
+  "revision": "R38",
   "authority": [
     "O26",
     "O27",
@@ -87,6 +87,12 @@
           "kind": "unit-native-four-step-reducer",
           "purpose": "24 HOST synthetic-native outcome cases, exact order/revision/window/context/clock/consent and retained unknown native work; not OS bridge/authentication",
           "state": "host-reducer-tested-Android-bridge-not-executed"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationControlTest.java",
+          "kind": "host-private-synthetic-owner-platform",
+          "purpose": "28 actual OwnerAuthentication controller/private-ticket/bridge cases using private reflected fake platform; no AndroidPlatform/OS auth/real signer calls",
+          "state": "main-HOST-control-flow-tested-NOT-system-evidence"
         }
       ]
     },
@@ -653,7 +659,7 @@
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "R33 actualAndroidBiometricStrong/deviceCredential/positiveKeyguardnolock/sourceStepBinding/privatefreshTicket source/APIcompile;3HOST binding-onlytests, noOSprompt/consume/cancel/verificationcontrolflowexecuted",
+      "validationMeaning": "Actual SDK/API compile plus 28 actual controller/private-ticket/bridge HOST synthetic-platform tests, NOT AndroidPlatform/OS/source runtime",
       "runtimePending": true,
       "testReferenceGroup": "continuity",
       "implementationReadinessRef": "records/implementation-readiness.json"

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "revision": "R40",
+  "scope": "Concrete native runtime limits from own Android memory-class observations, bounded owned in-memory byte/count reservations, trim ADVICE only. Not global/native Gecko memory accounting, authority, cancellation completion or persistent data cleanup.",
+  "invariants": [
+    "Production factory reads own Application ActivityManager; unavailable/error/low-RAM observations choose conservative tier, not a permissive default",
+    "Limits immutable; stream chunk32KiB/control envelope64KiB; initial engineering lane/cache limits are targets, not owner-confirmed performance guarantees",
+    "Reservation atomically bounds BOTH bytes and object count; positive lengths only, subtract-before-add overflow-safe admission, no unbounded zero-size credits",
+    "Private allocation token one-use release, only after actual owned buffer/cache object freed; requester cancellation/deadline does not release allocation automatically",
+    "Budget rejects new allocations without evicting live owners or altering existing reservations; task resource lanes must continue to account actual work",
+    "Trim advice only for rebuildable in-memory caches/new background work; no file traversal/app-data/cache erasure/system memory policy or stopping legitimate foreground/media"
+  ],
+  "testScope": "Actual production counters/profile/trim methods on HOST with explicit synthetic memory observations and real thread races; own Android ActivityManager/actual trim callbacks/Gecko process memory/performance unexecuted.",
+  "integrationGate": "TaskCoordinator overload accepts these immutable native limits; Application and domain caches still need concrete wiring. No formal source unlock or ordinary subapp cleanup added (O26)."
+}

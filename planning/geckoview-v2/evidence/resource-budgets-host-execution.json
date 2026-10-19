@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "revision": "R40",
+  "hostTestsPassed": 10,
+  "scope": "Actual production methods on HOST with explicitly synthetic journal/platform observations; not Android OS/SQLite/runtime evidence",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+      "sha256": "d2670bf4d3136dc8daf9ad8c151bb8fa9fa21436fb95929c29b619e7f7d1a1ac"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java",
+      "sha256": "811ea2337a31eafa2676c372718b1f0788619c73cde13f55b16e5a62939c8669"
+    }
+  ],
+  "actualCounterAndTrimPolicyMethodsExecuted": true,
+  "syntheticMemoryObservations": true,
+  "ownAndroidActivityManagerExecuted": false,
+  "realTrimCallbacksExecuted": false,
+  "globalGeckoMemoryOrPerformanceQualified": false,
+  "temporaryOwnedClassFilesRemoved": true,
+  "realKeysDeviceOrUserDataUsed": false,
+  "mainValidationRef": "evidence/production-main-standalone-jvm-checks.json"
+}

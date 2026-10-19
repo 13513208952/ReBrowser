@@ -69,7 +69,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0) + app.get('hostAndroidClassNativeControlTests',0) + app.get('hostAndroidClassNavigationPolicyTests',0)
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     for source in ledger['sourceFiles']:
@@ -94,12 +94,24 @@ def review():
     assert standalone['runnerSha256'] == hashlib.sha256((P/'run_bounded_main_jvm_checks.py').read_bytes()).hexdigest()
     for source in standalone['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    compact = standalone.get('validationResourceProfile') == 'compact-192m'
+    minimum_ram = 2048 if compact else 2304
+    assert standalone['minimumMemAvailableMiB'] == minimum_ram
+    assert standalone['jvmLimits'][:3] == (['-Xmx192m','-XX:MaxMetaspaceSize=96m','-XX:ReservedCodeCacheSize=48m'] if compact else ['-Xmx256m','-XX:MaxMetaspaceSize=128m','-XX:ReservedCodeCacheSize=64m'])
     for gate in ['resourceBeforeCompile','resourceBeforeTests']:
-        assert standalone[gate]['memAvailableBytes'] >= 2304*1024**2
+        assert standalone[gate]['memAvailableBytes'] >= minimum_ram*1024**2
         assert standalone[gate]['freeBytes'] >= 16*1024**2+1024**3
     changed_api = standalone['changedSourcesAndroidBootclasspathCompile']
-    assert len(changed_api['sourceFiles']) == 2 and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
+    assert len(changed_api['sourceFiles']) == 4 and changed_api['classFiles'] and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
     assert not changed_api['androidRuntimeExecuted']
+    for name,count,flag in [('TaskCoordinator',29,'actualOwnedExecutorAndWorksetMethodsExecuted'),('ResourceBudgets',10,'actualCounterAndTrimPolicyMethodsExecuted')]:
+        ref = 'task-coordinator-host-execution' if name == 'TaskCoordinator' else 'resource-budgets-host-execution'
+        host = json.loads((P/('evidence/'+ref+'.json')).read_text())
+        assert host['hostTestsPassed'] == count and host[flag] and host['temporaryOwnedClassFilesRemoved']
+        assert next(t for t in app['unitTests'] if t['class'] == 'io.github.rebrowser.core.'+name+'Test')['tests'] == count
+        for source in host['sourceFiles']:
+            assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not any(app[k] for k in ['taskCoordinatorAndroidSqliteAdapterExecuted','taskCoordinatorCommandDispatcherIntegrated','globalEpochQuiescenceEstablished','resourceBudgetsOwnAndroidMemoryFactoryExecuted'])
     agp_checkpoint = json.loads((P/app['lastFullAgpCheckpointRef']).read_text())
     assert agp_checkpoint['sourceCommit'] == 'b911bb6fc33a4f07a5160fa68d2a64968b795384'
     assert agp_checkpoint['report']['productionJavaSourceFiles'] == 39 and agp_checkpoint['report']['unitTestsPassed'] == 253

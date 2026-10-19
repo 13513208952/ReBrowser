@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "revision": "R40",
+  "ownerAuthority": ["O45", "O48", "O59", "O61", "O62"],
+  "runtimeFilesAdded": ["app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java", "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java"],
+  "actualValidation": {
+    "productionSourcesCompiled": 42,
+    "mainClasses": 197,
+    "allMainHostTests": 304,
+    "actualOwnedThreadWorksetTestsWithSyntheticJournal": 29,
+    "actualBudgetCounterPolicyTestsWithSyntheticObservations": 10,
+    "executor": "bounded-standalone-javac-junit",
+    "currentSourceEvidence": "evidence/production-main-standalone-jvm-checks.json",
+    "changedNativeActualAndroidBootclasspathSources": 4,
+    "changedApiEvidence": "evidence/changed-native-android-api-compile.json",
+    "lastFullAgpCheckpoint": "evidence/production-main-agp-R38-checkpoint.json"
+  },
+  "implementedScope": [
+    "Register before scheduling/preparation; AUTH/EFFECT/READ bounded lanes, separate reserved SAFETY; reject new positive safety jobs",
+    "Concrete TaskJournal adapter start before body, attempted intent once before external handoff, current context rechecked after native IO; no actual command/effect driver enabled",
+    "Java invocation return/native domain end/native lifecycle calls/owned stopper return/journal finalization independently tracked",
+    "Unknown body/stop submission holds actual owner, no retry/timeout/cancel release; source lock can block old DB finalization without blocking actual memory settlement",
+    "Permanent registered-set fence, owned-only cancel/stop, no shutdownNow or native/global quiescence inference",
+    "Own Android memory-class factory source; conservative fallback; byte AND object count checked atomically, overflow-safe bounded allocations, exact one-use release only after actual free",
+    "Trim advice only for rebuildable memory; no O26 persistent cleanup or stopping foreground/music work"
+  ],
+  "explicitPending": [
+    "Android SQLite adapter execution/crash recovery, actual OS memory factory/trim/performance",
+    "Full native serialized actor/source/epoch/policy/target/scope/grant admission; current guard pre/post checks are not transaction-internal full authorization fencing",
+    "Application/dispatcher/cache wiring and complete domain writer registration",
+    "Global epoch-erasure coverage/quiescence, source commit/unlock, complete browser/Outlook/music"
+  ],
+  "resourceHandling": "Standard2304MiB JVM admission failed before launching Java. First compact run compiled/tested but later API admission gate failed, so no complete report was claimed. Compact profile tightens JVM heap192/meta96/code48 and fresh2048MiB admission, disk16MiB+1GiB reserve, sequential JVMs with bounded20s re-admission waiting, never kills other processes. Final full source/HOST+additional SDK compile succeeded. Original Android build3GiB gate unchanged.",
+  "notExecuted": ["Gradle this increment", "JNI/dex/R8/APK/sign/install", "real device/owner authentication", "real user data/keys", "Android SQLite", "complete product runtime"],
+  "legacyAndProtectedInputs": "Root README/v1/releases/credentials unchanged; no new legacy archive/Trash cleanup or O26 data cleanup. Historical SQL/evidence inputs unchanged."
+}

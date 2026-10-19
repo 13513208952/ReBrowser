@@ -107,6 +107,14 @@
       "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+      "sha256": "d2670bf4d3136dc8daf9ad8c151bb8fa9fa21436fb95929c29b619e7f7d1a1ac"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "sha256": "cfca848ac3780fa1c410a2545a17d35236b04edc45a5f272b632fe5a4c52567a"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
       "sha256": "c7367edc772bf1a2ef07108e15802ad0540897e59babedc409c11586a135491c"
     },
@@ -231,6 +239,14 @@
       "sha256": "c893d15125685c73bfc8855761f3a965a3702b12d444b03a33fed34f60e6551a"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java",
+      "sha256": "811ea2337a31eafa2676c372718b1f0788619c73cde13f55b16e5a62939c8669"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
+      "sha256": "55b4dce83c713ded1416b915069db043a4d84c723c1f1d60842f621e9b96ebab"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java",
       "sha256": "fc374581b02614ffee8e47858909e8e8654ae17a9d21d198cc7775bdea3f3f53"
     },
@@ -261,34 +277,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
-    },
-    {
-      "path": "app/build.gradle.kts",
-      "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
-    },
-    {
-      "path": "rebrowser/app/build.gradle",
-      "sha256": "f28d1c6e48d658f8c6fbd4b008cb73e777ec8a654a0ce69f6b71663bd96410d2"
-    },
-    {
-      "path": "rebrowser/app/src/main/AndroidManifest.xml",
-      "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
-    },
-    {
-      "path": "rebrowser/build.gradle",
-      "sha256": "e2d485470c7a131cd54aa168a62d303d6eac25739f37e8bfcd27b0b6b9e4ca81"
-    },
-    {
-      "path": "rebrowser/gradle.properties",
-      "sha256": "1cd886683a2f0d99f8beab66f665478b2dd20291dc94277e3125099600893647"
-    },
-    {
-      "path": "rebrowser/settings.gradle",
-      "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
     }
   ],
-  "productionJavaSourceFiles": 40,
-  "compiledClassFiles": 170,
+  "productionJavaSourceFiles": 42,
+  "compiledClassFiles": 197,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -393,6 +385,18 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.core.ResourceBudgetsTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.core.TaskCoordinatorTest",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.core.TaskSnapshotTest",
       "tests": 5,
       "failures": 0,
@@ -441,7 +445,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 265,
+  "unitTestsPassed": 304,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -507,5 +511,13 @@
     "compileDebugJavaWithJavac",
     "processDebugMainManifest",
     "testDebugUnitTest"
-  ]
+  ],
+  "hostAndroidClassTaskCoordinatorTests": 29,
+  "hostAndroidClassResourceBudgetTests": 10,
+  "taskCoordinatorOwnedHostThreadsExecuted": true,
+  "taskCoordinatorAndroidSqliteAdapterExecuted": false,
+  "taskCoordinatorCommandDispatcherIntegrated": false,
+  "globalEpochQuiescenceEstablished": false,
+  "resourceBudgetsCounterHostExecuted": true,
+  "resourceBudgetsOwnAndroidMemoryFactoryExecuted": false
 }

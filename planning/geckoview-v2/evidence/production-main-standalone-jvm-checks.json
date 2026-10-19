@@ -107,6 +107,14 @@
       "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+      "sha256": "d2670bf4d3136dc8daf9ad8c151bb8fa9fa21436fb95929c29b619e7f7d1a1ac"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "sha256": "cfca848ac3780fa1c410a2545a17d35236b04edc45a5f272b632fe5a4c52567a"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
       "sha256": "c7367edc772bf1a2ef07108e15802ad0540897e59babedc409c11586a135491c"
     },
@@ -231,6 +239,14 @@
       "sha256": "c893d15125685c73bfc8855761f3a965a3702b12d444b03a33fed34f60e6551a"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java",
+      "sha256": "811ea2337a31eafa2676c372718b1f0788619c73cde13f55b16e5a62939c8669"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
+      "sha256": "55b4dce83c713ded1416b915069db043a4d84c723c1f1d60842f621e9b96ebab"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java",
       "sha256": "fc374581b02614ffee8e47858909e8e8654ae17a9d21d198cc7775bdea3f3f53"
     },
@@ -263,11 +279,11 @@
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
     }
   ],
-  "productionJavaSourceFiles": 40,
-  "compiledMainClassFiles": 170,
-  "mainAndTestClassFiles": 239,
+  "productionJavaSourceFiles": 42,
+  "compiledMainClassFiles": 197,
+  "mainAndTestClassFiles": 270,
   "changedSourcesAndroidBootclasspathCompile": {
-    "scope": "two changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification",
+    "scope": "four changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification",
     "sourceFiles": [
       {
         "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
@@ -276,9 +292,157 @@
       {
         "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
         "sha256": "2c7f1c142ff773bff7fba79745d3d6171771605b14f0d3e8ec5130e0372f540a"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+        "sha256": "cfca848ac3780fa1c410a2545a17d35236b04edc45a5f272b632fe5a4c52567a"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+        "sha256": "d2670bf4d3136dc8daf9ad8c151bb8fa9fa21436fb95929c29b619e7f7d1a1ac"
       }
     ],
     "classFiles": [
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$1.class",
+        "sha256": "dd8193981621e5b13b11ff4eabd47cc00204b5f833800b10f833c20179d06951",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$Allocation.class",
+        "sha256": "8aad58529bf8f9169357371a1f0f38cbcbcb5fa7cb1314afde695b3f3376cbdc",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$ByteBudget.class",
+        "sha256": "7ce1efb04683b4040846b693fc391f92222bf773d49033c5d25abe98da82e4d3",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$Limits.class",
+        "sha256": "0d6016fffb76c0e0c875faa725348d21818fc4cd828c65c0817a6fb13023da98",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$Tier.class",
+        "sha256": "ba3eb0514ef1e5325f30f061dc6f984f784b6346026b13f682bc6a3f152823b0",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$TrimAdvice.class",
+        "sha256": "6c38fd19a2c77ec8bd4e79cc43bc9eeb863b09db9410986b4633ab1ebb66f22f",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets$Usage.class",
+        "sha256": "a127cba320452f16086b955ab636e7a4b8a8a243a457d357e1a931a0a45fb548",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/ResourceBudgets.class",
+        "sha256": "ac9fc5c26caa5a4f2b530fad2fedccae1268bbc8e425ed5e7d561636d1737300",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$1$1.class",
+        "sha256": "765a3fcf3c12b50dbcc9c9c0e5657664ac0878c88121dbc96d4dccc0deea9307",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$1.class",
+        "sha256": "d66a25a3bcb145c05645bc9805a74afe0acc4126945efe58c519bdfbbda890e8",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$2.class",
+        "sha256": "afe4825dff5861cf31418f7694e3c58af7a167a1c942872c9209bfcef8e4aaa3",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$3.class",
+        "sha256": "fa22b304bd417ec3069cc406480239c5a6eee607f2d75e50134944508b430581",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$4.class",
+        "sha256": "10eecb9f45a6fc3a73155f4a0be4e5bdf5cd316cf9e90c39784112f7ffa2cb2d",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Client.class",
+        "sha256": "648c63e1076b1ee61a5609f8c518953513054c0fbb07a2d7bd9021edc3931fc6",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$CurrentContext.class",
+        "sha256": "205c5d1b333fc991c09321cc6d43261b26f5483dc2f399686822822885465724",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Entry.class",
+        "sha256": "78442e60c19036c950629a5d3e64f2c57704227dbc0822455a268d1879b26373",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$JournalBackend.class",
+        "sha256": "2a4c9cf944f81f5f721f73a2e924ba62491570407eb2812dbdaa361bb778d989",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Lane.class",
+        "sha256": "0e1e4198965a179ca18f0d3ee91a82532c2b47a0acf037aa0fb6e692f373de14",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$NativeBody.class",
+        "sha256": "f25615392d37961e401a8d533f9d612a1807a5296f1f981001d9cc4be22ac416",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$NativeJournal.class",
+        "sha256": "735248622c1628c95770bf1e06c509ff0e1ed77c5824a71d0071a1c7205272cd",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$NativeStopper.class",
+        "sha256": "c6f5e7c8638c5ad5fd172fed74dca00f479f4d6cfbc7d63b128075b18de1d0cf",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Owner.class",
+        "sha256": "a30e59d0687cde45a2397e2808899857562393fac7645712806c5fad1471e24d",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Persistence.class",
+        "sha256": "da73323aba79e8fcb67a0bba69c32710a5952d63129e11c0fec6156c64ca83c1",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Phase.class",
+        "sha256": "a2328f2a6c5be487a86be0fe443d4c4eef3a33cc2d61aaa2d2012ac2076ec555",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$RegisteredSetFence.class",
+        "sha256": "e14068a5006d4144e745d684853390abdacb6eddacc791ee975bee4d1754a6fd",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Snapshot.class",
+        "sha256": "c474ceb38a063efb7e5d8709313ce20b1f6d42912d21800ab8e7e897a14ca2d8",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator$Submission.class",
+        "sha256": "3e8094966ecfc5c9cce0244ec77c92c91b71dc316490343aab08f921a9f89141",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/core/TaskCoordinator.class",
+        "sha256": "faab7dd52cc10edaeeb80258e72af06592cf949c731de230038d11ffbf3bd724",
+        "classMajor": 52
+      },
       {
         "path": "io/github/rebrowser/engine/GeckoSessionOwner$1.class",
         "sha256": "82b72e1027ede084624a4d7615e11be31077aa854231dceee3c61f4a0a0585f4",
@@ -340,10 +504,10 @@
         "classMajor": 52
       }
     ],
-    "diagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
+    "diagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n注: /home/zhao/projects_2026/re_outlook/app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java使用或覆盖了已过时的 API。\n注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。\n3 个警告\n",
     "androidRuntimeExecuted": false
   },
-  "unitTestsPassed": 265,
+  "unitTestsPassed": 304,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -448,6 +612,18 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.core.ResourceBudgetsTest",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.core.TaskCoordinatorTest",
+      "tests": 29,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.core.TaskSnapshotTest",
       "tests": 5,
       "failures": 0,
@@ -518,27 +694,29 @@
       "sha256": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
     }
   ],
+  "validationResourceProfile": "compact-192m",
+  "minimumMemAvailableMiB": 2048,
   "jvmLimits": [
-    "-Xmx256m",
-    "-XX:MaxMetaspaceSize=128m",
-    "-XX:ReservedCodeCacheSize=64m",
+    "-Xmx192m",
+    "-XX:MaxMetaspaceSize=96m",
+    "-XX:ReservedCodeCacheSize=48m",
     "-XX:ActiveProcessorCount=2",
     "-Xss512k",
     "-Djava.io.tmpdir=/home/zhao/temp/re_outlook/geckoview-reimplementation/jvm"
   ],
   "resourceBeforeCompile": {
-    "freeBytes": 2921086976,
-    "memAvailableBytes": 2719813632
+    "freeBytes": 2855776256,
+    "memAvailableBytes": 2292547584
   },
   "resourceBeforeTests": {
-    "freeBytes": 2919616512,
-    "memAvailableBytes": 2675134464
+    "freeBytes": 2854117376,
+    "memAvailableBytes": 2206453760
   },
-  "generatedBytesBeforeRemoval": 816174,
+  "generatedBytesBeforeRemoval": 977174,
   "temporaryClassDirectoryRemoved": true,
-  "hostAndAdditionalApiElapsedSeconds": 3.518,
-  "compilerDiagnostics": "",
-  "runnerSha256": "d1fe5cf4d4dc8395d40e2349a38d40504aade46c2b75a0932887161fd057fa60",
+  "hostAndAdditionalApiElapsedSeconds": 2.2,
+  "compilerDiagnostics": "注: 某些输入文件使用或覆盖了已过时的 API。\n注: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。\n",
+  "runnerSha256": "eaa03416d992ba28e49f74d914a6fff5e021fe1de8307cc6d1880082aa04f269",
   "harnessSha256": "00a0faa4d95432ab0ba3c829fc47c41d51d3683a561ddcb5208d6d2886baebad",
   "jdkJavaBaseNotAndroidBootclasspath": true,
   "currentIncrementAgpTasksExecuted": false,

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R39",
+  "revision": "R40",
   "authority": [
     "O26",
     "O27",
@@ -128,6 +128,18 @@
           "kind": "host-actual-class-task-sql",
           "purpose": "235HOST SQLite constraints/196transitionpairs/recovery/pairedtransaction rollback,reopen/2writeronce;NOTAndroidDAO",
           "state": "host-sql-tested-not-Android-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
+          "kind": "host-actual-native-control-synthetic-boundary",
+          "purpose": "29 actual HOST tests, no real Android platform/SQLite execution",
+          "state": "main-HOST-tested-Android-integration-pending"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java",
+          "kind": "host-actual-native-control-synthetic-boundary",
+          "purpose": "10 actual HOST tests, no real Android platform/SQLite execution",
+          "state": "main-HOST-tested-Android-integration-pending"
         }
       ]
     },
@@ -753,13 +765,19 @@
       "group": "core",
       "kind": "native-code",
       "responsibility": "auth/effect/read/safety有界通道及真实工作集",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "29 actual HOST tests of production methods with synthetic journal/platform observations; actual SDK37.2 bootclasspath compile, NOT Android/SQLite/OS integration",
       "runtimePending": true,
-      "testReferenceGroup": "core"
+      "testReferenceGroup": "core",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/task-coordinator-contract.json",
+        "evidence/production-main-standalone-jvm-checks.json",
+        "evidence/changed-native-android-api-compile.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
@@ -808,13 +826,19 @@
       "group": "core",
       "kind": "native-code",
       "responsibility": "队列/块/缓存/优先级和低内存预算",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "10 actual HOST tests of production methods with synthetic journal/platform observations; actual SDK37.2 bootclasspath compile, NOT Android/SQLite/OS integration",
       "runtimePending": true,
-      "testReferenceGroup": "core"
+      "testReferenceGroup": "core",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/resource-budgets-contract.json",
+        "evidence/production-main-standalone-jvm-checks.json",
+        "evidence/changed-native-android-api-compile.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",

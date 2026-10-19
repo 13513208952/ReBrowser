@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "revision": "R40",
+  "authority": ["O45", "O48", "O59", "O61"],
+  "scope": "Actual bounded native scheduler/registered workset and concrete TaskJournal lifecycle adapter. NOT command authority, proof/grant admission, all-domain coverage or global epoch quiescence.",
+  "lanes": "AUTH/EFFECT/READ each one lazy owned thread with bounded queue/live capacity. Dedicated SAFETY thread only for already-owned stop requests/final settlement, never a new positive business command.",
+  "invariants": [
+    "Register live budget BEFORE queued/start-journal/preparatory IO; reserve through current native gate/fence; exact job already durably RESERVED by same native request/task DAO",
+    "Real TaskJournal start commit BEFORE native body. Intent commit and repeat current gate/fence before caller can perform external handoff; once attempted no alternate/replayed dispatch",
+    "Body return, client cancel, unknown exception, queued future or native stop submission NEVER prove whole native chain end",
+    "Separate native domain-chain end, Java invocation return, owned stop callback return and journal finalizer return; release live credit/Cancellation actual-end only after ALL finish",
+    "Native owner signals remain available after source lock to settle memory; blocked/unknown old journal write cannot prevent memory settlement or fabricate durable END",
+    "Body exception after entry retains unknown native work until original trusted owner reports actual end; do not replay",
+    "Source fence permanently denies new tasks, requests owned cancellation, retains old pending native owners; returned fence proves only THIS registered set empty, never untracked Gecko/system/download writers",
+    "All blocking native lifecycle calls occur outside Java monitor; safety queue bounded by at most one stopper and one finalizer per live task; no shutdownNow/Future.cancel slot release",
+    "Only native opaque owner installs stopper/reports end; client view has cancel/snapshot only, never decode owner/reporter/runnable from IPC"
+  ],
+  "productionBoundary": "Public constructor takes actual native TaskJournal and ComponentGate/current-context guard. A PRIVATE constructor can be reflected with an explicitly synthetic JournalBackend for HOST thread tests. No public fake journal backend or default no-op admission.",
+  "testScope": "Actual owned HOST executor threads/queues, ignored interrupt/native owner delay, cancellation before start, fence after native IO, safety stop/finalization and resource return; fake journal invokes no Android SQLite. Concrete Android TaskJournal adapter API compilation only.",
+  "integrationGate": "Not started by Application/command dispatcher yet. Full native serialized policy/epoch/target/scope/grant admission, paired durable request reservation, effect driver ownership and complete domain registration remain required. Source UNCONFIGURED/LOCKED, no real device/OS/effect/data access."
+}

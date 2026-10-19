@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R39",
+  "revision": "R40",
   "authority": [
     "O41",
     "O42",
@@ -1181,6 +1181,64 @@
         "complete initializer/permission reconciliation/main-window UI/persistence/restore"
       ],
       "integrationGate": "NOT startup wired. Browser domain only. Keep Root/gate unconfigured/locked. NEW targets deny until real native engine-document proof and unopened strong-owned popup allocation; no current-lease reacquisition as proof, no blind load or external Intent on reported gesture."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual bounded AUTH/EFFECT/READ executors and reserved SAFETY, exact registered workset, durable-start/intent/settlement concrete TaskJournal adapter; actual memory settlement after source lock. NOT authority or global work coverage",
+      "researchEvidence": [
+        "records/task-coordinator-contract.json"
+      ],
+      "inputOutput": "Native-only owned inputs -> bounded lifecycle/usage snapshots and private owner capabilities; no IPC enrollment or positive authority",
+      "dependencies": "Actual existing ComponentGate/Cancellation/TaskJournal and Android SDK/standard Java8; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.core.TaskCoordinatorTest"
+      ],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json",
+      "hostControlFlowExecutedWithSyntheticPlatform": true,
+      "notClaimed": [
+        "actual Android SQLite adapter/transactions",
+        "complete source-epoch-policy-target-scope-grant admission and command dispatcher",
+        "all-domain/Gecko/native/system writer coverage or epoch-erasure quiescence"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked. Native dispatcher must reserve paired request/task first and provide actual current context guard. Every native domain chain retains opaque owner until REAL end; registry fence only proves this registered set drained."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Own Android memory-class factory and immutable conservative limits; actual atomic byte+object reservations and one-use allocation release; trim advice only for rebuildable memory",
+      "researchEvidence": [
+        "records/resource-budgets-contract.json"
+      ],
+      "inputOutput": "Native-only owned inputs -> bounded lifecycle/usage snapshots and private owner capabilities; no IPC enrollment or positive authority",
+      "dependencies": "Actual existing ComponentGate/Cancellation/TaskJournal and Android SDK/standard Java8; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.core.ResourceBudgetsTest"
+      ],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json",
+      "hostControlFlowExecutedWithSyntheticPlatform": true,
+      "notClaimed": [
+        "actual own Android ActivityManager/trim callbacks",
+        "native Gecko/process-global memory accounting/OOM or performance guarantee",
+        "persistent cache/data cleanup or forcing foreground/media work end"
+      ],
+      "integrationGate": "TaskCoordinator can accept native limits; Application/caches not yet wired. Only actual native allocation owner releases after free, never client cancellation. Trim advice does not erase files or stop owned media."
     }
   ],
   "parallelPending": [

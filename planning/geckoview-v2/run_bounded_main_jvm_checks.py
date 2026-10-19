@@ -44,19 +44,33 @@ def sha(path):
         return hashlib.file_digest(source, 'sha256').hexdigest()
 
 
-def resources(work):
+def resources(work, minimum_ram_mib=2304):
     free = shutil.disk_usage(work).free
     memory = int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines()
                       if line.startswith('MemAvailable:'))) * 1024
     assert free >= 16 * 1024**2 + 1024**3, 'standalone small-check disk gate'
-    assert memory >= 2304 * 1024**2, 'standalone small-check RAM gate; do not stop other processes'
+    assert memory >= minimum_ram_mib * 1024**2, 'standalone small-check RAM gate; do not stop other processes'
     return {'freeBytes': free, 'memAvailableBytes': memory}
+
+
+def next_sequential_admission(work, minimum_ram):
+    # Prior owned JVM has exited; allow bounded kernel accounting/other-workload settling.
+    # NEVER overlap JVMs, lower the selected gate or stop unrelated processes.
+    deadline = time.monotonic()+20
+    while True:
+        try:
+            return resources(work, minimum_ram)
+        except AssertionError:
+            if time.monotonic() >= deadline:
+                raise
+            time.sleep(0.5)
 
 
 def run(args):
     work = args.work_dir.resolve()
     assert work.is_dir() and not work.is_relative_to(ROOT) and not work.is_relative_to(Path('/tmp'))
-    before = resources(work)
+    minimum_ram = 2048 if args.compact else 2304
+    before = resources(work, minimum_ram)
     dependencies = [args.android_jar, args.gecko_jar, args.annotation_jar, args.junit, args.hamcrest]
     assert all(p.is_file() for p in dependencies)
     baseline = json.loads((P/'evidence/production-android-api-compile.json').read_text())
@@ -67,7 +81,7 @@ def run(args):
     test_classes = ['.'.join(p.relative_to(ROOT/'app/src/test/java').with_suffix('').parts)
                     for p in tests if p.name.endswith('Test.java')]
     assert main and tests and all(re.fullmatch(r'[A-Za-z0-9_.]+', name) for name in test_classes)
-    limits = ['-Xmx256m', '-XX:MaxMetaspaceSize=128m', '-XX:ReservedCodeCacheSize=64m', '-XX:ActiveProcessorCount=2', '-Xss512k', '-Djava.io.tmpdir='+str(work)]
+    limits = (['-Xmx192m', '-XX:MaxMetaspaceSize=96m', '-XX:ReservedCodeCacheSize=48m'] if args.compact else ['-Xmx256m', '-XX:MaxMetaspaceSize=128m', '-XX:ReservedCodeCacheSize=64m']) + ['-XX:ActiveProcessorCount=2', '-Xss512k', '-Djava.io.tmpdir='+str(work)]
     java, javac = (args.java_home/'bin'/name for name in ['java', 'javac'])
     classpath = os.pathsep.join(str(p.resolve()) for p in dependencies)
     with tempfile.TemporaryDirectory(prefix='main-small-jvm-', dir=work) as temporary:
@@ -79,7 +93,7 @@ def run(args):
         compiler = subprocess.run([str(javac), *['-J'+flag for flag in limits], '--release', '17', '-proc:none', '-encoding', 'UTF-8', '-cp', classpath, '-d', str(classes), *map(str, main+tests+[harness])], cwd=ROOT, text=True, capture_output=True, timeout=75)
         if compiler.returncode:
             raise RuntimeError('Standalone compile failed:\n'+compiler.stdout+compiler.stderr)
-        middle = resources(work)
+        middle = next_sequential_admission(work, minimum_ram)
         started = time.monotonic()
         result = subprocess.run([str(java), *limits, '-cp', str(classes)+os.pathsep+classpath,
                                  'BoundedMainHostRunner', *test_classes], cwd=ROOT, text=True,
@@ -92,16 +106,16 @@ def run(args):
         all_classes = list((classes/'io/github/rebrowser').rglob('*.class'))
         main_names = {str(p.relative_to(ROOT/'app/src/main/java').with_suffix('')) for p in main}
         main_classes = sum(str(p.relative_to(classes)).removesuffix('.class').split('$')[0] in main_names for p in all_classes)
-        # Additional real SDK BOOTCLASSPATH compile for the two changed Android/Gecko files.
+        # Additional real SDK BOOTCLASSPATH compile for the current changed native files.
         # The full main compile above intentionally uses JDK java.base, not Android boot.
         api_output = temporary/'changed-android-api'
         api_output.mkdir()
-        changed = [ROOT/'app/src/main/java/io/github/rebrowser/engine'/name for name in ['NavigationDelegate.java','GeckoSessionOwner.java']]
-        resources(work)
+        changed = [ROOT/'app/src/main/java/io/github/rebrowser'/name for name in ['engine/NavigationDelegate.java','engine/GeckoSessionOwner.java','core/TaskCoordinator.java','core/ResourceBudgets.java']]
+        next_sequential_admission(work, minimum_ram)
         actual_api = subprocess.run([str(javac), *['-J'+flag for flag in limits], '-source', '8', '-target', '8', '-proc:none', '-encoding', 'UTF-8', '-bootclasspath', str(args.android_jar.resolve()), '-cp', str(classes)+os.pathsep+classpath, '-d', str(api_output), *map(str, changed)], cwd=ROOT, text=True, capture_output=True, timeout=45)
         if actual_api.returncode:
             raise RuntimeError('Changed SDK bootclasspath compile failed:\n'+actual_api.stdout+actual_api.stderr)
-        changed_api = {'scope':'two changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification', 'sourceFiles':[{'path':str(p.relative_to(ROOT)),'sha256':sha(p)} for p in changed], 'classFiles':[{'path':str(p.relative_to(api_output)),'sha256':sha(p),'classMajor':int.from_bytes(p.read_bytes()[6:8],'big')} for p in sorted(api_output.rglob('*.class'))], 'diagnostics':actual_api.stderr, 'androidRuntimeExecuted':False}
+        changed_api = {'scope':'four changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification', 'sourceFiles':[{'path':str(p.relative_to(ROOT)),'sha256':sha(p)} for p in changed], 'classFiles':[{'path':str(p.relative_to(api_output)),'sha256':sha(p),'classMajor':int.from_bytes(p.read_bytes()[6:8],'big')} for p in sorted(api_output.rglob('*.class'))], 'diagnostics':actual_api.stderr, 'androidRuntimeExecuted':False}
         generated_bytes = sum(p.stat().st_size for p in temporary.rglob('*') if p.is_file())
         assert generated_bytes < 16 * 1024**2
     return {
@@ -112,6 +126,7 @@ def run(args):
         'changedSourcesAndroidBootclasspathCompile':changed_api,
         'unitTestsPassed':unit['tests'], 'unitTests':unit['classes'],
         'localDependencies':[{'name':p.name, 'sha256':sha(p)} for p in dependencies],
+        'validationResourceProfile':'compact-192m' if args.compact else 'standard-256m', 'minimumMemAvailableMiB':minimum_ram,
         'jvmLimits':limits, 'resourceBeforeCompile':before, 'resourceBeforeTests':middle,
         'generatedBytesBeforeRemoval':generated_bytes, 'temporaryClassDirectoryRemoved':True,
         'hostAndAdditionalApiElapsedSeconds':round(time.monotonic()-started,3), 'compilerDiagnostics':compiler.stderr,
@@ -126,4 +141,5 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for option in ['java-home','android-jar','gecko-jar','annotation-jar','junit','hamcrest','work-dir']:
         parser.add_argument('--'+option, type=Path, required=True)
+    parser.add_argument('--compact', action='store_true', help='smaller sequential JVM192m heap/96m meta/48m code, fresh RAM>=2048MiB; NOT Android-build gate')
     print(json.dumps(run(parser.parse_args()), ensure_ascii=False, indent=2))

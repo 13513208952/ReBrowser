@@ -18,7 +18,7 @@ R35依据O54先回收已完成用途的历史产物：[本轮记录](evidence/te
 - 每次构建前复查MemAvailable≥3GiB，以及磁盘“预计新增峰值＋至少1GiB保留”。无法合理估算新增峰值时按至少3GiB可用空间闸门；不能因为最终APK只有194MB就按194MB预算。
 - 手机测试临时包按O35仅构建`arm64-v8a`；正式发行才按O34各自提供三个独立ABI包，禁三合一。不为手机试验预先重复构建另外两种ABI。
 - 单构建、离线、单worker、JVM1536MiB、不常驻daemon；沿用私有用户/project缓存和只读依赖复用，不为每次试错再建整套SDK/缓存。
-- R39内存不足3GiB时，不启动Gradle/Android构建，允许另行标识的**独立有界Java源码/API类型及HOST检查**：每个JVM heap≤256MiB、metaspace≤128MiB、code cache≤64MiB、ActiveProcessorCount=2，编译/测试不并行；新鲜MemAvailable≥2304MiB（至少约1.5GiB余量）、磁盘16MiB新增上限+1GiB保留。只复用既有固定SDK/Gecko/JUnit，不下载、不JNI/dex/R8/APK。JDK17 java.base + Android SDK类路径**不是Android bootclasspath/运行证据，也不是新的AGP/manifest构建通过**，报告必须分开保留上一次完整AGP结果。原Android构建3GiB内存闸门不变；不足本小检查闸门也停止启动JVM。
+- R39内存不足3GiB时，不启动Gradle/Android构建，允许另行标识的**独立有界Java源码/API类型及HOST检查**：每个JVM heap≤256MiB、metaspace≤128MiB、code cache≤64MiB、ActiveProcessorCount=2，编译/测试不并行；新鲜MemAvailable≥2304MiB（至少约1.5GiB余量）、磁盘16MiB新增上限+1GiB保留。只复用既有固定SDK/Gecko/JUnit，不下载、不JNI/dex/R8/APK。JDK17 java.base + Android SDK类路径**不是Android bootclasspath/运行证据，也不是新的AGP/manifest构建通过**，报告必须分开保留上一次完整AGP结果。原Android构建3GiB内存闸门不变；不足本小检查闸门也停止启动JVM。R40另有更小的`--compact` profile：heap192MiB/meta96MiB/code48MiB、顺序JVM/CPU2，MemAvailable≥2048MiB；总JVM上限相应收紧以保留约1.5GiB余量，不是以相同进程预算放宽闸门。只用于本体Java/API/HOST检查，无Gradle/Android构建或外部进程清理。
 - 临时目录明确放既定非tmpfs工作区，测试临时目录用`finally`/上下文自动收回。小型检查直接流式摘要，不另复制大包。
 - 每阶段最多保留一个当前可安装的实验包；历史大包确认无需即时复用后保留来源/摘要/结果，再回收自身可再生产物。正式发布物、原用户资料、源码和私钥不按此规则处理。
 - 清理前列出精确正向路径、用途、大小，确认无运行中的相关构建/文件使用者，不沿符号链接跨边界。先核验旧包SHA再删除；删除与结果记录要可追溯。

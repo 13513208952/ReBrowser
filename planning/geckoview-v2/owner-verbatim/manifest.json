@@ -422,7 +422,21 @@
       "utf8Bytes": 15,
       "sha256": "10911a504b91aa2487ce878c9bda4e63e4cdb9b3d1f6de891d4353f97eeb8b27",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O61",
+      "file": "owner-verbatim/O61-do-not-stop-implement-other-unfinished-master-tree-code.txt",
+      "utf8Bytes": 114,
+      "sha256": "079e3d0106cd04374031dfd1b7e859334126a06548fc6ea04edb7efb99bd4170",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O62",
+      "file": "owner-verbatim/O62-continue-native-task-and-resource-budgets.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-19T23:36:07+08:00"
+  "lastAppendedAt": "2026-10-20T06:50:27+08:00"
 }

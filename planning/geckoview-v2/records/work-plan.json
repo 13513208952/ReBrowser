@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R38",
+  "revision": "R39",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -216,7 +216,8 @@
     "buildGate": "estimated new peak +1GiB reserve; unknown >=3GiB free; MemAvailable>=3GiB",
     "noGlobalOrDeviceCleanup": true,
     "phoneTestAbi": "arm64-v8a only (O35)",
-    "latestRecoveryRef": "evidence/temporary-storage-recovery-R35.json"
+    "latestRecoveryRef": "evidence/temporary-storage-recovery-R35.json",
+    "standaloneSmallJavaCheck": "R39 only: sequential JVM256m heap/128m meta/64m code/CPU2, RAM>=2304MiB/disk16MiB+1GiB reserve; NOT new AGP or Android runtime"
   },
   "abiPackagingPolicyRef": "records/abi-packaging-policy.json",
   "supersededTrackAlias": {
@@ -224,11 +225,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "AFTER R37 push continued actual OwnerAuthentication native-platform separation and controller/bridge HOST execution, not a checkpoint stop",
-    "Activity-only production constructor, PRIVATE platform injection for explicit HOST fixtures; positive no-lock recheck/strong credential result/one-use foreground tickets remain",
-    "28 actual controller/private-ticket/bridge tests with SYNTHETIC platform; 253 main HOST =215 pure +10 metadata +28 control-flow;39 Java/25HOST+14API-WIP unchanged",
-    "Native cancellation allocation before binding start; clock failure in actual terminal success callback records FAILED and settles actual owner instead of stranding credit",
-    "No AndroidPlatform/OS/signing inspection/auth prompt/erasure/source unlock executed; source UI/bootstrap/erasure/backend integration still pending"
+    "Actual browser NavigationDelegate load/source/session/partition gates and inert location/history/error source; popup/default unsupported schemes deny pending real native document factory",
+    "GeckoSessionOwner initializer now receives exact allocated native owner BEFORE open, rejects retirement/reentrant closure instead of late post-open lookup/state overwrite",
+    "40 main Java/170mainclasses;265HOST=215pure+10metadata+28synthetic authcontrol+12navigation policy/SDK DTO;25HOST+15Android-boundWIP",
+    "RAM below 3GiB prevented AGP launch; bounded sequential standalone javac/JUnit with explicit 2304MiB RAM gate and capped256m heap, current SDK TYPE classpath not Android java.base; changed2files also actual SDKbootclasspath compiled",
+    "Last full AGP/manifest checkpoint R38 preserved by source commit/hash; no new Gradle/native/dex/R8/APK/Android/Gecko callbacks; full UI/source unlock missing"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -243,7 +244,7 @@
     "I0",
     "L0"
   ],
-  "latestOwnerContinuation": "O59继续，不要随随便便停下来",
+  "latestOwnerContinuation": "O60那么继续吧，O59不要随随便便停下来",
   "primaryFocus": {
     "authority": "O45",
     "work": "formal main-program and administrator mechanism source implementation",

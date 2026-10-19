@@ -415,7 +415,14 @@
       "utf8Bytes": 36,
       "sha256": "e95d9dac64ef1e768dd503565b02d0ea17efa534a2be503c7377aede04fab8ae",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O60",
+      "file": "owner-verbatim/O60-continue-browser-native-delegates.txt",
+      "utf8Bytes": 15,
+      "sha256": "10911a504b91aa2487ce878c9bda4e63e4cdb9b3d1f6de891d4353f97eeb8b27",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-19T22:17:00+08:00"
+  "lastAppendedAt": "2026-10-19T23:36:07+08:00"
 }

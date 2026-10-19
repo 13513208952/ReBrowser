@@ -69,7 +69,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0) + app.get('hostAndroidClassNativeControlTests',0)
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0) + app.get('hostAndroidClassNativeControlTests',0) + app.get('hostAndroidClassNavigationPolicyTests',0)
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     for source in ledger['sourceFiles']:
@@ -84,6 +84,26 @@ def review():
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not any(tasks[k] for k in ['androidSQLiteMethodsExecuted','actualNativeCoordinatorAndPolicyAtomicityTested','realDataOrKeysUsed'])
     assert not app['geckoDelegateCallbacksExecuted']
+    assert app['hostAndroidClassNavigationPolicyTests'] == 12 and app['navigationPolicyAndSdkDtoHostExecuted']
+    assert not app['navigationDelegateCallbacksAndroidExecuted']
+    standalone = json.loads((P/app['currentStandaloneEvidenceRef']).read_text())
+    assert standalone['validationExecutor'] == app['validationExecutor'] == 'bounded-standalone-javac-junit'
+    assert standalone['unitTestsPassed'] == app['unitTestsPassed'] and standalone['compiledMainClassFiles'] == app['compiledClassFiles']
+    assert standalone['jdkJavaBaseNotAndroidBootclasspath'] and not standalone['currentIncrementAgpTasksExecuted']
+    assert standalone['temporaryClassDirectoryRemoved'] and standalone['generatedBytesBeforeRemoval'] < 16*1024**2
+    assert standalone['runnerSha256'] == hashlib.sha256((P/'run_bounded_main_jvm_checks.py').read_bytes()).hexdigest()
+    for source in standalone['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    for gate in ['resourceBeforeCompile','resourceBeforeTests']:
+        assert standalone[gate]['memAvailableBytes'] >= 2304*1024**2
+        assert standalone[gate]['freeBytes'] >= 16*1024**2+1024**3
+    changed_api = standalone['changedSourcesAndroidBootclasspathCompile']
+    assert len(changed_api['sourceFiles']) == 2 and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
+    assert not changed_api['androidRuntimeExecuted']
+    agp_checkpoint = json.loads((P/app['lastFullAgpCheckpointRef']).read_text())
+    assert agp_checkpoint['sourceCommit'] == 'b911bb6fc33a4f07a5160fa68d2a64968b795384'
+    assert agp_checkpoint['report']['productionJavaSourceFiles'] == 39 and agp_checkpoint['report']['unitTestsPassed'] == 253
+    assert agp_checkpoint['report']['mergedManifestSha256'] == app['mergedManifestSha256']
     assert app['responseStreamWorkerHostTests'] == 10 and not app['actualGeckoResponseStreamsExecuted']
     stream = json.loads((P/'records/response-stream-implementation-contract.json').read_text())
     assert not stream['sourceInspection']['productUpstreamModified']
@@ -112,6 +132,9 @@ def review():
             'productionAndroidBoundFilesInProgress':len(android_entries),
             'productionAndroidBoundFilesWithSyntheticHostControlTests':sum(f.get('hostControlFlowExecutedWithSyntheticPlatform',False) for f in android_entries.values()),
             'standaloneMainAppCompiled':True,
+            'standaloneMainAppValidationExecutor':app['validationExecutor'],
+            'currentIncrementAgpTasksExecuted':app['currentIncrementAgpTasksExecuted'],
+            'lastFullAgpSourceCommit':agp_checkpoint['sourceCommit'],
             'standaloneMainAppHostTests':app['unitTestsPassed'],
             'concreteTypedActionSchemasImplemented':app['concreteActionArgumentSchemasImplemented'],
             'nativeIdempotencyDdlHostSqlChecks':ledger['hostSqlChecks'],

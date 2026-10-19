@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "revision": "R39",
+  "scope": "Actual browser-domain Gecko NavigationDelegate source: source/session/partition gated synchronous load decisions, current-session location/history observations, safe default load-error halt. NOT full navigation UI, document principal, popup factory or official-site qualification.",
+  "pinnedApi": {
+    "revision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
+    "facts": ["null onLoadRequest means ALLOW; errors/stale source must return explicit DENY", "onLoadRequest is top-level; subframe has separate callback", "onNewSession URI informational only; return fresh strongly-owned UNOPENED session, never load here", "location callback permission list/gesture/URL is not new native permission or document-lease authority"]
+  },
+  "implementationBoundary": [
+    "Only BROWSER partition can use this initial policy; never reuse broad browser policy for Outlook/Music domain",
+    "HTTP(S) structurally checked using admitted SearchEngines without rewriting/reloading URI; exact about:blank allowed; unsupported schemes deny, no search fallback or external Intent launch",
+    "Unknown target/malformed UTF16/control/over-budget request denied; URI/display observations never logged or promoted to origin/whitelist/owner permission",
+    "NEW targets/onNewSession fail closed until native document-bound popup factory exists; no unsafe latest-lease lookup or regular-open reuse",
+    "Conservative initial policy does NOT implement data/blob/javascript/reader/internal engine schemes; not complete browser compatibility and not wired into product startup",
+    "History/location observations have local sequence, NOT document ID/job result/page/network completion; native observer does not retain Activity strongly",
+    "onLoadError returns null to halt, no injected HTML, certificate/HTTPS exception bypass, retry or authenticated-original re-fetch"
+  ],
+  "testScope": "HOST tests execute actual static browser load classifier/display reduction and pinned SDK LoadRequest constructor facts where possible. Actual Gecko callback delivery, sessions/native loading, popup, origins and Android behavior remain unexecuted/API-only.",
+  "integrationGate": "Keep Source UNCONFIGURED/LOCKED. Concrete native initialization/finite permissions/document bridge and full UI must be wired and separately qualified; do not claim API source is completed frontend."
+}

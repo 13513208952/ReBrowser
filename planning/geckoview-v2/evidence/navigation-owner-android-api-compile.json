@@ -1,0 +1,77 @@
+{
+  "scope": "two changed native sources ACTUAL Android37.2 BOOTCLASSPATH compile; existing main ABI dependencies compiled standalone, NOT Android runtime/API30 qualification",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
+      "sha256": "bb6a4deaaaae42b8107d5e290237d94274fd03d2d22078568d0a357885fd0d1e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+      "sha256": "2c7f1c142ff773bff7fba79745d3d6171771605b14f0d3e8ec5130e0372f540a"
+    }
+  ],
+  "classFiles": [
+    {
+      "path": "io/github/rebrowser/engine/GeckoSessionOwner$1.class",
+      "sha256": "82b72e1027ede084624a4d7615e11be31077aa854231dceee3c61f4a0a0585f4",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/GeckoSessionOwner$Initializer.class",
+      "sha256": "10f152827b0025adaba0be48e8f7b7f3f375d9e4a5bb3cc07844cb8b09950425",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/GeckoSessionOwner$SessionRef.class",
+      "sha256": "3f950f8ea13b5e756e84218cdd6fe797316e4fc9d5c9341aad54023215940f93",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/GeckoSessionOwner$State.class",
+      "sha256": "76f6053ee591edecbdb9d05034712585ee287f5a0ad8417ba1aa453acdba8ed1",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/GeckoSessionOwner$StopSweep.class",
+      "sha256": "ac8ddcb13d72023b2985ace82fd4ed4dd9fba14307d723cd224bc12e0f31c571",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/GeckoSessionOwner.class",
+      "sha256": "5e35ee495608e3f242e9cd760fd4391a02608c40c7c0b6695b88b3ffcb8f41b2",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/NavigationDelegate$1.class",
+      "sha256": "63141b2fb81dd75a1d7a224e3dc376d384be56e348435c54fe9c4b7be9283938",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/NavigationDelegate$Decision.class",
+      "sha256": "61c077bdec4f75de262591d63c34dcc65fac980b6370b160b9f5f694a8d126d8",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/NavigationDelegate$Event.class",
+      "sha256": "566f092f62f1e8ce97df8b1ef185f79e459a83410bed481e6fcbf05910fbcb07",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/NavigationDelegate$NativeObserver.class",
+      "sha256": "64e85b6126a49441410351ad9ed02858be0c8fab99da0e1370b56de2a55010d4",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/NavigationDelegate$Observation.class",
+      "sha256": "a97e1e19f73beaf98d5750e37ec9e34c779b3999675d23fbcd04e892d6729101",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/NavigationDelegate.class",
+      "sha256": "db37e6413af5ad97ef31f1feb8c6009f04c8cad52dcbe4bf3747000435be0b4d",
+      "classMajor": 52
+    }
+  ],
+  "diagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
+  "androidRuntimeExecuted": false
+}

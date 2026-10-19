@@ -2,6 +2,8 @@
 
 R35已实现[响应流Worker](../records/response-stream-implementation-contract.json)：只复制到未发布私有stage，32KiB bulk读取、原始字节上限/长度/EOF/SHA、取消与全部关闭路径；10项HOST合成流测试。固定Gecko Java的单字节read()实际读四字节，故连EOF探测也只用bulk；忽略interrupt的阻塞流测试证明Future.done不代表实际结束。未执行Gecko/JNI/Android流，也未接通ContentDelegate、下载准入、目标选择或发布。
 
+R39增加实际`NavigationDelegate` Browser域源码：Source/原SDKsession/partition闸门、明确ALLOW/DENY、位置/历史能力/加载错误只作观测。12项HOST测实际策略/display方法与固定SDK LoadRequest构造；**没有执行Gecko回调、加载或网络**。真实document-bound且unopened的Popup factory尚缺，故NEW目标/onNewSession拒绝；data/blob/javascript/reader等兼容性未集成也拒绝，不能声称完整网站功能。`GeckoSessionOwner.Initializer`现于open前获得精确已登记SessionRef，关闭/退休中途不被覆盖成OPEN_REQUESTED。资源不足时本轮是独立JDK类型编译/HOST检查，两文件另实际SDK bootclasspath检查；最近全量AGP结果仍R38。
+
 当前权限阻断以[Native权限记录](../records/gecko-permission-design.json)为准：
 - 普通引擎许可写EXPIRE_NEVER；自身期限/void撤回派发不能冒充引擎过期或活动使用结束。
 - [固定提供方方法体HOST研究](../evidence/geolocation-source-host-probe.json)显示先发布最精确缓存再选择COARSE provider；`enableHighAccuracy=false`不是单站模糊位置保证，global pause也不是单站停止回执。实际JNI/OS/站点结果仍未测；不因编码层已有源码而跳过该阻断。

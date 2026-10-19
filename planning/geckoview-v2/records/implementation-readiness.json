@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R38",
+  "revision": "R39",
   "authority": [
     "O41",
     "O42",
@@ -744,11 +744,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "actual Gecko strong references/explicit issued context/open delegate-before-open/close and display token ownership, no Activity capture",
+      "scope": "actual Gecko strong references/explicit issued context/open delegate-before-open/close and display token ownership, no Activity capture; R39 initializer receives exact registered ALLOCATED SessionRef before SDK open; retiring/closing during install/open cannot be overwritten as OPEN_REQUESTED, failed cleanup remains strongly tracked",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/navigation-delegate-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -1150,6 +1151,36 @@
         "complete bootstrap/source UI/rescue or business unlock"
       ],
       "integrationGate": "NOT startup/UI wired. Production construction only OwnerAuthentication factory with actual own signer/compiled Root/window. Only its private OS-ticket consumption bridge completes attempts; native guards still validate actual source/epoch/ledger. EpochErasureCoordinator/EpochCommitter exact data workset backend required before effect; keep business locked."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual BROWSER-only direct Gecko NavigationDelegate source/current gate+session+partition checks, explicit HTTP/blank load decisions, inert location/history/error observations; popup and unsupported schemes fail closed pending real backend",
+      "researchEvidence": [
+        "records/navigation-delegate-contract.json",
+        "records/gecko-contracts.json",
+        "evidence/upstream.json"
+      ],
+      "inputOutput": "one actual SDK session and native BROWSER lease -> explicit AllowOrDeny or bounded display observations, null popup/error halt; no origin/document/permission/OS effect authority",
+      "dependencies": "pinned Gecko158 NavigationDelegate/GeckoResult/AllowOrDeny, native gate/PartitionCatalog/SearchEngines; no new libraries/network",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/NavigationDelegatePolicyTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.NavigationDelegatePolicyTest"
+      ],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "actual Gecko callback/session/JNI/Android navigation execution",
+        "complete data/blob/javascript/reader/internal scheme compatibility or official-site login",
+        "native document-bound unopened Popup factory/parent ancestry runtime",
+        "complete initializer/permission reconciliation/main-window UI/persistence/restore"
+      ],
+      "integrationGate": "NOT startup wired. Browser domain only. Keep Root/gate unconfigured/locked. NEW targets deny until real native engine-document proof and unopened strong-owned popup allocation; no current-lease reacquisition as proof, no blind load or external Intent on reported gesture."
     }
   ],
   "parallelPending": [

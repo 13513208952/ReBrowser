@@ -1,11 +1,7 @@
 {
-  "scope": "actual standalone ReBrowser MAIN APP Gradle Java/resources/manifest compilation and HOST unit tests; NOT APK/runtime/formal delivery",
+  "scope": "ALL current main Java + HOST tests compiled standalone --release17 against existing Android37.2/Gecko TYPE classpath; JDK java.base, NOT Android bootclasspath/AGP/Android runtime; manifest metadata below is UNCHANGED historical R38 AGP result, not a new manifest/AGP task execution",
   "project": "rebrowser",
   "sourceFiles": [
-    {
-      "path": "app/build.gradle.kts",
-      "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
-    },
     {
       "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
       "sha256": "c4d4fe3f5920a0abeca23581acf6ca048e2b59217024333c6ade932a9e896ee3"
@@ -136,7 +132,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
-      "sha256": "261f7be6ed357b3129d334b0fb1b5aa6c7b336b4b35b6f5e9c3026630bca89f4"
+      "sha256": "2c7f1c142ff773bff7fba79745d3d6171771605b14f0d3e8ec5130e0372f540a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
+      "sha256": "bb6a4deaaaae42b8107d5e290237d94274fd03d2d22078568d0a357885fd0d1e"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
@@ -247,6 +247,10 @@
       "sha256": "f2540eec7e5ee8858e0df94431a007c07bcd96ad09ddb0b5cefa001123b1d868"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/engine/NavigationDelegatePolicyTest.java",
+      "sha256": "1951063e196b436529210946419761c774f7dbc5d1344983cb8860bbf4e6c423"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java",
       "sha256": "c13d0a270635e17162f48655de260d578ab6a0cfd911125c23aec495d23e38c8"
     },
@@ -257,6 +261,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
+    },
+    {
+      "path": "app/build.gradle.kts",
+      "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     },
     {
       "path": "rebrowser/app/build.gradle",
@@ -279,8 +287,8 @@
       "sha256": "fe38cb9579b55995ad4430bfba21fa39e9ef23bbb76e4d58e156825ad852f964"
     }
   ],
-  "productionJavaSourceFiles": 39,
-  "compiledClassFiles": 165,
+  "productionJavaSourceFiles": 40,
+  "compiledClassFiles": 170,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -409,6 +417,12 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.engine.NavigationDelegatePolicyTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.engine.PartitionCatalogTest",
       "tests": 6,
       "failures": 0,
@@ -427,17 +441,12 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 253,
+  "unitTestsPassed": 265,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
   "mergedManifestSha256": "8aa507019dd1fec2c2e3b3debbd01ae431890ff93a2a6171cf4741da0027580b",
-  "tasks": [
-    "compileDebugJavaWithJavac",
-    "processDebugMainManifest",
-    "testDebugUnitTest"
-  ],
-  "toolchain": "AGP9.4.0/Gradle9.6.0/JDK21/SDK37.2",
+  "toolchain": "standalone JDK21 --release17 + pinned SDK37.2/Gecko158 TYPE classpath; additional changed-source Android bootclasspath compile; last AGP9.4 task checkpoint R38",
   "offline": true,
   "selectedAbi": "arm64-v8a",
   "nativeMergeDexR8OrApkExecuted": false,
@@ -485,5 +494,18 @@
     "ownerAuthenticationPromptOrTicketConsumeExecuted": "ACTUAL ANDROID OS execution only; false. HOST controller/private ticket and synthetic platform tracked by separate explicit HOST fields.",
     "continuityNativeOwnerBridgeHostExecuted": "actual production bridge methods with explicit SYNTHETIC platform; not AndroidPlatform/real OS verification",
     "hostAndroidClassPureIdentityTests": "legacy10 metadata-only extra tests, separate from 28 synthetic-platform control-flow tests"
-  }
+  },
+  "validationExecutor": "bounded-standalone-javac-junit",
+  "currentIncrementAgpTasksExecuted": false,
+  "lastFullAgpCheckpointRef": "evidence/production-main-agp-R38-checkpoint.json",
+  "currentStandaloneEvidenceRef": "evidence/production-main-standalone-jvm-checks.json",
+  "hostAndroidClassNavigationPolicyTests": 12,
+  "navigationDelegateCallbacksAndroidExecuted": false,
+  "navigationPolicyAndSdkDtoHostExecuted": true,
+  "jdkJavaBaseNotAndroidBootclasspath": true,
+  "lastAgpTasks": [
+    "compileDebugJavaWithJavac",
+    "processDebugMainManifest",
+    "testDebugUnitTest"
+  ]
 }

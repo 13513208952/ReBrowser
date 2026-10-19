@@ -21,8 +21,9 @@ public final class GeckoSessionOwner {
     public interface Initializer {
         /** Native source/epoch/finite-permission reconciliation; throwing prevents runtime creation. */
         void reconcileBeforeOpen(PartitionCatalog.Lease partition,ComponentGate.BusinessPermit permit);
-        /** Install native navigation/content/prompt/permission delegates BEFORE open. No queued loads/effects. No Activity capture. */
-        void installDelegates(GeckoSession session,PartitionCatalog.Lease partition,Object nativeOwnerToken);
+        /** Install delegates BEFORE open with the exact already-registered owner, not a post-open tab lookup.
+         * No queued loads/effects or Activity capture. Ref is allocated, NOT an open/ready capability. */
+        void installDelegates(GeckoSession session,SessionRef allocatedOwner,PartitionCatalog.Lease partition,Object nativeOwnerToken);
     }
     public static final class SessionRef {
         private final GeckoSessionOwner issuer;
@@ -57,11 +58,14 @@ public final class GeckoSessionOwner {
         GeckoSession session=new GeckoSession(new GeckoSessionSettings.Builder().contextId(partitions.activeContextId(partition,permit)).build());
         SessionRef ref=new SessionRef(this,session,partition);sessions.put(ref,ref);
         try{
-            initializer.installDelegates(session,partition,nativeOwnerToken);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
-            session.open(runtime.requireRuntime(permit));session.setFocused(false);session.setActive(false);ref.state=State.OPEN_REQUESTED;return ref;
+            initializer.installDelegates(session,ref,partition,nativeOwnerToken);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
+            if(ref.state!=State.ALLOCATED || !sessions.containsKey(ref))throw new IllegalStateException("Allocated session retired during delegate installation");
+            session.open(runtime.requireRuntime(permit));session.setFocused(false);session.setActive(false);
+            if(ref.state!=State.ALLOCATED || !sessions.containsKey(ref) || !session.isOpen())throw new IllegalStateException("Session ended during open request");
+            ref.state=State.OPEN_REQUESTED;return ref;
         }catch(RuntimeException failure){
             try{if(session.isOpen())session.close();}catch(RuntimeException cleanup){failure.addSuppressed(cleanup);}
-            if(session.isOpen())ref.state=State.CLOSE_FAILED;else{sessions.remove(ref);ref.state=State.CLOSED;}
+            if(session.isOpen()){ref.state=State.CLOSE_FAILED;sessions.put(ref,ref);}else{sessions.remove(ref);ref.state=State.CLOSED;}
             throw failure; // no automatic second route/runtime/session attempt
         }
     }

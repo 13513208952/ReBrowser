@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R38",
+  "revision": "R39",
   "authority": [
     "O26",
     "O27",
@@ -248,6 +248,12 @@
           "kind": "unit-real-issued-partitions",
           "purpose": "6HOST actual owner-domain/context/epoch/fence/tombstone/capacity/gate/thread tests; notcookie/storage erasure/runtime",
           "state": "host-tested-not-Android-engine"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/NavigationDelegatePolicyTest.java",
+          "kind": "host-static-navigation-policy-and-sdk-dto",
+          "purpose": "12 actual production classifier/display + synthetic pinned SDK LoadRequest constructor cases; not session/callback/network runtime",
+          "state": "host-policy-only-callbacks-unexecuted"
         }
       ]
     },
@@ -1293,7 +1299,7 @@
       "group": "engine",
       "kind": "native-code",
       "responsibility": "加载/外链/新窗与正确父来源",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1301,9 +1307,15 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "12 actual HOST classifier/display + synthetic SDK DTO ctor tests; actual SDK bootclasspath compile of changed native files; NO Gecko callbacks/Android/navigation/popup runtime",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/navigation-delegate-contract.json",
+        "evidence/production-main-standalone-jvm-checks.json",
+        "evidence/navigation-owner-android-api-compile.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",

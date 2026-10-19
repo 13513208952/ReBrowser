@@ -16,7 +16,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
-      "sha256": "e9fe02a58f3f1f0ac7cd95466c641a197aa391cd8a601560f5d490a51c7dbaf1"
+      "sha256": "67e40b2f751858ae4b752fbe0ab1f8cd9ad840ac5f7ecc59a0bb26c7e1d35054"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
@@ -28,7 +28,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
-      "sha256": "98f1756f5e9a9ccf9037b82e2d8e92d7e96944dfec9d0754fae7700d56fe7e66"
+      "sha256": "d175f69b70726a8020bbf8a59bdcba89b581e0c2ee8e68617592d3987916c53a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+      "sha256": "39bdc4747ff3cec7d4c587ae7fe31fc8bf1f9f3d0295a701070ccd46c94fb328"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
@@ -53,6 +57,14 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
       "sha256": "ae5131def1be306edb3520256c8a7217f371f085f16e75db0e5d1d7ef741cce9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+      "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+      "sha256": "c6a1c3363be09ebe0d4137966f81300b36f1e448aefed4182a1fc964834be229"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
@@ -127,12 +139,24 @@
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/browser/BackCoordinatorTest.java",
+      "sha256": "01ed01110e9ec19bd58ed9f1881b9e86ae9223bbde0e1c8b54e58706d16ae115"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java",
       "sha256": "7835b2a2a28a7e29480eff1290233166641a92442af072187d48e2a07485fed5"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java",
       "sha256": "dea7444edc3bf3649e1333ccf18e3596a1b70388643a5ecf5e72cebd36f268b5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java",
+      "sha256": "d422ba2e524c7e47d90ef056a7dfa33afc530d69633ba9c89186a15cba5d99a9"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java",
+      "sha256": "2134c0ce9f67dee1b83ac7e6d81a2857895ea0c5f92ed1c5c7295db9b3472ea5"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java",
@@ -207,9 +231,15 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 30,
-  "compiledClassFiles": 102,
+  "productionJavaSourceFiles": 33,
+  "compiledClassFiles": 113,
   "unitTests": [
+    {
+      "class": "io.github.rebrowser.continuity.SigningIdentityTest",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0
+    },
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
       "tests": 9,
@@ -243,6 +273,12 @@
     {
       "class": "io.github.rebrowser.control.ControlChallengeStoreTest",
       "tests": 14,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.browser.BackCoordinatorTest",
+      "tests": 12,
       "failures": 0,
       "errors": 0
     },
@@ -299,9 +335,15 @@
       "tests": 7,
       "failures": 0,
       "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.continuity.CompiledSourceIdentityTest",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0
     }
   ],
-  "unitTestsPassed": 149,
+  "unitTestsPassed": 168,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -325,7 +367,7 @@
   "processLocalChallengeAdmissionImplemented": true,
   "durableJobAdmissionOrEffectDispatchImplemented": false,
   "androidSQLiteMethodsExecuted": false,
-  "hostAndroidClassPureIdentityTests": 3,
+  "hostAndroidClassPureIdentityTests": 7,
   "durableRequestTaskPairCodeImplemented": true,
   "fullPolicyCoordinatorAndEffectDispatchImplemented": false,
   "concreteActionArgumentSchemasImplemented": 4,
@@ -335,5 +377,7 @@
   "browserStartupUiNavigationOrCheckpointRestoreIntegrated": false,
   "nativeSelectedNavigationCodeAdded": true,
   "externalIntentReceiverActivated": false,
-  "browserSourceUnlockAndUiReady": false
+  "browserSourceUnlockAndUiReady": false,
+  "ownAndroidSignerMethodsExecuted": false,
+  "sourceRootOrBackUiActivated": false
 }

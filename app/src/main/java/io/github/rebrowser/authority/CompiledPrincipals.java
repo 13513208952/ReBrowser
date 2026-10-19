@@ -58,6 +58,8 @@ public final class CompiledPrincipals {
     }
     public Entry find(String keyId) { return entries.get(keyId); }
     public boolean formalRootConfigured() { return root != null; }
+    /** Public APK metadata only; no runtime Root enrollment or private-key custody claim. */
+    public String rootSpkiSha256() { return root == null ? null : root.fingerprint; }
     public int size() { return entries.size(); }
     private static IllegalArgumentException invalid() { return new IllegalArgumentException("Invalid compiled principal policy"); }
 }

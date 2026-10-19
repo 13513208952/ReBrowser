@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R31",
+  "revision": "R32",
   "authority": [
     "O31",
     "O32"
@@ -1368,12 +1368,14 @@
       "sha256": "df27da19623435a6d0814a09fd78ef052edc3d29f3b38c7576c33d7f6f1ff911",
       "bytes": 599,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T17:12:00+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧API33+按键/手势同一应用Back入口，旧Activity仍依赖维护保留。新BackCoordinator只编写原生窗口优先级/一次层动作/代次与待办，不伪称已接真实Android predictiveBack/IME或模拟正向本人同意。",
+      "evidenceRefs": [
+        "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

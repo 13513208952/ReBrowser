@@ -352,7 +352,14 @@
       "utf8Bytes": 111,
       "sha256": "ed1020276e56c587b237f64ce852e97d09b4ba1e61e9e76dcbb1e8c63e82b685",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O51",
+      "file": "owner-verbatim/O51-continue-owned-window-back-code.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-19T16:42:16+08:00"
+  "lastAppendedAt": "2026-10-19T17:03:04+08:00"
 }

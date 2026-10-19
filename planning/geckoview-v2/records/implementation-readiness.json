@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R31",
+  "revision": "R32",
   "authority": [
     "O41",
     "O42",
@@ -872,6 +872,96 @@
         "actual navigation completion or full browserready"
       ],
       "integrationGate": "No incomingextras/target IDs becomeauthority. Accept externalURL only aftersource/epoch check inNEWtemporarycontext. Nativeinitializer mustbind actualTabowner beforeopen; domain navigate checks currentselection/revision andcallercommittedintent. RealSDKdocument evidence required; no replay/load-success fromJava return."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "one native-owned window Back priority/current revision/reserve-before-dispatch and pending/result capability; no second layer afterunknown",
+      "researchEvidence": [
+        "records/platform-action-contracts.json",
+        "records/domain-interfaces.json",
+        "records/runtime-traces.json"
+      ],
+      "inputOutput": "nativeOwnedLayerCallbacks+expectedrevision/currentSourcePermit -> immutableone-layerReceipt andprivateownerReporter; notAndroid globalBack",
+      "dependencies": "actualComponentGate/BrowserModels/Java8; NativeWindow concrete UI/IME/session bindings separate",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BackCoordinatorTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BackCoordinatorTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "real Android/IME/fullscreen/predictiveBack or actualUI bindings",
+        "positiveowner/sourceconsent or completeauthorityadmission",
+        "wholeworker/task/effectslot/quiescence settlement",
+        "complete approved browserUI"
+      ],
+      "integrationGate": "Only realnative ownedWindow implementation suppliespresence andprivateReporter result; freshactor/scope checks beforeentry. HISTORY/WORKSPACE sourcegate current, SourceLockedminimalownedcancel permitted, no injectedglobalBACK; pendingmustretainuntilactualnativecallback, nottimeout/rotation."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "native own-package+UID PackageManager single-signer/system rotation-history reading and bounded public fingerprint metadata; notcurrentRoottrust orunlock",
+      "researchEvidence": [
+        "records/key-and-enrollment-design.json",
+        "records/authority-model.json",
+        "records/requirements.json"
+      ],
+      "inputOutput": "actualownOSpublicsigningmetadata orcurrentcompiledRoot table -> immutablemetadata; noLastGoodwrite/keygeneration/businessunlock",
+      "dependencies": "AndroidPackageManager/SigningInfo/Process forOSinspect; Java8 SHA/collections forreduction; actualCompiledPrincipals forRootmetadata",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java"
+      ],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "actualAndroid certificate/rotation/UID inspection execution",
+        "actualcertificates orprivatekeycustody/enrollment",
+        "fullcompiledpolicyHash orLastGood+epochtransaction",
+        "Root/grant/source-owner-auth/trustunlock"
+      ],
+      "integrationGate": "KeepbusinessUNCONFIGURED/LOCKED; actual OS signer leg andcompiledRoot leg mustboth match lastgood andnormalAndroidpackage rules; mismatch requiresnative4steps/separateownerAuth andverifiederasure beforeepochcommit. Never updateLastGood onunknownanomaly."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "immutable currentAPK compiledRoot fingerprint, explicitunconfigured andexactlastGoodRoot comparison; notpolicyDigest/signer/ownerconsent/sourceunlock",
+      "researchEvidence": [
+        "records/key-and-enrollment-design.json",
+        "records/authority-model.json",
+        "records/requirements.json"
+      ],
+      "inputOutput": "actualownOSpublicsigningmetadata orcurrentcompiledRoot table -> immutablemetadata; noLastGoodwrite/keygeneration/businessunlock",
+      "dependencies": "AndroidPackageManager/SigningInfo/Process forOSinspect; Java8 SHA/collections forreduction; actualCompiledPrincipals forRootmetadata",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.continuity.CompiledSourceIdentityTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "actualAndroid certificate/rotation/UID inspection execution",
+        "actualcertificates orprivatekeycustody/enrollment",
+        "fullcompiledpolicyHash orLastGood+epochtransaction",
+        "Root/grant/source-owner-auth/trustunlock"
+      ],
+      "integrationGate": "KeepbusinessUNCONFIGURED/LOCKED; actual OS signer leg andcompiledRoot leg mustboth match lastgood andnormalAndroidpackage rules; mismatch requiresnative4steps/separateownerAuth andverifiederasure beforeepochcommit. Never updateLastGood onunknownanomaly.",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
     }
   ],
   "parallelPending": [

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R31",
+  "revision": "R32",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -134,7 +134,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "具体领域命令、状态持久化、Popup归属、环境删除",
-      "existingEvidence": "仅功能与能力分组；R30真实BrowserModels/WorkspaceCatalog/TabCatalog/BrowserCoordinator/PartitionCatalog/GeckoSessionOwner/SessionDisplayBinding，模型HOST及NativeGeckoAPI编译分层；无持久BrowserStore/正确恢复/A04/完整主窗口接通；R31实际SearchEngines/ExternalNavigation和选定Tab当前revision后SDKloadUri调用；Nativeowner在open前绑定，149主工程HOST；非实际OSIntent/Gecko/DNS/Source解锁或完整浏览器通过",
+      "existingEvidence": "仅功能与能力分组；R30真实BrowserModels/WorkspaceCatalog/TabCatalog/BrowserCoordinator/PartitionCatalog/GeckoSessionOwner/SessionDisplayBinding，模型HOST及NativeGeckoAPI编译分层；无持久BrowserStore/正确恢复/A04/完整主窗口接通；R31实际SearchEngines/ExternalNavigation和选定Tab当前revision后SDKloadUri调用；Nativeowner在open前绑定，149主工程HOST；非实际OSIntent/Gecko/DNS/Source解锁或完整浏览器通过；R32实际BackCoordinator/SigningIdentity/CompiledSourceIdentity及Startup只读身份接入；33主源码168HOST，单层Back及signer/Root元数据不是OS实机/四步来源授权/解锁完成",
       "completionDeliverables": [
         "数据模型",
         "所有正常与失败动作",
@@ -522,7 +522,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "签名身份、可信基线密封、两次系统验证、私有集合销毁",
-      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证",
+      "existingEvidence": "四步与A-B-C规则已有模型，平台未验证；R32实际BackCoordinator/SigningIdentity/CompiledSourceIdentity及Startup只读身份接入；33主源码168HOST，单层Back及signer/Root元数据不是OS实机/四步来源授权/解锁完成",
       "completionDeliverables": [
         "状态持久化和恢复",
         "全部入口闸门",

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R31",
+  "revision": "R32",
   "authority": [
     "O26",
     "O27",
@@ -51,6 +51,18 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "合成A→异常B→正常C、版本/签名限制、两次新系统验证与无锁/取消；不清日常资料"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java",
+          "kind": "unit-compiled-root-metadata",
+          "purpose": "actualunconfiguredRoot/strictfingerprints/noDynamicRegistrationAPI;3HOSTtestsnottrustunlock",
+          "state": "host-tested-noformalRoot"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java",
+          "kind": "unit-signing-metadata-only",
+          "purpose": "4HOST publicTOYoctet hash/history/bounds/immutability;notcertificates/AndroidOS/privatekey custody",
+          "state": "main-project-HOST-pure-metadata-only"
         }
       ]
     },
@@ -263,6 +275,12 @@
           "kind": "unit-real-navigation-targets",
           "purpose": "11HOST queries4providers/strictHTTP/userinfo/UTF16/UnicodeIDNpreservation/IPv6/ports/noSecretSearchFallback/URLbounds+fixedpoint;notGecko/DNS orOSIntent",
           "state": "host-tested-no-network"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BackCoordinatorTest.java",
+          "kind": "unit-native-owned-back-reducer",
+          "purpose": "12HOST real reducer/synthetic layer priority/revision/pending/unknown/stalepublication/thread/reentrancy/sourceLockedcancel, notAndroidactualBack",
+          "state": "host-tested-not-Android-UI"
         }
       ]
     },
@@ -522,26 +540,28 @@
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "APK真实签名锚与合法轮换验证",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R32 actual Android own-package/UID/single-signer/history API compile;4HOST publicTOY-octet metadata tests, NOTOSsigning inspection/certificates/privatecustody",
       "runtimePending": true,
-      "testReferenceGroup": "continuity"
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "APK编译根公钥/策略身份",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R32 actual ownedBack single-layer native reducer andcompiledRoot publicmetadata;15newpureHOSTtests; notAndroid UI orsourceunlock",
       "runtimePending": true,
-      "testReferenceGroup": "continuity"
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
@@ -1638,15 +1658,16 @@
       "group": "browser",
       "kind": "native-code",
       "responsibility": "IME/模态/全屏/浮层/子屏/Popup/history/环境单次返回",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R32 actual ownedBack single-layer native reducer andcompiledRoot publicmetadata;15newpureHOSTtests; notAndroid UI orsourceunlock",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
@@ -3409,6 +3430,17 @@
         "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
         "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
         "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java"
+      ]
+    },
+    {
+      "group": "continuity",
+      "kind": "actual-source-metadata-and-owned-back",
+      "summary": "R32按总树补BackCoordinator/SigningIdentity/CompiledSourceIdentity。原生Back只一层，未知不落下一层，原执行者迟到结算不发布新代；来源只读自身OS签名和APK编译Root元数据，Startup仍UNCONFIGURED/LOCKED，不写lastGood/不解锁。",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+        "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+        "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+        "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java"
       ]
     }
   ],

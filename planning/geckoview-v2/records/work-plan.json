@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R31",
+  "revision": "R32",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -180,7 +180,7 @@
       ],
       "name": "统一旧结构审查整理：主体价值耗尽后ZIP；重要凭据保留；其他价值耗尽后系统回收站",
       "depends": [],
-      "state": "in-progress-thirty-one-semantic-source-reviews-retained",
+      "state": "in-progress-thirty-two-semantic-source-reviews-retained",
       "dispositions": [
         "legacy-main-code-original-path-ZIP",
         "important-credentials-retained",
@@ -220,10 +220,10 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "continuedafterR30push:actualSearchEngines/ExternalNavigation files +selectedNative navigate method andbefore-open Tabowner binding",
-    "30actualmain sourcefiles,149mainHOST=146pure+3Androidclasspure;19HOST/11API-WIP. No AndroidIntent/Gecko/realnavigation execution",
-    "sourceRoot remainsunconfigured/locked, exportedlinkreceiver NOTactivated; noautomaticreplay or fakepage-success",
-    "unifiedL0 Preferences fullread-retained,31retained/66queued/0archived; known32MiBincrementalcompile budgetonly"
+    "continuedafterR31push:actualBackCoordinator singleownedlayer +SigningIdentity ownOSmetadata +CompiledSourceIdentity Rootmetadata",
+    "33mainsources168mainHOST=161pure+7Androidclasspure;21HOST/12API-WIP, noAndroidBack/signinginfo execution orRoottrustunlock",
+    "Startup usescompiledsourceRoot metadata/ownsigner accessor butstillUNCONFIGURED/LOCKED, noLastGoodstorewrites/ownerAuth/erasure",
+    "L0oldSystemBackDispatcher fullreadretained;32retained65queued0archived; known32MiBincrementalcompile only"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -238,7 +238,7 @@
     "I0",
     "L0"
   ],
-  "latestOwnerContinuation": "O50记得推送后接着工作，机主远端分析不是暂停指令",
+  "latestOwnerContinuation": "O51continue，O50推送后继续工作/机主远端分析不暂停",
   "primaryFocus": {
     "authority": "O45",
     "work": "formal main-program and administrator mechanism source implementation",

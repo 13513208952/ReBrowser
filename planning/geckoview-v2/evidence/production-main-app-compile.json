@@ -31,6 +31,10 @@
       "sha256": "98f1756f5e9a9ccf9037b82e2d8e92d7e96944dfec9d0754fae7700d56fe7e66"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "sha256": "8582f4404b883c98b2f5dd135f80553456eec861e1301193ddafd8d2d4b84df8"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
       "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
     },
@@ -69,6 +73,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
+      "sha256": "fd097ff2cb10699838df4eccb65854c0884e5305638d6354c8418979193074b1"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
@@ -123,8 +131,8 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 16,
-  "compiledClassFiles": 44,
+  "productionJavaSourceFiles": 17,
+  "compiledClassFiles": 51,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -141,6 +149,12 @@
     {
       "class": "io.github.rebrowser.control.ControlDecoderTest",
       "tests": 18,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ControlChallengeStoreTest",
+      "tests": 12,
       "failures": 0,
       "errors": 0
     },
@@ -175,7 +189,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 89,
+  "unitTestsPassed": 101,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -195,5 +209,7 @@
   "businessSourceGate": "UNCONFIGURED/LOCKED until real continuity integration; no debug bypass",
   "commandAdmissionOrEffectsImplemented": false,
   "oldApplicationOrDataModified": false,
-  "legacySourceIsolation": "old main/test Java source sets exclude io/github/rebrowser/**; standalone v2 only imports that package root"
+  "legacySourceIsolation": "old main/test Java source sets exclude io/github/rebrowser/**; standalone v2 only imports that package root",
+  "processLocalChallengeAdmissionImplemented": true,
+  "durableJobAdmissionOrEffectDispatchImplemented": false
 }

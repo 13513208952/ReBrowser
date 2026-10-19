@@ -49,6 +49,10 @@
       {
         "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
         "sha256": "64d7f3e5c49c25afeaa0bf6838d144394505fefa4df1cc4ce986d10cdb6ec350"
+      },
+      {
+        "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+        "sha256": "8582f4404b883c98b2f5dd135f80553456eec861e1301193ddafd8d2d4b84df8"
       }
     ],
     "classFiles": [
@@ -115,6 +119,46 @@
       {
         "path": "io/github/rebrowser/bootstrap/ProcessRole.class",
         "sha256": "55db0335d0f13961ea5e0c6581dc6475992d7d2ec9cf15c8b717b1d3a0dfc475",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$1.class",
+        "sha256": "c1be88545d600e245f09b191eed8c246803d7e80359de570ed9dc690ff7c7b47",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$Admission.class",
+        "sha256": "0a5908d3fe9272ab2b4a950dc512e867caed6f74fc86bfb9ff190e2fafe4c79a",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$Context.class",
+        "sha256": "7b8f298164c96c9df0690ba66bcc6c9066d578a3bbef3d18dbb0dc758472b1cc",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$Failure.class",
+        "sha256": "d07b6e85b7b02a69559f568117b082ae9d7d9d9902e1f1a72f5f4be5085c9c19",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$Pending.class",
+        "sha256": "3106ad45cef64bafa84c2696aedda27301898fe0d249c7207ae186a19ec2ca31",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$Rejected.class",
+        "sha256": "76f8257f18f1ecf1de219ed6b59a16a77cca96580ea41bcad4c38e06523a346f",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore$Template.class",
+        "sha256": "8567c70de1898880252761725f048bb4732e288aba1eebe1159d3617cae55a76",
+        "classMajor": 52
+      },
+      {
+        "path": "io/github/rebrowser/control/ControlChallengeStore.class",
+        "sha256": "700f51fc7b7fd9e937a3890054b920c7773660f78d4e4cbd2e0c649a5cc9a779",
         "classMajor": 52
       },
       {
@@ -281,9 +325,9 @@
     "keystoreOrRealCredentialsAccessed": false,
     "temporaryClassDirectoryRemoved": true
   },
-  "runtimeSourceFilesCompiled": 11,
-  "junitTestsPassed": 89,
-  "junitOutput": "JUnit version 4.13.2\n.........................................................................................\nTime: 1.955\n\nOK (89 tests)\n\n",
+  "runtimeSourceFilesCompiled": 12,
+  "junitTestsPassed": 101,
+  "junitOutput": "JUnit version 4.13.2\n.....................................................................................................\nTime: 0.886\n\nOK (101 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -331,8 +375,16 @@
       "sha256": "64d7f3e5c49c25afeaa0bf6838d144394505fefa4df1cc4ce986d10cdb6ec350"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "sha256": "8582f4404b883c98b2f5dd135f80553456eec861e1301193ddafd8d2d4b84df8"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
+      "sha256": "fd097ff2cb10699838df4eccb65854c0884e5305638d6354c8418979193074b1"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
@@ -369,8 +421,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 1431871488,
-  "memAvailableBefore": 8220069888,
+  "freeBytesBefore": 1392656384,
+  "memAvailableBefore": 8187473920,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

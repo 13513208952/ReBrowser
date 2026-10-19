@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R25",
+  "revision": "R26",
   "authority": [
     "O26",
     "O27",
@@ -147,6 +147,12 @@
           "kind": "unit-strict-transport-json-syntax",
           "purpose": "外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入",
           "state": "host-tested-Android-IPC-and-admission-pending"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
+          "kind": "unit-real-challenge-admission-boundary",
+          "purpose": "30s exact-frame/context/nonce, replay/expiry, authorize failure/unknown reservation burn,16concurrent/reentrant attempts,1MiB retained-frame cap/clock rollback; no actual effects/durable journal",
+          "state": "host-tested-native-durable-admission-pending"
         }
       ]
     },
@@ -997,14 +1003,15 @@
       "group": "control",
       "kind": "native-code",
       "responsibility": "目标/epoch/服务实例/策略revision/动作参数绑定的30秒monotonic挑战；并发一次消费在授权后原子准入",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R26 actual process-local challenge issuance/binding/auth-recheck/one-use reservation callbacks and bounded races; durable native journal+policy atomicity/dispatch not complete",
       "runtimePending": true,
-      "testReferenceGroup": "control"
+      "testReferenceGroup": "control",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
@@ -3286,6 +3293,15 @@
         "rebrowser/settings.gradle",
         "rebrowser/app/build.gradle",
         "rebrowser/app/src/main/AndroidManifest.xml",
+        "planning/geckoview-v2/evidence/production-main-app-compile.json"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "native-challenge-and-process-local-admission",
+      "summary": "实际17字段服务器challenge/30s/1MiB内存界限/每身份容量，授权重查后一次消费并调用原生job reservation；异常未知不重放。101HOST测试，真实持久化/效果调度仍待接入",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
         "planning/geckoview-v2/evidence/production-main-app-compile.json"
       ]
     }

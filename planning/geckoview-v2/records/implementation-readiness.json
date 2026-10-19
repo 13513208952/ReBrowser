@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R25",
+  "revision": "R26",
   "authority": [
     "O41",
     "O42",
@@ -467,6 +467,37 @@
         "command admission/IPC/effects or Android device execution"
       ],
       "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "native bounded exact-frame30s challenges and process-local authorization/one-use/job-reservation callback boundary; NOT durable cross-store atomicity/dispatcher",
+      "researchEvidence": [
+        "records/control-proof-format.json",
+        "records/authority-model.json",
+        "records/domain-interfaces.json"
+      ],
+      "inputOutput": "native context/template -> unsigned17field frame; verifiedKeyProof+native policy/reservation callbacks -> non-null job receipt once or reject; no effects dispatched",
+      "dependencies": "actual production AdminProofVerifier/ControlEnvelope/CryptoEncoding, Java8 clocks/collections/SecureRandom",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.control.ControlChallengeStoreTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "real target Keystore/enrollment or current source authorization",
+        "native durable idempotency/SQLite+policy atomicity",
+        "actual command/effect dispatch or task budget release",
+        "complete low delegation/disable/owner-grant/action schema implementation"
+      ],
+      "integrationGate": "trusted native coordinator must serialize live policy and durable idempotent job transaction; effects only after successful receipt/current domain gate. Reservation exceptions burn proof and require fresh authorized query, never route replay; no public endpoint until full admission complete"
     }
   ],
   "parallelPending": [

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R25",
+  "revision": "R26",
   "authority": [
     "O31",
     "O32"
@@ -634,12 +634,15 @@
       "sha256": "ba54733f37fc9cd88232581838799693fe4c3ac760d6a788f4b83491bc24610c",
       "bytes": 3245,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T09:56:37+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧ADB入口的challenge/clear/result和180s旧协议职责，当前旧维护仍需保留。新source-neutral证明不继承旧shell-only入口限制/全局单pending清空；正式新Provider必须等完整认证/准入/隐私结果接入。",
+      "evidenceRefs": [
+        "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+        "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

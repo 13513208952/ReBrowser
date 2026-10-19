@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R25",
+  "revision": "R26",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -422,7 +422,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "数值档位、高级边界H、逐动作schema、错误/幂等/异步结果",
-      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现；R17首个固定帧生产类已编写/HOST12JUnit，未含JSON/准入/Android；领域仍未完成；R20严格语法/不可变UnverifiedProof生产类，三文件合跑42JUnit+1033独立JSON对照和实际Android API编译；逐动作schema、真实验签/委托、并发准入/IPC仍未完成；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成",
+      "existingEvidence": "R9 178逐动作等级策略与1925符号比较；R14 17字段请求签名字节、895主机JCA/独立Python/OpenSSL及7准入演算；不等于完整动作DTO/Android授权实现；R17首个固定帧生产类已编写/HOST12JUnit，未含JSON/准入/Android；领域仍未完成；R20严格语法/不可变UnverifiedProof生产类，三文件合跑42JUnit+1033独立JSON对照和实际Android API编译；逐动作schema、真实验签/委托、并发准入/IPC仍未完成；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成；R26实际挑战存储/30s精确帧匹配/进程内单次准入回调/1MiB容量，17源码主工程101HOST测试；真实durable journal/跨policy原子性/效果调度未完成",
       "completionDeliverables": [
         "等级提案",
         "动作拆细",

@@ -1,5 +1,5 @@
 {
-  "revision": "R25",
+  "revision": "R26",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -257,6 +257,12 @@
       "time": "2026-10-19T09:32:30+08:00",
       "finding": "O45要求收敛广泛研究，直接聚焦主程序和管理员调试代码；不能继续只推进协议/SQL候选而不建立正式主程序。",
       "resolution": "暂停SQL候选扩展并保留到树外；新增独立rebrowser Android工程，复用已准入源码但排除旧包/旧资产，原生Application/进程与来源闸门/Gecko owner/主窗口/管理员控制台实际编译。加入APK编译身份和实际P256验签、等级规则；production正式表为空且来源未接通保持锁定，签名有效不执行命令。离线Gradle编译/manifest/89HOST测试通过，无JNI/dex/APK/装机/真实key。主树用API/WIP诚实标应用迭代中。；旧Application完整审读保留，旧main/test加入仅排除新namespace的源集隔离，避免新增Gecko imports破坏v1维护；未声称已重跑旧672测试。"
+    },
+    {
+      "id": "REV44",
+      "time": "2026-10-19T09:56:37+08:00",
+      "finding": "主程序与编译身份验签已写，但不能把签名有效直接当命令准入；挑战必须服务器字段、时间/策略绑定和并发一次使用，未知job提交结果不换路重放。",
+      "resolution": "直接实现ControlChallengeStore及12项HOST测试：30s精确签名字节、native context、授权重查、单次job回调、spent保留、回调异常烧nonce、并发/重入和1MiB签名帧保留预算。17主源码实际Gradle/manifest/101HOST通过。明确进程monitor不证明SQLite/policy跨存储原子性，未接外部Provider/效果执行；Android bootclasspath不提供lambda metafactory的具体编译阻碍改小循环后通过，未绕过验证。旧Provider审读保留。"
     }
   ]
 }

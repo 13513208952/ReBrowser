@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R30",
+  "revision": "R31",
   "authority": [
     "O26",
     "O27",
@@ -257,6 +257,12 @@
           "kind": "unit-real-browser-catalogs",
           "purpose": "14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore",
           "state": "host-tested-not-Android-browser"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java",
+          "kind": "unit-real-navigation-targets",
+          "purpose": "11HOST queries4providers/strictHTTP/userinfo/UTF16/UnicodeIDNpreservation/IPv6/ports/noSecretSearchFallback/URLbounds+fixedpoint;notGecko/DNS orOSIntent",
+          "state": "host-tested-no-network"
         }
       ]
     },
@@ -1600,30 +1606,32 @@
       "group": "browser",
       "kind": "native-code",
       "responsibility": "原生搜索提供者与明确目标加载",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R31 actual4provider bounded UTF8query/strictstructuralHTTP input11HOSTtests andSDK37bootcompile; not GeckoIDNA/principal/authorization",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
       "group": "browser",
       "kind": "native-code",
       "responsibility": "拒绝无效/userinfo/控制字符URL，重建私有Intent丢外部extras/selector/ClipData，合法链接入新临时隔离环境",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R31 actual Android narrow ACTION_VIEW freshIntent/privateaction one-shot code/APIcompile; noAndroidIntent runtime oractiveexportedlinkreceiver",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
@@ -3391,6 +3399,16 @@
         "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
         "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
         "planning/geckoview-v2/evidence/production-main-app-compile.json"
+      ]
+    },
+    {
+      "group": "browser",
+      "kind": "actual-navigation-input-and-Android-link-boundary",
+      "summary": "SearchEngines/ExternalNavigation正式源码，选定环境/标签/revision检查后NativeCoordinator.loadUri调用；Nativeinitializer在open前拿真实Tabowner。无系统receiver激活/Source解锁/正确Checkpoint/Android实机动作；加载提交不等于网页成功，不回滚代次重放。",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
+        "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
+        "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java"
       ]
     }
   ],

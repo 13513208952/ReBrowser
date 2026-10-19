@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R30",
+  "revision": "R31",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -134,7 +134,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "具体领域命令、状态持久化、Popup归属、环境删除",
-      "existingEvidence": "仅功能与能力分组；R30真实BrowserModels/WorkspaceCatalog/TabCatalog/BrowserCoordinator/PartitionCatalog/GeckoSessionOwner/SessionDisplayBinding，模型HOST及NativeGeckoAPI编译分层；无持久BrowserStore/正确恢复/A04/完整主窗口接通",
+      "existingEvidence": "仅功能与能力分组；R30真实BrowserModels/WorkspaceCatalog/TabCatalog/BrowserCoordinator/PartitionCatalog/GeckoSessionOwner/SessionDisplayBinding，模型HOST及NativeGeckoAPI编译分层；无持久BrowserStore/正确恢复/A04/完整主窗口接通；R31实际SearchEngines/ExternalNavigation和选定Tab当前revision后SDKloadUri调用；Nativeowner在open前绑定，149主工程HOST；非实际OSIntent/Gecko/DNS/Source解锁或完整浏览器通过",
       "completionDeliverables": [
         "数据模型",
         "所有正常与失败动作",
@@ -172,7 +172,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "引擎响应流、权限提示、文件/媒体/安装器生命周期",
-      "existingEvidence": "R15实际Gecko158权限/clipboard/scoped读写API签名javac通过；pinned模块普通权限EXPIRE_NEVER与v1有限期限冲突已确认；四平台动作具体DTO/返回/取消契约，非Android权限/位置/clipboard实际测试；R16执行固定SDK模块JS+合成Services/actors的28项主机断言，不等于真实权限管理器或Android；R19固定Java四方法体+合成LocationManager16断言：COARSE选择前可发布最精确缓存，paused仍requested不移除listener；不是OS/Native实际坐标结果",
+      "existingEvidence": "R15实际Gecko158权限/clipboard/scoped读写API签名javac通过；pinned模块普通权限EXPIRE_NEVER与v1有限期限冲突已确认；四平台动作具体DTO/返回/取消契约，非Android权限/位置/clipboard实际测试；R16执行固定SDK模块JS+合成Services/actors的28项主机断言，不等于真实权限管理器或Android；R19固定Java四方法体+合成LocationManager16断言：COARSE选择前可发布最精确缓存，paused仍requested不移除listener；不是OS/Native实际坐标结果；R31实际SearchEngines/ExternalNavigation和选定Tab当前revision后SDKloadUri调用；Nativeowner在open前绑定，149主工程HOST；非实际OSIntent/Gecko/DNS/Source解锁或完整浏览器通过",
       "completionDeliverables": [
         "逐项delegate映射",
         "流与取消",

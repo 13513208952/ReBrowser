@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R30",
+  "revision": "R31",
   "authority": [
     "O31",
     "O32"
@@ -1088,12 +1088,14 @@
       "sha256": "dbc40f7f0aa46e7f1536062c05d89f941aa603943dc5ef438e1f291dfeff6048",
       "bytes": 8496,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T16:44:10+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧偏好/四搜索提供者/主页和地址选择语义；旧设置仍运行维护且有功能验收价值。新SearchEngines保留4固定搜索入口但不抄宽松HTTP/用坏URL猜搜索的行为，不迁移SharedPreferences或账户数据。",
+      "evidenceRefs": [
+        "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

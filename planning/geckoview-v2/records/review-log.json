@@ -1,5 +1,5 @@
 {
-  "revision": "R30",
+  "revision": "R31",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -287,6 +287,12 @@
       "time": "2026-10-19T16:26:04+08:00",
       "finding": "机主明确主程序未完成并要求按总树继续补缺失文件；不能把管理员基础和工程编译称为浏览器完成。",
       "resolution": "直接编写7个浏览器/Gecko所有权文件：双层环境/临时副主/收起恢复/总64主5标签50/Popup及代次/不拆Unicode字符/分区epoch/强Session引用/View代次，Native业务协调按同环境共享context惰性创建。无持久化/恢复/A04成熟回调时不默认开放网页；Owner初始化要求真实reconciler/委托，Startup仍锁定。4纯类HOST测试，3Native类仅API-WIP。完整读旧Store/WorkspaceController保留，不移动旧版资料。资源仅known32MiB新增峰值，非APK构建授权。"
+    },
+    {
+      "id": "REV49",
+      "time": "2026-10-19T16:44:10+08:00",
+      "finding": "按树补浏览器导航必须区分地址/显式搜索、实际origin和单纯结构校验，外部Intent不能把extras/grants或目标环境带入内部动作；SDKopen之前还需要正确绑定NativeTabowner。",
+      "resolution": "R30push后继续写SearchEngines/ExternalNavigation，固定4搜索器和boundedHTTP结构/编码，坏显式URL不回落搜索泄漏凭据；UnicodeHost不使用旧JavaIDN静默映射。Intent新建只HTTP数据且privateaction也不信任。NativeCoordinator当前选中workspace/tab/revision后才loadUri，不报告pageSuccess/不重放；initializeropen前接真实Tabowner。30源码149主工程HOST(146pure)通过，NativeIntent/Gecko实机未执行，source仍锁定。O50远端分析不暂停。"
     }
   ]
 }

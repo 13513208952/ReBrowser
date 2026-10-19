@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R30",
+  "revision": "R31",
   "authority": [
     "O41",
     "O42",
@@ -815,6 +815,63 @@
         "Android Gecko runtime/cached finite permission reconciliation validation"
       ],
       "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "fixed4provider UTF8 search and explicit bounded structural HTTP(S)/address targets; Unicode host preserved toGecko notoldJavaIDN; no actual-origin/whitelist authority",
+      "researchEvidence": [
+        "records/application-code-files.json",
+        "records/domain-interfaces.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native explicit input or untrustedAndroidwebdata -> bounded immutableURLtarget/freshprivateIntent; not an authorized target or loaded-page result",
+      "dependencies": "Java8 URI/String/UTF8; Android Intent/Uri only forAPI boundary; no newlib/network/DNScalls",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.SearchEnginesTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "actualAndroid Intent runtime/GeckoURI/IDNA orDNS equivalence",
+        "entryRouter/sourceGate/isolatedtemporaryworkspace startup integration",
+        "origin/whitelist/account/login/gesture/permission authority",
+        "actual navigation completion or full browserready"
+      ],
+      "integrationGate": "No incomingextras/target IDs becomeauthority. Accept externalURL only aftersource/epoch check inNEWtemporarycontext. Nativeinitializer mustbind actualTabowner beforeopen; domain navigate checks currentselection/revision andcallercommittedintent. RealSDKdocument evidence required; no replay/load-success fromJava return.",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual Android incoming ACTION_VIEW rebuilt from HTTP(S)data only, no forwarding extras/selector/ClipData/categories/grantflags; one-shot privateaction revalidated asuntrusted",
+      "researchEvidence": [
+        "records/application-code-files.json",
+        "records/domain-interfaces.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native explicit input or untrustedAndroidwebdata -> bounded immutableURLtarget/freshprivateIntent; not an authorized target or loaded-page result",
+      "dependencies": "Java8 URI/String/UTF8; Android Intent/Uri only forAPI boundary; no newlib/network/DNScalls",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "actualAndroid Intent runtime/GeckoURI/IDNA orDNS equivalence",
+        "entryRouter/sourceGate/isolatedtemporaryworkspace startup integration",
+        "origin/whitelist/account/login/gesture/permission authority",
+        "actual navigation completion or full browserready"
+      ],
+      "integrationGate": "No incomingextras/target IDs becomeauthority. Accept externalURL only aftersource/epoch check inNEWtemporarycontext. Nativeinitializer mustbind actualTabowner beforeopen; domain navigate checks currentselection/revision andcallercommittedintent. RealSDKdocument evidence required; no replay/load-success fromJava return."
     }
   ],
   "parallelPending": [

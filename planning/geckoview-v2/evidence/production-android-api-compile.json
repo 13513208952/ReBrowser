@@ -75,6 +75,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
       "sha256": "b56ab8aceec452fe719e2ee1f66b5e1476be77c30c6bc9e9b30639f7c0976693"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
+      "sha256": "dba5dab12e6829a4cc9db92957dc5c4ad397b5b11a5be758b6a6b920e07eda65"
     }
   ],
   "classFiles": [
@@ -191,6 +195,31 @@
     {
       "path": "io/github/rebrowser/browser/BrowserModels.class",
       "sha256": "96b95599915bada90397fb3d7e19afc30ea9e80bea3263ad7fb8194e838bc54b",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/browser/SearchEngines$1.class",
+      "sha256": "0085c9e3c1a3721de62ec35125e71c965148100350196bce28df59e16f79ccd0",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/browser/SearchEngines$Kind.class",
+      "sha256": "faad32d982cf559c67e6c0467a63f5beec50ceeb7cd2e364168e6545af6eed3b",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/browser/SearchEngines$Provider.class",
+      "sha256": "32bb6d3f2e408bcc10e9412e7d7eb33831bdcc626fede01c0effa25070037d4f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/browser/SearchEngines$Target.class",
+      "sha256": "578c93454c4e82ece8903bf14ebe9158c29e9d5ad84d41f5fba0275ac321a9ae",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/browser/SearchEngines.class",
+      "sha256": "5aa75f9d7c042376ea3d4d395d5873aabfbfda8b5f730959ce68f176e90340eb",
       "classMajor": 52
     },
     {

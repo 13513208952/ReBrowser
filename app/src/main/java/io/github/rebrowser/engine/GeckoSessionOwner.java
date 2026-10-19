@@ -22,7 +22,7 @@ public final class GeckoSessionOwner {
         /** Native source/epoch/finite-permission reconciliation; throwing prevents runtime creation. */
         void reconcileBeforeOpen(PartitionCatalog.Lease partition,ComponentGate.BusinessPermit permit);
         /** Install native navigation/content/prompt/permission delegates BEFORE open. No queued loads/effects. No Activity capture. */
-        void installDelegates(GeckoSession session,PartitionCatalog.Lease partition);
+        void installDelegates(GeckoSession session,PartitionCatalog.Lease partition,Object nativeOwnerToken);
     }
     public static final class SessionRef {
         private final GeckoSessionOwner issuer;
@@ -46,18 +46,18 @@ public final class GeckoSessionOwner {
         this.gate=gate;this.runtime=runtime;this.partitions=partitions;this.initializer=initializer;this.capacity=capacity;
     }
     public void requireBindings(ComponentGate expectedGate,PartitionCatalog expectedPartitions){mainThread();if(gate!=expectedGate || partitions!=expectedPartitions)throw invalid();}
-    public SessionRef open(PartitionCatalog.Lease partition,ComponentGate.BusinessPermit permit){
-        mainThread();if(opening)throw new IllegalStateException("Reentrant session creation forbidden");opening=true;
-        try{return openInternal(partition,permit);}finally{opening=false;}
+    public SessionRef open(PartitionCatalog.Lease partition,Object nativeOwnerToken,ComponentGate.BusinessPermit permit){
+        mainThread();if(nativeOwnerToken==null)throw invalid();if(opening)throw new IllegalStateException("Reentrant session creation forbidden");opening=true;
+        try{return openInternal(partition,nativeOwnerToken,permit);}finally{opening=false;}
     }
-    private SessionRef openInternal(PartitionCatalog.Lease partition,ComponentGate.BusinessPermit permit){
+    private SessionRef openInternal(PartitionCatalog.Lease partition,Object nativeOwnerToken,ComponentGate.BusinessPermit permit){
         gate.checkCurrent(permit);partitions.requireActive(partition,permit);
         if(sessions.size()>=capacity)throw new IllegalStateException("Live session limit reached");
         initializer.reconcileBeforeOpen(partition,permit);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
         GeckoSession session=new GeckoSession(new GeckoSessionSettings.Builder().contextId(partitions.activeContextId(partition,permit)).build());
         SessionRef ref=new SessionRef(this,session,partition);sessions.put(ref,ref);
         try{
-            initializer.installDelegates(session,partition);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
+            initializer.installDelegates(session,partition,nativeOwnerToken);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
             session.open(runtime.requireRuntime(permit));session.setFocused(false);session.setActive(false);ref.state=State.OPEN_REQUESTED;return ref;
         }catch(RuntimeException failure){
             try{if(session.isOpen())session.close();}catch(RuntimeException cleanup){failure.addSuppressed(cleanup);}

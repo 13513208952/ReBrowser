@@ -1,10 +1,10 @@
-# ReBrowser v2 · 主程序与管理员系统实现 R30
+# ReBrowser v2 · 主程序与管理员系统实现 R31
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停；O41允许已搞清实现方法的总树文件按文件推进，O42再次明确推送后不自行停工。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
 > 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译、隔离R8 Release打包，以及O29授权手机上的[本地合成Native/扩展/MAIN世界/context子集](evidence/validation-android-local-synthetic.json)。**官网、真实播放、本人验证及Popup/恢复等仍未测**；不能宣称完整产品已实现或全部规划完成。
 
-> 状态：**主线已按O45转为主程序与管理员系统代码实现，调查只按具体阻碍开展**。独立 `rebrowser` Android 工程、Application/原生主窗口/内部管理员控制台/来源闸门/Gecko owner和编译身份验签已开始真实编码；28个本体源码已创建，其中18个HOST切片、10个API/WIP。主程序Gradle编译、清单合并及138项主工程HOST测试通过；另有1033项独立JSON对照。正式来源/根未配置保持业务锁定，完整浏览器和命令准入仍未完成。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
+> 状态：**主线已按O45转为主程序与管理员系统代码实现，调查只按具体阻碍开展**。独立 `rebrowser` Android 工程、Application/原生主窗口/内部管理员控制台/来源闸门/Gecko owner和编译身份验签已开始真实编码；30个本体源码已创建，其中19个HOST切片、11个API/WIP。主程序Gradle编译、清单合并及149项主工程HOST测试通过；另有1033项独立JSON对照。正式来源/根未配置保持业务锁定，完整浏览器和命令准入仍未完成。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
 
 ```mermaid
 mindmap
@@ -41,9 +41,9 @@ mindmap
 
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
-| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、18 HOST与10 API/WIP，138项主程序HOST测试 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
+| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、19 HOST与11 API/WIP，149项主程序HOST测试 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 全部目标运行代码逐文件展开，区分PLAN与HOST，测试等辅助只概括引用 | O26／O27／O41，HOST不等于Android集成 |
-| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，138项主工程JUnit（JVM切片135项） |
+| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，149项主工程JUnit（JVM切片146项） |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
 | [旧结构审查整理：统一任务](records/structure-retirement-policy.json)／[回收站记录](records/noncode-retirement-review.json) | 主体ZIP／凭据保留／其他价值耗尽进Trash是同任务内分流，与新版本工作并行 | O37；不把一次整理当停止节点 |
@@ -79,9 +79,10 @@ mindmap
 | [Native网站权限契约](records/gecko-permission-design.json)／[来源与API编译](evidence/gecko-permission-api-and-lifetime.json) | clipboard原生回调与context字段已编译；永久engine allow和有限grant期限差异已确认 | 有限期限/粗细定位/停止使用仍待实测，不复制v1补丁 |
 | [四平台动作具体契约](records/platform-action-contracts.json)／[主机DTO演算](review_platform_actions.py) | 参数/原生窗口代次/安装sourceRef/共享方法/完成与取消 | 四个动作子集，不是178动作DTO完成 |
 | [控制请求签名字节契约](records/control-proof-format.json)／[跨实现主机检查](evidence/control-proof-cross-implementation.json) | 17字段帧、895项JCA/独立Python与OpenSSL、重放与新proof幂等规则 | 公开标量1合成材料，非Android授权实现 |
-| [生产源码Android API编译](evidence/production-android-api-compile.json) | JVM切片18文件SDK37.2 bootclasspath编译；独立主程序28源码以实际AGP编译 | 编译不等于Android运行，也不宣称API30已测 |
+| [生产源码Android API编译](evidence/production-android-api-compile.json) | JVM切片19文件SDK37.2 bootclasspath编译；独立主程序30源码以实际AGP编译 | 编译不等于Android运行，也不宣称API30已测 |
 | [原文字节codec](records/mail-codec-implementation-contract.json) | RAW/zlib选择算实际帧开销；有界inflate/完整原文摘要、私有对象管线HOST通过 | 不是DB引用/游标提交或官网同步完成 |
 | [流式对象加密边界](records/object-aead-implementation-contract.json)／[新旧互通](evidence/object-aead-production-interop.json) | 新对象一次性ID/canonical catalog头/32KiB认证帧，36双向与精确字节检查 | 不等于ZLIB原文验证、DB提交或Android加密通过 |
+| [实际导航输入](../../app/src/main/java/io/github/rebrowser/browser/SearchEngines.java)／[Android外链边界](../../app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java) | 4固定搜索入口/结构化HTTP目标/不透传Intent extras/grants，选中Tab/revision后SDKloadUri；11新HOST测试 | 不把URL结构当实际origin/权限；Native外链receiver未激活、主窗口仍锁定，不代表已运行浏览 |
 | [浏览器领域](../../app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java)／[工作区](../../app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java)／[标签](../../app/src/main/java/io/github/rebrowser/browser/TabCatalog.java) | 总树7个新文件含不可变模型/分区/GeckoSession/View所有权；20项新HOST测试及Native API编译 | 主窗口网页接入/持久BrowserStore/正确恢复/A04尚缺，不是完整可用浏览器；retire/close不等于数据抹除或任务结束 |
 | [实际动作参数](../../app/src/main/java/io/github/rebrowser/control/ActionSchemas.java) | 四项已知原生窗口schema严格类型/字段/整数/引用/安装源配对，接入内部控制台；保留原始signedargs | 只含4项，其他174项拒绝；不是有效权限/真实target/revision/OS动作执行 |
 | [真实任务日志](../../app/src/main/java/io/github/rebrowser/core/TaskJournal.java)／[任务分轴快照](../../app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java) | 真实work/dispatch-intent/outcome/end分轴，request/task单次提交，进程丢失未知不重放；235HOST SQL含196转换对/2writer/回滚重开 | 未执行Android DAO/实际效果；原执行者settlement与新代数据发布分开，快照不释放槽位 |
@@ -116,7 +117,7 @@ mindmap
 | [规划自检](review_plan.py) | 标准库检查原话摘要、引用、覆盖与规则案例 | 不是产品功能测试 |
 | [四步确认演算](matrices/confirmation-cases.csv) | 点击、逐次系统验证、无锁例外、销毁核对前保持锁定 | 不调用设备身份验证、不执行删除 |
 | [跨异常包来源演算](matrices/source-continuity-cases.csv) | lastKnownGood不被lastSeen覆盖；正常后续包认回原数据 | 仅符号演算，真实APK救援仍待样机验证 |
-| [R30自检结果](reviews/R30-browser-catalog-Gecko-ownership-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
+| [R31自检结果](reviews/R31-native-navigation-input-boundary-review.json) | 结构/演算/主树路由/旧代码台账与分级运行证据 | 不将合成运行当完整官网/产品通过 |
 
 ## 使用约定
 

@@ -49,8 +49,21 @@ public final class BrowserCoordinator {
         PartitionCatalog.Lease context=contexts.get(workspace);
         if(context==null){context=partitions.create(PartitionCatalog.Domain.BROWSER,workspace,permit);contexts.put(workspace,context);}
         engineMutation=true;
-        try{GeckoSessionOwner.SessionRef opened=sessions.open(context,permit);live.put(tab,opened);return opened;}
+        try{GeckoSessionOwner.SessionRef opened=sessions.open(context,tab,permit);live.put(tab,opened);return opened;}
         finally{engineMutation=false;}
+    }
+    /**
+     * Native explicit UI/current-authorized administrator only. Caller must commit its job
+     * dispatch intent before entry. Return is a native dispatch attempt, NOT page success;
+     * no retry or generation rollback after a thrown/unknown SDK result. Delegates must
+     * bind actual document evidence, never acquire a fresh lease for an old event.
+     */
+    public TabCatalog.DocumentLease navigateSelected(WorkspaceRef expectedWorkspace,TabRef expectedTab,long expectedTabsRevision,SearchEngines.Target target,ComponentGate.BusinessPermit permit){
+        access(permit);if(target==null || workspaces.snapshot(permit).selected()!=expectedWorkspace)throw BrowserModels.invalid();
+        TabsView group=tabs.snapshot(expectedWorkspace,permit);if(group.selected()!=expectedTab || group.revision()!=expectedTabsRevision)throw new IllegalStateException("Stale navigation target");
+        GeckoSessionOwner.SessionRef ref=requireSelectedSession(permit);
+        TabCatalog.DocumentLease lease=tabs.beginDocument(expectedTab,expectedTabsRevision,permit);engineMutation=true;
+        try{sessions.requireOpen(ref,permit).loadUri(target.url());return lease;}finally{engineMutation=false;}
     }
     public TabCatalog.CloseResult closeTab(TabRef tab,long expectedTabsRevision,ComponentGate.BusinessPermit permit){
         access(permit);TabsView view=tabs.snapshot(tab.workspace(),permit);if(view.revision()!=expectedTabsRevision)throw new IllegalStateException("Stale tab revision");

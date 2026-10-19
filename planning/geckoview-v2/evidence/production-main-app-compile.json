@@ -32,11 +32,19 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
-      "sha256": "d6df018af63a77051928c65c245fdbcca1ffc4a8482e29188afde91d00bc9e60"
+      "sha256": "d9d0b75fa6aeee8f2696cebdae6a0d6afb2b13f675d2025c120bf5454c97ee9f"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
       "sha256": "2b056c9470e052cdcf9b10f1b4935a69ec8dbd9fa9411694cae95e7bc11cfbd9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
+      "sha256": "e8a2b0ac3ef3d38895046d3f25f04c5cd63a522cb4083be7f9ac2186734f04a7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
+      "sha256": "dba5dab12e6829a4cc9db92957dc5c4ad397b5b11a5be758b6a6b920e07eda65"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
@@ -92,7 +100,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
-      "sha256": "25f4d13a7430c2cb18000295034e3dae69d67598923ad62577c6c61a215208e3"
+      "sha256": "261f7be6ed357b3129d334b0fb1b5aa6c7b336b4b35b6f5e9c3026630bca89f4"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
@@ -121,6 +129,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java",
       "sha256": "7835b2a2a28a7e29480eff1290233166641a92442af072187d48e2a07485fed5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java",
+      "sha256": "dea7444edc3bf3649e1333ccf18e3596a1b70388643a5ecf5e72cebd36f268b5"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java",
@@ -195,8 +207,8 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 28,
-  "compiledClassFiles": 97,
+  "productionJavaSourceFiles": 30,
+  "compiledClassFiles": 102,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -207,6 +219,12 @@
     {
       "class": "io.github.rebrowser.crypto.ObjectAeadTest",
       "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.browser.SearchEnginesTest",
+      "tests": 11,
       "failures": 0,
       "errors": 0
     },
@@ -283,7 +301,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 138,
+  "unitTestsPassed": 149,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -314,5 +332,8 @@
   "allActionArgumentSchemasComplete": false,
   "knownIncrementalCompileNewDiskPeakBytes": 33554432,
   "browserCatalogAndNativeSessionOwnershipSourceAdded": true,
-  "browserStartupUiNavigationOrCheckpointRestoreIntegrated": false
+  "browserStartupUiNavigationOrCheckpointRestoreIntegrated": false,
+  "nativeSelectedNavigationCodeAdded": true,
+  "externalIntentReceiverActivated": false,
+  "browserSourceUnlockAndUiReady": false
 }

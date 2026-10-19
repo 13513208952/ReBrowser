@@ -1,5 +1,5 @@
 {
-  "revision": "R28",
+  "revision": "R29",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -275,6 +275,12 @@
       "time": "2026-10-19T10:37:54+08:00",
       "finding": "仅request/job持久映射不足：需先登记真实work、在外部路由前持久化intent，不能把效果已观察/超时/进程丢失当真实工作结束。还发现DB锁/IO之后原先只做过早期限检查，嵌套事务会让返回值被误当已提交。",
       "resolution": "直接实现TaskSnapshot7阶段/分轴、TaskJournal原执行者ticket/单次workstart/intent/outcome/end/recovery和单一request-task提交，禁止外层嵌套receipt；无Java monitor等待SQLite写锁避免bridge锁反转。CommitFence强制同线程事务内重读当前授权/期限，异常nonce保持spent。111主工程HOST及235HOST SQLite检查(196转换对/2writer/回滚重开)，均不冒充AndroidDAO或全策略原子性。L0旧AdminEnvironment保留，来源锁诊断不能照搬打开业务库。"
+    },
+    {
+      "id": "REV47",
+      "time": "2026-10-19T10:45:42+08:00",
+      "finding": "严格JSON语法不等于动作参数合法，policy178条不能被当成178个参数schema或handler。",
+      "resolution": "在R28推送后继续直接实现四项有具体契约的ActionSchemas，原生控制台接入严格类型/字段/安全整数/引用/permissionpurpose及installerpair检查；仅返回保留原signedargs的unverifiedclaims。未知动作一律拒绝，不为未决174schema提供宽松默认。21主源码/118主工程HOST(115pure)编译测试，未执行真实Android/OS动作。"
     }
   ]
 }

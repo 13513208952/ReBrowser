@@ -67,6 +67,8 @@ def review():
     assert app['mergedManifestPackage'] == 'io.github.rebrowser.development'
     assert app['mergedApplicationClass'] == 'io.github.rebrowser.ReBrowserApplication'
     assert app['adminActivityExported'] == 'false'
+    assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
+    assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
     assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + app.get('hostAndroidClassPureIdentityTests',0)
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
@@ -90,6 +92,7 @@ def review():
             'productionAndroidApiOnlyFilesInProgress':len(android_entries),
             'standaloneMainAppCompiled':True,
             'standaloneMainAppHostTests':app['unitTestsPassed'],
+            'concreteTypedActionSchemasImplemented':app['concreteActionArgumentSchemasImplemented'],
             'nativeIdempotencyDdlHostSqlChecks':ledger['hostSqlChecks'],
             'nativeTaskJournalHostSqlChecks':tasks['hostSqlChecks'],
             'nativeTaskTransitionPairs':tasks['transitionPairsTested'],

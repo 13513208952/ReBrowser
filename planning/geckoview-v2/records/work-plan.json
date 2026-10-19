@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R28",
+  "revision": "R29",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -220,10 +220,9 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "TaskJournal/TaskSnapshot actual production code and request/task same top-level transaction bridge",
-    "private synchronous CommitFence checks current policy/deadline inside reservation; escaped/threaded/skipped fences fail, unknown reservation stays spent",
-    "20main sources/111mainHOST(108pure+3Androidclasspure);235HOST actual-class taskSQL checks,196transitionpairs and2writeronce;NOTAndroidDAO/completepolicyadmission",
-    "unifiedL0fullreadAdminEnvironment retained;28retained/69queued/0archived"
+    "continued afterR28push into actual ActionSchemas for4known native-window actions, typed claims connected tointernalconsole;unsupportedactions reject",
+    "21main sources/118mainHOST(115pure+3Androidclasspure);14HOST/7API-WIP. NoAndroidruntime/OSaction/effectdelivery",
+    "R28TaskJournal/CommitFence remains actualsource235HOSTSQL; fullNativepolicy/domaincoordinator stillneeded; unifiedL0retained28/69queued"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

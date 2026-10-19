@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R28",
+  "revision": "R29",
   "authority": [
     "O26",
     "O27",
@@ -171,6 +171,12 @@
           "kind": "unit-original-request-identity",
           "purpose": "fresh nonce/policy/grant same content identity; action/scope/raw args change conflicts, immutable digest/schema arrays; Android SQLite methods separately pending",
           "state": "main-project-HOST-tested-not-Android-SQLite-qualified"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java",
+          "kind": "unit-four-native-window-action-schemas",
+          "purpose": "fixed4actions/unknownfailclosed/strictrefs/exactsafeinteger/permissionpurpose/installerpair/rawargspreservation;NOTauthority orAndroidexecution",
+          "state": "host-tested-four-schemas-only"
         }
       ]
     },
@@ -979,14 +985,15 @@
       "group": "control",
       "kind": "native-code",
       "responsibility": "类型/范围/长度/目标/副作用参数",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R29 actual typed schemas four platform actions only;7HOST tests originalargs/ref/pair/purpose/safeinteger/unknown failclosed;remaining174schemas/nativehandler/currentauthority not complete",
       "runtimePending": true,
-      "testReferenceGroup": "control"
+      "testReferenceGroup": "control",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
@@ -3344,6 +3351,16 @@
         "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
         "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
         "planning/geckoview-v2/evidence/task-journal-host-sql.json"
+      ]
+    },
+    {
+      "group": "control",
+      "kind": "four-actual-action-schemas-console-integration",
+      "summary": "四项已理解原生窗口参数正式源码接入内部控制台：仅typedclaims，不验证真实window/source/presentation/URI权限，不执行动作；其他174项schema未完成并拒绝",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
+        "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
+        "planning/geckoview-v2/evidence/production-unit-tests.json"
       ]
     }
   ],

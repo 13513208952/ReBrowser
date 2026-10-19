@@ -55,6 +55,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
       "sha256": "60d5b1d7235064752f4ec356481fc0d54a14fef754b373871c82664446db9119"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
+      "sha256": "ab7d9a6620bebb54da6772786f9b1a61a4362dee7cdf63ba7c7708ecec8e571f"
     }
   ],
   "classFiles": [
@@ -121,6 +125,31 @@
     {
       "path": "io/github/rebrowser/bootstrap/ProcessRole.class",
       "sha256": "55db0335d0f13961ea5e0c6581dc6475992d7d2ec9cf15c8b717b1d3a0dfc475",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionSchemas$1.class",
+      "sha256": "dddbd3986464f401262071800730ece25d4fffa1a01475e484426c52d5a38c72",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionSchemas$Kind.class",
+      "sha256": "2828d8fbb0ffac43a893972bc3e966d2fe94cc74c97b49262912c7cd015e7ddf",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionSchemas$ParsedAction.class",
+      "sha256": "c39b635038acb8937da68186d7d3da678d3ef7b3892d3fd51a0287346cdbb5e5",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionSchemas$PermissionPurpose.class",
+      "sha256": "253355f3dda4cbd88f643d25240b7b1f6833439a1d03d678e60a4389fdc37cbb",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionSchemas.class",
+      "sha256": "50ffb527b9a5f0d9303af14766c72480fc65b03fb74ef7681477a67dbe6bf9da",
       "classMajor": 52
     },
     {

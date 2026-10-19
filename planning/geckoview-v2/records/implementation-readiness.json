@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R28",
+  "revision": "R29",
   "authority": [
     "O41",
     "O42",
@@ -584,6 +584,35 @@
         "trust in external completion/owner booleans"
       ],
       "integrationGate": "Initialize source-owned DB first; paired request/task in one top-level commit; Native coordinator serializes policy writers/current checks before effects. Lost process UNKNOWN not retry/end; old owners settle memory even if source lock forbidsDB publication."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "four concrete native-window actions only; unknown actions/fields/types rejected; safe-integer/ref/purpose and installer pair typed claims",
+      "researchEvidence": [
+        "records/platform-action-contracts.json",
+        "records/action-registry.json"
+      ],
+      "inputOutput": "strict UnverifiedProof -> immutable four-action claims retaining original signedargs; not authenticated/admitted actor or native target",
+      "dependencies": "actualControlDecoder/ControlEnvelope andJava8 only; noAndroid/newlib",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.control.ActionSchemasTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "remaining174action argument schemas or handlers",
+        "key/effective authority/owned window/current presentation or URI grant checks",
+        "actual Android OS permission/installer/back/role execution"
+      ],
+      "integrationGate": "native domain resolver must bind signedscope andwindow/source refs to live owned targets and current revisions after full currentauthority/challenge/task admission. Internalconsole validation only, noeffects."
     }
   ],
   "parallelPending": [

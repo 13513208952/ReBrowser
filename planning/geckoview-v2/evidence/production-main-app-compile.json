@@ -31,6 +31,10 @@
       "sha256": "98f1756f5e9a9ccf9037b82e2d8e92d7e96944dfec9d0754fae7700d56fe7e66"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
+      "sha256": "ab7d9a6620bebb54da6772786f9b1a61a4362dee7cdf63ba7c7708ecec8e571f"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
       "sha256": "556d83da788f3bce2117a7c31770e046949a9d41e2af49fa4c9ff5b6dc8cd775"
     },
@@ -72,7 +76,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
-      "sha256": "c800928593b30db20f73a10236e9122f48c2a79add0c2bebf00ac25bb46dd5b3"
+      "sha256": "46f3ffeae7f9ee5c2c9746b2bb9895b29ed0f2aa665ab3a4b38f8a063a65d6dc"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
@@ -85,6 +89,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java",
+      "sha256": "3f67ae2fcc731c310ad617df2ab4136472967cc43fddd7eaf728457c38457b05"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
@@ -151,8 +159,8 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 20,
-  "compiledClassFiles": 66,
+  "productionJavaSourceFiles": 21,
+  "compiledClassFiles": 70,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -219,9 +227,15 @@
       "tests": 11,
       "failures": 0,
       "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.control.ActionSchemasTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0
     }
   ],
-  "unitTestsPassed": 111,
+  "unitTestsPassed": 118,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -247,5 +261,7 @@
   "androidSQLiteMethodsExecuted": false,
   "hostAndroidClassPureIdentityTests": 3,
   "durableRequestTaskPairCodeImplemented": true,
-  "fullPolicyCoordinatorAndEffectDispatchImplemented": false
+  "fullPolicyCoordinatorAndEffectDispatchImplemented": false,
+  "concreteActionArgumentSchemasImplemented": 4,
+  "allActionArgumentSchemasComplete": false
 }

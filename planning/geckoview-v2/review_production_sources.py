@@ -74,6 +74,13 @@ def review():
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not ledger['androidSQLiteExecuted'] and not ledger['actualPolicyAndSqliteAtomicityTested']
     assert not ledger['realDataOrKeysUsed']
+    tasks = json.loads((P/'evidence/task-journal-host-sql.json').read_text())
+    assert tasks['hostSqlChecks'] == 235 and tasks['validStateTriples'] == 14
+    assert tasks['transitionPairsTested'] == 196 and tasks['acceptedTransitionPairs'] == 45
+    assert tasks['concurrentHostSqlWriters'] == 2 and tasks['temporaryDbAndHarnessRemoved']
+    for source in tasks['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    assert not any(tasks[k] for k in ['androidSQLiteMethodsExecuted','actualNativeCoordinatorAndPolicyAtomicityTested','realDataOrKeysUsed'])
     assert app['offline'] and not any(app[k] for k in ['nativeMergeDexR8OrApkExecuted','androidRuntimeExecuted','formalKeysProvisioned','formalRootConfigured','commandAdmissionOrEffectsImplemented','oldApplicationOrDataModified'])
     legacy_build = (ROOT/'app/build.gradle.kts').read_text()
     assert 'getByName("main").java.exclude("io/github/rebrowser/**")' in legacy_build
@@ -84,6 +91,8 @@ def review():
             'standaloneMainAppCompiled':True,
             'standaloneMainAppHostTests':app['unitTestsPassed'],
             'nativeIdempotencyDdlHostSqlChecks':ledger['hostSqlChecks'],
+            'nativeTaskJournalHostSqlChecks':tasks['hostSqlChecks'],
+            'nativeTaskTransitionPairs':tasks['transitionPairsTested'],
             'productionSourceAndroid37ApiCompiled':len(api['sourceFiles']),
             'productionHostJunitTestsPassed':evidence['junitTestsPassed'],
             'productionJsonDifferentialCasesPassed':differential['casesPassed'],

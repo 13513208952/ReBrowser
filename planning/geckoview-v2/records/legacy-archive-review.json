@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R26",
+  "revision": "R28",
   "authority": [
     "O31",
     "O32"
@@ -587,12 +587,15 @@
       "sha256": "8ff28f68213096944e1ee204deec07c698914add4cd54e51e99ce859dc3d8200",
       "bytes": 3326,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T10:37:54+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧无engine诊断汇总入口；旧history/settings/download/site-policy/native-device边界仍有维护/对照价值。其snapshot仍会打开旧history等业务库，不能抄成新来源锁定时可读业务数据的诊断捷径；新TaskSnapshot只保留原生任务投影。",
+      "evidenceRefs": [
+        "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+        "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

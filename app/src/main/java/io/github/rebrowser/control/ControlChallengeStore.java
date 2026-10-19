@@ -66,10 +66,37 @@ public final class ControlChallengeStore {
         public Failure failure() { return failure; }
     }
     public interface Admission<R> {
-        /** Bounded native policy recheck; reject by throwing, no effects or slow IO. */
+        /** Repeatable bounded native policy READ recheck; no effects, grant consumption or slow IO. */
         void authorize(AdminProofVerifier.KeyProof proof) throws Exception;
-        /** Durably reserve/return same idempotent job under native policy/transaction fence. No effect execution. */
-        R reserveJob(AdminProofVerifier.KeyProof proof) throws Exception;
+        /** Reserve under native policy/transaction fence; check fence inside transaction before commit. No effects. */
+        R reserveJob(CommitFence fence) throws Exception;
+    }
+    /** Native callback capability valid only during this exact admission, never an IPC token. */
+    public static final class CommitFence {
+        private final ControlChallengeStore owner;
+        private final AdminProofVerifier.KeyProof proof;
+        private final Pending entry;
+        private final Admission<?> admission;
+        private final Thread admissionThread=Thread.currentThread();
+        private boolean active=true,checked,checking;
+        private CommitFence(ControlChallengeStore owner,AdminProofVerifier.KeyProof proof,Pending entry,Admission<?> admission){this.owner=owner;this.proof=proof;this.entry=entry;this.admission=admission;}
+        public AdminProofVerifier.KeyProof proof(){return proof;}
+        /** Final current policy and deadline recheck, after DB lock/IO and before marking success. */
+        public void checkCurrent()throws Exception{
+            if(Thread.currentThread()!=admissionThread)throw new Rejected(Failure.INVALID_CHALLENGE);
+            synchronized(owner){
+                if(!active || !owner.admitting)throw new Rejected(Failure.INVALID_CHALLENGE);
+                if(checking)throw new Rejected(Failure.REENTRANT_ADMISSION);
+                checking=true;
+                try{
+                    owner.active();admission.authorize(proof);owner.active();
+                    if(owner.now()>=entry.deadline)throw new Rejected(Failure.EXPIRED);
+                    String key=CryptoEncoding.base64Url(proof.request().frame().bytes(ControlEnvelope.Field.CHALLENGE_ID));
+                    if(owner.pending.get(key)!=entry || !entry.spent)throw new Rejected(Failure.INVALID_CHALLENGE);
+                    checked=true;
+                }finally{checking=false;}
+            }
+        }
     }
     private static final class Pending {
         final byte[] signedFrame;
@@ -126,11 +153,13 @@ public final class ControlChallengeStore {
         try{
             nativeAdmission.authorize(proof); // exception: no consumption, no job reservation
             if(match(proof,now())!=entry)throw new Rejected(Failure.INVALID_CHALLENGE);
-            entry.spent=true;
-            R receipt=nativeAdmission.reserveJob(proof); // exception remains spent; NEVER auto-retry effect
-            active();
-            if(receipt==null)throw new IllegalStateException("Native admission did not reserve a job");
-            return receipt;
+            entry.spent=true;CommitFence fence=new CommitFence(this,proof,entry,nativeAdmission);
+            try{
+                R receipt=nativeAdmission.reserveJob(fence); // unknown/error remains spent; NEVER auto-retry effect
+                active();
+                if(receipt==null || !fence.checked)throw new IllegalStateException("Native admission did not reserve/fence a job");
+                return receipt;
+            }finally{fence.active=false;}
         }finally{admitting=false;}
     }
     private Pending match(AdminProofVerifier.KeyProof proof,long now) throws Rejected {

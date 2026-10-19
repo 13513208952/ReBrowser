@@ -32,7 +32,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
-      "sha256": "8582f4404b883c98b2f5dd135f80553456eec861e1301193ddafd8d2d4b84df8"
+      "sha256": "556d83da788f3bce2117a7c31770e046949a9d41e2af49fa4c9ff5b6dc8cd775"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
@@ -44,11 +44,19 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
-      "sha256": "2a1cc5dadb4b847d26d39245ab5b96365741100a15650dba84b4849be280ecfe"
+      "sha256": "3916743d84f75c207d8a1bfd812811452a746b7999f38df0e302d5179bca5ba6"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
       "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "sha256": "c7367edc772bf1a2ef07108e15802ad0540897e59babedc409c11586a135491c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+      "sha256": "60d5b1d7235064752f4ec356481fc0d54a14fef754b373871c82664446db9119"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
@@ -80,7 +88,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java",
-      "sha256": "f23dc4444d0152a142ed47cbdc9b819a2dbcee4ca0d81d1af4b6001f2d91ac61"
+      "sha256": "bf91caaffe795052cde05c104f440b8f8115782fc775f2907697d05731fd4f97"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java",
@@ -97,6 +105,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java",
       "sha256": "c893d15125685c73bfc8855761f3a965a3702b12d444b03a33fed34f60e6551a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java",
+      "sha256": "fc374581b02614ffee8e47858909e8e8654ae17a9d21d198cc7775bdea3f3f53"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java",
@@ -139,8 +151,8 @@
       "sha256": "00d674dc8e5d07c4935abab2b1b2150a7aca5fd66145d97bfea2a60a5c2b65d1"
     }
   ],
-  "productionJavaSourceFiles": 18,
-  "compiledClassFiles": 56,
+  "productionJavaSourceFiles": 20,
+  "compiledClassFiles": 66,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -168,13 +180,19 @@
     },
     {
       "class": "io.github.rebrowser.control.ControlChallengeStoreTest",
-      "tests": 12,
+      "tests": 14,
       "failures": 0,
       "errors": 0
     },
     {
       "class": "io.github.rebrowser.core.CoreContractsTest",
       "tests": 9,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.core.TaskSnapshotTest",
+      "tests": 5,
       "failures": 0,
       "errors": 0
     },
@@ -203,7 +221,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 104,
+  "unitTestsPassed": 111,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -227,5 +245,7 @@
   "processLocalChallengeAdmissionImplemented": true,
   "durableJobAdmissionOrEffectDispatchImplemented": false,
   "androidSQLiteMethodsExecuted": false,
-  "hostAndroidClassPureIdentityTests": 3
+  "hostAndroidClassPureIdentityTests": 3,
+  "durableRequestTaskPairCodeImplemented": true,
+  "fullPolicyCoordinatorAndEffectDispatchImplemented": false
 }

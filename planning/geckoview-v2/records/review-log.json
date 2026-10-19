@@ -1,5 +1,5 @@
 {
-  "revision": "R27",
+  "revision": "R28",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -269,6 +269,12 @@
       "time": "2026-10-19T10:09:58+08:00",
       "finding": "挑战一次使用不等于持久化请求幂等；新证明不能因为nonce/policy/owner-grant更新变成新业务动作，SQL REPLACE也不能驱逐旧请求绑定。",
       "resolution": "直接写Android IdempotencyStore：原生source/target/epoch检查、SQLite事务内同content取同job/不同content冲突/配额、不可变及防REPLACE DDL、未知schema不清空；原始内容键只绑定action/scope/rawargs，proof更新不改操作。18源码实际AGP编译/104HOST测试，生产class DDL在HOST SQLite39约束/回滚/磁盘重开检查。明确还缺AndroidSQLite实际执行、统一TaskJournal+policy原子性和效果调度；不开放外部入口。"
+    },
+    {
+      "id": "REV46",
+      "time": "2026-10-19T10:37:54+08:00",
+      "finding": "仅request/job持久映射不足：需先登记真实work、在外部路由前持久化intent，不能把效果已观察/超时/进程丢失当真实工作结束。还发现DB锁/IO之后原先只做过早期限检查，嵌套事务会让返回值被误当已提交。",
+      "resolution": "直接实现TaskSnapshot7阶段/分轴、TaskJournal原执行者ticket/单次workstart/intent/outcome/end/recovery和单一request-task提交，禁止外层嵌套receipt；无Java monitor等待SQLite写锁避免bridge锁反转。CommitFence强制同线程事务内重读当前授权/期限，异常nonce保持spent。111主工程HOST及235HOST SQLite检查(196转换对/2writer/回滚重开)，均不冒充AndroidDAO或全策略原子性。L0旧AdminEnvironment保留，来源锁诊断不能照搬打开业务库。"
     }
   ]
 }

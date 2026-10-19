@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R27",
+  "revision": "R28",
   "authority": [
     "O41",
     "O42",
@@ -474,7 +474,7 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "native bounded exact-frame30s challenges and process-local authorization/one-use/job-reservation callback boundary; NOT durable cross-store atomicity/dispatcher",
+      "scope": "native bounded exact-frame30s challenges and process-local authorization/one-use/job-reservation callback boundary; NOT durable cross-store atomicity/dispatcher; synchronous private CommitFence forces current authorization/deadline recheck inside reservation before commit, spent on failure; async/escaped/skippedfence reject",
       "researchEvidence": [
         "records/control-proof-format.json",
         "records/authority-model.json",
@@ -505,7 +505,7 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "native SQLite immutable request/job ledger and actual original-content key; current source/target/epoch guard and same-job/conflict/native row cap; not dispatch journal or complete admission coordinator",
+      "scope": "native SQLite immutable request/job ledger and actual original-content key; current source/target/epoch guard and same-job/conflict/native row cap; not dispatch journal or complete admission coordinator; same-handle TaskJournal reservation in same top-level commit; missing original task fails closed, requires live CommitFence before commit",
       "researchEvidence": [
         "records/control-proof-format.json",
         "records/domain-interfaces.json",
@@ -527,6 +527,63 @@
         "authority/grant/target installation key provisioning"
       ],
       "integrationGate": "trusted native coordinator must open dedicated source-bound DB and combine durable task record/current policy fence before effect dispatch. Unknown commit burns challenge; fresh proof retrieves same immutable request/job. No table clear/migration fallback."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "immutable phase/work/effect/durability/client-wait/cancel/publication projection; no authority/slot-release",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/runtime-traces.json"
+      ],
+      "inputOutput": "native typed evidence -> immutable axes;14valid of112phase/work/effect combinations",
+      "dependencies": "Java8 enums only",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.core.TaskSnapshotTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "trusted end producer/dispatch authority",
+        "whole task coordinator/resource release",
+        "native journal Android IO qualification"
+      ],
+      "integrationGate": "Only native execution owners supply observations; no IPC snapshot accepted as authority or slot/quiescence evidence"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "native durable work/intent/outcome/actual-end ledger, original owner ticket and paired request/task commit",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/runtime-traces.json",
+        "records/control-proof-format.json"
+      ],
+      "inputOutput": "dedicated nativeSQLite/gate/target/epoch -> exact schema, current-transaction reservation, private owner ticket before whole work; intent committed before route handoff",
+      "dependencies": "actual Android SQLite, TaskSnapshot/ComponentGate; policy fence/actual domain dispatch still required",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java"
+      ],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "hostSqlEvidence": "evidence/task-journal-host-sql.json",
+      "notClaimed": [
+        "actual AndroidSQLite DAO/process-death runtime",
+        "complete policy/grant/nonce/domain atomicity",
+        "actual effect execution/slot/quiescence release",
+        "trust in external completion/owner booleans"
+      ],
+      "integrationGate": "Initialize source-owned DB first; paired request/task in one top-level commit; Native coordinator serializes policy writers/current checks before effects. Lost process UNKNOWN not retry/end; old owners settle memory even if source lock forbidsDB publication."
     }
   ],
   "parallelPending": [

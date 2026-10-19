@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R27",
+  "revision": "R28",
   "authority": [
     "O26",
     "O27",
@@ -74,6 +74,18 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "线程/进程死亡/背压/取消失败与长任务并发，实际资源上限"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java",
+          "kind": "unit-native-task-axes",
+          "purpose": "112phase/work/effect combinations,14valid; timeout/cancel/stale neverendwork; observed outcome/workend/durability independent",
+          "state": "host-tested-not-authority"
+        },
+        {
+          "path": "planning/geckoview-v2/experiments/task_journal_sql.py",
+          "kind": "host-actual-class-task-sql",
+          "purpose": "235HOST SQLite constraints/196transitionpairs/recovery/pairedtransaction rollback,reopen/2writeronce;NOTAndroidDAO",
+          "state": "host-sql-tested-not-Android-runtime"
         }
       ]
     },
@@ -655,26 +667,28 @@
       "group": "core",
       "kind": "native-code",
       "responsibility": "副作用/幂等/持久化阶段日志",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R28 actual Android SQLite source/AGP API compile; actual-class DDL/recovery235HOST SQL checks including196transition pairs/paired commit/reopen/2writers; Android DAO/runtime not executed",
       "runtimePending": true,
-      "testReferenceGroup": "core"
+      "testReferenceGroup": "core",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
       "group": "core",
       "kind": "native-code",
       "responsibility": "客户端等待与实际执行/效果/持久化分轴",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R28 actual immutable axes;112 combinations/14valid and client/cancel/stale independence HOST tested; not authority or slot release",
       "runtimePending": true,
-      "testReferenceGroup": "core"
+      "testReferenceGroup": "core",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
@@ -3320,6 +3334,16 @@
         "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
         "planning/geckoview-v2/evidence/admin-idempotency-host-sql.json",
         "planning/geckoview-v2/experiments/admin_journal_sql.py"
+      ]
+    },
+    {
+      "group": "core",
+      "kind": "actual-task-journal-and-projection",
+      "summary": "原生work/intent/outcome/end分轴，私有原执行者ticket、跨进程未知不重放；request/task共一SQLite提交。同步CommitFence在事务内重查当前权限/期限，不能后台逃逸。",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+        "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+        "planning/geckoview-v2/evidence/task-journal-host-sql.json"
       ]
     }
   ],

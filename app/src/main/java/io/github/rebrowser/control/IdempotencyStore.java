@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import io.github.rebrowser.authority.AdminProofVerifier;
 import io.github.rebrowser.bootstrap.ComponentGate;
+import io.github.rebrowser.core.TaskJournal;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import java.util.Set;
  * Caller owns a DEDICATED v2 private admin database opened only after the source gate.
  * Never pass a mailbox/legacy DB or accept a path/SQL/permit from IPC. Fresh proof for
  * same content returns same job; changed content conflicts. No timeout/lease cleanup.
- * TaskJournal and native coordinator still must durably track dispatch/outcome, recheck
+ * TaskJournal reservation shares this exact commit. Native coordinator must still recheck
  * policy/target/owner grants, and serialize admission before effects. This class never
  * opens a DB, executes an effect, closes caller DB, clears unknown schema or auto-retries.
  */
@@ -73,7 +74,8 @@ public final class IdempotencyStore {
     }
     public static String[] schemaStatements(){return new String[]{CREATE,NO_UPDATE,NO_DELETE,NO_REPLACE};}
     public synchronized void initialize(ComponentGate.BusinessPermit permit){
-        gate.checkCurrent(permit);
+        initialized=false;gate.checkCurrent(permit);
+        if(database.inTransaction())throw new IllegalStateException("Nested administrator transaction forbidden");
         database.beginTransactionNonExclusive();
         try{
             int version=database.getVersion();
@@ -95,8 +97,11 @@ public final class IdempotencyStore {
         }
     }
     /** Invoke only from native authorized ControlChallengeStore.Admission.reserveJob. */
-    public synchronized Reservation reserveAfterAuthorization(AdminProofVerifier.KeyProof proof,ComponentGate.BusinessPermit permit)throws Conflict,ResourceLimit{
-        gate.checkCurrent(permit);if(!initialized)throw new IllegalStateException("Administrator journal not initialized");ContentKey key=contentKey(proof);
+    public synchronized Reservation reserveAfterAuthorization(ControlChallengeStore.CommitFence fence,ComponentGate.BusinessPermit permit,TaskJournal journal)throws Exception{
+        if(fence==null)throw invalid();AdminProofVerifier.KeyProof proof=fence.proof();
+        gate.checkCurrent(permit);fence.checkCurrent();if(!initialized || journal==null)throw new IllegalStateException("Administrator/task journal not initialized");
+        if(database.inTransaction())throw new IllegalStateException("Nested administrator transaction forbidden");
+        journal.requireSameStore(database,gate,target,epoch);ContentKey key=contentKey(proof);
         if(!target.equals(key.target) || !epoch.equals(key.epoch))throw new SecurityException("Wrong native target/epoch");
         String[] args={key.principal,key.target,key.epoch,key.request};Reservation reservation;
         database.beginTransactionNonExclusive();
@@ -112,7 +117,8 @@ public final class IdempotencyStore {
                     database.insertOrThrow(TABLE,null,values);reservation=new Reservation(job,false);
                 }
             }
-            gate.checkCurrent(permit);database.setTransactionSuccessful();
+            journal.reserveInCurrentTransaction(reservation.job,bindingSha256(key),reservation.existing,permit);
+            fence.checkCurrent();gate.checkCurrent(permit);database.setTransactionSuccessful();
         }finally{database.endTransaction();} // commit failure is UNKNOWN to caller: challenge stays spent
         return reservation;
     }
@@ -127,6 +133,14 @@ public final class IdempotencyStore {
             return new ContentKey(proof.compiledPrincipal().spkiSha256(),hex(f.bytes(ControlEnvelope.Field.TARGET_INSTALL_SPKI_SHA256)),hex(f.bytes(ControlEnvelope.Field.DATA_EPOCH)),hex(f.bytes(ControlEnvelope.Field.REQUEST_ID)),digest);
         }catch(IOException impossible){throw new IllegalStateException("In-memory request encoding failed");}
         catch(NoSuchAlgorithmException unavailable){throw new IllegalStateException("SHA-256 unavailable");}
+    }
+    /** Fixed-width native key components plus original operation digest; no proof-lifetime fields. */
+    private static byte[] bindingSha256(ContentKey key){
+        try{
+            MessageDigest digest=MessageDigest.getInstance("SHA-256");digest.update("ReBrowser.Job.Binding\0".getBytes(StandardCharsets.US_ASCII));
+            for(String part:new String[]{key.principal,key.target,key.epoch,key.request})digest.update(part.getBytes(StandardCharsets.US_ASCII));
+            return digest.digest(key.content);
+        }catch(NoSuchAlgorithmException unavailable){throw new IllegalStateException("SHA-256 unavailable");}
     }
     private static String hex(byte[] value){char[] out=new char[value.length*2];String digits="0123456789abcdef";for(int i=0;i<value.length;i++){out[2*i]=digits.charAt((value[i]&255)>>>4);out[2*i+1]=digits.charAt(value[i]&15);}return new String(out);}
     private static byte[] fixed(byte[] value,int length){if(value==null || value.length!=length)throw invalid();return value.clone();}

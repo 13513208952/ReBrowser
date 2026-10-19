@@ -39,7 +39,7 @@ public final class ControlChallengeStoreTest {
     }
     private static ControlChallengeStore.Admission<String> good(AtomicInteger jobs){return new ControlChallengeStore.Admission<String>(){
         public void authorize(AdminProofVerifier.KeyProof proof){}
-        public String reserveJob(AdminProofVerifier.KeyProof proof){return "synthetic-job-"+jobs.incrementAndGet();}
+        public String reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{fence.checkCurrent();return "synthetic-job-"+jobs.incrementAndGet();}
     };}
     private static void rejected(ControlChallengeStore.Failure expected,Checked operation)throws Exception{
         try{operation.run();fail("must reject");}catch(ControlChallengeStore.Rejected failure){assertEquals(expected,failure.failure());}
@@ -72,19 +72,19 @@ public final class ControlChallengeStoreTest {
     }
     @Test public void denialDoesNotReserveOrConsumeButLateAuthorizationExpires()throws Exception{
         AtomicLong clock=new AtomicLong(0);ControlChallengeStore store=new ControlChallengeStore(context(1),clock::get,8,4);AdminProofVerifier.KeyProof proof=sign(store.issue(template()));AtomicInteger jobs=new AtomicInteger();
-        try{store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p)throws Exception{throw new Exception("synthetic policy denial");}public String reserveJob(AdminProofVerifier.KeyProof p){fail();return "bad";}});fail();}catch(Exception denied){assertEquals("synthetic policy denial",denied.getMessage());}
+        try{store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p)throws Exception{throw new Exception("synthetic policy denial");}public String reserveJob(ControlChallengeStore.CommitFence fence){fail();return "bad";}});fail();}catch(Exception denied){assertEquals("synthetic policy denial",denied.getMessage());}
         assertNotNull(store.admit(proof,good(jobs)));assertEquals(1,jobs.get());
         AdminProofVerifier.KeyProof late=sign(store.issue(template()));
-        rejected(ControlChallengeStore.Failure.EXPIRED,()->store.admit(late,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p){clock.set(30000);}public String reserveJob(AdminProofVerifier.KeyProof p){fail();return "bad";}}));
+        rejected(ControlChallengeStore.Failure.EXPIRED,()->store.admit(late,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p){clock.set(30000);}public String reserveJob(ControlChallengeStore.CommitFence fence){fail();return "bad";}}));
     }
     @Test public void unknownReservationFailureBurnsProofRatherThanAutoReplaying()throws Exception{
         ControlChallengeStore store=new ControlChallengeStore(context(1),()->0L,8,4);AdminProofVerifier.KeyProof proof=sign(store.issue(template()));AtomicInteger reservations=new AtomicInteger();
-        try{store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p){}public String reserveJob(AdminProofVerifier.KeyProof p)throws Exception{reservations.incrementAndGet();throw new Exception("synthetic unknown commit outcome");}});fail();}catch(Exception unknown){assertEquals("synthetic unknown commit outcome",unknown.getMessage());}
+        try{store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p){}public String reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{fence.checkCurrent();reservations.incrementAndGet();throw new Exception("synthetic unknown commit outcome");}});fail();}catch(Exception unknown){assertEquals("synthetic unknown commit outcome",unknown.getMessage());}
         rejected(ControlChallengeStore.Failure.REPLAY,()->store.admit(proof,good(reservations)));assertEquals(1,reservations.get());
     }
     @Test public void nullReservationCannotProduceSuccessfulAdmission()throws Exception{
         ControlChallengeStore store=new ControlChallengeStore(context(1),()->0L,8,4);AdminProofVerifier.KeyProof proof=sign(store.issue(template()));
-        try{store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p){}public String reserveJob(AdminProofVerifier.KeyProof p){return null;}});fail();}catch(IllegalStateException expected){}
+        try{store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p){}public String reserveJob(ControlChallengeStore.CommitFence fence){return null;}});fail();}catch(IllegalStateException expected){}
         rejected(ControlChallengeStore.Failure.REPLAY,()->store.admit(proof,good(new AtomicInteger())));
     }
     @Test public void capacitiesCountSpentUntilExpiryWithoutClientReset()throws Exception{
@@ -99,7 +99,35 @@ public final class ControlChallengeStoreTest {
     }
     @Test public void reentrantAdmissionCannotConsumeSameProofTwice()throws Exception{
         ControlChallengeStore store=new ControlChallengeStore(context(1),()->0L,8,4);AdminProofVerifier.KeyProof proof=sign(store.issue(template()));AtomicInteger jobs=new AtomicInteger();
-        store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p)throws Exception{rejected(ControlChallengeStore.Failure.REENTRANT_ADMISSION,()->store.admit(p,good(jobs)));}public String reserveJob(AdminProofVerifier.KeyProof p){return "job-"+jobs.incrementAndGet();}});assertEquals(1,jobs.get());
+        store.admit(proof,new ControlChallengeStore.Admission<String>(){public void authorize(AdminProofVerifier.KeyProof p)throws Exception{rejected(ControlChallengeStore.Failure.REENTRANT_ADMISSION,()->store.admit(p,good(jobs)));}public String reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{fence.checkCurrent();return "job-"+jobs.incrementAndGet();}});assertEquals(1,jobs.get());
+    }
+    @Test public void deadlineRecheckedInsideReservationAndSpentFenceCannotEscape()throws Exception{
+        AtomicLong clock=new AtomicLong(0);ControlChallengeStore store=new ControlChallengeStore(context(1),clock::get,8,4);AdminProofVerifier.KeyProof proof=sign(store.issue(template()));
+        ControlChallengeStore.CommitFence[] retained=new ControlChallengeStore.CommitFence[1];AtomicInteger committed=new AtomicInteger();
+        rejected(ControlChallengeStore.Failure.EXPIRED,()->store.admit(proof,new ControlChallengeStore.Admission<String>(){
+            public void authorize(AdminProofVerifier.KeyProof p){}
+            public String reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{retained[0]=fence;clock.set(30000);fence.checkCurrent();committed.incrementAndGet();return "bad";}
+        }));assertEquals(0,committed.get());rejected(ControlChallengeStore.Failure.REPLAY,()->store.admit(proof,good(committed)));
+        rejected(ControlChallengeStore.Failure.INVALID_CHALLENGE,()->retained[0].checkCurrent());
+    }
+    @Test public void changedPolicyAtFinalFenceAndSkippedFenceCannotSucceed()throws Exception{
+        ControlChallengeStore store=new ControlChallengeStore(context(1),()->0L,8,4);AdminProofVerifier.KeyProof proof=sign(store.issue(template()));AtomicInteger checks=new AtomicInteger();
+        assertThrows(SecurityException.class,()->store.admit(proof,new ControlChallengeStore.Admission<String>(){
+            public void authorize(AdminProofVerifier.KeyProof p){if(checks.incrementAndGet()==2)throw new SecurityException("synthetic revoked");}
+            public String reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{fence.checkCurrent();return "bad";}
+        }));rejected(ControlChallengeStore.Failure.REPLAY,()->store.admit(proof,good(new AtomicInteger())));
+        AdminProofVerifier.KeyProof next=sign(store.issue(template()));assertThrows(IllegalStateException.class,()->store.admit(next,new ControlChallengeStore.Admission<String>(){
+            public void authorize(AdminProofVerifier.KeyProof p){}
+            public String reserveJob(ControlChallengeStore.CommitFence fence){return "unchecked";}
+        }));rejected(ControlChallengeStore.Failure.REPLAY,()->store.admit(next,good(new AtomicInteger())));
+        ExecutorService worker=Executors.newSingleThreadExecutor();
+        try{store.admit(sign(store.issue(template())),new ControlChallengeStore.Admission<String>(){
+            public void authorize(AdminProofVerifier.KeyProof p){}
+            public String reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{
+                Future<Boolean> blocked=worker.submit(()->{try{fence.checkCurrent();return false;}catch(ControlChallengeStore.Rejected r){return r.failure()==ControlChallengeStore.Failure.INVALID_CHALLENGE;}});
+                assertTrue(blocked.get(2,TimeUnit.SECONDS));fence.checkCurrent();return "same-native-thread-only";
+            }
+        });}finally{worker.shutdownNow();assertTrue(worker.awaitTermination(2,TimeUnit.SECONDS));}
     }
     @Test public void retainedFrameByteBudgetBoundsLargeChallengesAndIsReclaimedOnExpiry()throws Exception{
         AtomicLong clock=new AtomicLong(0);ControlChallengeStore store=new ControlChallengeStore(context(1),clock::get,256,256);

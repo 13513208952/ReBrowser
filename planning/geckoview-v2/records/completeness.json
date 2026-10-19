@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R29",
+  "revision": "R30",
   "overallDesignComplete": false,
   "productImplementationReady": false,
   "ownerSources": [
@@ -89,7 +89,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "进程所有权、view/session分离、上下文映射与崩溃恢复",
-      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R11另有授权手机本地Native/port/MAIN/context子集通过，非官网/导航竞态全验证；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成",
+      "existingEvidence": "API确认runtime进程寿命；session/context/Popup/crash部分契约；R6补充稳定源码契约与28项计划场景，非运行验证；R7具体输入输出/协议/旅程或离线时序设计，非产品运行通过；R11另有授权手机本地Native/port/MAIN/context子集通过，非官网/导航竞态全验证；O45后独立主程序/原生控制台与编译身份验签开始真实编码，Gradle编译+89HOST测试；完整浏览器/正式source-root/命令原子准入仍未完成；R30真实BrowserModels/WorkspaceCatalog/TabCatalog/BrowserCoordinator/PartitionCatalog/GeckoSessionOwner/SessionDisplayBinding，模型HOST及NativeGeckoAPI编译分层；无持久BrowserStore/正确恢复/A04/完整主窗口接通",
       "completionDeliverables": [
         "默认拓扑和退路",
         "持久ID",
@@ -134,7 +134,7 @@
       "designComplete": false,
       "implementationReady": false,
       "need": "具体领域命令、状态持久化、Popup归属、环境删除",
-      "existingEvidence": "仅功能与能力分组",
+      "existingEvidence": "仅功能与能力分组；R30真实BrowserModels/WorkspaceCatalog/TabCatalog/BrowserCoordinator/PartitionCatalog/GeckoSessionOwner/SessionDisplayBinding，模型HOST及NativeGeckoAPI编译分层；无持久BrowserStore/正确恢复/A04/完整主窗口接通",
       "completionDeliverables": [
         "数据模型",
         "所有正常与失败动作",

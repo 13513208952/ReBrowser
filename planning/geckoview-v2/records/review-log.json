@@ -1,5 +1,5 @@
 {
-  "revision": "R29",
+  "revision": "R30",
   "status": "draft-for-owner-review",
   "entries": [
     {
@@ -281,6 +281,12 @@
       "time": "2026-10-19T10:45:42+08:00",
       "finding": "严格JSON语法不等于动作参数合法，policy178条不能被当成178个参数schema或handler。",
       "resolution": "在R28推送后继续直接实现四项有具体契约的ActionSchemas，原生控制台接入严格类型/字段/安全整数/引用/permissionpurpose及installerpair检查；仅返回保留原signedargs的unverifiedclaims。未知动作一律拒绝，不为未决174schema提供宽松默认。21主源码/118主工程HOST(115pure)编译测试，未执行真实Android/OS动作。"
+    },
+    {
+      "id": "REV48",
+      "time": "2026-10-19T16:26:04+08:00",
+      "finding": "机主明确主程序未完成并要求按总树继续补缺失文件；不能把管理员基础和工程编译称为浏览器完成。",
+      "resolution": "直接编写7个浏览器/Gecko所有权文件：双层环境/临时副主/收起恢复/总64主5标签50/Popup及代次/不拆Unicode字符/分区epoch/强Session引用/View代次，Native业务协调按同环境共享context惰性创建。无持久化/恢复/A04成熟回调时不默认开放网页；Owner初始化要求真实reconciler/委托，Startup仍锁定。4纯类HOST测试，3Native类仅API-WIP。完整读旧Store/WorkspaceController保留，不移动旧版资料。资源仅known32MiB新增峰值，非APK构建授权。"
     }
   ]
 }

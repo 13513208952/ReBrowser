@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R29",
+  "revision": "R30",
   "authority": [
     "O41",
     "O42",
@@ -613,6 +613,208 @@
         "actual Android OS permission/installer/back/role execution"
       ],
       "integrationGate": "native domain resolver must bind signedscope andwindow/source refs to live owned targets and current revisions after full currentauthority/challenge/task admission. Internalconsole validation only, noeffects."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "immutable browser-native handles/views, bounded Unicode titles/display metadata, no persistence or load authority",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserCatalogTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "owner-thread bounded primary/secondary/temporary metadata, level/name/selection/shelf/restore and logical removal, native expected revisions",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserCatalogTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "per-workspace tab selection/50cap, exact parentPopup source/document lease, metadata-only close and generation fencing",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserCatalogTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "bounded process-local native domain-owner/context/epoch registry, fence/retired tombstones; no erasure or process-death restore",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.PartitionCatalogTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual Gecko strong references/explicit issued context/open delegate-before-open/close and display token ownership, no Activity capture",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "actual GeckoView attach/release/explicit focus-active policy and opaque per-session display token; detachment not close",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close",
+      "researchEvidence": [
+        "records/domain-interfaces.json",
+        "records/browser-background-ownership.json",
+        "records/gecko-contracts.json"
+      ],
+      "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
+      "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/production-main-app-compile.json",
+      "notClaimed": [
+        "complete browser/approvedUI integration or navigation handlers",
+        "durable BrowserStore/valid checkpoint process restore",
+        "temporary context physical erasure or actual worker quiescence/slot release",
+        "Android Gecko runtime/cached finite permission reconciliation validation"
+      ],
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement."
     }
   ],
   "parallelPending": [

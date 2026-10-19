@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R28",
+  "revision": "R30",
   "authority": [
     "O31",
     "O32"
@@ -1259,12 +1259,15 @@
       "sha256": "a8568a7ad59623f6ecac4bf5b8094dff9a4c2ad8d827441004f43b5e638250a7",
       "bytes": 14807,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T16:26:04+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧双层环境/保留级别/固定上限/收起恢复/Popup父来源/最后标签重置语义，旧版仍运行维护且有UI对照价值。新v2原生catalog不抄旧Profile/SharedPreferences迁移、损坏数据静默丢弃或shelf双文件非事务行为；新退役/关闭不声称清理或实际work结束。",
+      "evidenceRefs": [
+        "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+        "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {
@@ -1332,12 +1335,15 @@
       "sha256": "37adaa3a52a1d8874441d01274ccca302899d8c45a9d4cb00789fa2c8a484294",
       "bytes": 13172,
       "scope": "legacy-application-runtime-code",
-      "state": "queued-not-semantically-reviewed",
-      "reviewedAt": null,
+      "state": "reviewed-retain-value-remains",
+      "reviewedAt": "2026-10-19T16:26:04+08:00",
       "refactorValueExhausted": false,
       "archiveApproved": false,
-      "reason": "仅完成文件身份/摘要清点；未据此认定价值已完成",
-      "evidenceRefs": [],
+      "reason": "完整审读旧双层环境/保留级别/固定上限/收起恢复/Popup父来源/最后标签重置语义，旧版仍运行维护且有UI对照价值。新v2原生catalog不抄旧Profile/SharedPreferences迁移、损坏数据静默丢弃或shelf双文件非事务行为；新退役/关闭不声称清理或实际work结束。",
+      "evidenceRefs": [
+        "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+        "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java"
+      ],
       "trackedSourceAtCommit": true
     },
     {

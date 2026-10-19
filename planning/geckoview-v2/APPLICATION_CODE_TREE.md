@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**21文件**；其中HOST测试切片 **14文件**，API编译/实现中 **7文件**；其余 **157文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**28文件**；其中HOST测试切片 **18文件**，API编译/实现中 **10文件**；其余 **150文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -70,14 +70,14 @@
                             ├── browser/
                             │   ├── BackCoordinator.java [J][PLAN][?] — IME/模态/全屏/浮层/子屏/Popup/history/环境单次返回
                             │   ├── BookmarkStore.java [J][PLAN][?] — 收藏/书签/搜索设置
-                            │   ├── BrowserCoordinator.java [J][PLAN][?] — 环境/标签/导航/原生页面共同领域动作
-                            │   ├── BrowserModels.java [J][PLAN][?] — 浏览器句柄/状态/不可变快照
+                            │   ├── BrowserCoordinator.java [J][API/WIP][?] — 环境/标签/导航/原生页面共同领域动作
+                            │   ├── BrowserModels.java [J][HOST][?] — 浏览器句柄/状态/不可变快照
                             │   ├── BrowserStore.java [J][PLAN][?] — 新v2原生环境/标签持久化，非v1迁移
                             │   ├── ExternalNavigation.java [J][PLAN][?] — 拒绝无效/userinfo/控制字符URL，重建私有Intent丢外部extras/selector/ClipData，合法链接入新临时隔离环境
                             │   ├── HistoryStore.java [J][PLAN][?] — 近期访问/期限/维持/暂停写入
                             │   ├── SearchEngines.java [J][PLAN][?] — 原生搜索提供者与明确目标加载
-                            │   ├── TabCatalog.java [J][PLAN][?] — 环境子标签/选择/父Popup/关闭
-                            │   └── WorkspaceCatalog.java [J][PLAN][?] — 双层环境类型/保留策略/名称
+                            │   ├── TabCatalog.java [J][HOST][?] — 环境子标签/选择/父Popup/关闭
+                            │   └── WorkspaceCatalog.java [J][HOST][?] — 双层环境类型/保留策略/名称
                             ├── continuity/
                             │   ├── CompiledSourceIdentity.java [J][PLAN][?] — APK编译根公钥/策略身份
                             │   ├── ContinuityCoordinator.java [J][PLAN][?] — 四步/抢救/销毁前锁定/提交新epoch的状态归约
@@ -128,15 +128,15 @@
                             │   ├── GeckoHistoryDelegate.java [J][PLAN][?] — 已提交历史与认证瞬态访问区分
                             │   ├── GeckoMediaBridge.java [J][PLAN][?] — 实际媒体激活/feature/状态与秒单位
                             │   ├── GeckoRuntimeOwner.java [J][API/WIP][?] — 主进程唯一runtime，原生子进程由SDK管理
-                            │   ├── GeckoSessionOwner.java [J][PLAN][?] — session强引用/创建/关闭与代次
+                            │   ├── GeckoSessionOwner.java [J][API/WIP][?] — session强引用/创建/关闭与代次
                             │   ├── NavigationDelegate.java [J][PLAN][?] — 加载/外链/新窗与正确父来源
-                            │   ├── PartitionCatalog.java [J][PLAN][?] — 稳定非null context和环境/子应用归属
+                            │   ├── PartitionCatalog.java [J][HOST][?] — 稳定非null context和环境/子应用归属
                             │   ├── PermissionDelegate.java [J][PLAN][?] — context+origin网站许可与OS许可分层
                             │   ├── ProgressDelegate.java [J][PLAN][?] — 提交导航/加载/安全状态/快照事件
                             │   ├── PromptDelegate.java [J][PLAN][?] — 网站提示/文件选择的Native/系统等待
                             │   ├── SelectionDelegate.java [J][PLAN][?] — 网页选择/复制与用户动作
                             │   ├── SessionCheckpointStore.java [J][PLAN][?] — 异步sessionState与敏感快照提交/恢复
-                            │   ├── SessionDisplayBinding.java [J][PLAN][?] — View附着/分离/可见/focus与session生命分离
+                            │   ├── SessionDisplayBinding.java [J][API/WIP][?] — View附着/分离/可见/focus与session生命分离
                             │   └── ViewportPolicy.java [J][PLAN][?] — 手机/完整平板/小窗与批准布局策略
                             ├── entrypoints/
                             │   ├── AdminControlActivity.java [J][API/WIP][?] — 应用内/隐藏控制台，隐藏不是授权
@@ -236,9 +236,9 @@
 | 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路；fresh one-shot immutable object IDs/catalog scope/RAW digest/GCM frame tamper/tainted late prefix/cancel/4MiB generated source bounded private staging; ZLIB bytes need separate codec verification | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java` |
 | 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
 | 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入；30s exact-frame/context/nonce, replay/expiry, authorize failure/unknown reservation burn,16concurrent/reentrant attempts,1MiB retained-frame cap/clock rollback; no actual effects/durable journal；fresh nonce/policy/grant same content identity; action/scope/raw args change conflicts, immutable digest/schema arrays; Android SQLite methods separately pending；fixed4actions/unknownfailclosed/strictrefs/exactsafeinteger/permissionpurpose/installerpair/rawargspreservation;NOTauthority orAndroidexecution | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java`<br>`app/src/test/java/io/github/rebrowser/control/IdempotencyIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java` |
-| Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java` |
+| Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控；6HOST actual owner-domain/context/epoch/fence/tombstone/capacity/gate/thread tests; notcookie/storage erasure/runtime | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java` |
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
-| 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区 | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java` |
+| 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区；14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java` |
 | 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
 | 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发 | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java` |
 | 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
@@ -283,6 +283,7 @@
 | 统一控制入口与协议 | actual-native-idempotency-ledger | SQLite请求->job不可变绑定、SourcePermit/原生target-epoch检查；同内容新证明复用原job，内容变更冲突。实际类DDL在HOST SQLite39检查/磁盘重开，非Android事务或效果执行<br>`app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java`<br>`planning/geckoview-v2/evidence/admin-idempotency-host-sql.json`<br>`planning/geckoview-v2/experiments/admin_journal_sql.py` |
 | 领域基础与任务 | actual-task-journal-and-projection | 原生work/intent/outcome/end分轴，私有原执行者ticket、跨进程未知不重放；request/task共一SQLite提交。同步CommitFence在事务内重查当前权限/期限，不能后台逃逸。<br>`app/src/main/java/io/github/rebrowser/core/TaskJournal.java`<br>`app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java`<br>`planning/geckoview-v2/evidence/task-journal-host-sql.json` |
 | 统一控制入口与协议 | four-actual-action-schemas-console-integration | 四项已理解原生窗口参数正式源码接入内部控制台：仅typedclaims，不验证真实window/source/presentation/URI权限，不执行动作；其他174项schema未完成并拒绝<br>`app/src/main/java/io/github/rebrowser/control/ActionSchemas.java`<br>`app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java`<br>`planning/geckoview-v2/evidence/production-unit-tests.json` |
+| 浏览器领域与本机数据 | actual-browser-domain-and-Gecko-ownership | R30按总树编写7个缺失本体文件：工作区/标签/不可变模型及分区/Session/View所有权和Native协调器。真实模型测试与GeckoAPI编译分层；主窗口尚未接通、永久存储/正确恢复/A04未完成，不以外壳冒充可用浏览器。<br>`app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java`<br>`app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java`<br>`app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java`<br>`planning/geckoview-v2/evidence/production-main-app-compile.json` |
 
 ### 当前边界
 

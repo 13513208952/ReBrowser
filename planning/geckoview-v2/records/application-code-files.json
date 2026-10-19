@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R29",
+  "revision": "R30",
   "authority": [
     "O26",
     "O27",
@@ -200,6 +200,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java",
+          "kind": "unit-real-issued-partitions",
+          "purpose": "6HOST actual owner-domain/context/epoch/fence/tombstone/capacity/gate/thread tests; notcookie/storage erasure/runtime",
+          "state": "host-tested-not-Android-engine"
         }
       ]
     },
@@ -245,6 +251,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java",
+          "kind": "unit-real-browser-catalogs",
+          "purpose": "14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore",
+          "state": "host-tested-not-Android-browser"
         }
       ]
     },
@@ -1135,7 +1147,7 @@
       "group": "engine",
       "kind": "native-code",
       "responsibility": "稳定非null context和环境/子应用归属",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1143,16 +1155,17 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
       "group": "engine",
       "kind": "native-code",
       "responsibility": "session强引用/创建/关闭与代次",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1160,16 +1173,17 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
       "group": "engine",
       "kind": "native-code",
       "responsibility": "View附着/分离/可见/focus与session生命分离",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1177,9 +1191,10 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionCheckpointStore.java",
@@ -1476,60 +1491,64 @@
       "group": "browser",
       "kind": "native-code",
       "responsibility": "环境/标签/导航/原生页面共同领域动作",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
       "group": "browser",
       "kind": "native-code",
       "responsibility": "双层环境类型/保留策略/名称",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
       "group": "browser",
       "kind": "native-code",
       "responsibility": "环境子标签/选择/父Popup/关闭",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
       "group": "browser",
       "kind": "native-code",
       "responsibility": "浏览器句柄/状态/不可变快照",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
-      "testReferenceGroup": "browser"
+      "testReferenceGroup": "browser",
+      "implementationReadinessRef": "records/implementation-readiness.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
@@ -3361,6 +3380,17 @@
         "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
         "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
         "planning/geckoview-v2/evidence/production-unit-tests.json"
+      ]
+    },
+    {
+      "group": "browser",
+      "kind": "actual-browser-domain-and-Gecko-ownership",
+      "summary": "R30按总树编写7个缺失本体文件：工作区/标签/不可变模型及分区/Session/View所有权和Native协调器。真实模型测试与GeckoAPI编译分层；主窗口尚未接通、永久存储/正确恢复/A04未完成，不以外壳冒充可用浏览器。",
+      "paths": [
+        "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+        "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+        "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
+        "planning/geckoview-v2/evidence/production-main-app-compile.json"
       ]
     }
   ],

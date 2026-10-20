@@ -42,11 +42,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
-      "sha256": "a89815ff49431d33e1e6cb0124731c518f42994a44b43df37c5792107130d727"
+      "sha256": "25e3ae10defb9ad076aea789ecbe07cd6e9f5fbf29de147a9701e365458fb562"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
-      "sha256": "64d7f3e5c49c25afeaa0bf6838d144394505fefa4df1cc4ce986d10cdb6ec350"
+      "sha256": "2b9bc7ced8335cd0ffc307231d38aeafb053b7d3664f81bba9de48f9464cf0aa"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
@@ -66,7 +66,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
-      "sha256": "ae5131def1be306edb3520256c8a7217f371f085f16e75db0e5d1d7ef741cce9"
+      "sha256": "e3fe119df85d79561629ea6cc7e2e92ac8ca165da3302c7d490127b6b027cb30"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
@@ -74,7 +74,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
-      "sha256": "b56ab8aceec452fe719e2ee1f66b5e1476be77c30c6bc9e9b30639f7c0976693"
+      "sha256": "3e2e9c7794233d0425d52f20d9abbebc5ecddcd5992185e2ba42c1d7890c0afe"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -143,12 +143,22 @@
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$1.class",
-      "sha256": "a014de519025efeff41c9aeab9f4bfeca881d475172fc01d9037828692ff5893",
+      "sha256": "b578d9f152755e0c4017eefab67f84cc4c9d8af5c46eb85163e7035d4bcd4c47",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/bootstrap/ComponentGate$BoundSourceEvaluator.class",
+      "sha256": "2d3b0b3fada6087d0a1400cf0cbcbfb792468f8e065177392b210b683b1ff88f",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$BusinessPermit.class",
-      "sha256": "ff75133517351b994ba07cbac37152ced2a492353aac155902f9bfe403863762",
+      "sha256": "0b675c80da2003c8e98d425f9cd04aa78f02b7067a59c01d2e13d6f690c4874a",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/bootstrap/ComponentGate$ResourcePin.class",
+      "sha256": "25975bef88273e33c488c8958bcced4fbf6784d8bc14e33abcc8f9375198bac1",
       "classMajor": 52
     },
     {
@@ -162,13 +172,23 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/bootstrap/ComponentGate$SourceView.class",
+      "sha256": "d5ff21a0b74cc95d2c82f3dafbe7629ebaa2da09e197865209f3f1193a1ef43c",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/bootstrap/ComponentGate.class",
-      "sha256": "85a962a020a3cc46ae2352c5c90b03c892ed6ef9e5bd96944e4c191a62d85150",
+      "sha256": "32d9add37a31897882e0745e608e0f6569107ebc9e1b7f30648fb0c799f2a316",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/bootstrap/ProcessRole$StartupRoute.class",
+      "sha256": "12b51be73b348b92e4f74e5cf86e3a4633f6833ef4aab867ba4fc63ae35e578a",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/bootstrap/ProcessRole.class",
-      "sha256": "55db0335d0f13961ea5e0c6581dc6475992d7d2ec9cf15c8b717b1d3a0dfc475",
+      "sha256": "d6c0cf9792b3604b44e1318c1b8c0eefc3382a25874d0bb26bcd6c63efcf6220",
       "classMajor": 52
     },
     {
@@ -318,12 +338,12 @@
     },
     {
       "path": "io/github/rebrowser/browser/WorkspaceCatalog$Entry.class",
-      "sha256": "7298118422da4fd3e4db51b36eec415275b69fbd2d6c1143c71c3669601639d2",
+      "sha256": "4c94a862f97c9e104fc5f790b67f384b57841420dcf064b715c358143f38f014",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/browser/WorkspaceCatalog.class",
-      "sha256": "4cc63e4207e61839dee048ed1b257cfa5f902e3941c693f88c61c685181a45a3",
+      "sha256": "f653f723c03317c3272716b3d80843dcfbe15e3e70068e801f86389782124f63",
       "classMajor": 52
     },
     {
@@ -703,7 +723,7 @@
     },
     {
       "path": "io/github/rebrowser/engine/PartitionCatalog.class",
-      "sha256": "0ceedb0684a1373afdaabf4de9f1db99cee91c324b1ecf73ce4b89a1351ecfbd",
+      "sha256": "dcc063dfcfa0dbbe5fb9abab402b02737a28707c2281d8262be34f7cfbf09655",
       "classMajor": 52
     },
     {

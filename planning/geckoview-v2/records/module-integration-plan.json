@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "revision": "R44",
+  "authority": [
+    "O45",
+    "O64",
+    "O67",
+    "O68",
+    "O69"
+  ],
+  "method": "Close complete module contracts and end-to-end flows, implementing other-module dependencies as needed. File count is only commit minimum, never module completion. No standalone UI expansion while higher-priority module blockers have an implementable next step.",
+  "priority": [
+    "entry",
+    "browser",
+    "engine",
+    "control",
+    "bridge",
+    "ui"
+  ],
+  "adjustmentRule": "Module boundaries/admin wire protocol/native DTOs may change when actual interoperability/capability requires it. Record the concrete failed flow, change both producer and consumer and tests together. Breaking wire changes get explicit new protocol/version/evidence; do not silently redefine historical SHA-bound frames or add v1 data/protocol migration. Source-neutral identity, current authorization, owner consent/privacy, bounded actual ownership remain invariants.",
+  "progressRule": "Each increment chooses a named closure gap with executable acceptance. A missing external prerequisite must name owner/exit condition and be kept fail-closed; continue independent implementable paths rather than indefinitely research/retry the same blocker. Commit only >=10 meaningful code files (current stricter runtime-source minimum), with module-scope result and remaining dependency gates stated.",
+  "modules": [
+    {
+      "id": "entry",
+      "owns": "Actual process routing, one native app startup owner, minimal locked shell/control inspection versus old-data business access, source-decision lifetime and resource handoff",
+      "designExit": "Every process/component path has explicit ownership, source context, allowed operations, fail/unknown route; no first-click/metadata/debug unlock",
+      "implementationExit": "Exact main process creates one startup owner; children/unknown do not. Old permits/resources never reactivate on observed source lock or different native source incarnation. Cross-module DB/catalog/runtime/task pins reject old-context reuse; old owned work still settles/stops without new access",
+      "currentSlice": "R44 close source-incarnation and entry-resource lifetime gaps across entry/browser/engine/control/task",
+      "dependencies": [
+        "continuity supplies actual native accepted source+epoch incarnation; Root currently unconfigured",
+        "fresh-install/rescue/erasure/epoch commit authority still separate and unfinished"
+      ],
+      "state": "in-progress-not-module-complete"
+    },
+    {
+      "id": "browser",
+      "owns": "Native workspace/tab/document selection, lifecycle/retention intents, navigation, bookmark/history/persistence/checkpoints via shared domain services",
+      "designExit": "All catalog/persistence/engine/UI/admin routes bind same target/scope/epoch and distinguish reported URL from document identity",
+      "implementationExit": "Native create/select/close/shelf/restore and valid persistence/process recovery complete without blind session reopen; cross-module dispatch/results current and source-gated",
+      "dependencies": [
+        "entry accepted context",
+        "engine document/session receipts",
+        "permission lifetime and native storage"
+      ],
+      "state": "in-progress"
+    },
+    {
+      "id": "engine",
+      "owns": "One runtime/process, issued partitions, strongly held sessions, displays/delegates, actual response/checkpoint/native writer ownership",
+      "designExit": "Session/partition/document/View/workset semantics explicit for every callback/close/unknown handoff",
+      "implementationExit": "Real native delegate wiring/open-unopenedPopup/crash/restore/private-checkpoint/response disposal and finite permissions qualify without treating void close/page stop as quiescence",
+      "dependencies": [
+        "browser intent and current native targets",
+        "permissions finite grant/actual stop",
+        "download private staging and source workset coverage"
+      ],
+      "state": "in-progress"
+    },
+    {
+      "id": "control",
+      "owns": "Portable proof decoding/key possession/current actor policy/target+epoch/deadline/nonce/grant/idempotent durable admission/shared dispatch/private results",
+      "designExit": "All supported actions have actual executable producer/consumer schema and authority/ownership/error/recovery flow; unknown actions reject",
+      "implementationExit": "Same principal from any program receives same effective authority; UI and admin converge on same domain methods, no alternate privileged route/retry after unknown effect",
+      "dependencies": [
+        "entry incarnation-bound permits",
+        "authority/grants/targets",
+        "TaskJournal/TaskCoordinator and native domain handlers"
+      ],
+      "state": "in-progress"
+    },
+    {
+      "id": "bridge",
+      "owns": "APK built-in connector assets/session+background ports/native MAIN execution and bounded scoped messaging",
+      "designExit": "Native-issued connector/session/document ownership and current actor limits enforced, never trust page payload level/package/origin claims as authority",
+      "implementationExit": "Cross-domain/same-context/stale document/large response/cancel/process recovery flows work with actual Gecko wiring and shared services",
+      "dependencies": [
+        "engine real document/session ownership",
+        "control shared admission/results",
+        "browser/Outlook/music domain services"
+      ],
+      "state": "planned-dependent"
+    },
+    {
+      "id": "ui",
+      "owns": "Native presentation of current shared-domain state and genuine owned interactions, not source/actor authority",
+      "designExit": "Every control maps to current shared services and actual native callback receipt; no mock completion or WebView facade",
+      "implementationExit": "Approved phone/tablet/small-window appearance and real lifecycle/input/back/progress/site flows qualified",
+      "dependencies": [
+        "higher priority native source/domain/engine/control closures"
+      ],
+      "state": "components-in-progress-not-priority-frontier"
+    }
+  ],
+  "acceptanceFlows": [
+    "locked/unconfigured startup -> native shell/control inspection -> no old business DB/runtime/connector access",
+    "trusted native incarnation A -> queued/active work -> observed source lock or native incarnation B -> no old permit/catalog/runtime/DB reuse; actual A owners still settle memory/owned close",
+    "native user and portable admin proof -> same current target/domain method -> same actual effect/result axes",
+    "native current document/connector -> bounded request/stream -> stale context rejects publication but not old actual work accounting"
+  ],
+  "notClaimed": "Formal Root/custody, real Android source/auth/SQLite/Gecko/process-death and complete product runtime remain separate qualification. Design contract closure is not Android runtime completion.",
+  "blockerDecisions": [
+    {
+      "id": "ENTRY-ACCEPTED-SOURCE",
+      "owner": "native-continuity/entry integration",
+      "current": "Root absent staysUNCONFIGURED; native bound provider deliberately publishes no accepted snapshot",
+      "nextExecutableStep": "Implement bounded own signer+last-good inspection/typed native acceptance receipt and entry publication, with synthetic source/filesystem failure tests; fresh/erasure branches must never infer empty install from missing marker",
+      "exit": "Actual current accepted source+epoch proof and serialized cutover, not source DTO constructor",
+      "blocks": "business activation, NOT current entry routing/permit-resource lifetime code and tests"
+    },
+    {
+      "id": "ENGINE-OLD-INCARNATION",
+      "owner": "Gecko host/source cutover",
+      "current": "Old runtime remains owned by oldincarnation; cannotreuse or create secondruntime in same process",
+      "nextExecutableStep": "Define/implement native source restart/engine quiescence handoff before exposing newacceptedepoch",
+      "exit": "Real old domain/engine writers and process handoff qualified",
+      "blocks": "new-epoch runtimeactivation, not safe locked shell/accounting"
+    },
+    {
+      "id": "MODULE-FRONTIER",
+      "owner": "current coding increment",
+      "current": "No new isolated UI leaves planned while entry/browser/Gecko integration has named steps",
+      "nextExecutableStep": "Each increment closes named producer/consumer flow with executable tests or explicit safe dependency boundary",
+      "exit": "No indefinite broad research or falsely complete module label"
+    }
+  ]
+}

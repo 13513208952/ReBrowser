@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R43",
+  "revision": "R44",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,11 +225,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "本批按O64至少10代码文件：8个新NativeUI/Viewport源文件+BrowserActivity/BrowserCoordinator实质改动；不以测试/文档凑数",
-    "真实Native工具栏/双层标签面板、窗口内多选/单调进度、信息/文本Dialog所有权、own-windowinsets/fullscreen/metrics源代码；locked入口只构建最小原生壳，不偷偷创建网页业务",
-    "51mainJava/238classes；实际AGP Java编译和HOST367测试，含37新增界面模型测试；manifest任务调用UP-TO-DATE并核对当前产物，不称重新执行merge",
-    "可用内存回到>=3GiB，已执行known-small32MiB+1GiB保留的Java/manifest/JUnit任务；无JNI/dex/R8/APK/签名/装机/实际AndroidView运行",
-    "真实已验证epoch/domainfactory/ActorContext/有限权限/完整主窗口/Gecko回调与恢复仍待接通；不能把UI组件API/模型测试当完整浏览器/外观验收"
+    "按O67/O68/O69以模块完整契约和联动闭合为重心，优先入口/进程，其次浏览器核心/Gecko宿主/管理员协议/内建连接器/UI；协议边界可随能力需求调整，不无限卡同一阻碍",
+    "入口/来源生命周期闭合切片跨12runtime文件：实际own-process路由和单StartupFactory；NativeSourceView新incarnation/观察到的代次绑定permit，锁定/切换/ABA不复活旧许可",
+    "Browser/partition/runtime/task/target/DB实例sticky资源pin防新permit重定向旧资源；原运行者MEM结算/ownedclose仍不依赖新businesspermit；DBconstructor显式openingpermit，公开nativeAPI按需调整，wire/DDL未改",
+    "实际AGP主工程51源码/244classes/HOST386；纯源25文件独立230HOST+真实SDKbootclasspath；当前编译DDL实际HOST SQLite39+235重跑，历史原证据不改",
+    "真实Android进程/Source接受回执/SQLiteDAO/GeckoRuntime创建与完整模块验收仍待；Root继续UNCONFIGURED/LOCKED。Nativecontinuity实际acceptedincarnation提供器是下一明确依赖，不以布尔/metadata/调试解锁替代"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -257,5 +257,15 @@
     "maximumFiles": null,
     "checker": "check_commit_batch.py",
     "notCompletionProof": "code quantity is not whole responsibility or Android runtime completion"
-  }
+  },
+  "moduleIntegrationPlanRef": "records/module-integration-plan.json",
+  "currentModuleFocus": "entry",
+  "modulePriority": [
+    "entry",
+    "browser",
+    "engine",
+    "control",
+    "bridge",
+    "ui"
+  ]
 }

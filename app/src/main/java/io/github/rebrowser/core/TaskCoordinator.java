@@ -118,7 +118,7 @@ public final class TaskCoordinator implements AutoCloseable {
     }
     private final Object monitor=new Object();
     private final ThreadLocal<Boolean> ownedThread=new ThreadLocal<>();
-    private final ComponentGate gate;private final JournalBackend journal;private final CurrentContext context;
+    private final ComponentGate gate;private final ComponentGate.ResourcePin sourceLifetime;private final JournalBackend journal;private final CurrentContext context;
     private final int perLaneCapacity;
     private final Map<String,Entry> live=new LinkedHashMap<>();
     private final EnumMap<Lane,Integer> counts=new EnumMap<>(Lane.class);
@@ -130,7 +130,7 @@ public final class TaskCoordinator implements AutoCloseable {
     /** PRIVATE synthetic journal injection is for reflected HOST tests, not production enrollment. */
     private TaskCoordinator(ComponentGate gate,JournalBackend journal,CurrentContext context,int capacity){
         if(gate==null || !gate.mayShowNativeShell() || journal==null || context==null || capacity<1 || capacity>32)throw invalid();
-        this.gate=gate;this.journal=journal;this.context=context;perLaneCapacity=capacity;
+        this.gate=gate;sourceLifetime=gate.newResourcePin();this.journal=journal;this.context=context;perLaneCapacity=capacity;
         for(final Lane lane:Lane.values()){
             int queue=lane==Lane.SAFETY?6*capacity+1:capacity;counts.put(lane,0);
             ThreadFactory threads=new ThreadFactory(){@Override public Thread newThread(final Runnable r){Thread t=new Thread(new Runnable(){@Override public void run(){ownedThread.set(Boolean.TRUE);try{r.run();}finally{ownedThread.remove();}}},"ReBrowser-v2-"+lane.name().toLowerCase(java.util.Locale.ROOT));t.setDaemon(true);return t;}};
@@ -140,7 +140,7 @@ public final class TaskCoordinator implements AutoCloseable {
     /** Job already exists in paired request/task ledger. This method does NOT authenticate/grant it. */
     public Submission submitNativeReserved(String job,Lane lane,ComponentGate.BusinessPermit permit,NativeBody body){
         if(job==null || !job.matches("j_[0-9a-f]{32}") || lane==null || lane==Lane.SAFETY || body==null)throw invalid();
-        gate.checkCurrent(permit);context.checkCurrent(job);
+        sourceLifetime.checkOrBind(permit);context.checkCurrent(job);
         Entry e=new Entry(job,lane,permit,body);e.owner=new Owner(this,e);
         synchronized(monitor){
             gate.checkCurrent(permit);if(!accepting)throw new IllegalStateException("Native registered workset fenced");
@@ -170,7 +170,7 @@ public final class TaskCoordinator implements AutoCloseable {
     private Object startJournal(Entry e){
         CommitFence fence=new CommitFence(this,e,FenceUse.WORK);try{Object ticket=journal.start(e.job,e.permit,fence);fence.requireNativeChecks();return ticket;}finally{fence.retire();}
     }
-    private void current(Entry e){gate.checkCurrent(e.permit);context.checkCurrent(e.job);gate.checkCurrent(e.permit);}
+    private void current(Entry e){sourceLifetime.checkOrBind(e.permit);context.checkCurrent(e.job);sourceLifetime.checkOrBind(e.permit);}
     private void currentWork(Entry e){
         synchronized(monitor){if(!accepting)throw new SecurityException("Native task set fenced");}current(e);
         synchronized(monitor){if(!accepting)throw new SecurityException("Native task set fenced");}

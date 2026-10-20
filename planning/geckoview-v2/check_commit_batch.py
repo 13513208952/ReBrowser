@@ -10,7 +10,8 @@ P=Path(__file__).resolve().parent
 ROOT=P.parents[1]
 
 def review(base=None,contract=None):
-    batch=json.loads((contract or P/'records/native-browser-window-batch-contract.json').read_text())
+    current=json.loads((P/'evidence/production-main-app-compile.json').read_text()).get('currentCodeBatchContractRef','records/native-browser-window-batch-contract.json')
+    batch=json.loads((contract or P/current).read_text())
     args=['git','diff','--name-only','--diff-filter=ACMR']+([base] if base else ['--cached'])+['--','app/src/main/java/io/github/rebrowser']
     changed=set(subprocess.run(args,cwd=ROOT,text=True,capture_output=True,check=True).stdout.splitlines())
     runtime={s for s in changed if s.endswith(('.java','.kt')) and (ROOT/s).is_file()}

@@ -64,6 +64,7 @@ public final class TaskJournal {
     private static final String RECOVER="UPDATE task_journal_v1 SET phase=CASE phase WHEN 1 THEN 6 WHEN 2 THEN 5 ELSE phase END,work=3,revision=revision+1 WHERE target_fp=? AND data_epoch=? AND work=1 AND owner_run<>?";
     private final SQLiteDatabase db;
     private final ComponentGate gate;
+    private final ComponentGate.ResourcePin sourceLifetime;
     private final String target,epoch;
     private volatile boolean initialized;
 
@@ -89,9 +90,9 @@ public final class TaskJournal {
         private ExecutionTicket(TaskJournal issuer,String job,String token){this.issuer=issuer;this.job=job;this.token=token;}
         public String jobRef(){return job;}
     }
-    public TaskJournal(SQLiteDatabase nativeDedicatedDatabase,ComponentGate gate,byte[] targetInstallSpkiSha256,byte[] dataEpoch){
+    public TaskJournal(SQLiteDatabase nativeDedicatedDatabase,ComponentGate gate,byte[] targetInstallSpkiSha256,byte[] dataEpoch,ComponentGate.BusinessPermit nativeOpeningPermit){
         if(nativeDedicatedDatabase==null || gate==null)throw invalid();
-        db=nativeDedicatedDatabase;this.gate=gate;target=hex(fixed(targetInstallSpkiSha256,32));epoch=hex(fixed(dataEpoch,16));
+        db=nativeDedicatedDatabase;this.gate=gate;sourceLifetime=gate.newResourcePin();sourceLifetime.checkOrBind(nativeOpeningPermit);target=hex(fixed(targetInstallSpkiSha256,32));epoch=hex(fixed(dataEpoch,16));
     }
     public static String[] schemaStatements(){return new String[]{CREATE,INSERT_GUARD,DELETE_GUARD,UPDATE_GUARD};}
     public static String lostProcessRecoveryStatement(){return RECOVER;}
@@ -104,16 +105,16 @@ public final class TaskJournal {
             requireSchema("table",TABLE,CREATE);requireSchema("trigger","task_no_replace",INSERT_GUARD);requireSchema("trigger","task_no_delete",DELETE_GUARD);requireSchema("trigger","task_monotonic",UPDATE_GUARD);
             commit(permit,fence);
         }finally{db.endTransaction();}
-        initialized=true;
+        check(permit,fence);initialized=true;
     }
     private void requireSchema(String type,String name,String expected){try(Cursor c=db.rawQuery("SELECT sql FROM sqlite_master WHERE type=? AND name=?",new String[]{type,name})){if(!c.moveToFirst() || !expected.equals(c.getString(0)))throw new IllegalStateException("Unknown task journal schema");}}
     /** Internal bridge only. Both ledgers must use this exact handle/gate/native binding. */
     public void requireSameStore(SQLiteDatabase database,ComponentGate sourceGate,String targetFingerprint,String dataEpoch){
-        if(!initialized || db!=database || gate!=sourceGate || !target.equals(targetFingerprint) || !epoch.equals(dataEpoch))throw new IllegalStateException("Task journal backing store mismatch");
+        sourceLifetime.requireCurrent();if(!initialized || db!=database || gate!=sourceGate || !target.equals(targetFingerprint) || !epoch.equals(dataEpoch))throw new IllegalStateException("Task journal backing store mismatch");
     }
     /** Only inside native coordinator's reservation transaction; NOT a durable receipt yet. */
     public void reserveInCurrentTransaction(String job,byte[] bindingSha256,boolean existingJob,ComponentGate.BusinessPermit permit){
-        gate.checkCurrent(permit);ready();if(!db.inTransaction())throw new IllegalStateException("Task reservation transaction required");validateJob(job);byte[] binding=fixed(bindingSha256,32);
+        sourceLifetime.checkOrBind(permit);ready();if(!db.inTransaction())throw new IllegalStateException("Task reservation transaction required");validateJob(job);byte[] binding=fixed(bindingSha256,32);
         Record old=read(job);
         if(existingJob){if(old==null || !MessageDigest.isEqual(old.binding,binding))throw new IllegalStateException("Missing or conflicting original task");return;}
         if(old!=null)throw new IllegalStateException("Task already reserved");
@@ -123,7 +124,7 @@ public final class TaskJournal {
     public ExecutionTicket startWorkAfterAuthorization(String job,ComponentGate.BusinessPermit permit,NativeFence fence){
         validateJob(job);String token=newToken();begin(permit,true,fence);
         try{check(permit,fence);ContentValues v=state(1,1,0);v.put("owner_run",RUN);v.put("execution_token",token);update(job,v,"phase=0",null);commit(permit,fence);}finally{db.endTransaction();}
-        return new ExecutionTicket(this,job,token);
+        check(permit,fence);return new ExecutionTicket(this,job,token);
     }
     /** Must return successfully BEFORE any selected external route receives the command. */
     public void commitDispatchIntentAfterAuthorization(ExecutionTicket ticket,ComponentGate.BusinessPermit permit,NativeFence fence){
@@ -185,7 +186,7 @@ public final class TaskJournal {
     }
     private void begin(ComponentGate.BusinessPermit permit,boolean requireInitialized,NativeFence fence){check(permit,fence);if(requireInitialized)ready();if(db.inTransaction())throw new IllegalStateException("Nested journal transaction forbidden");db.beginTransactionNonExclusive();}
     private void commit(ComponentGate.BusinessPermit permit,NativeFence fence){check(permit,fence);db.setTransactionSuccessful();}
-    private void check(ComponentGate.BusinessPermit permit,NativeFence fence){if(fence==null)throw invalid();gate.checkCurrent(permit);fence.checkCurrent();gate.checkCurrent(permit);}
+    private void check(ComponentGate.BusinessPermit permit,NativeFence fence){if(fence==null)throw invalid();sourceLifetime.checkOrBind(permit);fence.checkCurrent();sourceLifetime.checkOrBind(permit);}
     private void ready(){if(!initialized)throw new IllegalStateException("Task journal not initialized");}
     private void own(ExecutionTicket t){if(t==null || t.issuer!=this)throw new SecurityException("Wrong native execution ticket");}
     private static ContentValues state(int phase,int work,int effect){ContentValues v=new ContentValues();v.put("phase",phase);v.put("work",work);v.put("effect",effect);return v;}

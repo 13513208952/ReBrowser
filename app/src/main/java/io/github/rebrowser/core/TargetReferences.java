@@ -41,7 +41,7 @@ public final class TargetReferences {
         long revision;boolean retired;Registration registration;
         Slot(String reference,Object activity,Object window){this.reference=reference;this.activity=new WeakReference<>(activity);this.window=new WeakReference<>(window);}
     }
-    private final Object application;private final ComponentGate gate;private final CurrentEpoch epochGuard;
+    private final Object application;private final ComponentGate gate;private final ComponentGate.ResourcePin sourceLifetime;private final CurrentEpoch epochGuard;
     private final byte[] epoch;private final int capacity;private final WindowProbe probe;
     private final Thread owner=Thread.currentThread();private final SecureRandom random=new SecureRandom();
     private final Map<String,Slot> issued=new LinkedHashMap<>();
@@ -53,7 +53,7 @@ public final class TargetReferences {
     /** PRIVATE synthetic boundary for HOST tests only, no public alternate window provider. */
     private TargetReferences(Object application,ComponentGate gate,byte[] epoch,CurrentEpoch guard,int capacity,WindowProbe probe){
         if(application==null || gate==null || !gate.mayShowNativeShell() || epoch==null || epoch.length!=16 || guard==null || capacity<1 || capacity>64 || probe==null)throw invalid();
-        this.application=application;this.gate=gate;this.epoch=epoch.clone();epochGuard=guard;this.capacity=capacity;this.probe=probe;
+        this.application=application;this.gate=gate;sourceLifetime=gate.newResourcePin();this.epoch=epoch.clone();epochGuard=guard;this.capacity=capacity;this.probe=probe;
     }
     public Registration registerWindowAfterAuthorization(Activity nativeOwnedActivity,ComponentGate.BusinessPermit permit){return registerNative(nativeOwnedActivity,permit);}
     private Registration registerNative(Object nativeActivity,ComponentGate.BusinessPermit permit){
@@ -99,7 +99,7 @@ public final class TargetReferences {
     private WindowState inspect(Object activity){if(checking)throw denied();checking=true;try{return probe.inspect(activity);}finally{checking=false;}}
     private void requireLive(WindowState state){if(state==null || state.application!=application || state.window==null || state.destroyed || state.finishing)throw denied();}
     private void access(ComponentGate.BusinessPermit permit){
-        thread();if(checking)throw denied();gate.checkCurrent(permit);checking=true;try{epochGuard.checkCurrent(epoch.clone());}finally{checking=false;}gate.checkCurrent(permit);
+        thread();if(checking)throw denied();sourceLifetime.checkOrBind(permit);checking=true;try{epochGuard.checkCurrent(epoch.clone());}finally{checking=false;}sourceLifetime.checkOrBind(permit);
     }
     private void thread(){if(Thread.currentThread()!=owner)throw new IllegalStateException("Native window registry owner thread required");}
     private static SecurityException denied(){return new SecurityException("Native window target unavailable or stale");}

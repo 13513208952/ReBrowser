@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "revision": "R44",
+  "authority": ["O64", "O67", "O68", "O69"],
+  "moduleFocus": "entry",
+  "priority": ["entry", "browser", "engine", "control", "bridge", "ui"],
+  "moduleClosureSlice": "Process/startup/source-decision/resource-lifetime contract across actual consumers. Not isolated file completion, not whole entry module/platform runtime completion.",
+  "actualChanges": [
+    "Own package/process classifier explicit startup route; unknown/child/auxiliary never instantiate native main services. ReBrowserApplication startup once, volatile published owner, no implicit getter construction",
+    "StartupCoordinator private constructor and actual main-thread/own-process singleton factory, construction-attempt ownership/no alternate owner; minimal EntryStatus, production bound-source snapshot provider remains UNCONFIGURED/LOCKED",
+    "ComponentGate native SourceView incarnation + observed generation pins permits; observed lock/error/cutover/ABA never reactivates old permit; provider recursion poisons gate. State-only constructor explicitly not an unobserved epoch-change detector/production acceptance provider",
+    "Sticky ResourcePin prevents valid new permits from retargeting old WorkspaceCatalog/PartitionCatalog/BrowserCoordinator/GeckoRuntimeOwner/TaskCoordinator/TargetReferences/TaskJournal/IdempotencyStore",
+    "DB constructors now require native opening permit; context checks after SQLite waiting/before commit/after relevant physical commit before publication; runtime checks again after native create. No DDL/wire change",
+    "Old native work still settles actual MEMORY ownership after source failure; no source error/permit denial fabricated as durable task end/quiescence"
+  ],
+  "minimumWorkload": {"actualMeaningfulRuntimeFiles":12,"minimum":10,"maximum":null,"testsDocumentsCountedTowardMinimum":false,"contractRef":"records/entry-source-incarnation-batch-contract.json"},
+  "actualValidation": {
+    "mainSources": 51,
+    "mainClasses": 244,
+    "actualAgpHostTests": 386,
+    "independentPureHostTests": 230,
+    "actualPureSdkBootclasspathSources": 25,
+    "currentCompiledHostAdminSqlChecks": 39,
+    "currentCompiledHostTaskSqlChecks": 235,
+    "entryTests":16,
+    "browserCatalogTests":16,
+    "partitionTests":8,
+    "taskCoordinatorTests":40,
+    "targetReferenceTests":19,
+    "newTestsThisSlice":19,
+    "scope":"Actual production models/counters/threads with SYNTHETIC native acceptance markers; actual compiled SQL on HOST SQLite, NOT Android DAO/process/source/engine execution",
+    "mainEvidenceRef":"evidence/production-main-agp-R44-checks.json",
+    "entryEvidenceRef":"evidence/entry-source-context-host-execution.json"
+  },
+  "dynamicIntegrationRule": "Native source/lifetime contract changed consumers together, including explicit opening permit API instead of gate-only DB construction. Admin wire17fields/DDL unchanged this slice; future capability-driven changes allowed with explicit producer+consumer/versioned tests and historical evidence preserved.",
+  "remainingModuleGates": [
+    "Native accepted source/epoch receipt provider (actual signer + last-good/continuity/fresh/rescue/erasure commit), formal Root still absent",
+    "Actual Android main/child startup/source/SQLite/runtime qualification",
+    "Native source-cutover serialization/complete writer coverage; old runtime cannot be reused or replaced by an automatic second runtime for a new incarnation"
+  ],
+  "steadyProgress": "Resolved concrete permit-reactivation/resource-retarget gap with19new tests and actual current-source SQL verification; named dependent acceptance provider/engine handoff next steps instead of indefinite research or more isolated UI. Current increment does not claim whole module complete or wait for Root provisioning to continue code.",
+  "protected": "No v1 migration/Root/debug unlock, no actual device/auth/data/key access, no JNI/dex/R8/APK/sign/install/global cleanup. Root README/history/SHA-bound oldSQL evidence unchanged; new current SQL source evidence separately added."
+}

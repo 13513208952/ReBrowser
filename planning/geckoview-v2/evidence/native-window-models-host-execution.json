@@ -1,5 +1,5 @@
 {
-  "revision": "R43",
+  "revision": "R44",
   "hostTestsPassed": 37,
   "scope": "Actual native window/panel/toolbar binding/address/selection/progress/modal/inset/metric-policy models on HOST; no Android View/Window/AlertDialog/ValueAnimator/Activity metric method execution",
   "sourceFiles": [
@@ -37,7 +37,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
-      "sha256": "1bfa4d851973d257e04b672946e9fff0c49bb92441134180dc43eb5f8a2edd81"
+      "sha256": "72f0a4085b8df43049cd8e1c1e4bd66645119a868ae8a6409ec1d65e17b9f740"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
@@ -52,5 +52,6 @@
   "actualAndroidUiCallbacksOrRenderingExecuted": false,
   "nativeBrowserComplete": false,
   "sourceOrOwnerConsentGranted": false,
-  "gradleEvidenceRef": "evidence/production-main-agp-R43-checks.json"
+  "gradleEvidenceRef": "evidence/production-main-agp-R43-checks.json",
+  "currentActualHostRunRef": "evidence/production-main-agp-R44-checks.json"
 }

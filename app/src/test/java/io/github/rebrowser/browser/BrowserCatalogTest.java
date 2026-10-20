@@ -57,7 +57,13 @@ public final class BrowserCatalogTest {
     @Test public void sourceClosureRejectsReadsAndWritesWithoutErasingMetadata(){
         Fixture f=new Fixture();WorkspaceRef w=f.create();f.source.set(ComponentGate.SourceState.LOCKED);
         assertThrows(SecurityException.class,()->f.workspaces.snapshot(f.permit));assertThrows(SecurityException.class,()->f.tabs(w));
-        f.source.set(ComponentGate.SourceState.TRUSTED);assertSame(w,f.view(w).ref());
+        f.source.set(ComponentGate.SourceState.TRUSTED);assertThrows(SecurityException.class,()->f.view(w));assertThrows(SecurityException.class,()->f.workspaces.workspace(w,f.gate.requireBusiness()));
+    }
+    @Test public void freshAcceptedIncarnationCannotReadOldWorkspaceOrTabWithNewPermit(){
+        AtomicReference<ComponentGate.SourceView> source=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(new Object()));ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,source::get);WorkspaceCatalog workspaces=new WorkspaceCatalog(gate);TabCatalog tabs=new TabCatalog(workspaces);ComponentGate.BusinessPermit original=gate.requireBusiness();WorkspaceRef old=workspaces.createTemporary(0,original);tabs.initializeWorkspace(old,original);source.set(ComponentGate.SourceView.acceptedNative(new Object()));ComponentGate.BusinessPermit fresh=gate.requireBusiness();assertThrows(SecurityException.class,()->workspaces.snapshot(fresh));assertThrows(SecurityException.class,()->tabs.snapshot(old,fresh));WorkspaceCatalog replacement=new WorkspaceCatalog(gate);assertTrue(replacement.snapshot(fresh).active().isEmpty());assertThrows(IllegalArgumentException.class,()->replacement.workspace(old,fresh));
+    }
+    @Test public void oldImmutableSnapshotDoesNotBecomeFreshSourceAuthorization(){
+        Fixture f=new Fixture();WorkspaceRef ref=f.create();WorkspacesView captured=f.workspaces.snapshot(f.permit);f.source.set(ComponentGate.SourceState.LOCKED);f.gate.sourceState();f.source.set(ComponentGate.SourceState.TRUSTED);assertSame(ref,captured.selected());assertThrows(SecurityException.class,()->f.workspaces.select(captured.selected(),captured.revision(),f.gate.requireBusiness()));
     }
     @Test public void actualWrongThreadCannotMutateCatalog()throws Exception{
         Fixture f=new Fixture();WorkspaceRef w=f.create();ExecutorService pool=Executors.newSingleThreadExecutor();

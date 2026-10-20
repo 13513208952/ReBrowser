@@ -42,6 +42,7 @@ public final class IdempotencyStore {
     private static final String WHERE="principal_fp=? AND target_fp=? AND data_epoch=? AND request_id=?";
     private final SQLiteDatabase database;
     private final ComponentGate gate;
+    private final ComponentGate.ResourcePin sourceLifetime;
     private final String target,epoch;
     private final int maxJobs;
     private boolean initialized;
@@ -68,17 +69,17 @@ public final class IdempotencyStore {
     public static final class ResourceLimit extends Exception {private ResourceLimit(){super("ADMIN_JOB_LEDGER_FULL");}}
 
     public IdempotencyStore(SQLiteDatabase nativeDedicatedDatabase,ComponentGate gate,
-            byte[] nativeTargetInstallSpkiSha256,byte[] nativeDataEpoch,int maxJobs){
+            byte[] nativeTargetInstallSpkiSha256,byte[] nativeDataEpoch,int maxJobs,ComponentGate.BusinessPermit nativeOpeningPermit){
         if(nativeDedicatedDatabase==null || gate==null || maxJobs<1 || maxJobs>1_000_000)throw invalid();
-        this.database=nativeDedicatedDatabase;this.gate=gate;target=hex(fixed(nativeTargetInstallSpkiSha256,32));epoch=hex(fixed(nativeDataEpoch,16));this.maxJobs=maxJobs;
+        this.database=nativeDedicatedDatabase;this.gate=gate;sourceLifetime=gate.newResourcePin();sourceLifetime.checkOrBind(nativeOpeningPermit);target=hex(fixed(nativeTargetInstallSpkiSha256,32));epoch=hex(fixed(nativeDataEpoch,16));this.maxJobs=maxJobs;
     }
     public static String[] schemaStatements(){return new String[]{CREATE,NO_UPDATE,NO_DELETE,NO_REPLACE};}
     public synchronized void initialize(ComponentGate.BusinessPermit permit){
-        initialized=false;gate.checkCurrent(permit);
+        initialized=false;sourceLifetime.checkOrBind(permit);
         if(database.inTransaction())throw new IllegalStateException("Nested administrator transaction forbidden");
         database.beginTransactionNonExclusive();
         try{
-            int version=database.getVersion();
+            sourceLifetime.checkOrBind(permit);int version=database.getVersion();
             if(version!=0 && version!=1)throw new IllegalStateException("Unsupported administrator journal schema");
             if(version==0){for(String statement:schemaStatements())database.execSQL(statement);database.setVersion(1);}
             Set<String> actual=new HashSet<>();try(Cursor c=database.rawQuery("PRAGMA table_info(admin_requests_v1)",null)){while(c.moveToNext())actual.add(c.getString(c.getColumnIndexOrThrow("name")));}
@@ -87,9 +88,9 @@ public final class IdempotencyStore {
             requireSchema("trigger","admin_request_no_update",NO_UPDATE);
             requireSchema("trigger","admin_request_no_delete",NO_DELETE);
             requireSchema("trigger","admin_request_no_replace",NO_REPLACE);
-            gate.checkCurrent(permit);database.setTransactionSuccessful();
+            sourceLifetime.checkOrBind(permit);database.setTransactionSuccessful();
         }finally{database.endTransaction();}
-        initialized=true;
+        sourceLifetime.checkOrBind(permit);initialized=true;
     }
     private void requireSchema(String type,String name,String expected){
         try(Cursor c=database.rawQuery("SELECT sql FROM sqlite_master WHERE type=? AND name=?",new String[]{type,name})){
@@ -99,13 +100,14 @@ public final class IdempotencyStore {
     /** Invoke only from native authorized ControlChallengeStore.Admission.reserveJob. */
     public synchronized Reservation reserveAfterAuthorization(ControlChallengeStore.CommitFence fence,ComponentGate.BusinessPermit permit,TaskJournal journal)throws Exception{
         if(fence==null)throw invalid();AdminProofVerifier.KeyProof proof=fence.proof();
-        gate.checkCurrent(permit);fence.checkCurrent();if(!initialized || journal==null)throw new IllegalStateException("Administrator/task journal not initialized");
+        sourceLifetime.checkOrBind(permit);fence.checkCurrent();if(!initialized || journal==null)throw new IllegalStateException("Administrator/task journal not initialized");
         if(database.inTransaction())throw new IllegalStateException("Nested administrator transaction forbidden");
         journal.requireSameStore(database,gate,target,epoch);ContentKey key=contentKey(proof);
         if(!target.equals(key.target) || !epoch.equals(key.epoch))throw new SecurityException("Wrong native target/epoch");
         String[] args={key.principal,key.target,key.epoch,key.request};Reservation reservation;
         database.beginTransactionNonExclusive();
         try{
+            sourceLifetime.checkOrBind(permit);fence.checkCurrent();
             try(Cursor c=database.query(TABLE,new String[]{"job_ref","content_sha256"},WHERE,args,null,null,null,"1")){
                 if(c.moveToFirst()){
                     if(!MessageDigest.isEqual(key.content,c.getBlob(1)))throw new Conflict();
@@ -118,9 +120,9 @@ public final class IdempotencyStore {
                 }
             }
             journal.reserveInCurrentTransaction(reservation.job,bindingSha256(key),reservation.existing,permit);
-            fence.checkCurrent();gate.checkCurrent(permit);database.setTransactionSuccessful();
+            fence.checkCurrent();sourceLifetime.checkOrBind(permit);database.setTransactionSuccessful();
         }finally{database.endTransaction();} // commit failure is UNKNOWN to caller: challenge stays spent
-        return reservation;
+        sourceLifetime.checkOrBind(permit);return reservation;
     }
     /** Fresh nonce/signature/grant/policy revisions are not immutable operation content. */
     public static ContentKey contentKey(AdminProofVerifier.KeyProof proof){

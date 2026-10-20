@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R43",
+  "revision": "R44",
   "authority": [
     "O41",
     "O42",
@@ -290,11 +290,13 @@
       "state": "implemented-host-tested-not-integrated",
       "validationMode": "jvm",
       "researchCompleteForScope": true,
-      "scope": "主进程与Gecko/辅助进程识别，未知不初始化主业务",
+      "scope": "主进程与Gecko/辅助进程识别，未知不初始化主业务; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/authority-model.json",
         "records/control-proof-format.json",
-        "records/domain-interfaces.json"
+        "records/domain-interfaces.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
       "dependencies": "existing production control/crypto code and Java8 only",
@@ -319,11 +321,13 @@
       "state": "implemented-host-tested-not-integrated",
       "validationMode": "jvm",
       "researchCompleteForScope": true,
-      "scope": "原生壳和业务来源闸门分离；gate绑定不透明permit每次重新检查，不接外部bool",
+      "scope": "原生壳和业务来源闸门分离；gate绑定不透明permit每次重新检查，不接外部bool; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/authority-model.json",
         "records/control-proof-format.json",
-        "records/domain-interfaces.json"
+        "records/domain-interfaces.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
       "dependencies": "existing production control/crypto code and Java8 only",
@@ -349,11 +353,13 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "主程序Application；只在精确主进程创建原生Startup，不自动启动Gecko/DB",
+      "scope": "主程序Application；只在精确主进程创建原生Startup，不自动启动Gecko/DB; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
-        "evidence/validation-android-local-synthetic.json"
+        "evidence/validation-android-local-synthetic.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -366,7 +372,8 @@
         "formal Root/key custody or continuous source rescue/auth/erasure implementation",
         "command admission/IPC/effects or Android device execution"
       ],
-      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
@@ -374,11 +381,13 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED",
+      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
-        "evidence/validation-android-local-synthetic.json"
+        "evidence/validation-android-local-synthetic.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -391,7 +400,8 @@
         "formal Root/key custody or continuous source rescue/auth/erasure implementation",
         "command admission/IPC/effects or Android device execution"
       ],
-      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
@@ -399,11 +409,13 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "应用进程单一按需GeckoRuntime，permit重查；失败不自动第二次初始化，页面隐藏不shutdown全局runtime",
+      "scope": "应用进程单一按需GeckoRuntime，permit重查；失败不自动第二次初始化，页面隐藏不shutdown全局runtime; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
-        "evidence/validation-android-local-synthetic.json"
+        "evidence/validation-android-local-synthetic.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -416,7 +428,8 @@
         "formal Root/key custody or continuous source rescue/auth/erasure implementation",
         "command admission/IPC/effects or Android device execution"
       ],
-      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
@@ -507,11 +520,13 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "native SQLite immutable request/job ledger and actual original-content key; current source/target/epoch guard and same-job/conflict/native row cap; not dispatch journal or complete admission coordinator; same-handle TaskJournal reservation in same top-level commit; missing original task fails closed, requires live CommitFence before commit",
+      "scope": "native SQLite immutable request/job ledger and actual original-content key; current source/target/epoch guard and same-job/conflict/native row cap; not dispatch journal or complete admission coordinator; same-handle TaskJournal reservation in same top-level commit; missing original task fails closed, requires live CommitFence before commit; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/control-proof-format.json",
         "records/domain-interfaces.json",
-        "records/implementation-readiness.json"
+        "records/implementation-readiness.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "trusted dedicated v2 SQLiteDatabase+gate+native target/epoch -> initialize known schema and reserve/reuse job after authorization; no raw client SQL/path",
       "dependencies": "actual Android SQLite/ContentValues/Cursor and existing KeyProof/gate, no new library",
@@ -528,7 +543,8 @@
         "effect execution or automatic restart replay",
         "authority/grant/target installation key provisioning"
       ],
-      "integrationGate": "trusted native coordinator must open dedicated source-bound DB and combine durable task record/current policy fence before effect dispatch. Unknown commit burns challenge; fresh proof retrieves same immutable request/job. No table clear/migration fallback."
+      "integrationGate": "trusted native coordinator must open dedicated source-bound DB and combine durable task record/current policy fence before effect dispatch. Unknown commit burns challenge; fresh proof retrieves same immutable request/job. No table clear/migration fallback.",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
@@ -564,12 +580,14 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "native durable work/intent/outcome/actual-end ledger, original owner ticket and paired request/task commit; R41 mandatory operation-bound read-only NativeFence in transaction after writer waiting and before commit, not complete policy serialization",
+      "scope": "native durable work/intent/outcome/actual-end ledger, original owner ticket and paired request/task commit; R41 mandatory operation-bound read-only NativeFence in transaction after writer waiting and before commit, not complete policy serialization; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/runtime-traces.json",
         "records/control-proof-format.json",
-        "records/task-journal-native-fence-contract.json"
+        "records/task-journal-native-fence-contract.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "dedicated nativeSQLite/gate/target/epoch -> exact schema, current-transaction reservation, private owner ticket before whole work; intent committed before route handoff",
       "dependencies": "actual Android SQLite, TaskSnapshot/ComponentGate; policy fence/actual domain dispatch still required",
@@ -587,7 +605,7 @@
         "trust in external completion/owner booleans"
       ],
       "integrationGate": "Initialize source-owned DB first; paired request/task in one top-level commit; Native coordinator serializes policy writers/current checks before effects. Lost process UNKNOWN not retry/end; old owners settle memory even if source lock forbidsDB publication.",
-      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
@@ -655,11 +673,13 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "owner-thread bounded primary/secondary/temporary metadata, level/name/selection/shelf/restore and logical removal, native expected revisions",
+      "scope": "owner-thread bounded primary/secondary/temporary metadata, level/name/selection/shelf/restore and logical removal, native expected revisions; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -717,11 +737,13 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "bounded process-local native domain-owner/context/epoch registry, fence/retired tombstones; no erasure or process-death restore",
+      "scope": "bounded process-local native domain-owner/context/epoch registry, fence/retired tombstones; no erasure or process-death restore; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -801,12 +823,14 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring",
+      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
-        "records/native-browser-window-batch-contract.json"
+        "records/native-browser-window-batch-contract.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -821,7 +845,7 @@
         "Android Gecko runtime/cached finite permission reconciliation validation"
       ],
       "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -1194,10 +1218,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Actual bounded AUTH/EFFECT/READ executors and reserved SAFETY, exact registered workset, durable-start/intent/settlement concrete TaskJournal adapter; actual memory settlement after source lock. NOT authority or global work coverage; R41 mandatory operation-bound read-only NativeFence in transaction after writer waiting and before commit, not complete policy serialization",
+      "scope": "Actual bounded AUTH/EFFECT/READ executors and reserved SAFETY, exact registered workset, durable-start/intent/settlement concrete TaskJournal adapter; actual memory settlement after source lock. NOT authority or global work coverage; R41 mandatory operation-bound read-only NativeFence in transaction after writer waiting and before commit, not complete policy serialization; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/task-coordinator-contract.json",
-        "records/task-journal-native-fence-contract.json"
+        "records/task-journal-native-fence-contract.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "Native-only owned inputs -> bounded lifecycle/usage snapshots and private owner capabilities; no IPC enrollment or positive authority",
       "dependencies": "Actual existing ComponentGate/Cancellation/TaskJournal and Android SDK/standard Java8; no new dependencies",
@@ -1209,7 +1235,7 @@
         "io.github.rebrowser.core.TaskCoordinatorTest"
       ],
       "hostEvidence": "evidence/production-main-app-compile.json",
-      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json",
       "hostControlFlowExecutedWithSyntheticPlatform": true,
       "notClaimed": [
         "actual Android SQLite adapter/transactions",
@@ -1253,10 +1279,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Native WINDOW target handle/revision/epoch/own Activity-Application-Window binding, weak UI refs/tombstones, mandatory fresh native scope and final handoff lease checks; NOT actor authority or other target kinds",
+      "scope": "Native WINDOW target handle/revision/epoch/own Activity-Application-Window binding, weak UI refs/tombstones, mandatory fresh native scope and final handoff lease checks; NOT actor authority or other target kinds; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
       "researchEvidence": [
         "records/target-references-contract.json",
-        "records/platform-action-contracts.json"
+        "records/platform-action-contracts.json",
+        "records/module-integration-plan.json",
+        "records/entry-source-incarnation-batch-contract.json"
       ],
       "inputOutput": "Native own Activity + current gate/epoch -> opaque win_128bithex registration, immutable lease bound to exact revision; unresolved/stale/foreign targets reject",
       "dependencies": "Actual Android Activity/Application/Looper and Java8 WeakReference/SecureRandom/ComponentGate; no new dependency",
@@ -1268,7 +1296,7 @@
         "io.github.rebrowser.core.TargetReferencesTest"
       ],
       "hostEvidence": "evidence/window-target-references-host-execution.json",
-      "androidApiCompileEvidence": "evidence/changed-native-android-api-compile.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json",
       "hostControlFlowExecutedWithSyntheticPlatform": true,
       "notClaimed": [
         "actual Android Activity/Window lifecycle probe or UI effect",

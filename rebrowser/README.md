@@ -19,6 +19,8 @@ $GRADLE_96/bin/gradle -p rebrowser :app:compileDebugJavaWithJavac \
 
 SDK、Gradle 用户目录、项目缓存及 `java.io.tmpdir` 使用既有隔离环境；不要改动全局 SDK/缓存。代码/清单编译通过不等于 APK、Android运行或网站验证。
 
-R43按O64完成至少10个实质runtime代码文件后再提交：新增8个原生工具栏/双层标签面板/多选/进度/Dialog/窗口样式/Viewport文件，实质修改BrowserActivity与BrowserCoordinator；测试和文档不凑数，不设10个上限。本轮[实际离线AGP检查](../planning/geckoview-v2/evidence/production-main-agp-R43-checks.json)编译51份本体源码/238class，367项HOST测试通过（新增37项界面模型）；manifest任务UP-TO-DATE并核对当前产物。未执行Android View/Window/Dialog/Gecko运行或JNI/dex/R8/APK。入口仍只构建锁定原生壳，完整浏览器/已核验epoch域工厂/有限权限/恢复尚未接通，不能把组件代码当可用产品。
+R44按模块推进：入口与进程→浏览器核心→Gecko宿主→管理员协议→内建连接器→原生UI，依赖按需协作，协议/边界允许随能力需求调整。本批跨12个runtime文件收口入口/来源生命周期：实际own-process路由、唯一startup工厂、incarnation/代次绑定许可，旧catalog/runtime/task/target/DB不能用新许可重定向。实际AGP编译51源码/244class，386HOST（纯切片230），当前编译DDL实际HOST SQL39+235通过。Root仍未配置，真实source接受/Android进程/SQLite DAO/Gecko及整模块运行未完成；下一依赖是原生continuity接受回执提供器，不用元数据或布尔值解锁。提交最少10个实质runtime代码文件，不设上限。
+
+历史R43按O64完成至少10个实质runtime代码文件后再提交：新增8个原生工具栏/双层标签面板/多选/进度/Dialog/窗口样式/Viewport文件，实质修改BrowserActivity与BrowserCoordinator；测试和文档不凑数，不设10个上限。本轮[实际离线AGP检查](../planning/geckoview-v2/evidence/production-main-agp-R43-checks.json)编译51份本体源码/238class，367项HOST测试通过（新增37项界面模型）；manifest任务UP-TO-DATE并核对当前产物。未执行Android View/Window/Dialog/Gecko运行或JNI/dex/R8/APK。入口仍只构建锁定原生壳，完整浏览器/已核验epoch域工厂/有限权限/恢复尚未接通，不能把组件代码当可用产品。
 
 R42独立限额Java检查及R38历史AGP记录保留为分级检查点。TaskCoordinator/TargetReferences/资源预算与事务fence已有源码和限定HOST证据；Android SQLite、实际窗口/内存工厂、完整ActorContext/命令派发器和全域静默仍未完成，引用/槽位/编译均不授予权限。

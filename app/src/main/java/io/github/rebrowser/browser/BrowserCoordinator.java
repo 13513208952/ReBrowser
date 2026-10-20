@@ -25,6 +25,7 @@ public final class BrowserCoordinator {
         public TabsView selectedWorkspaceTabs(){return tabs;}
     }
     private final ComponentGate gate;
+    private final ComponentGate.ResourcePin sourceLifetime;
     private final WorkspaceCatalog workspaces;
     private final TabCatalog tabs;
     private final PartitionCatalog partitions;
@@ -37,7 +38,7 @@ public final class BrowserCoordinator {
     public BrowserCoordinator(ComponentGate gate,WorkspaceCatalog workspaces,TabCatalog tabs,PartitionCatalog partitions,GeckoSessionOwner sessions){
         if(gate==null || workspaces==null || tabs==null || partitions==null || sessions==null)throw BrowserModels.invalid();
         workspaces.requireGate(gate);tabs.requireCatalog(workspaces);partitions.requireGate(gate);sessions.requireBindings(gate,partitions);
-        this.gate=gate;this.workspaces=workspaces;this.tabs=tabs;this.partitions=partitions;this.sessions=sessions;
+        this.gate=gate;sourceLifetime=gate.newResourcePin();this.workspaces=workspaces;this.tabs=tabs;this.partitions=partitions;this.sessions=sessions;
     }
     public WorkspaceRef createTemporary(long expectedWorkspacesRevision,ComponentGate.BusinessPermit permit){
         access(permit);WorkspaceRef ref=workspaces.createTemporary(expectedWorkspacesRevision,permit);
@@ -117,6 +118,6 @@ public final class BrowserCoordinator {
     }
     public WorkspacesView workspaces(ComponentGate.BusinessPermit permit){access(permit);return workspaces.snapshot(permit);}
     public TabsView tabs(WorkspaceRef workspace,ComponentGate.BusinessPermit permit){access(permit);return tabs.snapshot(workspace,permit);}
-    private void access(ComponentGate.BusinessPermit permit){ownerThread();if(engineMutation)throw new IllegalStateException("Reentrant browser engine mutation forbidden");gate.checkCurrent(permit);}
+    private void access(ComponentGate.BusinessPermit permit){ownerThread();if(engineMutation)throw new IllegalStateException("Reentrant browser engine mutation forbidden");sourceLifetime.checkOrBind(permit);}
     private void ownerThread(){if(Thread.currentThread()!=thread)throw new IllegalStateException("Browser coordinator owner thread required");}
 }

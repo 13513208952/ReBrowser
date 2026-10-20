@@ -1,35 +1,62 @@
 package io.github.rebrowser.bootstrap;
 
 /**
- * All native entries share one source/data decision. Shell visibility is not business
- * unlock. Evaluator is trusted in-process continuity code, never IPC/client assertions.
- * A permit is bound to this gate and rechecked on every use, not a permanent boolean.
+ * Native entry/source lifetime gate, NOT administrator/owner/scope authorization.
+ * Native context provider is a read-only nonblocking snapshot of accepted continuity.
+ * Snapshot metadata never establishes acceptance by itself; no IPC/debug unlock setter.
  */
 public final class ComponentGate {
     public enum SourceState { INITIALIZING, UNCONFIGURED, LOCKED, TRUSTED }
     public interface SourceEvaluator { SourceState current(); }
-    private final ProcessRole role;
-    private final SourceEvaluator source;
-    public ComponentGate(ProcessRole role, SourceEvaluator source) {
-        if (role == null || source == null) throw new IllegalArgumentException("Native source decision required");
-        this.role = role; this.source = source;
+    public interface BoundSourceEvaluator { SourceView current(); }
+    /** Native continuity supplies a FRESH opaque incarnation for each accepted source/epoch.
+     * Never reuse a context object after a cutover, even when returning to same source/data.
+     * This DTO is not a receipt/authority to accept a source. No old-data access here.
+     */
+    public static final class SourceView {
+        private final SourceState state;private final Object incarnation;
+        private SourceView(SourceState state,Object incarnation){if(state==null || ((state==SourceState.TRUSTED)!=(incarnation!=null)))throw new IllegalArgumentException("Invalid native source snapshot");this.state=state;this.incarnation=incarnation;}
+        public static SourceView untrusted(SourceState state){if(state==SourceState.TRUSTED)throw new IllegalArgumentException("Native source incarnation required");return new SourceView(state,null);}
+        public static SourceView acceptedNative(Object nativeAcceptedIncarnation){if(nativeAcceptedIncarnation==null)throw new IllegalArgumentException("Native source incarnation required");return new SourceView(SourceState.TRUSTED,nativeAcceptedIncarnation);}
     }
-    public boolean mayShowNativeShell() { return role == ProcessRole.MAIN; }
-    public SourceState sourceState() {
-        if (role != ProcessRole.MAIN) return SourceState.LOCKED;
-        try { SourceState value = source.current(); return value == null ? SourceState.LOCKED : value; }
-        catch (RuntimeException unavailable) { return SourceState.LOCKED; }
+    private final ProcessRole role;private final BoundSourceEvaluator source;
+    private SourceState observed;private Object incarnation;private long revision;private boolean evaluating,poisoned;
+    /** State-only routing for locked shells/explicit synthetic fixtures; cannot represent an
+     * unobserved epoch change. PRODUCTION acceptance must use forNativeSource + fresh incarnation.
+     */
+    public ComponentGate(ProcessRole role,SourceEvaluator source){
+        if(role==null || source==null)throw new IllegalArgumentException("Native source decision required");this.role=role;
+        final Object stateOnlyContext=new Object();this.source=new BoundSourceEvaluator(){@Override public SourceView current(){SourceState state=source.current();return state==null?null:state==SourceState.TRUSTED?SourceView.acceptedNative(stateOnlyContext):SourceView.untrusted(state);}};
     }
+    private ComponentGate(ProcessRole role,BoundSourceEvaluator source,boolean bound){if(role==null || source==null)throw new IllegalArgumentException("Native source decision required");this.role=role;this.source=source;}
+    public static ComponentGate forNativeSource(ProcessRole role,BoundSourceEvaluator nativeAcceptedSource){return new ComponentGate(role,nativeAcceptedSource,true);}
+    public boolean mayShowNativeShell(){return role==ProcessRole.MAIN;}
+    /** No provider IO/DB/authority mutation allowed while this short snapshot lock is held. */
+    private synchronized SourceState capture(){
+        if(role!=ProcessRole.MAIN)return SourceState.LOCKED;
+        if(evaluating){poisoned=true;return SourceState.LOCKED;}
+        SourceView view=null;evaluating=true;
+        try{view=source.current();}catch(RuntimeException unavailable){/* reject, do not log source-private data */}finally{evaluating=false;}
+        SourceState next=view==null || poisoned?SourceState.LOCKED:view.state;Object context=next==SourceState.TRUSTED?view.incarnation:null;
+        if(next!=observed || context!=incarnation){if(revision==Long.MAX_VALUE){poisoned=true;next=SourceState.LOCKED;context=null;}else revision++;observed=next;incarnation=context;}
+        return next;
+    }
+    public SourceState sourceState(){return capture();}
     public static final class BusinessPermit {
-        private final ComponentGate issuer;
-        private BusinessPermit(ComponentGate issuer) { this.issuer = issuer; }
+        private final ComponentGate issuer;private final Object incarnation;private final long revision;
+        private BusinessPermit(ComponentGate issuer,Object incarnation,long revision){this.issuer=issuer;this.incarnation=incarnation;this.revision=revision;}
     }
-    public BusinessPermit requireBusiness() {
-        if (sourceState() != SourceState.TRUSTED) throw locked();
-        return new BusinessPermit(this);
+    public synchronized BusinessPermit requireBusiness(){if(capture()!=SourceState.TRUSTED)throw locked();return new BusinessPermit(this,incarnation,revision);}
+    public synchronized void checkCurrent(BusinessPermit permit){if(capture()!=SourceState.TRUSTED || !matches(permit))throw locked();}
+    public synchronized void checkSameContext(BusinessPermit pinned,BusinessPermit current){if(capture()!=SourceState.TRUSTED || !matches(pinned) || !matches(current))throw locked();}
+    private boolean matches(BusinessPermit permit){return permit!=null && permit.issuer==this && permit.incarnation==incarnation && permit.revision==revision;}
+    /** Sticky native resource lifetime. A new valid permit never retargets an old DB/catalog/runtime. */
+    public static final class ResourcePin {
+        private final ComponentGate issuer;private BusinessPermit anchor;
+        private ResourcePin(ComponentGate issuer){this.issuer=issuer;}
+        public synchronized void checkOrBind(BusinessPermit current){issuer.checkCurrent(current);if(anchor==null)anchor=current;else issuer.checkSameContext(anchor,current);}
+        public synchronized void requireCurrent(){if(anchor==null)throw locked();issuer.checkCurrent(anchor);}
     }
-    public void checkCurrent(BusinessPermit permit) {
-        if (permit == null || permit.issuer != this || sourceState() != SourceState.TRUSTED) throw locked();
-    }
-    private static SecurityException locked() { return new SecurityException("Business source/data gate locked"); }
+    public ResourcePin newResourcePin(){return new ResourcePin(this);}
+    private static SecurityException locked(){return new SecurityException("Business source/data context locked or retired");}
 }

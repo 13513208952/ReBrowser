@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "revision": "R44",
+  "authority": ["O64", "O67", "O68", "O69"],
+  "moduleGoal": "Entry/process closure slice: exact process routing, one startup owner, fail-closed source publication boundary, cached permits and old resources never silently reused after observed revocation or different native incarnation. Implement browser/engine/control/task dependencies together rather than finish isolated files.",
+  "commitMinimum": {"minimumMeaningfulRuntimeCodeFiles":10,"maximumFiles":null},
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+    "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+    "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+    "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+    "app/src/main/java/io/github/rebrowser/core/TargetReferences.java"
+  ],
+  "invariants": [
+    "Actual own package/process routing is local ownership, never source-neutral administrator caller-package privilege",
+    "Only exact main process claims native startup once; construction/reentry failure never creates an alternate startup/runtime owner",
+    "Native accepted-source provider supplies fresh stable opaque incarnation for each accepted source/epoch; SourceView/metadata alone is NOT source acceptance authority. Production startup uses bound-source provider and remains unconfigured/locked until real continuity integration",
+    "State-only gate constructor remains explicitly minimal-shell/synthetic routing; cannot detect an unobserved epoch change and is not used for production acceptance",
+    "Permit bound to issuing gate, observed generation and native incarnation. Observed lock/error/context cutover/ABA rejects old permit even when source later says TRUSTED",
+    "Sticky ResourcePin prevents a fresh valid permit from retargeting old catalogs/runtime/task scheduler/database objects; DAO constructors require original native opening permit, callers must gate before actually opening DB",
+    "Source failure blocks old DB publication but old task owners still settle actual MEMORY work and owned session close without a fresh business permit",
+    "Read-only snapshot checks do not themselves serialize policy mutation or establish complete writer quiescence. Context provider must be nonblocking/read-only; recursion poisons gate",
+    "DDL/proof wire unchanged. Current source SQL tests and historical SHA-bound records are separate, no v1 migration or source shortcut"
+  ],
+  "moduleNotCompleteUntil": [
+    "Actual native continuity acceptance/fresh install/rescue/erasure/new-epoch commit produces accepted incarnation; absent Root remains unconfigured",
+    "Actual Android main/child process/SQLite/runtime/source transition qualification",
+    "Complete native source cutover serialization and engine writer coverage; if old runtime already belongs to a previous incarnation, no in-process second runtime/reuse shortcut"
+  ],
+  "nextPriority": "After this entry-lifetime closure, next implement source acceptance dependency or browser/Gecko shared factory/document ownership, not new isolated UI leaves. Administrator protocol/connector boundaries remain adjustable with producer+consumer tests."
+}

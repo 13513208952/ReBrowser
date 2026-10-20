@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R43",
+  "revision": "R44",
   "authority": [
     "O26",
     "O27",
@@ -132,7 +132,7 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
           "kind": "host-actual-native-control-synthetic-boundary",
-          "purpose": "37 actual HOST tests, no real Android platform/SQLite execution",
+          "purpose": "40 actual HOST tests, no real Android platform/SQLite execution",
           "state": "main-HOST-tested-Android-integration-pending"
         },
         {
@@ -144,7 +144,7 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java",
           "kind": "host-native-window-reference-synthetic-probe",
-          "purpose": "18actualHOST current native epoch/window identity/revision/weak lifetime/retire/scope negative cases; not Android Window or UI effects",
+          "purpose": "19actualHOST current native epoch/window identity/revision/weak lifetime/retire/scope negative cases; not Android Window or UI effects",
           "state": "main-HOST-tested-Android-and-dispatcher-pending"
         }
       ]
@@ -554,7 +554,12 @@
       "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
       "testReferenceGroup": "entry",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
@@ -569,7 +574,12 @@
       "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
       "testReferenceGroup": "entry",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
@@ -584,7 +594,12 @@
       "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
       "testReferenceGroup": "entry",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
@@ -599,7 +614,12 @@
       "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
       "runtimePending": true,
       "testReferenceGroup": "entry",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
@@ -755,14 +775,17 @@
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "18actualHOST registry/lease cases with PRIVATE SYNTHETIC window probe; actual SDK37.2 bootclasspath compiled, NO actual Android windows/actor authority/partition-session-document target execution",
+      "validationMeaning": "19actualHOST registry/lease cases with PRIVATE SYNTHETIC window probe; actual SDK37.2 bootclasspath compiled, NO actual Android windows/actor authority/partition-session-document target execution",
       "runtimePending": true,
       "testReferenceGroup": "core",
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/target-references-contract.json",
         "evidence/window-target-references-host-execution.json",
-        "evidence/changed-native-android-api-compile.json"
+        "evidence/changed-native-android-api-compile.json",
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
       ]
     },
     {
@@ -787,7 +810,7 @@
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "37 actual HOST tests of production methods with synthetic journal/platform observations; actual SDK37.2 bootclasspath compile, NOT Android/SQLite/OS integration",
+      "validationMeaning": "40 actual HOST tests of production methods with synthetic journal/platform observations; actual SDK37.2 bootclasspath compile, NOT Android/SQLite/OS integration",
       "runtimePending": true,
       "testReferenceGroup": "core",
       "implementationReadinessRef": "records/implementation-readiness.json",
@@ -796,7 +819,10 @@
         "evidence/production-main-standalone-jvm-checks.json",
         "evidence/changed-native-android-api-compile.json",
         "records/task-journal-native-fence-contract.json",
-        "evidence/task-journal-current-schema-equivalence.json"
+        "evidence/task-journal-current-schema-equivalence.json",
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
       ]
     },
     {
@@ -814,7 +840,10 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/task-journal-native-fence-contract.json",
-        "evidence/task-journal-current-schema-equivalence.json"
+        "evidence/task-journal-current-schema-equivalence.json",
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
       ]
     },
     {
@@ -1194,7 +1223,12 @@
       "validationMeaning": "actual main-app Android SQLite API compile +3HOST content-key tests and39HOST actual production DDL SQLite checks; Android transaction/crash/complete dispatch not tested",
       "runtimePending": true,
       "testReferenceGroup": "control",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
@@ -1269,7 +1303,12 @@
       "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
       "runtimePending": true,
       "testReferenceGroup": "engine",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
@@ -1287,7 +1326,12 @@
       "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
       "testReferenceGroup": "engine",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
@@ -1642,7 +1686,12 @@
       "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
       "testReferenceGroup": "browser",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
@@ -1658,7 +1707,12 @@
       "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
       "testReferenceGroup": "browser",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/entry-source-incarnation-batch-contract.json",
+        "evidence/entry-source-context-host-execution.json",
+        "evidence/production-main-agp-R44-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",

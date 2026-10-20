@@ -232,6 +232,17 @@ public final class TaskCoordinatorTest {
         for(Method method:TaskJournal.class.getDeclaredMethods())if(Modifier.isPublic(method.getModifiers()) && required.contains(method.getName())){assertEquals(TaskJournal.NativeFence.class,method.getParameterTypes()[method.getParameterCount()-1]);required.remove(method.getName());}assertTrue(required.isEmpty());
         for(Constructor<?> constructor:TaskCoordinator.CommitFence.class.getDeclaredConstructors())assertFalse(Modifier.isPublic(constructor.getModifiers()));
     }
+    @Test public void oldCoordinatorCannotAcceptFreshPermitAfterSourceReturnsTrusted()throws Exception{
+        try(Fixture f=new Fixture(2)){
+            CountDownLatch body=new CountDownLatch(1);TaskCoordinator.Submission original=f.submit(TaskCoordinator.Lane.READ,o->body.countDown());reached(body);until(()->original.client().snapshot().javaInvocationReturned());f.state.set(ComponentGate.SourceState.LOCKED);f.gate.sourceState();f.state.set(ComponentGate.SourceState.TRUSTED);ComponentGate.BusinessPermit fresh=f.gate.requireBusiness();assertThrows(SecurityException.class,()->f.tasks.submitNativeReserved(job(99),TaskCoordinator.Lane.AUTH,fresh,o->{}));assertFalse(original.nativeOwner().mayPublishCurrentResult());original.nativeOwner().reportActualDomainChainEnd(Cancellation.EndReason.UNDERLYING_RETURNED);settled(original);assertTrue(original.client().snapshot().cancellation().workEnded());assertEquals(TaskCoordinator.Persistence.BLOCKED_OR_UNKNOWN,original.client().snapshot().journalFinalization());assertEquals(0,f.journal.ends.get());
+        }
+    }
+    @Test public void databaseOwnersRequireNativeOpeningPermitNotOnlyRawHandle(){
+        for(Class<?> owner:new Class<?>[]{TaskJournal.class,io.github.rebrowser.control.IdempotencyStore.class})for(Constructor<?> constructor:owner.getConstructors())assertEquals(ComponentGate.BusinessPermit.class,constructor.getParameterTypes()[constructor.getParameterCount()-1]);
+    }
+    @Test public void startupOwnerCannotBeConstructedByCallerSuppliedMainRole(){
+        assertEquals(0,io.github.rebrowser.bootstrap.StartupCoordinator.class.getConstructors().length);
+    }
     @Test public void publicConstructorOnlyAcceptsRealNativeJournalNotFakeBackend(){
         for(Constructor<?> constructor:TaskCoordinator.class.getConstructors())for(Class<?> parameter:constructor.getParameterTypes())assertNotEquals(TaskCoordinator.JournalBackend.class,parameter);
     }

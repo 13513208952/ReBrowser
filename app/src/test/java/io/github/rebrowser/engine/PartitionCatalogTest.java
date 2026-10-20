@@ -43,6 +43,12 @@ public final class PartitionCatalogTest {
         assertTrue(c.matchesEpoch(new byte[16],f.permit));assertFalse(c.matchesEpoch(epoch,f.permit));assertFalse(c.matchesEpoch(null,f.permit));
         assertThrows(IllegalArgumentException.class,()->c.requireGate(new Fixture().gate));
     }
+    @Test public void acceptedNativeCutoverCannotReuseOldContextWithFreshPermit(){
+        AtomicReference<ComponentGate.SourceView> source=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(new Object()));ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,source::get);PartitionCatalog partitions=new PartitionCatalog(gate,new byte[16],4);ComponentGate.BusinessPermit old=gate.requireBusiness();PartitionCatalog.Lease lease=partitions.create(PartitionCatalog.Domain.BROWSER,new Object(),old);source.set(ComponentGate.SourceView.acceptedNative(new Object()));ComponentGate.BusinessPermit fresh=gate.requireBusiness();assertThrows(SecurityException.class,()->partitions.activeContextId(lease,fresh));assertThrows(SecurityException.class,()->partitions.create(PartitionCatalog.Domain.BROWSER,new Object(),fresh));assertNotNull(new PartitionCatalog(gate,new byte[16],4).create(PartitionCatalog.Domain.BROWSER,new Object(),fresh));
+    }
+    @Test public void observedLockDoesNotReactivatePartitionCatalogEvenWithoutErasure(){
+        Fixture f=new Fixture();PartitionCatalog.Lease lease=f.catalog.create(PartitionCatalog.Domain.BROWSER,new Object(),f.permit);f.source.set(ComponentGate.SourceState.LOCKED);f.gate.sourceState();f.source.set(ComponentGate.SourceState.TRUSTED);assertThrows(SecurityException.class,()->f.catalog.requireActive(lease,f.gate.requireBusiness()));assertTrue(lease.opaqueRef().startsWith("ctx_"));
+    }
     @Test public void ownerThreadIsEnforcedBeforeMutation()throws Exception{
         Fixture f=new Fixture();ExecutorService pool=Executors.newSingleThreadExecutor();
         try{assertTrue(pool.submit(()->{try{f.catalog.create(PartitionCatalog.Domain.BROWSER,new Object(),f.permit);return false;}catch(IllegalStateException expected){return true;}}).get(2,TimeUnit.SECONDS));}

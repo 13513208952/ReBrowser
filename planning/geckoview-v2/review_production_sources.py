@@ -73,8 +73,11 @@ def review():
     assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
+    ledger_history = json.loads((P/'evidence/admin-idempotency-host-sql-R43-checkpoint.json').read_text())
+    assert ledger_history['sourceCommit'] == 'a726d77f477f85ceb72b32e3850df958c9c3ab3d' and ledger_history['report'] == ledger
     for source in ledger['sourceFiles']:
-        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+        content=subprocess.run(['git','show',ledger_history['sourceCommit']+':'+source['path']],cwd=ROOT,capture_output=True,check=True).stdout
+        assert hashlib.sha256(content).hexdigest() == source['sha256']
     assert not ledger['androidSQLiteExecuted'] and not ledger['actualPolicyAndSqliteAtomicityTested']
     assert not ledger['realDataOrKeysUsed']
     tasks = json.loads((P/'evidence/task-journal-host-sql.json').read_text())
@@ -124,12 +127,17 @@ def review():
     assert len(changed_api['sourceFiles']) == 6 and changed_api['classFiles'] and all(c['classMajor'] == 52 for c in changed_api['classFiles'])
     assert not changed_api['androidRuntimeExecuted']
     schema = json.loads((P/'evidence/task-journal-current-schema-equivalence.json').read_text())
-    assert schema['actualCurrentCompiledSchemaExtracted'] and not schema['historical235SqlChecksRerun'] and not schema['androidSqliteMethodsExecuted']
+    assert schema['actualCurrentCompiledSchemaExtracted'] and schema['historical235SqlChecksRerun'] and not schema['androidSqliteMethodsExecuted']
     assert schema['currentCompiledDdlAndRecoverySha256'] == standalone['taskJournalCurrentCompiledSchemaSha256'] == tasks['ddlAndRecoverySha256']
+    for ref,count,digest in [(app['currentAdminSqlEvidenceRef'],39,'ddlSha256'),(app['currentTaskSqlEvidenceRef'],235,'ddlAndRecoverySha256')]:
+        current_sql=json.loads((P/ref).read_text());assert current_sql['hostSqlChecks']==count
+        assert current_sql[digest] == (ledger if count==39 else tasks)[digest]
+        for source in current_sql['sourceFiles']:
+            assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     for source in schema['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not standalone['historical235SqlChecksRerun'] and not app['taskJournalNativeFenceAndroidExecuted']
-    for name,count,flag in [('TaskCoordinator',37,'actualOwnedExecutorAndWorksetMethodsExecuted'),('ResourceBudgets',10,'actualCounterAndTrimPolicyMethodsExecuted')]:
+    for name,count,flag in [('TaskCoordinator',40,'actualOwnedExecutorAndWorksetMethodsExecuted'),('ResourceBudgets',10,'actualCounterAndTrimPolicyMethodsExecuted')]:
         ref = 'task-coordinator-host-execution' if name == 'TaskCoordinator' else 'resource-budgets-host-execution'
         host = json.loads((P/('evidence/'+ref+'.json')).read_text())
         assert host['hostTestsPassed'] == count and host[flag] and host['temporaryOwnedClassFilesRemoved']
@@ -137,7 +145,7 @@ def review():
         for source in host['sourceFiles']:
             assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     window_targets = json.loads((P/'evidence/window-target-references-host-execution.json').read_text())
-    assert window_targets['hostTestsPassed'] == app['hostAndroidClassWindowTargetTests'] == 18
+    assert window_targets['hostTestsPassed'] == app['hostAndroidClassWindowTargetTests'] == 19
     assert window_targets['actualRegistryAndLeaseMethodsExecuted'] and window_targets['privateSyntheticProbe']
     assert not any(window_targets[k] for k in ['androidWindowProbeExecuted','dispatcherIntegrated','partitionSessionDocumentOrApkTargetsImplemented','realUserDataOrDeviceUsed'])
     for source in window_targets['sourceFiles']:
@@ -149,10 +157,17 @@ def review():
     assert not any(ui[k] for k in ['actualAndroidUiCallbacksOrRenderingExecuted','nativeBrowserComplete','sourceOrOwnerConsentGranted'])
     for source in ui['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
-    batch = json.loads((P/'records/native-browser-window-batch-contract.json').read_text())
+    entry = json.loads((P/'evidence/entry-source-context-host-execution.json').read_text())
+    assert entry['entryContractTests']==16 and entry['browserCatalogTests']==16 and entry['partitionCatalogTests']==8 and entry['taskCoordinatorTests']==40
+    assert entry['actualSourceIncarnationAndResourcePinMethodsExecuted'] and not entry['actualAndroidProcessOrSourceAcceptanceExecuted'] and not entry['actualSqliteDaoOrGeckoRuntimeCreationExecuted']
+    for source in entry['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
+    modules=json.loads((P/'records/module-integration-plan.json').read_text())
+    assert modules['priority']==['entry','browser','engine','control','bridge','ui'] and modules['blockerDecisions']
+    batch = json.loads((P/app['currentCodeBatchContractRef']).read_text())
     assert len(set(batch['runtimeCodeBatch'])) >= batch['commitMinimum']['minimumMeaningfulRuntimeCodeFiles'] >= 10
     assert batch['commitMinimum']['maximumFiles'] is None
-    workload = json.loads((P/'evidence/native-window-code-batch-workload.json').read_text())
+    workload = json.loads((P/app['currentCodeBatchWorkloadRef']).read_text())
     assert workload['minimumRuntimeCodeFiles'] >= 10 and workload['runtimeCodeFilesChanged'] >= workload['minimumRuntimeCodeFiles']
     assert workload['maximumFiles'] is None and set(batch['runtimeCodeBatch']) <= {s['path'] for s in workload['sourceFiles']}
     for source in workload['sourceFiles']:

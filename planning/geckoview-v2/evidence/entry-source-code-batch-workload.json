@@ -1,0 +1,57 @@
+{
+  "authority": "O64",
+  "minimumRuntimeCodeFiles": 10,
+  "runtimeCodeFilesChanged": 12,
+  "maximumFiles": null,
+  "scope": "source workload only, not full responsibility/runtime completion",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "sha256": "7a20145da4dc5d9648aacca8b7b9971a8586e3a3fb0eba89f202ecf00c85ee9f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "2b9bc7ced8335cd0ffc307231d38aeafb053b7d3664f81bba9de48f9464cf0aa"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "sha256": "25e3ae10defb9ad076aea789ecbe07cd6e9f5fbf29de147a9701e365458fb562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "ea24d5dbe9fc62fc7c9beb39968ac87c30278bf04d56f7aad3bc99df0c7a3c16"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "72f0a4085b8df43049cd8e1c1e4bd66645119a868ae8a6409ec1d65e17b9f740"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "sha256": "e3fe119df85d79561629ea6cc7e2e92ac8ca165da3302c7d490127b6b027cb30"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "20e9a663b125eff8530e7cbf6a60fe08d12a50cb88b07c071581fbf8a47019ed"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "sha256": "3d5a5473b46bdf9c111637b8e3a62997ceacf093f5290de2c8e4dc389556a6c3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "sha256": "204753ad3d5bd044dfdc3d08b67b72d64a6a476e86a17eda353184d876c7fe23"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "sha256": "db918d341be8a99abf29612df51d98856c52846801e71394d1fb7c27cd14c7b2"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "sha256": "b857a28970838ca45211f979c51b5ba57a6d0a6e4a3966d2e48bc95fe7d5613a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "sha256": "3e2e9c7794233d0425d52f20d9abbebc5ecddcd5992185e2ba42c1d7890c0afe"
+    }
+  ]
+}

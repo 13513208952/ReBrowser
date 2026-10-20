@@ -1,16 +1,16 @@
 {
   "schema": 1,
-  "revision": "R41",
-  "hostTestsPassed": 37,
+  "revision": "R44",
+  "hostTestsPassed": 40,
   "scope": "Actual production methods on HOST with explicitly synthetic journal/platform observations; not Android OS/SQLite/runtime evidence",
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
-      "sha256": "f2a0361849bce667b97e2f4fae898dd6a9a17b37a3ec7f017ce3d510af6ee604"
+      "sha256": "204753ad3d5bd044dfdc3d08b67b72d64a6a476e86a17eda353184d876c7fe23"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
-      "sha256": "9d03317cd8937f1a8248361a6589e3027004e393a10bf6c5eb2e34aa8425de36"
+      "sha256": "487f652c6d25cd65b1bd47ae527fc9a7437b7014f5c98d7e975f2494e98852d3"
     }
   ],
   "actualOwnedExecutorAndWorksetMethodsExecuted": true,
@@ -22,5 +22,6 @@
   "temporaryOwnedClassFilesRemoved": true,
   "realKeysDeviceOrUserDataUsed": false,
   "mainValidationRef": "evidence/production-main-standalone-jvm-checks.json",
-  "operationBoundCommitFenceHostExecuted": true
+  "operationBoundCommitFenceHostExecuted": true,
+  "currentActualHostRunRef": "evidence/production-main-agp-R44-checks.json"
 }

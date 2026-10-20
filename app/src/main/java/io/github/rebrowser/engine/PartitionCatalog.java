@@ -27,13 +27,14 @@ public final class PartitionCatalog {
         public String opaqueRef(){return context;}
     }
     private final ComponentGate gate;
+    private final ComponentGate.ResourcePin sourceLifetime;
     private final Thread thread=Thread.currentThread();
     private final byte[] epoch;
     private final int capacity;
     private final Map<Object,Lease> owners=new IdentityHashMap<>();
     public PartitionCatalog(ComponentGate gate,byte[] nativeDataEpoch,int capacity){
         if(gate==null || nativeDataEpoch==null || nativeDataEpoch.length!=16 || capacity<1 || capacity>1024)throw invalid();
-        this.gate=gate;epoch=nativeDataEpoch.clone();this.capacity=capacity;
+        this.gate=gate;sourceLifetime=gate.newResourcePin();epoch=nativeDataEpoch.clone();this.capacity=capacity;
     }
     public Lease create(Domain domain,Object nativeOwner,ComponentGate.BusinessPermit permit){
         access(permit);if(domain==null || nativeOwner==null)throw invalid();Lease known=owners.get(nativeOwner);
@@ -53,7 +54,7 @@ public final class PartitionCatalog {
     public void requireGate(ComponentGate expected){if(gate!=expected || Thread.currentThread()!=thread)throw invalid();}
     public boolean matchesEpoch(byte[] nativeExpected,ComponentGate.BusinessPermit permit){access(permit);return nativeExpected!=null && Arrays.equals(epoch,nativeExpected);}
     private void known(Lease lease){if(lease==null || lease.issuer!=this || owners.get(lease.owner)!=lease)throw invalid();}
-    private void access(ComponentGate.BusinessPermit permit){if(Thread.currentThread()!=thread)throw new IllegalStateException("Partition owner thread required");gate.checkCurrent(permit);}
+    private void access(ComponentGate.BusinessPermit permit){if(Thread.currentThread()!=thread)throw new IllegalStateException("Partition owner thread required");sourceLifetime.checkOrBind(permit);}
     private static String randomContext(){byte[] b=new byte[16];new SecureRandom().nextBytes(b);StringBuilder out=new StringBuilder("ctx_");for(byte v:b){out.append("0123456789abcdef".charAt((v&255)>>>4));out.append("0123456789abcdef".charAt(v&15));}return out.toString();}
     private static IllegalArgumentException invalid(){return new IllegalArgumentException("Invalid native partition handle/binding");}
 }

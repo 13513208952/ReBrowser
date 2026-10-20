@@ -81,6 +81,9 @@ public final class TargetReferencesTest {
     @Test public void weakNativeWindowLossDoesNotReopenOrInventAnActivity()throws Exception{
         Fixture f=new Fixture(1);TargetReferences.Registration r=f.register(f.window());TargetReferences.WindowLease lease=f.lease(r);Field slotField=TargetReferences.Registration.class.getDeclaredField("slot");slotField.setAccessible(true);Object slot=slotField.get(r);for(String name:new String[]{"activity","window"}){Field field=slot.getClass().getDeclaredField(name);assertEquals(WeakReference.class,field.getType());field.setAccessible(true);((WeakReference<?>)field.get(slot)).clear();}assertThrows(SecurityException.class,()->f.handoff(lease));
     }
+    @Test public void freshPermitCannotRetargetOldWindowRegistryAfterObservedSourceLock()throws Exception{
+        Fixture f=new Fixture(2);TargetReferences.Registration registration=f.register(f.window());f.state.set(ComponentGate.SourceState.LOCKED);f.gate.sourceState();f.state.set(ComponentGate.SourceState.TRUSTED);assertThrows(SecurityException.class,()->f.refs.resolveWindowAfterAuthorization(registration.reference(),0,x->{},f.gate.requireBusiness()));f.refs.retire(registration);
+    }
     @Test public void malformedReferenceAndUnsafeRevisionNeverBecomeSearchOrScopeFallback()throws Exception{
         Fixture f=new Fixture(1);f.register(f.window());assertThrows(IllegalArgumentException.class,()->f.refs.resolveWindowAfterAuthorization("../window",0,r->{},f.gate.requireBusiness()));assertThrows(IllegalArgumentException.class,()->f.refs.resolveWindowAfterAuthorization("win_"+"0".repeat(32),9007199254740992L,r->{},f.gate.requireBusiness()));assertThrows(SecurityException.class,()->f.refs.resolveWindowAfterAuthorization("win_"+"0".repeat(32),0,r->{},f.gate.requireBusiness()));for(Constructor<?> c:TargetReferences.class.getConstructors())assertEquals(android.app.Application.class,c.getParameterTypes()[0]);
     }

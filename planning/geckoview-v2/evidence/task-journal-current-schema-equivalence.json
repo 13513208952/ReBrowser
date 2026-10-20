@@ -1,22 +1,23 @@
 {
-  "revision": "R41",
+  "revision": "R44",
   "currentCompiledDdlAndRecoverySha256": "491f3443983feea8fb42f8ff21fa493a962fc1b96681a0376068b4bb188fde93",
   "historicalSqlEvidenceRef": "evidence/task-journal-host-sql-R40-checkpoint.json",
   "actualCurrentCompiledSchemaExtracted": true,
-  "historical235SqlChecksRerun": false,
+  "historical235SqlChecksRerun": true,
   "androidSqliteMethodsExecuted": false,
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
-      "sha256": "6654a01a7c195ed0c538f77362236b5c5793aa577d8a6868cad82933ccf974e4"
+      "sha256": "db918d341be8a99abf29612df51d98856c52846801e71394d1fb7c27cd14c7b2"
     },
     {
       "path": "planning/geckoview-v2/experiments/DumpTaskJournalSchema.java",
       "sha256": "330ab922abd3ba8f029d40dbe99a9b2d17ebdd7009d2830b0ca1f8a295734dba"
     },
     {
-      "path": "planning/geckoview-v2/run_bounded_main_jvm_checks.py",
-      "sha256": "44f47c6f499f12a82cdfa88ea135d406fdd8903102e8b9cffc805a7e77189c0f"
+      "path": "planning/geckoview-v2/experiments/task_journal_sql.py",
+      "sha256": "d6bc0afac1268ff35a33a568e10a3f4f08843aacb00c3bed305e3267160cda1d"
     }
-  ]
+  ],
+  "currentSqlExecutionRef": "evidence/task-journal-current-host-sql-R44.json"
 }

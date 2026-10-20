@@ -17,6 +17,7 @@ import java.util.Map;
 public final class WorkspaceCatalog {
     public static final int MAX_WORKSPACES=64,MAX_PRIMARY=5;
     private final ComponentGate gate;
+    private final ComponentGate.ResourcePin sourceLifetime;
     private final Thread thread=Thread.currentThread();
     private final Map<WorkspaceRef,Entry> entries=new LinkedHashMap<>();
     private WorkspaceRef selected;
@@ -30,7 +31,7 @@ public final class WorkspaceCatalog {
         Entry(WorkspaceRef ref){this.ref=ref;}
         WorkspaceView view(){return new WorkspaceView(ref,title,level,placement,revision);}
     }
-    public WorkspaceCatalog(ComponentGate gate){if(gate==null)throw BrowserModels.invalid();this.gate=gate;}
+    public WorkspaceCatalog(ComponentGate gate){if(gate==null)throw BrowserModels.invalid();this.gate=gate;sourceLifetime=gate.newResourcePin();}
     public WorkspaceRef createTemporary(long expectedCatalogRevision,ComponentGate.BusinessPermit permit){
         access(permit);if(expectedCatalogRevision!=revision)throw stale();if(entries.size()>=MAX_WORKSPACES)throw new IllegalStateException("Workspace limit reached");
         long next=BrowserModels.next(revision);WorkspaceRef ref=BrowserModels.workspaceRef(this);
@@ -76,7 +77,7 @@ public final class WorkspaceCatalog {
     void requireActive(WorkspaceRef ref,ComponentGate.BusinessPermit permit){access(permit);if(entry(ref).placement!=Placement.ACTIVE)throw BrowserModels.invalid();}
     boolean registered(WorkspaceRef ref,ComponentGate.BusinessPermit permit){access(permit);if(ref==null || !ref.issuedBy(this))throw BrowserModels.invalid();return entries.containsKey(ref);}
     void requireSelected(WorkspaceRef ref,ComponentGate.BusinessPermit permit){requireActive(ref,permit);if(selected!=ref)throw stale();}
-    void access(ComponentGate.BusinessPermit permit){if(Thread.currentThread()!=thread)throw new IllegalStateException("Browser owner thread required");gate.checkCurrent(permit);}
+    void access(ComponentGate.BusinessPermit permit){if(Thread.currentThread()!=thread)throw new IllegalStateException("Browser owner thread required");sourceLifetime.checkOrBind(permit);}
     private Entry current(WorkspaceRef ref,long expected){Entry e=entry(ref);if(e.revision!=expected)throw stale();return e;}
     private Entry entry(WorkspaceRef ref){if(ref==null || !ref.issuedBy(this))throw BrowserModels.invalid();Entry e=entries.get(ref);if(e==null)throw BrowserModels.invalid();return e;}
     private void advance(Entry e){long global=BrowserModels.next(revision),local=BrowserModels.next(e.revision);revision=global;e.revision=local;}

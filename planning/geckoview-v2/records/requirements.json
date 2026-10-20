@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R43",
+  "revision": "R44",
   "requirements": [
     {
       "id": "R01",
@@ -530,6 +530,45 @@
       "implementationEvidence": "records/implementation-readiness.json",
       "workloadEvidence": "records/native-browser-window-batch-contract.json",
       "implementationMeaning": "本批8个新增原生文件+2个实质修改原生文件；source工作量门槛并不等于10个完整产品职责/Android运行通过"
+    },
+    {
+      "id": "R48",
+      "ownerSources": [
+        "O67"
+      ],
+      "title": "以完整模块设计和联动闭合为重心，按指定顺序推进",
+      "rule": "优先入口与进程、浏览器核心、Gecko宿主、管理员协议、内建连接器，然后原生UI；按需实现其他模块所需依赖，以模块完整契约/端到端联动验收为目标，不以单文件数量代替模块完成。",
+      "state": "owner-required",
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "moduleEvidence": "records/module-integration-plan.json",
+      "implementationMeaning": "module-priority contract and concrete entry/source-lifetime integration across12runtime files; whole modules/platform runtime not declared complete"
+    },
+    {
+      "id": "R49",
+      "ownerSources": [
+        "O68"
+      ],
+      "title": "允许协议和模块动态协同调整以实现预期能力",
+      "rule": "管理员协议及各模块可按实际联动需要动态调整边界/接口/协议；同时修改生产者与消费者及测试，保障融合组合协作能力；保留安全不变量和历史证据含义，不机械锁死旧草案。",
+      "state": "owner-required",
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "moduleEvidence": "records/module-integration-plan.json",
+      "implementationMeaning": "module-priority contract and concrete entry/source-lifetime integration across12runtime files; whole modules/platform runtime not declared complete"
+    },
+    {
+      "id": "R50",
+      "ownerSources": [
+        "O69"
+      ],
+      "title": "稳步推进，避免单个阻碍无限卡住",
+      "rule": "每批选择可验证模块闭合目标；阻碍明确负责人/解除条件/安全边界并决策实现、按需改接口或继续独立可行路径，不以无限研究和重试替代代码进度。",
+      "state": "owner-required",
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "moduleEvidence": "records/module-integration-plan.json",
+      "implementationMeaning": "module-priority contract and concrete entry/source-lifetime integration across12runtime files; whole modules/platform runtime not declared complete"
     }
   ]
 }

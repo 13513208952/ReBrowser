@@ -27,7 +27,7 @@ def render(manifest=None):
         assert path.suffix in ['.java', '.kt', '.js', '.css', '.html', '.sql']
         assert f['group'] in groups and f['testReferenceGroup'] in groups
         assert f['responsibility'] and f['validationRefs']
-        assert f['state'] in ['planned-not-implemented', 'implemented-host-tested-not-integrated', 'source-in-progress-api-compiled']
+        assert f['state'] in ['planned-not-implemented', 'implemented-host-tested-not-integrated', 'source-in-progress-api-compiled', 'source-in-progress-static-tested']
         if f['state'] != 'planned-not-implemented':
             assert (P.parents[1] / f['path']).is_file()
             assert f.get('implementationReadinessRef') == 'records/implementation-readiness.json'
@@ -38,7 +38,7 @@ def render(manifest=None):
             assert delegation['difficulty'] in ['low', 'moderate']
             assert delegation['taskId'].startswith('L') and len(delegation['taskId']) == 3 and delegation['taskId'][1:].isdigit()
             assert delegation['assignee'] == 'owner-selected-low-cost-agent'
-            assert delegation['status'] in ['reserved-not-started', 'in-progress', 'awaiting-main-review', 'delivered-awaiting-main-review', 'reviewed-scoped-host-api']
+            assert delegation['status'] in ['reserved-not-started', 'in-progress', 'awaiting-main-review', 'delivered-awaiting-main-review', 'reviewed-scoped-host-api', 'reviewed-static-source-inactive', 'review-held-layout-unapproved']
             assert delegation['scope'] in ['whole', 'slice']
             assert delegation['contractRef'] == 'records/low-cost-agent-assignments.json'
             assert (P / delegation['contractRef']).is_file()
@@ -54,11 +54,11 @@ def render(manifest=None):
     lines = [
         '# 应用本体目标代码总树 · R10首版', '',
         '> O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。',
-        '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
-        f'当前已准入本体源码：**{len(implemented)}文件**；其中HOST测试切片 **{sum(f["state"] == "implemented-host-tested-not-integrated" for f in files)}文件**，API编译/实现中 **{sum(f["state"] == "source-in-progress-api-compiled" for f in files)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
+        '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。`[ASSET/WIP]`仅静态/合成DOM验证的未激活运行资产，不等于APK资源已接线或真实渲染。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
+        f'当前已准入本体源码：**{len(implemented)}文件**；其中HOST测试切片 **{sum(f["state"] == "implemented-host-tested-not-integrated" for f in files)}文件**，API编译/实现中 **{sum(f["state"] == "source-in-progress-api-compiled" for f in files)}文件**，静态资产WIP **{sum(f["state"] == "source-in-progress-static-tested" for f in files)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
         f'当前目标：`io.github.rebrowser` · 本体代码 **{len(files)}文件** · {len(groups)}职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。', '',
         '符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。', '',
-        '> D02分配时已评估全部126个剩余PLAN节点，本轮42个新目标（36Java+6运行资产）继续预留；R47已将旧6交付与3个主链依赖准入为有限HOST/API源码，当前117个PLAN。`[LOW:Lxx]`为整项低风险；`[LOW-EFFECT:Lxx]`为完整低副作用任务但集成/实现风险仍中等；`[LOW-SLICE:Lxx]`仅允许该文件限定低风险切片。`[RISK:*]`是原完整责任风险，`[REVIEW-PENDING]`表示已有未准入交付。**任务数、解析/展示和交付都不是产品完成或业务授权。**只看[权威任务范围](records/low-cost-agent-assignments.json)／[全部剩余文件风险](records/remaining-file-risk-assessment.json)，共享上下文不另写交接文档。', '',
+        '> D02分配时已评估全部126个剩余PLAN节点，本轮42个新目标（36Java+6运行资产）经O80主审后，R48并入36Java+4未激活资产，另2份窗口/桌面CSS无批准参考继续HOLD。旧6交付及主链依赖的有限准入仍保留，当前77个PLAN。`[LOW:Lxx]`为整项低风险；`[LOW-EFFECT:Lxx]`为完整低副作用任务但集成/实现风险仍中等；`[LOW-SLICE:Lxx]`仅允许该文件限定低风险切片。`[RISK:*]`是原完整责任风险，`[REVIEW-PENDING]`表示已有未准入交付。**任务数、解析/展示和交付都不是产品完成或业务授权。**只看[权威任务范围](records/low-cost-agent-assignments.json)／[全部剩余文件风险](records/remaining-file-risk-assessment.json)，共享上下文不另写交接文档。', '',
         '## 本体代码树', '', '```text']
     leaf_count = 0
     def walk(items, prefix=''):
@@ -71,7 +71,7 @@ def render(manifest=None):
             if 'responsibility' in item:
                 symbol = {'native-code':'J', 'script-code':'S', 'style-code':'C', 'sql-code':'Q'}[item['kind']]
                 status = {'planned-not-implemented':'[PLAN]', 'implemented-host-tested-not-integrated':'[HOST]',
-                          'source-in-progress-api-compiled':'[API/WIP]'}[item['state']]
+                          'source-in-progress-api-compiled':'[API/WIP]', 'source-in-progress-static-tested':'[ASSET/WIP]'}[item['state']]
                 assignment = item.get('delegation')
                 risk = item.get('riskAssessment')
                 low = ''
@@ -79,7 +79,7 @@ def render(manifest=None):
                     tag = 'LOW-SLICE' if assignment['scope']=='slice' else 'LOW' if risk['fullFileRisk']=='low' else 'LOW-EFFECT'
                     low = '['+tag+':' + assignment['taskId'] + ']'
                 risk_tag = '[RISK:'+risk['fullFileRisk'].upper()+']' if risk else ''
-                review_tag = '[REVIEW-PENDING]' if assignment and assignment['status']=='delivered-awaiting-main-review' else ''
+                review_tag = '[REVIEW-PENDING]' if assignment and assignment['status']=='delivered-awaiting-main-review' else '[REVIEW-HOLD]' if assignment and assignment['status']=='review-held-layout-unapproved' else ''
                 lines.append(prefix + branch + name + ' [' + symbol + ']' + status + '[?]' + low + risk_tag + review_tag + ' — ' + item['responsibility'])
                 leaf_count += 1
             else:
@@ -87,13 +87,13 @@ def render(manifest=None):
                 walk(item, prefix + ('    ' if last else '│   '))
     walk(nodes)
     assert leaf_count == len(files)
-    lines += ['```', '', '## ↪ D02单轮42文件分工（旧6另列审查，不计新增实现）', '',
+    lines += ['```', '', '## ↪ D02单轮42文件审查（40有限准入，2样式HOLD）', '',
               '| 任务 | 目标文件 | 完整责任风险 / 分配范围 / 状态 |', '| --- | --- | --- |']
     for item in files:
         if item.get('delegation'):
             d = item['delegation']
             lines.append('| ' + d['taskId'] + ' | `' + item['path'] + '` | '+item['riskAssessment']['fullFileRisk']+' / '+d['scope']+' / ' + d['status'] + ' |')
-    lines += ['', '范围/接口/验收以[任务记录](records/low-cost-agent-assignments.json)和[全量风险](records/remaining-file-risk-assessment.json)为准；42新目标不包含原6交付。其余78个文件全部保留主agent，slice之外的高风险责任也保留主agent。不增空实现、不把分工当产品进度。原6交付只按实际模型HOST/API范围准入，不是Android View/backend完成；R47主链证据独立绑定当前源码，不能沿用R46测试声称新代码全部通过。', '', '## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）', '',
+    lines += ['', '范围/接口/验收以[任务记录](records/low-cost-agent-assignments.json)和[全量风险](records/remaining-file-risk-assessment.json)为准；42新目标不包含原6交付。原其余78目标继续由主agent负责（其中3已有限准入、75仍PLAN），slice之外的高风险责任也保留主agent。不增空实现、不把分工当产品进度。原6交付只按实际模型HOST/API范围准入，不是Android View/backend完成；R48主审证据独立绑定当前源码，R47等历史记录原样保留；不能沿用旧测试声称新代码全部通过。', '', '## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）', '',
               '| 职责 | 测试要求摘要 | 目标文件引用，实施/证据另看准入记录 |', '| --- | --- | --- |']
     for group in manifest['groups']:
         refs = '<br>'.join('`'+t['path']+'`' for t in group['testReferences'])
@@ -115,6 +115,7 @@ def render(manifest=None):
                                'runtimeSourceFilesCreated':len(implemented),
                                'implementedRuntimeCodeFiles':sum(f['state'] == 'implemented-host-tested-not-integrated' for f in files),
                                'apiCompiledRuntimeSourcesInProgress':sum(f['state'] == 'source-in-progress-api-compiled' for f in files),
+                               'staticRuntimeAssetsInProgress':sum(f['state'] == 'source-in-progress-static-tested' for f in files),
                                'productRuntimeIntegrated':False,
                                'delegatedRuntimeTargetsIncludingPriorDelivery':sum(bool(f.get('delegation')) for f in files),
                                'newD02DelegatedRuntimeFiles':sum(f.get('delegation',{}).get('round')=='D02' for f in files),

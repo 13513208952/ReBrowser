@@ -39,8 +39,10 @@ class ApplicationTreeTests(unittest.TestCase):
         for task in tasks:
             f = assigned[task['runtimePath']]
             self.assertEqual(f['delegation']['taskId'], task['id'])
-            self.assertEqual(f['state'], 'planned-not-implemented' if task['round']=='D02' else 'implemented-host-tested-not-integrated' if f['path'].endswith(('SubapplicationRegistry.java','SettingsSections.java')) else 'source-in-progress-api-compiled')
-            self.assertEqual(task['status'], 'reserved-not-started' if task['round']=='D02' else 'reviewed-scoped-host-api')
+            if task['round']=='D02':
+                self.assertEqual(task['status'],'review-held-layout-unapproved' if task['id'] in ['L47','L48'] else 'reviewed-scoped-host-api' if task['runtimePath'].endswith('.java') else 'reviewed-static-source-inactive')
+                self.assertEqual(f['state']=='planned-not-implemented',task['id'] in ['L47','L48'])
+            else:self.assertEqual(task['status'],'reviewed-scoped-host-api')
             d = f['delegation']; risk = f['riskAssessment']['fullFileRisk']
             tag = 'LOW-SLICE' if d['scope']=='slice' else 'LOW' if risk=='low' else 'LOW-EFFECT'
             self.assertIn('['+tag+':'+task['id']+']', text)
@@ -55,7 +57,7 @@ class ApplicationTreeTests(unittest.TestCase):
         for f in self.manifest['files']:
             if f.get('delegation'):
                 self.assertIn(Path(f['path']).name+' [', text)
-                if f['delegation']['round']=='D02':self.assertEqual(f['state'], 'planned-not-implemented')
+                if f['delegation']['round']=='D02':self.assertEqual(f['state']=='planned-not-implemented', f['delegation']['status']=='review-held-layout-unapproved')
         without = copy.deepcopy(self.manifest)
         for f in without['files']:
             f.pop('delegation', None)
@@ -78,7 +80,7 @@ class ApplicationTreeTests(unittest.TestCase):
     def test_entire_remaining_tree_has_full_responsibility_risk(self):
         remaining = {f['path']:f for f in self.manifest['files'] if f['state']=='planned-not-implemented'}
         record = json.loads((P/'records/remaining-file-risk-assessment.json').read_text())
-        self.assertEqual(len(remaining),117)
+        self.assertEqual(len(remaining),77)
         self.assertEqual(set(remaining), {f['path'] for f in record['files'] if f['state']=='planned-not-implemented'})
         self.assertEqual(len(record['files']),126) # preserve original allocation survey, don't silently rewrite history
         for f in record['files']:
@@ -131,7 +133,9 @@ class ApplicationTreeTests(unittest.TestCase):
         self.assertEqual(text.count('[HOST][?]'), expected)
         wip = sum(f['state'] == 'source-in-progress-api-compiled' for f in self.manifest['files'])
         self.assertEqual(text.count('[API/WIP][?]'), wip)
-        self.assertEqual(facts['runtimeSourceFilesCreated'], expected + wip)
+        asset=sum(f['state']=='source-in-progress-static-tested' for f in self.manifest['files'])
+        self.assertEqual(text.count('[ASSET/WIP][?]'),asset)
+        self.assertEqual(facts['runtimeSourceFilesCreated'], expected + wip+asset)
 
     def test_reject_unknown_implementation_state(self):
         self.manifest['files'][0]['state'] = 'complete-Android-passed'

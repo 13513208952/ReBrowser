@@ -12,7 +12,7 @@
     "O78"
   ],
   "baseSourceCommit": "dd41e3e7b1fb0aa6225837a309d9ac8d9a15f485",
-  "state": "owner-requested-single-large-round-reserved-not-started",
+  "state": "D02-reviewed-40-source-candidates-2-style-held-not-full-product",
   "scopeMeaning": "已全面评估126个剩余PLAN节点。D02一次分配42个全新目标文件（36Java+6运行资产），不重复计算先前6个交付；部分是低副作用限定切片，不将高风险文件整体谎标低风险。主agent保留切片之外与集成。",
   "handoff": null,
   "difficultyMarker": "[LOW:Lxx]",
@@ -175,7 +175,7 @@
       "difficulty": "low",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
@@ -195,7 +195,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L08",
@@ -203,7 +204,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
@@ -223,7 +224,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L09",
@@ -231,7 +233,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
@@ -251,7 +253,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L10",
@@ -259,7 +262,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
@@ -279,7 +282,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L11",
@@ -287,7 +291,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
@@ -307,7 +311,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L12",
@@ -315,7 +320,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
@@ -335,7 +340,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L13",
@@ -343,7 +349,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
@@ -363,7 +369,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L14",
@@ -371,7 +378,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
@@ -391,7 +398,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L15",
@@ -399,7 +407,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
@@ -419,7 +427,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L16",
@@ -427,7 +436,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
@@ -447,7 +456,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L17",
@@ -455,7 +465,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
@@ -475,7 +485,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L18",
@@ -483,7 +494,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
@@ -503,7 +514,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L19",
@@ -511,7 +523,7 @@
       "difficulty": "low",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
@@ -531,7 +543,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L20",
@@ -539,7 +552,7 @@
       "difficulty": "low",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
@@ -559,7 +572,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L21",
@@ -567,7 +581,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
@@ -587,7 +601,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L22",
@@ -595,7 +610,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
@@ -615,7 +630,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L23",
@@ -623,7 +639,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
@@ -643,7 +659,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L24",
@@ -651,7 +668,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
@@ -671,7 +688,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L25",
@@ -679,7 +697,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java",
@@ -699,7 +717,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L26",
@@ -707,7 +726,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
       "testPath": "app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java",
@@ -727,7 +746,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L27",
@@ -735,7 +755,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
       "testPath": "app/src/test/java/io/github/rebrowser/system/ForegroundPolicyTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/ForegroundPolicyTest.java",
@@ -755,7 +775,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L28",
@@ -763,7 +784,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
       "testPath": "app/src/test/java/io/github/rebrowser/system/MemoryPressurePolicyTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/MemoryPressurePolicyTest.java",
@@ -783,7 +804,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L29",
@@ -791,7 +813,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/system/ApkHandoffActivityTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/ApkHandoffActivityTest.java",
@@ -811,7 +833,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L30",
@@ -819,7 +842,7 @@
       "difficulty": "low",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/OfficialMailEntryTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/OfficialMailEntryTest.java",
@@ -839,7 +862,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L31",
@@ -847,7 +871,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailRetentionPolicyTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/MailRetentionPolicyTest.java",
@@ -867,7 +891,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L32",
@@ -875,7 +900,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
       "testPath": "app/src/test/java/io/github/rebrowser/core/DomainResultTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/core/DomainResultTest.java",
@@ -895,7 +920,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L33",
@@ -903,7 +929,7 @@
       "difficulty": "low",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
       "testPath": "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java",
@@ -923,7 +949,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L34",
@@ -931,7 +958,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
       "testPath": "app/src/test/java/io/github/rebrowser/bridge/BridgeMessagesTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/bridge/BridgeMessagesTest.java",
@@ -951,7 +978,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L35",
@@ -959,7 +987,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
       "testPath": "app/src/test/java/io/github/rebrowser/bridge/BridgeBudgetTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/bridge/BridgeBudgetTest.java",
@@ -979,7 +1007,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L36",
@@ -987,7 +1016,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailObjectFormatTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/MailObjectFormatTest.java",
@@ -1007,7 +1036,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L37",
@@ -1015,7 +1045,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
@@ -1035,7 +1065,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L38",
@@ -1043,7 +1074,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
       "testPath": "app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java",
@@ -1063,7 +1094,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L39",
@@ -1071,7 +1103,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
@@ -1091,7 +1123,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L40",
@@ -1099,7 +1132,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
@@ -1119,7 +1152,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L41",
@@ -1127,7 +1161,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
       "testPath": "app/src/test/java/io/github/rebrowser/engine/GeckoMediaBridgeTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/engine/GeckoMediaBridgeTest.java",
@@ -1147,7 +1181,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L42",
@@ -1155,7 +1190,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
       "testPath": "app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java",
       "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java",
@@ -1175,7 +1210,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L43",
@@ -1183,7 +1219,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-static-source-inactive",
       "runtimePath": "app/src/main/assets/offline-mail/reader.html",
       "testPath": null,
       "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
@@ -1203,7 +1239,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L44",
@@ -1211,7 +1248,7 @@
       "difficulty": "low",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-static-source-inactive",
       "runtimePath": "app/src/main/assets/offline-mail/reader.css",
       "testPath": null,
       "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
@@ -1231,7 +1268,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L45",
@@ -1239,7 +1277,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-static-source-inactive",
       "runtimePath": "app/src/main/assets/offline-mail/reader.js",
       "testPath": null,
       "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
@@ -1259,7 +1297,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": false,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L46",
@@ -1267,7 +1306,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-static-source-inactive",
       "runtimePath": "app/src/main/assets/bridge/styles/music-phone.css",
       "testPath": null,
       "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
@@ -1287,7 +1326,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L47",
@@ -1295,7 +1335,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "review-held-layout-unapproved",
       "runtimePath": "app/src/main/assets/bridge/styles/music-window.css",
       "testPath": null,
       "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
@@ -1315,7 +1355,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     },
     {
       "id": "L48",
@@ -1323,7 +1364,7 @@
       "difficulty": "moderate",
       "riskWithinAllowedScope": "low-with-main-review-not-qualified",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "review-held-layout-unapproved",
       "runtimePath": "app/src/main/assets/bridge/styles/music-desktop.css",
       "testPath": null,
       "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
@@ -1343,7 +1384,8 @@
       ],
       "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
       "fullResponsibilityCompleteExpected": true,
-      "integrationStatus": "not-integrated-until-main-review"
+      "integrationStatus": "not-integrated-until-main-review",
+      "fullResponsibilityCompleteClaim": false
     }
   ],
   "retainedByMainAgent": [
@@ -1440,5 +1482,6 @@
     "mainActivationGate": "CSP与实际APK资源origin/Gecko加载由主agent复核前，不激活离线reader。"
   },
   "D01ReviewStatus": "R47 scoped realHOST/API reviewed with main corrections; NOT actualAndroid/nativeView/backendcompletion",
-  "D01ReviewEvidenceRef": "evidence/D01-reviewed-worker-models-host-execution.json"
+  "D01ReviewEvidenceRef": "evidence/D01-reviewed-worker-models-host-execution.json",
+  "D02ReviewContractRef": "records/D02-review-integration-contract.json"
 }

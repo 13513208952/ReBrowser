@@ -1,10 +1,13 @@
 {
   "schema": 1,
-  "revision": "R47",
+  "revision": "R48",
   "authority": [
     "O41",
     "O42",
-    "O45"
+    "O45",
+    "O78",
+    "O80",
+    "O81"
   ],
   "scope": "按文件完成调研和边界审查后准入；不把一个文件通过扩成整个领域/总项目完成",
   "gate": [
@@ -1331,10 +1334,11 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Native48dp controls/address input and fresh per-window binding, separate raw edit/display state, no URL load/actor authority in view; R47 native private-record producer-consumer lifecycle or truthful callback boundary",
+      "scope": "Native48dp controls/address input and fresh per-window binding, separate raw edit/display state, no URL load/actor authority in view; R47 native private-record producer-consumer lifecycle or truthful callback boundary; R48 acceptedD02 metadata/commonprivatepresentationcleanup integration",
       "researchEvidence": [
         "records/native-browser-window-batch-contract.json",
-        "records/native-private-record-store-contract.json"
+        "records/native-private-record-store-contract.json",
+        "records/D02-review-integration-contract.json"
       ],
       "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
       "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
@@ -1346,7 +1350,7 @@
         "io.github.rebrowser.ui.NativeWindowModelsTest"
       ],
       "hostEvidence": "evidence/native-window-models-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
       "hostPresentationModelMethodsExecuted": true,
       "notClaimed": [
         "actual Android View/Window/dialog/metric/rendering callbacks",
@@ -1726,10 +1730,11 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Bounded independentlyversioned non-mail AESGCM metadata framing/purpose-epoch-scope-revision binding with strict lengths and nonce freshness",
+      "scope": "Bounded independentlyversioned non-mail AESGCM metadata framing/purpose-epoch-scope-revision binding with strict lengths and nonce freshness; R48 acceptedD02 metadata/commonprivatepresentationcleanup integration",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
-        "records/module-integration-plan.json"
+        "records/module-integration-plan.json",
+        "records/D02-review-integration-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
@@ -2022,6 +2027,1312 @@
       ],
       "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
       "hostPresentationModelMethodsExecuted": true
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实native新标签页布局：只读背景展示、四个既定搜索引擎入口及有界收藏缩略行；复用Binding输出精确用户意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NewTabViewTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实Activity生命周期与已给定一页历史的呈现，接现有HistoryAdapter；期限/保留/暂停/删除只报告意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.HistoryActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实Activity及已提供下载页的呈现，复用DownloadsAdapter；批准/取消/交接是待原生控制器审核的意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.DownloadsActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实原生设置分组页面与SettingsSections组合；已知只读值、未知值禁用，动作只交回原生窗口所有者。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.SettingsActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "固定Outlook/音乐目录的真实native应用列表，启用状态来自只读投影，48dp设置齿轮与打开/启停意图分开。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.ApplicationsActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实子设置页面展示音源/入口/恢复选项的已给定投影，生成明确更改意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.SubapplicationSettingsActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "仅网站/分区/能力/到期与OS状态的只读原生列表和请求更改意图；过期/未知文案不混淆。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.SitePermissionsActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实原生邮箱页面外壳、官方入口选择/账号观察/离线入口控件；接已由原生所有者提供的显示binding。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.OutlookActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实原生离线邮件metadata列表/搜索栏/附件行和恢复位置的展示模型；只消费原生已筛选的有界页。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.OfflineMailActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实原生音乐控制/标题/队列/歌词布局，只读官方播放器投影及已提供的显示绑定，回传明确用户意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实Notification.Builder构造与纯展示投影，标题/艺术家/可用动作和position秒到毫秒的边界转换。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicNotificationTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "对原生已提供的<=8MiB编码字节做格式/尺寸检查、采样解码和最新请求代次保护；单张<=1024*1024像素。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicArtworkTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "有界LRC及官方逐字时间文本的纯解析、稳定排序/重叠与逐字位置映射；保留译文/原文关联，不伪造缺失歌词。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicLyricsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "有界不可变官网队列/歌单/喜欢状态展示与精确资源token的用户意图描述，不拥有播放器或流地址。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicQueueTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "只读不可变官方播放/账号/资源/意图代次/焦点观察投影与字段校验，供UI消费。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicStateTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "纯owner-thread关闭/可拖动/锁定穿透的native用户意图与显示模式reducer，重绑/退役代次有界。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.lyrics.LyricOverlayControllerTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实native歌词面板/拖拽触摸模型/锁定文案及layout参数描述，包含清理所有视图文本和监听。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.lyrics.LyricOverlayWindowTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "位置的有界不可变记录、版本与窗口内夹取/恢复纯计算；输入来自原生已读取记录，输出待保存意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.lyrics.LyricPositionStoreTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "只读自身canDrawOverlays状态观察和用户提示模型：已知允许/拒绝/未知，显示返回后需重查。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.lyrics.OverlayPermissionFlowTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "只读自身浏览器角色观察与系统默认应用推荐页面的请求描述；已持有角色也能显示推荐入口。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.system.DefaultBrowserFlowTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "纯Android版本/真实生命周期输入到前台服务/通知前置条件与不可用原因的建议矩阵，无任何执行。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/system/ForegroundPolicyTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.system.ForegroundPolicyTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "复用ResourceBudgets.trimAdvice的有界本应用可重建cache候选建议，输出不包含原始唯一内容或未结束链。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/system/MemoryPressurePolicyTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.system.MemoryPressurePolicyTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "真实原生APK交接确认页面，只展示原生已验证的文件描述与等待/未知状态，用户意图交回拥有者。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/system/ApkHandoffActivityTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.system.ApkHandoffActivityTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "个人/工作学校/最近成功入口的固定官方URL目录与选择模型；recent仅原生展示偏好，不是登录事实。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/OfficialMailEntryTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.OfficialMailEntryTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "唯一原始内容与可重建派生物的保守分类/保留建议，unknown一律保留，要求显式原始来源仍可重建的观察。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/MailRetentionPolicyTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.MailRetentionPolicyTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "有界不可变结果展示、错误码/等待条件/证据类别的投影，不替代TaskSnapshot真实生命周期轴。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/core/DomainResultTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.core.DomainResultTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "固定密钥域词汇：APK_SIGN/ADMIN_ROOT/ADMIN_HIGH/ADMIN_LOW/DEVICE_INSTALL/DATA_WRAP/DATA_OBJECT；独立RecordKind目录BROWSER_CATALOG(code1,max4MiB)/GECKO_CHECKPOINT(code2,max2MiB)。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.crypto.KeyPurposeTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "按现有connector-protocol.json的rebrowser.connector/1严格有界语法解析/不可变Unverified消息DTO，非管理员Control协议。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/bridge/BridgeMessagesTest.java",
+        "app/src/test/java/io/github/rebrowser/review/D02ParserRegressionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.bridge.BridgeMessagesTest",
+        "io.github.rebrowser.review.D02ParserRegressionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "64KiB信封/32KiB原始chunk的大小检查与有界字节+对象信用，复用ResourceBudgets计数思想，opaque one-use release。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/bridge/BridgeBudgetTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.bridge.BridgeBudgetTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "纯RBMOBJ1 124B头/帧长度/codec/purpose/版本/预期总长度编解码与严格校验，复用已定mail-object-format及ObjectAead契约。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/MailObjectFormatTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.MailObjectFormatTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "只对原生已授权且交给它的Reader做有界literal中文跨块匹配/结果分页计算，返回位置片段；字面匹配不执行regex。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.outlook.MailSearchTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "内建背景/主题/缩放裁剪的纯选择/几何/颜色对比建议和未知外部资源提示，不改变批准风格。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.settings.PersonalizationPolicyTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "只读配置投影/有界字段校验与精确revision的更改意图，默认未知；恢复意图不自动起播。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicPreferencesTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "纯官方播放器投影到Android PlaybackState/MediaMetadata构造与系统动作到意图类型的映射；秒/毫秒严格有界。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.music.MusicMediaSessionTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "按固定SDK真实MediaSession.Delegate回调类型做只读观察适配/有界metadata/position/state模型，精确原生绑定失效后拒绝发布。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/GeckoMediaBridgeTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.GeckoMediaBridgeTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "固定SDK历史事件的只读有界观察/瞬态展示分类，记录无授权含义；没有原生查询后端则明确未连接。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.GeckoHistoryDelegateTest"
+      ],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": null
+    },
+    {
+      "path": "app/src/main/assets/offline-mail/reader.html",
+      "state": "source-in-progress-static-tested",
+      "validationMode": "runtime-asset",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "静态只读阅读器结构与明确空/加载/未知/失败区，正文只能作为文本节点；无实际邮件内容。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": null,
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": false
+    },
+    {
+      "path": "app/src/main/assets/offline-mail/reader.css",
+      "state": "source-in-progress-static-tested",
+      "validationMode": "runtime-asset",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "阅读器的文字/列表/表格/换行/窄屏/暗色/高对比排版样式，不带真实数据或网络。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": null,
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": false
+    },
+    {
+      "path": "app/src/main/assets/offline-mail/reader.js",
+      "state": "source-in-progress-static-tested",
+      "validationMode": "runtime-asset",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "静态阅读UI的有界纯DTO文本渲染/搜索高亮/展开交互，全部使用textContent/createTextNode；默认无数据。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": null,
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": false
+    },
+    {
+      "path": "app/src/main/assets/bridge/styles/music-phone.css",
+      "state": "source-in-progress-static-tested",
+      "validationMode": "runtime-asset",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "仅从已有批准phone CSS中机械迁移固定官网布局规则，保留官方播放器/登录层，说明每条selector来源。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "researchEvidence": [
+        "records/D02-review-integration-contract.json",
+        "records/low-cost-agent-assignments.json"
+      ],
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/D02-main-review-host-execution.json",
+      "androidApiCompileEvidence": null,
+      "notClaimed": [
+        "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+        "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+        "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+        "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+        "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+        "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+      ],
+      "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
+      "runtimeAssetPackagingActivated": false
     }
   ],
   "parallelPending": [

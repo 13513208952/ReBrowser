@@ -1,0 +1,34 @@
+{
+  "id": "R48",
+  "state": "independently-tested-scoped-source-integration-2-style-holds-not-product-complete",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O78",
+    "O80",
+    "O81"
+  ],
+  "baseSourceCommit": "6a5b2e783e9543a513171a22f21c7df69053797a",
+  "contractRef": "records/D02-review-integration-contract.json",
+  "executionEvidenceRef": "evidence/D02-main-review-host-execution.json",
+  "codeWorkloadRef": "evidence/D02-main-review-code-workload.json",
+  "meaningfulRuntimeJavaChanged": 38,
+  "acceptedD02SourceTargets": 40,
+  "heldD02SourceTargets": 2,
+  "allActualAGPHostTestsPassed": 728,
+  "allActualPureHostTestsPassed": 398,
+  "runtimeJavaSources": 101,
+  "pureSources": 48,
+  "AndroidBoundSourcesInProgress": 53,
+  "inactiveStaticAssets": 4,
+  "remainingPlanLeaves": 77,
+  "notClaimed": [
+    "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+    "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+    "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+    "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+    "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim",
+    "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R47",
+  "revision": "R48",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,11 +225,10 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "主agent不触碰D02新42目标，继续Sourceacceptedepoch -> existingnativevault -> independentprivateRecordAEAD -> exactfixedpathCAS/atomiccommit的真实producer-consumer链；无Root/密钥/目录自动seed",
-    "D01六个真实交付完成scope审查与修正：Surface常量不是角度；业务callback异常不能当stale吞掉；unbind清真实view文本/监听；批准下载仅意图且cancel不能抹去实际end",
-    "11实质runtime文件，新增3core+6worker、修改Startup/Toolbar；HOST文件系统/JCA是PRIVATE合成Android来源/公开toykey，实际Androidprovider/UI/SDK未运行",
-    "原D02的126文件分配输入以exactSHA压缩快照保留；当前117PLAN、65已准入源，D02新42预留不变；历史R46/SQL报告不重写",
-    "下一闭合依赖：新epoch/provisioning、BrowserStore/checkpoint实际序列化与恢复/finitepermission/document；IO零计数不是全局quiescence/rollback防护/销毁凭据"
+    "O80指定dsh/result完成：42输入独立SHA与9contextR47比对并原样私有归档后逐项审查，不盲信129/探针报告或复制context/构建脚本",
+    "主审修复真实超限/取消后发布/Reader关闭/UTF16/片段长度/能力猜测/旧seek手势/回收视图泄漏/伪APKVerified等问题；40源候选并入，2无批准窗口/桌面CSS继续HOLD不产空文件",
+    "36Java+4非激活运行资产；新增代码不注册Manifest/资源sourceSet、不安装扩展/起业务，不把纯DTO/parse/show当来源/权限/执行/持久化证明",
+    "下一模块闭合：核心真实持久化/当前actor与document许可依赖及nativewindowownedfactory；所有新UI/算法仅按实际HOST/API/合成DOM范围准入，网站/OS/Gecko未资格"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "revision": "R48",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O74",
+    "O78",
+    "O79",
+    "O80",
+    "O81"
+  ],
+  "moduleFocus": "Review/fix/integrate bounded D02 pure algorithms + native presentation/observation adapters; no premature activation of source/authority/persistence/site effects",
+  "commitMinimum": {
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "testsDocsGeneratedDoNotCount": true
+  },
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+    "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+    "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+    "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+    "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+    "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+    "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+    "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+    "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+    "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+    "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+    "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+    "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
+    "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+    "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
+    "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
+    "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
+    "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
+    "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
+    "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
+    "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+    "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
+    "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
+    "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
+    "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+    "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+    "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+    "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
+    "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
+    "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+    "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java"
+  ],
+  "runtimeAssetBatch": [
+    "app/src/main/assets/offline-mail/reader.html",
+    "app/src/main/assets/offline-mail/reader.css",
+    "app/src/main/assets/offline-mail/reader.js",
+    "app/src/main/assets/bridge/styles/music-phone.css"
+  ],
+  "inputScope": "Exact42 source hashes independently checked against owner-provided dsh/result/evidence/result-evidence.json;9contextcopies matchedR47git, thenprivateoriginalinputarchivebeforemainfix. Worker129/probes13641+2523 are REPORTEDhistorical evidence, not adopted as main execution.",
+  "heldFiles": [
+    {
+      "taskId": "L47",
+      "path": "app/src/main/assets/bridge/styles/music-window.css",
+      "reason": "Invented window/desktop rearrangements are explicitly not supported by an independently owner-approved reference; keep candidate outside runtime source, do not pretend approved/merge empty placeholder.",
+      "exit": "Use verified actual approved corresponding reference or native full-window policy retaining official original layout, plus controlled qualification."
+    },
+    {
+      "taskId": "L48",
+      "path": "app/src/main/assets/bridge/styles/music-desktop.css",
+      "reason": "Invented window/desktop rearrangements are explicitly not supported by an independently owner-approved reference; keep candidate outside runtime source, do not pretend approved/merge empty placeholder.",
+      "exit": "Use verified actual approved corresponding reference or native full-window policy retaining official original layout, plus controlled qualification."
+    }
+  ],
+  "mainFixes": [
+    "Bridge full32KiB base64specialcase within64KiBenvelope with canonicaldecodedlength; COMMANDargsrequired asprotocol, READYshapeschecked, ordinary8192stringcap retained, UTF16charboundbeforeencoding",
+    "MailObjectFormat unsignedpositive originalLength aligns ObjectAead insteadinventingpackedlimit; MailSearch ownsReader onALLexit,afterread/afterclosecancelcheck,count/UTF16validation,120snippetcap andnonoverlapchunkinvariance",
+    "UI ownedsubtreecleanup+boundedmaps/detach; offlinecache/recycledviewguards; reportedAPKDisplayDescriptor notpublicfakeVerifiedreceipt,oneattempt/exactframehandoff, NOinstallerdispatch",
+    "Explicitnative mediaactionoffers insteadguessPlayPauseSeekfromstate; seekgestureboundoriginalframe/duration; boundedpublicarithmetic; artworkstalegenerationreturns0/decodedpixelceil+actualcheck/singledecodechain",
+    "Lockedlyricscannotdrag;Androidpixelstodp conversion;negativepositionclamp;overlaybooleanobservationnotowner-ticket/SystemFlowpermit;underpressurepreserveoldmedia!=allowNEWbackgroundallocations",
+    "Geckohistoryfalsebackendconnectedflagremoved; mediaobservationsexactactivatedmediahandle/ownerthread/sourceguard/retireprivateclear; no control/session/actualcallbackexecution",
+    "OfflineJSglobal1MiBtext/node/hitlimits,validatebeforeDOMcommit/failurescrubsallheadersandbody,UTF16strict/textonly/repeatedhighlightrebuildsboundedtree; phoneCSSexactapprovedtwoexistingreferencebodies, other2CSSheld",
+    "KeyPurposemetadataRecordKindnowconsumedbyPrivateRecordSealerwithUNCHANGEDcodes/limits/wire, no key/authoritygeneration",
+    "Independent Java8/actualSDKbootclasspath caught LambdaMetafactory absent from soleSDKbootclasspath in MusicLyrics comparator lambdas; use real Java8Comparator implementations, preserve ordering, rerunboth actualcompilers. FirstAGP706/1roundingfailure fixed thenfinal728/0; originalfailure/privatecompilerdiagnostic retained."
+  ],
+  "noActivation": [
+    "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
+    "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
+    "No adminActor/OwnerGrant/DocumentLeaseminting, nativepermission/system/global/service/media action, keystore/dataFS/DBwrites/clear/archive/export",
+    "No whole-browser/Outlook/music/history/settings/overlay/downloadbackendcompletion from presenters/DTOs",
+    "Unsupported rawofficialYRC/translationlinking stays explicit; MusicLyrics onlyLRC+native-normalizedTSV perwordsubset, not full official-formatclaim"
+  ],
+  "evidenceBoundary": "Actual main offlineAGP/pureSDKbootclasspath+HOSTmodels/parsers and syntheticDOM only; actualAndroidViews/MediaSession/Notification/Window/Geckocallback/CSP/site/keys/device NOT executed."
+}

@@ -555,7 +555,21 @@
       "utf8Bytes": 39,
       "sha256": "a2995447189b7f64178629a1361994faa4522bc340698c064ae4a529a719fac1",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O80",
+      "file": "owner-verbatim/O80-review-integrate-D02-result.txt",
+      "utf8Bytes": 113,
+      "sha256": "2a74249077fb5f8d407dc7187fdf44e272651ce7277b6379f4ccea6bf3efa550",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O81",
+      "file": "owner-verbatim/O81-continue-D02-review.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-20T17:31:30+08:00"
+  "lastAppendedAt": "2026-10-20T20:42:04+08:00"
 }

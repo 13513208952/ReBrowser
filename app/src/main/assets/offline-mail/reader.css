@@ -1,0 +1,48 @@
+/* Offline reader typography ONLY. No @import, no url(), no remote fonts, no behaviour. */
+:root {
+  color-scheme: light dark;
+  --reader-bg: #ffffff;
+  --reader-fg: #1b1b1f;
+  --reader-muted: #5a5a66;
+  --reader-border: #d8d8de;
+  --reader-mark: #7a4b00;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --reader-bg: #141416;
+    --reader-fg: #ececf1;
+    --reader-muted: #a7a7b4;
+    --reader-border: #35353d;
+    --reader-mark: #ffd479;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--reader-bg); color: var(--reader-fg); }
+body { font-family: system-ui, -apple-system, "Noto Sans CJK SC", "Source Han Sans SC", sans-serif; line-height: 1.65; }
+#reader { max-width: 46rem; margin: 0 auto; padding: 1rem 1rem 3rem; }
+.reader-header { border-bottom: 1px solid var(--reader-border); padding-bottom: .75rem; margin-bottom: 1rem; }
+.subject { font-size: 1.35rem; line-height: 1.35; margin: 0 0 .35rem; overflow-wrap: anywhere; }
+.meta { margin: 0; color: var(--reader-muted); font-size: .9rem; overflow-wrap: anywhere; }
+.status { padding: .75rem 0; color: var(--reader-muted); }
+.status[data-state="error"] { color: #b3261e; }
+.status[data-state="unknown"] { color: var(--reader-mark); }
+.body { font-size: 1rem; overflow-wrap: anywhere; }
+.body p { margin: 0 0 .85rem; white-space: pre-wrap; }
+.body blockquote { margin: 0 0 .85rem; padding-left: .85rem; border-left: 3px solid var(--reader-border); color: var(--reader-muted); }
+.body pre { white-space: pre-wrap; overflow-wrap: anywhere; background: transparent; font-family: ui-monospace, "Noto Sans Mono CJK SC", monospace; }
+.body a { color: inherit; text-decoration: underline; pointer-events: none; }
+.attachments { border-top: 1px solid var(--reader-border); margin-top: 1rem; padding-top: .75rem; }
+.attachments h2 { font-size: 1rem; margin: 0 0 .5rem; }
+.attachments ul { list-style: none; margin: 0; padding: 0; }
+.attachments li { padding: .5rem 0; border-bottom: 1px solid var(--reader-border); overflow-wrap: anywhere; }
+mark.search-hit { background: transparent; color: inherit; outline: 2px solid var(--reader-mark); }
+.footer { margin-top: 2rem; color: var(--reader-muted); font-size: .85rem; }
+@media (max-width: 420px) {
+  #reader { padding: .75rem .75rem 2.5rem; }
+  .subject { font-size: 1.15rem; }
+  .body { font-size: .98rem; }
+}
+@media (prefers-contrast: more) {
+  :root { --reader-muted: var(--reader-fg); --reader-border: var(--reader-fg); }
+  .body blockquote { border-left-width: 4px; }
+}

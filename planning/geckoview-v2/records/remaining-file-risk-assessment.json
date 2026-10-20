@@ -6,8 +6,8 @@
   "definition": "fullFileRisk针对原完整责任，不是实施难度/代码完成/实际业务准入；LOW-SLICE只在被授权切片内低副作用，完整文件可能高风险。",
   "coverage": {
     "allMasterRuntimeFiles": 182,
-    "previousAdmittedRuntimeFiles": 65,
-    "remainingPlanRuntimeFiles": 117,
+    "previousAdmittedRuntimeFiles": 105,
+    "remainingPlanRuntimeFiles": 77,
     "previousDeliveredAwaitingReview": 6,
     "newAssignedFiles": 42,
     "newAssignedJavaFiles": 36,
@@ -15,19 +15,22 @@
     "newWholeScopeTasks": 14,
     "newSliceTasks": 28,
     "fullFileRiskCounts": {
-      "low": 6,
-      "medium": 18,
-      "high": 93
+      "low": 0,
+      "medium": 2,
+      "high": 75
     },
     "mainOnlyUnassignedFiles": 75,
     "initialRemainingPlanRuntimeFilesAtD02Allocation": 126,
-    "admittedSinceD02Allocation": 9,
+    "admittedSinceD02Allocation": 49,
     "initialMainOnlyFilesAtAllocation": 78,
     "initialFullFileRiskCounts": {
       "low": 8,
       "medium": 22,
       "high": 96
-    }
+    },
+    "newD02AdmittedJava": 36,
+    "newD02AdmittedInactiveAssets": 4,
+    "newD02HeldStyles": 2
   },
   "files": [
     {
@@ -66,7 +69,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
       "group": "core",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -88,7 +91,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
       "group": "crypto",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "low",
       "owner": "worker-whole",
@@ -297,7 +300,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
       "group": "engine",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -308,7 +311,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
       "group": "engine",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -352,7 +355,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
       "group": "bridge",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -363,7 +366,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
       "group": "bridge",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-whole",
@@ -440,7 +443,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "low",
       "owner": "worker-whole",
@@ -462,7 +465,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -484,7 +487,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -506,7 +509,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -528,7 +531,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -539,7 +542,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -550,7 +553,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
       "group": "ui",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -671,7 +674,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -693,7 +696,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "low",
       "owner": "worker-whole",
@@ -770,7 +773,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-whole",
@@ -781,7 +784,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -814,7 +817,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -847,7 +850,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -858,7 +861,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -902,7 +905,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -935,7 +938,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -957,7 +960,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -968,7 +971,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-whole",
@@ -979,7 +982,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "low",
       "owner": "worker-whole",
@@ -990,7 +993,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "low",
       "owner": "worker-whole",
@@ -1001,7 +1004,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
       "group": "music",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1012,7 +1015,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
       "group": "lyrics",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1023,7 +1026,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
       "group": "lyrics",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1034,7 +1037,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
       "group": "lyrics",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1045,7 +1048,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
       "group": "lyrics",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1067,7 +1070,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
       "group": "system",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1078,7 +1081,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
       "group": "system",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-whole",
@@ -1100,7 +1103,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
       "group": "system",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-whole",
@@ -1177,7 +1180,7 @@
     {
       "path": "app/src/main/assets/bridge/styles/music-phone.css",
       "group": "bridge",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-static-tested",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "medium",
       "owner": "worker-whole",
@@ -1210,7 +1213,7 @@
     {
       "path": "app/src/main/assets/offline-mail/reader.html",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-static-tested",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1221,7 +1224,7 @@
     {
       "path": "app/src/main/assets/offline-mail/reader.js",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-static-tested",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1232,7 +1235,7 @@
     {
       "path": "app/src/main/assets/offline-mail/reader.css",
       "group": "outlook",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-static-tested",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "low",
       "owner": "worker-whole",
@@ -1309,7 +1312,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
       "group": "settings",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",
@@ -1364,7 +1367,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
       "group": "system",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "worker-low-risk-slice-main-high-risk-remainder",

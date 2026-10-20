@@ -18,6 +18,19 @@ public final class BrowserToolbar extends LinearLayout {
     /** Java callback return/exception only, NEVER domain success or actual work-end proof. */
     public enum IntentOutcome { CALLBACK_RETURNED, CALLBACK_UNKNOWN }
     public static IntentOutcome invokeNativeIntent(Runnable exactNativeCallback){if(exactNativeCallback==null)throw invalid();try{exactNativeCallback.run();return IntentOutcome.CALLBACK_RETURNED;}catch(RuntimeException unknown){return IntentOutcome.CALLBACK_UNKNOWN;}}
+    /** Clears ONLY the caller-owned presentation subtree, including listeners/private recycled text.
+     * This is not session/window close, data deletion, owner consent or a task-end receipt. */
+    public static void clearOwnedViewTree(View root){
+        main();if(root==null)return;java.util.ArrayDeque<View> pending=new java.util.ArrayDeque<>();pending.add(root);int count=0;
+        while(!pending.isEmpty()){View view=pending.removeFirst();if(++count>10000)throw new IllegalStateException("Owned UI subtree too large");
+            if(view instanceof android.view.ViewGroup){android.view.ViewGroup group=(android.view.ViewGroup)view;for(int i=0;i<group.getChildCount();i++)pending.addLast(group.getChildAt(i));}
+            view.setOnClickListener(null);view.setOnLongClickListener(null);view.setOnTouchListener(null);view.setContentDescription(null);
+            if(view instanceof android.widget.TextView){android.widget.TextView text=(android.widget.TextView)view;text.setOnEditorActionListener(null);text.setText("");}
+            if(view instanceof android.widget.ImageView)((android.widget.ImageView)view).setImageDrawable(null);
+            if(view instanceof android.widget.SeekBar)((android.widget.SeekBar)view).setOnSeekBarChangeListener(null);
+        }
+    }
+    public static String boundedStatusReason(String reason){return reason==null?"":io.github.rebrowser.core.DomainResult.text(reason,200,false);}
     public interface NativeWindowGuard { void checkCurrent(); }
     public interface Actions { void submit(String originalInput);void back();void reload();void workspaces();void tabs();void menu(); }
     /** Exact native presentation binding. Never decode a permit/guard from UI/IPC data. */

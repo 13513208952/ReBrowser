@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Fixed local-only CSP: no inline script/style, no remote content, no form/frame/object. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'">
+<title>离线邮件</title>
+<link rel="stylesheet" href="reader.css">
+</head>
+<body>
+<main id="reader" role="main" aria-live="polite">
+  <header class="reader-header">
+    <h1 id="subject" class="subject">离线邮件</h1>
+    <p id="meta" class="meta"></p>
+  </header>
+  <section id="status" class="status" role="status">未载入任何邮件内容</section>
+  <section id="attachments" class="attachments" hidden></section>
+  <article id="body" class="body" aria-label="纯文本正文"></article>
+  <footer class="footer">
+    <p>本页只显示原生安全投影提供的纯文本；不加载远程图片、脚本或邮箱会话。</p>
+  </footer>
+</main>
+<script src="reader.js"></script>
+</body>
+</html>

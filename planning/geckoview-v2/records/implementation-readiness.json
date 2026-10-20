@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R45",
+  "revision": "R46",
   "authority": [
     "O41",
     "O42",
@@ -383,14 +383,15 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock",
+      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
         "evidence/validation-android-local-synthetic.json",
         "records/module-integration-plan.json",
         "records/entry-source-incarnation-batch-contract.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/native-temporary-browser-host-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -404,7 +405,7 @@
         "command admission/IPC/effects or Android device execution"
       ],
       "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R45-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
@@ -648,11 +649,12 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "immutable browser-native handles/views, bounded Unicode titles/display metadata, no persistence or load authority",
+      "scope": "immutable browser-native handles/views, bounded Unicode titles/display metadata, no persistence or load authority; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/native-temporary-browser-host-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -712,11 +714,12 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "per-workspace tab selection/50cap, exact parentPopup source/document lease, metadata-only close and generation fencing",
+      "scope": "per-workspace tab selection/50cap, exact parentPopup source/document lease, metadata-only close and generation fencing; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/native-temporary-browser-host-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -743,14 +746,15 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "bounded process-local native domain-owner/context/epoch registry, fence/retired tombstones; no erasure or process-death restore; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock",
+      "scope": "bounded process-local native domain-owner/context/epoch registry, fence/retired tombstones; no erasure or process-death restore; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
         "records/module-integration-plan.json",
         "records/entry-source-incarnation-batch-contract.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/native-temporary-browser-host-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -777,12 +781,13 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "actual Gecko strong references/explicit issued context/open delegate-before-open/close and display token ownership, no Activity capture; R39 initializer receives exact registered ALLOCATED SessionRef before SDK open; retiring/closing during install/open cannot be overwritten as OPEN_REQUESTED, failed cleanup remains strongly tracked",
+      "scope": "actual Gecko strong references/explicit issued context/open delegate-before-open/close and display token ownership, no Activity capture; R39 initializer receives exact registered ALLOCATED SessionRef before SDK open; retiring/closing during install/open cannot be overwritten as OPEN_REQUESTED, failed cleanup remains strongly tracked; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
-        "records/navigation-delegate-contract.json"
+        "records/navigation-delegate-contract.json",
+        "records/native-temporary-browser-host-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -796,7 +801,8 @@
         "temporary context physical erasure or actual worker quiescence/slot release",
         "Android Gecko runtime/cached finite permission reconciliation validation"
       ],
-      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement."
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
@@ -830,14 +836,15 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
+      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
         "records/native-browser-window-batch-contract.json",
         "records/module-integration-plan.json",
-        "records/entry-source-incarnation-batch-contract.json"
+        "records/entry-source-incarnation-batch-contract.json",
+        "records/native-temporary-browser-host-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -852,7 +859,7 @@
         "Android Gecko runtime/cached finite permission reconciliation validation"
       ],
       "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R44-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -1578,6 +1585,138 @@
         "fresh install/rotation/rescue/erasure/epoch commit and entire entry module acceptance"
       ],
       "integrationGate": "Production Root remains unconfigured. Only exact existing CURRENT/STABLE pair can be accepted by actual factory; missing/unfinished/changed baseline never seeds. Native continuity must fence entry before ledger mutation, complete first-fresh/recovery/engine handoff separately."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/BrowserSessionHost.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual unopened-session native permission/content/navigation/progress delegate graph and bounded session bundles, private browser partitions only",
+      "researchEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Actual accepted native epoch + issued private partition/session ref -> installed native delegates/defensive immutable session frame or explicit reject; no caller data becomes permission or document identity",
+      "dependencies": "Pinned Gecko158 SDK/Android only in SDK adapters; pure SessionPresentation Java8, no new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.TemporaryHostBoundaryTest"
+      ],
+      "hostEvidence": "evidence/native-temporary-browser-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json",
+      "notClaimed": [
+        "Root absent: default app still UNCONFIGURED, no actual source unlock or automatic browser UI activation",
+        "Existing exact stable source only. Missing baseline not fresh; first-fresh inventory/seed and recovery/force/erasure/newEpoch commit missing",
+        "Persistent BrowserStore/context restore/checkpoints/primary-secondary native domain, finite permission grant/real document identity and Popup factory unimplemented and rejected",
+        "No actual Gecko SDK session/response/JNI callback or Android Handler/OS runtime/device executed. Source graph API compilation plus narrow real HOST tests only",
+        "Conservative early-main callback-before-post-return confirmation rejects a legitimate bootstrap attempt rather than retry/block/unsafe trust; explicit future native retry/quiescence protocol separate",
+        "Native direct ignored-body close may have JNI/monitor latency; no whole-chain CPU/RAM/stop/erasure qualification or download publication claimed",
+        "Actual native window lifecycle/approved full UI/administrator admission/connectors remain separate required module closures"
+      ],
+      "integrationGate": "Actual trusted-source graph source only; defaultRoot absent stays closed. No persistent session reopen/finite grant/Popup/task completion/erasure. Native body close is not native-tail end; all native erasure needs separate true engine/writer quiescence."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Exact native session content/engine-close observations; unsupported body close even locked/stale, no read/drain/download publication or native-tail end",
+      "researchEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Actual accepted native epoch + issued private partition/session ref -> installed native delegates/defensive immutable session frame or explicit reject; no caller data becomes permission or document identity",
+      "dependencies": "Pinned Gecko158 SDK/Android only in SDK adapters; pure SessionPresentation Java8, no new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.TemporaryHostBoundaryTest"
+      ],
+      "hostEvidence": "evidence/native-temporary-browser-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json",
+      "notClaimed": [
+        "Root absent: default app still UNCONFIGURED, no actual source unlock or automatic browser UI activation",
+        "Existing exact stable source only. Missing baseline not fresh; first-fresh inventory/seed and recovery/force/erasure/newEpoch commit missing",
+        "Persistent BrowserStore/context restore/checkpoints/primary-secondary native domain, finite permission grant/real document identity and Popup factory unimplemented and rejected",
+        "No actual Gecko SDK session/response/JNI callback or Android Handler/OS runtime/device executed. Source graph API compilation plus narrow real HOST tests only",
+        "Conservative early-main callback-before-post-return confirmation rejects a legitimate bootstrap attempt rather than retry/block/unsafe trust; explicit future native retry/quiescence protocol separate",
+        "Native direct ignored-body close may have JNI/monitor latency; no whole-chain CPU/RAM/stop/erasure qualification or download publication claimed",
+        "Actual native window lifecycle/approved full UI/administrator admission/connectors remain separate required module closures"
+      ],
+      "integrationGate": "Actual trusted-source graph source only; defaultRoot absent stays closed. No persistent session reopen/finite grant/Popup/task completion/erasure. Native body close is not native-tail end; all native erasure needs separate true engine/writer quiescence."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PermissionDelegate.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Explicit temporary host deny-all NEW Android/content/media requests, no owner prompts/finite grants or old-grant revocation",
+      "researchEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Actual accepted native epoch + issued private partition/session ref -> installed native delegates/defensive immutable session frame or explicit reject; no caller data becomes permission or document identity",
+      "dependencies": "Pinned Gecko158 SDK/Android only in SDK adapters; pure SessionPresentation Java8, no new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.TemporaryHostBoundaryTest"
+      ],
+      "hostEvidence": "evidence/native-temporary-browser-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json",
+      "notClaimed": [
+        "Root absent: default app still UNCONFIGURED, no actual source unlock or automatic browser UI activation",
+        "Existing exact stable source only. Missing baseline not fresh; first-fresh inventory/seed and recovery/force/erasure/newEpoch commit missing",
+        "Persistent BrowserStore/context restore/checkpoints/primary-secondary native domain, finite permission grant/real document identity and Popup factory unimplemented and rejected",
+        "No actual Gecko SDK session/response/JNI callback or Android Handler/OS runtime/device executed. Source graph API compilation plus narrow real HOST tests only",
+        "Conservative early-main callback-before-post-return confirmation rejects a legitimate bootstrap attempt rather than retry/block/unsafe trust; explicit future native retry/quiescence protocol separate",
+        "Native direct ignored-body close may have JNI/monitor latency; no whole-chain CPU/RAM/stop/erasure qualification or download publication claimed",
+        "Actual native window lifecycle/approved full UI/administrator admission/connectors remain separate required module closures"
+      ],
+      "integrationGate": "Actual trusted-source graph source only; defaultRoot absent stays closed. No persistent session reopen/finite grant/Popup/task completion/erasure. Native body close is not native-tail end; all native erasure needs separate true engine/writer quiescence."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Bounded owner-thread immutable SESSION display/security/history/loading observations, never actual document identity/task/grant or native work-end",
+      "researchEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Actual accepted native epoch + issued private partition/session ref -> installed native delegates/defensive immutable session frame or explicit reject; no caller data becomes permission or document identity",
+      "dependencies": "Pinned Gecko158 SDK/Android only in SDK adapters; pure SessionPresentation Java8, no new library",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/engine/SessionPresentationTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.engine.SessionPresentationTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "Root absent: default app still UNCONFIGURED, no actual source unlock or automatic browser UI activation",
+        "Existing exact stable source only. Missing baseline not fresh; first-fresh inventory/seed and recovery/force/erasure/newEpoch commit missing",
+        "Persistent BrowserStore/context restore/checkpoints/primary-secondary native domain, finite permission grant/real document identity and Popup factory unimplemented and rejected",
+        "No actual Gecko SDK session/response/JNI callback or Android Handler/OS runtime/device executed. Source graph API compilation plus narrow real HOST tests only",
+        "Conservative early-main callback-before-post-return confirmation rejects a legitimate bootstrap attempt rather than retry/block/unsafe trust; explicit future native retry/quiescence protocol separate",
+        "Native direct ignored-body close may have JNI/monitor latency; no whole-chain CPU/RAM/stop/erasure qualification or download publication claimed",
+        "Actual native window lifecycle/approved full UI/administrator admission/connectors remain separate required module closures"
+      ],
+      "integrationGate": "Actual trusted-source graph source only; defaultRoot absent stays closed. No persistent session reopen/finite grant/Popup/task completion/erasure. Native body close is not native-tail end; all native erasure needs separate true engine/writer quiescence."
     }
   ],
   "parallelPending": [

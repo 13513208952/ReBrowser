@@ -32,7 +32,8 @@ public final class TabCatalog {
         long revision=1;
         Group(WorkspaceRef workspace){this.workspace=workspace;}
     }
-    /** Native captured generation; NEVER reacquire the latest lease for an old callback. */
+    /** Native METADATA generation/dispatch intent, NOT actual Gecko document identity.
+     * NEVER reacquire the latest lease for an old callback lacking native document evidence. */
     public static final class DocumentLease {
         private final TabCatalog issuer;
         private final TabRef tab;
@@ -78,7 +79,7 @@ public final class TabCatalog {
     public DocumentLease currentDocument(TabRef ref,ComponentGate.BusinessPermit permit){
         workspaces.requireActive(workspace(ref),permit);return new DocumentLease(this,tab(group(ref.workspace()),ref));
     }
-    /** Call before a native-established new document; lease is not navigation/authority proof. */
+    /** Retire prior metadata generation before dispatch; NOT successful new-document establishment. */
     public DocumentLease beginDocument(TabRef ref,long expectedTabsRevision,ComponentGate.BusinessPermit permit){
         Group group=active(workspace(ref),expectedTabsRevision,permit);Tab tab=tab(group,ref);
         long generation=BrowserModels.next(tab.generation),revision=BrowserModels.next(group.revision);
@@ -110,6 +111,16 @@ public final class TabCatalog {
     public List<TabRef> retireWorkspace(WorkspaceRef workspace,ComponentGate.BusinessPermit permit){
         workspaces.registered(workspace,permit);Group group=groups.remove(workspace);
         return group==null?Collections.<TabRef>emptyList():BrowserModels.immutable(new ArrayList<>(group.tabs.keySet()));
+    }
+    /** Exact current selection snapshot. Cannot be reconstructed from a sender's opaque IDs. */
+    public Selection captureSelection(ComponentGate.BusinessPermit permit){
+        WorkspacesView all=workspaces.snapshot(permit);if(all.selected()==null)throw new IllegalStateException("No selected workspace");
+        TabsView group=snapshot(all.selected(),permit);Selection result=BrowserModels.selection(this,all,group);requireSelection(result,permit);return result;
+    }
+    public void requireSelection(Selection selection,ComponentGate.BusinessPermit permit){
+        workspaces.access(permit);if(selection==null || !selection.issuedBy(this))throw BrowserModels.invalid();
+        WorkspacesView all=workspaces.snapshot(permit);if(all.revision()!=selection.workspacesRevision() || all.selected()!=selection.workspace())throw stale();
+        Group group=active(selection.workspace(),selection.tabsRevision(),permit);if(group.selected!=selection.tab())throw stale();tab(group,selection.tab());
     }
     public TabsView snapshot(WorkspaceRef workspace,ComponentGate.BusinessPermit permit){
         workspaces.access(permit);if(!workspaces.registered(workspace,permit))throw BrowserModels.invalid();Group group=group(workspace);List<TabView> tabs=new ArrayList<>();for(Tab t:group.tabs.values())tabs.add(t.view());return new TabsView(workspace,tabs,group.selected,group.revision);

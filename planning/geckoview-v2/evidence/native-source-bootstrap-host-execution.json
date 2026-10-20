@@ -1,6 +1,6 @@
 {
-  "revision": "R45",
-  "hostTestsPassed": 23,
+  "revision": "R46",
+  "hostTestsPassed": 27,
   "scope": "Actual private native provenance-composition/accepted-context transfer + real bounded HOST ledger IO/gate/partition/publication model; explicitly SYNTHETIC own-Android provenance and clock, NOT real PM/Android files/process/Handler",
   "sourceFiles": [
     {
@@ -21,7 +21,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
-      "sha256": "1964d62969eabd8fe580846e021ef48252506f15d8c6df318e639dbb42cfbf89"
+      "sha256": "3ee5231302332ee0c8141bbf458b080f29f9752ea10e025c227130815ad1adfb"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
@@ -33,7 +33,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
-      "sha256": "62ab8120f832148ffb4861419856324e89323282978725c9e3d634b9c0b802a1"
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
@@ -53,7 +53,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/continuity/SourceBootstrapTest.java",
-      "sha256": "27f7670a70cd1577aa6f565342fc31166aba43540632491e63366f8978c97793"
+      "sha256": "f24cd4db79681d72acd642ba832acbfd826a205978a93c1e1996baf6f03d0bcc"
     }
   ],
   "privateSyntheticOwnInspectionConstructorUsed": true,
@@ -65,5 +65,7 @@
   "realRootKeysCredentialsOrDeviceUsed": false,
   "productSourceUnlockExecuted": false,
   "productionUnconfiguredNoIoFastPathHostExecuted": true,
-  "currentAgpEvidenceRef": "evidence/production-main-agp-R45-checks.json"
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R46-checks.json",
+  "positiveHandlerSubmissionReturnRequiredByTicketModel": true,
+  "earlyOrUnknownSubmissionCannotPublishTrustHostTested": true
 }

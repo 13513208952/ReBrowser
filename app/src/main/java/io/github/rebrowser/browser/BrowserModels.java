@@ -25,6 +25,17 @@ public final class BrowserModels {
         public WorkspaceRef workspace(){return workspace;}
         boolean issuedBy(Object owner){return issuer==owner;}
     }
+    /** Captured native selection/revisions ONLY; no URL/document/principal/dispatch authority. */
+    public static final class Selection {
+        private final Object issuer;private final WorkspaceRef workspace;private final TabRef tab;private final long workspacesRevision,tabsRevision;
+        private Selection(Object issuer,WorkspaceRef workspace,TabRef tab,long workspacesRevision,long tabsRevision){this.issuer=issuer;this.workspace=workspace;this.tab=tab;this.workspacesRevision=workspacesRevision;this.tabsRevision=tabsRevision;}
+        public WorkspaceRef workspace(){return workspace;}
+        public TabRef tab(){return tab;}
+        public long workspacesRevision(){return workspacesRevision;}
+        public long tabsRevision(){return tabsRevision;}
+        boolean issuedBy(Object owner){return issuer==owner;}
+    }
+    static Selection selection(Object issuer,WorkspacesView workspaces,TabsView tabs){return new Selection(issuer,tabs.workspace(),tabs.selected(),workspaces.revision(),tabs.revision());}
     public static final class WorkspaceView {
         private final WorkspaceRef ref;
         private final String title;

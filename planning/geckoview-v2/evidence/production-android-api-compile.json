@@ -62,7 +62,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
-      "sha256": "2b056c9470e052cdcf9b10f1b4935a69ec8dbd9fa9411694cae95e7bc11cfbd9"
+      "sha256": "dd25100fb8aa71d6dab508ed6dd792e4e3d6c63967fb3ed596e400e608708fd1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
@@ -70,11 +70,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
-      "sha256": "8acd03d491de90a662a3a0093f3e6514fd6aa2a62ebec85b34607a9a79a895c9"
+      "sha256": "1cec12e1d70ab126718ffd96daa3fd52aeb248d7bbe10d8942952083b971db9c"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
-      "sha256": "62ab8120f832148ffb4861419856324e89323282978725c9e3d634b9c0b802a1"
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -103,6 +103,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
       "sha256": "0e353205d8197b1358363fd305779901d70060aadd0ddf18ac7d53745c647da1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
+      "sha256": "3328ec871a0d2aaa8686cf8098450149fb76eb5e676221810e8cfb369aa137d9"
     }
   ],
   "classFiles": [
@@ -247,18 +251,23 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/browser/BrowserModels$Selection.class",
+      "sha256": "cc1b22fa4cb8c8044296eb7d6737d9ad1bf76722d47606d0c1beb670b84cf845",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/browser/BrowserModels$TabRef.class",
       "sha256": "00169a62da568193d354d90c279bf2bf05f9157638627c9301f6142c2b81b7bf",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/browser/BrowserModels$TabView.class",
-      "sha256": "a9021c62225ed70bd2a27ef6c0d3bf43c6277ab83a766cc7f9a2d54e9b359a83",
+      "sha256": "195792bdc90778b1e58f2642794dd7e9555fc8d9f5c80b2a709b80a39cca6535",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/browser/BrowserModels$TabsView.class",
-      "sha256": "f7f1e2cd8a837eeb8ff2124984eeca54da1c6aab90c6aa9401b731ae073ce03d",
+      "sha256": "55c98a1f5f14e1ad581238a60c53f92014234cfcdc1929f3ce18695be33fb46c",
       "classMajor": 52
     },
     {
@@ -268,17 +277,17 @@
     },
     {
       "path": "io/github/rebrowser/browser/BrowserModels$WorkspaceView.class",
-      "sha256": "9588f36b8798db3387d91a19a85f6d48b1c0c26ad3770b866715e28112f76826",
+      "sha256": "9a52672607181f5c08758994a0310301db6def60dde41fde5b84f87cebbc1542",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/browser/BrowserModels$WorkspacesView.class",
-      "sha256": "e41825fe02305fc4c3286dafd06739d4a942258122b30372fe5959952b3961db",
+      "sha256": "f056a1f667df159f859b40c2ddadc0b5ae5cb691e9d085f449575cbdd2857894",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/browser/BrowserModels.class",
-      "sha256": "96b95599915bada90397fb3d7e19afc30ea9e80bea3263ad7fb8194e838bc54b",
+      "sha256": "4f75a84e51e78f925f18959647811d3a5c7a8390bc57ff16af34d52a68c0b263",
       "classMajor": 52
     },
     {
@@ -313,12 +322,12 @@
     },
     {
       "path": "io/github/rebrowser/browser/TabCatalog$CloseResult.class",
-      "sha256": "5a09c7991708a1890c4dec6ad3ed5c389c1092bd6c36336c03aa29cdf610d56e",
+      "sha256": "c2179b723c3a3e8f4b2699678297d16aee6285a6397fcd07b3f346c3d77a4d97",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/browser/TabCatalog$DocumentLease.class",
-      "sha256": "d100da5055a77cf91881608dfbddd765f02ed81e8130bf7f123e1c3d36711618",
+      "sha256": "2292abf78a443ceb4a466751febcc7d903a90a64b88d5aa35765db7e858acbae",
       "classMajor": 52
     },
     {
@@ -333,7 +342,7 @@
     },
     {
       "path": "io/github/rebrowser/browser/TabCatalog.class",
-      "sha256": "8e172ef84edd555499e6b3422a2e082c928f78601593ec1debb25cf4485d5302",
+      "sha256": "330d08d7d7cdf6de2e2b9220dd185befba58936c872d74d77493f7903916826a",
       "classMajor": 52
     },
     {
@@ -723,7 +732,12 @@
     },
     {
       "path": "io/github/rebrowser/engine/PartitionCatalog$Lease.class",
-      "sha256": "d54a4d307a4ea2bfbca208e12c6211949c9fd31c5981826577c07491960ed762",
+      "sha256": "de00ce6be768bd53c6b5ddfa64b2fef0d2541ff7022f0919a740d2eb87f4aa83",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/PartitionCatalog$Retention.class",
+      "sha256": "7f9a09764d799db26aeeaf431156d06908d059537f06b57ea843beababf71377",
       "classMajor": 52
     },
     {
@@ -733,7 +747,22 @@
     },
     {
       "path": "io/github/rebrowser/engine/PartitionCatalog.class",
-      "sha256": "47c489039171ac5f8142701dbbee5499fd994a8d4676349f63612019731851eb",
+      "sha256": "cfc68ed162c71ba4995042cb2d880eb3709cfbab8e7a22c4de30c88ea8a2f6a1",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/SessionPresentation$1.class",
+      "sha256": "cfa3b85f5f34ac1ee2404d6a6957fa541dcdaf687af1d97e43081af7f3188c3a",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/SessionPresentation$Frame.class",
+      "sha256": "4f6ba40d2515903bf4204406470641886d4baaa3e3770b5c25f976fd6a7bf157",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/engine/SessionPresentation.class",
+      "sha256": "9b324bd2cfff4682325a7350f4227d3274c877a651f72604cb03fb3c87d09027",
       "classMajor": 52
     },
     {

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R45",
+  "revision": "R46",
   "authority": [
     "O26",
     "O27",
@@ -97,7 +97,7 @@
         {
           "path": "app/src/test/java/io/github/rebrowser/continuity/SourceBootstrapTest.java",
           "kind": "host-native-source-receipt-synthetic-provenance",
-          "purpose": "23actualHOST receipt/private synthetic OS provenance/real metadata IO/gate-partition/publication pipeline cases, not Android acceptance",
+          "purpose": "27actual HOST source receipt/metadata IO/publication ticket cases, private SYNTHETIC own-OS provenance; no real Handler/own signer/source unlock",
           "state": "main-HOST-controlled-source-pipeline-tested-Android-pending"
         }
       ]
@@ -278,6 +278,18 @@
           "kind": "host-static-navigation-policy-and-sdk-dto",
           "purpose": "12 actual production classifier/display + synthetic pinned SDK LoadRequest constructor cases; not session/callback/network runtime",
           "state": "host-policy-only-callbacks-unexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/SessionPresentationTest.java",
+          "kind": "unit-native-temporary-session-host",
+          "purpose": "Actual native observation model/reject callback and body-close helper HOST; no real Gecko/Android event execution",
+          "state": "host-tested-native-callbacks-pending"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java",
+          "kind": "unit-native-temporary-session-host",
+          "purpose": "Actual native observation model/reject callback and body-close helper HOST; no real Gecko/Android event execution",
+          "state": "host-tested-native-callbacks-pending"
         }
       ]
     },
@@ -606,7 +618,8 @@
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
         "evidence/production-main-agp-R44-checks.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/native-temporary-browser-host-contract.json"
       ]
     },
     {
@@ -656,7 +669,7 @@
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "23 actual HOST receipt/metadata-IO/publication-model cases via PRIVATE SYNTHETIC own-Android provenance, not actual Android source/Handler/filesystem acceptance",
+      "validationMeaning": "27 actual HOST provenance/metadata IO/one-shot transfer/publication model cases; private synthetic own-OS provenance, no Android source/Handler publication",
       "runtimePending": true,
       "testReferenceGroup": "continuity",
       "implementationReadinessRef": "records/implementation-readiness.json",
@@ -1370,7 +1383,8 @@
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
         "evidence/production-main-agp-R44-checks.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/native-temporary-browser-host-contract.json"
       ]
     },
     {
@@ -1389,7 +1403,10 @@
       "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
       "testReferenceGroup": "engine",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
@@ -1472,7 +1489,7 @@
       "group": "engine",
       "kind": "native-code",
       "responsibility": "崩溃/终止/全屏/外部response",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1480,9 +1497,15 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP SDK compile;17 production session model +13 private event-adapter/reject/owned-close HOST cases, not SDK sessions/native callbacks",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "evidence/native-temporary-browser-host-execution.json",
+        "evidence/production-main-agp-R46-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PromptDelegate.java",
@@ -1506,7 +1529,7 @@
       "group": "engine",
       "kind": "native-code",
       "responsibility": "context+origin网站许可与OS许可分层",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1514,9 +1537,15 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP SDK compile;17 production session model +13 private event-adapter/reject/owned-close HOST cases, not SDK sessions/native callbacks",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "evidence/native-temporary-browser-host-execution.json",
+        "evidence/production-main-agp-R46-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/SelectionDelegate.java",
@@ -1730,7 +1759,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-temporary-browser-host-contract.json"
       ]
     },
     {
@@ -1768,7 +1798,10 @@
       "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
       "testReferenceGroup": "browser",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
@@ -1784,7 +1817,10 @@
       "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
       "runtimePending": true,
       "testReferenceGroup": "browser",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
@@ -3375,6 +3411,52 @@
       "validationMeaning": "旧实际交接源码/文档完整审读，v2代码/真实安装器流程未实现或验证",
       "runtimePending": true,
       "testReferenceGroup": "system"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/BrowserSessionHost.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "Actual unopened-session native permission/content/navigation/progress delegate graph and bounded session bundles, private browser partitions only",
+      "state": "source-in-progress-api-compiled",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "Actual AGP SDK compile;17 production session model +13 private event-adapter/reject/owned-close HOST cases, not SDK sessions/native callbacks",
+      "runtimePending": true,
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "evidence/native-temporary-browser-host-execution.json",
+        "evidence/production-main-agp-R46-checks.json"
+      ]
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
+      "group": "engine",
+      "kind": "native-code",
+      "responsibility": "Bounded owner-thread immutable SESSION display/security/history/loading observations, never actual document identity/task/grant or native work-end",
+      "state": "implemented-host-tested-not-integrated",
+      "validationRefs": [
+        "VT02",
+        "VT03",
+        "VT05",
+        "VT06",
+        "VT07"
+      ],
+      "validationMeaning": "Actual AGP SDK compile;17 production session model +13 private event-adapter/reject/owned-close HOST cases, not SDK sessions/native callbacks",
+      "runtimePending": true,
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-temporary-browser-host-contract.json",
+        "evidence/native-temporary-browser-host-execution.json",
+        "evidence/production-main-agp-R46-checks.json"
+      ]
     }
   ],
   "references": [

@@ -19,7 +19,9 @@ $GRADLE_96/bin/gradle -p rebrowser :app:compileDebugJavaWithJavac \
 
 SDK、Gradle 用户目录、项目缓存及 `java.io.tmpdir` 使用既有隔离环境；不要改动全局 SDK/缓存。代码/清单编译通过不等于 APK、Android运行或网站验证。
 
-R45继续闭合入口的原生来源依赖：新增SourceBootstrap稳定精确来源回执，并将epoch16接到入口/Gate/数据库/分区/目标/runtime，跨12个实质runtime文件。实际AGP编译52源码/253class，413HOST；独立纯切片234，HOST SQL39+235通过。23项回执流水线测试使用私有合成OS来源和真实HOST metadata文件，不是Android签名/文件系统/Handler实测。当前Root仍未配置；基准缺失/非stable/不匹配/仅lineage轮换仍锁定，不自动seed或擦除。first-fresh清单、恢复/销毁提交与完整浏览器仍需完成。
+R46跨10个实质runtime文件连接原生accepted epoch→临时浏览器域→private context/Gecko privateMode→open前permission/content/navigation/progress delegates。Selection精确校验workspace/tab双revision拒绝ABA；session级title/location不能伪造真实document。修复源发布未知提交/确认前回调不得信任的缺口。实际AGP56源码/264class/456HOST；独立26纯切片260HOST与SDKbootclasspath；新增17模型/13私有adapter＋拒绝/body-close HOST，不是Gecko/Android实测。Root仍无配置，未激活完整UI、持久化恢复、finiteGrant、Popup或下载发布。
+
+历史R45继续闭合入口的原生来源依赖：新增SourceBootstrap稳定精确来源回执，并将epoch16接到入口/Gate/数据库/分区/目标/runtime，跨12个实质runtime文件。实际AGP编译52源码/253class，413HOST；独立纯切片234，HOST SQL39+235通过。23项回执流水线测试使用私有合成OS来源和真实HOST metadata文件，不是Android签名/文件系统/Handler实测。当前Root仍未配置；基准缺失/非stable/不匹配/仅lineage轮换仍锁定，不自动seed或擦除。first-fresh清单、恢复/销毁提交与完整浏览器仍需完成。
 
 历史R44按模块推进：入口与进程→浏览器核心→Gecko宿主→管理员协议→内建连接器→原生UI，依赖按需协作，协议/边界允许随能力需求调整。本批跨12个runtime文件收口入口/来源生命周期：实际own-process路由、唯一startup工厂、incarnation/代次绑定许可，旧catalog/runtime/task/target/DB不能用新许可重定向。实际AGP编译51源码/244class，386HOST（纯切片230），当前编译DDL实际HOST SQL39+235通过。Root仍未配置，真实source接受/Android进程/SQLite DAO/Gecko及整模块运行未完成；下一依赖是原生continuity接受回执提供器，不用元数据或布尔值解锁。提交最少10个实质runtime代码文件，不设上限。
 

@@ -1,4 +1,8 @@
-# 实施完整性看板 · R45（原生来源回执与入口联动）
+# 实施完整性看板 · R46（入口→临时浏览器域→Gecko宿主）
+
+本轮10runtime文件实现实际native临时域/SDK会话delegate图源码，Selection精确issuer与双revision拒绝ABA；原生Source ticket必须确认提交肯定返回，unknown/确认前回调不得发布TRUSTED。56源码/264class/456HOST，独立纯切片26文件/260HOST+SDKbootclasspath；17模型和13私有adapter/拒绝/body-close测试执行了实际生产方法，平台DTO/回调/流明确合成。尚无实际Android/Gecko会话/回调/界面资格；Root空、首次初始化/恢复销毁及持久化/finiteGrant/真实document/Popup未实现不解锁或冒充完成。
+
+## R45历史切片
 
 R45跨12个runtime文件完成STABLE既有来源回执→原生入口→epoch消费者的源码联动：52源码/413实际AGP HOST（234独立纯切片），23个回执/metadata文件/epoch分区/发布模型测试用明确合成OS来源。当前Root未配置，无实际Android PM/FS/Handler或业务解锁证据；缺基准/非stable/仅lineage轮换继续锁定，first-fresh精确清单/seed、恢复/销毁提交仍未完成。
 

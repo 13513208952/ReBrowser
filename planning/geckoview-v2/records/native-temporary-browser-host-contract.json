@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "revision": "R46",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O69",
+    "O72",
+    "O73"
+  ],
+  "moduleFocus": "accepted source -> native temporary browser coordinator -> private context -> lazy owned Gecko sessions with BEFORE-open delegate graph",
+  "commitMinimum": {
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "testsDocsAndGeneratedFilesCountAsRuntime": false
+  },
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+    "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+    "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+    "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+    "app/src/main/java/io/github/rebrowser/engine/BrowserSessionHost.java",
+    "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
+    "app/src/main/java/io/github/rebrowser/engine/PermissionDelegate.java",
+    "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java"
+  ],
+  "flow": [
+    "Startup native accepted epoch/gate -> one-attempt cached temporary-only browser graph (no startup SDK session/URL/DB opening)",
+    "Catalog native Selection opaque issuer/workspaces revision/tabs revision -> validates workspace/tab ABA and exact current target before native handoff; returned DocumentLease is dispatch intent metadata NOT actual new-document proof",
+    "Explicit fresh PRIVATE_SESSION partition lifetime/native exact workspace owner -> usePrivateMode=true SDK session settings, host refuses ordinary context/import/restore",
+    "Gecko owner allocates ref BEFORE delegates, installs explicit deny-all permission/content/navigation/progress delegates BEFORE SDK open, keeps inactive/unfocused until native display handoff",
+    "Host bundle models bounded session observations only, no Activity captures/no lookup of current document lease for old title/location callbacks",
+    "Native close/crash/kill fence delegates/drop private presentation, retained late ContentDelegate always closes unsupported response body without read/drain/refetch; closeRequest only observation, never auto-close/end",
+    "Failed response-body close sticky in actual session owner even after bundle retirement, neither closed-window nor map removal is native network/quiescence/erasure proof",
+    "R45 real gap corrected: positive Handler submission RETURN confirmation must precede native source callback publication. Unknown/false submission and callback-before-confirmation fail closed; no late callback revives source, no blocking main/retry/second route"
+  ],
+  "sourceInspection": {
+    "geckoRevision": "eb9a6e3a736802c8e080a76c44dc81f409d99d54",
+    "inputStreamSourceSha256": "26ff1c334cdb967327e9e6d3dba421d9564bf7991f0ab1b5b4dd33f7f0af707e",
+    "externalBodyRule": "Pinned GeckoInputStream.close synchronized body marks closed and calls Support.close annotated dispatchTo=gecko. Callback rejection performs ONLY close, never ResponseStreamWorker bulk IO on UI; no reader ever started by this host. JNI latency not qualified and native-tail stop not inferred.",
+    "permissionDefaults": "Pinned SDK default Android/media reject and ContentPermission defaults PROMPT. Native host explicitly installs deny for ALL new content requests; no native grants/revocation/finite expiry claims."
+  },
+  "remainingGates": [
+    "Root absent: default app still UNCONFIGURED, no actual source unlock or automatic browser UI activation",
+    "Existing exact stable source only. Missing baseline not fresh; first-fresh inventory/seed and recovery/force/erasure/newEpoch commit missing",
+    "Persistent BrowserStore/context restore/checkpoints/primary-secondary native domain, finite permission grant/real document identity and Popup factory unimplemented and rejected",
+    "No actual Gecko SDK session/response/JNI callback or Android Handler/OS runtime/device executed. Source graph API compilation plus narrow real HOST tests only",
+    "Conservative early-main callback-before-post-return confirmation rejects a legitimate bootstrap attempt rather than retry/block/unsafe trust; explicit future native retry/quiescence protocol separate",
+    "Native direct ignored-body close may have JNI/monitor latency; no whole-chain CPU/RAM/stop/erasure qualification or download publication claimed",
+    "Actual native window lifecycle/approved full UI/administrator admission/connectors remain separate required module closures"
+  ]
+}

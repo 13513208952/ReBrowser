@@ -1,0 +1,49 @@
+{
+  "authority": "O64",
+  "minimumRuntimeCodeFiles": 10,
+  "runtimeCodeFilesChanged": 10,
+  "maximumFiles": null,
+  "scope": "source workload only, not full responsibility/runtime completion",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "3ee5231302332ee0c8141bbf458b080f29f9752ea10e025c227130815ad1adfb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "e6525aa4dd5c01ef23d93fbe6965cbe3177f436c9c0fcaf8947431058c744e4f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "sha256": "dd25100fb8aa71d6dab508ed6dd792e4e3d6c63967fb3ed596e400e608708fd1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "sha256": "1cec12e1d70ab126718ffd96daa3fd52aeb248d7bbe10d8942952083b971db9c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/BrowserSessionHost.java",
+      "sha256": "27dc08c6484f55cb800d4f00fdb52933fb3bed2ae8ba60542615c1510fd225ce"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
+      "sha256": "4cc857741bf646b9e237d28ee01adddea10807cefefce5d0b6438a40cb56f7a6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+      "sha256": "b94a475f6cccb0d4b64d1a05c252c35e99454347f89198d75da80e05ee41169c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PermissionDelegate.java",
+      "sha256": "e5fbbad37ad16206dcce19d6a39d431058713c32de3711573678754d7f9bd8f0"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
+      "sha256": "3328ec871a0d2aaa8686cf8098450149fb76eb5e676221810e8cfb369aa137d9"
+    }
+  ]
+}

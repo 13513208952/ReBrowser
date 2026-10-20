@@ -15,13 +15,17 @@ import java.util.Map;
 public final class PartitionCatalog {
     public enum Domain { BROWSER, OUTLOOK, MUSIC }
     public enum State { ACTIVE, FENCED, RETIRED }
+    /** PRIVATE_SESSION asks Gecko not to retain session data; NOT physical erasure/quiescence. */
+    public enum Retention { PROCESS_LOCAL_CATALOG, PRIVATE_SESSION }
     public static final class Lease {
         private final PartitionCatalog issuer;
         private final Domain domain;
         private final Object owner;
         private final String context;
+        private final Retention retention;
         private State state=State.ACTIVE;
-        private Lease(PartitionCatalog issuer,Domain domain,Object owner,String context){this.issuer=issuer;this.domain=domain;this.owner=owner;this.context=context;}
+        private Lease(PartitionCatalog issuer,Domain domain,Object owner,String context,Retention retention){this.issuer=issuer;this.domain=domain;this.owner=owner;this.context=context;this.retention=retention;}
+        public Retention retention(){return retention;}
         public Domain domain(){return domain;}
         /** Opaque registry ref, never evidence of active scope or physical storage removal. */
         public String opaqueRef(){return context;}
@@ -37,16 +41,21 @@ public final class PartitionCatalog {
         this.gate=gate;sourceLifetime=gate.newResourcePin();epoch=nativeDataEpoch.clone();this.capacity=capacity;
     }
     public Lease create(Domain domain,Object nativeOwner,ComponentGate.BusinessPermit permit){
+        return create(domain,nativeOwner,Retention.PROCESS_LOCAL_CATALOG,permit);
+    }
+    public Lease createPrivateBrowser(Object nativeWorkspace,ComponentGate.BusinessPermit permit){return create(Domain.BROWSER,nativeWorkspace,Retention.PRIVATE_SESSION,permit);}
+    private Lease create(Domain domain,Object nativeOwner,Retention retention,ComponentGate.BusinessPermit permit){
         access(permit);if(domain==null || nativeOwner==null)throw invalid();Lease known=owners.get(nativeOwner);
-        if(known!=null){if(known.domain!=domain || known.state!=State.ACTIVE)throw new IllegalStateException("Native owner already fenced/assigned");return known;}
+        if(known!=null){if(known.domain!=domain || known.retention!=retention || known.state!=State.ACTIVE)throw new IllegalStateException("Native owner already fenced/assigned");return known;}
         if(owners.size()>=capacity)throw new IllegalStateException("Partition registry capacity reached");
         String context=null;
         for(int attempt=0;attempt<16;attempt++){String candidate=randomContext();boolean collision=false;for(Lease lease:owners.values())if(lease.context.equals(candidate)){collision=true;break;}if(!collision){context=candidate;break;}}
         if(context==null)throw new IllegalStateException("Partition identity collision");
-        Lease result=new Lease(this,domain,nativeOwner,context);owners.put(nativeOwner,result);return result;
+        Lease result=new Lease(this,domain,nativeOwner,context,retention);owners.put(nativeOwner,result);return result;
     }
     public String activeContextId(Lease lease,ComponentGate.BusinessPermit permit){requireActive(lease,permit);return lease.context;}
     public void requireActive(Lease lease,ComponentGate.BusinessPermit permit){access(permit);known(lease);if(lease.state!=State.ACTIVE)throw new SecurityException("Partition fenced/retired");}
+    public void requireOwner(Lease lease,Object exactNativeOwner,ComponentGate.BusinessPermit permit){requireActive(lease,permit);if(lease.owner!=exactNativeOwner)throw invalid();}
     public State state(Lease lease,ComponentGate.BusinessPermit permit){access(permit);known(lease);return lease.state;}
     public void fence(Lease lease,ComponentGate.BusinessPermit permit){access(permit);known(lease);if(lease.state==State.RETIRED)throw new IllegalStateException("Partition already retired");lease.state=State.FENCED;}
     /** Admission retirement only; old work must STILL settle before erasure/quiescence claims. */

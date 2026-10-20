@@ -14,6 +14,8 @@ import io.github.rebrowser.continuity.SourceBootstrap;
 import io.github.rebrowser.authority.AdminProofVerifier;
 import io.github.rebrowser.authority.CompiledPrincipals;
 import io.github.rebrowser.engine.GeckoRuntimeOwner;
+import io.github.rebrowser.browser.BrowserCoordinator;
+import java.util.concurrent.atomic.AtomicInteger;
 import io.github.rebrowser.continuity.CompiledSourceIdentity;
 import io.github.rebrowser.continuity.SigningIdentity;
 
@@ -30,10 +32,14 @@ public final class StartupCoordinator {
     }
     /** Owner-thread handoff model only, not source acceptance/actual IO-end evidence. */
     public static final class PublicationGate {
-        public static final class Ticket {private final PublicationGate issuer;private boolean ended;private Ticket(PublicationGate issuer){this.issuer=issuer;}}
+        public static final class Ticket {private final PublicationGate issuer;private boolean ended;private final AtomicInteger submission=new AtomicInteger();private Ticket(PublicationGate issuer){this.issuer=issuer;}}
         private final Thread thread=Thread.currentThread();private Ticket pending;private boolean started,revoked;
         public Ticket begin(){check();if(started || revoked)throw new IllegalStateException("Native source inspection already attempted");started=true;pending=new Ticket(this);return pending;}
-        public boolean finish(Ticket ticket){check();if(ticket==null || ticket.issuer!=this)throw new SecurityException("Foreign source publication ticket");if(ticket.ended)return false;if(pending!=ticket)throw new SecurityException("Stale source publication ticket");ticket.ended=true;pending=null;return !revoked;}
+        public boolean finish(Ticket ticket){check();if(ticket==null || ticket.issuer!=this)throw new SecurityException("Foreign source publication ticket");if(ticket.ended)return false;if(pending!=ticket)throw new SecurityException("Stale source publication ticket");ticket.ended=true;pending=null;int submission=ticket.submission.getAndSet(3);return !revoked && submission==1;}
+        /** Native IO records positive Handler.post RETURN, not merely an attempted submission. */
+        public boolean confirmSubmission(Ticket ticket){own(ticket);return ticket.submission.compareAndSet(0,1);}
+        public void rejectSubmission(Ticket ticket){own(ticket);ticket.submission.compareAndSet(0,2);ticket.submission.compareAndSet(1,2);}
+        private void own(Ticket ticket){if(ticket==null || ticket.issuer!=this)throw new SecurityException("Foreign source submission ticket");}
         public void revoke(){check();revoked=true;}
         public boolean hasPendingHandoff(){check();return pending!=null;}
         private void check(){if(Thread.currentThread()!=thread)throw new IllegalStateException("Native source publication owner thread required");}
@@ -54,6 +60,7 @@ public final class StartupCoordinator {
     private final AdminProofVerifier proofVerifier;
     private final CompiledSourceIdentity compiledSource;
     private volatile GeckoRuntimeOwner runtimeOwner;
+    private BrowserCoordinator browserDomain;private boolean browserDomainAttempted;
     private final ComponentGate.ResourcePin businessLifetime;
     private final AtomicReference<ComponentGate.SourceView> sourceView=new AtomicReference<>(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.INITIALIZING));
     private final Handler main=new Handler(Looper.getMainLooper());
@@ -91,14 +98,17 @@ public final class StartupCoordinator {
             catch(Exception unavailable){/* missing/unsafe bootstrap is not a fresh installation */}
             finally{inspectionIoPending=false;if(result==null){if(inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED)inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));}}
             final SourceBootstrap.Inspection finished=result;
-            try{if(!main.post(()->publishNativeInspection(ticket,finished)))failInspectionHandoff();}catch(RuntimeException unknownSubmission){failInspectionHandoff();}
+            boolean confirmed=false;
+            try{if(main.post(()->publishNativeInspection(ticket,finished)))confirmed=publication.confirmSubmission(ticket);}
+            catch(RuntimeException unknownSubmission){/* never retry an uncertain post */}
+            finally{if(!confirmed){publication.rejectSubmission(ticket);failInspectionHandoff();}}
         });}catch(RejectedExecutionException knownUnsubmitted){inspectionIoPending=false;publication.finish(ticket);failInspectionHandoff();}
         catch(RuntimeException unknownSubmission){failInspectionHandoff();}
         finally{io.shutdown();} // orderly only, NEVER interruption/timeout as actual IO completion
     }
     private void failInspectionHandoff(){if(inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED)inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));}
     private void publishNativeInspection(PublicationGate.Ticket ticket,SourceBootstrap.Inspection inspection){
-        ownerThread();if(!publication.finish(ticket))return;
+        ownerThread();boolean pending=publication.hasPendingHandoff();if(!publication.finish(ticket)){if(pending)failInspectionHandoff();return;} // early/unknown submission cannot publish; duplicate completion cannot change a settled source
         inspectionStatus=inspection==null?SourceBootstrap.Status.UNAVAILABLE:inspection.status();
         if(inspection!=null && inspection.status()==SourceBootstrap.Status.ACCEPTED_STABLE){
             try{SourceBootstrap.AcceptedContext accepted=inspection.takeAccepted(application);acceptedSource=accepted;sourceView.set(ComponentGate.SourceView.acceptedNative(accepted,accepted.dataEpoch()));return;}
@@ -122,6 +132,12 @@ public final class StartupCoordinator {
         businessLifetime.checkOrBind(permit);
         if (runtimeOwner == null) runtimeOwner = GeckoRuntimeOwner.forMainProcess(application,gate,requireNativeDataEpoch(permit),permit);
         return runtimeOwner;
+    }
+    /** Lazy actual native temporary-domain graph. Does not open a session or load a URL. */
+    public BrowserCoordinator temporaryBrowserDomain(ComponentGate.BusinessPermit permit){
+        ownerThread();byte[] epoch=requireNativeDataEpoch(permit);
+        if(browserDomain!=null)return browserDomain;if(browserDomainAttempted)throw new IllegalStateException("Browser domain construction already attempted");browserDomainAttempted=true;
+        browserDomain=BrowserCoordinator.createTemporaryNative(gate,browserRuntimeOwner(permit),epoch,8,permit);gate.checkCurrent(permit);return browserDomain;
     }
     public boolean hasCreatedBrowserRuntime() { return runtimeOwner != null && runtimeOwner.hasCreatedRuntime(); }
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R45",
+  "revision": "R46",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,12 +225,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "入口依赖继续闭合：新增SourceBootstrap原生stable精确来源回执，现有11runtime消费者一起调整，共12runtime文件；不把模块独立做死/不以UI叶节点数代替进展",
-    "实际own PM包装两次版本/更新时间/签名稳定检查、当前compiledRoot、固定no-backup目录及last-good精确CURRENT/STABLE快照；30s/单次/exact native app回执交接到有代次/退役/重复回调闸门的Main发布",
-    "Root未配置fast path不PM/FS IO；配置后单worker有界metadata检查，不创建marker/读businessDB；缺基准/非stable/轮换仅lineage/不确定状态继续LOCKED，不能布尔/metadata/调试解锁",
-    "原生SourceView携immutableepoch16，Gate及partition/runtime/DB/target绑定实际acceptedepoch，metadata-only trusted fixture不能开epoch资源；Native continuity写ledger前必须fence入口",
-    "实际AGP52源码/253classes/HOST413；独立纯切片25文件234HOST+SDKbootclasspath；当前编译DDL HOST SQL39+235；真实Android源签名/文件系统/Handler/完整模块未运行",
-    "下一明确依赖：first-fresh准确私有清单/seed与rotate/rescue/erasure/epoch commit，以及browser/Gecko真实factory/document/checkpoint/permission闭合；不等待Root配置才继续编码"
+    "接受来源epoch -> 懒创建临时浏览器域 -> 私有context/SDKprivateMode -> BEFORE-open四delegate实际接线；10实质runtime文件，不把暂不支持能力伪装成完成",
+    "浏览器选择Selection来自native catalog私发，精确workspace/tab双revision拒绝ABA；native load/history交接后仅metadata intent，不凭SDK location/title虚构真实document/grant/job",
+    "ContentDelegate崩溃/终止走原生owner关闭观察，closeRequest只请求；退役先fence正向发布，late/locked外部body仍close，不读/重取；失败原owner保留sticky不确定性，不宣称网络尾部结束",
+    "Source发布补上R45实际缺口：必须Handler.post肯定返回的ticket确认；unknown/false或callback先于确认均拒绝、不重试/不Main阻塞，late callback不复活",
+    "仅源代码图/模型/拒绝边界HOST测试及API compile，Root仍无配置；真实Android/Gecko session/界面、持久化restore/finiteGrant/Popup/真实document、first-fresh与恢复销毁仍未完成"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

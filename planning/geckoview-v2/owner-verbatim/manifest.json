@@ -499,7 +499,21 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O72",
+      "file": "owner-verbatim/O72-continue-module-browser-gecko-integration.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O73",
+      "file": "owner-verbatim/O73-continue-native-session-host.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-20T13:07:07+08:00"
+  "lastAppendedAt": "2026-10-20T15:37:46+08:00"
 }

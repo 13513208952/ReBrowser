@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R45",
+  "revision": "R46",
   "authority": [
     "O45",
     "O64",
@@ -42,7 +42,8 @@
         "engine document/session receipts",
         "permission lifetime and native storage"
       ],
-      "state": "in-progress"
+      "state": "in-progress",
+      "currentSlice": "R46 actual temporary-private native domain/session delegate graph source connected from accepted entry epoch; scoped selection/presentation/reject helper HOST, actual SDK session/window/persistence/doc/grants qualification pending"
     },
     {
       "id": "engine",
@@ -54,7 +55,8 @@
         "permissions finite grant/actual stop",
         "download private staging and source workset coverage"
       ],
-      "state": "in-progress"
+      "state": "in-progress",
+      "currentSlice": "R46 actual temporary-private native domain/session delegate graph source connected from accepted entry epoch; scoped selection/presentation/reject helper HOST, actual SDK session/window/persistence/doc/grants qualification pending"
     },
     {
       "id": "control",
@@ -121,6 +123,13 @@
       "current": "No new isolated UI leaves planned while entry/browser/Gecko integration has named steps",
       "nextExecutableStep": "Each increment closes named producer/consumer flow with executable tests or explicit safe dependency boundary",
       "exit": "No indefinite broad research or falsely complete module label"
+    },
+    {
+      "id": "BROWSER-PRIVATE-NATIVE-GRAPH",
+      "current": "Actual native temporary graph source wired with no UI/global effects; no source/SDK session runtime qualification",
+      "nextExecutableStep": "Close BrowserStore/persistent context/checkpoint and real native document lifecycle/finite grants; native window lifecycle only after core ownership contracts",
+      "exit": "Real supported session/restore/document/grant behavior and controlled Android qualification, not raw compile or presentation-only tests",
+      "blocks": "Full browser/product activation, NOT next independent domain implementation"
     }
   ]
 }

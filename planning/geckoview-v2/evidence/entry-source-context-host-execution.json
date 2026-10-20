@@ -1,9 +1,9 @@
 {
-  "revision": "R45",
+  "revision": "R46",
   "scope": "Actual ProcessRole/ComponentGate/ResourcePin/WorkspaceCatalog/TabCatalog/PartitionCatalog/TaskCoordinator cross-module HOST flows with explicitly SYNTHETIC source acceptance markers, not actual Android source/process/DB/runtime startup",
   "entryContractTests": 19,
-  "browserCatalogTests": 16,
-  "partitionCatalogTests": 9,
+  "browserCatalogTests": 23,
+  "partitionCatalogTests": 11,
   "taskCoordinatorTests": 40,
   "actualSourceIncarnationAndResourcePinMethodsExecuted": true,
   "actualAndroidProcessOrSourceAcceptanceExecuted": false,
@@ -23,7 +23,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
-      "sha256": "1964d62969eabd8fe580846e021ef48252506f15d8c6df318e639dbb42cfbf89"
+      "sha256": "3ee5231302332ee0c8141bbf458b080f29f9752ea10e025c227130815ad1adfb"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
@@ -31,7 +31,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
-      "sha256": "62ab8120f832148ffb4861419856324e89323282978725c9e3d634b9c0b802a1"
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
@@ -39,7 +39,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
-      "sha256": "72f0a4085b8df43049cd8e1c1e4bd66645119a868ae8a6409ec1d65e17b9f740"
+      "sha256": "e6525aa4dd5c01ef23d93fbe6965cbe3177f436c9c0fcaf8947431058c744e4f"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
@@ -63,11 +63,11 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java",
-      "sha256": "99a9724941395d09f7a1c6d0d22123908e24d47dd312a2a65e8ab6ec5750ad0a"
+      "sha256": "fa85ac4872787aae28a203e5f62ebec4c23388a9d35790684b1cdfd5d85aa7fb"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java",
-      "sha256": "0c45ef9aa96d92f0469df44c38a4009b8e99d889e0c3bbf5477d44f3ae081545"
+      "sha256": "fb343fdcb4cc4ee0d71d8e550e5c038d45550e05f1edbbffcafe1c7c2801ca2c"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
@@ -78,5 +78,5 @@
       "sha256": "a2debb1fb5c401b5f98fe39914d77d9c1256ac267c4987da76646c4a09e7e676"
     }
   ],
-  "currentActualHostRunRef": "evidence/production-main-agp-R45-checks.json"
+  "currentActualHostRunRef": "evidence/production-main-agp-R46-checks.json"
 }

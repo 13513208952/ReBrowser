@@ -16,6 +16,8 @@ public final class PartitionCatalogTest {
         final ComponentGate.BusinessPermit permit=gate.requireBusiness();
         final PartitionCatalog catalog=new PartitionCatalog(gate,new byte[16],4);
     }
+    @Test public void privateBrowserRetentionCannotSilentlyChangeAnExistingContext(){Fixture f=new Fixture();Object owner=new Object();PartitionCatalog.Lease privateLease=f.catalog.createPrivateBrowser(owner,f.permit);assertEquals(PartitionCatalog.Retention.PRIVATE_SESSION,privateLease.retention());assertSame(privateLease,f.catalog.createPrivateBrowser(owner,f.permit));assertThrows(IllegalStateException.class,()->f.catalog.create(PartitionCatalog.Domain.BROWSER,owner,f.permit));Object regular=new Object();f.catalog.create(PartitionCatalog.Domain.BROWSER,regular,f.permit);assertThrows(IllegalStateException.class,()->f.catalog.createPrivateBrowser(regular,f.permit));}
+    @Test public void nativeContextRequiresExactWorkspaceOwnerNotAnotherNativeTab(){Fixture f=new Fixture();Object owner=new Object();PartitionCatalog.Lease lease=f.catalog.createPrivateBrowser(owner,f.permit);f.catalog.requireOwner(lease,owner,f.permit);assertThrows(IllegalArgumentException.class,()->f.catalog.requireOwner(lease,new Object(),f.permit));f.catalog.fence(lease,f.permit);assertThrows(SecurityException.class,()->f.catalog.requireOwner(lease,owner,f.permit));}
     @Test public void sameNativeOwnerSharesContextDifferentOwnersAndDomainsDoNot(){
         Fixture f=new Fixture();Object owner=new Object();PartitionCatalog.Lease first=f.catalog.create(PartitionCatalog.Domain.BROWSER,owner,f.permit);
         assertSame(first,f.catalog.create(PartitionCatalog.Domain.BROWSER,owner,f.permit));

@@ -24,6 +24,9 @@ public final class GeckoSessionOwner {
         /** Install delegates BEFORE open with the exact already-registered owner, not a post-open tab lookup.
          * No queued loads/effects or Activity capture. Ref is allocated, NOT an open/ready capability. */
         void installDelegates(GeckoSession session,SessionRef allocatedOwner,PartitionCatalog.Lease partition,Object nativeOwnerToken);
+        /** Synchronous/idempotent positive-publication fencing, NOT writer or JNI quiescence. */
+        default void retireDelegates(GeckoSession session,SessionRef owner){}
+        default SessionPresentation.Frame presentation(SessionRef owner){throw new UnsupportedOperationException("Session presentation unavailable");}
     }
     public static final class SessionRef {
         private final GeckoSessionOwner issuer;
@@ -40,7 +43,10 @@ public final class GeckoSessionOwner {
     private final Initializer initializer;
     private final int capacity;
     private final Map<SessionRef,SessionRef> sessions=new LinkedHashMap<>();
-    private boolean opening;
+    private boolean opening,unknownRejectedResponseClose;
+    void observeUnknownRejectedBodyClose(SessionRef ref){mainThread();own(ref);unknownRejectedResponseClose=true;}
+    /** Sticky even after retiring a callback/ref; no positive native-tail/quiescence receipt. */
+    public boolean hasUnknownRejectedResponseClose(){mainThread();return unknownRejectedResponseClose;}
     public GeckoSessionOwner(ComponentGate gate,GeckoRuntimeOwner runtime,PartitionCatalog partitions,Initializer initializer,int capacity){
         mainThread();if(gate==null || runtime==null || partitions==null || initializer==null || capacity<1 || capacity>256)throw invalid();
         partitions.requireGate(gate);
@@ -55,7 +61,7 @@ public final class GeckoSessionOwner {
         gate.checkCurrent(permit);partitions.requireActive(partition,permit);
         if(sessions.size()>=capacity)throw new IllegalStateException("Live session limit reached");
         initializer.reconcileBeforeOpen(partition,permit);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
-        GeckoSession session=new GeckoSession(new GeckoSessionSettings.Builder().contextId(partitions.activeContextId(partition,permit)).build());
+        GeckoSession session=new GeckoSession(new GeckoSessionSettings.Builder().contextId(partitions.activeContextId(partition,permit)).usePrivateMode(partition.retention()==PartitionCatalog.Retention.PRIVATE_SESSION).build());
         SessionRef ref=new SessionRef(this,session,partition);sessions.put(ref,ref);
         try{
             initializer.installDelegates(session,ref,partition,nativeOwnerToken);gate.checkCurrent(permit);partitions.requireActive(partition,permit);
@@ -64,6 +70,7 @@ public final class GeckoSessionOwner {
             if(ref.state!=State.ALLOCATED || !sessions.containsKey(ref) || !session.isOpen())throw new IllegalStateException("Session ended during open request");
             ref.state=State.OPEN_REQUESTED;return ref;
         }catch(RuntimeException failure){
+            try{initializer.retireDelegates(session,ref);}catch(RuntimeException cleanup){failure.addSuppressed(cleanup);}
             try{if(session.isOpen())session.close();}catch(RuntimeException cleanup){failure.addSuppressed(cleanup);}
             if(session.isOpen()){ref.state=State.CLOSE_FAILED;sessions.put(ref,ref);}else{sessions.remove(ref);ref.state=State.CLOSED;}
             throw failure; // no automatic second route/runtime/session attempt
@@ -83,12 +90,13 @@ public final class GeckoSessionOwner {
         if(ref.state==State.CLOSED)return;
         if(opening || ref.state==State.CLOSING)throw new IllegalStateException("Reentrant session close forbidden");
         ref.state=State.CLOSING;
-        try{ref.session.close();if(ref.session.isOpen())throw new IllegalStateException("Session close did not close window");}
+        try{initializer.retireDelegates(ref.session,ref);ref.session.close();if(ref.session.isOpen())throw new IllegalStateException("Session close did not close window");}
         catch(RuntimeException failure){ref.state=State.CLOSE_FAILED;throw failure;}
         ref.state=State.CLOSED;sessions.remove(ref);
     }
     /** SDK onCrash/onKill says window closed; never re-open or silently restore here. */
-    public void observeEngineClosed(SessionRef ref){mainThread();own(ref);if(ref.session.isOpen())throw new IllegalStateException("Engine window still open");ref.state=State.CLOSED;sessions.remove(ref);}
+    public void observeEngineClosed(SessionRef ref){mainThread();own(ref);if(ref.session.isOpen())throw new IllegalStateException("Engine window still open");initializer.retireDelegates(ref.session,ref);ref.state=State.CLOSED;sessions.remove(ref);}
+    public SessionPresentation.Frame presentation(SessionRef ref,ComponentGate.BusinessPermit permit){requireOpen(ref,permit);SessionPresentation.Frame frame=initializer.presentation(ref);requireOpen(ref,permit);return frame;}
     /** Native safety sweep only; no IPC publication, no whole-work/erasure/quiescence claim. */
     public static final class StopSweep {
         private final int closedWindows,stillTracked;

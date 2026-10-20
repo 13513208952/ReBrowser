@@ -4,6 +4,9 @@ import io.github.rebrowser.bootstrap.ComponentGate;
 import io.github.rebrowser.browser.BrowserModels.*;
 import io.github.rebrowser.engine.GeckoSessionOwner;
 import io.github.rebrowser.engine.PartitionCatalog;
+import io.github.rebrowser.engine.GeckoRuntimeOwner;
+import io.github.rebrowser.engine.BrowserSessionHost;
+import io.github.rebrowser.engine.SessionPresentation;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,6 +38,22 @@ public final class BrowserCoordinator {
     private final Map<TabRef,GeckoSessionOwner.SessionRef> live=new HashMap<>();
     private final Set<TabRef> requiresRestore=new HashSet<>();
     private boolean engineMutation;
+    private boolean temporaryNativeOnly;
+    /** Real native graph, but deliberately no persistent/secondary/primary restoration path. */
+    public static BrowserCoordinator createTemporaryNative(ComponentGate gate,GeckoRuntimeOwner runtime,byte[] acceptedEpoch,int capacity,ComponentGate.BusinessPermit permit){
+        gate.requireDataEpoch(permit,acceptedEpoch);WorkspaceCatalog workspaces=new WorkspaceCatalog(gate);TabCatalog tabs=new TabCatalog(workspaces);
+        PartitionCatalog partitions=new PartitionCatalog(gate,acceptedEpoch,WorkspaceCatalog.MAX_WORKSPACES);
+        GeckoSessionOwner sessions=BrowserSessionHost.createTemporaryOwner(gate,runtime,partitions,capacity);
+        BrowserCoordinator domain=new BrowserCoordinator(gate,workspaces,tabs,partitions,sessions);domain.temporaryNativeOnly=true;domain.access(permit);gate.requireDataEpoch(permit,acceptedEpoch);return domain;
+    }
+    public SessionDisplayAccess sessionDisplayAccess(ComponentGate.BusinessPermit permit){access(permit);return new SessionDisplayAccess(sessions);}
+    /** Native display owner only; never IPC. Does not open or claim a View by itself. */
+    public static final class SessionDisplayAccess {
+        private final GeckoSessionOwner sessions;private SessionDisplayAccess(GeckoSessionOwner sessions){this.sessions=sessions;}
+        public io.github.rebrowser.engine.SessionDisplayBinding bind(org.mozilla.geckoview.GeckoView view){return new io.github.rebrowser.engine.SessionDisplayBinding(view,sessions);}
+    }
+    public Selection captureSelection(ComponentGate.BusinessPermit permit){access(permit);return tabs.captureSelection(permit);}
+    public SessionPresentation.Frame selectedPresentation(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());return ref==null?null:sessions.presentation(ref,permit);}
     public BrowserCoordinator(ComponentGate gate,WorkspaceCatalog workspaces,TabCatalog tabs,PartitionCatalog partitions,GeckoSessionOwner sessions){
         if(gate==null || workspaces==null || tabs==null || partitions==null || sessions==null)throw BrowserModels.invalid();
         workspaces.requireGate(gate);tabs.requireCatalog(workspaces);partitions.requireGate(gate);sessions.requireBindings(gate,partitions);
@@ -47,7 +66,7 @@ public final class BrowserCoordinator {
     }
     /** Native UI/admin shared services: caller authorization precedes these domain mutations. */
     public void renameWorkspace(WorkspaceRef ref,long expectedWorkspaceRevision,String nativeTitle,ComponentGate.BusinessPermit permit){access(permit);workspaces.rename(ref,expectedWorkspaceRevision,nativeTitle,permit);}
-    public void changeWorkspaceLevel(WorkspaceRef ref,long expectedWorkspaceRevision,Level level,ComponentGate.BusinessPermit permit){access(permit);workspaces.changeLevel(ref,expectedWorkspaceRevision,level,permit);}
+    public void changeWorkspaceLevel(WorkspaceRef ref,long expectedWorkspaceRevision,Level level,ComponentGate.BusinessPermit permit){access(permit);if(temporaryNativeOnly && level!=Level.TEMPORARY)throw new UnsupportedOperationException("Persistent browser factory/restore not implemented");workspaces.changeLevel(ref,expectedWorkspaceRevision,level,permit);}
     /** Metadata becomes active; closed sessions still require explicit validated restore. */
     public void restoreSecondary(WorkspaceRef ref,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){access(permit);workspaces.restoreSecondary(ref,expectedWorkspaceRevision,permit);}
     public WindowSnapshot windowSnapshot(ComponentGate.BusinessPermit permit){
@@ -64,7 +83,7 @@ public final class BrowserCoordinator {
         if(existing!=null){sessions.requireOpen(existing,permit);return existing;}
         if(requiresRestore.contains(tab))throw new IllegalStateException("Explicit validated checkpoint restore required; no blind reopen");
         PartitionCatalog.Lease context=contexts.get(workspace);
-        if(context==null){context=partitions.create(PartitionCatalog.Domain.BROWSER,workspace,permit);contexts.put(workspace,context);}
+        if(context==null){context=temporaryNativeOnly?partitions.createPrivateBrowser(workspace,permit):partitions.create(PartitionCatalog.Domain.BROWSER,workspace,permit);contexts.put(workspace,context);}
         engineMutation=true;
         try{GeckoSessionOwner.SessionRef opened=sessions.open(context,tab,permit);live.put(tab,opened);return opened;}
         finally{engineMutation=false;}
@@ -75,12 +94,18 @@ public final class BrowserCoordinator {
      * no retry or generation rollback after a thrown/unknown SDK result. Delegates must
      * bind actual document evidence, never acquire a fresh lease for an old event.
      */
-    public TabCatalog.DocumentLease navigateSelected(WorkspaceRef expectedWorkspace,TabRef expectedTab,long expectedTabsRevision,SearchEngines.Target target,ComponentGate.BusinessPermit permit){
-        access(permit);if(target==null || workspaces.snapshot(permit).selected()!=expectedWorkspace)throw BrowserModels.invalid();
-        TabsView group=tabs.snapshot(expectedWorkspace,permit);if(group.selected()!=expectedTab || group.revision()!=expectedTabsRevision)throw new IllegalStateException("Stale navigation target");
-        GeckoSessionOwner.SessionRef ref=requireSelectedSession(permit);
-        TabCatalog.DocumentLease lease=tabs.beginDocument(expectedTab,expectedTabsRevision,permit);engineMutation=true;
+    public TabCatalog.DocumentLease navigateSelected(Selection selection,SearchEngines.Target target,ComponentGate.BusinessPermit permit){
+        access(permit);if(target==null)throw BrowserModels.invalid();tabs.requireSelection(selection,permit);
+        GeckoSessionOwner.SessionRef ref=requireSelectedSession(permit);tabs.requireSelection(selection,permit);
+        TabCatalog.DocumentLease lease=tabs.beginDocument(selection.tab(),selection.tabsRevision(),permit);engineMutation=true;
         try{sessions.requireOpen(ref,permit).loadUri(target.url());return lease;}finally{engineMutation=false;}
+    }
+    /** Exact current native history handoff, no global BACK or inferred navigation success. */
+    public void traverseSelected(Selection selection,boolean backwards,ComponentGate.BusinessPermit permit){
+        access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());if(ref==null)throw new IllegalStateException("No current session");
+        SessionPresentation.Frame observed=sessions.presentation(ref,permit);if(backwards?!observed.reportedCanGoBack():!observed.reportedCanGoForward())throw new IllegalStateException("History capability not observed");
+        tabs.requireSelection(selection,permit);tabs.beginDocument(selection.tab(),selection.tabsRevision(),permit);engineMutation=true;
+        try{org.mozilla.geckoview.GeckoSession actual=sessions.requireOpen(ref,permit);if(backwards)actual.goBack();else actual.goForward();}finally{engineMutation=false;}
     }
     public TabCatalog.CloseResult closeTab(TabRef tab,long expectedTabsRevision,ComponentGate.BusinessPermit permit){
         access(permit);TabsView view=tabs.snapshot(tab.workspace(),permit);if(view.revision()!=expectedTabsRevision)throw new IllegalStateException("Stale tab revision");

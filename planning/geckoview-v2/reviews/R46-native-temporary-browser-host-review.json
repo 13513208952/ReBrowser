@@ -1,0 +1,35 @@
+{
+  "schema":1,
+  "revision":"R46",
+  "moduleFocus":"native accepted-source entry -> temporary browser core -> Gecko host composition",
+  "authority":["O64","O67","O68","O69","O72","O73"],
+  "runtimeWorkload":{"meaningfulRuntimeFiles":10,"newRuntimeFiles":4,"newMasterTreeLeaves":2,"minimum":10,"maximum":null,"contractRef":"records/native-temporary-browser-host-contract.json"},
+  "closedSourcePaths":[
+    "Startup accepted epoch supplies lazy one-attempt native temporary-domain graph, not an injected platform/provider; no startup URL/session/View/DB opening",
+    "Native catalog Selection private-issued exact workspace/tab revisions reject workspace/tab ABA, removal and source-fenced captured targets at native navigation/history handoff",
+    "Private partition lifetime cannot silently replace ordinary context; exact native workspace owner verified before BEFORE-open delegate graph installation; SDK usePrivateMode bound to issued lifetime",
+    "Actual permission/content/navigation/progress graph installed with registered ref before SDK open; bounded native bundles, no strong Activity reference",
+    "Private production adapter executes producer DTO -> session observation model, no current-document-lease reacquisition from URL/title/progress; checkpoint receiver explicitly rejects without serialization",
+    "Native close/crash/kill retire positive callbacks before dropping tracking, closeRequest not auto-close; ignored body close even after lock/retire, no reads/refetch/publish; failed body close sticky in native owner, native tail remains unqualified",
+    "R45 substantive defect fixed: late callback after unknown Handler submission could otherwise publish again. Publication model now requires positive post-return confirmation; callback-before-confirmation consumes/rejects, no retry/blocking main/alternate route"
+  ],
+  "actualValidation":{
+    "productionJavaSources":56,"compiledMainClasses":264,"mainAgpHostTests":456,
+    "independentPureSources":26,"independentPureHostTests":260,"actualSdkBootclasspathCompile":true,
+    "sessionObservationModelHostTests":17,"privateAdapterRejectAndCloseHostTests":13,
+    "sourceReceiptAndPublicationModelHostTests":27,"catalogHostTests":23,"partitionHostTests":11,
+    "mainEvidenceRef":"evidence/production-main-agp-R46-checks.json",
+    "hostEvidenceRef":"evidence/native-temporary-browser-host-execution.json",
+    "boundary":"Actual production private event adapter/model/reject callback/stream close helper HOST methods with explicit SYNTHETIC private DTOs/SDK callback objects and HOST streams. Actual native factory/session/delegate invocation remains API compile only."
+  },
+  "notClaimed":[
+    "Root configured/source unlock or real Android/Gecko session/callback/Handler/UI/device qualification",
+    "Full entry/fresh inventory/seed/rescue/force/erasure/epoch commit, browser persistence/context restore/finite grants/real document identity/Popup/download publication",
+    "Java window or rejected-body close returns constitute JNI/network/writer quiescence or physical erasure",
+    "Ignored-body native close UI latency qualified; pinned implementation dispatches to Gecko but no actual latency/native-tail measurement",
+    "Legitimate very-early bootstrap callbacks accepted: conservative rejection before post-return confirmation requires explicit future retry protocol, not automatic replay",
+    "Current SQL39+235 rerun at R46: retained R45 source-identical current compiled SQL evidence remains valid, no new SQL execution claim",
+    "APK/native merges/dex/R8/sign/install/login/playback/sensors/user data or cleanup"
+  ],
+  "nextModuleClosure":"Persistent native BrowserStore/context and checkpoint lifecycle, real native document identity/finite permissions plus exact source first-fresh/recovery dependencies; complete native window lifecycle after core authority/ownership. Do not equate this source graph slice with complete browser or resume unrelated UI leaf accumulation."
+}

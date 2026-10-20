@@ -70,7 +70,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     for source in ledger['sourceFiles']:
@@ -90,14 +90,29 @@ def review():
     assert not app['geckoDelegateCallbacksExecuted']
     assert app['hostAndroidClassNavigationPolicyTests'] == 12 and app['navigationPolicyAndSdkDtoHostExecuted']
     assert not app['navigationDelegateCallbacksAndroidExecuted']
-    standalone = json.loads((P/app['currentStandaloneEvidenceRef']).read_text())
-    assert standalone['validationExecutor'] == app['validationExecutor'] == 'bounded-standalone-javac-junit'
-    assert standalone['unitTestsPassed'] == app['unitTestsPassed'] and standalone['compiledMainClassFiles'] == app['compiledClassFiles']
+    current_agp = app['validationExecutor'] == 'agp-gradle-javac-host-junit'
+    if current_agp:
+        agp = json.loads((P/app['currentAgpEvidenceRef']).read_text())
+        assert app['currentIncrementAgpTasksExecuted'] and agp['validationExecutor'] == app['validationExecutor']
+        assert agp['unitTestsPassed'] == app['unitTestsPassed'] and agp['compiledMainClassFiles'] == app['compiledClassFiles']
+        assert agp['productionJavaSourceFiles'] == app['productionJavaSourceFiles'] and agp['sourceFiles'] == app['sourceFiles']
+        assert agp['compileAndUnitTaskStatus'] == 'EXECUTED' and agp['manifestTaskStatus'].startswith('UP-TO-DATE')
+        assert agp['resourceBeforeBuild']['memAvailableBytes'] >= 3*1024**3 and agp['resourceBeforeBuild']['freeBytes'] >= 32*1024**2+1024**3
+        assert not any(agp[k] for k in ['androidRuntimeExecuted','nativeMergeDexR8OrApkExecuted','actualAndroidViewWindowDialogOrMetricMethodsExecuted','deviceKeysOrUserDataUsed'])
+        assert agp['classFiles'] and all(c['classMajor'] == 61 for c in agp['classFiles'])
+        history = json.loads((P/app['historicalStandaloneCheckpointRef']).read_text())
+        assert history['sourceCommit'] == 'c5557d78117de6b67744780fe9444759158bd75e'
+        standalone = history['report']
+    else:
+        standalone = json.loads((P/app['currentStandaloneEvidenceRef']).read_text())
+        assert standalone['unitTestsPassed'] == app['unitTestsPassed'] and standalone['compiledMainClassFiles'] == app['compiledClassFiles']
+    assert standalone['validationExecutor'] == 'bounded-standalone-javac-junit'
     assert standalone['jdkJavaBaseNotAndroidBootclasspath'] and not standalone['currentIncrementAgpTasksExecuted']
     assert standalone['temporaryClassDirectoryRemoved'] and standalone['generatedBytesBeforeRemoval'] < 16*1024**2
     assert standalone['runnerSha256'] == hashlib.sha256((P/'run_bounded_main_jvm_checks.py').read_bytes()).hexdigest()
     for source in standalone['sourceFiles']:
-        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+        content = subprocess.run(['git','show',history['sourceCommit']+':'+source['path']],cwd=ROOT,capture_output=True,check=True).stdout if current_agp else (ROOT/source['path']).read_bytes()
+        assert hashlib.sha256(content).hexdigest() == source['sha256']
     compact = standalone.get('validationResourceProfile') == 'compact-192m'
     minimum_ram = 2048 if compact else 2304
     assert standalone['minimumMemAvailableMiB'] == minimum_ram
@@ -129,7 +144,20 @@ def review():
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     assert not app['windowTargetAndroidActivityOrWindowProbeExecuted'] and not app['windowTargetRegistryDispatcherIntegrated']
     assert not any(app[k] for k in ['taskCoordinatorAndroidSqliteAdapterExecuted','taskCoordinatorCommandDispatcherIntegrated','globalEpochQuiescenceEstablished','resourceBudgetsOwnAndroidMemoryFactoryExecuted'])
-    agp_checkpoint = json.loads((P/app['lastFullAgpCheckpointRef']).read_text())
+    ui = json.loads((P/'evidence/native-window-models-host-execution.json').read_text())
+    assert ui['hostTestsPassed'] == app['hostAndroidClassNativeWindowModelsTests'] == 37 and ui['actualNestedPresentationMethodsExecuted']
+    assert not any(ui[k] for k in ['actualAndroidUiCallbacksOrRenderingExecuted','nativeBrowserComplete','sourceOrOwnerConsentGranted'])
+    for source in ui['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    batch = json.loads((P/'records/native-browser-window-batch-contract.json').read_text())
+    assert len(set(batch['runtimeCodeBatch'])) >= batch['commitMinimum']['minimumMeaningfulRuntimeCodeFiles'] >= 10
+    assert batch['commitMinimum']['maximumFiles'] is None
+    workload = json.loads((P/'evidence/native-window-code-batch-workload.json').read_text())
+    assert workload['minimumRuntimeCodeFiles'] >= 10 and workload['runtimeCodeFilesChanged'] >= workload['minimumRuntimeCodeFiles']
+    assert workload['maximumFiles'] is None and set(batch['runtimeCodeBatch']) <= {s['path'] for s in workload['sourceFiles']}
+    for source in workload['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
+    agp_checkpoint = json.loads((P/app.get('lastHistoricalAgpCheckpointRef',app.get('lastFullAgpCheckpointRef'))).read_text())
     assert agp_checkpoint['sourceCommit'] == 'b911bb6fc33a4f07a5160fa68d2a64968b795384'
     assert agp_checkpoint['report']['productionJavaSourceFiles'] == 39 and agp_checkpoint['report']['unitTestsPassed'] == 253
     assert agp_checkpoint['report']['mergedManifestSha256'] == app['mergedManifestSha256']
@@ -163,7 +191,10 @@ def review():
             'standaloneMainAppCompiled':True,
             'standaloneMainAppValidationExecutor':app['validationExecutor'],
             'currentIncrementAgpTasksExecuted':app['currentIncrementAgpTasksExecuted'],
-            'lastFullAgpSourceCommit':agp_checkpoint['sourceCommit'],
+            'lastHistoricalAgpSourceCommit':agp_checkpoint['sourceCommit'],
+            'currentAgpSourceBoundChecks':current_agp,
+            'productionAndroidFilesWithHostPresentationModels':sum(f.get('hostPresentationModelMethodsExecuted',False) for f in android_entries.values()),
+            'currentCodeBatchRuntimeFiles':len(batch['runtimeCodeBatch']),
             'standaloneMainAppHostTests':app['unitTestsPassed'],
             'concreteTypedActionSchemasImplemented':app['concreteActionArgumentSchemasImplemented'],
             'nativeIdempotencyDdlHostSqlChecks':ledger['hostSqlChecks'],

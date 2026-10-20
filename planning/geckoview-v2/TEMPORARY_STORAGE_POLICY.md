@@ -1,5 +1,7 @@
 # 验证工作区临时文件预算
 
+R43：内存回到原Android已知小任务门槛（fresh MemAvailable≥3GiB），磁盘满足Java/manifest/JUnit已知新增32MiB+1GiB保留，故实际运行离线单worker Gradle Java编译/清单任务/HOST测试。JVM1536MiB、测试256MiB；不据此授权Native合并/dex/R8/APK/下载/模拟器或放宽未知峰值3GiB磁盘闸门。清单任务为UP-TO-DATE，核对当前产物，不称重新执行merge。
+
 依据[O33](owner-verbatim/O33-continue-with-temporary-storage-budget.txt)。只管理本任务自己生成的隔离临时文件，不扩成设备清理或全局缓存清理。
 
 ## 当前已执行

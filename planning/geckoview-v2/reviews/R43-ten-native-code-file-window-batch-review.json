@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "revision": "R43",
+  "authority": [
+    "O64",
+    "O65",
+    "O66"
+  ],
+  "minimumWorkload": {
+    "minimumRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "actualNewRuntimeCodeFiles": 8,
+    "actualSubstantiallyModifiedRuntimeCodeFiles": 2,
+    "testOrDocumentFilesCountedTowardMinimum": 0,
+    "contractRef": "records/native-browser-window-batch-contract.json",
+    "preCommitReadOnlyChecker": "check_commit_batch.py"
+  },
+  "implementedSource": [
+    "BrowserToolbar native48dp controls/address, separate edited versus reported text, source/window binding and stale/retired/reentrant fences",
+    "WorkspacePanel/TabPanel bounded64/50 native rows and exact captured refs/revisions, independent view-frame invalidation on unbind/detach",
+    "OverviewSelection own-window selection, reconciled opaque refs, revision fence, panel/Back clearing without domain close/delete",
+    "LoadingProgressView approved historical gradient values, actual reported0..100 only, native load key/monotonic presentation, canceled animations/late callbacks, no timer or PageStop task completion",
+    "WindowPresentation own-window insets/fullscreen/light bars/cleanup; ViewportPolicy own actual window metrics source and bounded phone/tablet/small-window arithmetic, no global setting/UA/zoom",
+    "NativeDialogs actual information/text editing, one pending native modal, known-unsubmitted versus unknown-show versus actual-dismiss, retired results; not authentication/source-force consent",
+    "BrowserCoordinator shared native rename/level/restore and coherent window metadata snapshot; no blind session restore",
+    "BrowserActivity actual minimal locked-native shell composition, own-window styles/geometry/dialog lifecycle/owned Back, never auto-load/restore or create unconfigured business runtime; shared BackCoordinator minimal native layer wiring waits for actual dialog dismissal and Activity destroy, no cancel/finish-return shortcut"
+  ],
+  "actualValidation": {
+    "productionJavaSources": 51,
+    "mainClasses": 238,
+    "hostTests": 367,
+    "newActualPresentationModelTests": 37,
+    "executor": "Actual offline AGP9.4/Gradle9.6/JDK21/SDK37.2 Java compile and HOST JUnit",
+    "manifestTask": "Invoked UP-TO-DATE and current merged XML verified, NOT reexecuted merge",
+    "evidenceRef": "evidence/production-main-agp-R43-checks.json"
+  },
+  "explicitLimits": [
+    "Actual Android View/Window/AlertDialog/ValueAnimator/Activity metrics/rendering and real device UI not executed",
+    "Full approved visual parity/native NewTabView, source verified epoch/domain factory, finite permission reconciliation, ActorContext/current policy/target dispatcher, Gecko callbacks/restore/full browser remain incomplete",
+    "No new Root/source unlock, WebView facade, owner OS authentication, login/playback, JNI/dex/R8/APK/sign/install, user data/key access or persistent cleanup",
+    "10 is minimum meaningful SOURCE work, not a cap, and not proof that10 complete product responsibilities are runtime-qualified"
+  ],
+  "resourceHandling": "Fresh original>=3GiB RAM and known-small Java/manifest/JUnit32MiB+1GiB reserve passed; final exact gate values bound in AGP evidence. JVM1536MiB/tests256MiB/offline single worker. No JNI/dex/R8/APK/actual UI; R42 standalone preserved historical c5557d7 checkpoint."
+}

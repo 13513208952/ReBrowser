@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R42",
+  "revision": "R43",
   "authority": [
     "O41",
     "O42",
@@ -424,11 +424,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "主程序原生入口壳与内部管理员导航，完整浏览器领域/批准布局尚在接入",
+      "scope": "主程序原生入口壳与内部管理员导航，完整浏览器领域/批准布局尚在接入; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
-        "evidence/validation-android-local-synthetic.json"
+        "evidence/validation-android-local-synthetic.json",
+        "records/native-browser-window-batch-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -441,7 +442,8 @@
         "formal Root/key custody or continuous source rescue/auth/erasure implementation",
         "command admission/IPC/effects or Android device execution"
       ],
-      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut"
+      "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
@@ -799,11 +801,12 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close",
+      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
-        "records/gecko-contracts.json"
+        "records/gecko-contracts.json",
+        "records/native-browser-window-batch-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -817,7 +820,8 @@
         "temporary context physical erasure or actual worker quiescence/slot release",
         "Android Gecko runtime/cached finite permission reconciliation validation"
       ],
-      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement."
+      "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -1272,6 +1276,238 @@
         "account/partition/session/document/APK target kinds or complete master-file responsibility"
       ],
       "integrationGate": "Source/Root stays unconfigured/locked; future native MainWindowController must register/retire and invalidate revision on actual lifecycle, actual actor service supplies read-only current scope. Handle alone never grants authority. No exported receiver/command enabled."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Native48dp controls/address input and fresh per-window binding, separate raw edit/display state, no URL load/actor authority in view",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual bounded64workspace dual-level native rows, captured exact workspace/catalog revisions and stale-frame callbacks; no domain effects or persistent retention",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual bounded50child-tab native rows/current exact handles/revisions, Popup label, stale-frame callback fencing; no sessions opened by view",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Per-window panel/multiselection reducer, only reconciled opaque refs, stale revision/cross-workspace/retirement fences; no domain mutations",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual native gradient/animator view and private-issued monotonic load presentation model; no invented initial5percent/100percent/timer-success or document-authority inference",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Own-window insets/light-bars/fullscreen entry/exit/cleanup and nonaccumulating padding; no global device settings",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NativeDialogs.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual native information/text-edit dialog source plus one pending UI ownership lifecycle, unknown show retained until actual dismiss, no auth/source consent",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ViewportPolicy.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Read-only actual own Activity current/max window metrics and conservative bounded phone/tablet/small-window policy, no global density/rotation/UA/zoom override",
+      "researchEvidence": [
+        "records/native-browser-window-batch-contract.json"
+      ],
+      "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
+      "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.NativeWindowModelsTest"
+      ],
+      "hostEvidence": "evidence/native-window-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "hostPresentationModelMethodsExecuted": true,
+      "notClaimed": [
+        "actual Android View/Window/dialog/metric/rendering callbacks",
+        "approved complete layout/site compatibility or product browser UI",
+        "verified epoch/native domain factory/actor/current policy/finite permissions/Gecko restore integration"
+      ],
+      "integrationGate": "Source/Root remains unconfigured/locked; view callbacks require native binding/current domain actor/target. No automatic website load/runtime restore, owner/source consent or business domain entry from raw UI metadata."
     }
   ],
   "parallelPending": [

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R42",
+  "revision": "R43",
   "authority": [
     "O26",
     "O27",
@@ -359,6 +359,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java",
+          "kind": "host-actual-native-presentation-models",
+          "purpose": "37actualHOST binding/address/selection/rows/progress/modal/insets/viewport-policy methods, not Android UI rendering/callbacks",
+          "state": "main-HOST-model-tested-Android-UI-pending"
         }
       ]
     },
@@ -1484,7 +1490,7 @@
       "group": "engine",
       "kind": "native-code",
       "responsibility": "手机/完整平板/小窗与批准布局策略",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
@@ -1492,9 +1498,15 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "engine"
+      "testReferenceGroup": "engine",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bridge/BuiltinConnectorManager.java",
@@ -1793,42 +1805,60 @@
       "group": "ui",
       "kind": "native-code",
       "responsibility": "原生地址/返回/刷新/输入建议",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
       "group": "ui",
       "kind": "native-code",
       "responsibility": "环境列表和双层交互",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
       "group": "ui",
       "kind": "native-code",
       "responsibility": "环境内标签选择/新建/关闭",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
@@ -2003,28 +2033,40 @@
       "group": "ui",
       "kind": "native-code",
       "responsibility": "取消/危险确认/平台等待，不默认为同意",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
       "group": "ui",
       "kind": "native-code",
       "responsibility": "状态栏/全屏/窗口布局，不改用户全局设置",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
@@ -3149,28 +3191,40 @@
       "group": "ui",
       "kind": "native-code",
       "responsibility": "Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT05"
       ],
-      "validationMeaning": "旧主体实际审读与固定Gecko进度API来源核对；新控件/多选源码未实现、未编译",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
       "group": "ui",
       "kind": "native-code",
       "responsibility": "每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT05"
       ],
-      "validationMeaning": "旧主体实际审读与固定Gecko进度API来源核对；新控件/多选源码未实现、未编译",
+      "validationMeaning": "Actual AGP Java compilation; scoped production presentation models among37HOST tests, NOT actual Android View/Window/metrics/dialog execution",
       "runtimePending": true,
-      "testReferenceGroup": "ui"
+      "testReferenceGroup": "ui",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-window-batch-contract.json",
+        "evidence/native-window-models-host-execution.json",
+        "evidence/production-main-agp-R43-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R42",
+  "revision": "R43",
   "requirements": [
     {
       "id": "R01",
@@ -517,6 +517,19 @@
       "implementation": "partial-source",
       "implementationEvidence": "records/implementation-readiness.json",
       "implementationMeaning": "actual independent main-program project/native entry/control console and core verification compiled; full browser/command admission not finished"
+    },
+    {
+      "id": "R47",
+      "ownerSources": [
+        "O64"
+      ],
+      "title": "每次提交至少完成十个代码文件，不设十个上限",
+      "rule": "每次commit前完成不少于10个有实质工作量的代码文件；10是最小工作量不是上限，不以空壳/文档/单纯数量代替代码完成和验证。当前采用更严格的10个runtime源文件统计，测试/文档不凑最小数。",
+      "state": "owner-required",
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "workloadEvidence": "records/native-browser-window-batch-contract.json",
+      "implementationMeaning": "本批8个新增原生文件+2个实质修改原生文件；source工作量门槛并不等于10个完整产品职责/Android运行通过"
     }
   ]
 }

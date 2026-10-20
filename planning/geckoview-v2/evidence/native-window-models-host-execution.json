@@ -1,0 +1,56 @@
+{
+  "revision": "R43",
+  "hostTestsPassed": 37,
+  "scope": "Actual native window/panel/toolbar binding/address/selection/progress/modal/inset/metric-policy models on HOST; no Android View/Window/AlertDialog/ValueAnimator/Activity metric method execution",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "sha256": "2555b451c1dd28f3ff15b2e9c35e7f74db9993ef83792e1743f0deea181e7794"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
+      "sha256": "c5aeb1b57e06084cc1e0b3928f453cbd599e1b757c7206180d826873ced60f4f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
+      "sha256": "914c558c1556076a5182fde76bbfbddf6dd84fc7a77f576b16f7f633bce58abc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
+      "sha256": "ccef10c25944982b5f6d7492496b13a450e64be1d37f25f7cbf55e3de1d081de"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
+      "sha256": "dca16581d1cb87f43ed16c595d4a903b288c99c5b04bd8666ae8fca4af1cfbc4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "sha256": "97a810039583206c8fb76a74f20f0baa4205db9d995996d6216ae2c43a42d676"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NativeDialogs.java",
+      "sha256": "665f586c0108f67bf2920a7b4369f993bec2570d3f36cdb1dc5adddabf1c51d8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ViewportPolicy.java",
+      "sha256": "776cfc19d2f4d92d1d084f89c2c6cbad1990d4ee8d0097b05d1993326cf13f4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "1bfa4d851973d257e04b672946e9fff0c49bb92441134180dc43eb5f8a2edd81"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "sha256": "57bdf4b6de5d904d501e4608a0880309d19b7484bf5b3497fa57d3d52c5aebf3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java",
+      "sha256": "894e13db54d59dae585864114deb8b54b550a47ffd043a54c41cbfc6eefa0aa2"
+    }
+  ],
+  "actualNestedPresentationMethodsExecuted": true,
+  "actualAndroidUiCallbacksOrRenderingExecuted": false,
+  "nativeBrowserComplete": false,
+  "sourceOrOwnerConsentGranted": false,
+  "gradleEvidenceRef": "evidence/production-main-agp-R43-checks.json"
+}

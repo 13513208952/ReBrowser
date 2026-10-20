@@ -1,6 +1,6 @@
-# 实施完整性看板 · R42
+# 实施完整性看板 · R43
 
-O41后允许[完成本文件调研的节点](../records/implementation-readiness.json)先实现；按O45主线转主程序/管理员代码；43源码（25 HOST/18 Android绑定WIP）本轮限额独立Java/API类型编译+330HOST测试（215纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+37任务线程/工作集/fence+10预算计数/策略+18窗口目标registry）。R42继续新增TargetReferences的原生WINDOW切片，其他partition/session/document/APK目标及实际Android Window/主窗口/ActorContext/派发器仍未接通，句柄不是权限。新增TaskCoordinator真实调度/Journal适配器与ResourceBudgets；合成journal/内存观测不冒充真实Android SQLite/OS运行，注册工作集静默也不是全部Gecko/系统写者静默。完整AGP/清单最近结果仍R38；本轮没有启动Gradle，1033项独立JSON对照保留，不把它们标成A10/A11或整体领域完成。未决权限/逐动作schema/准入/Android仍分别阻断其自己的集成。
+O41后允许[完成本文件调研的节点](../records/implementation-readiness.json)先实现；按O45主线转主程序/管理员代码；51源码（25 HOST/26 Android绑定WIP），本批按O64至少10个实质runtime代码文件（8新+2改，不以测试/文档凑数且不设上限）。实际AGP Java编译+367HOST测试（215纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+37任务线程/fence+10预算+18窗口registry+37窗口界面模型）；manifest任务UP-TO-DATE核对当前产物。工具栏/双层面板/多选/进度/Dialog/own-window样式/metrics源码已补，但真实Android View/Window/Gecko、完整epoch域工厂/ActorContext/有限权限/恢复仍未接通；窗口句柄和模型不是权限。新增TaskCoordinator真实调度/Journal适配器与ResourceBudgets；合成journal/内存观测不冒充真实Android SQLite/OS运行，注册工作集静默也不是全部Gecko/系统写者静默。本轮确实启动并通过AGP编译/测试任务，R38和R42独立检查保留历史，不冒充真实Android运行；1033项独立JSON对照保留，不把它们标成A10/A11或整体领域完成。未决权限/逐动作schema/准入/Android仍分别阻断其自己的集成。
 
 **结论：整体规划未完成。** 原话/总体骨架和来源保护模型较充分，不代表浏览器、子应用、内核、数据和发行设计已经可实施。
 

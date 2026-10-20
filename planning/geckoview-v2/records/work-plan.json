@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R42",
+  "revision": "R43",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,11 +225,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "R40新增TaskCoordinator/ResourceBudgets、R41事务fence实际代码均推送后，继续总树缺失TargetReferences.java的WINDOW原生目标切片",
-    "实际opaque窗口句柄/epoch/精确Activity-Application-Window/revision绑定、弱引用和tombstones，已签发lease在派发前重复当前来源/权限范围/窗口检查；只原生退役可在SourceLocked继续",
-    "43mainJava/209classes；330HOST=215pure+10metadata+28authSynthetic+12navigation+37taskThreads/Fences+10budget+18windowTargetsSynthetic；25pure+18AndroidWIP",
-    "6个改动原生文件真实SDKbootclasspath编译；历史235SQL不重跑、当前编译SQL等价继续验证；原Android构建闸门/AGP R38检查点不变",
-    "实际OS窗口/原生ActorContext/MainWindowController/派发器、partition-session-document-APK目标种类/完整来源解锁仍缺失；窗口ref或lease不是权限"
+    "本批按O64至少10代码文件：8个新NativeUI/Viewport源文件+BrowserActivity/BrowserCoordinator实质改动；不以测试/文档凑数",
+    "真实Native工具栏/双层标签面板、窗口内多选/单调进度、信息/文本Dialog所有权、own-windowinsets/fullscreen/metrics源代码；locked入口只构建最小原生壳，不偷偷创建网页业务",
+    "51mainJava/238classes；实际AGP Java编译和HOST367测试，含37新增界面模型测试；manifest任务调用UP-TO-DATE并核对当前产物，不称重新执行merge",
+    "可用内存回到>=3GiB，已执行known-small32MiB+1GiB保留的Java/manifest/JUnit任务；无JNI/dex/R8/APK/签名/装机/实际AndroidView运行",
+    "真实已验证epoch/domainfactory/ActorContext/有限权限/完整主窗口/Gecko回调与恢复仍待接通；不能把UI组件API/模型测试当完整浏览器/外观验收"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -250,5 +250,12 @@
     "work": "formal main-program and administrator mechanism source implementation",
     "research": "on-demand only for concrete implementation blockers",
     "held": "R24SQL candidate kept outside runtime source, not a new research workstream"
+  },
+  "commitWorkloadRule": {
+    "authority": "O64",
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "checker": "check_commit_batch.py",
+    "notCompletionProof": "code quantity is not whole responsibility or Android runtime completion"
   }
 }

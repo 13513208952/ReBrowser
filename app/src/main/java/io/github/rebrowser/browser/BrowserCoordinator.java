@@ -17,6 +17,13 @@ import java.util.Set;
  * a window nor removing metadata settles underlying writers/tasks or erases context data.
  */
 public final class BrowserCoordinator {
+    /** Coherent owner-thread metadata for native views; no Session/Actor/DB receipt authority. */
+    public static final class WindowSnapshot {
+        private final WorkspacesView workspaces;private final TabsView tabs;
+        private WindowSnapshot(WorkspacesView workspaces,TabsView tabs){this.workspaces=workspaces;this.tabs=tabs;}
+        public WorkspacesView workspaces(){return workspaces;}
+        public TabsView selectedWorkspaceTabs(){return tabs;}
+    }
     private final ComponentGate gate;
     private final WorkspaceCatalog workspaces;
     private final TabCatalog tabs;
@@ -36,6 +43,15 @@ public final class BrowserCoordinator {
         access(permit);WorkspaceRef ref=workspaces.createTemporary(expectedWorkspacesRevision,permit);
         // No Gecko creation, network load, context clearing or "saved" claim on metadata creation.
         tabs.initializeWorkspace(ref,permit);return ref;
+    }
+    /** Native UI/admin shared services: caller authorization precedes these domain mutations. */
+    public void renameWorkspace(WorkspaceRef ref,long expectedWorkspaceRevision,String nativeTitle,ComponentGate.BusinessPermit permit){access(permit);workspaces.rename(ref,expectedWorkspaceRevision,nativeTitle,permit);}
+    public void changeWorkspaceLevel(WorkspaceRef ref,long expectedWorkspaceRevision,Level level,ComponentGate.BusinessPermit permit){access(permit);workspaces.changeLevel(ref,expectedWorkspaceRevision,level,permit);}
+    /** Metadata becomes active; closed sessions still require explicit validated restore. */
+    public void restoreSecondary(WorkspaceRef ref,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){access(permit);workspaces.restoreSecondary(ref,expectedWorkspaceRevision,permit);}
+    public WindowSnapshot windowSnapshot(ComponentGate.BusinessPermit permit){
+        access(permit);WorkspacesView view=workspaces.snapshot(permit);TabsView selected=view.selected()==null?null:tabs.snapshot(view.selected(),permit);
+        WorkspacesView after=workspaces.snapshot(permit);if(after.revision()!=view.revision() || after.selected()!=view.selected())throw new IllegalStateException("Browser window snapshot changed during capture");gate.checkCurrent(permit);return new WindowSnapshot(view,selected);
     }
     public TabRef addTab(WorkspaceRef workspace,long expectedTabsRevision,ComponentGate.BusinessPermit permit){access(permit);return tabs.addTab(workspace,expectedTabsRevision,permit);}
     public void selectWorkspace(WorkspaceRef workspace,long expectedWorkspacesRevision,ComponentGate.BusinessPermit permit){access(permit);workspaces.select(workspace,expectedWorkspacesRevision,permit);}

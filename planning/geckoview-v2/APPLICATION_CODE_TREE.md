@@ -3,7 +3,7 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**43文件**；其中HOST测试切片 **25文件**，API编译/实现中 **18文件**；其余 **135文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已创建本体源码：**51文件**；其中HOST测试切片 **25文件**，API编译/实现中 **26文件**；其余 **127文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **178文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -137,7 +137,7 @@
                             │   ├── SelectionDelegate.java [J][PLAN][?] — 网页选择/复制与用户动作
                             │   ├── SessionCheckpointStore.java [J][PLAN][?] — 异步sessionState与敏感快照提交/恢复
                             │   ├── SessionDisplayBinding.java [J][API/WIP][?] — View附着/分离/可见/focus与session生命分离
-                            │   └── ViewportPolicy.java [J][PLAN][?] — 手机/完整平板/小窗与批准布局策略
+                            │   └── ViewportPolicy.java [J][API/WIP][?] — 手机/完整平板/小窗与批准布局策略
                             ├── entrypoints/
                             │   ├── AdminControlActivity.java [J][API/WIP][?] — 应用内/隐藏控制台，隐藏不是授权
                             │   └── AdminControlProvider.java [J][PLAN][?] — 普通持钥辅助包/ADB的公开受认证Provider入口
@@ -207,23 +207,23 @@
                                 ├── ApplicationsActivity.java [J][PLAN][?] — 子应用启用与48dp设置齿轮
                                 ├── BookmarkView.java [J][PLAN][?] — 收藏和书签操作
                                 ├── BrowserActivity.java [J][API/WIP][?] — 主窗口和Native/Gecko显示协调
-                                ├── BrowserToolbar.java [J][PLAN][?] — 原生地址/返回/刷新/输入建议
+                                ├── BrowserToolbar.java [J][API/WIP][?] — 原生地址/返回/刷新/输入建议
                                 ├── DownloadsActivity.java [J][PLAN][?] — 批准/取消/任务/文件交接
                                 ├── DownloadsAdapter.java [J][PLAN][?] — 下载列表与实际阶段显示
                                 ├── HistoryActivity.java [J][PLAN][?] — 原生历史查询/期限/清理入口
                                 ├── HistoryAdapter.java [J][PLAN][?] — 有界近期/历史列表
-                                ├── LoadingProgressView.java [J][PLAN][?] — Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑
-                                ├── NativeDialogs.java [J][PLAN][?] — 取消/危险确认/平台等待，不默认为同意
+                                ├── LoadingProgressView.java [J][API/WIP][?] — Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑
+                                ├── NativeDialogs.java [J][API/WIP][?] — 取消/危险确认/平台等待，不默认为同意
                                 ├── NewTabView.java [J][PLAN][?] — 批准背景/搜索/收藏布局
-                                ├── OverviewSelection.java [J][PLAN][?] — 每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化
+                                ├── OverviewSelection.java [J][API/WIP][?] — 每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化
                                 ├── SettingsActivity.java [J][PLAN][?] — 通用/权限/应用管理入口
                                 ├── SettingsSections.java [J][PLAN][?] — Native设置项与结果绑定
                                 ├── SitePermissionsActivity.java [J][PLAN][?] — 网站范围与系统许可状态
                                 ├── SourceWarningActivity.java [J][PLAN][?] — 仅原生四步/救援，不创建锁定旧业务
                                 ├── SubapplicationSettingsActivity.java [J][PLAN][?] — 子设置/音源/入口；占用清理按O26搁置
-                                ├── TabPanel.java [J][PLAN][?] — 环境内标签选择/新建/关闭
-                                ├── WindowPresentation.java [J][PLAN][?] — 状态栏/全屏/窗口布局，不改用户全局设置
-                                └── WorkspacePanel.java [J][PLAN][?] — 环境列表和双层交互
+                                ├── TabPanel.java [J][API/WIP][?] — 环境内标签选择/新建/关闭
+                                ├── WindowPresentation.java [J][API/WIP][?] — 状态栏/全屏/窗口布局，不改用户全局设置
+                                └── WorkspacePanel.java [J][API/WIP][?] — 环境列表和双层交互
 ```
 
 ## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）
@@ -239,7 +239,7 @@
 | Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控；6HOST actual owner-domain/context/epoch/fence/tombstone/capacity/gate/thread tests; notcookie/storage erasure/runtime；12 actual production classifier/display + synthetic pinned SDK LoadRequest constructor cases; not session/callback/network runtime | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/NavigationDelegatePolicyTest.java` |
 | APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区；14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore；11HOST queries4providers/strictHTTP/userinfo/UTF16/UnicodeIDNpreservation/IPv6/ports/noSecretSearchFallback/URLbounds+fixedpoint;notGecko/DNS orOSIntent；12HOST real reducer/synthetic layer priority/revision/pending/unknown/stalepublication/thread/reentrancy/sourceLockedcancel, notAndroidactualBack | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BackCoordinatorTest.java` |
-| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板 | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java` |
+| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；37actualHOST binding/address/selection/rows/progress/modal/insets/viewport-policy methods, not Android UI rendering/callbacks | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java` |
 | 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发；10 HOST bulk-only EOF, byte length/SHA, all close/error paths, tainted prefix, cancel and interrupt-ignoring worker; not Gecko runtime | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java` |
 | 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
 | Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更；RAW/zlib选择包含AEAD帧开销，输出/摘要/EOF/字典/资源/取消，prepare->seal/open->decode私有暂存全原文；非DB/官网/Android性能 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java` |

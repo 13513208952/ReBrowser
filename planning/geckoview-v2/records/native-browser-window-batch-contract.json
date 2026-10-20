@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "revision": "R43",
+  "authority": ["O45", "O48", "O64", "O65"],
+  "commitMinimum": {"minimumMeaningfulRuntimeCodeFiles":10,"maximumFiles":null,"testsAndDocumentsNotUsedToMeetMinimum":true},
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+    "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
+    "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
+    "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
+    "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
+    "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+    "app/src/main/java/io/github/rebrowser/ui/NativeDialogs.java",
+    "app/src/main/java/io/github/rebrowser/engine/ViewportPolicy.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java"
+  ],
+  "scope": "Concrete native view construction/events, bounded stale-safe binding, window-local selection/progress models, own-window insets/fullscreen and read-only window-metric policy, catalog/domain presentation operations, native entry-shell composition. NOT a WebView facade or completed browser.",
+  "invariants": [
+    "No business DB/runtime/session opened by locked startup; no debug/first-click/source-unconfigured unlock",
+    "Native controls forward exact captured opaque refs/catalog revisions, not arbitrary ID lookup/latest-selection fallback; every late event repeats current issuing permit and native window binding",
+    "Selection/progress/view cancellation is only window presentation, never authority, task whole-chain end, source consent, granted sensor access or persistent deletion",
+    "Bound at most64workspaces/50tabs; old listeners/bindings retire on rebind, unbind clears sensitive labels/input and animations",
+    "Progress display only owned native-reported numbers; no guessed5percent/timer-to-completion or URL-as-document identity; page stop not job/login/storage completion",
+    "Own-window styling/insets only, no global rotation/timeout/roles/volume/DND changes; trim/visibility never stops legitimate service media",
+    "Dialog text/information not owner authentication or source-force consent; unknown submission retains own pending window until actual dismissal",
+    "Actual Android View/Window/dialog/metric and full UI/Gecko integration must remain separately pending; model HOST tests and API compile do not qualify layout parity"
+  ],
+  "integrationPending": "Actual verified epoch/startup Native domain factory, MainWindow lifecycle/TargetReferences/ActorContext/current policy/finite permissions/Gecko callbacks/checkpoint restore; Root remains unconfigured/locked. No site/device validation implied."
+}

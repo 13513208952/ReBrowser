@@ -1,0 +1,14 @@
+package io.github.rebrowser.bootstrap;
+import static org.junit.Assert.*;
+import java.util.concurrent.atomic.AtomicReference;
+import org.junit.Test;
+/** Actual gate private-issued epoch pin, source evaluator explicitly synthetic. */
+public final class DataEpochPinTest {
+ @Test public void capturesActualEpochDefensively(){byte[] epoch=new byte[16];epoch[0]=7;ComponentGate g=ComponentGate.forNativeSource(ProcessRole.MAIN,()->ComponentGate.SourceView.acceptedNative(this,epoch));ComponentGate.BusinessPermit p=g.requireBusiness();ComponentGate.DataEpochPin pin=g.captureDataEpoch(p);byte[] copy=pin.dataEpoch();copy[0]=9;assertEquals(7,pin.dataEpoch()[0]);pin.requireBindings(g,p);}
+ @Test public void missingNativeEpochCannotBeProposedByCaller(){ComponentGate g=new ComponentGate(ProcessRole.MAIN,()->ComponentGate.SourceState.TRUSTED);ComponentGate.BusinessPermit p=g.requireBusiness();assertThrows(SecurityException.class,()->g.captureDataEpoch(p));}
+ @Test public void childProcessCannotIssueEpochPin(){ComponentGate g=ComponentGate.forNativeSource(ProcessRole.GECKO_CHILD,()->ComponentGate.SourceView.acceptedNative(this,new byte[16]));assertThrows(SecurityException.class,()->g.captureDataEpoch(null));}
+ @Test public void lockRejectsBothAccessAndFreshBindings(){AtomicReference<ComponentGate.SourceView> s=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(this,new byte[16]));ComponentGate g=ComponentGate.forNativeSource(ProcessRole.MAIN,s::get);ComponentGate.DataEpochPin pin=g.captureDataEpoch(g.requireBusiness());s.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));assertThrows(SecurityException.class,pin::dataEpoch);assertThrows(SecurityException.class,pin::requireCurrent);}
+ @Test public void unseenSameEpochCutoverStillInvalidatesPin(){AtomicReference<ComponentGate.SourceView> s=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(new Object(),new byte[16]));ComponentGate g=ComponentGate.forNativeSource(ProcessRole.MAIN,s::get);ComponentGate.DataEpochPin pin=g.captureDataEpoch(g.requireBusiness());s.set(ComponentGate.SourceView.acceptedNative(new Object(),new byte[16]));assertThrows(SecurityException.class,()->pin.requireBindings(g,g.requireBusiness()));}
+ @Test public void foreignGateWithEqualEpochRejected(){ComponentGate a=ComponentGate.forNativeSource(ProcessRole.MAIN,()->ComponentGate.SourceView.acceptedNative(this,new byte[16])),b=ComponentGate.forNativeSource(ProcessRole.MAIN,()->ComponentGate.SourceView.acceptedNative(this,new byte[16]));ComponentGate.DataEpochPin pin=a.captureDataEpoch(a.requireBusiness());assertThrows(SecurityException.class,()->pin.requireBindings(b,b.requireBusiness()));}
+ @Test public void noPublicEpochPinConstructor(){assertEquals(0,ComponentGate.DataEpochPin.class.getConstructors().length);}
+}

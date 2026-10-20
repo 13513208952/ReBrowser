@@ -72,7 +72,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests','hostAndroidClassRetainedBrowserStoreTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     ledger_history = json.loads((P/'evidence/admin-idempotency-host-sql-R43-checkpoint.json').read_text())
@@ -159,12 +159,12 @@ def review():
     assert not any(ui[k] for k in ['actualAndroidUiCallbacksOrRenderingExecuted','nativeBrowserComplete','sourceOrOwnerConsentGranted'])
     for source in ui['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
-    entry = json.loads((P/'evidence/entry-source-context-host-execution.json').read_text())
+    entry = json.loads((P/app.get('currentEntryContextEvidenceRef','evidence/entry-source-context-host-execution.json')).read_text())
     assert entry['entryContractTests']==19 and entry['browserCatalogTests']==23 and entry['partitionCatalogTests']==11 and entry['taskCoordinatorTests']==40
     assert entry['actualSourceIncarnationAndResourcePinMethodsExecuted'] and not entry['actualAndroidProcessOrSourceAcceptanceExecuted'] and not entry['actualSqliteDaoOrGeckoRuntimeCreationExecuted']
     for source in entry['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
-    bootstrap=json.loads((P/'evidence/native-source-bootstrap-host-execution.json').read_text())
+    bootstrap=json.loads((P/app.get('currentSourceBootstrapEvidenceRef','evidence/native-source-bootstrap-host-execution.json')).read_text())
     assert bootstrap['hostTestsPassed']==app['hostAndroidClassSourceBootstrapTests']==27
     assert bootstrap['actualSourceReceiptAndTransferMethodsExecuted'] and bootstrap['actualNativeLedgerReadConfirmHostExecuted'] and bootstrap['actualPublicationFenceModelExecuted']
     assert bootstrap['privateSyntheticOwnInspectionConstructorUsed'] and bootstrap['productionUnconfiguredNoIoFastPathHostExecuted']
@@ -174,7 +174,7 @@ def review():
     assert not app['sourceBootstrapOwnAndroidSignerOrFilesystemExecuted'] and not app['sourceBootstrapMainHandlerPublicationExecuted']
     assert 'versionCode = 2_000_000' in (ROOT/'rebrowser/app/build.gradle').read_text() or 'versionCode 2_000_000' in (ROOT/'rebrowser/app/build.gradle').read_text()
     assert 'APPLICATION_VERSION_CODE=2_000_000L' in (ROOT/'app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java').read_text()
-    host=json.loads((P/'evidence/native-temporary-browser-host-execution.json').read_text())
+    host=json.loads((P/app.get('currentTemporaryBrowserHostEvidenceRef','evidence/native-temporary-browser-host-execution.json')).read_text())
     assert host['hostTestsPassed']==30 and host['hostSessionPresentationTests']==17 and host['hostPrivateAdapterRejectAndBodyCloseTests']==app['hostAndroidClassTemporaryHostBoundaryTests']==13
     assert host['actualPrivateEventAdapterMethodsExecuted'] and host['actualSessionObservationModelMethodsExecuted'] and host['actualAndroidMediaRejectMethodsHostExecuted'] and host['actualRejectedBodyCloseHelperExecuted']
     assert not any(host[k] for k in ['actualGeckoResultPermissionResponseExecuted','actualNativeSessionOrRuntimeFactoryExecuted','actualGeckoContentNavigationOrProgressCallbacksExecuted','actualAndroidHandlerApplicationViewOrDeviceExecuted','actualGeckoResponseBodyOrJniCloseLatencyQualified','documentIdentityOrOwnerConsentGranted','nativeNetworkOrWholeChainQuiescenceEstablished','nativeBrowserComplete','productionRootConfigured'])
@@ -206,6 +206,14 @@ def review():
     for source in d02['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     assert sum(t['round']=='D01' and t['status']=='reviewed-scoped-host-api' for t in delegation['tasks'])==6
+    assert sum(t['round']=='D03' and t['status']=='reserved-not-started' for t in delegation['tasks'])==25
+    retained=json.loads((P/'evidence/native-retained-browser-store-host-execution.json').read_text())
+    assert retained['pureCodecTests']==22 and retained['dataEpochPinTests']==7 and retained['nativeStorePipelineTests']==16 and retained['privateContextCaptureBoundaryTests']==5
+    assert retained['actualProductionCaptureCodecGateMethodsExecuted'] and retained['actualJcaAndHostFilesystemStorePipelineExecuted']
+    assert retained['retainedCoreHostTestsPassed']==50 and app['hostAndroidClassRetainedBrowserStoreTests']==21
+    assert not any(retained[k] for k in ['actualAndroidHandlerViewOrKeystoreExecuted','actualPersistentGeckoContextCheckpointOrRestoreExecuted','latestSnapshotOrAntiRollbackEstablished','formalSourceOrKeysProvisioned','D03WorkerCodeIntegrated'])
+    for source in retained['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     modules=json.loads((P/'records/module-integration-plan.json').read_text())
     assert modules['priority']==['entry','browser','engine','control','bridge','ui'] and modules['blockerDecisions']
     batch = json.loads((P/app['currentCodeBatchContractRef']).read_text())

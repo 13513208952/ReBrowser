@@ -64,6 +64,19 @@ public final class ComponentGate {
         public synchronized void checkEpochOrBind(BusinessPermit current,byte[] nativeExpectedEpoch){issuer.requireDataEpoch(current,nativeExpectedEpoch);checkOrBind(current);}
         public synchronized void requireCurrent(){if(anchor==null)throw locked();issuer.checkCurrent(anchor);}
     }
+    /** Private-issued native source/epoch lifetime, not an Actor, permission or disk receipt.
+     * Epoch bytes come from the current accepted source snapshot, NEVER a caller's proposed ID. */
+    public static final class DataEpochPin {
+        private final ComponentGate issuer;private final BusinessPermit anchor;private final byte[] epoch;
+        private DataEpochPin(ComponentGate issuer,BusinessPermit anchor,byte[] epoch){this.issuer=issuer;this.anchor=anchor;this.epoch=epoch.clone();}
+        public byte[] dataEpoch(){requireCurrent();return epoch.clone();}
+        public void requireCurrent(){issuer.requireDataEpoch(anchor,epoch);}
+        public void requireBindings(ComponentGate expected,BusinessPermit current){if(expected!=issuer)throw locked();issuer.checkSameContext(anchor,current);issuer.requireDataEpoch(current,epoch);}
+    }
+    public synchronized DataEpochPin captureDataEpoch(BusinessPermit permit){
+        if(capture()!=SourceState.TRUSTED || !matches(permit) || observedEpoch==null || observedEpoch.length!=16)throw locked();
+        return new DataEpochPin(this,permit,observedEpoch);
+    }
     public ResourcePin newResourcePin(){return new ResourcePin(this);}
     private static SecurityException locked(){return new SecurityException("Business source/data context locked or retired");}
 }

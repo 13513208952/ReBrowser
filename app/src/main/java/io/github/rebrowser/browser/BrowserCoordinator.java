@@ -52,6 +52,16 @@ public final class BrowserCoordinator {
         private final GeckoSessionOwner sessions;private SessionDisplayAccess(GeckoSessionOwner sessions){this.sessions=sessions;}
         public io.github.rebrowser.engine.SessionDisplayBinding bind(org.mozilla.geckoview.GeckoView view){return new io.github.rebrowser.engine.SessionDisplayBinding(view,sessions);}
     }
+    /** Explicit metadata persistence intent only, NOT automatic autosave or authenticated-current
+     * restore. Even a retained label must never serialize a live private-mode workspace. */
+    public RetainedCapture captureRetained(long expectedWorkspacesRevision,ComponentGate.BusinessPermit permit){
+        access(permit);RetainedCapture capture=tabs.captureRetained(expectedWorkspacesRevision,permit);
+        for(RetainedGroup group:capture.groups()){
+            PartitionCatalog.Lease context=contexts.get(group.workspace().ref());
+            if(context!=null){partitions.requireOwner(context,group.workspace().ref(),permit);if(context.retention()==PartitionCatalog.Retention.PRIVATE_SESSION)throw new SecurityException("Private session metadata cannot become retained storage");}
+        }
+        capture.requireBindings(gate,permit);access(permit);return capture;
+    }
     public Selection captureSelection(ComponentGate.BusinessPermit permit){access(permit);return tabs.captureSelection(permit);}
     public SessionPresentation.Frame selectedPresentation(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());return ref==null?null:sessions.presentation(ref,permit);}
     public BrowserCoordinator(ComponentGate gate,WorkspaceCatalog workspaces,TabCatalog tabs,PartitionCatalog partitions,GeckoSessionOwner sessions){

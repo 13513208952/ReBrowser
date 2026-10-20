@@ -1,0 +1,26 @@
+{
+  "id": "R49",
+  "state": "scoped-native-retained-metadata-pipeline-host-api-validated-D03reserved-not-integrated",
+  "contractRef": "records/native-retained-browser-store-contract.json",
+  "executionEvidenceRef": "evidence/native-retained-browser-store-host-execution.json",
+  "workloadEvidenceRef": "evidence/native-retained-browser-store-code-workload.json",
+  "runtimeJavaFilesMeaningfullyDeveloped": 11,
+  "runtimeJavaSources": 104,
+  "compiledMainClassFiles": 502,
+  "AGPHostTestsPassed": 778,
+  "pureSources": 49,
+  "pureHostTestsPassed": 427,
+  "retainedCoreNewHostTestsPassed": 50,
+  "D03ExistingCodeFilesReserved": 25,
+  "D03CodeIntegrated": false,
+  "masterLeaves": 184,
+  "sourceStarted": 108,
+  "remainingPLAN": 76,
+  "notClaimed": [
+    "No automatic autosave or overwrite of an unloaded live roster; compareAndWrite is explicit native domain operation requiring intended-memory/disk reconciliation and current caller authorization",
+    "Sameepoch valid historicalciphertextreplay is NOT rejected as latest. Parse/AEAD/sourceepoch/diskCAS do not authorize nativeRef/permission/session restore",
+    "GeckoSession.SessionState.toString serializes wholemState.toJSONObject().toString before outputbound (pinnedSDK source reviewed). No bounded native streaming capture primitive qualified, SessionCheckpointStore remains PLAN; no dummy native serializer/restore to fillcount",
+    "Persistent/cookie-preserving native contexts, finitepermission reconciliation, actualrestore, firstfresh inventory/seed/keyprovision/source warnings/ownerprompts/erasure/Actor/controlbackend remainseparate",
+    "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
+  ]
+}

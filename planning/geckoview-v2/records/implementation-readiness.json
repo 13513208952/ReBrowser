@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R48",
+  "revision": "R49",
   "authority": [
     "O41",
     "O42",
@@ -324,23 +324,26 @@
       "state": "implemented-host-tested-not-integrated",
       "validationMode": "jvm",
       "researchCompleteForScope": true,
-      "scope": "原生壳和业务来源闸门分离；gate绑定不透明permit每次重新检查，不接外部bool; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock",
+      "scope": "原生壳和业务来源闸门分离；gate绑定不透明permit每次重新检查，不接外部bool; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/authority-model.json",
         "records/control-proof-format.json",
         "records/domain-interfaces.json",
         "records/module-integration-plan.json",
         "records/entry-source-incarnation-batch-contract.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
       "dependencies": "existing production control/crypto code and Java8 only",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java"
+        "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java",
+        "app/src/test/java/io/github/rebrowser/bootstrap/DataEpochPinTest.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.entry.EntryContractsTest"
+        "io.github.rebrowser.entry.EntryContractsTest",
+        "io.github.rebrowser.bootstrap.DataEpochPinTest"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -386,7 +389,7 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration; R47 native private-record producer-consumer lifecycle or truthful callback boundary",
+      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration; R47 native private-record producer-consumer lifecycle or truthful callback boundary; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
@@ -395,7 +398,8 @@
         "records/entry-source-incarnation-batch-contract.json",
         "records/native-source-bootstrap-contract.json",
         "records/native-temporary-browser-host-contract.json",
-        "records/native-private-record-store-contract.json"
+        "records/native-private-record-store-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -409,7 +413,7 @@
         "command admission/IPC/effects or Android device execution"
       ],
       "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R49-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
@@ -446,12 +450,13 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "主程序原生入口壳与内部管理员导航，完整浏览器领域/批准布局尚在接入; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring",
+      "scope": "主程序原生入口壳与内部管理员导航，完整浏览器领域/批准布局尚在接入; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
         "evidence/validation-android-local-synthetic.json",
-        "records/native-browser-window-batch-contract.json"
+        "records/native-browser-window-batch-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -465,7 +470,7 @@
         "command admission/IPC/effects or Android device execution"
       ],
       "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R49-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
@@ -653,12 +658,13 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "immutable browser-native handles/views, bounded Unicode titles/display metadata, no persistence or load authority; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
+      "scope": "immutable browser-native handles/views, bounded Unicode titles/display metadata, no persistence or load authority; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -685,13 +691,14 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "owner-thread bounded primary/secondary/temporary metadata, level/name/selection/shelf/restore and logical removal, native expected revisions; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification",
+      "scope": "owner-thread bounded primary/secondary/temporary metadata, level/name/selection/shelf/restore and logical removal, native expected revisions; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
         "records/module-integration-plan.json",
-        "records/entry-source-incarnation-batch-contract.json"
+        "records/entry-source-incarnation-batch-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -718,12 +725,13 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "per-workspace tab selection/50cap, exact parentPopup source/document lease, metadata-only close and generation fencing; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
+      "scope": "per-workspace tab selection/50cap, exact parentPopup source/document lease, metadata-only close and generation fencing; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
         "records/gecko-contracts.json",
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
@@ -840,7 +848,7 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
+      "scope": "shared native catalog/session domain glue, lazy same-workspace partition binding, own-session safe close/shelf/remove; no blind reopen after close; R43 concrete own-window native shell lifecycle/style/metrics/Back and shared native workspace presentation operations, not full browser wiring; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/domain-interfaces.json",
         "records/browser-background-ownership.json",
@@ -848,13 +856,18 @@
         "records/native-browser-window-batch-contract.json",
         "records/module-integration-plan.json",
         "records/entry-source-incarnation-batch-contract.json",
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "native source permit+opaque registered handles/current revisions -> immutable metadata views or exact owned Gecko session/display operations",
       "dependencies": "existing ComponentGate; Java8 pure catalog helpers; Android/Gecko158 forAPI-only owners",
       "unresolvedWithinScope": [],
-      "hostTestSources": [],
-      "junitClasses": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserRetainedCaptureBoundaryTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserRetainedCaptureBoundaryTest"
+      ],
       "hostEvidence": "evidence/production-main-app-compile.json",
       "notClaimed": [
         "complete browser/approvedUI integration or navigation handlers",
@@ -863,7 +876,7 @@
         "Android Gecko runtime/cached finite permission reconciliation validation"
       ],
       "integrationGate": "Source remains UNCONFIGURED/LOCKED. Require real current source/epoch and finite-permission reconciler plus native delegates before any session open; BrowserStore/checkpoint/target authority/main UI still needed. Snapshot/metadata close/context retirement never mean byte erasure or real work settlement.",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R49-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -1798,10 +1811,11 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Actual native fixed existingepochdir AEAD records, exactReadStampCAS/0600stage/atomic commit/force/readback/nonblocking anchoredlock and quotas, no cleanup/restoreauthority",
+      "scope": "Actual native fixed existingepochdir AEAD records, exactReadStampCAS/0600stage/atomic commit/force/readback/nonblocking anchoredlock and quotas, no cleanup/restoreauthority; R49 explicit retained metadata/capture/inspection integration",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
-        "records/module-integration-plan.json"
+        "records/module-integration-plan.json",
+        "records/native-retained-browser-store-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
@@ -1813,7 +1827,7 @@
         "io.github.rebrowser.data.PrivateRecordStoreTest"
       ],
       "hostEvidence": "evidence/native-private-record-store-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R49-checks.json",
       "notClaimed": [
         "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
         "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
@@ -3333,6 +3347,92 @@
       ],
       "integrationGate": "Presentation/parseisNOTActor/source/doc/grant/task/fileproof. Mainretainsprivilegedwholemodules. NoManifest/assetactivation/realOSSDK/sitequalification. Originalwholefilepartiallyimplemented responsibilities remain pending.",
       "runtimeAssetPackagingActivated": false
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "保留浏览器目录的有界canonical二进制编解码；不是原生句柄/恢复/最新证明; native retained metadata ONLY, current restore/backend/platform incomplete; R49 explicit retained metadata/capture/inspection integration",
+      "researchEvidence": [
+        "records/native-retained-browser-store-contract.json"
+      ],
+      "inputOutput": "actualsourceownedcapture -> boundedmetadata/privateexistingAEADCAS or smallnativeinspectionreport",
+      "dependencies": "existing sourcegate/catalogs/nativeprivate-record owner/pinnedSDK only; no newlibrary, provider injection or Rootseed",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogCodecTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserCatalogCodecTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "No automatic autosave or overwrite of an unloaded live roster; compareAndWrite is explicit native domain operation requiring intended-memory/disk reconciliation and current caller authorization",
+        "Sameepoch valid historicalciphertextreplay is NOT rejected as latest. Parse/AEAD/sourceepoch/diskCAS do not authorize nativeRef/permission/session restore",
+        "GeckoSession.SessionState.toString serializes wholemState.toJSONObject().toString before outputbound (pinnedSDK source reviewed). No bounded native streaming capture primitive qualified, SessionCheckpointStore remains PLAN; no dummy native serializer/restore to fillcount",
+        "Persistent/cookie-preserving native contexts, finitepermission reconciliation, actualrestore, firstfresh inventory/seed/keyprovision/source warnings/ownerprompts/erasure/Actor/controlbackend remainseparate",
+        "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
+      ],
+      "integrationGate": "Actualproduction metadata/codec/gate + JCA and realHOSTfilesystem through private syntheticSource and PUBLICtoykey/path fixtures; realSDKAPIcompile, not actualAndroid/nativeproductqualification."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "新v2原生环境/标签持久化，非v1迁移; native retained metadata ONLY, current restore/backend/platform incomplete; R49 explicit retained metadata/capture/inspection integration",
+      "researchEvidence": [
+        "records/native-retained-browser-store-contract.json"
+      ],
+      "inputOutput": "actualsourceownedcapture -> boundedmetadata/privateexistingAEADCAS or smallnativeinspectionreport",
+      "dependencies": "existing sourcegate/catalogs/nativeprivate-record owner/pinnedSDK only; no newlibrary, provider injection or Rootseed",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserStoreTest"
+      ],
+      "hostEvidence": "evidence/native-retained-browser-store-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R49-checks.json",
+      "notClaimed": [
+        "No automatic autosave or overwrite of an unloaded live roster; compareAndWrite is explicit native domain operation requiring intended-memory/disk reconciliation and current caller authorization",
+        "Sameepoch valid historicalciphertextreplay is NOT rejected as latest. Parse/AEAD/sourceepoch/diskCAS do not authorize nativeRef/permission/session restore",
+        "GeckoSession.SessionState.toString serializes wholemState.toJSONObject().toString before outputbound (pinnedSDK source reviewed). No bounded native streaming capture primitive qualified, SessionCheckpointStore remains PLAN; no dummy native serializer/restore to fillcount",
+        "Persistent/cookie-preserving native contexts, finitepermission reconciliation, actualrestore, firstfresh inventory/seed/keyprovision/source warnings/ownerprompts/erasure/Actor/controlbackend remainseparate",
+        "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
+      ],
+      "integrationGate": "Actualproduction metadata/codec/gate + JCA and realHOSTfilesystem through private syntheticSource and PUBLICtoykey/path fixtures; realSDKAPIcompile, not actualAndroid/nativeproductqualification."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "既有epoch保留目录的单次有界原生IO检查与弱窗口发布；不自动恢复; native retained metadata ONLY, current restore/backend/platform incomplete; R49 explicit retained metadata/capture/inspection integration",
+      "researchEvidence": [
+        "records/native-retained-browser-store-contract.json"
+      ],
+      "inputOutput": "actualsourceownedcapture -> boundedmetadata/privateexistingAEADCAS or smallnativeinspectionreport",
+      "dependencies": "existing sourcegate/catalogs/nativeprivate-record owner/pinnedSDK only; no newlibrary, provider injection or Rootseed",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/native-retained-browser-store-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R49-checks.json",
+      "notClaimed": [
+        "No automatic autosave or overwrite of an unloaded live roster; compareAndWrite is explicit native domain operation requiring intended-memory/disk reconciliation and current caller authorization",
+        "Sameepoch valid historicalciphertextreplay is NOT rejected as latest. Parse/AEAD/sourceepoch/diskCAS do not authorize nativeRef/permission/session restore",
+        "GeckoSession.SessionState.toString serializes wholemState.toJSONObject().toString before outputbound (pinnedSDK source reviewed). No bounded native streaming capture primitive qualified, SessionCheckpointStore remains PLAN; no dummy native serializer/restore to fillcount",
+        "Persistent/cookie-preserving native contexts, finitepermission reconciliation, actualrestore, firstfresh inventory/seed/keyprovision/source warnings/ownerprompts/erasure/Actor/controlbackend remainseparate",
+        "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
+      ],
+      "integrationGate": "Actualproduction metadata/codec/gate + JCA and realHOSTfilesystem through private syntheticSource and PUBLICtoykey/path fixtures; realSDKAPIcompile, not actualAndroid/nativeproductqualification."
     }
   ],
   "parallelPending": [

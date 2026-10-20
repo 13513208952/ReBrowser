@@ -1,0 +1,147 @@
+{
+  "revision": "D03",
+  "authority": [
+    "O83",
+    "O85",
+    "O86"
+  ],
+  "baseSourceCommit": "1e98b9f26446796effbe77d6b816503189227f93",
+  "existingRuntimeJavaFilesAssigned": 25,
+  "newRuntimeFilesAssigned": 0,
+  "testDocsGeneratedOrFormattingCounted": false,
+  "mainCoreAndWorkerFilesDisjoint": true,
+  "mainRuntimeDevelopmentDoesNotChangeReserved25Inputs": true,
+  "workerCompleteContextAtTaskStart": true,
+  "extraHandoffOrContextSourceCopiesCreated": false,
+  "workerImplementationClaimedOrInspectedBeforeOwnerNotification": false,
+  "taskIds": [
+    "L49",
+    "L50",
+    "L51",
+    "L52",
+    "L53",
+    "L54",
+    "L55",
+    "L56",
+    "L57",
+    "L58",
+    "L59",
+    "L60",
+    "L61",
+    "L62",
+    "L63",
+    "L64",
+    "L65",
+    "L66",
+    "L67",
+    "L68",
+    "L69",
+    "L70",
+    "L71",
+    "L72",
+    "L73"
+  ],
+  "inputRuntimeFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "sha256": "8abecd1c6b8e5ce85677ae6134355027affbeb78acf8c9c0ee2241ba6a243caa"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "0727f7e4a22c788315694ffe9ae8036b5b318af8f8aad12c302b5d81d54031ca"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "sha256": "3c6d0a848d52e83c8979e3b9acabc6969325095a061fb428b1b43479fa1468ae"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "88611513d4d435a1810003bd849cd3c76ddabe4831e405ad69742f222eb0456b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "a0efe2939031b64186e73c31a8be84b2464e09e1111a42cb58e61a29b47dec8c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "sha256": "eda4ce8fe9813596e468efd0bd90cf256142ddb7cc81b44a1ae0ae369d5f38c3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "sha256": "2abfe8ad91a4db1288ac48648886fc4f6c36d44f1f56ef88d5389451a6fefee2"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "sha256": "618536a3b100e51926085ded1f5585ad4abab4ad19ff0795dc9150c619118c41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "sha256": "dd0963bd5f57e00591e136c3ea39978af670105281108ead980a7e738a69e627"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "sha256": "508800ee0f4b6aa7bf21f9a3f9b3d98bb0560dc45ff17621717340dd953f02c6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "sha256": "1df4f23046bf439d7a60207f5e8a7a5b09e21c1c3c5cd2287e2e26b0639e8acd"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "sha256": "8f593144ee3d75f6f01f53cc0092069533b801c3f2613ac66a263249a5e77538"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "sha256": "aff241e13499812b4152c93ea618a8e364339eaf4420ae38f9909bc83991e73a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "sha256": "8cf3bc8b2c758c0636deba81dcb061567db38bafbfac9ce52a8a70e66b7fd4eb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "sha256": "ffc1aa74dd154f979b11e8a4b686be07a455142b727bb5f9d0bff3db1458f8a9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "sha256": "ff520329d74941e54649acd6456f3706d919cd7d8dac1e20d8143d8330f5feda"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "sha256": "d39b35bf940f51620bf32ab7dc064e959e8e88d951853b9db02ceed37bff5700"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "sha256": "8a267219293267faae7023ab634b5ce5861e45f67aa54950823305d03ba5e00b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "sha256": "41e818888525b26d647da0de0165cd0d16fa40f1c74ca46288af71cd058ea448"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "sha256": "7ee3601a3b9bdb1f8d8f7e599d2d9f0c2ecb3dc133056a44e2cac8a86439f5d9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "sha256": "f19aa3cc35289146de1c9045fc6f4706c0fe51495cf8a825f0ef8e95afc159de"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "sha256": "3a6db32049cfd47241ca8f3e3ae6d5482ed2180539a7818ea14c8aaa6e45c520"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "sha256": "6aea403177b9f9496ff436965cfaeb4e23552d76507b415955484125e196f17d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "sha256": "c79b3f4ee464e11bf0fa184802be47392faffcc611064d84578f81af04726548"
+    }
+  ],
+  "assignmentRef": "records/low-cost-agent-assignments.json"
+}

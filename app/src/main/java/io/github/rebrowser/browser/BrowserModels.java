@@ -84,6 +84,27 @@ public final class BrowserModels {
         public TabRef selected(){return selected;}
         public long revision(){return revision;}
     }
+    /** Immutable owned native metadata capture ONLY. No cookies, checkpoints, native Ref restore,
+     * Popup ancestry or real document identity is serialized. Private-mode workspaces are rejected
+     * by the coordinator before entry; TEMPORARY workspaces never appear here. */
+    public static final class RetainedCapture {
+        private final io.github.rebrowser.bootstrap.ComponentGate.DataEpochPin source;
+        private final long revision;private final WorkspaceRef selected;private final List<RetainedGroup> groups;
+        private RetainedCapture(io.github.rebrowser.bootstrap.ComponentGate.DataEpochPin source,long revision,WorkspaceRef selected,List<RetainedGroup> groups){this.source=source;this.revision=revision;this.selected=selected;this.groups=immutable(groups);}
+        public long revision(){return revision;}
+        public WorkspaceRef selectedRetainedWorkspace(){return selected;}
+        public List<RetainedGroup> groups(){return groups;}
+        public void requireCurrentSource(){source.requireCurrent();}
+        public void requireBindings(io.github.rebrowser.bootstrap.ComponentGate gate,io.github.rebrowser.bootstrap.ComponentGate.BusinessPermit permit){source.requireBindings(gate,permit);}
+        public byte[] dataEpoch(){return source.dataEpoch();}
+    }
+    public static final class RetainedGroup {
+        private final WorkspaceView workspace;private final TabsView tabs;
+        private RetainedGroup(WorkspaceView workspace,TabsView tabs){if(workspace==null || tabs==null || tabs.workspace()!=workspace.ref() || workspace.level()==Level.TEMPORARY)throw invalid();this.workspace=workspace;this.tabs=tabs;}
+        public WorkspaceView workspace(){return workspace;}public TabsView tabs(){return tabs;}
+    }
+    static RetainedGroup retainedGroup(WorkspaceView workspace,TabsView tabs){return new RetainedGroup(workspace,tabs);}
+    static RetainedCapture retainedCapture(io.github.rebrowser.bootstrap.ComponentGate.DataEpochPin source,long revision,WorkspaceRef selected,List<RetainedGroup> groups){return new RetainedCapture(source,revision,selected,groups);}
     private BrowserModels(){}
     static WorkspaceRef workspaceRef(Object issuer){return new WorkspaceRef(issuer);}
     static TabRef tabRef(Object issuer,WorkspaceRef workspace){return new TabRef(issuer,workspace);}

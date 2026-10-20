@@ -15,6 +15,7 @@ import io.github.rebrowser.authority.AdminProofVerifier;
 import io.github.rebrowser.authority.CompiledPrincipals;
 import io.github.rebrowser.engine.GeckoRuntimeOwner;
 import io.github.rebrowser.browser.BrowserCoordinator;
+import io.github.rebrowser.browser.BrowserStore;
 import io.github.rebrowser.data.PrivateRecordStore;
 import java.util.concurrent.atomic.AtomicInteger;
 import io.github.rebrowser.continuity.CompiledSourceIdentity;
@@ -62,6 +63,8 @@ public final class StartupCoordinator {
     private final CompiledSourceIdentity compiledSource;
     private volatile GeckoRuntimeOwner runtimeOwner;
     private BrowserCoordinator browserDomain;private boolean browserDomainAttempted;
+    private BrowserStore browserStore;private boolean browserStoreAttempted;
+    private BrowserStoreCoordinator browserInspector;private boolean browserInspectorAttempted;
     private PrivateRecordStore privateRecords;private boolean privateRecordsAttempted;private final Object privateRecordOpening=new Object();
     private final ComponentGate.ResourcePin businessLifetime;
     private final AtomicReference<ComponentGate.SourceView> sourceView=new AtomicReference<>(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.INITIALIZING));
@@ -152,6 +155,23 @@ public final class StartupCoordinator {
             if(privateRecordsAttempted)throw new IllegalStateException("Native private record opening already attempted");privateRecordsAttempted=true;
             PrivateRecordStore opened=PrivateRecordStore.openExisting(application,gate,epoch,permit);gate.requireDataEpoch(permit,epoch);privateRecords=opened;return opened;
         }
+    }
+    /** Main-process accepted source only; canonical existing retained metadata owner on owned IO.
+     * Missing/corrupt catalog is not fresh-install proof; no automatic write or restore occurs. */
+    public BrowserStore openExistingBrowserStoreOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException {
+        if(Looper.myLooper()==Looper.getMainLooper())throw new IllegalStateException("Browser catalog opening requires an owned IO lane");
+        byte[] epoch=requireNativeDataEpoch(permit);
+        synchronized(privateRecordOpening){
+            requireNativeDataEpoch(permit);if(browserStore!=null){browserStore.requireBindings(gate,permit);return browserStore;}
+            if(browserStoreAttempted)throw new IllegalStateException("Native browser catalog opening already attempted");browserStoreAttempted=true;
+            BrowserStore opened=BrowserStore.openExisting(openExistingPrivateRecordsOnIo(permit),gate,permit);gate.requireDataEpoch(permit,epoch);browserStore=opened;return opened;
+        }
+    }
+    /** Lazy explicit native inspection only. Does not open Gecko or read any business record here. */
+    public BrowserStoreCoordinator browserCatalogInspector(ComponentGate.BusinessPermit permit){
+        ownerThread();requireNativeDataEpoch(permit);if(browserInspector!=null)return browserInspector;
+        if(browserInspectorAttempted)throw new IllegalStateException("Native catalog inspector construction already attempted");browserInspectorAttempted=true;
+        browserInspector=new BrowserStoreCoordinator(this,permit);gate.checkCurrent(permit);return browserInspector;
     }
     public boolean hasCreatedBrowserRuntime() { return runtimeOwner != null && runtimeOwner.hasCreatedRuntime(); }
 }

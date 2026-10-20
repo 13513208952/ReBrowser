@@ -73,6 +73,9 @@ public final class WorkspaceCatalog {
         for(Entry e:entries.values())(e.placement==Placement.ACTIVE?active:shelved).add(e.view());
         return new WorkspacesView(active,shelved,selected,revision);
     }
+    /** Source-owned retained metadata capture; no proposed epoch or fresh-install inference. */
+    ComponentGate.DataEpochPin captureDataEpoch(ComponentGate.BusinessPermit permit){access(permit);ComponentGate.DataEpochPin result=gate.captureDataEpoch(permit);access(permit);return result;}
+    void requireCapturedRevision(long expected,ComponentGate.BusinessPermit permit){access(permit);if(revision!=expected)throw stale();}
     void requireGate(ComponentGate expected){if(gate!=expected || Thread.currentThread()!=thread)throw BrowserModels.invalid();}
     void requireActive(WorkspaceRef ref,ComponentGate.BusinessPermit permit){access(permit);if(entry(ref).placement!=Placement.ACTIVE)throw BrowserModels.invalid();}
     boolean registered(WorkspaceRef ref,ComponentGate.BusinessPermit permit){access(permit);if(ref==null || !ref.issuedBy(this))throw BrowserModels.invalid();return entries.containsKey(ref);}

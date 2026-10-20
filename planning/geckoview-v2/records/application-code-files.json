@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R48",
+  "revision": "R49",
   "authority": [
     "O26",
     "O27",
@@ -32,6 +32,12 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "API30新安装冷启动及Gecko子进程不重复建主runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/bootstrap/DataEpochPinTest.java",
+          "kind": "scoped-main-production-host-test",
+          "purpose": "nativegate epoch-pin lifecycle model, synthetic source only",
+          "state": "HOST-scoped-not-OS/SDK-runtime"
         }
       ]
     },
@@ -413,6 +419,24 @@
           "kind": "unit-native-owned-back-reducer",
           "purpose": "12HOST real reducer/synthetic layer priority/revision/pending/unknown/stalepublication/thread/reentrancy/sourceLockedcancel, notAndroidactualBack",
           "state": "host-tested-not-Android-UI"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogCodecTest.java",
+          "kind": "scoped-main-production-host-test",
+          "purpose": "sourcecapture/binarycodec/UTF8/size/selection/IDs/metadataonly",
+          "state": "HOST-scoped-not-OS/SDK-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BrowserStoreTest.java",
+          "kind": "scoped-main-production-host-test",
+          "purpose": "PRIVATEsyntheticsource/toykey+actualHOSTprivateAEAD/CAS/borrowedplaintextdecoder",
+          "state": "HOST-scoped-not-OS/SDK-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BrowserRetainedCaptureBoundaryTest.java",
+          "kind": "scoped-main-production-host-test",
+          "purpose": "PRIVATEsyntheticdomainactualcapture/privatecontext/owner/source checks; noSDKfactory",
+          "state": "HOST-scoped-not-OS/SDK-runtime"
         }
       ]
     },
@@ -886,7 +910,7 @@
         "VT02",
         "VT03"
       ],
-      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "entry",
       "implementationReadinessRef": "records/implementation-readiness.json",
@@ -895,7 +919,8 @@
         "evidence/entry-source-context-host-execution.json",
         "evidence/production-main-agp-R44-checks.json",
         "records/native-source-bootstrap-contract.json",
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ]
     },
     {
@@ -908,7 +933,7 @@
         "VT02",
         "VT03"
       ],
-      "validationMeaning": "Actual production source +89combinedHOST JUnit in standalone v2 project; no formal key/continuity/action admission completion",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "entry",
       "implementationReadinessRef": "records/implementation-readiness.json",
@@ -916,7 +941,8 @@
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
         "evidence/production-main-agp-R44-checks.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ]
     },
     {
@@ -2368,7 +2394,7 @@
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "implementationReadinessRef": "records/implementation-readiness.json",
@@ -2376,7 +2402,8 @@
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
         "evidence/production-main-agp-R44-checks.json",
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ]
     },
     {
@@ -2390,14 +2417,15 @@
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-retained-browser-store-contract.json"
       ]
     },
     {
@@ -2411,12 +2439,13 @@
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ]
     },
     {
@@ -2430,12 +2459,13 @@
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "R30 actual source; bounded metadata HOST tested for4pure files, actualAGP/Gecko API compile for3Android files. NOT browser startup/runtime/durable restore/cleanup complete.",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-retained-browser-store-contract.json"
       ]
     },
     {
@@ -2443,13 +2473,13 @@
       "group": "browser",
       "kind": "native-code",
       "responsibility": "新v2原生环境/标签持久化，非v1迁移",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "riskAssessment": {
@@ -2458,7 +2488,11 @@
         "owner": "main",
         "reason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-retained-browser-store-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
@@ -2562,10 +2596,13 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual standalone v2 application Gradle compile/merged manifest; source in progress, NOT Android device or full browser/admin admission",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "ui",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-retained-browser-store-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
@@ -2661,7 +2698,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L59",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
@@ -2698,7 +2744,16 @@
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
         "evidence/production-main-agp-R47-checks.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L53",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
@@ -2734,7 +2789,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L49",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
@@ -2771,7 +2835,16 @@
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
         "evidence/production-main-agp-R47-checks.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L50",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
@@ -2807,7 +2880,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L51",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
@@ -2844,7 +2926,16 @@
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
         "evidence/production-main-agp-R47-checks.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L52",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
@@ -2880,7 +2971,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L54",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
@@ -2917,7 +3017,16 @@
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
         "evidence/production-main-agp-R47-checks.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L55",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
@@ -2953,7 +3062,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L56",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
@@ -2989,7 +3107,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L57",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
@@ -3025,7 +3152,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L58",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SourceWarningActivity.java",
@@ -3338,7 +3474,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L71",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookSessionOwner.java",
@@ -3630,7 +3775,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L73",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailReferenceReconciler.java",
@@ -3714,7 +3868,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L72",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailRenderer.java",
@@ -3836,7 +3999,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L60",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicService.java",
@@ -3943,7 +4115,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L62",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
@@ -4027,7 +4208,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L67",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicAudioFocus.java",
@@ -4088,7 +4278,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L66",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
@@ -4126,7 +4325,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L65",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
@@ -4164,7 +4372,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L64",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
@@ -4202,7 +4419,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L61",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
@@ -4240,7 +4466,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L63",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
@@ -4276,7 +4511,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L68",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
@@ -4312,7 +4556,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L69",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
@@ -4348,7 +4601,16 @@
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
         "evidence/D02-main-review-host-execution.json"
-      ]
+      ],
+      "activeDelegation": {
+        "taskId": "L70",
+        "round": "D03",
+        "difficulty": "bounded-code-extension",
+        "scope": "slice",
+        "status": "reserved-not-started",
+        "assignmentRef": "records/low-cost-agent-assignments.json",
+        "doesNotReplaceHistoricalAdmission": true
+      }
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
@@ -5346,7 +5608,7 @@
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "Scoped actual production HOST methods or PRIVATE synthetic native source/toykey/path fixtures + SDK compile; NOT actual Android Keystore/filesystem/UI/source/native SDK execution",
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
       "runtimePending": true,
       "testReferenceGroup": "crypto",
       "riskAssessment": {
@@ -5360,7 +5622,59 @@
       "implementationEvidence": [
         "records/native-private-record-store-contract.json",
         "evidence/native-private-record-store-host-execution.json",
-        "evidence/production-main-agp-R47-checks.json"
+        "evidence/production-main-agp-R47-checks.json",
+        "records/native-retained-browser-store-contract.json"
+      ]
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
+      "group": "browser",
+      "kind": "native-code",
+      "responsibility": "保留浏览器目录的有界canonical二进制编解码；不是原生句柄/恢复/最新证明",
+      "state": "implemented-host-tested-not-integrated",
+      "validationRefs": [
+        "VT05",
+        "VT08",
+        "VT09"
+      ],
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
+      "runtimePending": true,
+      "testReferenceGroup": "browser",
+      "riskAssessment": {
+        "revision": "R49",
+        "fullFileRisk": "high",
+        "owner": "main",
+        "reason": "Native source/private data/owned IO and parser bounds remain main responsibility.",
+        "contractRef": "records/native-retained-browser-store-contract.json"
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-retained-browser-store-contract.json"
+      ]
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
+      "group": "entry",
+      "kind": "native-code",
+      "responsibility": "既有epoch保留目录的单次有界原生IO检查与弱窗口发布；不自动恢复",
+      "state": "source-in-progress-api-compiled",
+      "validationRefs": [
+        "VT02",
+        "VT03"
+      ],
+      "validationMeaning": "R49 scoped coherent source/metadata/ownedprivateIO HOST plus SDKcompile, NOT Android Handler/View/storeprovider/Gecko restore",
+      "runtimePending": true,
+      "testReferenceGroup": "entry",
+      "riskAssessment": {
+        "revision": "R49",
+        "fullFileRisk": "high",
+        "owner": "main",
+        "reason": "Native source/private data/owned IO and parser bounds remain main responsibility.",
+        "contractRef": "records/native-retained-browser-store-contract.json"
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-retained-browser-store-contract.json"
       ]
     }
   ],

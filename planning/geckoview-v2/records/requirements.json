@@ -585,6 +585,19 @@
       "implementationEvidence": "records/low-cost-agent-assignments.json",
       "moduleEvidence": "records/module-integration-plan.json",
       "implementationMeaning": "D02全面覆盖126剩余PLAN节点，分配42新文件（36Java+6资产，14整项+28限定切片，实际数见风险记录），D01原6交付另归主agent审查；不把分配/切片当全文件完成"
+    },
+    {
+      "id": "R52",
+      "ownerSources": [
+        "O83"
+      ],
+      "title": "低成本协作以实际代码实现为主且单批不少于25文件",
+      "rule": "根据实际模块任务分配不少于25个不同应用代码文件的实质实现任务，不转为主要依靠低成本agent负责边界测试；主agent保留独立边界审查、接口/安全不变量和集成。不能用测试、文档、空实现、无意义改动凑数；不将高风险限定切片谎报整文件完成。",
+      "state": "owner-required",
+      "implementation": "not-started",
+      "implementationEvidence": "records/low-cost-agent-assignments.json",
+      "implementationMeaning": "D03 assigned25distinctexistingJavafiles L49–L73 with concrete code responsibilities; no newruntimecount/PLANcompletion claimed; worker implementation and main independent review stillpending.",
+      "delegationAssignmentState": "D03-assigned-25-code-extensions-awaiting-worker"
     }
   ]
 }

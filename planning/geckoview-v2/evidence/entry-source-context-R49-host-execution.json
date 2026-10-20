@@ -1,0 +1,85 @@
+{
+  "revision": "R49",
+  "scope": "Actual ProcessRole/ComponentGate/ResourcePin/WorkspaceCatalog/TabCatalog/PartitionCatalog/TaskCoordinator cross-module HOST flows with explicitly SYNTHETIC source acceptance markers, not actual Android source/process/DB/runtime startup",
+  "entryContractTests": 19,
+  "browserCatalogTests": 23,
+  "partitionCatalogTests": 11,
+  "taskCoordinatorTests": 40,
+  "actualSourceIncarnationAndResourcePinMethodsExecuted": true,
+  "actualAndroidProcessOrSourceAcceptanceExecuted": false,
+  "actualSqliteDaoOrGeckoRuntimeCreationExecuted": false,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "sha256": "c963656196d68baeae732018c1638cfd687901df239fe8b08de801a164544dcc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "sha256": "25e3ae10defb9ad076aea789ecbe07cd6e9f5fbf29de147a9701e365458fb562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "65a05b709ece3590d44020b43bb934abc060e5d9fdcb7c07a777300aa405e562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "22ba1f05ee8866c6bb9b6e31d85da5d37d427ae9e1744bdd61c470b78f03236a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "sha256": "c54120d9cb7090fa584a6e41c3ca6a3940ab333ceafc2ddbbceee2e54e67fb10"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "sha256": "99db92396b8fc3bed7f775e2bad9dcd85c580314aefe9ab0b1ee46f41ed0c010"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "8ada828296c78f8ca0c2dcfd273f60cf9813fad3d66884e2ae0d99710ea3dc4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "sha256": "204753ad3d5bd044dfdc3d08b67b72d64a6a476e86a17eda353184d876c7fe23"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "sha256": "45491f173b68b4da1cc6c49cec26b4b1b9fc9b2e3507b830576cdc4b2ee7ac06"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "8765745ed230553cae930bf9248cd9780133b15c73d791f1a3fe6daaa07e65d4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "sha256": "1a56070130d6a84cc643b3d40cfb11557973aa5f18060cc1706d9bc6f38aaeaf"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java",
+      "sha256": "32f21027f60d882bb7dd88a7be7fcf79b2192e93e8edf6adcfc509cad803ba91"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java",
+      "sha256": "fa85ac4872787aae28a203e5f62ebec4c23388a9d35790684b1cdfd5d85aa7fb"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java",
+      "sha256": "fb343fdcb4cc4ee0d71d8e550e5c038d45550e05f1edbbffcafe1c7c2801ca2c"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java",
+      "sha256": "487f652c6d25cd65b1bd47ae527fc9a7437b7014f5c98d7e975f2494e98852d3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java",
+      "sha256": "a2debb1fb5c401b5f98fe39914d77d9c1256ac267c4987da76646c4a09e7e676"
+    }
+  ],
+  "currentActualHostRunRef": "evidence/production-main-agp-R49-checks.json",
+  "historicalUnchangedEvidenceRef": "evidence/entry-source-context-host-execution.json",
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R49-checks.json",
+  "scopeNoteR49": "Existing scoped HOST tests independently executed again in fullR49; exactR47/R48 reports NOT rewritten. Current source hashes include the actual R49 source/metadata/commonhelpers; actualAndroid/Gecko qualification remains false. New borrowed-plaintext/retained-source/format/store cases counted separately in retained core50."
+}

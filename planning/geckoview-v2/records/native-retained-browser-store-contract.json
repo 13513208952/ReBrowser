@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "revision": "R49",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O69",
+    "O83",
+    "O85",
+    "O86"
+  ],
+  "moduleFocus": "Native retained-browser metadata capture -> bounded binary codec -> existing private record AEAD/CAS -> one-shot native off-UI inspection; NO checkpoint/restore/cookie proof",
+  "commitMinimum": {
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "testsDocsGeneratedDoNotCount": true
+  },
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+    "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+    "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
+    "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+    "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java"
+  ],
+  "workerReservation": "D03L49–L73:25EXISTINGJavaextensions, disjointfromthis11filemainbatch. Fullcontextatstart, no extra handoff/doc/contextsourcecopy. No originalDSHresultread/modified forD03, completionnotice required.",
+  "wire": {
+    "magic": "RBCAT01 followed by NUL",
+    "version": 1,
+    "headerBytes": 22,
+    "header": "magic8/U16version/U16workspacecount/I64metadataRevision/U16selectedWorkspaceOr65535",
+    "workspace": "nativeID16/U8level2or3/U8placement1or2/I64workspaceRevision/I64tabsRevision/U16titleBytes/title/U16tabCount/U16selectedTab",
+    "tab": "nativeID16/I64metadataGeneration/U16titleBytes/title/U16displayUrlBytes/url",
+    "maximumBytes": 4194304,
+    "maxWorkspaces": 64,
+    "maxTabsPerWorkspace": 50,
+    "maxPrimaryWorkspaces": 5,
+    "maxTitleUtf8": 640,
+    "maxDisplayUrlUtf8": 24576,
+    "strict": "exactEOF/noUnknownEnum/noTEMP/noShelvedPrimary/uniqueIDs/strictUTF8/canonicalnativeTitle/boundedpreflight, decodedIDs+URL+generations are metadataONLY",
+    "magicHex": "5242434154303100"
+  },
+  "implemented": [
+    "ComponentGate private-issued DataEpochPin reads actual current accepted source epoch, never proposed byte[]; same-epoch new incarnation also retires old capture/store",
+    "Owner-thread coherent retained snapshots recheck allgroup revisions;TEMPexcluded; BrowserCoordinator rejects private-session context retention even if metadata levelchanged; noPopup/cookie/checkpoint serialization",
+    "BrowserCatalogCodec pure deterministic bounded binary; unverified immutable parsedmetadata cannot construct native Refs or Actor/permission/document receipt",
+    "BrowserStore uses one fixed native-purpose/scope reference, existing PrivateRecordStore actualAEAD/exactdiskCAS; one held decoded-root ownershipcredit untilclose, caller copies/references separatelyowned; no latest guarantee",
+    "PrivateRecordStore synchronous read-only borrowed plaintext decoder avoids second entireplaintextcopy; callback/reentrantclose/copy/readreentry prevented whileownerdecodeactive; credit retainedthroughactualdecode/close",
+    "Canonical Startup existing-browser-store opener offUI with one consumed attempt/no alternate owner/keydirseed; one-shot inspector uses boundedIOexecutor+weakrecipient+positiveHandlerpost-return gate and current-source recheck",
+    "Existing BrowserActivity explicitnativebutton enabledonlytrustedsource; onlycounts/non-sensitive metadata report, no autoinspection/restore. onStop/Destroy retiresrecipient, notinterrupting/endingIO"
+  ],
+  "pending": [
+    "No automatic autosave or overwrite of an unloaded live roster; compareAndWrite is explicit native domain operation requiring intended-memory/disk reconciliation and current caller authorization",
+    "Sameepoch valid historicalciphertextreplay is NOT rejected as latest. Parse/AEAD/sourceepoch/diskCAS do not authorize nativeRef/permission/session restore",
+    "GeckoSession.SessionState.toString serializes wholemState.toJSONObject().toString before outputbound (pinnedSDK source reviewed). No bounded native streaming capture primitive qualified, SessionCheckpointStore remains PLAN; no dummy native serializer/restore to fillcount",
+    "Persistent/cookie-preserving native contexts, finitepermission reconciliation, actualrestore, firstfresh inventory/seed/keyprovision/source warnings/ownerprompts/erasure/Actor/controlbackend remainseparate",
+    "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
+  ],
+  "evidenceBoundary": "Actualproduction metadata/codec/gate + JCA and realHOSTfilesystem through private syntheticSource and PUBLICtoykey/path fixtures; realSDKAPIcompile, not actualAndroid/nativeproductqualification."
+}

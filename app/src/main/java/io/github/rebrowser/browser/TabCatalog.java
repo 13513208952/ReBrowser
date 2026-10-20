@@ -125,6 +125,19 @@ public final class TabCatalog {
     public TabsView snapshot(WorkspaceRef workspace,ComponentGate.BusinessPermit permit){
         workspaces.access(permit);if(!workspaces.registered(workspace,permit))throw BrowserModels.invalid();Group group=group(workspace);List<TabView> tabs=new ArrayList<>();for(Tab t:group.tabs.values())tabs.add(t.view());return new TabsView(workspace,tabs,group.selected,group.revision);
     }
+    /** Owner-thread coherent bounded retained roster. Does NOT capture Gecko state or permit restore. */
+    public RetainedCapture captureRetained(long expectedWorkspacesRevision,ComponentGate.BusinessPermit permit){
+        workspaces.requireCapturedRevision(expectedWorkspacesRevision,permit);
+        ComponentGate.DataEpochPin epoch=workspaces.captureDataEpoch(permit);WorkspacesView all=workspaces.snapshot(permit);
+        List<WorkspaceView> ordered=new ArrayList<>(all.active());ordered.addAll(all.shelved());List<RetainedGroup> retained=new ArrayList<>();WorkspaceRef selected=null;
+        for(WorkspaceView workspace:ordered)if(workspace.wantsRetention()){
+            TabsView current=snapshot(workspace.ref(),permit);if(current.tabs().isEmpty() || current.selected()==null)throw new IllegalStateException("Incomplete retained tab roster");
+            retained.add(BrowserModels.retainedGroup(workspace,current));if(all.selected()==workspace.ref())selected=workspace.ref();
+        }
+        workspaces.requireCapturedRevision(expectedWorkspacesRevision,permit);
+        for(RetainedGroup captured:retained)if(snapshot(captured.workspace().ref(),permit).revision()!=captured.tabs().revision())throw stale();
+        epoch.requireCurrent();return BrowserModels.retainedCapture(epoch,all.revision(),selected,retained);
+    }
     private Group active(WorkspaceRef workspace,long expected,ComponentGate.BusinessPermit permit){workspaces.requireActive(workspace,permit);Group group=group(workspace);if(group.revision!=expected)throw stale();return group;}
     private Group group(WorkspaceRef workspace){Group group=groups.get(workspace);if(group==null)throw BrowserModels.invalid();return group;}
     private Tab tab(Group group,TabRef ref){if(ref==null || !ref.issuedBy(this) || ref.workspace()!=group.workspace)throw BrowserModels.invalid();Tab tab=group.tabs.get(ref);if(tab==null)throw BrowserModels.invalid();return tab;}

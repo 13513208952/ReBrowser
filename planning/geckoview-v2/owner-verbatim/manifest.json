@@ -569,7 +569,42 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O82",
+      "file": "owner-verbatim/O82-assess-continuing-delegation-mode.txt",
+      "utf8Bytes": 54,
+      "sha256": "006686abb9708e5efbe3bfcbacfba2d0d8f62b9f43c25b48d78f797ca50980e7",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O83",
+      "file": "owner-verbatim/O83-code-task-delegation-minimum-twenty-five-files.txt",
+      "utf8Bytes": 296,
+      "sha256": "eb0b0e6cb0915390ca9103705bc7752e2ad1b0e44c6e8a981fecae4b045d25d5",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O84",
+      "file": "owner-verbatim/O84-invite-independent-delegation-judgment.txt",
+      "utf8Bytes": 57,
+      "sha256": "48292a3e74f04edcfd23628a83cd574293d4e1a54a9b443fefb5dddba14cc753",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O85",
+      "file": "owner-verbatim/O85-assign-code-batch-then-continue-core.txt",
+      "utf8Bytes": 84,
+      "sha256": "cde627a8e9aacb8e1c3f5da64c265021028c5ff4654c5fe34fc8ebf780644805",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O86",
+      "file": "owner-verbatim/O86-worker-full-context-synchronized-at-start.txt",
+      "utf8Bytes": 101,
+      "sha256": "918412aea6fe76c9b38a2638b570b66328b9040792c284da555cd5ff8a8953ed",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-20T20:42:04+08:00"
+  "lastAppendedAt": "2026-10-20T21:51:07+08:00"
 }

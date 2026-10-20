@@ -1,0 +1,96 @@
+{
+  "revision": "R49",
+  "baseSourceCommit": "1e98b9f26446796effbe77d6b816503189227f93",
+  "scope": "Actualproduction metadata/codec/gate + JCA and realHOSTfilesystem through private syntheticSource and PUBLICtoykey/path fixtures; realSDKAPIcompile, not actualAndroid/nativeproductqualification.",
+  "pureCodecTests": 22,
+  "dataEpochPinTests": 7,
+  "nativeStorePipelineTests": 16,
+  "privateContextCaptureBoundaryTests": 5,
+  "retainedCoreHostTestsPassed": 50,
+  "actualProductionCaptureCodecGateMethodsExecuted": true,
+  "actualJcaAndHostFilesystemStorePipelineExecuted": true,
+  "privateSyntheticNativeSourceAndPathFixtures": true,
+  "publicAllZeroToyWrappingKeyOnly": true,
+  "actualAndroidHandlerViewOrKeystoreExecuted": false,
+  "actualPersistentGeckoContextCheckpointOrRestoreExecuted": false,
+  "latestSnapshotOrAntiRollbackEstablished": false,
+  "formalSourceOrKeysProvisioned": false,
+  "D03WorkerCodeIntegrated": false,
+  "actualPrivateContextCaptureRejectionMethodsHostExecuted": true,
+  "nativeCoordinatorAndActivityApiCompiledOnly": true,
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R49-checks.json",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "65a05b709ece3590d44020b43bb934abc060e5d9fdcb7c07a777300aa405e562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "sha256": "27d1f08e4705a4e06fc81791e37b632f0c452c2c7cf35b6024bf8f8cca463f29"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "sha256": "99db92396b8fc3bed7f775e2bad9dcd85c580314aefe9ab0b1ee46f41ed0c010"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "sha256": "9e10c725359b7f5d0c1b4dc175f06f36f63932c52c0b632ee2dde24a903bf2f4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "8ada828296c78f8ca0c2dcfd273f60cf9813fad3d66884e2ae0d99710ea3dc4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
+      "sha256": "af74f9ee6e70d42ed55d21d0938f306bfb729c94fb0fa67e6a2c77d6c22d1f01"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
+      "sha256": "06bbc59fb7d8e18fcfd0955720591246f1377f24a09741308c5e44d97cf77424"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
+      "sha256": "d6d1d065e2cf8d782e5067ad6654bb5cf4b3aca532bd061b11dc35c4ce8896f9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "22ba1f05ee8866c6bb9b6e31d85da5d37d427ae9e1744bdd61c470b78f03236a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "95dc6a029594736f193bf378734eeb25e930393d6c50497db497ba44f1c1f5a5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "sha256": "321f5fcd60bca4ca9912c1dc337ac17ffb7a55fcd990004c89dabf54289420f9"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/bootstrap/DataEpochPinTest.java",
+      "sha256": "098e738fa906d5685f8423d8b073193693823e002d3f751a229112f4dbe1ecd8"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogCodecTest.java",
+      "sha256": "f1363351e216248c98a47925191a86e37753505ff7032675073946b9667eaef8"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/browser/BrowserStoreTest.java",
+      "sha256": "74384914599394f1eaf6db11b09d451d50df480428c5be73e4b3485a61fe0c6b"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/browser/BrowserRetainedCaptureBoundaryTest.java",
+      "sha256": "7c066964f1b501193303ba759537b0b13a6195a92fed92c9e3a7991642db3771"
+    }
+  ],
+  "checkpointBlockerSource": {
+    "pinnedSourceSha256": "9f151109323dd1b69a6e8187b660ceea78c0e8e5510fe37c53a7fab32d2b42f7",
+    "method": "GeckoSession.SessionState.toString: mState.toJSONObject().toString before output size can be checked",
+    "nativeMethodExecuted": false
+  },
+  "notClaimed": [
+    "No automatic autosave or overwrite of an unloaded live roster; compareAndWrite is explicit native domain operation requiring intended-memory/disk reconciliation and current caller authorization",
+    "Sameepoch valid historicalciphertextreplay is NOT rejected as latest. Parse/AEAD/sourceepoch/diskCAS do not authorize nativeRef/permission/session restore",
+    "GeckoSession.SessionState.toString serializes wholemState.toJSONObject().toString before outputbound (pinnedSDK source reviewed). No bounded native streaming capture primitive qualified, SessionCheckpointStore remains PLAN; no dummy native serializer/restore to fillcount",
+    "Persistent/cookie-preserving native contexts, finitepermission reconciliation, actualrestore, firstfresh inventory/seed/keyprovision/source warnings/ownerprompts/erasure/Actor/controlbackend remainseparate",
+    "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
+  ]
+}

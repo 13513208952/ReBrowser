@@ -38,6 +38,10 @@ class ApplicationTreeTests(unittest.TestCase):
         self.assertEqual(facts['newD02DelegatedRuntimeFiles'], 42)
         for task in tasks:
             f = assigned[task['runtimePath']]
+            if task['round']=='D03':
+                d=f['activeDelegation'];self.assertEqual(d['taskId'],task['id']);self.assertEqual(d['status'],'reserved-not-started');self.assertEqual(d['scope'],'slice')
+                self.assertTrue(task['existingFileExtension']);self.assertFalse(task['countedAsNewRuntimeFile']);self.assertTrue(task['requiredBehavior'] and task['acceptance']);self.assertIn('[D03:'+task['id']+']',text)
+                continue
             self.assertEqual(f['delegation']['taskId'], task['id'])
             if task['round']=='D02':
                 self.assertEqual(task['status'],'review-held-layout-unapproved' if task['id'] in ['L47','L48'] else 'reviewed-scoped-host-api' if task['runtimePath'].endswith('.java') else 'reviewed-static-source-inactive')
@@ -80,13 +84,13 @@ class ApplicationTreeTests(unittest.TestCase):
     def test_entire_remaining_tree_has_full_responsibility_risk(self):
         remaining = {f['path']:f for f in self.manifest['files'] if f['state']=='planned-not-implemented'}
         record = json.loads((P/'records/remaining-file-risk-assessment.json').read_text())
-        self.assertEqual(len(remaining),77)
+        self.assertEqual(len(remaining),76)
         self.assertEqual(set(remaining), {f['path'] for f in record['files'] if f['state']=='planned-not-implemented'})
         self.assertEqual(len(record['files']),126) # preserve original allocation survey, don't silently rewrite history
         for f in record['files']:
             if f['path'] in remaining:self.assertEqual(f['fullFileRisk'],remaining[f['path']]['riskAssessment']['fullFileRisk'])
             self.assertTrue(f['riskReason'])
-        self.assertEqual(record['coverage']['mainOnlyUnassignedFiles'],75)
+        self.assertEqual(record['coverage']['mainOnlyUnassignedFiles'],74)
 
     def test_new_round_42_does_not_recount_original_six(self):
         tasks = json.loads((P/'records/low-cost-agent-assignments.json').read_text())['tasks']
@@ -105,8 +109,20 @@ class ApplicationTreeTests(unittest.TestCase):
                 self.assertIn('[LOW-SLICE:'+d['taskId']+']',text)
                 self.assertNotIn('[LOW:'+d['taskId']+']',text)
 
+    def test_d03_real_code_extensions_not_twenty_five_new_stubs(self):
+        import hashlib
+        record=json.loads((P/'records/low-cost-agent-assignments.json').read_text());tasks=[t for t in record['tasks'] if t['round']=='D03']
+        self.assertEqual(len(tasks),25);self.assertEqual(len({t['runtimePath'] for t in tasks}),25)
+        self.assertEqual(record['currentBatchNewRuntimeFiles'],0)
+        self.assertEqual(record['currentBatchTaskIds'],[t['id'] for t in tasks])
+        for t in tasks:
+            raw=(P.parents[1]/t['runtimePath']).read_bytes();self.assertEqual(hashlib.sha256(raw).hexdigest(),t['inputRuntimeSha256'])
+            self.assertTrue(t['runtimePath'].endswith('.java'));self.assertFalse(t['fullResponsibilityCompleteClaim'])
+        self.assertTrue(record['D03Rules']['existingD02ResultUntouched'])
+        self.assertEqual(render(self.manifest)[1]['activeD03ExistingCodeExtensions'],25)
+
     def test_main_core_not_delegated_for_count(self):
-        for suffix in ['ActorContext.java','AuthorityPolicy.java','DataKeyVault.java','PrivateRecordSealer.java','PrivateRecordStore.java','EpochErasureCoordinator.java','ControlDispatcher.java','PermissionCoordinator.java','BrowserStore.java','MailDatabase.java','SourceWarningActivity.java']:
+        for suffix in ['ActorContext.java','AuthorityPolicy.java','DataKeyVault.java','PrivateRecordSealer.java','PrivateRecordStore.java','EpochErasureCoordinator.java','ControlDispatcher.java','PermissionCoordinator.java','BrowserStore.java','BrowserCatalogCodec.java','BrowserStoreCoordinator.java','MailDatabase.java','SourceWarningActivity.java']:
             f=next(f for f in self.manifest['files'] if f['path'].endswith('/'+suffix))
             self.assertNotIn('delegation',f)
             self.assertEqual(f['riskAssessment']['owner'],'main')

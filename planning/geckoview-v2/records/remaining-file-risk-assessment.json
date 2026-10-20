@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "revision": "D02",
+  "revision": "R49",
   "authority": "O78",
   "baseSourceCommit": "dd41e3e7b1fb0aa6225837a309d9ac8d9a15f485",
   "definition": "fullFileRisk针对原完整责任，不是实施难度/代码完成/实际业务准入；LOW-SLICE只在被授权切片内低副作用，完整文件可能高风险。",
   "coverage": {
-    "allMasterRuntimeFiles": 182,
-    "previousAdmittedRuntimeFiles": 105,
-    "remainingPlanRuntimeFiles": 77,
+    "allMasterRuntimeFiles": 184,
+    "previousAdmittedRuntimeFiles": 108,
+    "remainingPlanRuntimeFiles": 76,
     "previousDeliveredAwaitingReview": 6,
     "newAssignedFiles": 42,
     "newAssignedJavaFiles": 36,
@@ -17,11 +17,11 @@
     "fullFileRiskCounts": {
       "low": 0,
       "medium": 2,
-      "high": 75
+      "high": 74
     },
-    "mainOnlyUnassignedFiles": 75,
+    "mainOnlyUnassignedFiles": 74,
     "initialRemainingPlanRuntimeFilesAtD02Allocation": 126,
-    "admittedSinceD02Allocation": 49,
+    "admittedSinceD02Allocation": 50,
     "initialMainOnlyFilesAtAllocation": 78,
     "initialFullFileRiskCounts": {
       "low": 8,
@@ -30,7 +30,8 @@
     },
     "newD02AdmittedJava": 36,
     "newD02AdmittedInactiveAssets": 4,
-    "newD02HeldStyles": 2
+    "newD02HeldStyles": 2,
+    "newRuntimeSourcesSinceSurvey": 2
   },
   "files": [
     {
@@ -410,7 +411,7 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
       "group": "browser",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",

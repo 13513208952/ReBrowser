@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R48",
+  "revision": "R49",
   "authority": [
     "O45",
     "O64",
@@ -137,6 +137,14 @@
       "nextExecutableStep": "Native verified-empty epoch provision+BrowserStore/checkpoint serializers and explicit native restore gates; KeyPurpose vocabulary staysD02reserved",
       "exit": "Real source/OS/filesystem key custody/restore behavior plus native current writer quiescence qualification, not CAS metadata/zero counter",
       "blocks": "Full persistent browser/epoch destruction activation, not independent metadata serializer/core implementation"
+    },
+    {
+      "id": "R49-gecko-checkpoint-native-allocation",
+      "blocker": "pinnedSessionState.toString materializes entireJSONObject/String beforeoutputbound; private/current/temp cookiecontext and actualrestore dependencies unqualified",
+      "decision": "Continue independently bounded native retained-metadata codec/privateCAS/inspection; leave SessionCheckpointStore PLAN, no fake serializer/restore or metadata->documentproof",
+      "owner": "main",
+      "exit": "Bounded actualnativecapture allocation+samepersistentpartition+finitepermission/source reconciliation and qualified exact native restore",
+      "contractRef": "records/native-retained-browser-store-contract.json"
     }
   ],
   "parallelDelegation": {
@@ -149,15 +157,44 @@
     ],
     "contractRef": "records/low-cost-agent-assignments.json",
     "riskAssessmentRef": "records/remaining-file-risk-assessment.json",
-    "reservedRuntimeFiles": [],
+    "reservedRuntimeFiles": [
+      "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java"
+    ],
     "workerWorkspace": "dsh/",
     "previousSixDeliveryStatus": "scoped-host-api-reviewed-no-Android-UI-or-backend-completion",
     "mainAgentRule": "等待owner再次通知前，不编辑L07-L48的42目标，主agent继续未分配核心链；所有slice之外与最终集成归主agent；任务数量不当完成证明。",
     "implementationOrCommitClaim": false,
-    "reviewStatus": "ownerO80delivered,40source-reviewed-scoped,2styleHOLD; no ongoing worker claim",
+    "reviewStatus": "D03reserved25existingcodeextensions;D02historicalreview40/hold2",
     "heldRuntimeFiles": [
       "app/src/main/assets/bridge/styles/music-window.css",
       "app/src/main/assets/bridge/styles/music-desktop.css"
-    ]
+    ],
+    "activeRound": "D03",
+    "fullContextSynchronizedAtWorkerStart": true,
+    "mainContinues": "Native retained-browser metadata persistence/capture IO core; no editing reserved25 files."
   }
 }

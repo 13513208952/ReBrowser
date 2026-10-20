@@ -1,0 +1,62 @@
+{
+  "revision": "R49",
+  "hostTestsPassed": 42,
+  "scope": "Actual native window/panel/toolbar binding/address/selection/progress/modal/inset/metric-policy models on HOST; no Android View/Window/AlertDialog/ValueAnimator/Activity metric method execution",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "sha256": "24ba0cb93cef0cc7f0cefaba4c78a5b84dc1e2430e69b9da6bdcdcba3f34877b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
+      "sha256": "c5aeb1b57e06084cc1e0b3928f453cbd599e1b757c7206180d826873ced60f4f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
+      "sha256": "914c558c1556076a5182fde76bbfbddf6dd84fc7a77f576b16f7f633bce58abc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
+      "sha256": "ccef10c25944982b5f6d7492496b13a450e64be1d37f25f7cbf55e3de1d081de"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
+      "sha256": "dca16581d1cb87f43ed16c595d4a903b288c99c5b04bd8666ae8fca4af1cfbc4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "sha256": "97a810039583206c8fb76a74f20f0baa4205db9d995996d6216ae2c43a42d676"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NativeDialogs.java",
+      "sha256": "665f586c0108f67bf2920a7b4369f993bec2570d3f36cdb1dc5adddabf1c51d8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ViewportPolicy.java",
+      "sha256": "776cfc19d2f4d92d1d084f89c2c6cbad1990d4ee8d0097b05d1993326cf13f4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "8ada828296c78f8ca0c2dcfd273f60cf9813fad3d66884e2ae0d99710ea3dc4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "sha256": "321f5fcd60bca4ca9912c1dc337ac17ffb7a55fcd990004c89dabf54289420f9"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java",
+      "sha256": "13899917abdc80159ea2491b1a2e678fd9c267507c9c95c1f145bf6d3d6a6cc7"
+    }
+  ],
+  "actualNestedPresentationMethodsExecuted": true,
+  "actualAndroidUiCallbacksOrRenderingExecuted": false,
+  "nativeBrowserComplete": false,
+  "sourceOrOwnerConsentGranted": false,
+  "gradleEvidenceRef": "evidence/production-main-agp-R43-checks.json",
+  "currentActualHostRunRef": "evidence/production-main-agp-R49-checks.json",
+  "historicalR47EvidenceRef": "evidence/native-window-models-host-execution.json",
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R49-checks.json",
+  "scopeNoteR48": "Same actual scoped tests executed again in R48; public R47 report remains byte-identical. Current exact common helper / KeyPurposeconsumer source hashes reflect the independently rerun code, NOT a rehash-only refresh.",
+  "historicalUnchangedEvidenceRef": "evidence/native-window-models-R48-host-execution.json",
+  "scopeNoteR49": "Existing scoped HOST tests independently executed again in fullR49; exactR47/R48 reports NOT rewritten. Current source hashes include the actual R49 source/metadata/commonhelpers; actualAndroid/Gecko qualification remains false. New borrowed-plaintext/retained-source/format/store cases counted separately in retained core50."
+}

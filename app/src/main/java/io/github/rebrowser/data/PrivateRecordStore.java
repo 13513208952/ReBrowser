@@ -50,14 +50,23 @@ public final class PrivateRecordStore {
         private ReadStamp(PrivateRecordStore issuer,Reference ref,Kind kind,long revision,byte[] digest){this.issuer=issuer;reference=ref;this.kind=kind;this.revision=revision;this.digest=digest;}
         public Kind kind(){return kind;}public long revision(){return revision;}
     }
+    /** Native bounded synchronous decoder only, not a persistence/actor authorization provider.
+     * Reader must not retain the borrowed read-only buffer; returned copies are separately owned. */
+    public interface PlaintextReader<T> {T read(ByteBuffer borrowedReadOnly)throws IOException;}
     /** Caller owns sensitive plaintext lifetime; close scrubs this copy, not all JVM/provider copies. */
     public static final class ReadRecord implements AutoCloseable {
-        private final ReadStamp stamp;private byte[] plaintext;private ResourceBudgets.Allocation credit;
+        private final ReadStamp stamp;private byte[] plaintext;private ResourceBudgets.Allocation credit;private boolean consuming;
         private ReadRecord(ReadStamp stamp,byte[] plaintext,ResourceBudgets.Allocation credit){this.stamp=stamp;this.plaintext=plaintext;this.credit=credit;}
         public ReadStamp stamp(){return stamp;}
         /** Caller separately owns/budgets each returned copy; close only clears this record's buffer. */
-        public synchronized byte[] plaintextCopy(){if(plaintext==null)throw new IllegalStateException("No owned private plaintext");return plaintext.clone();}
-        @Override public synchronized void close(){if(plaintext!=null){Arrays.fill(plaintext,(byte)0);plaintext=null;}if(credit!=null){credit.releaseAfterOwnedAllocationFreed();credit=null;}}
+        public synchronized byte[] plaintextCopy(){if(plaintext==null || consuming)throw new IllegalStateException("No available owned private plaintext");return plaintext.clone();}
+        /** Avoid a second whole-record plaintext copy. Credit survives until close AFTER decode.
+         * ByteBuffer read-only is a mutation guard, NOT an authority or secrecy guarantee. */
+        public synchronized <T> T readOwnedPlaintext(PlaintextReader<T> reader)throws IOException {
+            if(reader==null || plaintext==null || consuming)throw new IllegalStateException("Private plaintext decoder already owned/unavailable");
+            consuming=true;try{return reader.read(ByteBuffer.wrap(plaintext).asReadOnlyBuffer());}finally{consuming=false;}
+        }
+        @Override public synchronized void close(){if(consuming)throw new IllegalStateException("Private plaintext decoder still executing");if(plaintext!=null){Arrays.fill(plaintext,(byte)0);plaintext=null;}if(credit!=null){credit.releaseAfterOwnedAllocationFreed();credit=null;}}
     }
     private final ComponentGate gate;private final ComponentGate.ResourcePin lifetime;private final byte[] epoch;private final DataKeyVault vault;
     private final Path[] directories;private final Object[] directoryKeys;private final Path directory,lockPath;private Object lockKey;

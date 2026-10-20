@@ -1,0 +1,42 @@
+package io.github.rebrowser.browser;
+import static org.junit.Assert.*;
+import io.github.rebrowser.bootstrap.*;
+import io.github.rebrowser.crypto.*;
+import io.github.rebrowser.data.PrivateRecordStore;
+import io.github.rebrowser.browser.BrowserModels.*;
+import java.lang.reflect.*;
+import java.nio.file.*;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.util.*;
+import org.junit.Test;
+/** Actual JCA+HOST CAS pipeline; PRIVATE public-toy key/native-source/path fixtures, NOT Android. */
+public final class BrowserStoreTest {
+ static final class F implements AutoCloseable {
+  final BrowserCatalogCodecTest.F nativeCatalog=new BrowserCatalogCodecTest.F();final Path root=Files.createTempDirectory("browser-record-host-");final PrivateRecordStore records;final BrowserStore store;
+  F()throws Exception{Constructor<DataKeyVault> v=DataKeyVault.class.getDeclaredConstructor(SecretKey.class,ComponentGate.class,byte[].class,boolean.class);v.setAccessible(true);DataKeyVault vault=v.newInstance(new SecretKeySpec(new byte[32],"AES"),nativeCatalog.gate,new byte[16],false);Constructor<PrivateRecordStore> c=PrivateRecordStore.class.getDeclaredConstructor(Path[].class,ComponentGate.class,byte[].class,DataKeyVault.class,boolean.class);c.setAccessible(true);records=c.newInstance(new Path[]{root},nativeCatalog.gate,new byte[16],vault,false);store=BrowserStore.openExisting(records,nativeCatalog.gate,nativeCatalog.permit);}
+  PrivateRecordStore.Reference ref()throws Exception{Field field=BrowserStore.class.getDeclaredField("reference");field.setAccessible(true);return (PrivateRecordStore.Reference)field.get(store);}
+  ComponentGate.BusinessPermit p(){return nativeCatalog.permit;}
+  RetainedCapture capture(){return nativeCatalog.capture();}
+  void write()throws Exception{try(BrowserStore.ReadView expected=store.read(p())){store.compareAndWrite(expected,capture(),p());}}
+  public void close()throws Exception{try(java.util.stream.Stream<Path> files=Files.walk(root)){for(Path p:files.sorted(Comparator.reverseOrder()).toArray(Path[]::new))Files.delete(p);}}
+ }
+ @Test public void missingIsNotFreshAndDoesNotWriteCatalog()throws Exception{try(F f=new F();BrowserStore.ReadView read=f.store.read(f.p())){assertEquals(PrivateRecordStore.Kind.MISSING,read.kind());assertEquals(0,read.recordRevision());assertThrows(IllegalStateException.class,()->read.metadata(f.p()));assertFalse(Files.exists(f.root.resolve(f.ref().opaqueRef())));}}
+ @Test public void explicitCoherentMetadataCiphertextCasRoundTrip()throws Exception{try(F f=new F()){WorkspaceRef w=f.nativeCatalog.add(Level.PRIMARY);f.write();try(BrowserStore.ReadView read=f.store.read(f.p())){assertEquals(1,read.recordRevision());assertEquals(w.id(),read.metadata(f.p()).workspaces().get(0).id());assertEquals(1,read.metadata(f.p()).tabCount());}byte[] encrypted=Files.readAllBytes(f.root.resolve(f.ref().opaqueRef()));assertFalse(new String(encrypted,java.nio.charset.StandardCharsets.ISO_8859_1).contains(w.id()));}}
+ @Test public void ownedDecodedRootSurvivesIoReturnUntilClose()throws Exception{try(F f=new F()){BrowserStore.ReadView read=f.store.read(f.p());assertFalse(f.records.hasOwnedIoInFlight());assertThrows(IllegalStateException.class,()->f.store.read(f.p()));read.close();try(BrowserStore.ReadView next=f.store.read(f.p())){assertEquals(PrivateRecordStore.Kind.MISSING,next.kind());}}}
+ @Test public void readStampCannotBeUsedForTwoWriteAttempts()throws Exception{try(F f=new F();BrowserStore.ReadView expected=f.store.read(f.p())){f.store.compareAndWrite(expected,f.capture(),f.p());assertThrows(IllegalArgumentException.class,()->f.store.compareAndWrite(expected,f.capture(),f.p()));}}
+ @Test public void oldReadViewCasCannotOverwriteExternalWriter()throws Exception{try(F f=new F();BrowserStore.ReadView expected=f.store.read(f.p())){PrivateRecordStore.Reference ref=f.ref();try(PrivateRecordStore.ReadRecord raw=f.records.read(ref,f.p())){f.records.write(raw.stamp(),BrowserCatalogCodec.encode(f.capture()),f.p());}assertThrows(IOException.class,()->f.store.compareAndWrite(expected,f.capture(),f.p()));}}
+ @Test public void pendingWritePreservedAndCannotBecomeSuccess()throws Exception{try(F f=new F()){Files.write(f.root.resolve(f.ref().opaqueRef()+".pending"),new byte[]{1});try(BrowserStore.ReadView read=f.store.read(f.p())){assertEquals(PrivateRecordStore.Kind.UNFINISHED_WRITE,read.kind());assertThrows(IllegalArgumentException.class,()->f.store.compareAndWrite(read,f.capture(),f.p()));}assertArrayEquals(new byte[]{1},Files.readAllBytes(f.root.resolve(f.ref().opaqueRef()+".pending")));}}
+ @Test public void authenticatedButMalformedPayloadDoesNotBecomeCatalog()throws Exception{try(F f=new F()){PrivateRecordStore.Reference ref=f.ref();try(PrivateRecordStore.ReadRecord raw=f.records.read(ref,f.p())){f.records.write(raw.stamp(),new byte[]{1},f.p());}assertThrows(IllegalArgumentException.class,()->f.store.read(f.p()));assertThrows(IllegalArgumentException.class,()->f.store.read(f.p()));assertFalse(f.records.hasOwnedIoInFlight());}}
+ @Test public void cipherTamperNotRepairedOrParsedAsMetadata()throws Exception{try(F f=new F()){f.write();Path path=f.root.resolve(f.ref().opaqueRef());byte[] b=Files.readAllBytes(path);b[b.length-1]^=1;Files.write(path,b);assertThrows(GeneralSecurityException.class,()->f.store.read(f.p()));assertArrayEquals(b,Files.readAllBytes(path));}}
+ @Test public void sourceLockRevokesReturnedMetadataAccess()throws Exception{try(F f=new F()){f.write();try(BrowserStore.ReadView read=f.store.read(f.p())){f.nativeCatalog.source.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));assertThrows(SecurityException.class,()->read.metadata(f.p()));}}}
+ @Test public void closedViewCannotReadOrAuthorizeReplacement()throws Exception{try(F f=new F()){BrowserStore.ReadView read=f.store.read(f.p());read.close();read.close();assertThrows(IllegalStateException.class,read::kind);assertThrows(IllegalStateException.class,()->f.store.compareAndWrite(read,f.capture(),f.p()));}}
+ @Test public void foreignStoreViewRejectedEvenWithSameEpochAndGate()throws Exception{try(F f=new F();BrowserStore.ReadView read=f.store.read(f.p())){BrowserStore second=BrowserStore.openExisting(f.records,f.nativeCatalog.gate,f.p());assertThrows(IllegalArgumentException.class,()->second.compareAndWrite(read,f.capture(),f.p()));}}
+ @Test public void foreignCaptureCannotBeRetargetedIntoCurrentStore()throws Exception{try(F f=new F();F other=new F();BrowserStore.ReadView read=f.store.read(f.p())){assertThrows(SecurityException.class,()->f.store.compareAndWrite(read,other.capture(),f.p()));}}
+ @Test public void epochCutoverCannotCreateAlternateSourceOwner()throws Exception{try(F f=new F()){f.nativeCatalog.source.set(ComponentGate.SourceView.acceptedNative(new Object(),new byte[16]));ComponentGate.BusinessPermit next=f.nativeCatalog.gate.requireBusiness();assertThrows(SecurityException.class,()->f.store.read(next));assertThrows(SecurityException.class,()->BrowserStore.openExisting(f.records,f.nativeCatalog.gate,next));}}
+ @Test public void plaintextParseBufferReadOnlyAndCreditActualFinally()throws Exception{try(F f=new F()){f.write();try(PrivateRecordStore.ReadRecord read=f.records.read(f.ref(),f.p())){read.readOwnedPlaintext(buffer->{assertTrue(buffer.isReadOnly());assertThrows(java.nio.ReadOnlyBufferException.class,()->buffer.put(0,(byte)3));assertThrows(IllegalStateException.class,read::close);assertThrows(IllegalStateException.class,read::plaintextCopy);assertThrows(IllegalStateException.class,()->read.readOwnedPlaintext(b->null));return null;});assertTrue(read.plaintextCopy().length>=22);}}}
+ @Test public void failedBorrowedDecoderDoesNotPermanentlyLockBuffer()throws Exception{try(F f=new F()){f.write();try(PrivateRecordStore.ReadRecord read=f.records.read(f.ref(),f.p())){assertThrows(IOException.class,()->read.readOwnedPlaintext(b->{throw new IOException("synthetic");}));assertTrue(read.readOwnedPlaintext(b->b.remaining())>=22);}}}
+ @Test public void noPublicReceiptCaptureOrRestoreConstructor(){assertEquals(0,BrowserStore.class.getConstructors().length);assertEquals(0,BrowserStore.ReadView.class.getConstructors().length);assertEquals(0,RetainedCapture.class.getConstructors().length);for(Method m:BrowserStore.class.getMethods())assertFalse(m.getName().toLowerCase(java.util.Locale.ROOT).contains("restore"));}
+}

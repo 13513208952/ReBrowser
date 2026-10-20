@@ -1,0 +1,57 @@
+{
+  "revision": "R49",
+  "minimumRuntimeCodeFiles": 10,
+  "runtimeCodeFilesChanged": 11,
+  "maximumFiles": null,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "65a05b709ece3590d44020b43bb934abc060e5d9fdcb7c07a777300aa405e562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "sha256": "27d1f08e4705a4e06fc81791e37b632f0c452c2c7cf35b6024bf8f8cca463f29"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "sha256": "99db92396b8fc3bed7f775e2bad9dcd85c580314aefe9ab0b1ee46f41ed0c010"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "sha256": "9e10c725359b7f5d0c1b4dc175f06f36f63932c52c0b632ee2dde24a903bf2f4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "8ada828296c78f8ca0c2dcfd273f60cf9813fad3d66884e2ae0d99710ea3dc4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
+      "sha256": "af74f9ee6e70d42ed55d21d0938f306bfb729c94fb0fa67e6a2c77d6c22d1f01"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
+      "sha256": "06bbc59fb7d8e18fcfd0955720591246f1377f24a09741308c5e44d97cf77424"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
+      "sha256": "d6d1d065e2cf8d782e5067ad6654bb5cf4b3aca532bd061b11dc35c4ce8896f9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "22ba1f05ee8866c6bb9b6e31d85da5d37d427ae9e1744bdd61c470b78f03236a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "95dc6a029594736f193bf378734eeb25e930393d6c50497db497ba44f1c1f5a5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "sha256": "321f5fcd60bca4ca9912c1dc337ac17ffb7a55fcd990004c89dabf54289420f9"
+    }
+  ],
+  "newRuntimeFiles": 3,
+  "newTargetTreeLeavesBeyondPriorPlan": 2,
+  "testsDocsGeneratedNotCounted": true,
+  "meaningfulDevelopment": "sourceepochpin+nativecoherentretainedroster+privatecontextrejection+strictcodec+nativeexistingrecordstore+borrowedplaintextdecoder+canonicalstartupIO+boundedweakone-shotinspection+explicitlockednativewindowcontrol. Not checkpoint/restore or worker integration.",
+  "currentActualHostRunRef": "evidence/production-main-agp-R49-checks.json"
+}

@@ -42,6 +42,11 @@ def render(manifest=None):
             assert delegation['scope'] in ['whole', 'slice']
             assert delegation['contractRef'] == 'records/low-cost-agent-assignments.json'
             assert (P / delegation['contractRef']).is_file()
+        active=f.get('activeDelegation')
+        if active:
+            assert active['round']=='D03' and active['scope']=='slice' and active['difficulty']=='bounded-code-extension'
+            assert active['status'] in ['reserved-not-started','in-progress','delivered-awaiting-main-review']
+            assert active['doesNotReplaceHistoricalAdmission'] and active['assignmentRef']=='records/low-cost-agent-assignments.json'
         if f['state'] == 'planned-not-implemented':
             risk = f.get('riskAssessment')
             assert risk and risk['fullFileRisk'] in ['low', 'medium', 'high']
@@ -58,7 +63,8 @@ def render(manifest=None):
         f'当前已准入本体源码：**{len(implemented)}文件**；其中HOST测试切片 **{sum(f["state"] == "implemented-host-tested-not-integrated" for f in files)}文件**，API编译/实现中 **{sum(f["state"] == "source-in-progress-api-compiled" for f in files)}文件**，静态资产WIP **{sum(f["state"] == "source-in-progress-static-tested" for f in files)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。', '',
         f'当前目标：`io.github.rebrowser` · 本体代码 **{len(files)}文件** · {len(groups)}职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。', '',
         '符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。', '',
-        '> D02分配时已评估全部126个剩余PLAN节点，本轮42个新目标（36Java+6运行资产）经O80主审后，R48并入36Java+4未激活资产，另2份窗口/桌面CSS无批准参考继续HOLD。旧6交付及主链依赖的有限准入仍保留，当前77个PLAN。`[LOW:Lxx]`为整项低风险；`[LOW-EFFECT:Lxx]`为完整低副作用任务但集成/实现风险仍中等；`[LOW-SLICE:Lxx]`仅允许该文件限定低风险切片。`[RISK:*]`是原完整责任风险，`[REVIEW-PENDING]`表示已有未准入交付。**任务数、解析/展示和交付都不是产品完成或业务授权。**只看[权威任务范围](records/low-cost-agent-assignments.json)／[全部剩余文件风险](records/remaining-file-risk-assessment.json)，共享上下文不另写交接文档。', '',
+        '> D02分配时已评估全部126个剩余PLAN节点，本轮42个新目标（36Java+6运行资产）经O80主审后，R48并入36Java+4未激活资产，另2份窗口/桌面CSS无批准参考继续HOLD。旧6交付及主链依赖的有限准入仍保留，当前PLAN数以本页统计为准。`[LOW:Lxx]`为整项低风险；`[LOW-EFFECT:Lxx]`为完整低副作用任务但集成/实现风险仍中等；`[LOW-SLICE:Lxx]`仅允许该文件限定低风险切片。`[RISK:*]`是原完整责任风险，`[REVIEW-PENDING]`表示已有未准入交付。**任务数、解析/展示和交付都不是产品完成或业务授权。**只看[权威任务范围](records/low-cost-agent-assignments.json)／[全部剩余文件风险](records/remaining-file-risk-assessment.json)，共享上下文不另写交接文档。', '',
+        '> 当前D03依O83/O85/O86分配25个**既有Java文件的实质扩展**（L49–L73），不是25个新增文件/PLAN完成。`[D03:Lxx]`仅当前保留范围，不覆盖D01/D02历史准入；任务开始前上下文全同步，无额外交接/依赖源码副本。主agent避开这些文件继续核心；完整边界与验收由主agent独立审查。', '',
         '## 本体代码树', '', '```text']
     leaf_count = 0
     def walk(items, prefix=''):
@@ -80,7 +86,7 @@ def render(manifest=None):
                     low = '['+tag+':' + assignment['taskId'] + ']'
                 risk_tag = '[RISK:'+risk['fullFileRisk'].upper()+']' if risk else ''
                 review_tag = '[REVIEW-PENDING]' if assignment and assignment['status']=='delivered-awaiting-main-review' else '[REVIEW-HOLD]' if assignment and assignment['status']=='review-held-layout-unapproved' else ''
-                lines.append(prefix + branch + name + ' [' + symbol + ']' + status + '[?]' + low + risk_tag + review_tag + ' — ' + item['responsibility'])
+                lines.append(prefix + branch + name + ' [' + symbol + ']' + status + '[?]' + low + risk_tag + review_tag + ('[D03:'+item['activeDelegation']['taskId']+']' if item.get('activeDelegation') else '') + ' — ' + item['responsibility'])
                 leaf_count += 1
             else:
                 lines.append(prefix + branch + name + '/')
@@ -93,7 +99,11 @@ def render(manifest=None):
         if item.get('delegation'):
             d = item['delegation']
             lines.append('| ' + d['taskId'] + ' | `' + item['path'] + '` | '+item['riskAssessment']['fullFileRisk']+' / '+d['scope']+' / ' + d['status'] + ' |')
-    lines += ['', '范围/接口/验收以[任务记录](records/low-cost-agent-assignments.json)和[全量风险](records/remaining-file-risk-assessment.json)为准；42新目标不包含原6交付。原其余78目标继续由主agent负责（其中3已有限准入、75仍PLAN），slice之外的高风险责任也保留主agent。不增空实现、不把分工当产品进度。原6交付只按实际模型HOST/API范围准入，不是Android View/backend完成；R48主审证据独立绑定当前源码，R47等历史记录原样保留；不能沿用旧测试声称新代码全部通过。', '', '## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）', '',
+    lines += ['', '## ↪ 当前D03：25既有代码文件扩展（不算新增文件，不是测试任务包）', '', '| 任务 | 保留文件 | 范围 / 状态 |', '| --- | --- | --- |']
+    for item in files:
+        if item.get('activeDelegation'):
+            d=item['activeDelegation'];lines.append('| '+d['taskId']+' | `'+item['path']+'` | '+d['scope']+' / '+d['status']+' |')
+    lines += ['', '范围/接口/验收以[任务记录](records/low-cost-agent-assignments.json)和[全量风险](records/remaining-file-risk-assessment.json)为准；42新目标不包含原6交付。原其余78目标继续由主agent负责（其中4已有限准入、74仍PLAN），slice之外的高风险责任也保留主agent。不增空实现、不把分工当产品进度。原6交付只按实际模型HOST/API范围准入，不是Android View/backend完成；R48主审证据独立绑定当前源码，R47等历史记录原样保留；不能沿用旧测试声称新代码全部通过。', '', '## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）', '',
               '| 职责 | 测试要求摘要 | 目标文件引用，实施/证据另看准入记录 |', '| --- | --- | --- |']
     for group in manifest['groups']:
         refs = '<br>'.join('`'+t['path']+'`' for t in group['testReferences'])
@@ -119,6 +129,7 @@ def render(manifest=None):
                                'productRuntimeIntegrated':False,
                                'delegatedRuntimeTargetsIncludingPriorDelivery':sum(bool(f.get('delegation')) for f in files),
                                'newD02DelegatedRuntimeFiles':sum(f.get('delegation',{}).get('round')=='D02' for f in files),
+                               'activeD03ExistingCodeExtensions':sum(f.get('activeDelegation',{}).get('round')=='D03' for f in files),
                                'remainingFilesRiskAssessed':sum(bool(f.get('riskAssessment')) for f in files)}
 
 

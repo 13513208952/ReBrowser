@@ -1,0 +1,38 @@
+{
+  "schema":1,
+  "revision":"R45",
+  "moduleFocus":"entry source-acceptance dependency (exact stable existing source only)",
+  "authority":["O64","O67","O68","O69","O70","O71"],
+  "runtimeWorkload":{"meaningfulRuntimeFiles":12,"newRuntimeFiles":1,"minimum":10,"maximum":null,"contractRef":"records/native-source-bootstrap-contract.json"},
+  "implementedFlow":[
+    "Private-issued own Android inspection wraps actual PM/UID/current signer/history/version/update metadata; loaded version constant must match actual installed version, before/after inspection must match",
+    "Actual compiledRoot and exact fixed own no-backup namespace + bounded LastGood current/STABLE frame and repeated issuer-bound read receipt; no missing-marker freshness inference/seed/write/repair/erasure",
+    "Private source receipt requires exact current signer and Root; lineage-only successor/nonstable/prepared/destructive/empty metadata stays locked for separate recovery",
+    "Accepted epoch context private construction, defensive16bytes, <=30s monotonic/exact native app/single attempted transfer spent before handoff; invalid/expired/foreign/replayed attempts reject",
+    "Application main owner starts one bounded native PM/metadata worker only when compiledRoot exists; no UI-thread FS/PM IO or business DB/Gecko/connector restore. Root absent fast path performs no IO",
+    "Main publication ticket rejects foreign/duplicate/retired callbacks; source revoke locks/invalidate result before ledger mutation without pretending old IO ended; known-unsubmitted versus unknown owner preserved",
+    "Actual accepted epoch16 now required by Gate/data owner pins, partition/runtime/DB/target consumers; metadata-only trusted fixture cannot open epoch-bearing resources"
+  ],
+  "actualValidation":{
+    "productionSources":52,
+    "mainClasses":253,
+    "agpHostTests":413,
+    "independentPureHostTests":234,
+    "pureSdkBootclasspathSources":25,
+    "sourceReceiptHostPipelineTests":23,
+    "currentHostAdminSqlChecks":39,
+    "currentHostTaskSqlChecks":235,
+    "mainEvidenceRef":"evidence/production-main-agp-R45-checks.json",
+    "receiptEvidenceRef":"evidence/native-source-bootstrap-host-execution.json",
+    "receiptTestBoundary":"Actual private production composition/receipt/transfer/publication model + real bounded HOST metadata IO, explicitly SYNTHETIC own-Android provenance and clock. NOT actual OS signer/filesystem/Handler publication."
+  },
+  "notClaimed":[
+    "Current productionRoot configured, real accepted-source unlock or formal key custody",
+    "Actual Android PM/filesystem/Application/Handler/Gecko or process-death qualification",
+    "First-fresh exact inventory/seed, rotation/rescue, four-step force UI/owner auth/erasure/newEpoch commit and full entry module activation",
+    "Native source fences/read snapshots/TTL alone constitute all-writer quiescence/complete policy serialization",
+    "JNI/dex/R8/APK/sign/install/device/login/playback/data cleanup or v1 migration"
+  ],
+  "steadyProgress":"Previous ENTRY-ACCEPTED-SOURCE named provider dependency now has concrete stable-resume implementation/producer-consumer wiring and23executable HOST cases; remaining fresh/recovery/qualification are explicit separate gates, not indefinite broad research or UI leaf filling.",
+  "historicalInputs":"Old SQL/proof evidence retained unchanged; current exact compiled SQL39+235 rerun in newR45source-bound artifacts. RootREADME/v1/releases/credentials unmodified."
+}

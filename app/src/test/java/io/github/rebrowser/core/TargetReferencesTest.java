@@ -15,7 +15,7 @@ public final class TargetReferencesTest {
     private static final class Fixture {
         final Object app=new Object();final byte[] epoch=new byte[16];final AtomicBoolean current=new AtomicBoolean(true);
         final AtomicReference<ComponentGate.SourceState> state=new AtomicReference<>(ComponentGate.SourceState.TRUSTED);
-        final ComponentGate gate=new ComponentGate(ProcessRole.MAIN,state::get);
+        final Object incarnation=new Object();final ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,()->state.get()==ComponentGate.SourceState.TRUSTED?ComponentGate.SourceView.acceptedNative(incarnation,new byte[16]):ComponentGate.SourceView.untrusted(state.get()));
         final IdentityHashMap<Object,Info> windows=new IdentityHashMap<>();final AtomicInteger probes=new AtomicInteger();
         final TargetReferences refs;final Method register,checkLease;
         Fixture(int capacity)throws Exception{

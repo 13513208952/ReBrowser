@@ -36,8 +36,17 @@ public final class SigningIdentity {
             return history.contains(nativeLastGoodAnchor);
         }
     }
+    /** Opaque provenance from the actual own PackageManager path, not the metadata reducer. */
+    public static final class OwnInspection {
+        private final Object application;private final Identity identity;private final long version,updated;
+        private OwnInspection(Object application,Identity identity,long version,long updated){this.application=application;this.identity=identity;this.version=version;this.updated=updated;}
+        public Identity identity(){return identity;}
+        boolean belongsTo(Object nativeApplication){return application==nativeApplication;}
+        boolean sameInstallation(OwnInspection other){return other!=null && application==other.application && version==other.version && updated==other.updated && identity.current.equals(other.identity.current);}
+    }
     private SigningIdentity(){}
-    public static Identity inspectOwn(Application nativeApplication)throws Unavailable{
+    public static Identity inspectOwn(Application nativeApplication)throws Unavailable{return inspectOwnForContinuity(nativeApplication).identity();}
+    public static OwnInspection inspectOwnForContinuity(Application nativeApplication)throws Unavailable{
         if(nativeApplication==null)throw new Unavailable();
         try{
             String packageName=nativeApplication.getPackageName();
@@ -50,7 +59,8 @@ public final class SigningIdentity {
             if(current==null || current.length!=1 || current[0]==null || history==null || history.length==0 || history.length>MAX_LINEAGE)throw new Unavailable();
             byte[][] bytes=new byte[history.length][];
             for(int i=0;i<history.length;i++){if(history[i]==null)throw new Unavailable();bytes[i]=history[i].toByteArray();if(bytes[i].length==0 || bytes[i].length>MAX_CERT_BYTES)throw new Unavailable();}
-            return fromSystemVerifiedCertificates(current[0].toByteArray(),bytes);
+            long version=info.getLongVersionCode();if(version!=CompiledSourceIdentity.APPLICATION_VERSION_CODE || info.lastUpdateTime<1)throw new Unavailable();
+            return new OwnInspection(nativeApplication,fromSystemVerifiedCertificates(current[0].toByteArray(),bytes),version,info.lastUpdateTime);
         }catch(PackageManager.NameNotFoundException|RuntimeException failure){throw new Unavailable();}
     }
     /** Package-private metadata reduction only; NEVER expose as an IPC certificate-enrollment API. */

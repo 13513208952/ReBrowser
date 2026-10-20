@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R44",
+  "revision": "R45",
   "authority": [
     "O26",
     "O27",
@@ -93,6 +93,12 @@
           "kind": "host-private-synthetic-owner-platform",
           "purpose": "28 actual OwnerAuthentication controller/private-ticket/bridge cases using private reflected fake platform; no AndroidPlatform/OS auth/real signer calls",
           "state": "main-HOST-control-flow-tested-NOT-system-evidence"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/SourceBootstrapTest.java",
+          "kind": "host-native-source-receipt-synthetic-provenance",
+          "purpose": "23actualHOST receipt/private synthetic OS provenance/real metadata IO/gate-partition/publication pipeline cases, not Android acceptance",
+          "state": "main-HOST-controlled-source-pipeline-tested-Android-pending"
         }
       ]
     },
@@ -558,7 +564,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -598,7 +605,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -618,7 +626,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -633,7 +642,29 @@
       "validationMeaning": "R32 actual Android own-package/UID/single-signer/history API compile;4HOST publicTOY-octet metadata tests, NOTOSsigning inspection/certificates/privatecustody",
       "runtimePending": true,
       "testReferenceGroup": "continuity",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-source-bootstrap-contract.json"
+      ]
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SourceBootstrap.java",
+      "group": "continuity",
+      "kind": "native-code",
+      "responsibility": "原生自身签名/编译Root/last-good稳定快照检查与一次性交接回执，非元数据布尔解锁",
+      "state": "source-in-progress-api-compiled",
+      "validationRefs": [
+        "VT04"
+      ],
+      "validationMeaning": "23 actual HOST receipt/metadata-IO/publication-model cases via PRIVATE SYNTHETIC own-Android provenance, not actual Android source/Handler/filesystem acceptance",
+      "runtimePending": true,
+      "testReferenceGroup": "continuity",
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-source-bootstrap-contract.json",
+        "evidence/native-source-bootstrap-host-execution.json",
+        "evidence/production-main-agp-R45-checks.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
@@ -647,7 +678,10 @@
       "validationMeaning": "R32 actual ownedBack single-layer native reducer andcompiledRoot publicmetadata;15newpureHOSTtests; notAndroid UI orsourceunlock",
       "runtimePending": true,
       "testReferenceGroup": "continuity",
-      "implementationReadinessRef": "records/implementation-readiness.json"
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-source-bootstrap-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
@@ -665,7 +699,8 @@
       "implementationEvidence": [
         "records/last-good-source-store-contract.json",
         "evidence/production-unit-tests.json",
-        "evidence/production-android-api-compile.json"
+        "evidence/production-android-api-compile.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -785,7 +820,8 @@
         "evidence/changed-native-android-api-compile.json",
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -843,7 +879,8 @@
         "evidence/task-journal-current-schema-equivalence.json",
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -1227,7 +1264,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -1307,7 +1345,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {
@@ -1330,7 +1369,8 @@
       "implementationEvidence": [
         "records/entry-source-incarnation-batch-contract.json",
         "evidence/entry-source-context-host-execution.json",
-        "evidence/production-main-agp-R44-checks.json"
+        "evidence/production-main-agp-R44-checks.json",
+        "records/native-source-bootstrap-contract.json"
       ]
     },
     {

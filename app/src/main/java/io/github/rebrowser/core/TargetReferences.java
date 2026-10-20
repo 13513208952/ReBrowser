@@ -99,7 +99,7 @@ public final class TargetReferences {
     private WindowState inspect(Object activity){if(checking)throw denied();checking=true;try{return probe.inspect(activity);}finally{checking=false;}}
     private void requireLive(WindowState state){if(state==null || state.application!=application || state.window==null || state.destroyed || state.finishing)throw denied();}
     private void access(ComponentGate.BusinessPermit permit){
-        thread();if(checking)throw denied();sourceLifetime.checkOrBind(permit);checking=true;try{epochGuard.checkCurrent(epoch.clone());}finally{checking=false;}sourceLifetime.checkOrBind(permit);
+        thread();if(checking)throw denied();sourceLifetime.checkEpochOrBind(permit,epoch);checking=true;try{epochGuard.checkCurrent(epoch.clone());}finally{checking=false;}sourceLifetime.checkEpochOrBind(permit,epoch);
     }
     private void thread(){if(Thread.currentThread()!=owner)throw new IllegalStateException("Native window registry owner thread required");}
     private static SecurityException denied(){return new SecurityException("Native window target unavailable or stale");}

@@ -92,7 +92,7 @@ public final class TaskJournal {
     }
     public TaskJournal(SQLiteDatabase nativeDedicatedDatabase,ComponentGate gate,byte[] targetInstallSpkiSha256,byte[] dataEpoch,ComponentGate.BusinessPermit nativeOpeningPermit){
         if(nativeDedicatedDatabase==null || gate==null)throw invalid();
-        db=nativeDedicatedDatabase;this.gate=gate;sourceLifetime=gate.newResourcePin();sourceLifetime.checkOrBind(nativeOpeningPermit);target=hex(fixed(targetInstallSpkiSha256,32));epoch=hex(fixed(dataEpoch,16));
+        byte[] acceptedEpoch=fixed(dataEpoch,16);db=nativeDedicatedDatabase;this.gate=gate;sourceLifetime=gate.newResourcePin();sourceLifetime.checkEpochOrBind(nativeOpeningPermit,acceptedEpoch);target=hex(fixed(targetInstallSpkiSha256,32));epoch=hex(acceptedEpoch);
     }
     public static String[] schemaStatements(){return new String[]{CREATE,INSERT_GUARD,DELETE_GUARD,UPDATE_GUARD};}
     public static String lostProcessRecoveryStatement(){return RECOVER;}

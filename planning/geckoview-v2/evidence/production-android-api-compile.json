@@ -46,7 +46,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
-      "sha256": "2b9bc7ced8335cd0ffc307231d38aeafb053b7d3664f81bba9de48f9464cf0aa"
+      "sha256": "fa92aba18dbd8c6c51ef098f09bc6f39534bf5c40037e96349bcee7b345dfe47"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
@@ -74,7 +74,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
-      "sha256": "3e2e9c7794233d0425d52f20d9abbebc5ecddcd5992185e2ba42c1d7890c0afe"
+      "sha256": "62ab8120f832148ffb4861419856324e89323282978725c9e3d634b9c0b802a1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -86,7 +86,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
-      "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
+      "sha256": "f4b6a282c8677d4bf7a1c70fb817a1353e898bddd2938f4a030a1203a9bf18d1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
@@ -98,7 +98,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
-      "sha256": "bc720145110db3b74b9e246d7f7cb8c70222f81dad4bea0b962aacf7c5232c3e"
+      "sha256": "4bc75882096e4599628e6b046b43047e76b1f19f256afbb73ccc5e1e1dbbf59a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
@@ -143,7 +143,7 @@
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$1.class",
-      "sha256": "b578d9f152755e0c4017eefab67f84cc4c9d8af5c46eb85163e7035d4bcd4c47",
+      "sha256": "72814d31f6bc5a3496e1b23e3ee58de7c23d5463f2c9725b7500b74c5fbbca1d",
       "classMajor": 52
     },
     {
@@ -153,12 +153,12 @@
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$BusinessPermit.class",
-      "sha256": "0b675c80da2003c8e98d425f9cd04aa78f02b7067a59c01d2e13d6f690c4874a",
+      "sha256": "bc628e980ad9ebbb7215af94ea5554aed9e927e252622611662fb6e3300ec915",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$ResourcePin.class",
-      "sha256": "25975bef88273e33c488c8958bcced4fbf6784d8bc14e33abcc8f9375198bac1",
+      "sha256": "3ecb16afd82fa73d0a4edf626e25798977ccc3e647c1ecbb50513c10a5c5d631",
       "classMajor": 52
     },
     {
@@ -168,17 +168,17 @@
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$SourceState.class",
-      "sha256": "ede0b3d895954751e13d522dcc260ddc575aff8a65ea613fce04cfbafa460c3c",
+      "sha256": "a973352280e39119e7e5c0aeb0939e826baa20778d14d842b91b31ce576aa7a5",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate$SourceView.class",
-      "sha256": "d5ff21a0b74cc95d2c82f3dafbe7629ebaa2da09e197865209f3f1193a1ef43c",
+      "sha256": "4057fcd3a38c069b57a2844d638f357988252a3c48293dffcc43fc5a483df650",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/bootstrap/ComponentGate.class",
-      "sha256": "32d9add37a31897882e0745e608e0f6569107ebc9e1b7f30648fb0c799f2a316",
+      "sha256": "e92b3ccdefd57b53f9418c1991bfc89217904b7d097b4587ffc3e545f598240c",
       "classMajor": 52
     },
     {
@@ -347,8 +347,13 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/continuity/CompiledSourceIdentity$RootRelation.class",
+      "sha256": "683f8189eb72abb0590e04c7cd0eb0e7e7bb188af470247a8c0533b05bf0f03f",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/continuity/CompiledSourceIdentity.class",
-      "sha256": "11e95fc70e535dcb8993c9ada5fa2a37bbe37c03b43e36bfb29f54ec398e6131",
+      "sha256": "355a83fb643df922dc674772f7c3bb7cb9e6e57100b8a337859fef49474d8a2f",
       "classMajor": 52
     },
     {
@@ -423,7 +428,7 @@
     },
     {
       "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Blob.class",
-      "sha256": "6f5410a63bd007a61c86fe18542df569bd2a2bb35287f1cf97c6133a1f7d7c34",
+      "sha256": "f9d090bc295b90602dc534addd87cdd50db4630df88ff540378880ad44c4ba54",
       "classMajor": 52
     },
     {
@@ -433,7 +438,7 @@
     },
     {
       "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Locked.class",
-      "sha256": "2b6ee9f42130e3cc22a148fe9e62967228f93afd70f4eab496c073d8b676da2e",
+      "sha256": "1b56f16a7818f957e54f395ea58d9c42211bd86cb18b0ec6fe4076a9452cc2a8",
       "classMajor": 52
     },
     {
@@ -447,23 +452,28 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/continuity/LastGoodSourceStore$ReadReceipt.class",
+      "sha256": "6308e734ea70dbbe029fc49a3f508b5dd2ef9fccb1938e92c9080c5e7f8600b1",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/continuity/LastGoodSourceStore$Record.class",
-      "sha256": "bb368dd02634f64290b0dda525543a205b0e24885491a8eb150571d6f0be07b7",
+      "sha256": "3313e9226b58098eacf8609b3296ae16bba62cfe6bf317cfc273d34bfee57ff5",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/continuity/LastGoodSourceStore$SourceEpoch.class",
-      "sha256": "fae105ef208145d8510b1aa5dd14a314e0d2e94380beb9c72c6cbd6e913d7a5f",
+      "sha256": "793b99e0fe452bb196202364735c469e3f2ffc2ee329019a4c35be9aa8d08bab",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/continuity/LastGoodSourceStore$View.class",
-      "sha256": "ddb71ffa3df37640ae1cb9e6d6c331f64b3c89e46f81f1d668c5c69afff27491",
+      "sha256": "67d65dd8a64bb617f5df1bf2790752811b021fe9c1950ad0168e71385bea65fa",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/continuity/LastGoodSourceStore.class",
-      "sha256": "76a508aafa87b9d1f78716966eb3daa29790a21237487f2f3f04eed8a0f1b64a",
+      "sha256": "e202b974079611788ba4a1ade9e76cce7999afe4d6b568a4a3cd778f555298ec",
       "classMajor": 52
     },
     {
@@ -723,7 +733,7 @@
     },
     {
       "path": "io/github/rebrowser/engine/PartitionCatalog.class",
-      "sha256": "dcc063dfcfa0dbbe5fb9abab402b02737a28707c2281d8262be34f7cfbf09655",
+      "sha256": "47c489039171ac5f8142701dbbee5499fd994a8d4676349f63612019731851eb",
       "classMajor": 52
     },
     {

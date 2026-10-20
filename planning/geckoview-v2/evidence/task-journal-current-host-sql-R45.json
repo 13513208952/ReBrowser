@@ -1,0 +1,36 @@
+{
+  "scope": "actual compiled literal DDL/recovery on owned HOST SQLite, exhaustive transition graph and paired SQL transaction; NOT Android DAO execution/complete policy admission",
+  "hostSqlChecks": 235,
+  "validStateTriples": 14,
+  "transitionPairsTested": 196,
+  "acceptedTransitionPairs": 45,
+  "concurrentHostSqlWriters": 2,
+  "sqliteVersion": "3.46.1",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "sha256": "45491f173b68b4da1cc6c49cec26b4b1b9fc9b2e3507b830576cdc4b2ee7ac06"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+      "sha256": "60d5b1d7235064752f4ec356481fc0d54a14fef754b373871c82664446db9119"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "8765745ed230553cae930bf9248cd9780133b15c73d791f1a3fe6daaa07e65d4"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/DumpTaskJournalSchema.java",
+      "sha256": "330ab922abd3ba8f029d40dbe99a9b2d17ebdd7009d2830b0ca1f8a295734dba"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/task_journal_sql.py",
+      "sha256": "d6bc0afac1268ff35a33a568e10a3f4f08843aacb00c3bed305e3267160cda1d"
+    }
+  ],
+  "ddlAndRecoverySha256": "491f3443983feea8fb42f8ff21fa493a962fc1b96681a0376068b4bb188fde93",
+  "temporaryDbAndHarnessRemoved": true,
+  "androidSQLiteMethodsExecuted": false,
+  "actualNativeCoordinatorAndPolicyAtomicityTested": false,
+  "realDataOrKeysUsed": false
+}

@@ -1,6 +1,8 @@
-# 实施完整性看板 · R44（按模块联动闭合）
+# 实施完整性看板 · R45（原生来源回执与入口联动）
 
-当前按[模块联动计划](../records/module-integration-plan.json)推进：入口与进程→浏览器核心→Gecko宿主→管理员协议→内建连接器→UI，边界/协议按需协同调整；阻碍有负责人/退出条件和下一可执行路径，不能无限卡住。R44入口/来源生命周期跨12个runtime代码文件，实际AGP386HOST（独立纯切片230）及当前编译DDL HOST SQL39+235通过。入口完整激活仍依赖实际native continuity接受回执；metadata快照/源码编译不是信任来源或整模块实机完成。
+R45跨12个runtime文件完成STABLE既有来源回执→原生入口→epoch消费者的源码联动：52源码/413实际AGP HOST（234独立纯切片），23个回执/metadata文件/epoch分区/发布模型测试用明确合成OS来源。当前Root未配置，无实际Android PM/FS/Handler或业务解锁证据；缺基准/非stable/仅lineage轮换继续锁定，first-fresh精确清单/seed、恢复/销毁提交仍未完成。
+
+以下R44及更早阶段保留其历史范围。当前按[模块联动计划](../records/module-integration-plan.json)推进：入口与进程→浏览器核心→Gecko宿主→管理员协议→内建连接器→UI，边界/协议按需协同调整；阻碍有负责人/退出条件和下一可执行路径，不能无限卡住。R44入口/来源生命周期跨12个runtime代码文件，实际AGP386HOST（独立纯切片230）及当前编译DDL HOST SQL39+235通过。入口完整激活仍依赖实际native continuity接受回执；metadata快照/源码编译不是信任来源或整模块实机完成。
 
 以下R43界面批次是历史阶段记录，不是当前优先前沿。O41后允许[完成本文件调研的节点](../records/implementation-readiness.json)先实现；按O45主线转主程序/管理员代码；51源码（25 HOST/26 Android绑定WIP），本批按O64至少10个实质runtime代码文件（8新+2改，不以测试/文档凑数且不设上限）。实际AGP Java编译+367HOST测试（215纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+37任务线程/fence+10预算+18窗口registry+37窗口界面模型）；manifest任务UP-TO-DATE核对当前产物。工具栏/双层面板/多选/进度/Dialog/own-window样式/metrics源码已补，但真实Android View/Window/Gecko、完整epoch域工厂/ActorContext/有限权限/恢复仍未接通；窗口句柄和模型不是权限。新增TaskCoordinator真实调度/Journal适配器与ResourceBudgets；合成journal/内存观测不冒充真实Android SQLite/OS运行，注册工作集静默也不是全部Gecko/系统写者静默。本轮确实启动并通过AGP编译/测试任务，R38和R42独立检查保留历史，不冒充真实Android运行；1033项独立JSON对照保留，不把它们标成A10/A11或整体领域完成。未决权限/逐动作schema/准入/Android仍分别阻断其自己的集成。
 

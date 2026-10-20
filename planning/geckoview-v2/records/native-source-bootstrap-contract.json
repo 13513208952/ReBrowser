@@ -1,0 +1,31 @@
+{
+  "schema":1,
+  "revision":"R45",
+  "authority":["O64","O67","O68","O69","O70"],
+  "moduleGoal":"Close entry's named native accepted-source provider dependency for exact STABLE existing-source resume, not fresh-install/rotation/rescue/destructive acceptance.",
+  "commitMinimum":{"minimumMeaningfulRuntimeCodeFiles":10,"maximumFiles":null},
+  "runtimeCodeBatch":[
+    "app/src/main/java/io/github/rebrowser/continuity/SourceBootstrap.java",
+    "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+    "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+    "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+    "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+    "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+    "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+    "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+    "app/src/main/java/io/github/rebrowser/core/TargetReferences.java"
+  ],
+  "invariants":[
+    "Production acceptance only actual own Android signer inspection + current compiled Root + exact unchanged CURRENT/STABLE private native ledger. Public metadata/lineage alone never issues receipt",
+    "Exact current signer and Root must match last-good pair. Lineage-only successor, prepared/destructive/empty/missing/corrupt/unfinished metadata require separate recovery; no silent seed/write/abandon/erasure",
+    "Source receipt private-issued/exact native app/epoch, short monotonic deadline/single transfer. Root-unconfigured fast path performs no PM/metadata IO",
+    "Background one-owner bounded inspection and generation-fenced main-thread publication, no UI-thread FS/PM IO. Native revoke only locks/increments publication generation, never grants or retries",
+    "Actual native source snapshot carries immutable epoch16; DB/catalog/runtime/target epoch checks cannot bind an unrelated native epoch to a current permit",
+    "No business DB/Gecko/connector restore during source inspection. No owner OS prompt or formal key generation. Existing bootstrap ledger/lock metadata is not business data",
+    "Native continuity writers MUST fence entry publication/business before ledger mutation; read snapshots/TTL are not complete concurrent policy serialization or all-writer quiescence"
+  ],
+  "stillPending":"Fresh-install exact inventory/seed, signer-rotation/rescue, four-step UI/native owner auth/exact erasure/epoch commit, complete native engine restart/writer quiescence and real Android filesystem/source/process qualification. Root remains unconfigured in current production table."
+}

@@ -1,5 +1,5 @@
 {
-  "revision": "R44",
+  "revision": "R45",
   "currentCompiledDdlAndRecoverySha256": "491f3443983feea8fb42f8ff21fa493a962fc1b96681a0376068b4bb188fde93",
   "historicalSqlEvidenceRef": "evidence/task-journal-host-sql-R40-checkpoint.json",
   "actualCurrentCompiledSchemaExtracted": true,
@@ -8,7 +8,7 @@
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
-      "sha256": "db918d341be8a99abf29612df51d98856c52846801e71394d1fb7c27cd14c7b2"
+      "sha256": "45491f173b68b4da1cc6c49cec26b4b1b9fc9b2e3507b830576cdc4b2ee7ac06"
     },
     {
       "path": "planning/geckoview-v2/experiments/DumpTaskJournalSchema.java",
@@ -19,5 +19,5 @@
       "sha256": "d6bc0afac1268ff35a33a568e10a3f4f08843aacb00c3bed305e3267160cda1d"
     }
   ],
-  "currentSqlExecutionRef": "evidence/task-journal-current-host-sql-R44.json"
+  "currentSqlExecutionRef": "evidence/task-journal-current-host-sql-R45.json"
 }

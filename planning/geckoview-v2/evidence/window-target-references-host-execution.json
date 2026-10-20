@@ -1,15 +1,15 @@
 {
-  "revision": "R44",
+  "revision": "R45",
   "hostTestsPassed": 19,
   "scope": "Actual native window registry methods through PRIVATE reflected SYNTHETIC probe/Object window helpers; no Android Activity/Application/Window method or public Activity handoff cast executed",
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
-      "sha256": "3d5a5473b46bdf9c111637b8e3a62997ceacf093f5290de2c8e4dc389556a6c3"
+      "sha256": "1a56070130d6a84cc643b3d40cfb11557973aa5f18060cc1706d9bc6f38aaeaf"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java",
-      "sha256": "ce8b460dd6c7d5a6442f97c51c6bdde339ef3d167010c3645e29350dbb10deee"
+      "sha256": "a2debb1fb5c401b5f98fe39914d77d9c1256ac267c4987da76646c4a09e7e676"
     }
   ],
   "actualRegistryAndLeaseMethodsExecuted": true,
@@ -19,5 +19,5 @@
   "partitionSessionDocumentOrApkTargetsImplemented": false,
   "temporaryFixturesRemoved": true,
   "realUserDataOrDeviceUsed": false,
-  "currentActualHostRunRef": "evidence/production-main-agp-R44-checks.json"
+  "currentActualHostRunRef": "evidence/production-main-agp-R45-checks.json"
 }

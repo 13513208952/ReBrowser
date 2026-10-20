@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R44",
+  "revision": "R45",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,11 +225,12 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "按O67/O68/O69以模块完整契约和联动闭合为重心，优先入口/进程，其次浏览器核心/Gecko宿主/管理员协议/内建连接器/UI；协议边界可随能力需求调整，不无限卡同一阻碍",
-    "入口/来源生命周期闭合切片跨12runtime文件：实际own-process路由和单StartupFactory；NativeSourceView新incarnation/观察到的代次绑定permit，锁定/切换/ABA不复活旧许可",
-    "Browser/partition/runtime/task/target/DB实例sticky资源pin防新permit重定向旧资源；原运行者MEM结算/ownedclose仍不依赖新businesspermit；DBconstructor显式openingpermit，公开nativeAPI按需调整，wire/DDL未改",
-    "实际AGP主工程51源码/244classes/HOST386；纯源25文件独立230HOST+真实SDKbootclasspath；当前编译DDL实际HOST SQLite39+235重跑，历史原证据不改",
-    "真实Android进程/Source接受回执/SQLiteDAO/GeckoRuntime创建与完整模块验收仍待；Root继续UNCONFIGURED/LOCKED。Nativecontinuity实际acceptedincarnation提供器是下一明确依赖，不以布尔/metadata/调试解锁替代"
+    "入口依赖继续闭合：新增SourceBootstrap原生stable精确来源回执，现有11runtime消费者一起调整，共12runtime文件；不把模块独立做死/不以UI叶节点数代替进展",
+    "实际own PM包装两次版本/更新时间/签名稳定检查、当前compiledRoot、固定no-backup目录及last-good精确CURRENT/STABLE快照；30s/单次/exact native app回执交接到有代次/退役/重复回调闸门的Main发布",
+    "Root未配置fast path不PM/FS IO；配置后单worker有界metadata检查，不创建marker/读businessDB；缺基准/非stable/轮换仅lineage/不确定状态继续LOCKED，不能布尔/metadata/调试解锁",
+    "原生SourceView携immutableepoch16，Gate及partition/runtime/DB/target绑定实际acceptedepoch，metadata-only trusted fixture不能开epoch资源；Native continuity写ledger前必须fence入口",
+    "实际AGP52源码/253classes/HOST413；独立纯切片25文件234HOST+SDKbootclasspath；当前编译DDL HOST SQL39+235；真实Android源签名/文件系统/Handler/完整模块未运行",
+    "下一明确依赖：first-fresh准确私有清单/seed与rotate/rescue/erasure/epoch commit，以及browser/Gecko真实factory/document/checkpoint/permission闭合；不等待Root配置才继续编码"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

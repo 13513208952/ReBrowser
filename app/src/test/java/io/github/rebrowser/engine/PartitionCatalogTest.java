@@ -11,7 +11,8 @@ import org.junit.Test;
 public final class PartitionCatalogTest {
     private static final class Fixture {
         final AtomicReference<ComponentGate.SourceState> source=new AtomicReference<>(ComponentGate.SourceState.TRUSTED);
-        final ComponentGate gate=new ComponentGate(ProcessRole.MAIN,source::get);
+        final Object incarnation=new Object();
+        final ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,()->source.get()==ComponentGate.SourceState.TRUSTED?ComponentGate.SourceView.acceptedNative(incarnation,new byte[16]):ComponentGate.SourceView.untrusted(source.get()));
         final ComponentGate.BusinessPermit permit=gate.requireBusiness();
         final PartitionCatalog catalog=new PartitionCatalog(gate,new byte[16],4);
     }
@@ -44,10 +45,13 @@ public final class PartitionCatalogTest {
         assertThrows(IllegalArgumentException.class,()->c.requireGate(new Fixture().gate));
     }
     @Test public void acceptedNativeCutoverCannotReuseOldContextWithFreshPermit(){
-        AtomicReference<ComponentGate.SourceView> source=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(new Object()));ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,source::get);PartitionCatalog partitions=new PartitionCatalog(gate,new byte[16],4);ComponentGate.BusinessPermit old=gate.requireBusiness();PartitionCatalog.Lease lease=partitions.create(PartitionCatalog.Domain.BROWSER,new Object(),old);source.set(ComponentGate.SourceView.acceptedNative(new Object()));ComponentGate.BusinessPermit fresh=gate.requireBusiness();assertThrows(SecurityException.class,()->partitions.activeContextId(lease,fresh));assertThrows(SecurityException.class,()->partitions.create(PartitionCatalog.Domain.BROWSER,new Object(),fresh));assertNotNull(new PartitionCatalog(gate,new byte[16],4).create(PartitionCatalog.Domain.BROWSER,new Object(),fresh));
+        AtomicReference<ComponentGate.SourceView> source=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(new Object(),new byte[16]));ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,source::get);PartitionCatalog partitions=new PartitionCatalog(gate,new byte[16],4);ComponentGate.BusinessPermit old=gate.requireBusiness();PartitionCatalog.Lease lease=partitions.create(PartitionCatalog.Domain.BROWSER,new Object(),old);source.set(ComponentGate.SourceView.acceptedNative(new Object(),new byte[16]));ComponentGate.BusinessPermit fresh=gate.requireBusiness();assertThrows(SecurityException.class,()->partitions.activeContextId(lease,fresh));assertThrows(SecurityException.class,()->partitions.create(PartitionCatalog.Domain.BROWSER,new Object(),fresh));assertNotNull(new PartitionCatalog(gate,new byte[16],4).create(PartitionCatalog.Domain.BROWSER,new Object(),fresh));
     }
     @Test public void observedLockDoesNotReactivatePartitionCatalogEvenWithoutErasure(){
         Fixture f=new Fixture();PartitionCatalog.Lease lease=f.catalog.create(PartitionCatalog.Domain.BROWSER,new Object(),f.permit);f.source.set(ComponentGate.SourceState.LOCKED);f.gate.sourceState();f.source.set(ComponentGate.SourceState.TRUSTED);assertThrows(SecurityException.class,()->f.catalog.requireActive(lease,f.gate.requireBusiness()));assertTrue(lease.opaqueRef().startsWith("ctx_"));
+    }
+    @Test public void wrongNativeEpochCannotBindEvenAnEmptyCatalog(){
+        Fixture f=new Fixture();byte[] wrong=new byte[16];wrong[0]=1;PartitionCatalog catalog=new PartitionCatalog(f.gate,wrong,1);assertThrows(SecurityException.class,()->catalog.create(PartitionCatalog.Domain.BROWSER,new Object(),f.permit));
     }
     @Test public void ownerThreadIsEnforcedBeforeMutation()throws Exception{
         Fixture f=new Fixture();ExecutorService pool=Executors.newSingleThreadExecutor();

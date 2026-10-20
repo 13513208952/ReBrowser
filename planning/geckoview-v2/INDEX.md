@@ -1,10 +1,10 @@
-# ReBrowser v2 · 模块联动闭合 R44（当前：入口与进程）
+# ReBrowser v2 · 模块联动闭合 R45（当前：原生来源回执→入口）
 
 > **已按O26恢复并调整任务顺序。** 子应用占用查看/清理暂搁置；先技术验证，再构建应用本体全代码总树。O28要求保存后继续，不是暂停；O41允许已搞清实现方法的总树文件按文件推进，O42再次明确推送后不自行停工。[O25暂停快照](PAUSED_REVIEW.md)仅作历史记录。
 >
 > 当前：[应用本体目标代码总树](APPLICATION_CODE_TREE.md)／[全代码清单](records/application-code-files.json)／[技术验证状态](records/technology-validation.json)。已验证二进制、API编译、隔离R8 Release打包，以及O29授权手机上的[本地合成Native/扩展/MAIN世界/context子集](evidence/validation-android-local-synthetic.json)。**官网、真实播放、本人验证及Popup/恢复等仍未测**；不能宣称完整产品已实现或全部规划完成。
 
-> 状态：**主线已按O45转为主程序与管理员系统代码实现，调查只按具体阻碍开展**。独立 `rebrowser` Android 工程、Application/原生主窗口/内部管理员控制台/来源闸门/Gecko owner和编译身份验签已开始真实编码；51个本体源码已创建，其中25个HOST切片、26个Android绑定WIP。按O67/O68/O69转为完整模块契约和联动闭合：入口与进程→浏览器核心→Gecko宿主→管理员协议→内建连接器→原生UI，依赖按需并行，边界/协议可按能力需求动态调整，不无限卡同一阻碍。本批入口/来源生命周期闭合跨12个实质runtime文件，修复旧许可/旧资源在来源切换后复用风险；未靠UI叶节点数量代替模块完成。实际离线AGP Java编译与386项HOST测试通过，纯切片230项独立HOST及SDK bootclasspath通过，当前编译DDL实际HOST SQL39+235检查通过（原历史证据保留）；manifest任务UP-TO-DATE核对。真实Android View/Window/Dialog/Gecko回调和完整网页UI仍未验证，Root/来源未配置保持锁定。R42独立Java检查保留为历史，不与本轮AGP混写；另有1033项独立JSON对照。正式来源/根未配置保持业务锁定，完整浏览器和命令准入仍未完成。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
+> 状态：**主线已按O45转为主程序与管理员系统代码实现，调查只按具体阻碍开展**。独立 `rebrowser` Android 工程、Application/原生主窗口/内部管理员控制台/来源闸门/Gecko owner和编译身份验签已开始真实编码；52个本体源码已创建，其中25个HOST切片、27个Android绑定WIP。按O67/O68/O69转为完整模块契约和联动闭合：入口与进程→浏览器核心→Gecko宿主→管理员协议→内建连接器→原生UI，依赖按需并行，边界/协议可按能力需求动态调整，不无限卡同一阻碍。本批跨12个实质runtime文件接入原生STABLE精确来源恢复回执：两次实际own signer/安装版本检查、compiledRoot、固定no-backup精确快照、30s一次性交接、单worker及Main发布闸门，epoch16贯通Gate/存储/分区/目标/runtime。当前Root仍未配置；23项回执流水线HOST测试使用明确私有合成OS来源，不是实际Android接受。实际离线AGP编译与413HOST通过，纯切片234项独立HOST及SDK bootclasspath、当前编译DDL HOST SQL39+235通过；manifest任务UP-TO-DATE核对。真实Android View/Window/Dialog/Gecko回调和完整网页UI仍未验证，Root/来源未配置保持锁定。R42独立Java检查保留为历史，不与本轮AGP混写；另有1033项独立JSON对照。正式来源/根未配置保持业务锁定，完整浏览器和命令准入仍未完成。正式密钥、设备登记与产品发行未开始；独立临时签名验证包已安装并运行，不是v2产品安装。按O37，旧主体ZIP与非主体回收站处置同属一个[旧结构审查整理任务](records/structure-retirement-policy.json)，与新版本验证/代码基础同轮并行；保存或一次整理不是暂停节点，价值未耗尽的仍保留。
 
 ```mermaid
 mindmap
@@ -41,9 +41,9 @@ mindmap
 
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
-| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、25 HOST与26 Android绑定WIP，本轮实际AGP Java编译/386项HOST，清单任务UP-TO-DATE核对 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
+| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、25 HOST与27 Android绑定WIP，本轮实际AGP Java编译/413项HOST，清单任务UP-TO-DATE核对 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 全部目标运行代码逐文件展开，区分PLAN与HOST，测试等辅助只概括引用 | O26／O27／O41，HOST不等于Android集成 |
-| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，386项HOST（230纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+40任务线程/工作集/fence+10资源计数/策略+19窗口目标registry+37窗口界面模型）；本轮AGP实际执行，不是Android UI运行 |
+| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，413项HOST（234纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+40任务线程/工作集/fence+10资源计数/策略+19窗口目标registry+37窗口界面模型+23原生回执流水线）；本轮AGP实际执行，不是Android UI运行 |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
 | [旧结构审查整理：统一任务](records/structure-retirement-policy.json)／[回收站记录](records/noncode-retirement-review.json) | 主体ZIP／凭据保留／其他价值耗尽进Trash是同任务内分流，与新版本工作并行 | O37；不把一次整理当停止节点 |
@@ -84,7 +84,8 @@ mindmap
 | [流式对象加密边界](records/object-aead-implementation-contract.json)／[新旧互通](evidence/object-aead-production-interop.json) | 新对象一次性ID/canonical catalog头/32KiB认证帧，36双向与精确字节检查 | 不等于ZLIB原文验证、DB提交或Android加密通过 |
 | [Native导航委托](../../app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java)／[范围](records/navigation-delegate-contract.json) | Browser域Source/session/partition闸门、显式web/blank加载判定、位置/历史/错误观测；12项HOST策略/SDK DTO测试 | 未执行真实回调；Popup及data/blob等方案未集成时拒绝，不冒充完整浏览器；Initializer现于open前收到精确SessionRef |
 | [模块优先级/联动闭合](records/module-integration-plan.json)／[入口生命周期契约](records/entry-source-incarnation-batch-contract.json) | 先完整模块契约与可执行跨模块路径；当前12文件入口/资源生命周期，之后按优先级推进 | 接口/协议可动态协同调整，保留安全不变量与版本化历史；明确阻碍/退出条件，非无限研究 |
-| [本轮实际AGP检查](evidence/production-main-agp-R44-checks.json)／[当前入口批次](records/entry-source-incarnation-batch-contract.json) | 51源码/244class/386HOST；当前HOST SQL39+235，独立纯切片230 | NativeSourceView是原生已接受上下文的快照，不是认证回执；Root无配置仍锁定，未完成整模块实机验收 |
+| [本轮原生稳定来源回执](records/native-source-bootstrap-contract.json)／[HOST流水线](evidence/native-source-bootstrap-host-execution.json)／[AGP](evidence/production-main-agp-R45-checks.json) | 52源码/253class/413HOST；23回执/精确metadata IO/epoch分区/发布模型测试，原生平台事实明确合成 | 缺基准/非stable/轮换仅lineage继续锁定，未种植/修复/销毁；实际Android PM/FS/Handler和完整入口未验收 |
+| [R44历史AGP检查](evidence/production-main-agp-R44-checks.json)／[当前入口批次](records/entry-source-incarnation-batch-contract.json) | 51源码/244class/386HOST；当前HOST SQL39+235，独立纯切片230 | NativeSourceView是原生已接受上下文的快照，不是认证回执；Root无配置仍锁定，未完成整模块实机验收 |
 | [R43历史AGP检查](evidence/production-main-agp-R43-checks.json)／[十代码文件批次](records/native-browser-window-batch-contract.json)／[只读提交前检查](check_commit_batch.py) | 51源码/238class/367HOST；编译/测试任务实际执行，清单任务UP-TO-DATE核对 | 10是本批runtime源文件最小工作量，不是上限或完整职责验收；无JNI/dex/R8/APK/设备运行 |
 | [R42历史低内存独立检查](evidence/production-main-standalone-jvm-checks.json)／[最近完整AGP](evidence/production-main-agp-R38-checkpoint.json) | 本轮compact192MiB heap/96MiB meta/48MiB code、顺序JVM、内存≥2048MiB；原Android构建≥3GiB闸门不变 | JDK java.base+SDK类型类路径不是Android bootclasspath；六个改动原生文件另单独实际bootclasspath检查，非APK/运行 |
 | [Gecko进度/快照回调](../../app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java) | 实际SDK加载/安全观测、Source/session/partition检查和单占位敏感SessionState copy转交 | 仅API编译，没有新增回调/Gecko测试；PageStop非任务完成、失效不释放旧writer、observer未知不重试、无明文快照日志 |
@@ -133,7 +134,8 @@ mindmap
 | [事务内当前状态闸门](records/task-journal-native-fence-contract.json)／[当前编译SQL等价](evidence/task-journal-current-schema-equivalence.json) | 实际TaskJournal在获锁后和提交前强制复核；私有原操作/线程fence拒绝过期/逃逸/递归/跳过 | 当前DDL与历史235 SQL输入相同，不冒充本轮重跑或真实Android事务/完整权限序列化 |
 | [原生目标句柄WINDOW切片](records/target-references-contract.json)／[HOST证据](evidence/window-target-references-host-execution.json) | 精确原生Activity/Application/Window、epoch/revision绑定；弱UI引用与退役/tombstones，派发前重查 | 实际Android窗口/ActorContext/派发器及其他目标种类未接通；ref/lease不是权限 |
 | [原生窗口组件与模型](evidence/native-window-models-host-execution.json) | 工具栏、双层标签面板、多选、单调渐变进度、Dialog所有权、own-window样式/insets/metrics；37HOST模型测试 | 真正Android绘制/回调、核验epoch/域工厂、完整UI/有限权限/恢复未接通 |
-| [R44模块闭合切片审查](reviews/R44-entry-module-source-lifetime-review.json) | 实际process路由/唯一Startup/原生incarnation和permit代次/跨模块sticky资源pin；12个runtime文件 | 真实Android进程/source接受/SQLite DAO/Gecko创建未执行；入口完整激活仍依赖原生continuity接受提供器 |
+| [R45原生来源回执审查](reviews/R45-native-stable-source-bootstrap-review.json) | stable精确恢复提供器已编码，跨12runtime消费者；来源epoch强绑定 | first-fresh精确清单/seed、rotate/rescue、销毁提交及实际Android资格仍待；不是metadata布尔解锁 |
+| [R44历史模块闭合切片审查](reviews/R44-entry-module-source-lifetime-review.json) | 实际process路由/唯一Startup/原生incarnation和permit代次/跨模块sticky资源pin；12个runtime文件 | 真实Android进程/source接受/SQLite DAO/Gecko创建未执行；入口完整激活仍依赖原生continuity接受提供器 |
 | [R43历史自检结果](reviews/R43-ten-native-code-file-window-batch-review.json) | 本批10个runtime代码文件，实际AGP和367HOST | 未把工作量/编译当产品完成 |
 | [R42历史自检结果](reviews/R42-native-window-target-reference-review.json) | 43源码/330HOST，6改动原生文件SDK bootclasspath编译 | 非产品/Android UI完成 |
 | [R41历史自检结果](reviews/R41-native-task-transaction-fence-review.json) | 42源码/312HOST，5改动原生文件SDK bootclasspath编译 | 非完整产品/Android运行 |

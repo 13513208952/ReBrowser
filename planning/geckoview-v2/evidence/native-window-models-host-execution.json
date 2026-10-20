@@ -1,5 +1,5 @@
 {
-  "revision": "R44",
+  "revision": "R45",
   "hostTestsPassed": 37,
   "scope": "Actual native window/panel/toolbar binding/address/selection/progress/modal/inset/metric-policy models on HOST; no Android View/Window/AlertDialog/ValueAnimator/Activity metric method execution",
   "sourceFiles": [
@@ -53,5 +53,5 @@
   "nativeBrowserComplete": false,
   "sourceOrOwnerConsentGranted": false,
   "gradleEvidenceRef": "evidence/production-main-agp-R43-checks.json",
-  "currentActualHostRunRef": "evidence/production-main-agp-R44-checks.json"
+  "currentActualHostRunRef": "evidence/production-main-agp-R45-checks.json"
 }

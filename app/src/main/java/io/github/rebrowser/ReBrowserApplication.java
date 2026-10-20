@@ -13,7 +13,7 @@ public final class ReBrowserApplication extends Application {
         if(applicationCreateObserved)return;applicationCreateObserved=true;
         super.onCreate();
         try{role=ProcessRole.classifyOwnApplication(getPackageName(),Application.getProcessName());}catch(RuntimeException unavailable){role=ProcessRole.UNKNOWN;}
-        if(role.startupRoute()==ProcessRole.StartupRoute.MAIN_NATIVE_OWNER)startup=StartupCoordinator.forMainApplication(this);
+        if(role.startupRoute()==ProcessRole.StartupRoute.MAIN_NATIVE_OWNER){startup=StartupCoordinator.forMainApplication(this);startup.beginNativeSourceInspection();}
         // Gecko manages its own child services. Never create runtime/DB/control server here.
     }
     /** Local routing metadata only; never administrator identity or source acceptance. */

@@ -70,7 +70,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     ledger_history = json.loads((P/'evidence/admin-idempotency-host-sql-R43-checkpoint.json').read_text())
@@ -158,10 +158,20 @@ def review():
     for source in ui['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
     entry = json.loads((P/'evidence/entry-source-context-host-execution.json').read_text())
-    assert entry['entryContractTests']==16 and entry['browserCatalogTests']==16 and entry['partitionCatalogTests']==8 and entry['taskCoordinatorTests']==40
+    assert entry['entryContractTests']==19 and entry['browserCatalogTests']==16 and entry['partitionCatalogTests']==9 and entry['taskCoordinatorTests']==40
     assert entry['actualSourceIncarnationAndResourcePinMethodsExecuted'] and not entry['actualAndroidProcessOrSourceAcceptanceExecuted'] and not entry['actualSqliteDaoOrGeckoRuntimeCreationExecuted']
     for source in entry['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
+    bootstrap=json.loads((P/'evidence/native-source-bootstrap-host-execution.json').read_text())
+    assert bootstrap['hostTestsPassed']==app['hostAndroidClassSourceBootstrapTests']==23
+    assert bootstrap['actualSourceReceiptAndTransferMethodsExecuted'] and bootstrap['actualNativeLedgerReadConfirmHostExecuted'] and bootstrap['actualPublicationFenceModelExecuted']
+    assert bootstrap['privateSyntheticOwnInspectionConstructorUsed'] and bootstrap['productionUnconfiguredNoIoFastPathHostExecuted']
+    assert not any(bootstrap[k] for k in ['actualOwnAndroidSignerOrFilesystemExecuted','actualMainHandlerOrGeckoPublicationExecuted','realRootKeysCredentialsOrDeviceUsed','productSourceUnlockExecuted'])
+    for source in bootstrap['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
+    assert not app['sourceBootstrapOwnAndroidSignerOrFilesystemExecuted'] and not app['sourceBootstrapMainHandlerPublicationExecuted']
+    assert 'versionCode = 2_000_000' in (ROOT/'rebrowser/app/build.gradle').read_text() or 'versionCode 2_000_000' in (ROOT/'rebrowser/app/build.gradle').read_text()
+    assert 'APPLICATION_VERSION_CODE=2_000_000L' in (ROOT/'app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java').read_text()
     modules=json.loads((P/'records/module-integration-plan.json').read_text())
     assert modules['priority']==['entry','browser','engine','control','bridge','ui'] and modules['blockerDecisions']
     batch = json.loads((P/app['currentCodeBatchContractRef']).read_text())

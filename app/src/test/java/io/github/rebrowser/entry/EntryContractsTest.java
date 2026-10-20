@@ -68,6 +68,15 @@ public final class EntryContractsTest {
     @Test public void newViewsForSameNativeContextStillPinSameLifetimeAcrossThreads()throws Exception{
         Object context=new Object();ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,()->ComponentGate.SourceView.acceptedNative(context));ComponentGate.ResourcePin pin=gate.newResourcePin();java.util.concurrent.ExecutorService pool=java.util.concurrent.Executors.newFixedThreadPool(2);try{java.util.List<java.util.concurrent.Future<?>> pending=new java.util.ArrayList<>();for(int i=0;i<32;i++)pending.add(pool.submit(()->pin.checkOrBind(gate.requireBusiness())));for(java.util.concurrent.Future<?> f:pending)f.get(3,java.util.concurrent.TimeUnit.SECONDS);pin.requireCurrent();}finally{pool.shutdown();assertTrue(pool.awaitTermination(3,java.util.concurrent.TimeUnit.SECONDS));}
     }
+    @Test public void acceptedEpochBytesAreDefensiveAndWrongEpochCannotOpenResource(){
+        byte[] epoch=new byte[16];ComponentGate.SourceView view=ComponentGate.SourceView.acceptedNative(new Object(),epoch);epoch[0]=1;ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,()->view);ComponentGate.BusinessPermit permit=gate.requireBusiness();gate.requireDataEpoch(permit,new byte[16]);assertThrows(SecurityException.class,()->gate.requireDataEpoch(permit,epoch));assertThrows(SecurityException.class,()->gate.newResourcePin().checkEpochOrBind(permit,epoch));
+    }
+    @Test public void changingEpochWithoutChangingMarkerStillInvalidatesOldPermit(){
+        Object marker=new Object();AtomicReference<ComponentGate.SourceView> source=new AtomicReference<>(ComponentGate.SourceView.acceptedNative(marker,new byte[16]));ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,source::get);ComponentGate.BusinessPermit old=gate.requireBusiness();byte[] next=new byte[16];next[0]=1;source.set(ComponentGate.SourceView.acceptedNative(marker,next));assertThrows(SecurityException.class,()->gate.checkCurrent(old));gate.requireDataEpoch(gate.requireBusiness(),next);
+    }
+    @Test public void stateOnlyTrustedFixtureCannotAuthorizeEpochBearingDataOwner(){
+        ComponentGate gate=new ComponentGate(ProcessRole.MAIN,()->ComponentGate.SourceState.TRUSTED);assertThrows(SecurityException.class,()->gate.requireDataEpoch(gate.requireBusiness(),new byte[16]));assertThrows(IllegalArgumentException.class,()->ComponentGate.SourceView.acceptedNative(new Object(),new byte[15]));
+    }
     @Test public void nullOrFailedSourceDecisionFailsClosed(){
         ComponentGate nil=new ComponentGate(ProcessRole.MAIN,()->null);assertEquals(ComponentGate.SourceState.LOCKED,nil.sourceState());
         ComponentGate failed=new ComponentGate(ProcessRole.MAIN,()->{throw new IllegalStateException("synthetic");});assertEquals(ComponentGate.SourceState.LOCKED,failed.sourceState());

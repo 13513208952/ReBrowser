@@ -36,6 +36,7 @@ public final class LastGoodSourceStore {
     public enum Phase { STABLE, PREPARED_OLD_DATA_PRESERVED, DESTRUCTION_MAY_HAVE_STARTED, EMPTY_EPOCH_VERIFIED }
     public enum Kind { MISSING, CURRENT, UNFINISHED_WRITE, CORRUPT }
     public static final int FRAME_BYTES=216;
+    public static final String BOOTSTRAP_DIRECTORY="source-bootstrap-v1";
     private static final int CONTENT_BYTES=184;
     private static final long MAGIC=0x5242535243303100L; // RBSRC01 NUL
     private static final String MARKER="source-continuity.v1", STAGE="source-continuity.pending", LOCK="source-continuity.lock";
@@ -79,6 +80,12 @@ public final class LastGoodSourceStore {
         public boolean hasBaselineMetadata(){return record!=null;}
         public Record record(){if(record==null)throw new IllegalStateException("No valid source metadata");return record;}
     }
+    /** Exact native metadata re-read, NOT source authority/epoch unlock or erasure proof. */
+    public static final class ReadReceipt {
+        private final View snapshot;
+        private ReadReceipt(View snapshot){this.snapshot=snapshot;}
+        public View snapshot(){return snapshot;}
+    }
     interface NativeFence {
         /** Read-only native checks after lock and after staging IO; NEVER consume grants/tickets.
          * Replacement may be null only when discarding an uncommitted initial metadata stage. */
@@ -93,7 +100,13 @@ public final class LastGoodSourceStore {
         if(!attributes.isDirectory() || attributes.fileKey()==null)throw new IOException("Identifiable native bootstrap directory required");
         directoryKey=attributes.fileKey();marker=directory.resolve(MARKER);stage=directory.resolve(STAGE);lock=directory.resolve(LOCK);
     }
+    /** Actual own-Application factory verifies its fixed no-backup child, not an IPC path. */
+    void requireNativeBootstrapPath(Path expected)throws IOException{if(expected==null || !expected.isAbsolute() || !directory.equals(expected.normalize()))throw new IOException("Unexpected native bootstrap namespace");requireDirectory();}
     public View inspect()throws IOException{try(Locked held=lock()){return readLocked();}}
+    /** IO-lane repeated exact snapshot check; no seed/repair/update or business data read. */
+    public ReadReceipt confirmUnchanged(View expected)throws IOException{
+        requireView(expected);try(Locked held=lock()){View current=readLocked();compare(expected,current);return new ReadReceipt(current);}
+    }
     // These operations record coordinator decisions; they DO NOT implement their authority.
     View seedVerifiedFresh(View missing,SourceEpoch accepted,NativeFence fence)throws IOException{
         requireView(missing);if(missing.kind!=Kind.MISSING)throw conflict();return replace(missing,new Record(1,Phase.STABLE,accepted,null),fence);

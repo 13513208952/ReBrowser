@@ -71,7 +71,7 @@ public final class IdempotencyStore {
     public IdempotencyStore(SQLiteDatabase nativeDedicatedDatabase,ComponentGate gate,
             byte[] nativeTargetInstallSpkiSha256,byte[] nativeDataEpoch,int maxJobs,ComponentGate.BusinessPermit nativeOpeningPermit){
         if(nativeDedicatedDatabase==null || gate==null || maxJobs<1 || maxJobs>1_000_000)throw invalid();
-        this.database=nativeDedicatedDatabase;this.gate=gate;sourceLifetime=gate.newResourcePin();sourceLifetime.checkOrBind(nativeOpeningPermit);target=hex(fixed(nativeTargetInstallSpkiSha256,32));epoch=hex(fixed(nativeDataEpoch,16));this.maxJobs=maxJobs;
+        byte[] acceptedEpoch=fixed(nativeDataEpoch,16);this.database=nativeDedicatedDatabase;this.gate=gate;sourceLifetime=gate.newResourcePin();sourceLifetime.checkEpochOrBind(nativeOpeningPermit,acceptedEpoch);target=hex(fixed(nativeTargetInstallSpkiSha256,32));epoch=hex(acceptedEpoch);this.maxJobs=maxJobs;
     }
     public static String[] schemaStatements(){return new String[]{CREATE,NO_UPDATE,NO_DELETE,NO_REPLACE};}
     public synchronized void initialize(ComponentGate.BusinessPermit permit){

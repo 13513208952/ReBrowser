@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R44",
+  "revision": "R45",
   "authority": [
     "O45",
     "O64",
@@ -25,7 +25,7 @@
       "owns": "Actual process routing, one native app startup owner, minimal locked shell/control inspection versus old-data business access, source-decision lifetime and resource handoff",
       "designExit": "Every process/component path has explicit ownership, source context, allowed operations, fail/unknown route; no first-click/metadata/debug unlock",
       "implementationExit": "Exact main process creates one startup owner; children/unknown do not. Old permits/resources never reactivate on observed source lock or different native source incarnation. Cross-module DB/catalog/runtime/task pins reject old-context reuse; old owned work still settles/stops without new access",
-      "currentSlice": "R44 close source-incarnation and entry-resource lifetime gaps across entry/browser/engine/control/task",
+      "currentSlice": "R44 context/resource lifetime closed; R45 exact STABLE native source-resume provider/receipt and bounded entry handoff implemented; real Android qualification and fresh/recovery paths still pending",
       "dependencies": [
         "continuity supplies actual native accepted source+epoch incarnation; Root currently unconfigured",
         "fresh-install/rescue/erasure/epoch commit authority still separate and unfinished"
@@ -102,10 +102,10 @@
     {
       "id": "ENTRY-ACCEPTED-SOURCE",
       "owner": "native-continuity/entry integration",
-      "current": "Root absent staysUNCONFIGURED; native bound provider deliberately publishes no accepted snapshot",
-      "nextExecutableStep": "Implement bounded own signer+last-good inspection/typed native acceptance receipt and entry publication, with synthetic source/filesystem failure tests; fresh/erasure branches must never infer empty install from missing marker",
-      "exit": "Actual current accepted source+epoch proof and serialized cutover, not source DTO constructor",
-      "blocks": "business activation, NOT current entry routing/permit-resource lifetime code and tests"
+      "current": "Exact STABLE resume provider and entry publication source now implemented with23SYNTHETIC-provenance HOST pipeline tests, Root absent stays UNCONFIGURED and actual Android source path unexecuted",
+      "nextExecutableStep": "Close exact first-fresh private inventory/seed and signer-rotation/rescue/erasure acceptance dependencies; in parallel implement browser/Gecko real domain factory/document ownership with typed accepted epoch",
+      "exit": "Actual supported fresh/rescue/normal source transitions and Android qualification, not a generic metadata Boolean",
+      "blocks": "Unimplemented fresh/recovery business activation, NOT scoped stable-provider implementation or independent browser/engine code progress"
     },
     {
       "id": "ENGINE-OLD-INCARNATION",

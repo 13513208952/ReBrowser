@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
   "runtimeSourceFilesCompiled": 25,
-  "junitTestsPassed": 230,
-  "junitOutput": "JUnit version 4.13.2\n......................................................................................................................................................................................................................................\nTime: 1.179\n\nOK (230 tests)\n\n",
+  "junitTestsPassed": 234,
+  "junitOutput": "JUnit version 4.13.2\n..........................................................................................................................................................................................................................................\nTime: 1.158\n\nOK (234 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -47,7 +47,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
-      "sha256": "2b9bc7ced8335cd0ffc307231d38aeafb053b7d3664f81bba9de48f9464cf0aa"
+      "sha256": "fa92aba18dbd8c6c51ef098f09bc6f39534bf5c40037e96349bcee7b345dfe47"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
@@ -75,7 +75,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
-      "sha256": "3e2e9c7794233d0425d52f20d9abbebc5ecddcd5992185e2ba42c1d7890c0afe"
+      "sha256": "62ab8120f832148ffb4861419856324e89323282978725c9e3d634b9c0b802a1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -87,7 +87,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
-      "sha256": "05414c986b87958aa2f1e418d5c61e2d81f476c32278bfd136833d9b2ab625d9"
+      "sha256": "f4b6a282c8677d4bf7a1c70fb817a1353e898bddd2938f4a030a1203a9bf18d1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
@@ -99,7 +99,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
-      "sha256": "bc720145110db3b74b9e246d7f7cb8c70222f81dad4bea0b962aacf7c5232c3e"
+      "sha256": "4bc75882096e4599628e6b046b43047e76b1f19f256afbb73ccc5e1e1dbbf59a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
@@ -175,11 +175,11 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java",
-      "sha256": "933fa69c722d2f62e07769145c297dcb61d9f4bd83b72d5cbe14e8c61594d782"
+      "sha256": "0c45ef9aa96d92f0469df44c38a4009b8e99d889e0c3bbf5477d44f3ae081545"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java",
-      "sha256": "f7e1b09b198697705fbd5c036debe7d1b0be605bd80be329db89e7891badd4c4"
+      "sha256": "32f21027f60d882bb7dd88a7be7fcf79b2192e93e8edf6adcfc509cad803ba91"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
@@ -192,8 +192,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 2877202432,
-  "memAvailableBefore": 5180465152,
+  "freeBytesBefore": 7955681280,
+  "memAvailableBefore": 4035162112,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

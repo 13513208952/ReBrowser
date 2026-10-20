@@ -1,0 +1,25 @@
+{
+  "scope": "actual production-class DDL on HOST SQLite with exact-owned synthetic disk DB/reopen; NOT Android SQLite method execution or policy/nonce atomicity",
+  "hostSqlChecks": 39,
+  "sqliteVersion": "3.46.1",
+  "ddlStatements": 4,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "8765745ed230553cae930bf9248cd9780133b15c73d791f1a3fe6daaa07e65d4"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/DumpAdminJournalSchema.java",
+      "sha256": "3a1b5651749e42342b6622c5446d0e34387e0c61ffab290573317772d4796992"
+    },
+    {
+      "path": "planning/geckoview-v2/experiments/admin_journal_sql.py",
+      "sha256": "3518f0cd0bca974578899b9ee78bcd652543126f998e20298360b8aaf9da814d"
+    }
+  ],
+  "ddlSha256": "fe79ffc284b56a00ac617841d30a4235f546654621b46fa58dc83a1407f5466b",
+  "temporaryDbAndHarnessRemoved": true,
+  "androidSQLiteExecuted": false,
+  "actualPolicyAndSqliteAtomicityTested": false,
+  "realDataOrKeysUsed": false
+}

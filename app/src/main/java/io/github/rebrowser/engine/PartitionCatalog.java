@@ -54,7 +54,7 @@ public final class PartitionCatalog {
     public void requireGate(ComponentGate expected){if(gate!=expected || Thread.currentThread()!=thread)throw invalid();}
     public boolean matchesEpoch(byte[] nativeExpected,ComponentGate.BusinessPermit permit){access(permit);return nativeExpected!=null && Arrays.equals(epoch,nativeExpected);}
     private void known(Lease lease){if(lease==null || lease.issuer!=this || owners.get(lease.owner)!=lease)throw invalid();}
-    private void access(ComponentGate.BusinessPermit permit){if(Thread.currentThread()!=thread)throw new IllegalStateException("Partition owner thread required");sourceLifetime.checkOrBind(permit);}
+    private void access(ComponentGate.BusinessPermit permit){if(Thread.currentThread()!=thread)throw new IllegalStateException("Partition owner thread required");sourceLifetime.checkEpochOrBind(permit,epoch);}
     private static String randomContext(){byte[] b=new byte[16];new SecureRandom().nextBytes(b);StringBuilder out=new StringBuilder("ctx_");for(byte v:b){out.append("0123456789abcdef".charAt((v&255)>>>4));out.append("0123456789abcdef".charAt(v&15));}return out.toString();}
     private static IllegalArgumentException invalid(){return new IllegalArgumentException("Invalid native partition handle/binding");}
 }

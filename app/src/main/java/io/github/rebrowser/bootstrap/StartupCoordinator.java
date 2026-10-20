@@ -15,6 +15,7 @@ import io.github.rebrowser.authority.AdminProofVerifier;
 import io.github.rebrowser.authority.CompiledPrincipals;
 import io.github.rebrowser.engine.GeckoRuntimeOwner;
 import io.github.rebrowser.browser.BrowserCoordinator;
+import io.github.rebrowser.data.PrivateRecordStore;
 import java.util.concurrent.atomic.AtomicInteger;
 import io.github.rebrowser.continuity.CompiledSourceIdentity;
 import io.github.rebrowser.continuity.SigningIdentity;
@@ -61,6 +62,7 @@ public final class StartupCoordinator {
     private final CompiledSourceIdentity compiledSource;
     private volatile GeckoRuntimeOwner runtimeOwner;
     private BrowserCoordinator browserDomain;private boolean browserDomainAttempted;
+    private PrivateRecordStore privateRecords;private boolean privateRecordsAttempted;private final Object privateRecordOpening=new Object();
     private final ComponentGate.ResourcePin businessLifetime;
     private final AtomicReference<ComponentGate.SourceView> sourceView=new AtomicReference<>(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.INITIALIZING));
     private final Handler main=new Handler(Looper.getMainLooper());
@@ -138,6 +140,18 @@ public final class StartupCoordinator {
         ownerThread();byte[] epoch=requireNativeDataEpoch(permit);
         if(browserDomain!=null)return browserDomain;if(browserDomainAttempted)throw new IllegalStateException("Browser domain construction already attempted");browserDomainAttempted=true;
         browserDomain=BrowserCoordinator.createTemporaryNative(gate,browserRuntimeOwner(permit),epoch,8,permit);gate.checkCurrent(permit);return browserDomain;
+    }
+    /** Explicit owned IO call only. Existing directory/key required; never source/fresh-install seed.
+     * Failure consumes opening attempt; an uncertain provider result cannot create another owner. */
+    public PrivateRecordStore openExistingPrivateRecordsOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException {
+        if(Looper.myLooper()==Looper.getMainLooper())throw new IllegalStateException("Private record opening requires an owned IO lane");
+        byte[] epoch=requireNativeDataEpoch(permit);
+        synchronized(privateRecordOpening){
+            requireNativeDataEpoch(permit);
+            if(privateRecords!=null){privateRecords.requireBindings(gate,epoch,permit);return privateRecords;}
+            if(privateRecordsAttempted)throw new IllegalStateException("Native private record opening already attempted");privateRecordsAttempted=true;
+            PrivateRecordStore opened=PrivateRecordStore.openExisting(application,gate,epoch,permit);gate.requireDataEpoch(permit,epoch);privateRecords=opened;return opened;
+        }
     }
     public boolean hasCreatedBrowserRuntime() { return runtimeOwner != null && runtimeOwner.hasCreatedRuntime(); }
 }

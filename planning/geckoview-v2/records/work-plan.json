@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R46",
+  "revision": "R47",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,11 +225,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "接受来源epoch -> 懒创建临时浏览器域 -> 私有context/SDKprivateMode -> BEFORE-open四delegate实际接线；10实质runtime文件，不把暂不支持能力伪装成完成",
-    "浏览器选择Selection来自native catalog私发，精确workspace/tab双revision拒绝ABA；native load/history交接后仅metadata intent，不凭SDK location/title虚构真实document/grant/job",
-    "ContentDelegate崩溃/终止走原生owner关闭观察，closeRequest只请求；退役先fence正向发布，late/locked外部body仍close，不读/重取；失败原owner保留sticky不确定性，不宣称网络尾部结束",
-    "Source发布补上R45实际缺口：必须Handler.post肯定返回的ticket确认；unknown/false或callback先于确认均拒绝、不重试/不Main阻塞，late callback不复活",
-    "仅源代码图/模型/拒绝边界HOST测试及API compile，Root仍无配置；真实Android/Gecko session/界面、持久化restore/finiteGrant/Popup/真实document、first-fresh与恢复销毁仍未完成"
+    "主agent不触碰D02新42目标，继续Sourceacceptedepoch -> existingnativevault -> independentprivateRecordAEAD -> exactfixedpathCAS/atomiccommit的真实producer-consumer链；无Root/密钥/目录自动seed",
+    "D01六个真实交付完成scope审查与修正：Surface常量不是角度；业务callback异常不能当stale吞掉；unbind清真实view文本/监听；批准下载仅意图且cancel不能抹去实际end",
+    "11实质runtime文件，新增3core+6worker、修改Startup/Toolbar；HOST文件系统/JCA是PRIVATE合成Android来源/公开toykey，实际Androidprovider/UI/SDK未运行",
+    "原D02的126文件分配输入以exactSHA压缩快照保留；当前117PLAN、65已准入源，D02新42预留不变；历史R46/SQL报告不重写",
+    "下一闭合依赖：新epoch/provisioning、BrowserStore/checkpoint实际序列化与恢复/finitepermission/document；IO零计数不是全局quiescence/rollback防护/销毁凭据"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -267,5 +267,15 @@
     "control",
     "bridge",
     "ui"
-  ]
+  ],
+  "activeParallelDelegation": {
+    "authority": "O78",
+    "revision": "D02",
+    "newRuntimeTargetFiles": 42,
+    "previousSixAwaitingReviewNotRecounted": true,
+    "fullRemainingRiskCoverage": 126,
+    "taskRecord": "records/low-cost-agent-assignments.json",
+    "riskRecord": "records/remaining-file-risk-assessment.json",
+    "implementationClaim": false
+  }
 }

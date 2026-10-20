@@ -1,0 +1,53 @@
+{
+  "authority": "O64",
+  "minimumRuntimeCodeFiles": 10,
+  "runtimeCodeFilesChanged": 11,
+  "maximumFiles": null,
+  "scope": "source workload only, not full responsibility/runtime completion",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "a4e3d1b53c52a14bd7d004713feb9ef9f9f9f813b1724712a04c8da5ae2338db"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+      "sha256": "a80bbcaec76b264405659e854c1c00df6b376185509a7c1688c57830f01696b5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "d61c04cd1e2252f00f5d5a43b39325223d2f3104f6ddbf0fc7b2e3bcc46bd28e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "bf2bb48b3f54f4b6f6044e72a68a0e3d11f8bef55f06e9747f8043c66b073e7e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "sha256": "cfb3ceec428a50ca90899815c6a5f202e7eab0f64bf5e4ad50d5d7fbea48f06f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "a0efe2939031b64186e73c31a8be84b2464e09e1111a42cb58e61a29b47dec8c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "sha256": "df202e6bc94788fb95b948a22ac5e7d39f7b6fd293b9f195bd4d814c3fc3626b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "88611513d4d435a1810003bd849cd3c76ddabe4831e405ad69742f222eb0456b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "0727f7e4a22c788315694ffe9ae8036b5b318af8f8aad12c302b5d81d54031ca"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
+    }
+  ]
+}

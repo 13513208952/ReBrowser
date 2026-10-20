@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R46",
+  "revision": "R47",
   "authority": [
     "O45",
     "O64",
@@ -130,6 +130,72 @@
       "nextExecutableStep": "Close BrowserStore/persistent context/checkpoint and real native document lifecycle/finite grants; native window lifecycle only after core ownership contracts",
       "exit": "Real supported session/restore/document/grant behavior and controlled Android qualification, not raw compile or presentation-only tests",
       "blocks": "Full browser/product activation, NOT next independent domain implementation"
+    },
+    {
+      "id": "BROWSER-PRIVATE-RECORD-DEPENDENCY",
+      "current": "Existing native epoch/key-only encrypted record path now actual source/JCA/HOST-filesystem pipeline; no provisioning/auto-seed/current product Root activation",
+      "nextExecutableStep": "Native verified-empty epoch provision+BrowserStore/checkpoint serializers and explicit native restore gates; KeyPurpose vocabulary staysD02reserved",
+      "exit": "Real source/OS/filesystem key custody/restore behavior plus native current writer quiescence qualification, not CAS metadata/zero counter",
+      "blocks": "Full persistent browser/epoch destruction activation, not independent metadata serializer/core implementation"
     }
-  ]
+  ],
+  "parallelDelegation": {
+    "revision": "D02",
+    "authority": [
+      "O74",
+      "O75",
+      "O76",
+      "O78"
+    ],
+    "contractRef": "records/low-cost-agent-assignments.json",
+    "riskAssessmentRef": "records/remaining-file-risk-assessment.json",
+    "reservedRuntimeFiles": [
+      "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
+      "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
+      "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
+      "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
+      "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
+      "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
+      "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
+      "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+      "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
+      "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
+      "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
+      "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
+      "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
+      "app/src/main/assets/offline-mail/reader.html",
+      "app/src/main/assets/offline-mail/reader.css",
+      "app/src/main/assets/offline-mail/reader.js",
+      "app/src/main/assets/bridge/styles/music-phone.css",
+      "app/src/main/assets/bridge/styles/music-window.css",
+      "app/src/main/assets/bridge/styles/music-desktop.css"
+    ],
+    "workerWorkspace": "dsh/",
+    "previousSixDeliveryStatus": "scoped-host-api-reviewed-no-Android-UI-or-backend-completion",
+    "mainAgentRule": "等待owner再次通知前，不编辑L07-L48的42目标，主agent继续未分配核心链；所有slice之外与最终集成归主agent；任务数量不当完成证明。",
+    "implementationOrCommitClaim": false
+  }
 }

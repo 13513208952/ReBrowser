@@ -1,4 +1,10 @@
-# 实施完整性看板 · R46（入口→临时浏览器域→Gecko宿主）
+# 实施完整性看板 · R47（epoch→原生私有记录依赖）
+
+本轮11runtime文件（3main新core＋6旧worker交付＋Startup/Toolbar）实际接线：仅已有epoch目录/key，独立metadata AEAD、固定文件引用/精确CAS、源fence/0600 stage/atomic rename/force-readback，3201记录/128MiB限额。65源码/307class/577实际AGP HOST；29纯切片293HOST+SDKbootclasspath。49个私有记录JCA/HOST文件流水线测试用PRIVATE合成Android来源/公开toykey，不是原生Keystore或AndroidFS资格；67交付模型测试不是完整backend或真实View渲染。未创建Root/key/目录，不自动seed/修复/清理，不防同epoch回滚，也不把CAS/IO计数当全局停机/销毁证明。
+
+D02新42文件未改动，原126目标分配输入的精确SHA已另存，当前117PLAN；旧6交付按实际scope准入但不声称全模块完成。完整来源首次初始化/恢复销毁、BrowserStore/checkpoint/真实document/finiteGrant仍是后续依赖。
+
+## R46历史切片
 
 本轮10runtime文件实现实际native临时域/SDK会话delegate图源码，Selection精确issuer与双revision拒绝ABA；原生Source ticket必须确认提交肯定返回，unknown/确认前回调不得发布TRUSTED。56源码/264class/456HOST，独立纯切片26文件/260HOST+SDKbootclasspath；17模型和13私有adapter/拒绝/body-close测试执行了实际生产方法，平台DTO/回调/流明确合成。尚无实际Android/Gecko会话/回调/界面资格；Root空、首次初始化/恢复销毁及持久化/finiteGrant/真实document/Popup未实现不解锁或冒充完成。
 

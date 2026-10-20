@@ -70,7 +70,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     ledger_history = json.loads((P/'evidence/admin-idempotency-host-sql-R43-checkpoint.json').read_text())
@@ -153,7 +153,7 @@ def review():
     assert not app['windowTargetAndroidActivityOrWindowProbeExecuted'] and not app['windowTargetRegistryDispatcherIntegrated']
     assert not any(app[k] for k in ['taskCoordinatorAndroidSqliteAdapterExecuted','taskCoordinatorCommandDispatcherIntegrated','globalEpochQuiescenceEstablished','resourceBudgetsOwnAndroidMemoryFactoryExecuted'])
     ui = json.loads((P/'evidence/native-window-models-host-execution.json').read_text())
-    assert ui['hostTestsPassed'] == app['hostAndroidClassNativeWindowModelsTests'] == 37 and ui['actualNestedPresentationMethodsExecuted']
+    assert ui['hostTestsPassed'] == app['hostAndroidClassNativeWindowModelsTests'] == 42 and ui['actualNestedPresentationMethodsExecuted']
     assert not any(ui[k] for k in ['actualAndroidUiCallbacksOrRenderingExecuted','nativeBrowserComplete','sourceOrOwnerConsentGranted'])
     for source in ui['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest() == source['sha256']
@@ -180,6 +180,20 @@ def review():
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     assert app['nativeTemporaryBrowserSourceGraphImplemented'] and app['actualPrivateNativeEventAdapterHostExecuted'] and not app['nativeTemporaryBrowserGraphExecutedAndroid']
     assert bootstrap['positiveHandlerSubmissionReturnRequiredByTicketModel'] and bootstrap['earlyOrUnknownSubmissionCannotPublishTrustHostTested']
+    record_host=json.loads((P/'evidence/native-private-record-store-host-execution.json').read_text())
+    assert record_host['hostTestsPassed']==49 and record_host['privateRecordSealerTests']==17 and record_host['vaultBoundaryTests']==12 and record_host['privateRecordStoreHostFilesystemTests']==20
+    assert app['hostAndroidClassPrivateRecordBoundaryTests']==32 and record_host['actualJcaRecordAndWrappingMethodsExecuted'] and record_host['actualHostFileCasForceAtomicRenameReadbackExecuted'] and record_host['privateSyntheticNativeProvenance']
+    assert not any(record_host[k] for k in ['actualAndroidKeystoreOrOwnApplicationExecuted','actualAndroidFilesystemOrPowerLossExecuted','formalOrRealUserKeysUsedOrProvisioned','actualSourceUnlockOrErasureExecuted','entireWriterOrNativeNetworkQuiescenceEstablished','antiRollbackLatestSnapshotGuaranteeEstablished'])
+    d01=json.loads((P/'evidence/D01-reviewed-worker-models-host-execution.json').read_text())
+    assert d01['hostTestsPassed']==67 and app['hostAndroidClassD01PresentationModelsTests']==51 and d01['mainSharedCallbackBoundaryTestsAdded']==5 and d01['productionModelHostMethodsExecuted']
+    assert not any(d01[k] for k in ['actualNativeViewOrActivityRendered','actualOwnWindowMetricsOrSurfaceGetterExecuted','domainBackendOrOsActionExecuted','fullModulesComplete'])
+    for report in [record_host,d01]:
+        for source in report['sourceFiles']:
+            assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
+    assert app['privateRecordJcaAndHostFilesystemPipelineExecuted'] and not app['privateRecordAndroidKeystoreOrFilesystemExecuted'] and not app['privateRecordKeysOrDirectoriesProvisioned']
+    delegation=json.loads((P/'records/low-cost-agent-assignments.json').read_text())
+    assert sum(t['round']=='D02' and t['status']=='reserved-not-started' for t in delegation['tasks'])==42
+    assert sum(t['round']=='D01' and t['status']=='reviewed-scoped-host-api' for t in delegation['tasks'])==6
     modules=json.loads((P/'records/module-integration-plan.json').read_text())
     assert modules['priority']==['entry','browser','engine','control','bridge','ui'] and modules['blockerDecisions']
     batch = json.loads((P/app['currentCodeBatchContractRef']).read_text())

@@ -3,11 +3,13 @@
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已创建本体源码：**56文件**；其中HOST测试切片 **26文件**，API编译/实现中 **30文件**；其余 **125文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+当前已准入本体源码：**65文件**；其中HOST测试切片 **29文件**，API编译/实现中 **36文件**；其余 **117文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
-当前目标：`io.github.rebrowser` · 本体代码 **181文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
+当前目标：`io.github.rebrowser` · 本体代码 **182文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
 符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。
+
+> D02分配时已评估全部126个剩余PLAN节点，本轮42个新目标（36Java+6运行资产）继续预留；R47已将旧6交付与3个主链依赖准入为有限HOST/API源码，当前117个PLAN。`[LOW:Lxx]`为整项低风险；`[LOW-EFFECT:Lxx]`为完整低副作用任务但集成/实现风险仍中等；`[LOW-SLICE:Lxx]`仅允许该文件限定低风险切片。`[RISK:*]`是原完整责任风险，`[REVIEW-PENDING]`表示已有未准入交付。**任务数、解析/展示和交付都不是产品完成或业务授权。**只看[权威任务范围](records/low-cost-agent-assignments.json)／[全部剩余文件风险](records/remaining-file-risk-assessment.json)，共享上下文不另写交接文档。
 
 ## 本体代码树
 
@@ -17,64 +19,64 @@
         └── main/
             ├── assets/
             │   ├── bridge/
-            │   │   ├── background.js [S][PLAN][?] — 固定内建扩展后台和Native路由
+            │   │   ├── background.js [S][PLAN][?][RISK:HIGH] — 固定内建扩展后台和Native路由
             │   │   ├── content/
-            │   │   │   ├── music.js [S][PLAN][?] — 隔离世界音乐页面握手与文档路由
-            │   │   │   └── outlook.js [S][PLAN][?] — 隔离世界邮箱握手/账户/DTO流
+            │   │   │   ├── music.js [S][PLAN][?][RISK:HIGH] — 隔离世界音乐页面握手与文档路由
+            │   │   │   └── outlook.js [S][PLAN][?][RISK:HIGH] — 隔离世界邮箱握手/账户/DTO流
             │   │   ├── page/
-            │   │   │   ├── music-api.js [S][PLAN][?] — 官网MAIN世界受控SDK命令和真实回执
-            │   │   │   └── outlook-api.js [S][PLAN][?] — 官网MAIN世界只读账号/邮件采集与明确用户动作
-            │   │   ├── protocol.js [S][PLAN][?] — 严格消息/序号/信用/版本
+            │   │   │   ├── music-api.js [S][PLAN][?][RISK:HIGH] — 官网MAIN世界受控SDK命令和真实回执
+            │   │   │   └── outlook-api.js [S][PLAN][?][RISK:HIGH] — 官网MAIN世界只读账号/邮件采集与明确用户动作
+            │   │   ├── protocol.js [S][PLAN][?][RISK:HIGH] — 严格消息/序号/信用/版本
             │   │   └── styles/
-            │   │       ├── music-desktop.css [C][PLAN][?] — 完整平板横屏/显式桌面扫码的边界
-            │   │       ├── music-phone.css [C][PLAN][?] — 批准手机布局适配，不重建播放器
-            │   │       └── music-window.css [C][PLAN][?] — 非完整平板窗口原约定适配
+            │   │       ├── music-desktop.css [C][PLAN][?][LOW-EFFECT:L48][RISK:MEDIUM] — 完整平板横屏/显式桌面扫码的边界
+            │   │       ├── music-phone.css [C][PLAN][?][LOW-EFFECT:L46][RISK:MEDIUM] — 批准手机布局适配，不重建播放器
+            │   │       └── music-window.css [C][PLAN][?][LOW-EFFECT:L47][RISK:MEDIUM] — 非完整平板窗口原约定适配
             │   ├── offline-mail/
-            │   │   ├── reader.css [C][PLAN][?] — 离线正文可读排版
-            │   │   ├── reader.html [S][PLAN][?] — 只读离线安全阅读文档
-            │   │   └── reader.js [S][PLAN][?] — 无脚本邮件执行的本机资源交互
+            │   │   ├── reader.css [C][PLAN][?][LOW:L44][RISK:LOW] — 离线正文可读排版
+            │   │   ├── reader.html [S][PLAN][?][LOW-SLICE:L43][RISK:HIGH] — 只读离线安全阅读文档
+            │   │   └── reader.js [S][PLAN][?][LOW-SLICE:L45][RISK:HIGH] — 无脚本邮件执行的本机资源交互
             │   └── sql/
-            │       ├── browser-v1.sql [Q][PLAN][?] — 环境/标签/历史/书签原生库
-            │       ├── control-v1.sql [Q][PLAN][?] — nonce/任务/幂等/审计元数据原生库
-            │       └── mail-v1.sql [Q][PLAN][?] — 新账户实体/引用/修订/事务约束
+            │       ├── browser-v1.sql [Q][PLAN][?][RISK:HIGH] — 环境/标签/历史/书签原生库
+            │       ├── control-v1.sql [Q][PLAN][?][RISK:HIGH] — nonce/任务/幂等/审计元数据原生库
+            │       └── mail-v1.sql [Q][PLAN][?][RISK:HIGH] — 新账户实体/引用/修订/事务约束
             └── java/
                 └── io/
                     └── github/
                         └── rebrowser/
                             ├── ReBrowserApplication.java [J][API/WIP][?] — 只在正确进程建立应用所有者，不启动被来源闸门锁住的业务
                             ├── authority/
-                            │   ├── AdminAudit.java [J][PLAN][?] — 脱敏审计与受控私有结果
+                            │   ├── AdminAudit.java [J][PLAN][?][RISK:HIGH] — 脱敏审计与受控私有结果
                             │   ├── AdminProofVerifier.java [J][HOST][?] — 来源中立私钥证明，不以辅助包签名额外否决
-                            │   ├── AuthorityPolicy.java [J][PLAN][?] — 同作用域>=、通道/介入floor、机主授权激活
+                            │   ├── AuthorityPolicy.java [J][PLAN][?][RISK:HIGH] — 同作用域>=、通道/介入floor、机主授权激活
                             │   ├── AuthorityScale.java [J][HOST][?] — H/普通最高/Root与不可变风险下限
                             │   ├── CompiledPrincipals.java [J][HOST][?] — 预编译全部高级身份与角色
-                            │   ├── DeviceWhitelist.java [J][PLAN][?] — Root联合/各最高自有/专有名单隔离
-                            │   ├── DisableLedger.java [J][PLAN][?] — 更高禁更低、Root不可禁、恢复和签名快照
-                            │   ├── EnrollmentProposal.java [J][PLAN][?] — 仅已明确设备/持钥证据的编译名单提案
-                            │   ├── LowDelegationVerifier.java [J][PLAN][?] — 低于H的有界委托链和撤销
-                            │   ├── OwnerGrantStore.java [J][PLAN][?] — 精确范围/期限/epoch的本人授权
-                            │   └── TargetPossessionProof.java [J][PLAN][?] — 实际目标安装私钥challenge验证
+                            │   ├── DeviceWhitelist.java [J][PLAN][?][RISK:HIGH] — Root联合/各最高自有/专有名单隔离
+                            │   ├── DisableLedger.java [J][PLAN][?][RISK:HIGH] — 更高禁更低、Root不可禁、恢复和签名快照
+                            │   ├── EnrollmentProposal.java [J][PLAN][?][RISK:HIGH] — 仅已明确设备/持钥证据的编译名单提案
+                            │   ├── LowDelegationVerifier.java [J][PLAN][?][RISK:HIGH] — 低于H的有界委托链和撤销
+                            │   ├── OwnerGrantStore.java [J][PLAN][?][RISK:HIGH] — 精确范围/期限/epoch的本人授权
+                            │   └── TargetPossessionProof.java [J][PLAN][?][RISK:HIGH] — 实际目标安装私钥challenge验证
                             ├── bootstrap/
                             │   ├── ComponentGate.java [J][HOST][?] — Activity/Provider/Service/后台入口共同闸门
                             │   ├── ProcessRole.java [J][HOST][?] — 识别主/Gecko内部子进程，避免每进程重复初始化
                             │   └── StartupCoordinator.java [J][API/WIP][?] — 来源检查→原生壳→按需内核的启动顺序
                             ├── bridge/
-                            │   ├── BridgeBudget.java [J][PLAN][?] — 64KiB信封/32KiB原始块和有界信用
-                            │   ├── BridgeMessages.java [J][PLAN][?] — HELLO/READY/命令/结果/观测/错误类型
-                            │   ├── BridgeStreamReceiver.java [J][PLAN][?] — 分块/长度/摘要/临时对象提交
-                            │   ├── BuiltinConnectorManager.java [J][PLAN][?] — 固定APK扩展安装/版本/注册先于业务数据泵
-                            │   ├── ConnectorBroker.java [J][PLAN][?] — 真实sender/session/port路由与允许动作
-                            │   ├── DocumentLease.java [J][PLAN][?] — 页面/port/epoch代次握手与失效
-                            │   ├── MusicConnector.java [J][PLAN][?] — 官方同context账号/业务SDK类型化命令
-                            │   └── OutlookConnector.java [J][PLAN][?] — 官方邮箱账号/邮件DTO校验与有界流
+                            │   ├── BridgeBudget.java [J][PLAN][?][LOW-EFFECT:L35][RISK:MEDIUM] — 64KiB信封/32KiB原始块和有界信用
+                            │   ├── BridgeMessages.java [J][PLAN][?][LOW-SLICE:L34][RISK:HIGH] — HELLO/READY/命令/结果/观测/错误类型
+                            │   ├── BridgeStreamReceiver.java [J][PLAN][?][RISK:HIGH] — 分块/长度/摘要/临时对象提交
+                            │   ├── BuiltinConnectorManager.java [J][PLAN][?][RISK:HIGH] — 固定APK扩展安装/版本/注册先于业务数据泵
+                            │   ├── ConnectorBroker.java [J][PLAN][?][RISK:HIGH] — 真实sender/session/port路由与允许动作
+                            │   ├── DocumentLease.java [J][PLAN][?][RISK:HIGH] — 页面/port/epoch代次握手与失效
+                            │   ├── MusicConnector.java [J][PLAN][?][RISK:HIGH] — 官方同context账号/业务SDK类型化命令
+                            │   └── OutlookConnector.java [J][PLAN][?][RISK:HIGH] — 官方邮箱账号/邮件DTO校验与有界流
                             ├── browser/
                             │   ├── BackCoordinator.java [J][HOST][?] — IME/模态/全屏/浮层/子屏/Popup/history/环境单次返回
-                            │   ├── BookmarkStore.java [J][PLAN][?] — 收藏/书签/搜索设置
+                            │   ├── BookmarkStore.java [J][PLAN][?][RISK:HIGH] — 收藏/书签/搜索设置
                             │   ├── BrowserCoordinator.java [J][API/WIP][?] — 环境/标签/导航/原生页面共同领域动作
                             │   ├── BrowserModels.java [J][HOST][?] — 浏览器句柄/状态/不可变快照
-                            │   ├── BrowserStore.java [J][PLAN][?] — 新v2原生环境/标签持久化，非v1迁移
+                            │   ├── BrowserStore.java [J][PLAN][?][RISK:HIGH] — 新v2原生环境/标签持久化，非v1迁移
                             │   ├── ExternalNavigation.java [J][API/WIP][?] — 拒绝无效/userinfo/控制字符URL，重建私有Intent丢外部extras/selector/ClipData，合法链接入新临时隔离环境
-                            │   ├── HistoryStore.java [J][PLAN][?] — 近期访问/期限/维持/暂停写入
+                            │   ├── HistoryStore.java [J][PLAN][?][RISK:HIGH] — 近期访问/期限/维持/暂停写入
                             │   ├── SearchEngines.java [J][HOST][?] — 原生搜索提供者与明确目标加载
                             │   ├── TabCatalog.java [J][HOST][?] — 环境子标签/选择/父Popup/关闭
                             │   └── WorkspaceCatalog.java [J][HOST][?] — 双层环境类型/保留策略/名称
@@ -82,27 +84,27 @@
                             │   ├── CompiledSourceIdentity.java [J][HOST][?] — APK编译根公钥/策略身份
                             │   ├── ContinuityCoordinator.java [J][HOST][?] — 四步/抢救/销毁前锁定/提交新epoch的状态归约
                             │   ├── ContinuityState.java [J][HOST][?] — 来源与确认步骤、失败和不可逆点数据类型
-                            │   ├── EpochCommitter.java [J][PLAN][?] — 确认清空后原子提交新epoch/source
-                            │   ├── EpochErasureCoordinator.java [J][PLAN][?] — 专项旧私有数据销毁/核对，不是搁置的子应用清理
+                            │   ├── EpochCommitter.java [J][PLAN][?][RISK:HIGH] — 确认清空后原子提交新epoch/source
+                            │   ├── EpochErasureCoordinator.java [J][PLAN][?][RISK:HIGH] — 专项旧私有数据销毁/核对，不是搁置的子应用清理
                             │   ├── LastGoodSourceStore.java [J][HOST][?] — 最后正常来源与数据epoch记录，异常包不覆盖
                             │   ├── OwnerAuthentication.java [J][API/WIP][?] — 每步新Android验证及确无锁判断
-                            │   ├── PrivateEpochManifest.java [J][PLAN][?] — 仅v2自有旧epoch文件/密钥归属清单
+                            │   ├── PrivateEpochManifest.java [J][PLAN][?][RISK:HIGH] — 仅v2自有旧epoch文件/密钥归属清单
                             │   ├── SigningIdentity.java [J][API/WIP][?] — APK真实签名锚与合法轮换验证
                             │   └── SourceBootstrap.java [J][API/WIP][?] — 原生自身签名/编译Root/last-good稳定快照检查与一次性交接回执，非元数据布尔解锁
                             ├── control/
-                            │   ├── ActionRegistry.java [J][PLAN][?] — 178逐动作定义/处理器/门槛单一注册
+                            │   ├── ActionRegistry.java [J][PLAN][?][RISK:HIGH] — 178逐动作定义/处理器/门槛单一注册
                             │   ├── ActionSchemas.java [J][HOST][?] — 类型/范围/长度/目标/副作用参数
                             │   ├── ControlChallengeStore.java [J][HOST][?] — 目标/epoch/服务实例/策略revision/动作参数绑定的30秒monotonic挑战；并发一次消费在授权后原子准入
                             │   ├── ControlDecoder.java [J][HOST][?] — 严格外包络/重复键/Unicode/Base64；不可变参数JSON语法树，不等于ActionSchemas/验签/准入
-                            │   ├── ControlDispatcher.java [J][PLAN][?] — 授权→同领域服务→真实结果，不复制特权路径
+                            │   ├── ControlDispatcher.java [J][PLAN][?][RISK:HIGH] — 授权→同领域服务→真实结果，不复制特权路径
                             │   ├── ControlEnvelope.java [J][HOST][?] — 17个长度前缀签名字节字段/固定域版本/目标和原参数，明确DER签名与外包络边界
-                            │   ├── ControlResultStream.java [J][PLAN][?] — 私有大结果有界传输
+                            │   ├── ControlResultStream.java [J][PLAN][?][RISK:HIGH] — 私有大结果有界传输
                             │   ├── IdempotencyStore.java [J][API/WIP][?] — 同principal/target/epoch/requestId同内容用新证明返回原任务，不同内容冲突；旧nonce重放不再授权
-                            │   └── PrivateDataController.java [J][PLAN][?] — 受授权应用自有对象检查/导出/重置，不访问无权名单；非子应用清理功能
+                            │   └── PrivateDataController.java [J][PLAN][?][RISK:HIGH] — 受授权应用自有对象检查/导出/重置，不访问无权名单；非子应用清理功能
                             ├── core/
-                            │   ├── ActorContext.java [J][PLAN][?] — 正常用户/系统媒体/已验证管理员的明确身份
+                            │   ├── ActorContext.java [J][PLAN][?][RISK:HIGH] — 正常用户/系统媒体/已验证管理员的明确身份
                             │   ├── Cancellation.java [J][HOST][?] — 请求取消和真实停止证据
-                            │   ├── DomainResult.java [J][PLAN][?] — 结果/错误/等待条件/证据等级
+                            │   ├── DomainResult.java [J][PLAN][?][LOW-SLICE:L32][RISK:HIGH] — 结果/错误/等待条件/证据等级
                             │   ├── ResourceBudgets.java [J][API/WIP][?] — 队列/块/缓存/优先级和低内存预算
                             │   ├── TargetReferences.java [J][API/WIP][?] — 原生目标句柄与epoch/partition/session绑定
                             │   ├── TaskCoordinator.java [J][API/WIP][?] — auth/effect/read/safety有界通道及真实工作集
@@ -110,124 +112,180 @@
                             │   └── TaskSnapshot.java [J][HOST][?] — 客户端等待与实际执行/效果/持久化分轴
                             ├── crypto/
                             │   ├── CryptoEncoding.java [J][HOST][?] — 严格SPKI/DER/长度和摘要编码
-                            │   ├── DataKeyVault.java [J][PLAN][?] — epoch包装密钥/账户用途DEK与版本
-                            │   ├── InstallKeyStore.java [J][PLAN][?] — 安装设备EC密钥持有与目标challenge，不用序列号作凭据
-                            │   ├── KeyPurpose.java [J][PLAN][?] — 发行/管理员/设备/数据密钥域定义
+                            │   ├── DataKeyVault.java [J][API/WIP][?][RISK:HIGH] — epoch包装密钥/账户用途DEK与版本
+                            │   ├── InstallKeyStore.java [J][PLAN][?][RISK:HIGH] — 安装设备EC密钥持有与目标challenge，不用序列号作凭据
+                            │   ├── KeyPurpose.java [J][PLAN][?][LOW:L33][RISK:LOW] — 发行/管理员/设备/数据密钥域定义
                             │   ├── ObjectAead.java [J][HOST][?] — HKDF派生不可变对象AES-GCM分帧
-                            │   └── PrivateRecordSealer.java [J][PLAN][?] — 原生敏感快照/策略记录封装
+                            │   └── PrivateRecordSealer.java [J][HOST][?][RISK:HIGH] — 原生敏感快照/策略记录封装
                             ├── data/
-                            │   └── OwnedDataCatalog.java [J][PLAN][?] — 来源保护/私有对象访问共享的精确v2拥有集合，不接任意文件路径
+                            │   ├── OwnedDataCatalog.java [J][PLAN][?][RISK:HIGH] — 来源保护/私有对象访问共享的精确v2拥有集合，不接任意文件路径
+                            │   └── PrivateRecordStore.java [J][API/WIP][?][RISK:HIGH] — 既有原生epoch私有目录内的AEAD记录读写/CAS/原子提交，浏览器目录与checkpoint共享；无任意路径/自动seed
                             ├── download/
-                            │   ├── DownloadCoordinator.java [J][PLAN][?] — 真实WebResponse流/用户批准/取消/发布
-                            │   ├── DownloadHandoff.java [J][PLAN][?] — 明确系统安装器/文件打开，非自动安装
-                            │   ├── DownloadStore.java [J][PLAN][?] — 任务/元数据/保存目标的私有记录
+                            │   ├── DownloadCoordinator.java [J][PLAN][?][RISK:HIGH] — 真实WebResponse流/用户批准/取消/发布
+                            │   ├── DownloadHandoff.java [J][PLAN][?][RISK:HIGH] — 明确系统安装器/文件打开，非自动安装
+                            │   ├── DownloadStore.java [J][PLAN][?][RISK:HIGH] — 任务/元数据/保存目标的私有记录
                             │   ├── ResponseStreamWorker.java [J][HOST][?] — 有界IO/EOF/关闭流/失败/临时对象
-                            │   └── SaveTargetRegistry.java [J][PLAN][?] — 原生拥有或用户授权URI，拒绝任意私有路径
+                            │   └── SaveTargetRegistry.java [J][PLAN][?][RISK:HIGH] — 原生拥有或用户授权URI，拒绝任意私有路径
                             ├── engine/
                             │   ├── BrowserSessionHost.java [J][API/WIP][?] — Actual unopened-session native permission/content/navigation/progress delegate graph and bounded session bundles, private browser partitions only
                             │   ├── ContentDelegate.java [J][API/WIP][?] — 崩溃/终止/全屏/外部response
-                            │   ├── DiagnosticCoordinator.java [J][PLAN][?] — 作用域内页面/网络/会话诊断和renderer脚本，不开无认证全局调试端口
-                            │   ├── GeckoHistoryDelegate.java [J][PLAN][?] — 已提交历史与认证瞬态访问区分
-                            │   ├── GeckoMediaBridge.java [J][PLAN][?] — 实际媒体激活/feature/状态与秒单位
+                            │   ├── DiagnosticCoordinator.java [J][PLAN][?][RISK:HIGH] — 作用域内页面/网络/会话诊断和renderer脚本，不开无认证全局调试端口
+                            │   ├── GeckoHistoryDelegate.java [J][PLAN][?][LOW-SLICE:L42][RISK:HIGH] — 已提交历史与认证瞬态访问区分
+                            │   ├── GeckoMediaBridge.java [J][PLAN][?][LOW-SLICE:L41][RISK:HIGH] — 实际媒体激活/feature/状态与秒单位
                             │   ├── GeckoRuntimeOwner.java [J][API/WIP][?] — 主进程唯一runtime，原生子进程由SDK管理
                             │   ├── GeckoSessionOwner.java [J][API/WIP][?] — session强引用/创建/关闭与代次
                             │   ├── NavigationDelegate.java [J][API/WIP][?] — 加载/外链/新窗与正确父来源
                             │   ├── PartitionCatalog.java [J][HOST][?] — 稳定非null context和环境/子应用归属
                             │   ├── PermissionDelegate.java [J][API/WIP][?] — context+origin网站许可与OS许可分层
                             │   ├── ProgressDelegate.java [J][API/WIP][?] — 提交导航/加载/安全状态/快照事件
-                            │   ├── PromptDelegate.java [J][PLAN][?] — 网站提示/文件选择的Native/系统等待
-                            │   ├── SelectionDelegate.java [J][PLAN][?] — 网页选择/复制与用户动作
-                            │   ├── SessionCheckpointStore.java [J][PLAN][?] — 异步sessionState与敏感快照提交/恢复
+                            │   ├── PromptDelegate.java [J][PLAN][?][RISK:HIGH] — 网站提示/文件选择的Native/系统等待
+                            │   ├── SelectionDelegate.java [J][PLAN][?][RISK:HIGH] — 网页选择/复制与用户动作
+                            │   ├── SessionCheckpointStore.java [J][PLAN][?][RISK:HIGH] — 异步sessionState与敏感快照提交/恢复
                             │   ├── SessionDisplayBinding.java [J][API/WIP][?] — View附着/分离/可见/focus与session生命分离
                             │   ├── SessionPresentation.java [J][HOST][?] — Bounded owner-thread immutable SESSION display/security/history/loading observations, never actual document identity/task/grant or native work-end
                             │   └── ViewportPolicy.java [J][API/WIP][?] — 手机/完整平板/小窗与批准布局策略
                             ├── entrypoints/
                             │   ├── AdminControlActivity.java [J][API/WIP][?] — 应用内/隐藏控制台，隐藏不是授权
-                            │   └── AdminControlProvider.java [J][PLAN][?] — 普通持钥辅助包/ADB的公开受认证Provider入口
+                            │   └── AdminControlProvider.java [J][PLAN][?][RISK:HIGH] — 普通持钥辅助包/ADB的公开受认证Provider入口
                             ├── lyrics/
-                            │   ├── LyricOverlayController.java [J][PLAN][?] — 关闭/可拖动/锁定穿透的唯一状态
-                            │   ├── LyricOverlayWindow.java [J][PLAN][?] — 实际浮层视图/触摸/穿透
-                            │   ├── LyricPositionStore.java [J][PLAN][?] — 位置恢复与窗口边界
-                            │   └── OverlayPermissionFlow.java [J][PLAN][?] — 系统浮层权限请求和结果
+                            │   ├── LyricOverlayController.java [J][PLAN][?][LOW-SLICE:L22][RISK:MEDIUM] — 关闭/可拖动/锁定穿透的唯一状态
+                            │   ├── LyricOverlayWindow.java [J][PLAN][?][LOW-SLICE:L23][RISK:HIGH] — 实际浮层视图/触摸/穿透
+                            │   ├── LyricPositionStore.java [J][PLAN][?][LOW-SLICE:L24][RISK:MEDIUM] — 位置恢复与窗口边界
+                            │   └── OverlayPermissionFlow.java [J][PLAN][?][LOW-SLICE:L25][RISK:HIGH] — 系统浮层权限请求和结果
                             ├── music/
-                            │   ├── MusicActivity.java [J][PLAN][?] — 批准布局及同一个真实播放器session显示
-                            │   ├── MusicArtwork.java [J][PLAN][?] — 最新请求/有界像素解码/缓存
-                            │   ├── MusicAudioFocus.java [J][PLAN][?] — 有效焦点租约，pause后gain不复活
-                            │   ├── MusicAuthentication.java [J][PLAN][?] — 正常手机UA/fresh官方检查/未知不等于退出
-                            │   ├── MusicCoordinator.java [J][PLAN][?] — 认证/意图/唯一执行路线/资源/真状态归约
-                            │   ├── MusicLyrics.java [J][PLAN][?] — 官方歌词有界读取/逐字时间映射
-                            │   ├── MusicMediaSession.java [J][PLAN][?] — Android系统动作与Gecko/官网语义对照
-                            │   ├── MusicNotification.java [J][PLAN][?] — 真实状态/可用动作，不伪造进度
-                            │   ├── MusicPlaybackAuthorization.java [J][PLAN][?] — 冷启暂停、明确起播、旧意图失效
-                            │   ├── MusicPreferences.java [J][PLAN][?] — 音源/恢复意图/位置的明确本机配置
-                            │   ├── MusicQueue.java [J][PLAN][?] — 官网队列/喜欢/歌单域，不提取URL重建播放器
-                            │   ├── MusicService.java [J][PLAN][?] — 合法前台媒体服务和Native任务/通知所有者
-                            │   ├── MusicSessionOwner.java [J][PLAN][?] — UI与服务共享单个music context/session
-                            │   └── MusicState.java [J][PLAN][?] — 账号/播放/资源/意图/焦点代次
+                            │   ├── MusicActivity.java [J][PLAN][?][LOW-SLICE:L16][RISK:HIGH] — 批准布局及同一个真实播放器session显示
+                            │   ├── MusicArtwork.java [J][PLAN][?][LOW-EFFECT:L18][RISK:MEDIUM] — 最新请求/有界像素解码/缓存
+                            │   ├── MusicAudioFocus.java [J][PLAN][?][RISK:HIGH] — 有效焦点租约，pause后gain不复活
+                            │   ├── MusicAuthentication.java [J][PLAN][?][RISK:HIGH] — 正常手机UA/fresh官方检查/未知不等于退出
+                            │   ├── MusicCoordinator.java [J][PLAN][?][RISK:HIGH] — 认证/意图/唯一执行路线/资源/真状态归约
+                            │   ├── MusicLyrics.java [J][PLAN][?][LOW:L19][RISK:LOW] — 官方歌词有界读取/逐字时间映射
+                            │   ├── MusicMediaSession.java [J][PLAN][?][LOW-SLICE:L40][RISK:HIGH] — Android系统动作与Gecko/官网语义对照
+                            │   ├── MusicNotification.java [J][PLAN][?][LOW-SLICE:L17][RISK:MEDIUM] — 真实状态/可用动作，不伪造进度
+                            │   ├── MusicPlaybackAuthorization.java [J][PLAN][?][RISK:HIGH] — 冷启暂停、明确起播、旧意图失效
+                            │   ├── MusicPreferences.java [J][PLAN][?][LOW-SLICE:L39][RISK:MEDIUM] — 音源/恢复意图/位置的明确本机配置
+                            │   ├── MusicQueue.java [J][PLAN][?][LOW:L20][RISK:LOW] — 官网队列/喜欢/歌单域，不提取URL重建播放器
+                            │   ├── MusicService.java [J][PLAN][?][RISK:HIGH] — 合法前台媒体服务和Native任务/通知所有者
+                            │   ├── MusicSessionOwner.java [J][PLAN][?][RISK:HIGH] — UI与服务共享单个music context/session
+                            │   └── MusicState.java [J][PLAN][?][LOW-SLICE:L21][RISK:HIGH] — 账号/播放/资源/意图/焦点代次
                             ├── outlook/
-                            │   ├── AttachmentCoordinator.java [J][PLAN][?] — 有界获取/取消/原生对象/明确保存
-                            │   ├── MailAccountCatalog.java [J][PLAN][?] — 原生账号归属和绑定revision
-                            │   ├── MailAuthCoordinator.java [J][PLAN][?] — fresh官网证据/网络未知/错误分类/恢复
-                            │   ├── MailCaptureValidator.java [J][PLAN][?] — 真实官方来源/代次/账户/DTO/流校验
-                            │   ├── MailDatabase.java [J][PLAN][?] — 执行新账户SQL/事务/约束，源闸门先于打开
-                            │   ├── MailExportCoordinator.java [J][PLAN][?] — 明确范围/高风险授权的正文附件导出
+                            │   ├── AttachmentCoordinator.java [J][PLAN][?][RISK:HIGH] — 有界获取/取消/原生对象/明确保存
+                            │   ├── MailAccountCatalog.java [J][PLAN][?][RISK:HIGH] — 原生账号归属和绑定revision
+                            │   ├── MailAuthCoordinator.java [J][PLAN][?][RISK:HIGH] — fresh官网证据/网络未知/错误分类/恢复
+                            │   ├── MailCaptureValidator.java [J][PLAN][?][RISK:HIGH] — 真实官方来源/代次/账户/DTO/流校验
+                            │   ├── MailDatabase.java [J][PLAN][?][RISK:HIGH] — 执行新账户SQL/事务/约束，源闸门先于打开
+                            │   ├── MailExportCoordinator.java [J][PLAN][?][RISK:HIGH] — 明确范围/高风险授权的正文附件导出
                             │   ├── MailObjectCodec.java [J][HOST][?] — RAW/zlib与受约束解压、长度/摘要
-                            │   ├── MailObjectFormat.java [J][PLAN][?] — 124B头/不可变对象/分帧AEAD
-                            │   ├── MailObjectStore.java [J][PLAN][?] — 小payload内联/较大不可变文件/同账户去重
-                            │   ├── MailReferenceReconciler.java [J][PLAN][?] — 内部引用/孤儿完整性回收，非子应用清理功能
-                            │   ├── MailRetentionPolicy.java [J][PLAN][?] — 原始唯一内容与可重建缓存区分
-                            │   ├── MailSearch.java [J][PLAN][?] — 分页元数据与可取消中文正文跨块检索
-                            │   ├── MailSyncCoordinator.java [J][PLAN][?] — 账户有序批次/引用/游标同事务
-                            │   ├── OfficialMailActions.java [J][PLAN][?] — 仅已授权官网发信/移动/删除等命令与真实回执；不与本机同步事务混淆
-                            │   ├── OfficialMailEntry.java [J][PLAN][?] — 个人/工作学校/最近成功入口，禁止猜测账户域
-                            │   ├── OfflineMailActivity.java [J][PLAN][?] — 原生离线列表/正文/搜索恢复位置
-                            │   ├── OfflineMailRenderer.java [J][PLAN][?] — 隔离只读HTML，无脚本/邮箱Cookie/自动远程内容
-                            │   ├── OutlookActivity.java [J][PLAN][?] — 官方邮箱显示和原生离线入口
-                            │   └── OutlookSessionOwner.java [J][PLAN][?] — 同context邮箱/官方认证Popup生命
+                            │   ├── MailObjectFormat.java [J][PLAN][?][LOW-EFFECT:L36][RISK:MEDIUM] — 124B头/不可变对象/分帧AEAD
+                            │   ├── MailObjectStore.java [J][PLAN][?][RISK:HIGH] — 小payload内联/较大不可变文件/同账户去重
+                            │   ├── MailReferenceReconciler.java [J][PLAN][?][RISK:HIGH] — 内部引用/孤儿完整性回收，非子应用清理功能
+                            │   ├── MailRetentionPolicy.java [J][PLAN][?][LOW-SLICE:L31][RISK:HIGH] — 原始唯一内容与可重建缓存区分
+                            │   ├── MailSearch.java [J][PLAN][?][LOW-SLICE:L37][RISK:HIGH] — 分页元数据与可取消中文正文跨块检索
+                            │   ├── MailSyncCoordinator.java [J][PLAN][?][RISK:HIGH] — 账户有序批次/引用/游标同事务
+                            │   ├── OfficialMailActions.java [J][PLAN][?][RISK:HIGH] — 仅已授权官网发信/移动/删除等命令与真实回执；不与本机同步事务混淆
+                            │   ├── OfficialMailEntry.java [J][PLAN][?][LOW:L30][RISK:LOW] — 个人/工作学校/最近成功入口，禁止猜测账户域
+                            │   ├── OfflineMailActivity.java [J][PLAN][?][LOW-SLICE:L15][RISK:HIGH] — 原生离线列表/正文/搜索恢复位置
+                            │   ├── OfflineMailRenderer.java [J][PLAN][?][RISK:HIGH] — 隔离只读HTML，无脚本/邮箱Cookie/自动远程内容
+                            │   ├── OutlookActivity.java [J][PLAN][?][LOW-SLICE:L14][RISK:HIGH] — 官方邮箱显示和原生离线入口
+                            │   └── OutlookSessionOwner.java [J][PLAN][?][RISK:HIGH] — 同context邮箱/官方认证Popup生命
                             ├── permissions/
-                            │   ├── ClipboardCoordinator.java [J][PLAN][?] — 网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验；Native clipboard read走SelectionActionDelegate，不把screenPoint当手势证明
-                            │   ├── FilePickerCoordinator.java [J][PLAN][?] — 选择器/ContentResolver/拒绝与重建
-                            │   ├── PendingPromptRegistry.java [J][PLAN][?] — session/document/request绑定且一次结果
-                            │   ├── PermissionCoordinator.java [J][PLAN][?] — Native content/OS/media权限分层与真实prompt；Gecko永久权限缓存和有限native grant时限差异尚待验证，不用定时器冒充回收
-                            │   └── SiteGrantStore.java [J][PLAN][?] — origin/partition/能力/期限记录
+                            │   ├── ClipboardCoordinator.java [J][PLAN][?][RISK:HIGH] — 网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验；Native clipboard read走SelectionActionDelegate，不把screenPoint当手势证明
+                            │   ├── FilePickerCoordinator.java [J][PLAN][?][RISK:HIGH] — 选择器/ContentResolver/拒绝与重建
+                            │   ├── PendingPromptRegistry.java [J][PLAN][?][RISK:HIGH] — session/document/request绑定且一次结果
+                            │   ├── PermissionCoordinator.java [J][PLAN][?][RISK:HIGH] — Native content/OS/media权限分层与真实prompt；Gecko永久权限缓存和有限native grant时限差异尚待验证，不用定时器冒充回收
+                            │   └── SiteGrantStore.java [J][PLAN][?][RISK:HIGH] — origin/partition/能力/期限记录
                             ├── settings/
-                            │   ├── PersonalizationPolicy.java [J][PLAN][?] — 批准背景与原生外观资源选择/授权URI归属
-                            │   └── SettingsRepository.java [J][PLAN][?] — 本机通用/背景/搜索/子设置读写，与Activity分离
+                            │   ├── PersonalizationPolicy.java [J][PLAN][?][LOW-SLICE:L38][RISK:HIGH] — 批准背景与原生外观资源选择/授权URI归属
+                            │   └── SettingsRepository.java [J][PLAN][?][RISK:HIGH] — 本机通用/背景/搜索/子设置读写，与Activity分离
                             ├── subapps/
-                            │   ├── SubapplicationCoordinator.java [J][PLAN][?] — NativeUI和管理员共享启用/打开/关闭/子设置路由
-                            │   └── SubapplicationRegistry.java [J][PLAN][?] — 固定子应用身份/启用/入口元数据，不包含已搁置容量/清理
+                            │   ├── SubapplicationCoordinator.java [J][PLAN][?][RISK:HIGH] — NativeUI和管理员共享启用/打开/关闭/子设置路由
+                            │   └── SubapplicationRegistry.java [J][HOST][?][LOW:L01][RISK:LOW] — 固定子应用身份/启用/入口元数据，不包含已搁置容量/清理
                             ├── system/
-                            │   ├── ApkHandoffActivity.java [J][PLAN][?] — 仅已授权本地.1/APK交接入口与Native生命周期，不转发外部管理员参数
-                            │   ├── ApkHandoffCoordinator.java [J][PLAN][?] — UI/管理员共同的来源验证、受限stage与明确系统安装器交接；已交接不冒充安装完成
-                            │   ├── ApkStagingProvider.java [J][PLAN][?] — 不导出只读随机单文件URI，核对授权/归属/期限/规范路径，绝不暴露业务资料
-                            │   ├── ApkStagingStore.java [J][PLAN][?] — 仅自有随机APK暂存，输入流/队列/实际任务/空间/保留预算及取消结算；不清其他缓存
-                            │   ├── DefaultBrowserFlow.java [J][PLAN][?] — 用户/已授权动作打开系统推荐默认应用页，已持有角色也可打开；只读角色不直接设置默认，不交第三方/合成Resolver
-                            │   ├── DeviceWindowState.java [J][PLAN][?] — 窗口/平板/横竖屏事实，不以型号硬门控
-                            │   ├── ForegroundPolicy.java [J][PLAN][?] — Android前台服务/通知许可按实际版本处理
-                            │   ├── MemoryPressurePolicy.java [J][PLAN][?] — 仅本软件缓存/可恢复session回收，不动其他软件
-                            │   └── PlatformResultRouter.java [J][PLAN][?] — 系统选择器/权限/安装器返回归属
+                            │   ├── ApkHandoffActivity.java [J][PLAN][?][LOW-SLICE:L29][RISK:HIGH] — 仅已授权本地.1/APK交接入口与Native生命周期，不转发外部管理员参数
+                            │   ├── ApkHandoffCoordinator.java [J][PLAN][?][RISK:HIGH] — UI/管理员共同的来源验证、受限stage与明确系统安装器交接；已交接不冒充安装完成
+                            │   ├── ApkStagingProvider.java [J][PLAN][?][RISK:HIGH] — 不导出只读随机单文件URI，核对授权/归属/期限/规范路径，绝不暴露业务资料
+                            │   ├── ApkStagingStore.java [J][PLAN][?][RISK:HIGH] — 仅自有随机APK暂存，输入流/队列/实际任务/空间/保留预算及取消结算；不清其他缓存
+                            │   ├── DefaultBrowserFlow.java [J][PLAN][?][LOW-SLICE:L26][RISK:MEDIUM] — 用户/已授权动作打开系统推荐默认应用页，已持有角色也可打开；只读角色不直接设置默认，不交第三方/合成Resolver
+                            │   ├── DeviceWindowState.java [J][API/WIP][?][LOW-EFFECT:L06][RISK:MEDIUM] — 窗口/平板/横竖屏事实，不以型号硬门控
+                            │   ├── ForegroundPolicy.java [J][PLAN][?][LOW-EFFECT:L27][RISK:MEDIUM] — Android前台服务/通知许可按实际版本处理
+                            │   ├── MemoryPressurePolicy.java [J][PLAN][?][LOW-EFFECT:L28][RISK:MEDIUM] — 仅本软件缓存/可恢复session回收，不动其他软件
+                            │   └── PlatformResultRouter.java [J][PLAN][?][RISK:HIGH] — 系统选择器/权限/安装器返回归属
                             └── ui/
-                                ├── ApplicationsActivity.java [J][PLAN][?] — 子应用启用与48dp设置齿轮
-                                ├── BookmarkView.java [J][PLAN][?] — 收藏和书签操作
+                                ├── ApplicationsActivity.java [J][PLAN][?][LOW-SLICE:L11][RISK:MEDIUM] — 子应用启用与48dp设置齿轮
+                                ├── BookmarkView.java [J][API/WIP][?][LOW-EFFECT:L05][RISK:MEDIUM] — 收藏和书签操作
                                 ├── BrowserActivity.java [J][API/WIP][?] — 主窗口和Native/Gecko显示协调
                                 ├── BrowserToolbar.java [J][API/WIP][?] — 原生地址/返回/刷新/输入建议
-                                ├── DownloadsActivity.java [J][PLAN][?] — 批准/取消/任务/文件交接
-                                ├── DownloadsAdapter.java [J][PLAN][?] — 下载列表与实际阶段显示
-                                ├── HistoryActivity.java [J][PLAN][?] — 原生历史查询/期限/清理入口
-                                ├── HistoryAdapter.java [J][PLAN][?] — 有界近期/历史列表
+                                ├── DownloadsActivity.java [J][PLAN][?][LOW-SLICE:L09][RISK:MEDIUM] — 批准/取消/任务/文件交接
+                                ├── DownloadsAdapter.java [J][API/WIP][?][LOW-EFFECT:L04][RISK:MEDIUM] — 下载列表与实际阶段显示
+                                ├── HistoryActivity.java [J][PLAN][?][LOW-SLICE:L08][RISK:MEDIUM] — 原生历史查询/期限/清理入口
+                                ├── HistoryAdapter.java [J][API/WIP][?][LOW-EFFECT:L03][RISK:MEDIUM] — 有界近期/历史列表
                                 ├── LoadingProgressView.java [J][API/WIP][?] — Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑
                                 ├── NativeDialogs.java [J][API/WIP][?] — 取消/危险确认/平台等待，不默认为同意
-                                ├── NewTabView.java [J][PLAN][?] — 批准背景/搜索/收藏布局
+                                ├── NewTabView.java [J][PLAN][?][LOW:L07][RISK:LOW] — 批准背景/搜索/收藏布局
                                 ├── OverviewSelection.java [J][API/WIP][?] — 每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化
-                                ├── SettingsActivity.java [J][PLAN][?] — 通用/权限/应用管理入口
-                                ├── SettingsSections.java [J][PLAN][?] — Native设置项与结果绑定
-                                ├── SitePermissionsActivity.java [J][PLAN][?] — 网站范围与系统许可状态
-                                ├── SourceWarningActivity.java [J][PLAN][?] — 仅原生四步/救援，不创建锁定旧业务
-                                ├── SubapplicationSettingsActivity.java [J][PLAN][?] — 子设置/音源/入口；占用清理按O26搁置
+                                ├── SettingsActivity.java [J][PLAN][?][LOW-SLICE:L10][RISK:MEDIUM] — 通用/权限/应用管理入口
+                                ├── SettingsSections.java [J][HOST][?][LOW:L02][RISK:LOW] — Native设置项与结果绑定
+                                ├── SitePermissionsActivity.java [J][PLAN][?][LOW-SLICE:L13][RISK:HIGH] — 网站范围与系统许可状态
+                                ├── SourceWarningActivity.java [J][PLAN][?][RISK:HIGH] — 仅原生四步/救援，不创建锁定旧业务
+                                ├── SubapplicationSettingsActivity.java [J][PLAN][?][LOW-SLICE:L12][RISK:MEDIUM] — 子设置/音源/入口；占用清理按O26搁置
                                 ├── TabPanel.java [J][API/WIP][?] — 环境内标签选择/新建/关闭
                                 ├── WindowPresentation.java [J][API/WIP][?] — 状态栏/全屏/窗口布局，不改用户全局设置
                                 └── WorkspacePanel.java [J][API/WIP][?] — 环境列表和双层交互
 ```
+
+## ↪ D02单轮42文件分工（旧6另列审查，不计新增实现）
+
+| 任务 | 目标文件 | 完整责任风险 / 分配范围 / 状态 |
+| --- | --- | --- |
+| L32 | `app/src/main/java/io/github/rebrowser/core/DomainResult.java` | high / slice / reserved-not-started |
+| L33 | `app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java` | low / whole / reserved-not-started |
+| L41 | `app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java` | high / slice / reserved-not-started |
+| L42 | `app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java` | high / slice / reserved-not-started |
+| L34 | `app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java` | high / slice / reserved-not-started |
+| L35 | `app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java` | medium / whole / reserved-not-started |
+| L07 | `app/src/main/java/io/github/rebrowser/ui/NewTabView.java` | low / whole / reserved-not-started |
+| L05 | `app/src/main/java/io/github/rebrowser/ui/BookmarkView.java` | medium / whole / reviewed-scoped-host-api |
+| L08 | `app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java` | medium / slice / reserved-not-started |
+| L03 | `app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java` | medium / whole / reviewed-scoped-host-api |
+| L09 | `app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java` | medium / slice / reserved-not-started |
+| L04 | `app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java` | medium / whole / reviewed-scoped-host-api |
+| L10 | `app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java` | medium / slice / reserved-not-started |
+| L02 | `app/src/main/java/io/github/rebrowser/ui/SettingsSections.java` | low / whole / reviewed-scoped-host-api |
+| L11 | `app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java` | medium / slice / reserved-not-started |
+| L12 | `app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java` | medium / slice / reserved-not-started |
+| L13 | `app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java` | high / slice / reserved-not-started |
+| L14 | `app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java` | high / slice / reserved-not-started |
+| L30 | `app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java` | low / whole / reserved-not-started |
+| L36 | `app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java` | medium / whole / reserved-not-started |
+| L37 | `app/src/main/java/io/github/rebrowser/outlook/MailSearch.java` | high / slice / reserved-not-started |
+| L15 | `app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java` | high / slice / reserved-not-started |
+| L31 | `app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java` | high / slice / reserved-not-started |
+| L16 | `app/src/main/java/io/github/rebrowser/music/MusicActivity.java` | high / slice / reserved-not-started |
+| L21 | `app/src/main/java/io/github/rebrowser/music/MusicState.java` | high / slice / reserved-not-started |
+| L40 | `app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java` | high / slice / reserved-not-started |
+| L17 | `app/src/main/java/io/github/rebrowser/music/MusicNotification.java` | medium / slice / reserved-not-started |
+| L18 | `app/src/main/java/io/github/rebrowser/music/MusicArtwork.java` | medium / whole / reserved-not-started |
+| L19 | `app/src/main/java/io/github/rebrowser/music/MusicLyrics.java` | low / whole / reserved-not-started |
+| L20 | `app/src/main/java/io/github/rebrowser/music/MusicQueue.java` | low / whole / reserved-not-started |
+| L39 | `app/src/main/java/io/github/rebrowser/music/MusicPreferences.java` | medium / slice / reserved-not-started |
+| L22 | `app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java` | medium / slice / reserved-not-started |
+| L23 | `app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java` | high / slice / reserved-not-started |
+| L24 | `app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java` | medium / slice / reserved-not-started |
+| L25 | `app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java` | high / slice / reserved-not-started |
+| L06 | `app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java` | medium / whole / reviewed-scoped-host-api |
+| L26 | `app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java` | medium / slice / reserved-not-started |
+| L27 | `app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java` | medium / whole / reserved-not-started |
+| L28 | `app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java` | medium / whole / reserved-not-started |
+| L46 | `app/src/main/assets/bridge/styles/music-phone.css` | medium / whole / reserved-not-started |
+| L47 | `app/src/main/assets/bridge/styles/music-window.css` | medium / whole / reserved-not-started |
+| L48 | `app/src/main/assets/bridge/styles/music-desktop.css` | medium / whole / reserved-not-started |
+| L43 | `app/src/main/assets/offline-mail/reader.html` | high / slice / reserved-not-started |
+| L45 | `app/src/main/assets/offline-mail/reader.js` | high / slice / reserved-not-started |
+| L44 | `app/src/main/assets/offline-mail/reader.css` | low / whole / reserved-not-started |
+| L01 | `app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java` | low / whole / reviewed-scoped-host-api |
+| L38 | `app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java` | high / slice / reserved-not-started |
+| L29 | `app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java` | high / slice / reserved-not-started |
+
+范围/接口/验收以[任务记录](records/low-cost-agent-assignments.json)和[全量风险](records/remaining-file-risk-assessment.json)为准；42新目标不包含原6交付。其余78个文件全部保留主agent，slice之外的高风险责任也保留主agent。不增空实现、不把分工当产品进度。原6交付只按实际模型HOST/API范围准入，不是Android View/backend完成；R47主链证据独立绑定当前源码，不能沿用R46测试声称新代码全部通过。
 
 ## ↪ 测试需求与目标位置（辅助代码独立存放，不展开为主树）
 
@@ -235,22 +293,22 @@
 | --- | --- | --- |
 | 入口与进程 | 进程角色/幂等启动/所有组件先闸门/无系统WebView条件；API30新安装冷启动及Gecko子进程不重复建主runtime | `app/src/test/java/io/github/rebrowser/entry/EntryContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/entry/EntryRuntimeTest.java` |
 | 来源连续性 | lastGood而非lastSeen、四步计数/取消、精确私有清单与原子epoch；合成A→异常B→正常C、版本/签名限制、两次新系统验证与无锁/取消；不清日常资料；actualunconfiguredRoot/strictfingerprints/noDynamicRegistrationAPI;3HOSTtestsnottrustunlock；4HOST publicTOYoctet hash/history/bounds/immutability;notcertificates/AndroidOS/privatekey custody；3HOST exact4O16warninghashes andForce2/3freshauthpositions;notOwnerAuthorTrust；3HOST epochcopy/steprestriction/freshchallenge/privateTicketconstructor, NOownerprompt/noLockproof/ticketmintconsume/controlflowexecution；17 actual HOST metadata IO/reopen/A-B-abort-A and explicit-empty-B, lock/CAS, corrupt/pending/symlink/directory identity rejection; synthetic fences, not owner authentication or erasure；24 HOST synthetic-native outcome cases, exact order/revision/window/context/clock/consent and retained unknown native work; not OS bridge/authentication；28 actual OwnerAuthentication controller/private-ticket/bridge cases using private reflected fake platform; no AndroidPlatform/OS auth/real signer calls；27actual HOST source receipt/metadata IO/publication ticket cases, private SYNTHETIC own-OS provenance; no real Handler/own signer/source unlock | `app/src/test/java/io/github/rebrowser/continuity/ContinuityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/continuity/ContinuityRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/CompiledSourceIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/SigningIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/ContinuityStateTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationBindingTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/LastGoodSourceStoreTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/ContinuityCoordinatorTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/OwnerAuthenticationControlTest.java`<br>`app/src/test/java/io/github/rebrowser/continuity/SourceBootstrapTest.java` |
-| 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限；112phase/work/effect combinations,14valid; timeout/cancel/stale neverendwork; observed outcome/workend/durability independent；235HOST SQLite constraints/196transitionpairs/recovery/pairedtransaction rollback,reopen/2writeronce;NOTAndroidDAO；40 actual HOST tests, no real Android platform/SQLite execution；10 actual HOST tests, no real Android platform/SQLite execution；19actualHOST current native epoch/window identity/revision/weak lifetime/retire/scope negative cases; not Android Window or UI effects | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java`<br>`planning/geckoview-v2/experiments/task_journal_sql.py`<br>`app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java`<br>`app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java`<br>`app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java` |
-| 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路；fresh one-shot immutable object IDs/catalog scope/RAW digest/GCM frame tamper/tainted late prefix/cancel/4MiB generated source bounded private staging; ZLIB bytes need separate codec verification | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java` |
+| 领域基础与任务 | 真实槽/安全通道/超时不释放/旧拥有者只结算/持久化前后fence；线程/进程死亡/背压/取消失败与长任务并发，实际资源上限；112phase/work/effect combinations,14valid; timeout/cancel/stale neverendwork; observed outcome/workend/durability independent；235HOST SQLite constraints/196transitionpairs/recovery/pairedtransaction rollback,reopen/2writeronce;NOTAndroidDAO；40 actual HOST tests, no real Android platform/SQLite execution；10 actual HOST tests, no real Android platform/SQLite execution；19actualHOST current native epoch/window identity/revision/weak lifetime/retire/scope negative cases; not Android Window or UI effects；L32 错误字符串<=256且不带私有URL/内容，unknown/等待/返回与效果、持久化、实际结束明确分离 | `app/src/test/java/io/github/rebrowser/core/CoreContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/core/CoreRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/core/TaskSnapshotTest.java`<br>`planning/geckoview-v2/experiments/task_journal_sql.py`<br>`app/src/test/java/io/github/rebrowser/core/TaskCoordinatorTest.java`<br>`app/src/test/java/io/github/rebrowser/core/ResourceBudgetsTest.java`<br>`app/src/test/java/io/github/rebrowser/core/TargetReferencesTest.java`<br>`app/src/test/java/io/github/rebrowser/core/DomainResultTest.java` |
+| 本机加密与密钥 | 公开RFC/NIST向量、帧边界/篡改/截断/错epoch/account/object/key版本；Android JCA/Keystore生命周期、同包更新保留、无生物硬件单项退路；fresh one-shot immutable object IDs/catalog scope/RAW digest/GCM frame tamper/tainted late prefix/cancel/4MiB generated source bounded private staging; ZLIB bytes need separate codec verification；L33 域无混用/固定记录code/未知code拒绝、max长度边界和不可变定义；对外新增私有记录格式仍由主agent定；Bounded independentlyversioned non-mail AESGCM metadata framing/purpose-epoch-scope-revision binding with strict lengths and nonce freshness; real HOST pipeline with explicitlyPRIVATEtoyAndroidprovenance；Actual existing native Android wrapping-key factory and fresh record-DEK envelope, no generate/seed/import/enrollment or fallback; real HOST pipeline with explicitlyPRIVATEtoyAndroidprovenance；Actual native fixed existingepochdir AEAD records, exactReadStampCAS/0600stage/atomic commit/force/readback/nonblocking anchoredlock and quotas, no cleanup/restoreauthority; real HOST pipeline with explicitlyPRIVATEtoyAndroidprovenance | `app/src/test/java/io/github/rebrowser/crypto/CryptoContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/crypto/CryptoRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java`<br>`app/src/test/java/io/github/rebrowser/crypto/DataKeyVaultTest.java`<br>`app/src/test/java/io/github/rebrowser/data/PrivateRecordStoreTest.java` |
 | 管理员政策 | >=与H、静态高级、Root不可禁、撤销恢复、多名单所有权、同钥同身份；实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决 | `app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java` |
 | 统一控制入口与协议 | 严格字段/长度/签名字节/nonce/重复请求/未知副作用不重放；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；ADB/普通辅助包同协议，断线重连/大结果流/平台等待而非权限假报；跨语言17字段帧/DER/P256/目标代次/新proof取旧job，签名变体不改身份或绕nonce；外包络必填/未知/重复与类型，原字节/不可变树、代理摘要、深度/节点/数值预算、UTF8/surrogate/数字语法/不把UnverifiedProof当身份；不覆盖逐动作schema/准入；30s exact-frame/context/nonce, replay/expiry, authorize failure/unknown reservation burn,16concurrent/reentrant attempts,1MiB retained-frame cap/clock rollback; no actual effects/durable journal；fresh nonce/policy/grant same content identity; action/scope/raw args change conflicts, immutable digest/schema arrays; Android SQLite methods separately pending；fixed4actions/unknownfailclosed/strictrefs/exactsafeinteger/permissionpurpose/installerpair/rawargspreservation;NOTauthority orAndroidexecution | `app/src/test/java/io/github/rebrowser/control/ControlContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/control/ControlRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlDecoderTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ControlChallengeStoreTest.java`<br>`app/src/test/java/io/github/rebrowser/control/IdempotencyIdentityTest.java`<br>`app/src/test/java/io/github/rebrowser/control/ActionSchemasTest.java` |
-| Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控；6HOST actual owner-domain/context/epoch/fence/tombstone/capacity/gate/thread tests; notcookie/storage erasure/runtime；12 actual production classifier/display + synthetic pinned SDK LoadRequest constructor cases; not session/callback/network runtime；Actual native observation model/reject callback and body-close helper HOST; no real Gecko/Android event execution | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/NavigationDelegatePolicyTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/SessionPresentationTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java` |
-| APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务 | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java` |
+| Gecko原生宿主 | partition与session身份/Popup父来源/快照revision/显示与关闭分离；实际context cookies隔离、NativePopup、崩溃/回收恢复、无WebView门控；6HOST actual owner-domain/context/epoch/fence/tombstone/capacity/gate/thread tests; notcookie/storage erasure/runtime；12 actual production classifier/display + synthetic pinned SDK LoadRequest constructor cases; not session/callback/network runtime；Actual native observation model/reject callback and body-close helper HOST; no real Gecko/Android event execution；L41 SDK158签名API编译、旧session/退役/秒单位/未知feature；合成DTO测试不能说真实Gecko callback运行；L42 实际SDK类型编译、超长/错误UTF16/未知转移/旧绑定；不补空HistoryStore或宣称历史持久化完成 | `app/src/test/java/io/github/rebrowser/engine/EngineContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/engine/EngineRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/PartitionCatalogTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/NavigationDelegatePolicyTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/SessionPresentationTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/GeckoMediaBridgeTest.java`<br>`app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java` |
+| APK内建连接器 | 一HELLO/版本、原生sender绑定、序号/信用、旧代次与实际结算；Gecko内建权限、content/MAIN世界、SPA/BFCache、port断开与真实未完成任务；L34 重复/未知字段、safeInteger溢出、坏UTF8/超限、版本方向/kind及类型严格；待决字段先报告不可私改协议；L35 原子并发限额/双归还/外issuer/overflow/零进度、报告remaining不代替native actual end | `app/src/test/java/io/github/rebrowser/bridge/BridgeContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/bridge/BridgeRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/bridge/BridgeMessagesTest.java`<br>`app/src/test/java/io/github/rebrowser/bridge/BridgeBudgetTest.java` |
 | 浏览器领域与本机数据 | 双层环境/标签、搜索/收藏/历史期限维持、原生返回优先级；多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区；14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore；11HOST queries4providers/strictHTTP/userinfo/UTF16/UnicodeIDNpreservation/IPv6/ports/noSecretSearchFallback/URLbounds+fixedpoint;notGecko/DNS orOSIntent；12HOST real reducer/synthetic layer priority/revision/pending/unknown/stalepublication/thread/reentrancy/sourceLockedcancel, notAndroidactualBack | `app/src/test/java/io/github/rebrowser/browser/BrowserContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/browser/BrowserRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java`<br>`app/src/test/java/io/github/rebrowser/browser/BackCoordinatorTest.java` |
-| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；37actualHOST binding/address/selection/rows/progress/modal/insets/viewport-policy methods, not Android UI rendering/callbacks | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java` |
+| 原生浏览器界面 | 每Native控件到领域动作、Back只消费一次、无障碍焦点/48dp齿轮；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；手机/平板/完整与非完整窗口、IME/模态/全屏/列表恢复与批准外观对照；加载条按session/document代际单调/取消旧fade；每窗口多选与Back清除，旧ID不可影响新面板；37actualHOST binding/address/selection/rows/progress/modal/insets/viewport-policy methods, not Android UI rendering/callbacks；L02 限定展示/只读模型边界及失效行为，实际HOST/API和Android执行范围分别报告；L03 限定展示/只读模型边界及失效行为，实际HOST/API和Android执行范围分别报告；L04 限定展示/只读模型边界及失效行为，实际HOST/API和Android执行范围分别报告；L05 限定展示/只读模型边界及失效行为，实际HOST/API和Android执行范围分别报告；L07 布局模型/宽窄窗口/空收藏/长文本与旧frame失效；API编译，不把UI意图称导航成功；L08 源锁定壳、旋转/销毁解绑、旧页无回调、期限未知文案，不能伪报删除完成；L09 TaskSnapshot分轴、空列表/晚回调/窗口销毁，无任务执行或自动安装；L10 未知配置保持未读取，分类/绑定/退役及返回处理，无已保存/已授权假象；L11 未知启用状态、两类按钮精确目标、48dp与旧frame，描述目录不等于已经启用；L12 子应用身份精确校验、未知配置、绑定失效、展示和修改意图区分；L13 有限期/未知/OS拒绝展示、精确行scope与退役；实际授权/撤销链留主agent | `app/src/test/java/io/github/rebrowser/ui/UiContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/ui/UiRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java` |
 | 下载与目标文件 | 所有拒绝/失败路径close流、目标URI/文件名边界、事务发布；真实Gecko response流、断网/磁盘不足/系统选择器取消；不导Cookie重发；10 HOST bulk-only EOF, byte length/SHA, all close/error paths, tainted prefix, cancel and interrupt-ignoring worker; not Gecko runtime | `app/src/test/java/io/github/rebrowser/download/DownloadContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/download/DownloadRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java` |
 | 网站与系统许可 | origin+context范围、prompt一次结果、手势/文档代次与拒绝；Android许可/剪贴板前台资格、文件选择器/旋转/取消和API差异 | `app/src/test/java/io/github/rebrowser/permissions/PermissionsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/permissions/PermissionsRuntimeTest.java` |
-| Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更；RAW/zlib选择包含AEAD帧开销，输出/摘要/EOF/字典/资源/取消，prepare->seal/open->decode私有暂存全原文；非DB/官网/Android性能 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java` |
-| 官方音乐与后台 | fresh准入与安全停止分开、单路线/冷启暂停/seek单位、旧焦点gain失效；合成媒体事件后再明确授权官网验证、服务/通知/焦点/任务重连；不擅自播放 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java` |
-| 桌面歌词 | 关闭/拖动/锁定穿透、位置边界、歌词时间与资源代次；系统浮层许可/锁屏/小窗/方向变化/触摸穿透及恢复 | `app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java` |
-| 平台集成 | 版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功；API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java` |
-| 子应用启用与路由 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回 | `app/src/test/java/io/github/rebrowser/subapps/SubappsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/subapps/SubappsRuntimeTest.java` |
-| 本机设置领域 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回 | `app/src/test/java/io/github/rebrowser/settings/SettingsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/settings/SettingsRuntimeTest.java` |
+| Outlook与离线邮件 | 账户绑定/修订/SQL约束/引用/损坏/搜索跨块/导出范围/加密完整性；个人/工作学校官方流程与历史错误、同contextPopup、中文/HTML/离线读取与中断；无真实云端变更；RAW/zlib选择包含AEAD帧开销，输出/摘要/EOF/字典/资源/取消，prepare->seal/open->decode私有暂存全原文；非DB/官网/Android性能；L14 来源锁定不接业务、无绑定不造session、窗口解绑及未知登录展示；L30 精确固定https://outlook.live.com/mail/及https://outlook.office.com/mail/；未知入口拒绝、recent无值不伪造成功；L36 边界/溢出/RAW长度/32768帧/tag与精确golden vectors，错误version/flags/code拒绝，实际认证仍在ObjectAead；L37 块边界/Unicode代理对/空needle/坏文本/取消与实际owned close/结果上限/巨大输入；无后台自动继续；L15 页界限/私有文本退役/搜索用户意图和原账号token准确，无跨账号合并；L31 原始正文/附件/唯一译文等不能误作cache、来源不明保留、派生依赖丢失时拒绝回收建议 | `app/src/test/java/io/github/rebrowser/outlook/OutlookContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/outlook/OutlookRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/OfficialMailEntryTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailObjectFormatTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/outlook/MailRetentionPolicyTest.java` |
+| 官方音乐与后台 | fresh准入与安全停止分开、单路线/冷启暂停/seek单位、旧焦点gain失效；合成媒体事件后再明确授权官网验证、服务/通知/焦点/任务重连；不擅自播放；L16 未知播放/账号状态不猜测、手机/窗口模型、退役和同一绑定，不伪造播放器进度；L21 unknown与observed区分，代次不溢出/跨资源串用，状态DTO绝不释放slot或生成权限；L40 unknown时长/NaN/infinity/溢出/feature缺失、callback返回不代表播放完成；真实系统media owner留主agent；L17 未知时长/进度、溢出/无可用动作、私有文案限制；构造不是已发布通知；L18 inJustDecodeBounds后才解码，乘法long防溢出、过大/坏图/旧代次/实际finally释放；Android解码未执行要标false；L19 输入<=1MiB、行<=4096、时间非负/long溢出、重复时间/空行/坏UTF16/逐字区间与未知格式；L20 <=500项、重复/缺失token、旧revision/排序、未知喜欢状态、资源ID不能直接成为可执行URL；L39 缺失/损坏/过长/未知枚举保持unknown，精确revision和副作用为空 | `app/src/test/java/io/github/rebrowser/music/MusicContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/music/MusicRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicStateTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java`<br>`app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java` |
+| 桌面歌词 | 关闭/拖动/锁定穿透、位置边界、歌词时间与资源代次；系统浮层许可/锁屏/小窗/方向变化/触摸穿透及恢复；L22 关闭后晚回调无复活、锁定/解锁明确输入、申请状态与实际显示状态分离；L23 触摸边界/取消/多指/锁定状态、旧frame不拖新对象；只有View构造/API编译不算系统浮窗验证；L24 负数/NaN/infinity/屏幕变化/小窗口边界，未知旧位置明确而非造默认保存成功；L25 异常为unknown而非false/true；回到页面和实际授权区别、源关闭与旧窗口失效 | `app/src/test/java/io/github/rebrowser/lyrics/LyricsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/lyrics/LyricsRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java`<br>`app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java`<br>`app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java`<br>`app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java` |
+| 平台集成 | 版本分支/系统等待分类、仅本软件内存回收、不得改全局用户设置；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功；API30+Role/安装器/前台服务/通知许可、无GMS/无生物/无相机局部退路；.1输入/自有provider反读拒绝、字节一致/真实IO预算/取消、系统安装器vs商店、只读grant/过期、交接不等于安装成功；L06 限定展示/只读模型边界及失效行为，实际HOST/API和Android执行范围分别报告；L26 未知/持有/未持有分开，返回不是角色获取成功，页面请求不是已授权系统修改；L27 API30至当前SDK边界、通知未知/拒绝、实际service类型及启动例外；建议不等于系统已接受；L28 trim等级/unknown/前台保留、未结束资源不能作为可回收项；不宣称全Gecko RAM保证；L29 无native绑定时不接受外部路径；交接/系统返回/安装结果明确分离，销毁解绑 | `app/src/test/java/io/github/rebrowser/system/SystemContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/system/SystemRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/system/DeviceWindowStateTest.java`<br>`app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java`<br>`app/src/test/java/io/github/rebrowser/system/ForegroundPolicyTest.java`<br>`app/src/test/java/io/github/rebrowser/system/MemoryPressurePolicyTest.java`<br>`app/src/test/java/io/github/rebrowser/system/ApkHandoffActivityTest.java` |
+| 子应用启用与路由 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回；L01 限定展示/只读模型边界及失效行为，实际HOST/API和Android执行范围分别报告 | `app/src/test/java/io/github/rebrowser/subapps/SubappsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/subapps/SubappsRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java` |
+| 本机设置领域 | NativeUI和管理员同一设置/启用服务，幂等/来源闸门/取消/不创建无关网页；入口/设置恢复、Activity与领域生命分离，设备窗口变化和系统返回；L38 背景比例/小窗口/越界/无资源、只有建议不是授权；已批准资源不被替换为任意远程内容 | `app/src/test/java/io/github/rebrowser/settings/SettingsContractsTest.java`<br>`app/src/androidTest/java/io/github/rebrowser/settings/SettingsRuntimeTest.java`<br>`app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java` |
 
 ## ↪ 其他部分的概括引用（不作为源码分支展开）
 

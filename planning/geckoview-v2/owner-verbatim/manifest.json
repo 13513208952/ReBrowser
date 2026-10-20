@@ -513,7 +513,49 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O74",
+      "file": "owner-verbatim/O74-delegate-low-difficulty-tree-files.txt",
+      "utf8Bytes": 122,
+      "sha256": "74676d239e8e2d8cd3a7426ec948e3bb51f2420c1526995964cc93103dfa8786",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O75",
+      "file": "owner-verbatim/O75-worker-dsh-context-shared-main-continue.txt",
+      "utf8Bytes": 177,
+      "sha256": "845b41a21c8f93cdab2ecffa8b975aff2af96d3a3228078940f8d7e36b17f97a",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O76",
+      "file": "owner-verbatim/O76-worker-completed-review-integration.txt",
+      "utf8Bytes": 18,
+      "sha256": "163f12f8d830ca3fe6cc0f2053a88462c2c7b6d76e46ac2439dbb972dc6489ba",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O77",
+      "file": "owner-verbatim/O77-assess-low-cost-agent-collaboration.txt",
+      "utf8Bytes": 93,
+      "sha256": "1b2991860ac55bdfadf15630f3c4a5cb14b6148a66cdafb1ca7d835e2c65ea2d",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O78",
+      "file": "owner-verbatim/O78-comprehensive-low-risk-batch-at-least-forty.txt",
+      "utf8Bytes": 233,
+      "sha256": "e0cfac0c814153ea2adba7858e2c320f43b66beb3b68c41dbcd29342cc765d31",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O79",
+      "file": "owner-verbatim/O79-main-continue-while-worker-D02.txt",
+      "utf8Bytes": 39,
+      "sha256": "a2995447189b7f64178629a1361994faa4522bc340698c064ae4a529a719fac1",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-20T15:37:46+08:00"
+  "lastAppendedAt": "2026-10-20T17:31:30+08:00"
 }

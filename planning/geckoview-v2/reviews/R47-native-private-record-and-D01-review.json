@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "revision": "R47",
+  "moduleFocus": "Entry accepted epoch -> actual existing vault/private record IO dependency; D01 scoped delivery reviewed while D02reserved42untouched",
+  "runtimeWorkload": {
+    "meaningfulRuntimeFiles": 11,
+    "newRuntimeSources": 9,
+    "mainNewCoreSources": 3,
+    "workerNewSourcesReviewed": 6,
+    "minimum": 10,
+    "maximum": null,
+    "contractRef": "records/native-private-record-store-contract.json"
+  },
+  "implementedFlow": [
+    "Startup ownedIO one-attempt cached existing record owner, actual accepted epoch required, no UIthread key/filesystem work and no automatic retry/seed after missing key/directory",
+    "Actual AndroidKeyStore existing AES256 GCM NoPadding ENCRYPT+DECRYPT non-routine-auth key factory; exact epoch alias only, no generate/import/enumerate/delete/credentialprompt",
+    "Independent RBPRIV1 metadata AEAD 72B header+tag16, strict purpose/epoch/scope/revision/length AAD; fresh random per-record DEK wrapped with separate58BAAD, bounded160B-overhead envelope; NOT mailRBMOBJ1",
+    "Actual nativefixedno-backup epochdir/NOFOLLOW filekeys, bounded reference/node/disk admission, private issuerReadStamp SHA-CAS, one sync IOowner, anchorednonblockinglock/0600CREATE_NEWstage/force/freshsourcefence/ATOMIC_MOVE/directoryforce/readback",
+    "Unknown pending/corrupt/missingkey/directory never auto-clean/retry/seed; already encrypted record preserved and original ReadStamp rejects changed disk",
+    "D01 actual Surface0/1/2/3 vsdegreebug fixed; shared UI Java callback exception afterattempt remainsUNKNOWN inclIllegalState/IllegalArg/Security, notstale/unsubmitted",
+    "D01 bounded weak per-adapter ownedHolder tracking clearsprivate text/description/listeners even recycledUIviews at bind/unbind/retire; cross-adapterholder cannotbecommandeered; bookmark-ownedchildren cleared",
+    "D01 explicit nativeoffered approval/cancel/handoff are only userintents; cancelrequested with knownENDED preservesactualendtext, success/100% stillnotfilepublication",
+    "Original D02 allocation exact SHA-bound inputs archived as zlibBase64 snapshots before current runtimeadmission;42newtargetsreservedunchanged, original126survey preserved withcurrent117PLAN",
+    "One retained native plaintext credit/store survives synchronous IO return until ReadRecord.close actually scrubs owned buffer; external copies remain separately owned/budgeted by caller, not a global/JVM-memory guarantee"
+  ],
+  "actualValidation": {
+    "productionJavaSources": 65,
+    "compiledMainClasses": 307,
+    "agpHostTests": 577,
+    "independentPureSources": 29,
+    "independentPureHostTests": 293,
+    "actualSdkBootclasspathCompile": true,
+    "privateRecordJcaAndHostFilesystemTests": 49,
+    "D01ScopedModelTests": 67,
+    "sharedIntentOutcomeTestsAdded": 5,
+    "mainEvidenceRef": "evidence/production-main-agp-R47-checks.json",
+    "coreEvidenceRef": "evidence/native-private-record-store-host-execution.json",
+    "workerEvidenceRef": "evidence/D01-reviewed-worker-models-host-execution.json",
+    "platformBoundary": "Private reflected SYNTHETIC native source/path/public TOY AES wrapping-key fixtures for actual JCA+HOST filesystem pipeline. Native OS factory/provider/filesystem/UI/Handler/session methods NOT executed."
+  },
+  "validationFindingsResolved": [
+    "Initial actual SDK compile caught nonexistent KeyInfo.isRandomizedEncryptionRequired (belongs to generation policy, not publicKeyInfo); removed unsupported query, enforce provider-generated12B encryption IV, keySize/mode/padding/purpose/auth policy; no claim actualOSkeypolicyrun",
+    "Independent --release8HOST tests caught worker reflection treating javac private-nest synthetic access bridges as public mutators; tests now exclude synthetic bridges and additionally assert actual descriptor fields final, without weakening real public immutability"
+  ],
+  "notClaimed": [
+    "FormalRoot/keycustody/emptyepochprovisioning or actual source unlock, signer lineage/rescue/erasure cutover qualification",
+    "Actual AndroidKeystore/App/Looper/filesystem/powerloss/processdeath/ownwindowfacts/Viewrender/GeckoSDKcallbacks/site/login/playback/OSprompt/device",
+    "Valid same-epoch ciphertext rollback is detected or authenticated snapshot means latest. Native session restore/regrant still needscurrentdomain evidence and source/epochpolicy",
+    "SourcePin checks/CAS/IOflag alone serialize allactors/writers or prove globalnative-tail/key erasure/physicaldurability/absolutememorywipe",
+    "BrowserStore/checkpointdomainserialization/persistentBrowser/finitegrants/actualdocumentidentity or D01UIbackend modules complete",
+    "D02new42workerfilesimplemented/collected/reviewed or reusingR46tests for newsource",
+    "CurrentSQL39+235reexecuted inR47: R45source-identical currentcompiledSQL evidence retainedandhashchecked, no freshAndroidSQLclaim",
+    "APK/JNI/dex/R8/build/download/sign/install/globalcachecleanup or userdatamigration"
+  ],
+  "nextClosure": "Core native provision/BrowserStore/checkpoint format and correct policyfenced restore; mainmustnoteditD02reservedKeyPurpose/other41filesuntilownercompletionnotification. No actual native private-mode temporary-session checkpoint is silently saved."
+}

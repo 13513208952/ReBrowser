@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R46",
+  "revision": "R47",
   "requirements": [
     {
       "id": "R01",
@@ -569,6 +569,22 @@
       "implementationEvidence": "records/implementation-readiness.json",
       "moduleEvidence": "records/module-integration-plan.json",
       "implementationMeaning": "module-priority contract and concrete entry/source-lifetime integration across12runtime files; whole modules/platform runtime not declared complete"
+    },
+    {
+      "id": "R51",
+      "ownerSources": [
+        "O74",
+        "O75",
+        "O76",
+        "O78"
+      ],
+      "title": "全量剩余树风险评估与至少40文件低风险协作批",
+      "rule": "从总树选择适合独立交付的低难度代码，显式标记范围、接口/验收及分工；owner另派低成本agent负责，主agent保留高风险主链与最终集成，不把分工标记冒充实现。",
+      "state": "owner-required",
+      "implementation": "not-started",
+      "implementationEvidence": "records/low-cost-agent-assignments.json",
+      "moduleEvidence": "records/module-integration-plan.json",
+      "implementationMeaning": "D02全面覆盖126剩余PLAN节点，分配42新文件（36Java+6资产，14整项+28限定切片，实际数见风险记录），D01原6交付另归主agent审查；不把分配/切片当全文件完成"
     }
   ]
 }

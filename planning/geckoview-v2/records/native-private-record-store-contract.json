@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "revision": "R47",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O69",
+    "O74",
+    "O75",
+    "O76",
+    "O78",
+    "O79"
+  ],
+  "moduleFocus": "Accepted native epoch -> one existing private record owner -> Android wrapping-key handle -> bounded independent metadata AEAD -> exact native file CAS; D01 worker delivery reviewed without touching D02targets",
+  "commitMinimum": {
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "testsDocsGeneratedFilesCount": false
+  },
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+    "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+    "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+    "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+    "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+    "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+    "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+    "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+    "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java"
+  ],
+  "nativeDataNamespaces": {
+    "directory": "Application.getNoBackupFilesDir()/owned-epochs-v1/<epochhex>/private-records-v1 (ALL components must ALREADY exist, anchored NOFOLLOW file keys)",
+    "wrappingKey": "AndroidKeyStore alias io.github.rebrowser.datawrap.v1.<epochhex>, existingAES256 GCM NoPadding key; no routine OS auth, no generate/import/enumerate/delete/fallback",
+    "recordName": "p<purposecode>_<native-scope-hex32>.v1, fixed pending suffix and namespace lock",
+    "quotas": "single owned synchronous operation/store; <=3201logicalrecords and<=6403nodes, 128MiB owned records+pending including nextstage; unknown objects forbid new writes, never cleanup; one retained plaintext credit/store up to4MiB survives IO return until ReadRecord.close scrubs its owned buffer; native caller separately owns/budgets external copies",
+    "mainThreadPolicy": "Actual native key/file factory and operations reject main Looper; private HOST fixture only bypasses Android-thread probe, not real public platform provider"
+  },
+  "formats": {
+    "PrivateRecordSealer": "RBPRIV1\\0,72B BE header:magic8/versionU16=1/purposeU16/keyFormatU32=1/epoch16/scope16/revisionI64positive/plainBytesU32/nonce12; AES256GCM tag16; WHOLE headerAAD; purpose1catalog<=4MiB,2checkpoint<=2MiB",
+    "DataKeyVault": "RBVLT1\\0\\0 magic8 +sealedLengthU32 +wrappingNonce12 +wrappedDEK48 +sealedRecord; totaloverhead160. FreshDEK32 eachrecord, wrappedunderexistingepochkey with58B domain/purpose/epoch/scope/revision/keyFormatAAD",
+    "compatibility": "DISTINCT private metadata format; existingObjectAead/RBMOBJ1/SQL/proofsunchanged; KeyPurpose taskL33 remains independently reservedvocabulary not authority"
+  },
+  "invariants": [
+    "Source/epoch/gate ResourcePin before/after wait/AEAD/staging/before ATOMIC_MOVE/after directory force-readback; newpermitneverretargetsoldowner",
+    "ReadStamp private issuer/ref+exact diskSHA CAS; headerrevision is UNVERIFIEDcandidate ONLY until both wrapping/record AEAD verify",
+    "Missing record is not missing source freshness, no key or directoryseed. Explicitnativewrites cancreate a record ONLY underexistingnativeepochdir+wrappingkey",
+    "0600 CREATE_NEW pending/no-symlink bounded reads/nonblocking FileLock/fixed lockinode+directory anchors/force-stage->fresh fence->atomic rename->force-directory->readback; all failures unknown without automatic retry/repair/cleanup",
+    "Actual synchronous native-chain owner held through channel/lock close; hasOwnedIoInFlight false never claims all-process/JNI/erasure quiescence",
+    "ReadRecord.close best-effort scrubs owned plaintext; caller copies/provider/JVM memory/flash/backups NOT guaranteed erased",
+    "D01Surfaceconstantbugfixed via actual0/1/2/3map; callbackRuntimeinclIllegalState/IllegalArg/Securityafterattempt ->UNKNOWN notstale; viewrebind/unbind clearsbounded weakownedholders andprivate text/listeners",
+    "D01downloads approval isexplicitnativeuserintent; TaskSnapshot actualend remainsvisible evencancelrequested; effect/durability/timeout/publication nevercollapsed",
+    "D02L07-L48new42filesuntouched; allhighscopeoutsideworkerpartialsandcurrentnativecoreownedmain"
+  ],
+  "remainingGates": [
+    "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+    "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+    "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+    "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+    "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+    "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+    "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+  ]
+}

@@ -1,0 +1,1444 @@
+{
+  "schema": 1,
+  "delegationRevision": "D02",
+  "authority": [
+    "O74",
+    "O64",
+    "O67",
+    "O68",
+    "O69",
+    "O75",
+    "O76",
+    "O78"
+  ],
+  "baseSourceCommit": "dd41e3e7b1fb0aa6225837a309d9ac8d9a15f485",
+  "state": "owner-requested-single-large-round-reserved-not-started",
+  "scopeMeaning": "已全面评估126个剩余PLAN节点。D02一次分配42个全新目标文件（36Java+6运行资产），不重复计算先前6个交付；部分是低副作用限定切片，不将高风险文件整体谎标低风险。主agent保留切片之外与集成。",
+  "handoff": null,
+  "difficultyMarker": "[LOW:Lxx]",
+  "sharedRules": {
+    "allowedRuntimeFiles": "本轮L07-L48共42个指定runtimePath可新增/修改；L01-L06已有交付由主agent修审，本轮不再编辑。测试限各条目testPath或静态测试；不得修改其他runtime/共用配置。",
+    "backendBoundary": "所有slice任务仅允许声明的低副作用部分。禁实际授权/私有DB或偏好读写/密钥/销毁/后台自动运行/媒体控制/系统角色与安装器交接。只读OS事实或离线内存解析可按任务执行；UI事实不是权威。",
+    "uiBinding": "Native UI复用BrowserToolbar.Binding和invokeNativeIntent：先校验frame/row后再调用业务callback；callback的IllegalState/IllegalArgument/Security异常同样结果未知，不能当陈旧事件吞掉。回调重绑后不修改新frame；解绑清模型还要清已有/回收view文本和监听。",
+    "uiBudget": "native SDK widgets/BaseAdapter，不加AndroidX/Compose/新依赖。每次仅接收一页最多100条，输入文本/集合有界防御复制，无静态Activity引用。不得擅自设计分页DB接口或加载全库。触摸目标至少48dp，可访问描述明确，不记录敏感URL/文件名。",
+    "dtoBoundary": "可做真实可用的本文件展示模型/纯算法，但不得以40目标压力制造只有enum/空方法/始终返回成功/空后端的文件。高风险slice的完整责任必须明确未完成；不要把通用布尔/DTO提升为可信receipt。",
+    "testing": "真实生产纯模型HOST边界测试＋现有SDK API编译；未构造/渲染Android View或未执行SDK方法必须明确标false，不能用mock界面称Android验证通过。测试不使用真实密钥、账户、设备、传感器或登录。",
+    "integration": "主agent负责公共接口与生产准入、source-bound汇总证据和模块接线。worker不得改共享manifest/readiness/主树/renderer/reviewer/build/AndroidManifest或把其余planned文件做成stub来编译。",
+    "delivery": "在dsh独立工作区交付42目标的patch/实际测试结果/接口与剩余责任；不要写共享main或碰主agent修改的BrowserToolbar/原6文件。共享上下文无需新交接文档。完成由owner通知，再由主agent审查。",
+    "commitPolicy": "O64仍>=10实质runtime代码/commit、无上限；本轮数量够但worker仍不直接commit/push main。不能靠测试/文档/空实现凑数。JS/CSS运行资产是任务数，不冒充Java runtime计数。",
+    "resourcePolicy": "只使用现有离线依赖；Java/manifest/JUnit须新鲜MemAvailable>=3GiB且预计32MiB新增磁盘+1GiB保留，TMPDIR用磁盘目录；失败就报告，不能删全局缓存/停其他进程/下载/构建APK/碰设备。",
+    "apiUnits": "原生API必须核对固定SDK/Android公开常量和单位：Display.getRotation是Surface常量0/1/2/3，不是角度；Gecko媒体秒与Android毫秒分开，不能只测自己假设的输入。",
+    "privacyAndAssets": "无URL/import/字体网络及内联执行，保留批准UI和不可变参考文件；新HTML/JS不能放松CSP/开启native指令通道。Native/网页Owner授权与来源警告不在Web样式或UI投影中完成。"
+  },
+  "tasks": [
+    {
+      "id": "L01",
+      "difficulty": "low",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reviewed-scoped-host-api",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java",
+      "scope": "固定内建子应用身份与展示目录，纯Java8，无启用状态存储与打开操作。",
+      "whyLow": "只有不可变静态目录、查找与输入校验；不需要Android/Gecko/存储/鉴权状态机。",
+      "inputOutput": "内部固定OUTLOOK/MUSIC身份 -> 两条不可变Descriptor（本地稳定ID、中文名称、说明、本地路由枚举），精确查找；未知/null拒绝。",
+      "requiredBehavior": [
+        "只含Outlook与音乐；浏览器不是子应用。名称固定为Outlook、音乐。稳定本地ID outlook/music，非控制协议actionId。",
+        "集合与Descriptor不可变，重复/未知标识不悄悄选默认；无任意URL/包名/类名/外部注册。",
+        "enabled/configured/account状态不是目录事实，不能默认true、读偏好或声明可播放/已登录。路由枚举仅描述，不触发组件。"
+      ],
+      "acceptance": [
+        "两个条目/唯一ID/顺序明确/精确查找/未知和null拒绝/不可变集合及无Android依赖的实际HOST测试",
+        "无持久化、任务/权限/账号/网络或子应用占用清理代码"
+      ],
+      "round": "D01",
+      "deliveryObservedAt": "2026-10-20",
+      "notCountedTowardNew42": true
+    },
+    {
+      "id": "L02",
+      "difficulty": "low",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reviewed-scoped-host-api",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "scope": "原生设置的静态section/row展示描述，纯Java8；不实现SettingsRepository或开关写入。",
+      "whyLow": "固定分组与纯展示格式化；沿用现有模型/值未知就禁用，不决定业务策略。",
+      "inputOutput": "固定通用/外观/搜索/子应用/网站权限/来源安全/关于分组 -> 不可变有序目录；可选外部只读展示值 -> 已知/未知文案。",
+      "requiredBehavior": [
+        "本地section/row稳定ID与路由枚举，不创建管理员actionId或持久化setting key。分组中文标题分别为通用、外观、搜索、子应用、网站权限、来源安全、关于。",
+        "缺失的真实配置显示未读取且不可操作，不伪造默认已启用/已授权/已保存；不代替源异常四步确认。",
+        "每组/总行数与文本有界、无重复ID、不可变；不附任意Runnable或强Activity引用，不实现占用/清理设置。"
+      ],
+      "acceptance": [
+        "分组唯一/顺序/防御复制/未知值不能显示成功或授权/边界输入实际HOST测试",
+        "不增加Activity、Repository stub或新的状态/权限协议"
+      ],
+      "round": "D01",
+      "deliveryObservedAt": "2026-10-20",
+      "notCountedTowardNew42": true
+    },
+    {
+      "id": "L03",
+      "difficulty": "low",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reviewed-scoped-host-api",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+      "scope": "有界原生历史列表BaseAdapter与不可变展示行，接收已查询的一页；不实现HistoryStore。",
+      "whyLow": "列表绘制/复用/帧失效，直接参考TabPanel与BrowserToolbar既有绑定模式。",
+      "inputOutput": "Binding＋页revision＋<=100个Row(itemRef/title/displayUrl/展示访问时间) -> native rows；打开/删除/保留意图回传精确原row token、revision，不直接执行。",
+      "requiredBehavior": [
+        "显示时间仅展示、不决定grant/过期授权；不在adapter查询数据库、推断账户或记录URL。",
+        "回收View要覆盖旧文字和监听；旧frame/rebind/unbind/锁源后不得对新row发动作；删除仅意图不改底层记录或预先声称成功。",
+        "空列表明确，无无限装载；保留/暂停写历史的策略由未来服务提供，不在UI造策略。"
+      ],
+      "acceptance": [
+        "纯行/帧模型HOST覆盖页上限、文本界限/坏UTF16、防御复制、旧row与回收目标、失效/重复绑定和未知结果",
+        "API编译BaseAdapter/native widgets；未实际渲染必须明确，不声称历史模块完成"
+      ],
+      "round": "D01",
+      "deliveryObservedAt": "2026-10-20",
+      "notCountedTowardNew42": true
+    },
+    {
+      "id": "L04",
+      "difficulty": "low",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reviewed-scoped-host-api",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+      "scope": "有界原生下载列表与现有TaskSnapshot各轴的忠实展示；不实现DownloadCoordinator/Store/Handoff。",
+      "whyLow": "数据来源接口已经有TaskSnapshot，worker仅呈现和回传用户意图，不做任务执行/流/文件发布。",
+      "inputOutput": "Binding＋revision＋<=100个Row(itemRef/displayName/已知或未知字节数/TaskSnapshot/原生可用动作展示提示) -> native rows与批准/取消/交接用户意图。",
+      "requiredBehavior": [
+        "复用TaskSnapshot，不新造任务phase协议。等待超时/取消请求/Java返回/观察到效果成功均不能折叠成实际结束或文件已发布。",
+        "总长度未知不显示猜测百分比/100%；进度满也不标记下载已完成或可打开；展示提示不是文件授权或发布凭据。",
+        "取消按钮报告请求不假装已取消；可交接提示由原生调用方提供，点击仍只回传意图，绝不发Intent/暴露路径/自动安装。"
+      ],
+      "acceptance": [
+        "实际HOST覆盖14合法TaskSnapshot组合的展示，至少包含运行中效果成功、结束但效果未知、持久化未知、超时及取消请求；不把它们误标发布/结束",
+        "同L03的边界/不可变/旧frame/row回收检查，实际SDK API编译；不读写流或文件"
+      ],
+      "round": "D01",
+      "deliveryObservedAt": "2026-10-20",
+      "notCountedTowardNew42": true
+    },
+    {
+      "id": "L05",
+      "difficulty": "low",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reviewed-scoped-host-api",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+      "scope": "原生收藏/书签展示与操作意图组件，非BookmarkStore/搜索或URL导航服务。",
+      "whyLow": "独立有界视图，不需要持久化/Native会话/授权，只复用现有Binding和UI操作模式。",
+      "inputOutput": "Binding＋revision＋<=100个不可变展示Row(itemRef/title/displayUrl/文件夹或书签种类) -> native widget；打开/新增/编辑/移除意图回传原token/revision。",
+      "requiredBehavior": [
+        "显示URL是文字不是已授权可加载目标，点击不自己调用loadUri/Intent/SearchEngines或打开网络。",
+        "文件夹点击与网址点击分开；空列表/长标题/URL/坏输入有界，文案保留中文，48dp可访问动作。",
+        "不弹owner验证/来源确认，不保存、更改或删除书签；需要编辑文本时只回传编辑意图，由实际窗口所有者接管对话框。"
+      ],
+      "acceptance": [
+        "纯Row/FrameHOST覆盖不可变/上限/坏文本、文件夹区分、旧绑定/锁源/晚回调不改新对象、编辑删除不提前宣告成功",
+        "API编译真实native组件；不新增文件夹持久化协议或BookmarkStore空桩"
+      ],
+      "round": "D01",
+      "deliveryObservedAt": "2026-10-20",
+      "notCountedTowardNew42": true
+    },
+    {
+      "id": "L06",
+      "difficulty": "low",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reviewed-scoped-host-api",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/system/DeviceWindowStateTest.java",
+      "scope": "仅自有Activity窗口的只读事实快照：几何、旋转、分屏/PiP；复用ViewportPolicy，不重写尺寸分类。",
+      "whyLow": "已有ViewportPolicy负责复杂尺寸/insets arithmetic；这里只组合本窗口事实和未知状态，无系统改写与权限。",
+      "inputOutput": "真实调用时的自有Activity -> 不持有Activity/Window的不可变Snapshot；纯观察值工厂可HOST测试，明确不是Android事实或身份凭据。",
+      "requiredBehavior": [
+        "几何复用ViewportPolicy.inspectOwnWindow/observed，宽度分类沿用原类型；不按机型、品牌、Android ID/序列号硬编码。",
+        "只读自身rotation/isInMultiWindowMode/isInPictureInPictureMode；原生缺失/已销毁/错误显式未知或失败，不把未知当false；不改全局方向/密度/亮度/角色/超时/音量。",
+        "窗口事实不是前台持有、用户手势、owner consent或TargetReferences租约；不得替换现有WindowProbe或权限检测。"
+      ],
+      "acceptance": [
+        "实际HOST覆盖纯观察值校验、四种rotation与未知、分屏/PiP未知、非法几何拒绝及不可变快照；API30+ SDK编译",
+        "实际Activity/Window方法未运行则明确false；无设备探测/系统设置/全局状态修改"
+      ],
+      "round": "D01",
+      "deliveryObservedAt": "2026-10-20",
+      "notCountedTowardNew42": true
+    },
+    {
+      "id": "L07",
+      "round": "D02",
+      "difficulty": "low",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
+      "group": "ui",
+      "delegationScope": "whole",
+      "wholeFileRisk": "low",
+      "scope": "真实native新标签页布局：只读背景展示、四个既定搜索引擎入口及有界收藏缩略行；复用Binding输出精确用户意图。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实native新标签页布局：只读背景展示、四个既定搜索引擎入口及有界收藏缩略行；复用Binding输出精确用户意图。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不打开URL、读收藏库或获取外部图片/URI授权；背景仅已提供的内存/内建资源，不擅自读取URI。",
+      "acceptance": [
+        "布局模型/宽窄窗口/空收藏/长文本与旧frame失效；API编译，不把UI意图称导航成功",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L08",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
+      "group": "ui",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "真实Activity生命周期与已给定一页历史的呈现，接现有HistoryAdapter；期限/保留/暂停/删除只报告意图。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实Activity生命周期与已给定一页历史的呈现，接现有HistoryAdapter；期限/保留/暂停/删除只报告意图。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不查询/清理HistoryStore，不接受Intent中的账号、actor、epoch或权限；缺原生窗口绑定则只显示锁定或未连接。",
+      "acceptance": [
+        "源锁定壳、旋转/销毁解绑、旧页无回调、期限未知文案，不能伪报删除完成",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L09",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
+      "group": "ui",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "真实Activity及已提供下载页的呈现，复用DownloadsAdapter；批准/取消/交接是待原生控制器审核的意图。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实Activity及已提供下载页的呈现，复用DownloadsAdapter；批准/取消/交接是待原生控制器审核的意图。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不捕获WebResponse、不下载、不发安装/打开Intent，不通过100%或Java返回认定文件已发布。",
+      "acceptance": [
+        "TaskSnapshot分轴、空列表/晚回调/窗口销毁，无任务执行或自动安装",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L10",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
+      "group": "ui",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "真实原生设置分组页面与SettingsSections组合；已知只读值、未知值禁用，动作只交回原生窗口所有者。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实原生设置分组页面与SettingsSections组合；已知只读值、未知值禁用，动作只交回原生窗口所有者。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不打开SettingsRepository或编写偏好、不自己实现来源警告或owner验证，不造设置默认值。",
+      "acceptance": [
+        "未知配置保持未读取，分类/绑定/退役及返回处理，无已保存/已授权假象",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L11",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
+      "group": "ui",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "固定Outlook/音乐目录的真实native应用列表，启用状态来自只读投影，48dp设置齿轮与打开/启停意图分开。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "固定Outlook/音乐目录的真实native应用列表，启用状态来自只读投影，48dp设置齿轮与打开/启停意图分开。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不创建/停止子应用session/service，不写启用状态，不实现占用量/缓存/数据清理。",
+      "acceptance": [
+        "未知启用状态、两类按钮精确目标、48dp与旧frame，描述目录不等于已经启用",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L12",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
+      "group": "ui",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "真实子设置页面展示音源/入口/恢复选项的已给定投影，生成明确更改意图。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实子设置页面展示音源/入口/恢复选项的已给定投影，生成明确更改意图。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不访问账户/Cookie/偏好，不执行音源切换/退出/数据清理，不更改正式支持列表。",
+      "acceptance": [
+        "子应用身份精确校验、未知配置、绑定失效、展示和修改意图区分",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L13",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
+      "group": "ui",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "仅网站/分区/能力/到期与OS状态的只读原生列表和请求更改意图；过期/未知文案不混淆。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "仅网站/分区/能力/到期与OS状态的只读原生列表和请求更改意图；过期/未知文案不混淆。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不发OS prompt、不授予/撤销Gecko权限、不把native计时结束认作传感器已停止，不枚举其他scope站点。",
+      "acceptance": [
+        "有限期/未知/OS拒绝展示、精确行scope与退役；实际授权/撤销链留主agent",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L14",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
+      "group": "outlook",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "真实原生邮箱页面外壳、官方入口选择/账号观察/离线入口控件；接已由原生所有者提供的显示binding。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实原生邮箱页面外壳、官方入口选择/账号观察/离线入口控件；接已由原生所有者提供的显示binding。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不创建session/context、自动登录/认证Popup，不用URL/Intent推断账号，不读取离线私有数据库。",
+      "acceptance": [
+        "来源锁定不接业务、无绑定不造session、窗口解绑及未知登录展示",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L15",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
+      "group": "outlook",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "真实原生离线邮件metadata列表/搜索栏/附件行和恢复位置的展示模型；只消费原生已筛选的有界页。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实原生离线邮件metadata列表/搜索栏/附件行和恢复位置的展示模型；只消费原生已筛选的有界页。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不查询数据库/解密/保存或导出附件，不自行加载HTML/远程内容；正文仅传入安全展示投影。",
+      "acceptance": [
+        "页界限/私有文本退役/搜索用户意图和原账号token准确，无跨账号合并",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L16",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
+      "group": "music",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "真实原生音乐控制/标题/队列/歌词布局，只读官方播放器投影及已提供的显示绑定，回传明确用户意图。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实原生音乐控制/标题/队列/歌词布局，只读官方播放器投影及已提供的显示绑定，回传明确用户意图。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不创建第二播放器、提取URL、自动恢复播放、登录/注册服务，不按URL/页面stop生成播放授权。",
+      "acceptance": [
+        "未知播放/账号状态不猜测、手机/窗口模型、退役和同一绑定，不伪造播放器进度",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L17",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
+      "group": "music",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "真实Notification.Builder构造与纯展示投影，标题/艺术家/可用动作和position秒到毫秒的边界转换。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实Notification.Builder构造与纯展示投影，标题/艺术家/可用动作和position秒到毫秒的边界转换。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不notify/startForeground/创建channel或自造PendingIntent；动作只可使用原生已提供的精确意图，不激活播放/服务。",
+      "acceptance": [
+        "未知时长/进度、溢出/无可用动作、私有文案限制；构造不是已发布通知",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L18",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
+      "group": "music",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "对原生已提供的<=8MiB编码字节做格式/尺寸检查、采样解码和最新请求代次保护；单张<=1024*1024像素。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "对原生已提供的<=8MiB编码字节做格式/尺寸检查、采样解码和最新请求代次保护；单张<=1024*1024像素。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不根据网页URL发网络、不读任意路径/URI；不把Bitmap.recycle或取消当整个解码链已结束，不建无限cache。",
+      "acceptance": [
+        "inJustDecodeBounds后才解码，乘法long防溢出、过大/坏图/旧代次/实际finally释放；Android解码未执行要标false",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L19",
+      "round": "D02",
+      "difficulty": "low",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
+      "group": "music",
+      "delegationScope": "whole",
+      "wholeFileRisk": "low",
+      "scope": "有界LRC及官方逐字时间文本的纯解析、稳定排序/重叠与逐字位置映射；保留译文/原文关联，不伪造缺失歌词。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "有界LRC及官方逐字时间文本的纯解析、稳定排序/重叠与逐字位置映射；保留译文/原文关联，不伪造缺失歌词。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不联网、不执行网页JS、不推导播放授权；无法解析格式返回unsupported/unknown而非猜测时间。",
+      "acceptance": [
+        "输入<=1MiB、行<=4096、时间非负/long溢出、重复时间/空行/坏UTF16/逐字区间与未知格式",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L20",
+      "round": "D02",
+      "difficulty": "low",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
+      "group": "music",
+      "delegationScope": "whole",
+      "wholeFileRisk": "low",
+      "scope": "有界不可变官网队列/歌单/喜欢状态展示与精确资源token的用户意图描述，不拥有播放器或流地址。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "有界不可变官网队列/歌单/喜欢状态展示与精确资源token的用户意图描述，不拥有播放器或流地址。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不提取播放URL、改变官网队列、伪造账号归属/喜欢成功；token只是回传资料，不是账号/动作权限。",
+      "acceptance": [
+        "<=500项、重复/缺失token、旧revision/排序、未知喜欢状态、资源ID不能直接成为可执行URL",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L21",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
+      "group": "music",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "只读不可变官方播放/账号/资源/意图代次/焦点观察投影与字段校验，供UI消费。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "只读不可变官方播放/账号/资源/意图代次/焦点观察投影与字段校验，供UI消费。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不得实现mayPlay/isAuthorized/ownerGrant/自动登录/焦点gain复活等正向决策；报称登录不等于fresh认证。",
+      "acceptance": [
+        "unknown与observed区分，代次不溢出/跨资源串用，状态DTO绝不释放slot或生成权限",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L22",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
+      "group": "lyrics",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "纯owner-thread关闭/可拖动/锁定穿透的native用户意图与显示模式reducer，重绑/退役代次有界。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "纯owner-thread关闭/可拖动/锁定穿透的native用户意图与显示模式reducer，重绑/退役代次有界。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不调用WindowManager/Settings/权限prompt，不把本地模式当实际OS浮窗/穿透已经生效。",
+      "acceptance": [
+        "关闭后晚回调无复活、锁定/解锁明确输入、申请状态与实际显示状态分离",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L23",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
+      "group": "lyrics",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "真实native歌词面板/拖拽触摸模型/锁定文案及layout参数描述，包含清理所有视图文本和监听。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实native歌词面板/拖拽触摸模型/锁定文案及layout参数描述，包含清理所有视图文本和监听。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不addView/updateViewLayout到系统窗口、不自己获取权限/改全局flags，不伪报穿透成功；OS窗口接入主agent实现。",
+      "acceptance": [
+        "触摸边界/取消/多指/锁定状态、旧frame不拖新对象；只有View构造/API编译不算系统浮窗验证",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L24",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
+      "group": "lyrics",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "位置的有界不可变记录、版本与窗口内夹取/恢复纯计算；输入来自原生已读取记录，输出待保存意图。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "位置的有界不可变记录、版本与窗口内夹取/恢复纯计算；输入来自原生已读取记录，输出待保存意图。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不写SharedPreferences/文件或读取旧v1位置，不将纯记录验证当持久化/源epoch授权。",
+      "acceptance": [
+        "负数/NaN/infinity/屏幕变化/小窗口边界，未知旧位置明确而非造默认保存成功",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L25",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java",
+      "group": "lyrics",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "只读自身canDrawOverlays状态观察和用户提示模型：已知允许/拒绝/未知，显示返回后需重查。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "只读自身canDrawOverlays状态观察和用户提示模型：已知允许/拒绝/未知，显示返回后需重查。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不startActivity/请求权限、不造owner consent；没有明确原生授权ticket时不能发起系统流程。",
+      "acceptance": [
+        "异常为unknown而非false/true；回到页面和实际授权区别、源关闭与旧窗口失效",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L26",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java",
+      "group": "system",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "只读自身浏览器角色观察与系统默认应用推荐页面的请求描述；已持有角色也能显示推荐入口。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "只读自身浏览器角色观察与系统默认应用推荐页面的请求描述；已持有角色也能显示推荐入口。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不设置默认/合成Resolver/发Intent/调用第三方页面；实际系统来源解析与已授权交接留主agent。",
+      "acceptance": [
+        "未知/持有/未持有分开，返回不是角色获取成功，页面请求不是已授权系统修改",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L27",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/system/ForegroundPolicyTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/ForegroundPolicyTest.java",
+      "group": "system",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "纯Android版本/真实生命周期输入到前台服务/通知前置条件与不可用原因的建议矩阵，无任何执行。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "纯Android版本/真实生命周期输入到前台服务/通知前置条件与不可用原因的建议矩阵，无任何执行。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不启动服务/通知或补充权限，不把当前UI隐藏当整个应用/音乐已停；unknown不能当允许。",
+      "acceptance": [
+        "API30至当前SDK边界、通知未知/拒绝、实际service类型及启动例外；建议不等于系统已接受",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L28",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/system/MemoryPressurePolicyTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/MemoryPressurePolicyTest.java",
+      "group": "system",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "复用ResourceBudgets.trimAdvice的有界本应用可重建cache候选建议，输出不包含原始唯一内容或未结束链。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "复用ResourceBudgets.trimAdvice的有界本应用可重建cache候选建议，输出不包含原始唯一内容或未结束链。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不实际清理/close/取消/杀进程，不动其他软件/当前foreground/media，UI_HIDDEN不能推断音乐结束。",
+      "acceptance": [
+        "trim等级/unknown/前台保留、未结束资源不能作为可回收项；不宣称全Gecko RAM保证",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L29",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/system/ApkHandoffActivityTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/system/ApkHandoffActivityTest.java",
+      "group": "system",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "真实原生APK交接确认页面，只展示原生已验证的文件描述与等待/未知状态，用户意图交回拥有者。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "真实原生APK交接确认页面，只展示原生已验证的文件描述与等待/未知状态，用户意图交回拥有者。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不读取外部Intent管理员字段、不stage/解析APK/发安装器Intent/生成URI权限，不报告安装完成。",
+      "acceptance": [
+        "无native绑定时不接受外部路径；交接/系统返回/安装结果明确分离，销毁解绑",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L30",
+      "round": "D02",
+      "difficulty": "low",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/OfficialMailEntryTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/OfficialMailEntryTest.java",
+      "group": "outlook",
+      "delegationScope": "whole",
+      "wholeFileRisk": "low",
+      "scope": "个人/工作学校/最近成功入口的固定官方URL目录与选择模型；recent仅原生展示偏好，不是登录事实。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "个人/工作学校/最近成功入口的固定官方URL目录与选择模型；recent仅原生展示偏好，不是登录事实。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不猜邮箱域、不联网探测/重定向、无账户识别或任意URL输入；不写最近成功记录。",
+      "acceptance": [
+        "精确固定https://outlook.live.com/mail/及https://outlook.office.com/mail/；未知入口拒绝、recent无值不伪造成功",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L31",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailRetentionPolicyTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/MailRetentionPolicyTest.java",
+      "group": "outlook",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "唯一原始内容与可重建派生物的保守分类/保留建议，unknown一律保留，要求显式原始来源仍可重建的观察。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "唯一原始内容与可重建派生物的保守分类/保留建议，unknown一律保留，要求显式原始来源仍可重建的观察。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不删除/改引用或计数、不按枚举/布尔标志生成删除许可；实际provenance/事务/回收由主agent验证。",
+      "acceptance": [
+        "原始正文/附件/唯一译文等不能误作cache、来源不明保留、派生依赖丢失时拒绝回收建议",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L32",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/core/DomainResultTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/core/DomainResultTest.java",
+      "group": "core",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "有界不可变结果展示、错误码/等待条件/证据类别的投影，不替代TaskSnapshot真实生命周期轴。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "有界不可变结果展示、错误码/等待条件/证据类别的投影，不替代TaskSnapshot真实生命周期轴。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不可作为Actor/权限/效果提交/任务完成receipt；不得释放slot或赋予通用success布尔正向权威。",
+      "acceptance": [
+        "错误字符串<=256且不带私有URL/内容，unknown/等待/返回与效果、持久化、实际结束明确分离",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L33",
+      "round": "D02",
+      "difficulty": "low",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java",
+      "group": "crypto",
+      "delegationScope": "whole",
+      "wholeFileRisk": "low",
+      "scope": "固定密钥域词汇：APK_SIGN/ADMIN_ROOT/ADMIN_HIGH/ADMIN_LOW/DEVICE_INSTALL/DATA_WRAP/DATA_OBJECT；独立RecordKind目录BROWSER_CATALOG(code1,max4MiB)/GECKO_CHECKPOINT(code2,max2MiB)。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "固定密钥域词汇：APK_SIGN/ADMIN_ROOT/ADMIN_HIGH/ADMIN_LOW/DEVICE_INSTALL/DATA_WRAP/DATA_OBJECT；独立RecordKind目录BROWSER_CATALOG(code1,max4MiB)/GECKO_CHECKPOINT(code2,max2MiB)。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不生成/导入/派生密钥，不改变现有ObjectAead/mail Purpose或RBMOBJ1格式；域枚举不是使用/销毁许可。",
+      "acceptance": [
+        "域无混用/固定记录code/未知code拒绝、max长度边界和不可变定义；对外新增私有记录格式仍由主agent定",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L34",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/bridge/BridgeMessagesTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/bridge/BridgeMessagesTest.java",
+      "group": "bridge",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "按现有connector-protocol.json的rebrowser.connector/1严格有界语法解析/不可变Unverified消息DTO，非管理员Control协议。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "按现有connector-protocol.json的rebrowser.connector/1严格有界语法解析/不可变Unverified消息DTO，非管理员Control协议。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不得mint/accept DocumentLease/READY权限，不验证真实port/sender/账号或路由命令；解析不是admission。",
+      "acceptance": [
+        "重复/未知字段、safeInteger溢出、坏UTF8/超限、版本方向/kind及类型严格；待决字段先报告不可私改协议",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L35",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/bridge/BridgeBudgetTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/bridge/BridgeBudgetTest.java",
+      "group": "bridge",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "64KiB信封/32KiB原始chunk的大小检查与有界字节+对象信用，复用ResourceBudgets计数思想，opaque one-use release。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "64KiB信封/32KiB原始chunk的大小检查与有界字节+对象信用，复用ResourceBudgets计数思想，opaque one-use release。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不执行/取消流、不给消息路由权限、不以timeout/Future.done/receiver返回释放真实链资源；caller只能实际释放后归还。",
+      "acceptance": [
+        "原子并发限额/双归还/外issuer/overflow/零进度、报告remaining不代替native actual end",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L36",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailObjectFormatTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/MailObjectFormatTest.java",
+      "group": "outlook",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "纯RBMOBJ1 124B头/帧长度/codec/purpose/版本/预期总长度编解码与严格校验，复用已定mail-object-format及ObjectAead契约。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "纯RBMOBJ1 124B头/帧长度/codec/purpose/版本/预期总长度编解码与严格校验，复用已定mail-object-format及ObjectAead契约。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不解密/压缩/写入/生成representationID，不把收到header自身当native catalog expectation；不得改历史向量。",
+      "acceptance": [
+        "边界/溢出/RAW长度/32768帧/tag与精确golden vectors，错误version/flags/code拒绝，实际认证仍在ObjectAead",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L37",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
+      "group": "outlook",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "只对原生已授权且交给它的Reader做有界literal中文跨块匹配/结果分页计算，返回位置片段；字面匹配不执行regex。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "只对原生已授权且交给它的Reader做有界literal中文跨块匹配/结果分页计算，返回位置片段；字面匹配不执行regex。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不读DB/账户/文件或解密，不把搜索结果当内容导出/账户权限；不得归档/修改邮件。",
+      "acceptance": [
+        "块边界/Unicode代理对/空needle/坏文本/取消与实际owned close/结果上限/巨大输入；无后台自动继续",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L38",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java",
+      "group": "settings",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "内建背景/主题/缩放裁剪的纯选择/几何/颜色对比建议和未知外部资源提示，不改变批准风格。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "内建背景/主题/缩放裁剪的纯选择/几何/颜色对比建议和未知外部资源提示，不改变批准风格。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不解析或打开任意URI、不获取持久URI授权/读取文件，不造背景已保存或已授权事实。",
+      "acceptance": [
+        "背景比例/小窗口/越界/无资源、只有建议不是授权；已批准资源不被替换为任意远程内容",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L39",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
+      "group": "music",
+      "delegationScope": "slice",
+      "wholeFileRisk": "medium",
+      "scope": "只读配置投影/有界字段校验与精确revision的更改意图，默认未知；恢复意图不自动起播。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "只读配置投影/有界字段校验与精确revision的更改意图，默认未知；恢复意图不自动起播。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不写偏好/迁移v1/加载账户或改变音源，不凭恢复配置创建播放授权。",
+      "acceptance": [
+        "缺失/损坏/过长/未知枚举保持unknown，精确revision和副作用为空",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L40",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
+      "group": "music",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "纯官方播放器投影到Android PlaybackState/MediaMetadata构造与系统动作到意图类型的映射；秒/毫秒严格有界。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "纯官方播放器投影到Android PlaybackState/MediaMetadata构造与系统动作到意图类型的映射；秒/毫秒严格有界。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不创建/激活MediaSession/设置系统回调/执行播放或获取AudioFocus；不自造可用动作或正在播放事实。",
+      "acceptance": [
+        "unknown时长/NaN/infinity/溢出/feature缺失、callback返回不代表播放完成；真实系统media owner留主agent",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L41",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/engine/GeckoMediaBridgeTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/engine/GeckoMediaBridgeTest.java",
+      "group": "engine",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "按固定SDK真实MediaSession.Delegate回调类型做只读观察适配/有界metadata/position/state模型，精确原生绑定失效后拒绝发布。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "按固定SDK真实MediaSession.Delegate回调类型做只读观察适配/有界metadata/position/state模型，精确原生绑定失效后拒绝发布。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不调用play/pause/seek/setActive或控制API，不识别账号/授予播放；真实delegate安装与SDK session owner由主agent接线。",
+      "acceptance": [
+        "SDK158签名API编译、旧session/退役/秒单位/未知feature；合成DTO测试不能说真实Gecko callback运行",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L42",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
+      "testPath": "app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java",
+      "auxiliaryTestScope": "app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java",
+      "group": "engine",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "固定SDK历史事件的只读有界观察/瞬态展示分类，记录无授权含义；没有原生查询后端则明确未连接。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "固定SDK历史事件的只读有界观察/瞬态展示分类，记录无授权含义；没有原生查询后端则明确未连接。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不打开HistoryStore/把认证瞬态自动当已提交历史，不以URL建立document/账号身份；未连接查询不造visited=true。",
+      "acceptance": [
+        "实际SDK类型编译、超长/错误UTF16/未知转移/旧绑定；不补空HistoryStore或宣称历史持久化完成",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L43",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/assets/offline-mail/reader.html",
+      "testPath": null,
+      "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
+      "group": "outlook",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "静态只读阅读器结构与明确空/加载/未知/失败区，正文只能作为文本节点；无实际邮件内容。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "静态只读阅读器结构与明确空/加载/未知/失败区，正文只能作为文本节点；无实际邮件内容。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "固定CSP default-src none、无inline script/event handler/表单/iframe/任意URL；不自行接受外部HTML或放松CSP。",
+      "acceptance": [
+        "静态安全断言、可访问结构、字符转义；sanitizer/native离线资源协议主agent保留",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L44",
+      "round": "D02",
+      "difficulty": "low",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/assets/offline-mail/reader.css",
+      "testPath": null,
+      "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
+      "group": "outlook",
+      "delegationScope": "whole",
+      "wholeFileRisk": "low",
+      "scope": "阅读器的文字/列表/表格/换行/窄屏/暗色/高对比排版样式，不带真实数据或网络。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "阅读器的文字/列表/表格/换行/窄屏/暗色/高对比排版样式，不带真实数据或网络。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "禁@import/url()/远程字体/行为脚本；不得隐藏风险提醒/确认按钮或破坏native控制。",
+      "acceptance": [
+        "静态无外部引用/可读性/长URL长词/窄屏、无脚本与样式泄漏通道",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L45",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/assets/offline-mail/reader.js",
+      "testPath": null,
+      "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
+      "group": "outlook",
+      "delegationScope": "slice",
+      "wholeFileRisk": "high",
+      "scope": "静态阅读UI的有界纯DTO文本渲染/搜索高亮/展开交互，全部使用textContent/createTextNode；默认无数据。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "静态阅读UI的有界纯DTO文本渲染/搜索高亮/展开交互，全部使用textContent/createTextNode；默认无数据。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "禁innerHTML/outerHTML/document.write/eval/动态script/网络/文件/任意Native消息；不注册新connector协议或相信window.postMessage来源。",
+      "acceptance": [
+        "DOM合成fixtures覆盖恶意HTML只是文本/长度和节点数上限/旧frame/无数据；真实Gecko阅读安全未资格",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": false,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L46",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/assets/bridge/styles/music-phone.css",
+      "testPath": null,
+      "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
+      "group": "bridge",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "仅从已有批准phone CSS中机械迁移固定官网布局规则，保留官方播放器/登录层，说明每条selector来源。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "仅从已有批准phone CSS中机械迁移固定官网布局规则，保留官方播放器/登录层，说明每条selector来源。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不改不可变portrait reference/owner vision、无新网络url()/import，不改JS/认证/播放路径、不隐藏授权提示。",
+      "acceptance": [
+        "静态selector/尺寸/媒体查询与既有参考对照；没有实际官网页面验证必须明确未验证",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L47",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/assets/bridge/styles/music-window.css",
+      "testPath": null,
+      "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
+      "group": "bridge",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "仅既有非完整平板/小窗口批准样式的固定selector与media-query整理，不强制机型/全局zoom。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "仅既有非完整平板/小窗口批准样式的固定selector与media-query整理，不强制机型/全局zoom。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "同phone CSS规则，不另造播放器/弹出登录替身，不扩大任意站点选择器范围。",
+      "acceptance": [
+        "完整窗口/小窗口媒体查询边界和批准参考；不把截图/静态规则当真实站点回归",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    },
+    {
+      "id": "L48",
+      "round": "D02",
+      "difficulty": "moderate",
+      "riskWithinAllowedScope": "low-with-main-review-not-qualified",
+      "assignee": "owner-selected-low-cost-agent",
+      "status": "reserved-not-started",
+      "runtimePath": "app/src/main/assets/bridge/styles/music-desktop.css",
+      "testPath": null,
+      "auxiliaryTestScope": "使用现有tools/tests测试区域新增本任务静态/合成DOM检查，不注册新runtime脚本",
+      "group": "bridge",
+      "delegationScope": "whole",
+      "wholeFileRisk": "medium",
+      "scope": "仅既有完整平板横屏/显式桌面扫码模式的批准样式组织，模式开关由原生/connector当前状态决定。",
+      "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
+      "requiredBehavior": [
+        "仅既有完整平板横屏/显式桌面扫码模式的批准样式组织，模式开关由原生/connector当前状态决定。",
+        "跨线程/绑定/未知状态与全局sharedRules一起适用；异常不能伪成功或自动换路线。"
+      ],
+      "forbidden": "不得CSS自行强制桌面UA/切换登录/修改全局缩放，不掩盖二维码过期/认证错误。",
+      "acceptance": [
+        "横竖/窄窗/显式模式隔离/参考规则静态测试；网站与扫码运行未资格",
+        "实际生产方法HOST/静态检查与API编译分别记录；未运行的Android/官网/OS/Gecko行为明确false。"
+      ],
+      "dependenciesRule": "仅依赖现有已实现组件或本D02允许文件；缺关键backend时保留真实可用切片并报告，不造服务桩、不更改授权/持久化协议。",
+      "fullResponsibilityCompleteExpected": true,
+      "integrationStatus": "not-integrated-until-main-review"
+    }
+  ],
+  "retainedByMainAgent": [
+    "来源/首次清单/恢复/销毁/epoch提交与所有者OS验证",
+    "Actor/管理员证明/名单/授权/禁用/Dispatcher/真实port/document信任",
+    "安装/数据密钥、AES封装、私有记录、所有持久化/DB/备份和会话checkpoint",
+    "Gecko真实session/context/权限授予撤回/传感器停机与官方登录播放命令",
+    "任务实际终止/邮件同步引用/流/附件导出/文件发布/安装交接与系统全局效果",
+    "D01六个原交付的修审、所有slice之外责任、最终公共API/模块接线与source-bound准入证据"
+  ],
+  "blockedTaskRule": "如限定范围仍需要缺失的权威接口，交付已验证的展示组件和具体缺口，标记任务待主agent接线；不得创造安全敏感接口/伪成功/空服务凑文件或绕过当前Root锁定。",
+  "workerWorkspace": "dsh/",
+  "coordination": "O75共享全部上下文，无需额外交接文档；任务权威是本JSON与主树。Owner再次通知完成前，主agent不修改D02的42个目标；D01六个交付归主agent审查。worker在dsh独立工作区，不修改共享main；若无法隔离先停止报告。",
+  "newBatchRuntimeFileCount": 42,
+  "newBatchJavaFiles": 36,
+  "newBatchRuntimeAssets": 6,
+  "previousBatchDeliveredRuntimeFiles": 6,
+  "currentBatchTaskIds": [
+    "L07",
+    "L08",
+    "L09",
+    "L10",
+    "L11",
+    "L12",
+    "L13",
+    "L14",
+    "L15",
+    "L16",
+    "L17",
+    "L18",
+    "L19",
+    "L20",
+    "L21",
+    "L22",
+    "L23",
+    "L24",
+    "L25",
+    "L26",
+    "L27",
+    "L28",
+    "L29",
+    "L30",
+    "L31",
+    "L32",
+    "L33",
+    "L34",
+    "L35",
+    "L36",
+    "L37",
+    "L38",
+    "L39",
+    "L40",
+    "L41",
+    "L42",
+    "L43",
+    "L44",
+    "L45",
+    "L46",
+    "L47",
+    "L48"
+  ],
+  "deliveryPathMapping": {
+    "preferred": "dsh/app/src/... 与 dsh/tools/tests/... 镜像输出，runtimePath/testPath是未来主工程目标而非本轮写入位置；主工程只读。",
+    "alternative": "仅已确认是独立clone/worktree时可在该隔离checkout内使用正常app相对路径；不得从项目根直接写app路径。",
+    "mainIntegration": "owner通知完成后主agent再从dsh收集/审查/合并，worker不可覆盖主agent当前未提交代码。"
+  },
+  "workPackets": [
+    {
+      "id": "D02-A",
+      "scope": "静态目录/有界格式/解析与只读模型",
+      "rule": "先固定边界/单元测试，缺权威数据不造成功。"
+    },
+    {
+      "id": "D02-B",
+      "scope": "native Activity/View/通知等展示接线",
+      "rule": "可以使用同批或原6只读依赖，不写服务/私有库或执行intent。"
+    },
+    {
+      "id": "D02-C",
+      "scope": "本窗口/OS/Gecko媒体与历史的只读观察/投影",
+      "rule": "核对公开SDK单位与回调签名，观察不是权限、因果或实际工作结束。"
+    },
+    {
+      "id": "D02-D",
+      "scope": "6个运行HTML/JS/CSS资产",
+      "rule": "只做有界展示/静态批准样式，无外部加载或新Native指令通道。"
+    }
+  ],
+  "steadyProgress": "本轮是单次42文件任务包，可按包内依赖顺序推进；遇真正缺失的高风险接口只标blocked-main并继续同批其他文件，不无限研究、改权限或产空stub凑数量。",
+  "offlineReaderAssetContract": {
+    "shellOnly": "reader.html/reader.css/reader.js只构成没有真实邮件输入的安全文本展示shell，不能替代OfflineMailRenderer的native隔离/去活化/资源授权。",
+    "fixedCsp": "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'none'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'",
+    "scriptAndStyleRefs": "只允许固定相对reader.js与reader.css，不允许外部URL、inline脚本或事件属性；正文只textContent，账号/邮件数据不得来自URL或任意postMessage。",
+    "mainActivationGate": "CSP与实际APK资源origin/Gecko加载由主agent复核前，不激活离线reader。"
+  },
+  "D01ReviewStatus": "R47 scoped realHOST/API reviewed with main corrections; NOT actualAndroid/nativeView/backendcompletion",
+  "D01ReviewEvidenceRef": "evidence/D01-reviewed-worker-models-host-execution.json"
+}

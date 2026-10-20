@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
-  "runtimeSourceFilesCompiled": 26,
-  "junitTestsPassed": 260,
-  "junitOutput": "JUnit version 4.13.2\n....................................................................................................................................................................................................................................................................\nTime: 1.427\n\nOK (260 tests)\n\n",
+  "runtimeSourceFilesCompiled": 29,
+  "junitTestsPassed": 293,
+  "junitOutput": "JUnit version 4.13.2\n.....................................................................................................................................................................................................................................................................................................\nTime: 1.114\n\nOK (293 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -110,6 +110,18 @@
       "sha256": "3328ec871a0d2aaa8686cf8098450149fb76eb5e676221810e8cfb369aa137d9"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "d61c04cd1e2252f00f5d5a43b39325223d2f3104f6ddbf0fc7b2e3bcc46bd28e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
     },
@@ -174,6 +186,10 @@
       "sha256": "dad32c625d8f88f64e62459847e481e9003485707135ba000ca61306d7f76b07"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java",
+      "sha256": "8068303d44b036c8dfc6abf351ea98d875c841c3da078e0962fbdaadaf4919f3"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java",
       "sha256": "f2540eec7e5ee8858e0df94431a007c07bcd96ad09ddb0b5cefa001123b1d868"
     },
@@ -192,6 +208,14 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/outlook/MailObjectCodecTest.java",
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java",
+      "sha256": "a2e33d43486150fdc77416adc78b5a0b3d9d743ac65d87c1672177aa3ea77d65"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "sha256": "39c5fa49ebfe478e13aae9a6842e99ffd9847c5ba18726470dbaf7e0ef3e13d9"
     }
   ],
   "runnerSha256": "d8c072bea4c3d235606c32bd451ef3aecf806b56147b0a9cd3cfcabb8a2dad20",
@@ -200,8 +224,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 7781724160,
-  "memAvailableBefore": 4417826816,
+  "freeBytesBefore": 7717007360,
+  "memAvailableBefore": 3701907456,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

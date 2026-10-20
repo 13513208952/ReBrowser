@@ -107,6 +107,18 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
       "sha256": "3328ec871a0d2aaa8686cf8098450149fb76eb5e676221810e8cfb369aa137d9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "d61c04cd1e2252f00f5d5a43b39325223d2f3104f6ddbf0fc7b2e3bcc46bd28e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
     }
   ],
   "classFiles": [
@@ -706,6 +718,21 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/crypto/PrivateRecordSealer$Binding.class",
+      "sha256": "0a95328be235cb0208cc9839b9660418911721c0e67e974358dd64263aac8723",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/PrivateRecordSealer$Purpose.class",
+      "sha256": "ff01448ee5a1b250b628cd6fabaf6fdb0c64339b769d61805b4ca5fa24a79b5f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/crypto/PrivateRecordSealer.class",
+      "sha256": "a06481cb905a12e4be500cd553358a9877d34c493c7ad119e588d8b435c9211c",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/download/ResponseStreamWorker$1.class",
       "sha256": "a22f30927d46e9e50c2ff8a69d7342f185ab88e77081a7ec474c72846068e15e",
       "classMajor": 52
@@ -798,6 +825,56 @@
     {
       "path": "io/github/rebrowser/outlook/MailObjectCodec.class",
       "sha256": "18431954385b5558bc72def3d23df6c6a4f7ab6e4323c265c1b79e767298e0fe",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/subapps/SubapplicationRegistry$1.class",
+      "sha256": "503b28ab5405742724e322a11bdf9e8a5fd53154722b10a906df1a82c7f566ca",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/subapps/SubapplicationRegistry$Descriptor.class",
+      "sha256": "8376d9278a70f3dc2a50f18379fd7a726b98ed8b673e92e273e2b22c502fdc19",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/subapps/SubapplicationRegistry$Route.class",
+      "sha256": "b80c00451ae6415fea76f18e74951ed85b25cc39c80a088022c03aa2b8fd6f05",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/subapps/SubapplicationRegistry.class",
+      "sha256": "66690e3658d72bf146b42c15583ae0db17a865957c82d1e074aec1b9f77fb4f1",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections$1.class",
+      "sha256": "a46aeaf43840ff4c4b1548dd9aac4256dd7234901b6a0db20e03d635328f3501",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections$Route.class",
+      "sha256": "742e1aa7c6d392a6b611a462d861f6bed14b0fdceb821e1eb0468ad9afbbcf10",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections$Row.class",
+      "sha256": "368bde3328457f9a36521d8caf8768e36e007898e36aa1a1f0fd88237db2389e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections$Section.class",
+      "sha256": "9cb14c164ea5dcd4d160c24b3330412a86334c80481e18ac4d33356f454b5cee",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections$SectionId.class",
+      "sha256": "9aa6c8b226251ef2ee5ee7e1a5fd196c665aa27571c573987116e17ff052e207",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections.class",
+      "sha256": "a7f4bd6a51f1516089b54854413c66517d94f4ed3991b5b181d2e85b88ab5530",
       "classMajor": 52
     }
   ],

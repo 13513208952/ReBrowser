@@ -12,6 +12,11 @@ import org.junit.Test;
 
 /** Actual nested presentation/binding models, not Android View/Window/dialog/metric execution. */
 public final class NativeWindowModelsTest {
+    @Test public void callbackIllegalStateAfterAttemptIsUnknownNotStale(){assertEquals(BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN,BrowserToolbar.invokeNativeIntent(()->{throw new IllegalStateException("synthetic after handoff");}));}
+    @Test public void callbackIllegalArgumentAfterAttemptIsUnknownNotStale(){assertEquals(BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN,BrowserToolbar.invokeNativeIntent(()->{throw new IllegalArgumentException("synthetic after handoff");}));}
+    @Test public void callbackSecurityExceptionAfterAttemptIsUnknownNotUnsubmitted(){assertEquals(BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN,BrowserToolbar.invokeNativeIntent(()->{throw new SecurityException("synthetic after handoff");}));}
+    @Test public void callbackReturnMeansOnlyJavaInvocationReturn(){AtomicInteger calls=new AtomicInteger();assertEquals(BrowserToolbar.IntentOutcome.CALLBACK_RETURNED,BrowserToolbar.invokeNativeIntent(calls::incrementAndGet));assertEquals(1,calls.get());}
+    @Test public void absentCallbackIsNotACompletedInvocation(){assertThrows(IllegalArgumentException.class,()->BrowserToolbar.invokeNativeIntent(null));}
     private static final class Catalog {
         final AtomicReference<ComponentGate.SourceState> source=new AtomicReference<>(ComponentGate.SourceState.TRUSTED);
         final ComponentGate gate=new ComponentGate(ProcessRole.MAIN,source::get);final ComponentGate.BusinessPermit permit=gate.requireBusiness();

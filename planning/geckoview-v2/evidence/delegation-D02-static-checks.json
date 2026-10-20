@@ -1,0 +1,47 @@
+{
+  "revision": "D02",
+  "scope": "Assignment/risk/tree STATIC structure checks only, not runtime/source admission/Android/worker execution",
+  "remainingPlanFilesAssessed": 126,
+  "newAssignedRuntimeTargets": 42,
+  "newJavaTargets": 36,
+  "newAssetTargets": 6,
+  "previousSixDeliveryNotRecounted": true,
+  "wholeLowEffectTasks": 14,
+  "restrictedLowRiskSliceTasks": 28,
+  "mainOnlyFiles": 78,
+  "treeTestsPassed": 26,
+  "repositoryChecksPassed": 718,
+  "repositoryMaintenanceTestsPassed": 20,
+  "fullProductionSourceAdmissionRerun": false,
+  "reasonFullAdmissionPending": "D01 six unadmitted worker sources and local BrowserToolbar/DeviceWindowState review fixes require source admission and actual fresh compilation/tests; no R46 test reuse as proof of new code.",
+  "androidOrGeckoRuntimeExecuted": false,
+  "workerProcessLaunchedByAssistant": false,
+  "runtimeCodeImplementedByThisAllocation": false,
+  "gitCommitOrPushPerformedForThisAllocation": false,
+  "sourceFiles": [
+    {
+      "path": "records/application-code-files.json",
+      "sha256": "a784e1bf2623bcd37fa688edcb1d84f420b89be5218220ebf55f515768d2dd19"
+    },
+    {
+      "path": "records/low-cost-agent-assignments.json",
+      "sha256": "046defd6fa7dae3fa6d87a15fc473d3882bf3b8f43b31fe1a932936683f8f3aa"
+    },
+    {
+      "path": "records/remaining-file-risk-assessment.json",
+      "sha256": "deb2a7f5f8594a555c7db0f7585dedb634e28b09a71c0dfc65377069526b6050"
+    },
+    {
+      "path": "render_application_tree.py",
+      "sha256": "cb6bce8ab3bf88dcf264dbf110f449de1b39affa63655764efd9476b066dd33b"
+    },
+    {
+      "path": "test_application_tree.py",
+      "sha256": "cab293848eb75de056599d63fa835bc93583abcb0d454885401817eedd580fcf"
+    },
+    {
+      "path": "APPLICATION_CODE_TREE.md",
+      "sha256": "f8d375f37947a13507ca368349dd405eff503eb574a0fcf859ec6682b3110fb3"
+    }
+  ]
+}

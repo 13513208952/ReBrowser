@@ -28,6 +28,102 @@ class ApplicationTreeTests(unittest.TestCase):
         for item in self.manifest['files']:
             self.assertIn(Path(item['path']).name + ' [', code_tree)
 
+    def test_low_delegation_matches_exact_task_inventory(self):
+        tasks = json.loads((P/'records/low-cost-agent-assignments.json').read_text())['tasks']
+        assigned = {f['path']:f for f in self.manifest['files'] if f.get('delegation')}
+        self.assertEqual(set(assigned), {t['runtimePath'] for t in tasks})
+        self.assertEqual(len({t['id'] for t in tasks}), len(tasks))
+        text, facts = render(self.manifest)
+        self.assertEqual(facts['delegatedRuntimeTargetsIncludingPriorDelivery'], 48)
+        self.assertEqual(facts['newD02DelegatedRuntimeFiles'], 42)
+        for task in tasks:
+            f = assigned[task['runtimePath']]
+            self.assertEqual(f['delegation']['taskId'], task['id'])
+            self.assertEqual(f['state'], 'planned-not-implemented' if task['round']=='D02' else 'implemented-host-tested-not-integrated' if f['path'].endswith(('SubapplicationRegistry.java','SettingsSections.java')) else 'source-in-progress-api-compiled')
+            self.assertEqual(task['status'], 'reserved-not-started' if task['round']=='D02' else 'reviewed-scoped-host-api')
+            d = f['delegation']; risk = f['riskAssessment']['fullFileRisk']
+            tag = 'LOW-SLICE' if d['scope']=='slice' else 'LOW' if risk=='low' else 'LOW-EFFECT'
+            self.assertIn('['+tag+':'+task['id']+']', text)
+            self.assertTrue(task['scope'] and task['requiredBehavior'] and task['acceptance'])
+            if task['testPath']:
+                self.assertTrue(task['testPath'].startswith('app/src/test/'))
+                group = next(g for g in self.manifest['groups'] if g['id']==f['testReferenceGroup'])
+                self.assertIn(task['testPath'], [t['path'] for t in group['testReferences']])
+
+    def test_delegation_is_not_implementation_progress(self):
+        text, facts = render(self.manifest)
+        for f in self.manifest['files']:
+            if f.get('delegation'):
+                self.assertIn(Path(f['path']).name+' [', text)
+                if f['delegation']['round']=='D02':self.assertEqual(f['state'], 'planned-not-implemented')
+        without = copy.deepcopy(self.manifest)
+        for f in without['files']:
+            f.pop('delegation', None)
+        _, unchanged = render(without)
+        for key in ['applicationRuntimeCodeLeaves','runtimeSourceFilesCreated','implementedRuntimeCodeFiles','apiCompiledRuntimeSourcesInProgress']:
+            self.assertEqual(facts[key], unchanged[key])
+
+    def test_unknown_delegation_difficulty_rejected(self):
+        f = next(f for f in self.manifest['files'] if f.get('delegation'))
+        f['delegation']['difficulty'] = 'already-complete'
+        with self.assertRaises(AssertionError):
+            render(self.manifest)
+
+    def test_delegation_cannot_claim_runtime_passed(self):
+        f = next(f for f in self.manifest['files'] if f.get('delegation'))
+        f['delegation']['status'] = 'product-runtime-complete'
+        with self.assertRaises(AssertionError):
+            render(self.manifest)
+
+    def test_entire_remaining_tree_has_full_responsibility_risk(self):
+        remaining = {f['path']:f for f in self.manifest['files'] if f['state']=='planned-not-implemented'}
+        record = json.loads((P/'records/remaining-file-risk-assessment.json').read_text())
+        self.assertEqual(len(remaining),117)
+        self.assertEqual(set(remaining), {f['path'] for f in record['files'] if f['state']=='planned-not-implemented'})
+        self.assertEqual(len(record['files']),126) # preserve original allocation survey, don't silently rewrite history
+        for f in record['files']:
+            if f['path'] in remaining:self.assertEqual(f['fullFileRisk'],remaining[f['path']]['riskAssessment']['fullFileRisk'])
+            self.assertTrue(f['riskReason'])
+        self.assertEqual(record['coverage']['mainOnlyUnassignedFiles'],75)
+
+    def test_new_round_42_does_not_recount_original_six(self):
+        tasks = json.loads((P/'records/low-cost-agent-assignments.json').read_text())['tasks']
+        old = {t['runtimePath'] for t in tasks if t['round']=='D01'}
+        new = {t['runtimePath'] for t in tasks if t['round']=='D02'}
+        self.assertEqual(len(old),6);self.assertEqual(len(new),42);self.assertFalse(old & new)
+        self.assertEqual(sum(t['round']=='D02' and t['runtimePath'].endswith('.java') for t in tasks),36)
+        self.assertEqual(sum(t['round']=='D02' and t['delegationScope']=='slice' for t in tasks),28)
+
+    def test_high_risk_file_cannot_get_whole_low_risk_marker(self):
+        text,_ = render(self.manifest)
+        for f in self.manifest['files']:
+            d=f.get('delegation')
+            if d and f['riskAssessment']['fullFileRisk']=='high':
+                self.assertEqual(d['scope'],'slice')
+                self.assertIn('[LOW-SLICE:'+d['taskId']+']',text)
+                self.assertNotIn('[LOW:'+d['taskId']+']',text)
+
+    def test_main_core_not_delegated_for_count(self):
+        for suffix in ['ActorContext.java','AuthorityPolicy.java','DataKeyVault.java','PrivateRecordSealer.java','PrivateRecordStore.java','EpochErasureCoordinator.java','ControlDispatcher.java','PermissionCoordinator.java','BrowserStore.java','MailDatabase.java','SourceWarningActivity.java']:
+            f=next(f for f in self.manifest['files'] if f['path'].endswith('/'+suffix))
+            self.assertNotIn('delegation',f)
+            self.assertEqual(f['riskAssessment']['owner'],'main')
+
+    def test_original_d02_sha_bound_inputs_survive_runtime_admission(self):
+        import base64,hashlib,zlib
+        original=json.loads((P/'evidence/delegation-D02-static-checks.json').read_text())
+        saved=json.loads((P/'evidence/delegation-D02-original-input-snapshots.json').read_text())
+        snapshots={s['path']:s for s in saved['snapshots']}
+        for source in original['sourceFiles']:
+            snap=snapshots[source['path']];raw=zlib.decompress(base64.b64decode(snap['zlibBase64']))
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),source['sha256'])
+            self.assertEqual(len(raw),snap['utf8Bytes'])
+
+    def test_missing_risk_assessment_for_remaining_target_rejected(self):
+        f=next(f for f in self.manifest['files'] if f['state']=='planned-not-implemented')
+        f.pop('riskAssessment')
+        with self.assertRaises(AssertionError):render(self.manifest)
+
     def test_host_marker_matches_implemented_count(self):
         text, facts = render(self.manifest)
         expected = sum(f['state'] == 'implemented-host-tested-not-integrated' for f in self.manifest['files'])

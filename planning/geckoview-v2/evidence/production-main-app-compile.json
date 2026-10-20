@@ -28,7 +28,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
-      "sha256": "3ee5231302332ee0c8141bbf458b080f29f9752ea10e025c227130815ad1adfb"
+      "sha256": "a4e3d1b53c52a14bd7d004713feb9ef9f9f9f813b1724712a04c8da5ae2338db"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
@@ -135,8 +135,20 @@
       "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+      "sha256": "a80bbcaec76b264405659e854c1c00df6b376185509a7c1688c57830f01696b5"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
       "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "d61c04cd1e2252f00f5d5a43b39325223d2f3104f6ddbf0fc7b2e3bcc46bd28e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "bf2bb48b3f54f4b6f6044e72a68a0e3d11f8bef55f06e9747f8043c66b073e7e"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
@@ -195,12 +207,32 @@
       "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "sha256": "cfb3ceec428a50ca90899815c6a5f202e7eab0f64bf5e4ad50d5d7fbea48f06f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "a0efe2939031b64186e73c31a8be84b2464e09e1111a42cb58e61a29b47dec8c"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
       "sha256": "57bdf4b6de5d904d501e4608a0880309d19b7484bf5b3497fa57d3d52c5aebf3"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
-      "sha256": "2555b451c1dd28f3ff15b2e9c35e7f74db9993ef83792e1743f0deea181e7794"
+      "sha256": "df202e6bc94788fb95b948a22ac5e7d39f7b6fd293b9f195bd4d814c3fc3626b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "88611513d4d435a1810003bd849cd3c76ddabe4831e405ad69742f222eb0456b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "0727f7e4a22c788315694ffe9ae8036b5b318af8f8aad12c302b5d81d54031ca"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
@@ -213,6 +245,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
       "sha256": "ccef10c25944982b5f6d7492496b13a450e64be1d37f25f7cbf55e3de1d081de"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
@@ -319,8 +355,20 @@
       "sha256": "17e7711e3fd7a48252eb2a63559b8b6849bbce45e437a5efbe5bd42d3197129f"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/DataKeyVaultTest.java",
+      "sha256": "ca27c11ee79d49096b9660e42172b7ac182b5b2ae191bc37438ef8c652ed5153"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java",
       "sha256": "dad32c625d8f88f64e62459847e481e9003485707135ba000ca61306d7f76b07"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java",
+      "sha256": "8068303d44b036c8dfc6abf351ea98d875c841c3da078e0962fbdaadaf4919f3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/data/PrivateRecordStoreTest.java",
+      "sha256": "2cb039c34807ae07934f0d2c52e684c936123407a444d086c0e3089415ad7a22"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java",
@@ -351,8 +399,32 @@
       "sha256": "21073ce3edd144ca3adb5c22157c9009e1a93908807b01e31ed5e5bb2d13e535"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java",
+      "sha256": "a2e33d43486150fdc77416adc78b5a0b3d9d743ac65d87c1672177aa3ea77d65"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/system/DeviceWindowStateTest.java",
+      "sha256": "01d5b6997730c53bf1fed69ee809e5dbdbe99d946a3b13b6f80fb2e05b2ea8ae"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+      "sha256": "f8995254a5ba97b1344c4efb9b50ccb9fceb758cddb054093ccb5c9c12197bf3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+      "sha256": "b6d5734b74297642e11d3429bf3bd8c584002c3461b98b7ca0aff3c45141bec5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+      "sha256": "ddc91b2990a327dd984d582cf5efb3b4e863f3a4f2bc6fe741c7aecea0175e0a"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java",
-      "sha256": "894e13db54d59dae585864114deb8b54b550a47ffd043a54c41cbfc6eefa0aa2"
+      "sha256": "13899917abdc80159ea2491b1a2e678fd9c267507c9c95c1f145bf6d3d6a6cc7"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "sha256": "39c5fa49ebfe478e13aae9a6842e99ffd9847c5ba18726470dbaf7e0ef3e13d9"
     },
     {
       "path": "rebrowser/settings.gradle",
@@ -375,8 +447,8 @@
       "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
     }
   ],
-  "productionJavaSourceFiles": 56,
-  "compiledClassFiles": 264,
+  "productionJavaSourceFiles": 65,
+  "compiledClassFiles": 307,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -517,8 +589,26 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.crypto.DataKeyVaultTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.crypto.ObjectAeadTest",
       "tests": 13,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.crypto.PrivateRecordSealerTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.data.PrivateRecordStoreTest",
+      "tests": 20,
       "failures": 0,
       "errors": 0
     },
@@ -565,13 +655,49 @@
       "errors": 0
     },
     {
+      "class": "io.github.rebrowser.subapps.SubapplicationRegistryTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.system.DeviceWindowStateTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.ui.BookmarkViewTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.ui.DownloadsAdapterTest",
+      "tests": 16,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.ui.HistoryAdapterTest",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0
+    },
+    {
       "class": "io.github.rebrowser.ui.NativeWindowModelsTest",
-      "tests": 37,
+      "tests": 42,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.ui.SettingsSectionsTest",
+      "tests": 8,
       "failures": 0,
       "errors": 0
     }
   ],
-  "unitTestsPassed": 456,
+  "unitTestsPassed": 577,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -651,14 +777,14 @@
   "windowTargetReferenceRegistryHostExecuted": true,
   "windowTargetAndroidActivityOrWindowProbeExecuted": false,
   "windowTargetRegistryDispatcherIntegrated": false,
-  "currentAgpEvidenceRef": "evidence/production-main-agp-R46-checks.json",
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R47-checks.json",
   "historicalStandaloneCheckpointRef": "evidence/production-main-standalone-R42-checkpoint.json",
-  "hostAndroidClassNativeWindowModelsTests": 37,
+  "hostAndroidClassNativeWindowModelsTests": 42,
   "nativeWindowPresentationModelsHostExecuted": true,
   "nativeAndroidViewWindowDialogMetricsExecuted": false,
   "lastHistoricalAgpCheckpointRef": "evidence/production-main-agp-R38-checkpoint.json",
-  "currentCodeBatchContractRef": "records/native-temporary-browser-host-contract.json",
-  "currentCodeBatchWorkloadRef": "evidence/native-temporary-browser-host-code-workload.json",
+  "currentCodeBatchContractRef": "records/native-private-record-store-contract.json",
+  "currentCodeBatchWorkloadRef": "evidence/native-private-record-store-code-workload.json",
   "sourceIncarnationGateHostExecuted": true,
   "actualAndroidEntryProcessStartupExecuted": false,
   "currentAdminSqlEvidenceRef": "evidence/admin-idempotency-current-host-sql-R45.json",
@@ -673,5 +799,13 @@
   "nativeTemporaryBrowserGraphExecutedAndroid": false,
   "actualPrivateNativeEventAdapterHostExecuted": true,
   "actualSdkGeckoResultPermissionResponseExecuted": false,
-  "actualPermissionRejectorAndRejectedBodyCloseHelpersHostExecuted": true
+  "actualPermissionRejectorAndRejectedBodyCloseHelpersHostExecuted": true,
+  "hostAndroidClassPrivateRecordBoundaryTests": 32,
+  "hostAndroidClassD01PresentationModelsTests": 51,
+  "privateRecordJcaAndHostFilesystemPipelineExecuted": true,
+  "privateRecordAndroidKeystoreOrFilesystemExecuted": false,
+  "privateRecordKeysOrDirectoriesProvisioned": false,
+  "delegatedD01ScopedModelsHostExecuted": true,
+  "delegatedD01ActualAndroidViewsRendered": false,
+  "D02New42ReservedUntouched": true
 }

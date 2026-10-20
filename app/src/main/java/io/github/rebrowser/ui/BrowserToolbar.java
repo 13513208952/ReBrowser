@@ -15,6 +15,9 @@ import io.github.rebrowser.browser.SearchEngines;
 
 /** Native address/actions only; callbacks still need current domain/actor/target authorization. */
 public final class BrowserToolbar extends LinearLayout {
+    /** Java callback return/exception only, NEVER domain success or actual work-end proof. */
+    public enum IntentOutcome { CALLBACK_RETURNED, CALLBACK_UNKNOWN }
+    public static IntentOutcome invokeNativeIntent(Runnable exactNativeCallback){if(exactNativeCallback==null)throw invalid();try{exactNativeCallback.run();return IntentOutcome.CALLBACK_RETURNED;}catch(RuntimeException unknown){return IntentOutcome.CALLBACK_UNKNOWN;}}
     public interface NativeWindowGuard { void checkCurrent(); }
     public interface Actions { void submit(String originalInput);void back();void reload();void workspaces();void tabs();void menu(); }
     /** Exact native presentation binding. Never decode a permit/guard from UI/IPC data. */
@@ -48,7 +51,7 @@ public final class BrowserToolbar extends LinearLayout {
     }
     public void bind(Binding current,Actions nativeActions,String displayUrl,boolean canGoBack){main();if(current==null || nativeActions==null)throw invalid();current.check();if(binding!=current){unbind();binding=current;}actions=nativeActions;state.reportDisplay(displayUrl==null?"":displayUrl);if(!address.hasFocus())address.setText(state.visible());setControls(true);back.setEnabled(canGoBack);}
     public void unbind(){main();binding=null;actions=null;state.clear();if(address!=null){address.setText("");address.setError(null);address.clearFocus();}setControls(false);}
-    private void dispatch(int kind){Binding captured=binding;Actions callback=actions;if(captured==null || callback==null)return;try{captured.check();if(captured!=binding || callback!=actions)return;if(kind==0){state.edit(address.getText().toString());callback.submit(state.visible());address.clearFocus();}else if(kind==1)callback.back();else if(kind==2)callback.reload();else if(kind==3)callback.workspaces();else if(kind==4)callback.tabs();else callback.menu();}catch(SecurityException stale){unbind();}catch(RuntimeException unknown){address.setError("操作结果未知，请核对当前状态");}}
+    private void dispatch(int kind){Binding captured=binding;Actions callback=actions;if(captured==null || callback==null)return;try{captured.check();if(captured!=binding || callback!=actions)return;IntentOutcome outcome=invokeNativeIntent(()->{if(kind==0){state.edit(address.getText().toString());callback.submit(state.visible());address.clearFocus();}else if(kind==1)callback.back();else if(kind==2)callback.reload();else if(kind==3)callback.workspaces();else if(kind==4)callback.tabs();else callback.menu();});if(outcome==IntentOutcome.CALLBACK_UNKNOWN && binding==captured && actions==callback)address.setError("操作结果未知，请核对当前状态");}catch(SecurityException stale){unbind();}catch(RuntimeException unknown){address.setError("操作结果未知，请核对当前状态");}}
     private Button button(LinearLayout parent,String text){Button button=new Button(getContext());button.setText(text);button.setMinWidth(dp(48));button.setMinimumHeight(dp(48));parent.addView(button,new LayoutParams(0,LayoutParams.MATCH_PARENT,1));return button;}
     private void setControls(boolean enabled){for(View v:new View[]{back,reload,workspace,tabs,menu,address})if(v!=null)v.setEnabled(enabled);}
     private int dp(int value){return Math.round(value*getResources().getDisplayMetrics().density);}

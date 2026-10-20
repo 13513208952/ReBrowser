@@ -1,11 +1,11 @@
 {
-  "revision": "R46",
-  "hostTestsPassed": 37,
+  "revision": "R47",
+  "hostTestsPassed": 42,
   "scope": "Actual native window/panel/toolbar binding/address/selection/progress/modal/inset/metric-policy models on HOST; no Android View/Window/AlertDialog/ValueAnimator/Activity metric method execution",
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
-      "sha256": "2555b451c1dd28f3ff15b2e9c35e7f74db9993ef83792e1743f0deea181e7794"
+      "sha256": "df202e6bc94788fb95b948a22ac5e7d39f7b6fd293b9f195bd4d814c3fc3626b"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
@@ -45,7 +45,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java",
-      "sha256": "894e13db54d59dae585864114deb8b54b550a47ffd043a54c41cbfc6eefa0aa2"
+      "sha256": "13899917abdc80159ea2491b1a2e678fd9c267507c9c95c1f145bf6d3d6a6cc7"
     }
   ],
   "actualNestedPresentationMethodsExecuted": true,
@@ -53,5 +53,5 @@
   "nativeBrowserComplete": false,
   "sourceOrOwnerConsentGranted": false,
   "gradleEvidenceRef": "evidence/production-main-agp-R43-checks.json",
-  "currentActualHostRunRef": "evidence/production-main-agp-R46-checks.json"
+  "currentActualHostRunRef": "evidence/production-main-agp-R47-checks.json"
 }

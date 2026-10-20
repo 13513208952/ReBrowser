@@ -19,7 +19,9 @@ $GRADLE_96/bin/gradle -p rebrowser :app:compileDebugJavaWithJavac \
 
 SDK、Gradle 用户目录、项目缓存及 `java.io.tmpdir` 使用既有隔离环境；不要改动全局 SDK/缓存。代码/清单编译通过不等于 APK、Android运行或网站验证。
 
-R46跨10个实质runtime文件连接原生accepted epoch→临时浏览器域→private context/Gecko privateMode→open前permission/content/navigation/progress delegates。Selection精确校验workspace/tab双revision拒绝ABA；session级title/location不能伪造真实document。修复源发布未知提交/确认前回调不得信任的缺口。实际AGP56源码/264class/456HOST；独立26纯切片260HOST与SDKbootclasspath；新增17模型/13私有adapter＋拒绝/body-close HOST，不是Gecko/Android实测。Root仍无配置，未激活完整UI、持久化恢复、finiteGrant、Popup或下载发布。
+R47跨11个实质runtime文件接入原生既有epoch的私有记录依赖：仅既有Android AES wrapping key、独立非mail的AEAD metadata格式、固定目录下有界CAS/0600 stage/atomic move/force/readback；不自动创建目录/密钥/seed，未防同epoch回滚。旧6个低成本agent交付修正后以有限模型/API范围准入，D02新42文件继续预留未触碰。实际AGP65源码/307class/577HOST；独立29纯切片293HOST与SDKbootclasspath；49私有记录流水线用明确合成来源/公开toykey/真实HOST文件，67交付模型测试不是真实Android View/Keystore/FS或完整backend验证。当前Root仍未配置。
+
+历史R46跨10个实质runtime文件连接原生accepted epoch→临时浏览器域→private context/Gecko privateMode→open前permission/content/navigation/progress delegates。Selection精确校验workspace/tab双revision拒绝ABA；session级title/location不能伪造真实document。修复源发布未知提交/确认前回调不得信任的缺口。实际AGP56源码/264class/456HOST；独立26纯切片260HOST与SDKbootclasspath；新增17模型/13私有adapter＋拒绝/body-close HOST，不是Gecko/Android实测。Root仍无配置，未激活完整UI、持久化恢复、finiteGrant、Popup或下载发布。
 
 历史R45继续闭合入口的原生来源依赖：新增SourceBootstrap稳定精确来源回执，并将epoch16接到入口/Gate/数据库/分区/目标/runtime，跨12个实质runtime文件。实际AGP编译52源码/253class，413HOST；独立纯切片234，HOST SQL39+235通过。23项回执流水线测试使用私有合成OS来源和真实HOST metadata文件，不是Android签名/文件系统/Handler实测。当前Root仍未配置；基准缺失/非stable/不匹配/仅lineage轮换仍锁定，不自动seed或擦除。first-fresh清单、恢复/销毁提交与完整浏览器仍需完成。
 

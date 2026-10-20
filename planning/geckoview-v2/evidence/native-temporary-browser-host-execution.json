@@ -1,5 +1,5 @@
 {
-  "revision": "R46",
+  "revision": "R47",
   "scope": "Actual private native host adapter -> production session observation model with SYNTHETIC private DTOs; actual reject methods with SYNTHETIC SDK callbacks/owned HOST streams. Native domain/SDK session factory API compiled, NOT Android/Gecko callback execution.",
   "hostSessionPresentationTests": 17,
   "hostPrivateAdapterRejectAndBodyCloseTests": 13,
@@ -18,7 +18,7 @@
   "nativeNetworkOrWholeChainQuiescenceEstablished": false,
   "nativeBrowserComplete": false,
   "productionRootConfigured": false,
-  "currentAgpEvidenceRef": "evidence/production-main-agp-R46-checks.json",
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R47-checks.json",
   "unitTests": [
     {
       "class": "io.github.rebrowser.engine.SessionPresentationTest",
@@ -36,7 +36,7 @@
   "sourceFiles": [
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
-      "sha256": "3ee5231302332ee0c8141bbf458b080f29f9752ea10e025c227130815ad1adfb"
+      "sha256": "a4e3d1b53c52a14bd7d004713feb9ef9f9f9f813b1724712a04c8da5ae2338db"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",

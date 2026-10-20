@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R46",
+  "revision": "R47",
   "authority": [
     "O41",
     "O42",
@@ -383,7 +383,7 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration",
+      "scope": "原生壳->来源保护->按需引擎的主程序顺序；正式Root缺失保持UNCONFIGURED，连续性未接通保持LOCKED; R44 entry-module cross-module source incarnation/resource lifetime closure, not source acceptance authority or complete module runtime qualification; R45 actual own stable-source receipt/accepted epoch producer-consumer integration, no metadata-only unlock; R46 actual temporary browser delegate graph/selection ABA/positive submission return fencing integration; R47 native private-record producer-consumer lifecycle or truthful callback boundary",
       "researchEvidence": [
         "records/gecko-contracts.json",
         "records/domain-interfaces.json",
@@ -391,7 +391,8 @@
         "records/module-integration-plan.json",
         "records/entry-source-incarnation-batch-contract.json",
         "records/native-source-bootstrap-contract.json",
-        "records/native-temporary-browser-host-contract.json"
+        "records/native-temporary-browser-host-contract.json",
+        "records/native-private-record-store-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -405,7 +406,7 @@
         "command admission/IPC/effects or Android device execution"
       ],
       "integrationGate": "formal source configuration and continuity before business unlock; browser domains and complete admin admission must be wired, no debug shortcut",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R46-checks.json"
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
@@ -1330,9 +1331,10 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "Native48dp controls/address input and fresh per-window binding, separate raw edit/display state, no URL load/actor authority in view",
+      "scope": "Native48dp controls/address input and fresh per-window binding, separate raw edit/display state, no URL load/actor authority in view; R47 native private-record producer-consumer lifecycle or truthful callback boundary",
       "researchEvidence": [
-        "records/native-browser-window-batch-contract.json"
+        "records/native-browser-window-batch-contract.json",
+        "records/native-private-record-store-contract.json"
       ],
       "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
       "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
@@ -1344,7 +1346,7 @@
         "io.github.rebrowser.ui.NativeWindowModelsTest"
       ],
       "hostEvidence": "evidence/native-window-models-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R43-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
       "hostPresentationModelMethodsExecuted": true,
       "notClaimed": [
         "actual Android View/Window/dialog/metric/rendering callbacks",
@@ -1717,6 +1719,309 @@
         "Actual native window lifecycle/approved full UI/administrator admission/connectors remain separate required module closures"
       ],
       "integrationGate": "Actual trusted-source graph source only; defaultRoot absent stays closed. No persistent session reopen/finite grant/Popup/task completion/erasure. Native body close is not native-tail end; all native erasure needs separate true engine/writer quiescence."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Bounded independentlyversioned non-mail AESGCM metadata framing/purpose-epoch-scope-revision binding with strict lengths and nonce freshness",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.crypto.PrivateRecordSealerTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual existing native Android wrapping-key factory and fresh record-DEK envelope, no generate/seed/import/enrollment or fallback",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/crypto/DataKeyVaultTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.crypto.DataKeyVaultTest"
+      ],
+      "hostEvidence": "evidence/native-private-record-store-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
+      "hostControlFlowExecutedWithSyntheticPlatform": true
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "Actual native fixed existingepochdir AEAD records, exactReadStampCAS/0600stage/atomic commit/force/readback/nonblocking anchoredlock and quotas, no cleanup/restoreauthority",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/data/PrivateRecordStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.data.PrivateRecordStoreTest"
+      ],
+      "hostEvidence": "evidence/native-private-record-store-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
+      "hostControlFlowExecutedWithSyntheticPlatform": true
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "D01actual fixed immutable Outlook/Music local identity/route directory, no enablement/account/defaults/opening",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.subapps.SubapplicationRegistryTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "D01actual fixed native settingsection/row directory and unknown display value, no preferences/defaults or source consent",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.SettingsSectionsTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "D01bounded native100rowhistory display/weakownedrecycledview cleanup/frame+binding guards and userintents, no DBwrites/navigation",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.HistoryAdapterTest"
+      ],
+      "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
+      "hostPresentationModelMethodsExecuted": true
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "D01bounded nativeTaskSnapshotmultiaxisdisplay with approval/cancel/handoffintents and actualendtruthful, no streams/publication",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.DownloadsAdapterTest"
+      ],
+      "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
+      "hostPresentationModelMethodsExecuted": true
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "D01real boundednativebookmark/folderview/callbackguard/privateviewtextlistenercleanup, no store/navigation/owner prompt",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.ui.BookmarkViewTest"
+      ],
+      "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
+      "hostPresentationModelMethodsExecuted": true
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "fullResponsibilityComplete": false,
+      "researchCompleteForScope": true,
+      "scope": "D01readonly OWNwindowfacts/ViewportPolicy reuse, actualSurfaceconstantmapping distinctfromdegrees, no deviceauthority/globalsettings",
+      "researchEvidence": [
+        "records/native-private-record-store-contract.json",
+        "records/module-integration-plan.json"
+      ],
+      "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
+      "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
+      "unresolvedWithinScope": [],
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/system/DeviceWindowStateTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.system.DeviceWindowStateTest"
+      ],
+      "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "notClaimed": [
+        "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
+        "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
+        "Source check placement and record CAS do NOT serialize every source policy cutover/writer. True native workset quiescence still required before erasure",
+        "Valid historical same-epoch encrypted records can be replayed if native files rollback; no trusted monotonic rollbackproof or automatic latest/session restore/permission recovery",
+        "Record catalog/checkpoint domain serializers, persistent browser restore/finite grants/actualSDKdocument ownership remain missing; privateMode temporary sessions never secretly checkpointed",
+        "Alias/key policy cannot defeat malicious same-UID/trusted-signer code; no absolute key custody/provider memory wipe orphysicaldurabilityclaim",
+        "WorkerUI models/API compiled are NOT complete History/Downloads/Settings/Bookmark systems, nativeCallbacks/Viewsunexecuted"
+      ],
+      "integrationGate": "Actualnativefactoryonly, defaultRoot remainsclosed/missingkeyordirectoryneverauto-seed. D01views onlysource/windowboundprojectionnotentirebackend. Native policy/erasure/restore needfulloriginalgates.",
+      "hostPresentationModelMethodsExecuted": true
     }
   ],
   "parallelPending": [

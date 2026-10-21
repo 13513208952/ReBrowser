@@ -16,6 +16,7 @@ public final class GeckoRuntimeOwner {
     private final byte[] epoch;
     private GeckoRuntime runtime;
     private boolean creationAttempted;
+    private io.github.rebrowser.bridge.BuiltinConnectorManager connectors;
     private GeckoRuntimeOwner(Application application, ComponentGate gate,byte[] nativeEpoch,ComponentGate.BusinessPermit permit) {
         this.application = application; this.gate = gate;epoch=nativeEpoch.clone();sourceLifetime=gate.newResourcePin();sourceLifetime.checkEpochOrBind(permit,epoch);
     }
@@ -38,6 +39,9 @@ public final class GeckoRuntimeOwner {
         sourceLifetime.checkEpochOrBind(permit,epoch); // source may change during native runtime creation; never publish old-context runtime
         return runtime;
     }
+    /** Lazy native extension owner, not extension installation/asset existence or page READY. */
+    public io.github.rebrowser.bridge.BuiltinConnectorManager builtinConnectors(ComponentGate.BusinessPermit permit){mainThread();sourceLifetime.checkEpochOrBind(permit,epoch);if(connectors==null)connectors=new io.github.rebrowser.bridge.BuiltinConnectorManager(application,this,gate,permit);return connectors;}
+    public void requireNativeBindings(Application expectedApplication,ComponentGate expectedGate,ComponentGate.DataEpochPin expectedSource){mainThread();if(expectedApplication!=application || expectedGate!=gate || expectedSource==null || !Arrays.equals(epoch,expectedSource.dataEpoch()))throw new SecurityException("Foreign native connector runtime binding");sourceLifetime.requireCurrent();}
     public boolean hasCreatedRuntime() { mainThread(); return runtime != null; }
     private static void mainThread() {
         if (Looper.myLooper() != Looper.getMainLooper()) throw new IllegalStateException("Main thread required");

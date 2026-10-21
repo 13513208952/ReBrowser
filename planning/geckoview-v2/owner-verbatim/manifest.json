@@ -653,7 +653,28 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O94",
+      "file": "owner-verbatim/O94-continue-core-connectors.txt",
+      "utf8Bytes": 18,
+      "sha256": "da8dafd712044c8c037b92926edb83bb3e9ef19cc9ea2ccd872d617fc9f4edb5",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O95",
+      "file": "owner-verbatim/O95-create-all-remaining-source-before-next-commit.txt",
+      "utf8Bytes": 93,
+      "sha256": "4801799d5a23ec57044dd6b1ec05177889b6a383c0e70683df83ebb8b7e331f1",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O96",
+      "file": "owner-verbatim/O96-continue-all-source-before-commit.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-21T14:16:41+08:00"
+  "lastAppendedAt": "2026-10-21T16:29:44+08:00"
 }

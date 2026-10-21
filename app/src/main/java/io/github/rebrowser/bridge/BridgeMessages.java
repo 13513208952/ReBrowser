@@ -415,5 +415,12 @@ public final class BridgeMessages {
         private boolean peek(char c){return index<text.length() && text.charAt(index)==c;}
         private void skipWhitespace(){while(index<text.length()){char c=text.charAt(index);if(c==' '||c=='\t'||c=='\n'||c=='\r')index++;else break;}}
     }
+    /** Bounded native outbound OBSERVATION-only frames. Building JSON never issues a lease. */
+    static String nativeReady(Binding b,String action){return finish("{\"protocol\":\""+PROTOCOL+"\",\"kind\":\"READY\",\"binding\":"+bindingJson(b)+",\"limits\":{\"chunkBytes\":32768,\"creditBytes\":65536},\"supportedActions\":["+quoted(action,128)+"]}");}
+    static String nativeObserve(Binding b,String requestId,String action){if(requestId==null || !requestId.matches("r_[0-9a-f]{32}"))throw invalid("native request id");return finish("{\"protocol\":\""+PROTOCOL+"\",\"kind\":\"COMMAND\",\"binding\":"+bindingJson(b)+",\"requestId\":"+quoted(requestId,34)+",\"action\":"+quoted(action,128)+",\"args\":{}}");}
+    static String nativeCredit(Binding b,String streamId,long sequence,int credit,long maximum){if(streamId==null || !streamId.matches("b_[0-9a-f]{32}") || sequence<0 || sequence>MAX_SAFE_INTEGER || credit<1 || credit>MAX_CHUNK_BYTES*2 || maximum<0 || maximum>MAX_SAFE_INTEGER)throw invalid("native stream credit");return finish("{\"protocol\":\""+PROTOCOL+"\",\"kind\":\"STREAM_CREDIT\",\"binding\":"+bindingJson(b)+",\"streamId\":"+quoted(streamId,34)+",\"nextSequence\":"+sequence+",\"creditBytes\":"+credit+",\"maxTotalBytes\":"+maximum+"}");}
+    private static String bindingJson(Binding b){if(b==null)throw invalid("native binding");return "{\"dataEpoch\":"+quoted(b.dataEpochHex(),32)+",\"partitionRef\":"+quoted(b.partitionRef(),64)+",\"partitionGeneration\":"+b.partitionGeneration()+",\"sessionRef\":"+quoted(b.sessionRef(),64)+",\"sessionGeneration\":"+b.sessionGeneration()+",\"documentLease\":"+quoted(b.documentLeaseHex(),64)+",\"portLeaseToken\":"+quoted(b.portLeaseTokenHex(),64)+"}";}
+    private static String quoted(String value,int maximum){if(value==null || value.isEmpty() || value.length()>maximum)throw invalid("native ASCII field");StringBuilder out=new StringBuilder("\"");for(int n=0;n<value.length();n++){char c=value.charAt(n);if(c<33 || c>126)throw invalid("native ASCII field");if(c=='\"' || c=='\\')out.append('\\');out.append(c);}return out.append('\"').toString();}
+    private static String finish(String value){parse(value);return value;} // Same strict schema, no ad-hoc bypass.
     private BridgeMessages(){}
 }

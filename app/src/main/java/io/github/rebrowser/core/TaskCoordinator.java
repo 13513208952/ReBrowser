@@ -86,6 +86,14 @@ public final class TaskCoordinator implements AutoCloseable {
         public void commitBeforeExternalDispatch(){issuer.commitDispatch(entry);}
         public void observeOutcome(TaskSnapshot.Effect effect){issuer.observe(entry,effect);}
         public void installOwnedStopper(NativeStopper stopper){issuer.installStopper(entry,stopper);}
+        /** Claim one exact native route AFTER the durable dispatch intent. No DB work on a
+         * later UI callback, no second bridge/alternate route after unknown post outcome. */
+        public void claimCommittedNativeRoute(Object nativeRoute){
+            if(nativeRoute==null)throw invalid();issuer.beforeNewEffect(entry);
+            synchronized(issuer.monitor){if(!entry.dispatchCommitted || entry.nativeEnd!=null || entry.committedRoute!=null || entry.cancellation.requester().snapshot().cancellationRequested())throw new SecurityException("Native dispatch intent unavailable or route already spent");entry.committedRoute=nativeRoute;}
+        }
+        /** Native resource-owner cleanup only; not success/publication or whole-process end. */
+        public boolean hasReportedActualDomainEnd(){synchronized(issuer.monitor){return entry.nativeEnd!=null;}}
         /** Domain/native writers REALLY ended. Does not itself return lane credit or publish effects. */
         public boolean reportActualDomainChainEnd(Cancellation.EndReason reason){
             if(reason==null)throw invalid();synchronized(issuer.monitor){if(entry.nativeEnd!=null)return false;if(!entry.bodyEntered)throw new IllegalStateException("Native domain body has not started");entry.nativeEnd=reason;issuer.maybeFinalize(entry);return true;}
@@ -109,7 +117,7 @@ public final class TaskCoordinator implements AutoCloseable {
         final String job;final Lane lane;final ComponentGate.BusinessPermit permit;NativeBody body;
         final Cancellation cancellation=Cancellation.create();
         Phase phase=Phase.QUEUED;Persistence persistence=Persistence.NOT_ATTEMPTED;
-        Object ticket;boolean bodyEntered,invocationReturned,dispatchAttempted,dispatchCommitted,unknown,finalizerScheduled,settled;
+        Object ticket,committedRoute;boolean bodyEntered,invocationReturned,dispatchAttempted,dispatchCommitted,unknown,finalizerScheduled,settled;
         int nativeCalls;
         NativeStopper stopper;boolean stopScheduled,stopReturned;
         Cancellation.EndReason nativeEnd;

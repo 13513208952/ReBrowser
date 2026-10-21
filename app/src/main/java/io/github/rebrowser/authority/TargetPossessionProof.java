@@ -17,6 +17,8 @@ public final class TargetPossessionProof {
         private final TargetPossessionProof issuer;private final AdminProofVerifier.KeyProof principal;private final DeviceWhitelist.Device device;private final byte[] message;private final long deadline;private boolean spent;
         private Challenge(TargetPossessionProof issuer,AdminProofVerifier.KeyProof principal,DeviceWhitelist.Device device,byte[] message,long deadline){this.issuer=issuer;this.principal=principal;this.device=device;this.message=message;this.deadline=deadline;}
         public byte[] signingBytes(){return message.clone();}
+        /** Existing installation-key signer only; no raw arbitrary bytes sign endpoint. */
+        public void requireCurrentTarget(byte[] actualKeySha256,byte[] actualEpoch){synchronized(issuer){if(spent || !issuer.pending.contains(this) || issuer.now()>=deadline || actualKeySha256==null || actualEpoch==null || !MessageDigest.isEqual(issuer.target,actualKeySha256) || !MessageDigest.isEqual(issuer.source.dataEpoch(),actualEpoch))throw denied();issuer.source.requireCurrent();}}
     }
     public static final class Receipt {
         private final Challenge challenge;private boolean consumed;

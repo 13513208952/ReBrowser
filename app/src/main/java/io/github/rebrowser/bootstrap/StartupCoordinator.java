@@ -68,6 +68,8 @@ public final class StartupCoordinator {
     private io.github.rebrowser.browser.BookmarkStore bookmarks;private io.github.rebrowser.browser.HistoryStore history;
     private io.github.rebrowser.settings.SettingsRepository settings;private io.github.rebrowser.subapps.SubapplicationCoordinator subapplications;
     private BrowserStoreCoordinator browserInspector;private boolean browserInspectorAttempted;
+    private io.github.rebrowser.music.MusicSessionOwner musicSessions;private boolean musicSessionsAttempted;
+    private io.github.rebrowser.outlook.OutlookSessionOwner outlookSessions;private boolean outlookSessionsAttempted;
     private PrivateRecordStore privateRecords;private boolean privateRecordsAttempted;private final Object privateRecordOpening=new Object();
     private final ComponentGate.ResourcePin businessLifetime;
     private final AtomicReference<ComponentGate.SourceView> sourceView=new AtomicReference<>(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.INITIALIZING));
@@ -147,6 +149,9 @@ public final class StartupCoordinator {
         if(browserDomain!=null)return browserDomain;if(browserDomainAttempted)throw new IllegalStateException("Browser domain construction already attempted");browserDomainAttempted=true;
         browserDomain=BrowserCoordinator.createTemporaryNative(gate,browserRuntimeOwner(permit),epoch,8,permit);gate.checkCurrent(permit);return browserDomain;
     }
+    /** Canonical UI/service shared built-in session owners. Construction does not open/load/play. */
+    public io.github.rebrowser.music.MusicSessionOwner musicSessionOwner(ComponentGate.BusinessPermit permit){ownerThread();requireNativeDataEpoch(permit);if(musicSessions!=null)return musicSessions;if(musicSessionsAttempted)throw new IllegalStateException("Native music owner already attempted");musicSessionsAttempted=true;musicSessions=new io.github.rebrowser.music.MusicSessionOwner(gate,browserRuntimeOwner(permit),permit);gate.checkCurrent(permit);return musicSessions;}
+    public io.github.rebrowser.outlook.OutlookSessionOwner outlookSessionOwner(ComponentGate.BusinessPermit permit){ownerThread();requireNativeDataEpoch(permit);if(outlookSessions!=null)return outlookSessions;if(outlookSessionsAttempted)throw new IllegalStateException("Native Outlook owner already attempted");outlookSessionsAttempted=true;outlookSessions=new io.github.rebrowser.outlook.OutlookSessionOwner(gate,browserRuntimeOwner(permit),permit);gate.checkCurrent(permit);return outlookSessions;}
     /** Explicit owned IO call only. Existing directory/key required; never source/fresh-install seed.
      * Failure consumes opening attempt; an uncertain provider result cannot create another owner. */
     public PrivateRecordStore openExistingPrivateRecordsOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException {

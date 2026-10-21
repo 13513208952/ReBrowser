@@ -32,11 +32,31 @@ public final class GeckoSessionOwner {
         private final GeckoSessionOwner issuer;
         private final GeckoSession session;
         private final PartitionCatalog.Lease partition;
-        private Object displayToken;
+        private Object displayToken,connectorOwner;
+        private final String connectorRef="ses_"+java.util.UUID.randomUUID().toString().replace("-","");
+        private long connectorNavigationRevision;
         private State state=State.ALLOCATED;
         private SessionRef(GeckoSessionOwner issuer,GeckoSession session,PartitionCatalog.Lease partition){this.issuer=issuer;this.session=session;this.partition=partition;}
         public PartitionCatalog.Lease partition(){return partition;}
     }
+    /** Native session-lifetime bridge context, NOT document/account/permission authority. */
+    public static final class ConnectorContext {
+        private final GeckoSessionOwner issuer;private final SessionRef ref;private final ComponentGate.BusinessPermit permit;private final ComponentGate.DataEpochPin source;
+        private ConnectorContext(GeckoSessionOwner issuer,SessionRef ref,ComponentGate.BusinessPermit permit){this.issuer=issuer;this.ref=ref;this.permit=permit;source=issuer.gate.captureDataEpoch(permit);}
+        public void requireCurrent(){issuer.requireOpen(ref,permit);source.requireCurrent();}
+        public GeckoSession nativeSession(){requireCurrent();return ref.session;}
+        public String partitionRef(){requireCurrent();return ref.partition.opaqueRef();}
+        public String sessionRef(){requireCurrent();return ref.connectorRef;}
+        public PartitionCatalog.Domain domain(){requireCurrent();return ref.partition.domain();}
+        public ComponentGate.DataEpochPin sourcePin(){requireCurrent();return source;}
+        public long navigationRevision(){requireCurrent();return ref.connectorNavigationRevision;}
+        /** Once per actual session; new ports/broker objects cannot reset outstanding work budgets. */
+        public void claimNativeBroker(Object exactNativeBroker){requireCurrent();if(exactNativeBroker==null || ref.connectorOwner!=null)throw new IllegalStateException("Native session connector owner already assigned");ref.connectorOwner=exactNativeBroker;}
+    }
+    public ConnectorContext captureConnectorContext(SessionRef ref,ComponentGate.BusinessPermit permit){requireOpen(ref,permit);if(ref.partition.domain()==PartitionCatalog.Domain.BROWSER)throw new SecurityException("No general browser page bridge");return new ConnectorContext(this,ref,permit);}
+    /** Actual owning navigation/lifecycle adapter calls BEFORE cutover. Negative fence only;
+     * absence of change is not proof of committed/live document identity. */
+    public void fenceConnectorDocument(SessionRef ref){mainThread();own(ref);if(ref.connectorNavigationRevision==Long.MAX_VALUE)throw new IllegalStateException("Native connector navigation fence exhausted");ref.connectorNavigationRevision++;}
     private final ComponentGate gate;
     private final GeckoRuntimeOwner runtime;
     private final PartitionCatalog partitions;

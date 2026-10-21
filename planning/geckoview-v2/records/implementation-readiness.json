@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R50",
+  "revision": "R51",
   "authority": [
     "O41",
     "O42",
@@ -239,7 +239,8 @@
       "researchEvidence": [
         "records/authority-model.json",
         "records/control-proof-format.json",
-        "records/domain-interfaces.json"
+        "records/domain-interfaces.json",
+        "records/current-authority-kernel-contract.json"
       ],
       "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
       "dependencies": "existing production control/crypto code and Java8 only",
@@ -268,7 +269,8 @@
       "researchEvidence": [
         "records/authority-model.json",
         "records/control-proof-format.json",
-        "records/domain-interfaces.json"
+        "records/domain-interfaces.json",
+        "records/current-authority-kernel-contract.json"
       ],
       "inputOutput": "trusted native/compiled inputs -> immutable policy/key proof or startup permit; never action success",
       "dependencies": "existing production control/crypto code and Java8 only",
@@ -507,7 +509,8 @@
       "researchEvidence": [
         "records/control-proof-format.json",
         "records/authority-model.json",
-        "records/domain-interfaces.json"
+        "records/domain-interfaces.json",
+        "records/current-authority-kernel-contract.json"
       ],
       "inputOutput": "native context/template -> unsigned17field frame; verifiedKeyProof+native policy/reservation callbacks -> non-null job receipt once or reject; no effects dispatched",
       "dependencies": "actual production AdminProofVerifier/ControlEnvelope/CryptoEncoding, Java8 clocks/collections/SecureRandom",
@@ -541,7 +544,8 @@
         "records/implementation-readiness.json",
         "records/module-integration-plan.json",
         "records/entry-source-incarnation-batch-contract.json",
-        "records/native-source-bootstrap-contract.json"
+        "records/native-source-bootstrap-contract.json",
+        "records/current-authority-kernel-contract.json"
       ],
       "inputOutput": "trusted dedicated v2 SQLiteDatabase+gate+native target/epoch -> initialize known schema and reserve/reuse job after authorization; no raw client SQL/path",
       "dependencies": "actual Android SQLite/ContentValues/Cursor and existing KeyProof/gate, no new library",
@@ -3519,6 +3523,314 @@
         "Actual AndroidFS/Keystore/Handler/View/Gecko/native service methods and powerloss/JNI latency not executed. Rootunconfigured; no login/playback/device/signing/enrollment/systemrole/sensor effects"
       ],
       "integrationGate": "Actualproduction metadata/codec/gate + JCA and realHOSTfilesystem through private syntheticSource and PUBLICtoykey/path fixtures; realSDKAPIcompile, not actualAndroid/nativeproductqualification."
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "同作用域>=、通道/介入floor、机主授权激活;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "低于H的有界委托链和撤销;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "Root联合/各最高自有/专有名单隔离;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "实际目标安装私钥challenge验证;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "精确范围/期限/epoch的本人授权;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/current-authority-kernel-host-execution.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R51-checks.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "更高禁更低、Root不可禁、恢复和签名快照;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "脱敏审计与受控私有结果;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "正常用户/系统媒体/已验证管理员的明确身份;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "178逐动作定义/处理器/门槛单一注册;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+        "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+        "io.github.rebrowser.authority.DelegationAndPossessionTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "授权→同领域服务→真实结果，不复制特权路径;R51boundedcomponent/currentWINDOWreservationonly,notwholeproduct",
+      "researchEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ],
+      "inputOutput": "Boundedimmutablecrypto/policymetadata/nativeownedsource+current-head/targethooks -> privateverifiedslice/lifetimes; noboolean/DTO->Actor",
+      "dependencies": "AdmittedJava8+existingnativegate/proof/challenges; AndroidOS/SQLitetypesAPIcompileonlywhereexplicit",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [],
+      "junitClasses": [],
+      "hostEvidence": "evidence/current-authority-kernel-host-execution.json",
+      "notClaimed": [
+        "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+        "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+        "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+        "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+        "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+      ],
+      "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R51-checks.json"
     }
   ],
   "parallelPending": [

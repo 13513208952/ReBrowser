@@ -1,0 +1,55 @@
+package io.github.rebrowser.authority;
+
+import static org.junit.Assert.*;
+import io.github.rebrowser.bootstrap.*;
+import io.github.rebrowser.control.*;
+import io.github.rebrowser.core.ActorContext;
+import io.github.rebrowser.crypto.CryptoEncoding;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.util.*;
+import java.util.concurrent.atomic.*;
+import org.junit.Test;
+
+/** Actual kernel/JCA/HOST synthetic native-cache fixtures; NOT durable SQLite/Android qualification. */
+public class CurrentAuthorityKernelTest {
+ static byte[] sign(PrivateKey k,byte[] b)throws Exception{Signature s=Signature.getInstance("SHA256withECDSA");s.initSign(k);s.update(b);return s.sign();}
+ static KeyPair key()throws Exception{KeyPairGenerator g=KeyPairGenerator.getInstance("EC");g.initialize(new java.security.spec.ECGenParameterSpec("secp256r1"));return g.generateKeyPair();}
+ static class F {
+  final KeyPair root=key(),high=key(),low=key();final byte[] target=new byte[32],epoch=new byte[16];final AtomicLong time=new AtomicLong(10);final AtomicReference<Object> incarnation=new AtomicReference<>(new Object());
+  final CompiledPrincipals compiled=new CompiledPrincipals(new CompiledPrincipals.Entry("root",CompiledPrincipals.Role.ROOT,10,root.getPublic().getEncoded(),4,Arrays.asList("host.window.back","host.openDefaultBrowserFlow")),new CompiledPrincipals.Entry("high",CompiledPrincipals.Role.HIGHEST,9,high.getPublic().getEncoded()),new CompiledPrincipals.Entry("low",CompiledPrincipals.Role.LOW,2,low.getPublic().getEncoded()));
+  final ComponentGate gate=ComponentGate.forNativeSource(ProcessRole.MAIN,()->ComponentGate.SourceView.acceptedNative(incarnation.get(),epoch));
+  final ComponentGate.DataEpochPin pin=gate.captureDataEpoch(gate.requireBusiness());final DisableLedger ledger=new DisableLedger(compiled,target,epoch);DisableLedger.Snapshot head=ledger.emptyHistory();boolean badTarget,advanceTarget,staleHead;int targetChecks;
+  final AuthorityPolicy policy=new AuthorityPolicy(compiled,pin,target,new AuthorityPolicy.NativeCurrent(){public DisableLedger.Snapshot currentDisableHead(){return head;}public void requireCurrentHead(DisableLedger.Snapshot exact){if(staleHead || exact!=head)throw new SecurityException();}public void requireCurrentTarget(ActionSchemas.ParsedAction action){targetChecks++;if(advanceTarget)time.set(30_010);if(badTarget || action.expectedPresentationRevision()!=0)throw new SecurityException();}},time::get);
+  final ControlChallengeStore challenges=new ControlChallengeStore(new ControlChallengeStore.Context(target,epoch,ActionRegistry.policySha256(compiled),0),time::get,16,8);
+  F()throws Exception{}
+  AdminProofVerifier.KeyProof proof(String principal,String action,String scope)throws Exception{
+   byte[] request=new byte[16];new SecureRandom().nextBytes(request);String window="win_00000000000000000000000000000000";
+   ControlEnvelope frame=challenges.issue(new ControlChallengeStore.Template(principal,action,scope==null?window:scope,"",request,new byte[32],("{\"windowRef\":\""+window+"\",\"expectedPresentationRevision\":0}").getBytes(StandardCharsets.UTF_8)));
+   return decode(frame,principal.equals("root")?root.getPrivate():principal.equals("high")?high.getPrivate():low.getPrivate());
+  }
+  AdminProofVerifier.KeyProof decode(ControlEnvelope frame,PrivateKey key)throws Exception{String json="{\"protocol\":\"rebrowser.control/1\",\"frameB64\":\""+CryptoEncoding.base64Url(frame.signedBytes())+"\",\"signatureB64\":\""+CryptoEncoding.base64Url(sign(key,frame.signedBytes()))+"\"}";return new AdminProofVerifier(compiled).verifyCompiledKey(ControlDecoder.decode(json.getBytes(StandardCharsets.UTF_8)));}
+  <T>T admit(AdminProofVerifier.KeyProof proof,AuthorityPolicy.Use<T> use)throws Exception{ActionSchemas.ParsedAction action=ActionSchemas.parse(proof.request());return challenges.admit(proof,new ControlChallengeStore.Admission<T>(){public void authorize(AdminProofVerifier.KeyProof p){policy.check(p,action);}public T reserveJob(ControlChallengeStore.CommitFence fence)throws Exception{return policy.withReservationActor(fence,action,use);}});}
+  DisableLedger.Snapshot event(DisableLedger.Snapshot before,DisableLedger.Operation op,String actor,String target,long withdraw)throws Exception{byte[] body=ledger.signingBytes(op,actor,target,before.revision()+1,withdraw,before.headSha256());return ledger.appendVerified(before,new DisableLedger.Event(op,actor,target,before.revision()+1,withdraw,before.headSha256(),sign(actor.equals("root")?root.getPrivate():high.getPrivate(),body)));}
+ }
+ @Test public void equalityLevelTwoAdmitsWindowBackOnlyDuringSpentChallenge()throws Exception{F f=new F();ActorContext[] held={null};String fp=f.admit(f.proof("low","host.window.back",null),actor->{held[0]=actor;assertEquals(2,actor.effectiveOrdinaryLevel());return actor.principalFingerprint();});assertNotNull(fp);assertThrows(SecurityException.class,()->held[0].requireCurrentReservation());assertTrue(f.targetChecks>1);}
+ @Test public void levelTwoCannotOpenLevelThreeOsFlow()throws Exception{F f=new F();assertThrows(SecurityException.class,()->f.admit(f.proof("low","host.openDefaultBrowserFlow",null),actor->"never"));}
+ @Test public void scopeStringCannotBorrowAnotherWindow()throws Exception{F f=new F();assertThrows(SecurityException.class,()->f.admit(f.proof("root","host.window.back","win_11111111111111111111111111111111"),actor->"never"));}
+ @Test public void matchingWindowTextDoesNotReplaceNativeTargetCheck()throws Exception{F f=new F();f.badTarget=true;assertThrows(SecurityException.class,()->f.admit(f.proof("root","host.window.back",null),actor->"never"));}
+ @Test public void signedHistoricalHeadIsNotCurrent()throws Exception{F f=new F();f.staleHead=true;assertThrows(SecurityException.class,()->f.admit(f.proof("root","host.window.back",null),actor->"never"));}
+ @Test public void nativeCallbackCannotAdvanceBeyondDeadlineAndStillAuthorize()throws Exception{F f=new F();f.advanceTarget=true;assertThrows(SecurityException.class,()->f.admit(f.proof("root","host.window.back",null),actor->"never"));}
+ @Test public void retiredEpochIncarnationCannotRetargetPolicy()throws Exception{F f=new F();AdminProofVerifier.KeyProof p=f.proof("root","host.window.back",null);f.incarnation.set(new Object());assertThrows(SecurityException.class,()->f.admit(p,actor->"never"));}
+ @Test public void actorCannotAuthorizeAnotherProof()throws Exception{F f=new F();AdminProofVerifier.KeyProof p=f.proof("root","host.window.back",null),q=f.proof("root","host.window.back",null);f.admit(p,a->{assertThrows(SecurityException.class,()->a.requireExactRequest(q));return "ok";});}
+ @Test public void retainedActorCannotEscapeToAnotherThread()throws Exception{F f=new F();f.admit(f.proof("root","host.window.back",null),a->{AtomicBoolean rejected=new AtomicBoolean();Thread t=new Thread(()->{try{a.requireCurrentReservation();}catch(SecurityException e){rejected.set(true);}});t.start();t.join();assertTrue(rejected.get());return "ok";});}
+ @Test public void parsedActionFromDifferentProofIsNotInterchangeable()throws Exception{F f=new F();AdminProofVerifier.KeyProof p=f.proof("root","host.window.back",null),q=f.proof("root","host.window.back",null);assertThrows(SecurityException.class,()->f.policy.check(p,ActionSchemas.parse(q.request())));}
+ @Test public void exactProofReplayNeverRunsSecondReservation()throws Exception{F f=new F();AdminProofVerifier.KeyProof p=f.proof("root","host.window.back",null);assertEquals("ok",f.admit(p,a->"ok"));assertThrows(ControlChallengeStore.Rejected.class,()->f.admit(p,a->"wrong"));}
+ @Test public void failureAfterReservationAttemptStillSpendsChallenge()throws Exception{F f=new F();AdminProofVerifier.KeyProof p=f.proof("root","host.window.back",null);assertThrows(IllegalStateException.class,()->f.admit(p,a->{throw new IllegalStateException();}));assertThrows(ControlChallengeStore.Rejected.class,()->f.admit(p,a->"wrong"));}
+ @Test public void signedDisableStrictlyHigherNeverTargetsRoot()throws Exception{F f=new F();assertThrows(GeneralSecurityException.class,()->f.event(f.head,DisableLedger.Operation.DISABLE,"high","root",0));assertThrows(GeneralSecurityException.class,()->f.event(f.head,DisableLedger.Operation.DISABLE,"high","high",0));}
+ @Test public void multipleRecordsRequireIndependentWithdrawal()throws Exception{F f=new F();DisableLedger.Snapshot s=f.event(f.head,DisableLedger.Operation.DISABLE,"root","low",0);s=f.event(s,DisableLedger.Operation.DISABLE,"high","low",0);s=f.event(s,DisableLedger.Operation.RESTORE,"root","low",1);assertTrue(s.disabled("low"));s=f.event(s,DisableLedger.Operation.RESTORE,"root","low",2);assertFalse(s.disabled("low"));}
+ @Test public void lowerIssuerCannotWithdrawHigherIssuersRecord()throws Exception{F f=new F();DisableLedger.Snapshot s=f.event(f.head,DisableLedger.Operation.DISABLE,"root","low",0);assertThrows(GeneralSecurityException.class,()->f.event(s,DisableLedger.Operation.RESTORE,"high","low",1));}
+ @Test public void disablingIssuerDoesNotResurrectVictim()throws Exception{F f=new F();DisableLedger.Snapshot s=f.event(f.head,DisableLedger.Operation.DISABLE,"high","low",0);s=f.event(s,DisableLedger.Operation.DISABLE,"root","high",0);assertTrue(s.disabled("low"));assertTrue(s.disabled("high"));assertFalse(s.disabled("root"));}
+ @Test public void wrongPreviousHashOrTargetEpochRejectsSignature()throws Exception{F f=new F();byte[] b=f.ledger.signingBytes(DisableLedger.Operation.DISABLE,"root","low",1,0,f.head.headSha256());assertThrows(GeneralSecurityException.class,()->f.ledger.appendVerified(f.head,new DisableLedger.Event(DisableLedger.Operation.DISABLE,"root","low",1,0,new byte[32],sign(f.root.getPrivate(),b))));}
+ @Test public void canonicalPolicyIgnoresDeclarationOrderButIncludesIdentityAndRules()throws Exception{F f=new F();CompiledPrincipals reversed=new CompiledPrincipals(f.compiled.find("low"),f.compiled.find("root"),f.compiled.find("high"));assertArrayEquals(f.compiled.identityPolicySha256(),reversed.identityPolicySha256());assertArrayEquals(ActionRegistry.policySha256(f.compiled),ActionRegistry.policySha256(reversed));assertFalse(Arrays.equals(ActionRegistry.policySha256(f.compiled),f.compiled.identityPolicySha256()));}
+ @Test public void noCallerConstructibleActorOrUnknownHandler()throws Exception{assertThrows(SecurityException.class,()->ActorContext.forReservation(null));assertThrows(IllegalArgumentException.class,()->ActionRegistry.require("renderer.runScript"));assertFalse(CompiledPrincipals.production().formalRootConfigured());assertEquals(0,DeviceWhitelist.production(CompiledPrincipals.production()).compiledDeviceEntryCount());}
+ @Test public void auditRingHasBoundedOrderNoPrivateIdentifiersAndDiesOnClockRollback()throws Exception{F f=new F();AdminAudit a=new AdminAudit(f.pin,f.time::get,2);for(int i=0;i<3;i++)a.observe(ActionSchemas.Kind.WINDOW_BACK,AdminAudit.Outcome.RESERVATION_RETURNED);assertEquals(2,a.readForNativeOwner().size());assertEquals(2,a.readForNativeOwner().get(0).sequence());f.time.set(0);assertThrows(SecurityException.class,()->a.readForNativeOwner());}
+}

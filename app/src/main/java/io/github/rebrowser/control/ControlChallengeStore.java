@@ -81,6 +81,8 @@ public final class ControlChallengeStore {
         private boolean active=true,checked,checking;
         private CommitFence(ControlChallengeStore owner,AdminProofVerifier.KeyProof proof,Pending entry,Admission<?> admission){this.owner=owner;this.proof=proof;this.entry=entry;this.admission=admission;}
         public AdminProofVerifier.KeyProof proof(){return proof;}
+        /** Native ephemeral Actor access cannot turn checked failures into a positive receipt. */
+        public void checkCurrentUnchecked(){try{checkCurrent();}catch(RuntimeException failure){throw failure;}catch(Exception unavailable){throw new SecurityException("Current challenge fence unavailable");}}
         /** Final current policy and deadline recheck, after DB lock/IO and before marking success. */
         public void checkCurrent()throws Exception{
             if(Thread.currentThread()!=admissionThread)throw new Rejected(Failure.INVALID_CHALLENGE);

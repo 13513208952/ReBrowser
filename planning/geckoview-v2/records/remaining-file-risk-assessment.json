@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "revision": "R49",
+  "revision": "R51",
   "authority": "O78",
   "baseSourceCommit": "dd41e3e7b1fb0aa6225837a309d9ac8d9a15f485",
   "definition": "fullFileRisk针对原完整责任，不是实施难度/代码完成/实际业务准入；LOW-SLICE只在被授权切片内低副作用，完整文件可能高风险。",
   "coverage": {
     "allMasterRuntimeFiles": 184,
-    "previousAdmittedRuntimeFiles": 108,
-    "remainingPlanRuntimeFiles": 76,
+    "previousAdmittedRuntimeFiles": 118,
+    "remainingPlanRuntimeFiles": 66,
     "previousDeliveredAwaitingReview": 6,
     "newAssignedFiles": 42,
     "newAssignedJavaFiles": 36,
@@ -17,11 +17,11 @@
     "fullFileRiskCounts": {
       "low": 0,
       "medium": 2,
-      "high": 74
+      "high": 64
     },
-    "mainOnlyUnassignedFiles": 74,
+    "mainOnlyUnassignedFiles": 64,
     "initialRemainingPlanRuntimeFilesAtD02Allocation": 126,
-    "admittedSinceD02Allocation": 50,
+    "admittedSinceD02Allocation": 60,
     "initialMainOnlyFilesAtAllocation": 78,
     "initialFullFileRiskCounts": {
       "low": 8,
@@ -81,13 +81,15 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
       "group": "core",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "真实Actor或生命周期权威是跨模块根，不由通用DTO或UI猜测。"
+      "riskReason": "真实Actor或生命周期权威是跨模块根，不由通用DTO或UI猜测。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
@@ -136,68 +138,80 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/EnrollmentProposal.java",
@@ -213,35 +227,41 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
       "group": "authority",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。"
+      "riskReason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
       "group": "control",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "解析后的准入/任务/私有结果/导出或副作用需完整当前策略。"
+      "riskReason": "解析后的准入/任务/私有结果/导出或副作用需完整当前策略。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
       "group": "control",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "解析后的准入/任务/私有结果/导出或副作用需完整当前策略。"
+      "riskReason": "解析后的准入/任务/私有结果/导出或副作用需完整当前策略。",
+      "stateBeforeR51": "planned-not-implemented",
+      "implementationRef": "records/current-authority-kernel-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlResultStream.java",

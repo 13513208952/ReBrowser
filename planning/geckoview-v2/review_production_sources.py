@@ -73,6 +73,16 @@ def review():
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
     assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests','hostAndroidClassRetainedBrowserStoreTests','hostAndroidClassD03PresentationModelsTests'])
+    kernel=json.loads((P/app['currentAuthorityKernelEvidenceRef']).read_text())
+    assert kernel['newFormalMainRuntimeFiles']==10 and kernel['existingInterfacesUpdated']==4
+    assert kernel['runtimeJavaSourceCountNow']==app['productionJavaSourceFiles']==114
+    assert kernel['runtimePureSourceCountNow']==evidence['runtimeSourceFilesCompiled']==57
+    assert kernel['newKernelJcaHostTestsPassed']==41 and sum(t['tests'] for t in kernel['newKernelClassesExecuted'])==41
+    assert kernel['allAGPHostTestsPassed']==app['unitTestsPassed'] and kernel['allPureHostTestsPassed']==evidence['junitTestsPassed']
+    assert kernel['actualJcaP256DisableAndDelegationAndTargetSignaturesExecuted'] and kernel['actualPrivateActorAndSpentChallengeCallbackLifetimesExecuted']
+    assert not any(kernel[k] for k in ['actualAndroidOsPromptsViewsAuthenticationOrKeystoreExecuted','actualAndroidSQLiteOrDurableCurrentHeadNativeTargetAdapterExecuted','RootOrInstallationKeysCreatedOrEnrolled','productionRootConfigured','actualDispatchOrNewEntryActivation','oldReportsRewritten'])
+    for source in kernel['newOwnSourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     ledger_history = json.loads((P/'evidence/admin-idempotency-host-sql-R43-checkpoint.json').read_text())

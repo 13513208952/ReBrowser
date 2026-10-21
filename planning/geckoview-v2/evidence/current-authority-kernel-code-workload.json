@@ -1,0 +1,68 @@
+{
+  "revision": "R51",
+  "minimumRuntimeCodeFiles": 10,
+  "runtimeCodeFilesChanged": 14,
+  "newSubstantiveMainFiles": 10,
+  "existingInterfaceFilesUpdated": 4,
+  "maximumFiles": null,
+  "testsDocsGeneratedNotCounted": true,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "sha256": "0f893c5e26a3753e496e9a96fba3972a897617e2d58f1619bc082e5ce0960eb7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "sha256": "4b63f0017cadc979660d7538a0675ffabaea325d2c0ecfd7ac101cf074856408"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "sha256": "c0bc3417bb0fe90bbaca5356d298294daaa6733a9d5d4ff8328b4cd6710ae39d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "sha256": "5eb1486c38c734915d3bad8246ee2e3907c7e1acb7e36302c8b34b3a37b218c8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+      "sha256": "c3c1252a5340a2ddd3e5f52e7f962c5eb530bbb59ec3693daa9978219552b29f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "sha256": "c73e73b289d0dde300b8d0cc56967a1a9cf874a1d46704bf301c79f98bb9dc41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "sha256": "6e985721d1565707660383728ab81af53d842ac2787b98df4e1edd756b9c4f5c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "sha256": "9c4c6ca6fbbcb8249215fa7cd41e2240b6457d9b9e8f237f5a5545ecc36efa91"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "sha256": "acf5fc52459ef1f6e25c5e01758308431448e380c58e4a7883351c2221426f36"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "sha256": "2c4d04b58de6c42aa86f3019b8fb989ebe060824752ecc63928a5952ac6f4199"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "sha256": "4c753a5c3f1946c57b49e4d5eee293add31e0c3843932907fa9267f816627e9d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "sha256": "f629f8394465961c1c2441825151ff70a2e9bb8f0dbc1b173b9ed507a9aa953a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "a4e4423c8731ebf45fd9586a7e94a00d3a37b3758f6df656e9670ab63d72fdd7"
+    }
+  ],
+  "scope": "10previousPLANleaves nowactualcrypto/state/rules/lifetimes/nativeOSgrant/bridgecode,not10DTOs;stillpartialmodule/notAndroidqualification"
+}

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R50",
+  "revision": "R51",
   "requirements": [
     {
       "id": "R01",
@@ -598,6 +598,20 @@
       "implementationEvidence": "records/implementation-readiness.json",
       "implementationMeaning": "25existingruntimeJavaextensions delivered, reviewed/fixed and independentlytestedbyMain atscopedHOST/APIlevel; no fullbackend/Android claim",
       "delegationAssignmentState": "D03-25-code-extensions-main-reviewed-scoped-not-wholeproduct"
+    },
+    {
+      "id": "R53",
+      "ownerSources": [
+        "O90",
+        "O91"
+      ],
+      "title": "继续核心并正常推进尚未创建的正式主程序文件",
+      "rule": "不陷入既有代码无限优化；按模块依赖正常实质创建尚未实现的核心文件，不能用空壳/DTO/测试/格式或数字掩盖未完成。",
+      "state": "owner-required",
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "implementationContractRef": "records/current-authority-kernel-contract.json",
+      "implementationMeaning": "R51实质创建10个原PLAN核心文件并联动4既有接口；不是整体管理员/实际Android完整资格。"
     }
   ]
 }

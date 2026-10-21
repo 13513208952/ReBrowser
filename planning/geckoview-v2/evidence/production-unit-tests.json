@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
-  "runtimeSourceFilesCompiled": 49,
-  "junitTestsPassed": 501,
-  "junitOutput": "JUnit version 4.13.2\n.....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................\nTime: 2.596\n\nOK (501 tests)\n\n",
+  "runtimeSourceFilesCompiled": 57,
+  "junitTestsPassed": 542,
+  "junitOutput": "JUnit version 4.13.2\n..............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................\nTime: 3.43\n\nOK (542 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -35,11 +35,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
-      "sha256": "67e40b2f751858ae4b752fbe0ab1f8cd9ad840ac5f7ecc59a0bb26c7e1d35054"
+      "sha256": "2c4d04b58de6c42aa86f3019b8fb989ebe060824752ecc63928a5952ac6f4199"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
-      "sha256": "a5dde0224dd7cad10012abb65bc889780de158597e0997c510ad6b366194cf78"
+      "sha256": "4c753a5c3f1946c57b49e4d5eee293add31e0c3843932907fa9267f816627e9d"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
@@ -51,7 +51,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
-      "sha256": "556d83da788f3bce2117a7c31770e046949a9d41e2af49fa4c9ff5b6dc8cd775"
+      "sha256": "f629f8394465961c1c2441825151ff70a2e9bb8f0dbc1b173b9ed507a9aa953a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
@@ -202,8 +202,48 @@
       "sha256": "af74f9ee6e70d42ed55d21d0938f306bfb729c94fb0fa67e6a2c77d6c22d1f01"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "sha256": "0f893c5e26a3753e496e9a96fba3972a897617e2d58f1619bc082e5ce0960eb7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "sha256": "4b63f0017cadc979660d7538a0675ffabaea325d2c0ecfd7ac101cf074856408"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "sha256": "c0bc3417bb0fe90bbaca5356d298294daaa6733a9d5d4ff8328b4cd6710ae39d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "sha256": "5eb1486c38c734915d3bad8246ee2e3907c7e1acb7e36302c8b34b3a37b218c8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "sha256": "c73e73b289d0dde300b8d0cc56967a1a9cf874a1d46704bf301c79f98bb9dc41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "sha256": "6e985721d1565707660383728ab81af53d842ac2787b98df4e1edd756b9c4f5c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "sha256": "9c4c6ca6fbbcb8249215fa7cd41e2240b6457d9b9e8f237f5a5545ecc36efa91"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+      "sha256": "79038de46dc14218906ef639235f7cf2dbc17d2c568e8ac0f05c75c67c920522"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java",
+      "sha256": "4e95daa770562d84b2b54783cc3f3c251e6af4a757f9577dcfebc4b10892371b"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/bootstrap/DataEpochPinTest.java",
@@ -424,8 +464,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 7736442880,
-  "memAvailableBefore": 5427036160,
+  "freeBytesBefore": 7718580224,
+  "memAvailableBefore": 5419630592,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

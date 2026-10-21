@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R50",
+  "revision": "R51",
   "authority": [
     "O26",
     "O27",
@@ -235,6 +235,18 @@
           "path": "app/src/androidTest/java/io/github/rebrowser/authority/AuthorityRuntimeTest.java",
           "kind": "android-runtime",
           "purpose": "实际持钥IPC/目标设备证明/机主范围授权期限；不得包名来源否决"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+          "kind": "current-authority-kernel-regression",
+          "purpose": "Actualsignedhistory/delegation/targetproof andprivateActor/currentfence HOST fixtures; noOS/DBqualification",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java",
+          "kind": "current-authority-kernel-regression",
+          "purpose": "Actualsignedhistory/delegation/targetproof andprivateActor/currentfence HOST fixtures; noOS/DBqualification",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -1367,11 +1379,11 @@
       "group": "core",
       "kind": "native-code",
       "responsibility": "正常用户/系统媒体/已验证管理员的明确身份",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "core",
       "riskAssessment": {
@@ -1380,7 +1392,11 @@
         "owner": "main",
         "reason": "真实Actor或生命周期权威是跨模块根，不由通用DTO或UI猜测。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
@@ -1651,12 +1667,12 @@
       "group": "authority",
       "kind": "native-code",
       "responsibility": "同作用域>=、通道/介入floor、机主授权激活",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1665,7 +1681,11 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
@@ -1687,12 +1707,12 @@
       "group": "authority",
       "kind": "native-code",
       "responsibility": "低于H的有界委托链和撤销",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1701,19 +1721,23 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
       "group": "authority",
       "kind": "native-code",
       "responsibility": "Root联合/各最高自有/专有名单隔离",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1722,19 +1746,23 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
       "group": "authority",
       "kind": "native-code",
       "responsibility": "实际目标安装私钥challenge验证",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1743,19 +1771,23 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
       "group": "authority",
       "kind": "native-code",
       "responsibility": "精确范围/期限/epoch的本人授权",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1764,19 +1796,23 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
       "group": "authority",
       "kind": "native-code",
       "responsibility": "更高禁更低、Root不可禁、恢复和签名快照",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1785,7 +1821,11 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/EnrollmentProposal.java",
@@ -1813,12 +1853,12 @@
       "group": "authority",
       "kind": "native-code",
       "responsibility": "脱敏审计与受控私有结果",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT04"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "authority",
       "riskAssessment": {
@@ -1827,19 +1867,23 @@
         "owner": "main",
         "reason": "管理员授权/名单/委托/禁用/本人grant属于高风险权威链。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
       "group": "control",
       "kind": "native-code",
       "responsibility": "178逐动作定义/处理器/门槛单一注册",
-      "state": "planned-not-implemented",
+      "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "control",
       "riskAssessment": {
@@ -1848,7 +1892,11 @@
         "owner": "main",
         "reason": "解析后的准入/任务/私有结果/导出或副作用需完整当前策略。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
@@ -1936,12 +1984,12 @@
       "group": "control",
       "kind": "native-code",
       "responsibility": "授权→同领域服务→真实结果，不复制特权路径",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT09",
         "VT02"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "R51actualboundedsource/JCA/HOSTandSDKcompile; nativeOS/DB/dispatchunqualified",
       "runtimePending": true,
       "testReferenceGroup": "control",
       "riskAssessment": {
@@ -1950,7 +1998,11 @@
         "owner": "main",
         "reason": "解析后的准入/任务/私有结果/导出或副作用需完整当前策略。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/current-authority-kernel-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlResultStream.java",

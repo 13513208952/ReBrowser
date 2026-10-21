@@ -7,8 +7,16 @@
       "sha256": "c963656196d68baeae732018c1638cfd687901df239fe8b08de801a164544dcc"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "sha256": "6e985721d1565707660383728ab81af53d842ac2787b98df4e1edd756b9c4f5c"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
-      "sha256": "a5dde0224dd7cad10012abb65bc889780de158597e0997c510ad6b366194cf78"
+      "sha256": "4c753a5c3f1946c57b49e4d5eee293add31e0c3843932907fa9267f816627e9d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "sha256": "0f893c5e26a3753e496e9a96fba3972a897617e2d58f1619bc082e5ce0960eb7"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
@@ -16,7 +24,27 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
-      "sha256": "67e40b2f751858ae4b752fbe0ab1f8cd9ad840ac5f7ecc59a0bb26c7e1d35054"
+      "sha256": "2c4d04b58de6c42aa86f3019b8fb989ebe060824752ecc63928a5952ac6f4199"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "sha256": "c0bc3417bb0fe90bbaca5356d298294daaa6733a9d5d4ff8328b4cd6710ae39d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "sha256": "c73e73b289d0dde300b8d0cc56967a1a9cf874a1d46704bf301c79f98bb9dc41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "sha256": "4b63f0017cadc979660d7538a0675ffabaea325d2c0ecfd7ac101cf074856408"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+      "sha256": "c3c1252a5340a2ddd3e5f52e7f962c5eb530bbb59ec3693daa9978219552b29f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "sha256": "5eb1486c38c734915d3bad8246ee2e3907c7e1acb7e36302c8b34b3a37b218c8"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
@@ -107,16 +135,24 @@
       "sha256": "753ae7ee9dbf603f88d8026cbfdd455c20a56af98ce884b4a6385670a100d5f4"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
       "sha256": "ab7d9a6620bebb54da6772786f9b1a61a4362dee7cdf63ba7c7708ecec8e571f"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
-      "sha256": "556d83da788f3bce2117a7c31770e046949a9d41e2af49fa4c9ff5b6dc8cd775"
+      "sha256": "f629f8394465961c1c2441825151ff70a2e9bb8f0dbc1b173b9ed507a9aa953a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
       "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "sha256": "acf5fc52459ef1f6e25c5e01758308431448e380c58e4a7883351c2221426f36"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
@@ -124,7 +160,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
-      "sha256": "8765745ed230553cae930bf9248cd9780133b15c73d791f1a3fe6daaa07e65d4"
+      "sha256": "a4e4423c8731ebf45fd9586a7e94a00d3a37b3758f6df656e9670ab63d72fdd7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "sha256": "9c4c6ca6fbbcb8249215fa7cd41e2240b6457d9b9e8f237f5a5545ecc36efa91"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
@@ -421,6 +461,14 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
       "sha256": "56370f328baeb61b3d6f1f31608034f276826bf116952556b926fe45c600d70f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+      "sha256": "79038de46dc14218906ef639235f7cf2dbc17d2c568e8ac0f05c75c67c920522"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java",
+      "sha256": "4e95daa770562d84b2b54783cc3f3c251e6af4a757f9577dcfebc4b10892371b"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/bootstrap/DataEpochPinTest.java",
@@ -887,12 +935,24 @@
       "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
     }
   ],
-  "productionJavaSourceFiles": 104,
-  "compiledClassFiles": 560,
+  "productionJavaSourceFiles": 114,
+  "compiledClassFiles": 590,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
       "tests": 9,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.authority.DelegationAndPossessionTest",
+      "tests": 21,
       "failures": 0,
       "errors": 0
     },
@@ -1563,7 +1623,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 944,
+  "unitTestsPassed": 985,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -1643,18 +1703,18 @@
   "windowTargetReferenceRegistryHostExecuted": true,
   "windowTargetAndroidActivityOrWindowProbeExecuted": false,
   "windowTargetRegistryDispatcherIntegrated": false,
-  "currentAgpEvidenceRef": "evidence/production-main-agp-R50-checks.json",
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R51-checks.json",
   "historicalStandaloneCheckpointRef": "evidence/production-main-standalone-R42-checkpoint.json",
   "hostAndroidClassNativeWindowModelsTests": 42,
   "nativeWindowPresentationModelsHostExecuted": true,
   "nativeAndroidViewWindowDialogMetricsExecuted": false,
   "lastHistoricalAgpCheckpointRef": "evidence/production-main-agp-R38-checkpoint.json",
-  "currentCodeBatchContractRef": "records/D03-review-integration-contract.json",
-  "currentCodeBatchWorkloadRef": "evidence/D03-main-review-code-workload.json",
+  "currentCodeBatchContractRef": "records/current-authority-kernel-contract.json",
+  "currentCodeBatchWorkloadRef": "evidence/current-authority-kernel-code-workload.json",
   "sourceIncarnationGateHostExecuted": true,
   "actualAndroidEntryProcessStartupExecuted": false,
-  "currentAdminSqlEvidenceRef": "evidence/admin-idempotency-current-host-sql-R45.json",
-  "currentTaskSqlEvidenceRef": "evidence/task-journal-current-host-sql-R45.json",
+  "currentAdminSqlEvidenceRef": "evidence/admin-idempotency-current-host-sql-R51.json",
+  "currentTaskSqlEvidenceRef": "evidence/task-journal-current-host-sql-R51.json",
   "hostAndroidClassSourceBootstrapTests": 27,
   "sourceBootstrapStableResumeProviderSourceAdded": true,
   "sourceBootstrapProvenanceCompositionHostExecuted": true,
@@ -1689,11 +1749,16 @@
   "nativeRetainedGeckoSessionCheckpointOrRestoreImplemented": false,
   "D03ReservedExistingCodeFiles": 0,
   "D03WorkerImplementationIntegrated": true,
-  "currentEntryContextEvidenceRef": "evidence/entry-source-context-R49-host-execution.json",
-  "currentSourceBootstrapEvidenceRef": "evidence/native-source-bootstrap-R49-host-execution.json",
+  "currentEntryContextEvidenceRef": "evidence/entry-source-context-R49-host-execution-R51.json",
+  "currentSourceBootstrapEvidenceRef": "evidence/native-source-bootstrap-R49-host-execution-R51.json",
   "currentTemporaryBrowserHostEvidenceRef": "evidence/native-temporary-browser-R49-host-execution.json",
   "hostAndroidClassD03PresentationModelsTests": 92,
   "D03IntegrationMeaning": "25existingruntimeextensions main-reviewed with numerous realfixes; no newRuntimeFile/wholebackend/actualAndroidqualification",
   "D03ActualAndroidViewsOrNativeMediaOrNotificationExecuted": false,
-  "currentD02HostEvidenceRef": "evidence/D02-main-review-R50-host-execution.json"
+  "currentD02HostEvidenceRef": "evidence/D02-main-review-R50-host-execution.json",
+  "currentAuthorityKernelEvidenceRef": "evidence/current-authority-kernel-host-execution.json",
+  "newCoreRuntimeFilesR51": 10,
+  "currentAuthorityReservationKernelImplemented": true,
+  "currentAuthorityNativeDurableHeadTargetAdaptersActivated": false,
+  "administratorExternalEffectsImplemented": false
 }

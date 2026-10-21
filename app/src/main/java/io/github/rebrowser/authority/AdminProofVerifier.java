@@ -20,11 +20,13 @@ public final class AdminProofVerifier {
         this.compiled = compiled;
     }
     public static final class KeyProof {
+        private final CompiledPrincipals issuer;
         private final CompiledPrincipals.Entry principal;
         private final ControlDecoder.UnverifiedProof request;
-        private KeyProof(CompiledPrincipals.Entry principal, ControlDecoder.UnverifiedProof request) {
-            this.principal = principal; this.request = request;
+        private KeyProof(CompiledPrincipals issuer, CompiledPrincipals.Entry principal, ControlDecoder.UnverifiedProof request) {
+            this.issuer=issuer;this.principal = principal; this.request = request;
         }
+        public boolean belongsTo(CompiledPrincipals expected){return issuer==expected;}
         public CompiledPrincipals.Entry compiledPrincipal() { return principal; }
         public ControlDecoder.UnverifiedProof request() { return request; }
     }
@@ -42,7 +44,7 @@ public final class AdminProofVerifier {
             verifier.initVerify(principal.publicKey());
             verifier.update(request.frame().signedBytes());
             if (!verifier.verify(signature)) throw invalid();
-            return new KeyProof(principal, request);
+            return new KeyProof(compiled, principal, request);
         } catch (GeneralSecurityException | IllegalArgumentException failure) {
             // No raw args, key identity, signatures or scopes in external diagnostics.
             throw invalid();

@@ -1,0 +1,122 @@
+{
+  "revision": "R51",
+  "sourceBaseCommit": "7411f906063e403a2dd641680b3a0063581e7363",
+  "newFormalMainRuntimeFiles": 10,
+  "existingInterfacesUpdated": 4,
+  "runtimeJavaSourceCountBefore": 104,
+  "runtimeJavaSourceCountNow": 114,
+  "runtimePureSourceCountNow": 57,
+  "remainingPlannedLeaves": 66,
+  "allAGPHostTestsPassed": 985,
+  "allPureHostTestsPassed": 542,
+  "newKernelJcaHostTestsPassed": 41,
+  "newKernelClassesExecuted": [
+    {
+      "class": "io.github.rebrowser.authority.CurrentAuthorityKernelTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.authority.DelegationAndPossessionTest",
+      "tests": 21,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "actualJcaP256DisableAndDelegationAndTargetSignaturesExecuted": true,
+  "actualPrivateActorAndSpentChallengeCallbackLifetimesExecuted": true,
+  "nativeSourceAndCurrentHeadAndTargetChecksSyntheticFixturesOnly": true,
+  "actualAndroidOsPromptsViewsAuthenticationOrKeystoreExecuted": false,
+  "actualAndroidSQLiteOrDurableCurrentHeadNativeTargetAdapterExecuted": false,
+  "RootOrInstallationKeysCreatedOrEnrolled": false,
+  "productionRootConfigured": false,
+  "actualDispatchOrNewEntryActivation": false,
+  "oldReportsRewritten": false,
+  "newOwnSourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "sha256": "0f893c5e26a3753e496e9a96fba3972a897617e2d58f1619bc082e5ce0960eb7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "sha256": "4b63f0017cadc979660d7538a0675ffabaea325d2c0ecfd7ac101cf074856408"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "sha256": "c0bc3417bb0fe90bbaca5356d298294daaa6733a9d5d4ff8328b4cd6710ae39d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "sha256": "5eb1486c38c734915d3bad8246ee2e3907c7e1acb7e36302c8b34b3a37b218c8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+      "sha256": "c3c1252a5340a2ddd3e5f52e7f962c5eb530bbb59ec3693daa9978219552b29f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "sha256": "c73e73b289d0dde300b8d0cc56967a1a9cf874a1d46704bf301c79f98bb9dc41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "sha256": "6e985721d1565707660383728ab81af53d842ac2787b98df4e1edd756b9c4f5c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "sha256": "9c4c6ca6fbbcb8249215fa7cd41e2240b6457d9b9e8f237f5a5545ecc36efa91"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "sha256": "acf5fc52459ef1f6e25c5e01758308431448e380c58e4a7883351c2221426f36"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "sha256": "2c4d04b58de6c42aa86f3019b8fb989ebe060824752ecc63928a5952ac6f4199"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "sha256": "4c753a5c3f1946c57b49e4d5eee293add31e0c3843932907fa9267f816627e9d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "sha256": "f629f8394465961c1c2441825151ff70a2e9bb8f0dbc1b173b9ed507a9aa953a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "a4e4423c8731ebf45fd9586a7e94a00d3a37b3758f6df656e9670ab63d72fdd7"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/CurrentAuthorityKernelTest.java",
+      "sha256": "79038de46dc14218906ef639235f7cf2dbc17d2c568e8ac0f05c75c67c920522"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/authority/DelegationAndPossessionTest.java",
+      "sha256": "4e95daa770562d84b2b54783cc3f3c251e6af4a757f9577dcfebc4b10892371b"
+    }
+  ],
+  "currentActualAgpEvidenceRef": "evidence/production-main-agp-R51-checks.json",
+  "scope": "4existingtypedWINDOWactions, currentcompiledidentityonly; currentActorvalidONLYduringexactSPENT-challengereservation callback; no effectdispatch",
+  "implementedLogic": [
+    "DisableLedger: signedhashlinkedhistory, exactnativeTarget/epoch/compiledpolicy, <=4096events; stricthigherdisable/noRoot, independentmultiplewithdrawals, ownissuerorhigherrestore, issuerdisabledoesnotresurrectvictims; historynotlatest",
+    "LowDelegationVerifier: actualP256signatures<=4certs/8192bytes, nativeTarget/epoch/policy, nonaliasIDs/keys, low<5, parenthash/subsetlevel/action/time narrowing, UTCrollbacksticky; <=24hlocalscopedformat1certs. CryptoresultNOTActor/currentrevocation",
+    "DeviceWhitelist: immutablecompiledownerkeys, Rootunion/Highestownonly, no unownedlistenumeration orruntimeadmission;productionempty. TargetPossessionProof freshprivatechallenges, actualdeviceECDSAsignature, exactOwnTarget/nativeepoch/request,30sbound,spendbeforecrypto/singleusereceipt",
+    "AuthorityPolicy: actualverifiedKeyProofissueridentity, fullcanonical4actionpolicy, nativeverifiedCURRENT-head+registeredtargethooks, sourcepin, deadlinebefore/afternativechecks; unknown/unconfigured/disabled/stalescopefailclosed",
+    "ActorContext: privatelyissuedAuthorityPolicy.Checked plusactualprivateCommitFence(requiredspentstorednonce), callback/thread/exactrequest lifetimecheckedoneveryaccess; notUser/SystemMedia/effectcapability",
+    "ControlDispatcher: actualdecode/keyproof/schema/policy/challenge/spend/Actor/idempotency+TaskJournalreservationbridge; noeffecthandlers/transportactivation/fallback; unknownpossiblecommitneverswitchesroute",
+    "OwnerGrantStore: actualnativeconsentDialog+distinctBiometricPrompt/currentpositiveNO_LOCK, noForceTicket/bool; exactattempt identity,retainedunknownOSwork, waitownforegroundbeforemint, target/action/scope/keybinding/revoke/5min/exactfreshrequestchecks; Androidexecutionnotqualified",
+    "AdminAudit: boundedredactednativeobservationring, typedoutcomes/noIDargsURLskeysdevices, orderedsequence/clockrollbackclose, nodevice/logcat/file/networkIO",
+    "CompiledPrincipals canonicalidentitydigest/declarationbound+AdminProofVerifier exactissuerownership integratewithactualpolicycommitment; existingproofwireunchanged"
+  ],
+  "notClaimed": [
+    "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+    "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+    "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+    "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+    "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+  ]
+}

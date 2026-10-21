@@ -625,7 +625,21 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O90",
+      "file": "owner-verbatim/O90-continue-develop-core-files.txt",
+      "utf8Bytes": 57,
+      "sha256": "96838e3426567112bb818e8a0d00526178475736bfe53774b55a92c8d06f009c",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O91",
+      "file": "owner-verbatim/O91-advance-new-main-files-not-endless-optimization.txt",
+      "utf8Bytes": 135,
+      "sha256": "cd0f6d1e2a763a1bb0c0b7111cc41580b4977bd5d2f703a6869aaf87d1ee7258",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-21T08:40:13+08:00"
+  "lastAppendedAt": "2026-10-21T10:31:07+08:00"
 }

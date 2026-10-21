@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "revision": "R51",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O69",
+    "O90",
+    "O91"
+  ],
+  "moduleFocus": "Advance10previouslyPLANmainruntimefiles: boundedcrypto/disablehistory/currentauthorityreservationkernel, notanotherUIpolishround",
+  "commitMinimum": {
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "testsDocsGeneratedDoNotCount": true
+  },
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+    "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+    "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+    "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+    "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+    "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+    "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+    "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+    "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+    "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+    "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+    "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+    "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+    "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java"
+  ],
+  "newRuntimeFiles": [
+    "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+    "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+    "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+    "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+    "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+    "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+    "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+    "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+    "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+    "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java"
+  ],
+  "modifiedExistingInterfaces": [
+    "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+    "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+    "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+    "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java"
+  ],
+  "supportedSlice": "4existingtypedWINDOWactions, currentcompiledidentityonly; currentActorvalidONLYduringexactSPENT-challengereservation callback; no effectdispatch",
+  "implementedLogic": [
+    "DisableLedger: signedhashlinkedhistory, exactnativeTarget/epoch/compiledpolicy, <=4096events; stricthigherdisable/noRoot, independentmultiplewithdrawals, ownissuerorhigherrestore, issuerdisabledoesnotresurrectvictims; historynotlatest",
+    "LowDelegationVerifier: actualP256signatures<=4certs/8192bytes, nativeTarget/epoch/policy, nonaliasIDs/keys, low<5, parenthash/subsetlevel/action/time narrowing, UTCrollbacksticky; <=24hlocalscopedformat1certs. CryptoresultNOTActor/currentrevocation",
+    "DeviceWhitelist: immutablecompiledownerkeys, Rootunion/Highestownonly, no unownedlistenumeration orruntimeadmission;productionempty. TargetPossessionProof freshprivatechallenges, actualdeviceECDSAsignature, exactOwnTarget/nativeepoch/request,30sbound,spendbeforecrypto/singleusereceipt",
+    "AuthorityPolicy: actualverifiedKeyProofissueridentity, fullcanonical4actionpolicy, nativeverifiedCURRENT-head+registeredtargethooks, sourcepin, deadlinebefore/afternativechecks; unknown/unconfigured/disabled/stalescopefailclosed",
+    "ActorContext: privatelyissuedAuthorityPolicy.Checked plusactualprivateCommitFence(requiredspentstorednonce), callback/thread/exactrequest lifetimecheckedoneveryaccess; notUser/SystemMedia/effectcapability",
+    "ControlDispatcher: actualdecode/keyproof/schema/policy/challenge/spend/Actor/idempotency+TaskJournalreservationbridge; noeffecthandlers/transportactivation/fallback; unknownpossiblecommitneverswitchesroute",
+    "OwnerGrantStore: actualnativeconsentDialog+distinctBiometricPrompt/currentpositiveNO_LOCK, noForceTicket/bool; exactattempt identity,retainedunknownOSwork, waitownforegroundbeforemint, target/action/scope/keybinding/revoke/5min/exactfreshrequestchecks; Androidexecutionnotqualified",
+    "AdminAudit: boundedredactednativeobservationring, typedoutcomes/noIDargsURLskeysdevices, orderedsequence/clockrollbackclose, nodevice/logcat/file/networkIO",
+    "CompiledPrincipals canonicalidentitydigest/declarationbound+AdminProofVerifier exactissuerownership integratewithactualpolicycommitment; existingproofwireunchanged"
+  ],
+  "nativeIntegrationBlocked": [
+    "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+    "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+    "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+    "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+    "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+  ],
+  "hostEvidenceRef": "evidence/current-authority-kernel-host-execution.json"
+}

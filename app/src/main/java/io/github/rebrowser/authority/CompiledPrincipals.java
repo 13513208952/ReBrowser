@@ -25,8 +25,13 @@ public final class CompiledPrincipals {
         private final int level;
         private final ECPublicKey key;
         private final String fingerprint;
+        private final int maxLowDelegation;private final java.util.Set<String> delegationActions;
         // Package-private for compiled policy declarations and same-package HOST tests.
-        Entry(String keyId, Role role, int level, byte[] canonicalSpki) throws GeneralSecurityException {
+        Entry(String keyId, Role role, int level, byte[] canonicalSpki) throws GeneralSecurityException {this(keyId,role,level,canonicalSpki,-1,java.util.Collections.<String>emptyList());}
+        Entry(String keyId,Role role,int level,byte[] canonicalSpki,int maxLowDelegation,java.util.Collection<String> delegationActions)throws GeneralSecurityException {
+            if(maxLowDelegation < -1 || maxLowDelegation>Math.min(level,4) || delegationActions==null || delegationActions.size()>32)throw invalid();
+            java.util.TreeSet<String> scope=new java.util.TreeSet<>();for(String action:delegationActions){io.github.rebrowser.control.ActionRegistry.require(action);if(!scope.add(action))throw invalid();}
+            if((maxLowDelegation==-1)!=scope.isEmpty())throw invalid();this.maxLowDelegation=maxLowDelegation;this.delegationActions=java.util.Collections.unmodifiableSet(scope);
             if (keyId == null || keyId.length() == 0 || keyId.length() > 128 || role == null) throw invalid();
             for (int i = 0; i < keyId.length(); i++) if (keyId.charAt(i) < 33 || keyId.charAt(i) > 126) throw invalid();
             AuthorityScale.requireLevel(level);
@@ -42,12 +47,14 @@ public final class CompiledPrincipals {
         public Role role() { return role; }
         public int level() { return level; }
         public String spkiSha256() { return fingerprint; }
+        public int maxLowDelegation(){return maxLowDelegation;}
+        public boolean permitsLowDelegationAction(String action){return delegationActions.contains(action);}
         ECPublicKey publicKey() { return key; }
     }
 
     public static CompiledPrincipals production() { return new CompiledPrincipals(APK_ENTRIES); }
     CompiledPrincipals(Entry... declarations) {
-        if (declarations == null) throw invalid();
+        if (declarations == null || declarations.length>128) throw invalid();
         Map<String, Entry> byId = new LinkedHashMap<>();Map<String, Entry> byKey = new LinkedHashMap<>();
         Entry rootEntry = null;
         for (Entry entry : declarations) {
@@ -61,5 +68,16 @@ public final class CompiledPrincipals {
     /** Public APK metadata only; no runtime Root enrollment or private-key custody claim. */
     public String rootSpkiSha256() { return root == null ? null : root.fingerprint; }
     public int size() { return entries.size(); }
+    public boolean containsFingerprint(String fingerprint){for(Entry entry:entries.values())if(entry.fingerprint.equals(fingerprint))return true;return false;}
+    /** Canonical identity commitment, independent of declaration iteration order. */
+    public byte[] identityPolicySha256() {
+        try {
+            java.io.ByteArrayOutputStream b=new java.io.ByteArrayOutputStream();java.io.DataOutputStream o=new java.io.DataOutputStream(b);
+            o.write("ReBrowser.Compiled.Identities.1\0".getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+            java.util.TreeMap<String,Entry> ordered=new java.util.TreeMap<>(entries);o.writeInt(ordered.size());
+            for(Entry e:ordered.values()){o.writeUTF(e.keyId);o.writeUTF(e.role.name());o.writeInt(e.level);o.writeInt(e.maxLowDelegation);o.writeInt(e.delegationActions.size());for(String action:e.delegationActions)o.writeUTF(action);byte[] key=e.key.getEncoded();o.writeInt(key.length);o.write(key);}
+            return CryptoEncoding.sha256(b.toByteArray());
+        }catch(java.io.IOException impossible){throw new AssertionError(impossible);}
+    }
     private static IllegalArgumentException invalid() { return new IllegalArgumentException("Invalid compiled principal policy"); }
 }

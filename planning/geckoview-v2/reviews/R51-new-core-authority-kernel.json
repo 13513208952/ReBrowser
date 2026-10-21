@@ -1,0 +1,21 @@
+{
+  "id": "R51",
+  "state": "10-new-core-runtime-files-implemented-scoped-HOST-and-API-not-full-native-admission",
+  "contractRef": "records/current-authority-kernel-contract.json",
+  "executionEvidenceRef": "evidence/current-authority-kernel-host-execution.json",
+  "workloadEvidenceRef": "evidence/current-authority-kernel-code-workload.json",
+  "newMainFiles": 10,
+  "allRuntimeJavaFiles": 114,
+  "remainingPLAN": 66,
+  "meaningfulRuntimeWorkload": 14,
+  "AGPHostTests": 985,
+  "pureHostTests": 542,
+  "newJcaKernelTests": 41,
+  "notClaimed": [
+    "FormalRootandcompileddevicekeysEMPTY; nokeygeneration/enrollment/signing permitted",
+    "NativeCurrentdurable-head/cacheandregisteredtargetadapter notinstalled; no claim validhistoryorAEADproveslatest. Nofreshseed/DBcreate/migration via thisbatch",
+    "ControlDispatcher reservationonly; no publicentryactivation, actualOSflow/nativeBackeffects or lowActorroute untilcurrentpolicy/revocation/nativeDBatomicity anddomainhandlerproofsclose",
+    "OwnerGrantStore APIcompileonly; no actualDialog/Biometric/Activity/lifecycle test. Only4ordinaryactionsregistered, no higher-riskcapabilityopened",
+    "NativeSQLite actualtransactions not HOSTexecuted; crossprocess/physicalrollback/current-policyserialization stillqualificationgate"
+  ]
+}

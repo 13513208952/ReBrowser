@@ -34,11 +34,11 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
-      "sha256": "67e40b2f751858ae4b752fbe0ab1f8cd9ad840ac5f7ecc59a0bb26c7e1d35054"
+      "sha256": "2c4d04b58de6c42aa86f3019b8fb989ebe060824752ecc63928a5952ac6f4199"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
-      "sha256": "a5dde0224dd7cad10012abb65bc889780de158597e0997c510ad6b366194cf78"
+      "sha256": "4c753a5c3f1946c57b49e4d5eee293add31e0c3843932907fa9267f816627e9d"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
@@ -50,7 +50,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
-      "sha256": "556d83da788f3bce2117a7c31770e046949a9d41e2af49fa4c9ff5b6dc8cd775"
+      "sha256": "f629f8394465961c1c2441825151ff70a2e9bb8f0dbc1b173b9ed507a9aa953a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
@@ -199,9 +199,61 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
       "sha256": "af74f9ee6e70d42ed55d21d0938f306bfb729c94fb0fa67e6a2c77d6c22d1f01"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "sha256": "0f893c5e26a3753e496e9a96fba3972a897617e2d58f1619bc082e5ce0960eb7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "sha256": "4b63f0017cadc979660d7538a0675ffabaea325d2c0ecfd7ac101cf074856408"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "sha256": "c0bc3417bb0fe90bbaca5356d298294daaa6733a9d5d4ff8328b4cd6710ae39d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "sha256": "5eb1486c38c734915d3bad8246ee2e3907c7e1acb7e36302c8b34b3a37b218c8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "sha256": "c73e73b289d0dde300b8d0cc56967a1a9cf874a1d46704bf301c79f98bb9dc41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "sha256": "6e985721d1565707660383728ab81af53d842ac2787b98df4e1edd756b9c4f5c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "sha256": "9c4c6ca6fbbcb8249215fa7cd41e2240b6457d9b9e8f237f5a5545ecc36efa91"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
     }
   ],
   "classFiles": [
+    {
+      "path": "io/github/rebrowser/authority/AdminAudit$1.class",
+      "sha256": "68c97a6a3a0f1da26a98776bd27a9c5162f5be7650392afabfbe6e4cd5cd6b72",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AdminAudit$Entry.class",
+      "sha256": "ce48cce4382be445be9278955e7609510316602550d88c09afbc8255f23ee67e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AdminAudit$Outcome.class",
+      "sha256": "88a1eb32185f74a21b7ecb317cab41990281fd9c4c8f188cfc1484299f94d9c5",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AdminAudit.class",
+      "sha256": "7469b5534af33691994760f0b4005348e15ddbdc6b0f9508f63e3585a889094d",
+      "classMajor": 52
+    },
     {
       "path": "io/github/rebrowser/authority/AdminProofVerifier$1.class",
       "sha256": "0efeac0ab6f14fe0a9cd3587f2f609bd461f3ba4fc8383d70c1eec635b1c947b",
@@ -209,12 +261,37 @@
     },
     {
       "path": "io/github/rebrowser/authority/AdminProofVerifier$KeyProof.class",
-      "sha256": "095989cd766bdaa872042b1ff2cd6a3dc105b1c2f7f3102095e5e545fc5a3c61",
+      "sha256": "220f6aa03d4fdb7405852a7a9190acbde57ca64040985cf062517946dd2d7204",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/authority/AdminProofVerifier.class",
-      "sha256": "18b3796fb4b8fd3b77d79465e3c31314289d65e7bf34bd16d210c2db7e8c272d",
+      "sha256": "f18b33a3689f9960fe07943d9066c9f10301cf546d5a53d051c59723b13eb01f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AuthorityPolicy$1.class",
+      "sha256": "9386a9879a54fab4f732f44875f633f64274ccaa0e01b9c1ea1bebb4c812551a",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AuthorityPolicy$Checked.class",
+      "sha256": "7ea4120a5c34602bae09209a7a814caa4ff27716c8bfaf46aac3e4dea1a8eb45",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AuthorityPolicy$NativeCurrent.class",
+      "sha256": "9289c87dbc34a7ca99346d89641b7a64b8b807df8228f5450cd03f90b769fa7c",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AuthorityPolicy$Use.class",
+      "sha256": "4af459e8bc05d21a28a8b181f990a60616b09524892cfab50b953fad53c215f9",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/AuthorityPolicy.class",
+      "sha256": "a5462b3b2eb035663775888064314c597224e0c303412a0da888fbef4a41928e",
       "classMajor": 52
     },
     {
@@ -224,7 +301,7 @@
     },
     {
       "path": "io/github/rebrowser/authority/CompiledPrincipals$Entry.class",
-      "sha256": "b22231c77b4e28d4598d01f20020d435cd2fa96bec7a73111631c09379a1f384",
+      "sha256": "1eeb8fdf3d652f7e2d51a2d7815d8aaa2526aa61eb0a68606435dc51a90dc137",
       "classMajor": 52
     },
     {
@@ -234,7 +311,87 @@
     },
     {
       "path": "io/github/rebrowser/authority/CompiledPrincipals.class",
-      "sha256": "d0e282f99a4f800e243f8cd7bd89245067a5d31b03e05bb0264246de75c3cc56",
+      "sha256": "26029bc4361a0e60152bf4a98c1189769d58972babaa887af96cecd95a1ff369",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DeviceWhitelist$Device.class",
+      "sha256": "d67712336899d678e3bda80261e88a156cd46038a1ef84c61b9bac5398eab095",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DeviceWhitelist.class",
+      "sha256": "c24da62433b2aa1e1527853d196ae4f9f9a7bfde89ef67b5bc9d2d863f1c36aa",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DisableLedger$1.class",
+      "sha256": "8a75615c6e8ec28e00daf3f3e9e26502ac2a31af1fb67032df2e112b9e73ef9a",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DisableLedger$Active.class",
+      "sha256": "26c5aaf4ebbe85f6d6074cd71bbfbb363d325e4c37b12154fff2707188d135b9",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DisableLedger$Event.class",
+      "sha256": "01f8720f510bb0e94239a961e59aa3921098d57d484180361d4515dedd659e89",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DisableLedger$Operation.class",
+      "sha256": "4b9cefd34878544f23e53fd93f8008e2a0946800f3c7511766a1b00cb69ce8a7",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DisableLedger$Snapshot.class",
+      "sha256": "0ba7578492699914d9e2cd4ab83a81565c44bbef6bbfa982864481e83862e31e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/DisableLedger.class",
+      "sha256": "31e671dfed598a9a560ff182a9df1c62c3d4992a3c47d27cb14c2c30e2a4d472",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/LowDelegationVerifier$1.class",
+      "sha256": "9fe9e7e39a759fdeec73d5705c6e0cd9160b72c4330b41b148bdfd824403425b",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/LowDelegationVerifier$Certificate.class",
+      "sha256": "ba3124e8a0be933d45ed7dcc48bc3c6985603e13f2a68b7d87b34809358fdc11",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/LowDelegationVerifier$LeafProof.class",
+      "sha256": "60fa06fd862b7e415e334d6e8231290cda45d992f57b498a193c15ee1084eb6b",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/LowDelegationVerifier.class",
+      "sha256": "3ec8cde9b8cca02adc18c38ac246082347021a61a03e852f5ebc78a926944b2f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/TargetPossessionProof$1.class",
+      "sha256": "c5738c01ceeb8da1480164d1b4890f5e1439f1358d50cb62c147b51ff26a2221",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/TargetPossessionProof$Challenge.class",
+      "sha256": "600a70d6ecf3fcdbbc249c32ccdb7e24ea4fe9fe62fbde2a86ead1342289c795",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/TargetPossessionProof$Receipt.class",
+      "sha256": "cb6014b45c468b17f0c6d811675bf7943d49795ef1d8f4242b781661801946fe",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/authority/TargetPossessionProof.class",
+      "sha256": "a1f715033a00161f579b8af2ed41f0a2193ad4d3afd0102584940cd68a037cc0",
       "classMajor": 52
     },
     {
@@ -758,6 +915,21 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/control/ActionRegistry$1.class",
+      "sha256": "8795b41931cf4040bccc83b41b0cbd1e601995d6883ca74ff85701bd9ae79f4f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionRegistry$Rule.class",
+      "sha256": "88a16c973948cf4a847200fa3469fbcd0e3c7fe083f4a3767de9837e39158ff2",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/control/ActionRegistry.class",
+      "sha256": "0910b9219c12333ab0b6cf3b11c9679bc37cbf2ddee45399919982b7828f9525",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/control/ActionSchemas$1.class",
       "sha256": "dddbd3986464f401262071800730ece25d4fffa1a01475e484426c52d5a38c72",
       "classMajor": 52
@@ -794,7 +966,7 @@
     },
     {
       "path": "io/github/rebrowser/control/ControlChallengeStore$CommitFence.class",
-      "sha256": "a2e47e8d220e66e04f1789979abea22d761c4167dd2a137fa64ad37e57a6600c",
+      "sha256": "dd5564dfa0cf4a539f8d3a88ce46a70f09db1b45e98d80d718143af20af65f09",
       "classMajor": 52
     },
     {
@@ -809,7 +981,7 @@
     },
     {
       "path": "io/github/rebrowser/control/ControlChallengeStore$Pending.class",
-      "sha256": "1c03961b207906f554d770d87b8d7a1be21bbf7e0f12f86be723dc20d85f702d",
+      "sha256": "d6567e122ab1af7fde2d4220557a6e6b9f18ef38c18214c44aa64e75fce28260",
       "classMajor": 52
     },
     {
@@ -824,7 +996,7 @@
     },
     {
       "path": "io/github/rebrowser/control/ControlChallengeStore.class",
-      "sha256": "141bab5a8b758b8ccaef914a0831f98f28f7e01db3ea472784ee8b45a0d58b69",
+      "sha256": "eff7210b55f3b9643890e32101caaeb537f77e0ab2adcfaa29c8051e0ea7e918",
       "classMajor": 52
     },
     {
@@ -865,6 +1037,11 @@
     {
       "path": "io/github/rebrowser/control/ControlEnvelope.class",
       "sha256": "599ce30b46d7399c71eaf15abd4f49c3d908e83a9c160c12c792dba7845de17f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/core/ActorContext.class",
+      "sha256": "68d0b1f8733ddcb2157fa5779472e480f700132339add692a3626fb7c7a46811",
       "classMajor": 52
     },
     {

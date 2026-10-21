@@ -97,6 +97,12 @@ public final class IdempotencyStore {
             if(!c.moveToFirst() || !expected.equals(c.getString(0)))throw new IllegalStateException("Administrator journal schema mismatch");
         }
     }
+    /** Current-actor bridge: the capability cannot survive the exact SPENT challenge callback.
+     * Underlying fence checks run before/after SQLite writer wait and before commit. */
+    public Reservation reserveAfterAuthorization(ControlChallengeStore.CommitFence fence,io.github.rebrowser.core.ActorContext actor,ComponentGate.BusinessPermit permit,TaskJournal journal)throws Exception{
+        if(fence==null || actor==null)throw invalid();actor.requireExactRequest(fence.proof());
+        Reservation result=reserveAfterAuthorization(fence,permit,journal);actor.requireExactRequest(fence.proof());return result;
+    }
     /** Invoke only from native authorized ControlChallengeStore.Admission.reserveJob. */
     public synchronized Reservation reserveAfterAuthorization(ControlChallengeStore.CommitFence fence,ComponentGate.BusinessPermit permit,TaskJournal journal)throws Exception{
         if(fence==null)throw invalid();AdminProofVerifier.KeyProof proof=fence.proof();

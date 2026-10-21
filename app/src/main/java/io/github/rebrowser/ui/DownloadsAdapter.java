@@ -29,6 +29,8 @@ public final class DownloadsAdapter extends BaseAdapter {
     public static final long MAX_BYTES = 1L << 40;
     public static final long UNKNOWN_BYTES = -1;
     private static final int CANCEL = 0, HANDOFF = 1, APPROVE = 2;
+    /** UI one-shot latch classes; separate from any native approval/idempotency receipt. */
+    public enum RowAction { APPROVE, CANCEL, HANDOFF }
 
     /** Faithful projection vocabulary; NOT a new task protocol and NOT a publication state. */
     public enum Terminal {
@@ -49,22 +51,31 @@ public final class DownloadsAdapter extends BaseAdapter {
         private final long totalBytes, receivedBytes;
         private final TaskSnapshot snapshot;
         private final boolean nativeApprovalOffered,nativeHandoffOffered;
+        private final Boolean publicationReported,workStillOwned;
+        private final java.util.Set<RowAction> suppressed;
         public Row(Object itemRef, String displayName, long totalBytes, long receivedBytes,
                    TaskSnapshot snapshot, boolean nativeHandoffOffered) {
             this(itemRef,displayName,totalBytes,receivedBytes,snapshot,false,nativeHandoffOffered);
         }
-        public Row(Object itemRef,String displayName,long totalBytes,long receivedBytes,TaskSnapshot snapshot,boolean nativeApprovalOffered,boolean nativeHandoffOffered){
-            if (itemRef == null || snapshot == null) throw invalid();
+        public Row(Object itemRef,String displayName,long totalBytes,long receivedBytes,TaskSnapshot snapshot,boolean nativeApprovalOffered,boolean nativeHandoffOffered){this(itemRef,displayName,totalBytes,receivedBytes,snapshot,nativeApprovalOffered,nativeHandoffOffered,null,null);}
+        public Row(Object itemRef,String displayName,long totalBytes,long receivedBytes,TaskSnapshot snapshot,boolean nativeApprovalOffered,boolean nativeHandoffOffered,Boolean publicationReported,Boolean workStillOwned){this(itemRef,displayName,totalBytes,receivedBytes,snapshot,nativeApprovalOffered,nativeHandoffOffered,publicationReported,workStillOwned,java.util.Collections.<RowAction>emptySet());}
+        private Row(Object itemRef,String displayName,long totalBytes,long receivedBytes,TaskSnapshot snapshot,boolean nativeApprovalOffered,boolean nativeHandoffOffered,Boolean publicationReported,Boolean workStillOwned,java.util.Set<RowAction> suppressed){
+            if (itemRef == null || snapshot == null) throw Checks.invalid();
             this.itemRef = itemRef;
             this.displayName = text(displayName, MAX_NAME_CHARS);
-            if (totalBytes < UNKNOWN_BYTES || totalBytes > MAX_BYTES) throw invalid();
-            if (receivedBytes < UNKNOWN_BYTES || receivedBytes > MAX_BYTES) throw invalid();
-            if (totalBytes >= 0 && receivedBytes >= 0 && receivedBytes > totalBytes) throw invalid();
+            if (totalBytes < UNKNOWN_BYTES || totalBytes > MAX_BYTES) throw Checks.invalid();
+            if (receivedBytes < UNKNOWN_BYTES || receivedBytes > MAX_BYTES) throw Checks.invalid();
+            if (totalBytes >= 0 && receivedBytes >= 0 && receivedBytes > totalBytes) throw Checks.invalid();
             this.totalBytes = totalBytes;
             this.receivedBytes = receivedBytes;
             this.snapshot = snapshot;
             this.nativeApprovalOffered=nativeApprovalOffered;this.nativeHandoffOffered = nativeHandoffOffered;
+            this.publicationReported=publicationReported;this.workStillOwned=workStillOwned;java.util.EnumSet<RowAction> copy=java.util.EnumSet.noneOf(RowAction.class);copy.addAll(suppressed);this.suppressed=java.util.Collections.unmodifiableSet(copy);
         }
+        public Boolean publicationReported(){return publicationReported;}
+        public Boolean workStillOwned(){return workStillOwned;}
+        /** UI-only one-shot suppression, never a changed native task/publication observation. */
+        public Row suppressUiActions(java.util.Set<RowAction> actions){java.util.EnumSet<RowAction> all=java.util.EnumSet.noneOf(RowAction.class);all.addAll(suppressed);all.addAll(actions);return new Row(itemRef,displayName,totalBytes,receivedBytes,snapshot,nativeApprovalOffered,nativeHandoffOffered,publicationReported,workStillOwned,all);}
         public Object itemRef() { return itemRef; }
         public String displayName() { return displayName; }
         public long totalBytes() { return totalBytes; }
@@ -75,6 +86,15 @@ public final class DownloadsAdapter extends BaseAdapter {
         public boolean nativeHandoffOffered() { return nativeHandoffOffered; }
     }
 
+    /** Nested pure checks so Rows/State/Row never resolve the Android outer class at HOST runtime. */
+    static final class Checks {
+        static IllegalArgumentException invalid(){return new IllegalArgumentException("Invalid native list row/page");}
+        static String text(String value,int maximum){
+            if(value==null || value.length()>maximum)throw Checks.invalid();
+            for(int i=0;i<value.length();i++){char c=value.charAt(i);if(Character.isISOControl(c))throw Checks.invalid();if(Character.isHighSurrogate(c)){if(++i>=value.length() || !Character.isLowSurrogate(value.charAt(i)))throw Checks.invalid();}else if(Character.isLowSurrogate(c))throw Checks.invalid();}
+            return value;
+        }
+    }
     public static final class Rows {
         public static void validate(List<Row> rows, long pageRevision) {
             if (pageRevision < 1) throw new IllegalArgumentException("Invalid native download page revision");
@@ -87,7 +107,7 @@ public final class DownloadsAdapter extends BaseAdapter {
             }
         }
         public static Terminal terminal(Row row) {
-            if (row == null) throw invalid();
+            if (row == null) throw Checks.invalid();
             TaskSnapshot snapshot = row.snapshot;
             if (snapshot.phase() == TaskSnapshot.Phase.ENDED_BEFORE_DISPATCH) return Terminal.ENDED_BEFORE_DISPATCH;
             if (snapshot.phase() == TaskSnapshot.Phase.OWNER_LOST_BEFORE_DISPATCH) return Terminal.OWNER_LOST_BEFORE_DISPATCH;
@@ -107,21 +127,26 @@ public final class DownloadsAdapter extends BaseAdapter {
         }
         /** -1 means unknown; a full 100 never means the transfer completed or the file is ready. */
         public static int shownPercent(Row row) {
-            if (row == null) throw invalid();
+            if (row == null) throw Checks.invalid();
             if (row.totalBytes < 0 || row.receivedBytes < 0) return -1;
             if (row.totalBytes == 0) return 0;
             long percent = row.receivedBytes * 100 / row.totalBytes;
             return (int) Math.min(100, Math.max(0, percent));
         }
-        public static boolean canRequestApproval(Row row){if(row==null)throw invalid();return row.nativeApprovalOffered && row.snapshot.phase()==TaskSnapshot.Phase.RESERVED && row.snapshot.work()==TaskSnapshot.Work.NOT_STARTED && row.snapshot.currentForPublication() && !row.snapshot.cancellationRequested();}
+        public static boolean canRequestApproval(Row row){if(row==null)throw Checks.invalid();return !row.suppressed.contains(RowAction.APPROVE) && row.nativeApprovalOffered && row.snapshot.phase()==TaskSnapshot.Phase.RESERVED && row.snapshot.work()==TaskSnapshot.Work.NOT_STARTED && row.snapshot.currentForPublication() && !row.snapshot.cancellationRequested();}
         public static boolean canRequestCancel(Row row) {
-            if (row == null) throw invalid();
-            return row.snapshot.work() == TaskSnapshot.Work.RUNNING && !row.snapshot.cancellationRequested();
+            if (row == null) throw Checks.invalid();
+            return !row.suppressed.contains(RowAction.CANCEL) && row.snapshot.work() == TaskSnapshot.Work.RUNNING && !row.snapshot.cancellationRequested();
+        }
+        /** True when the transfer is running but the total length is unknown (indeterminate UI). */
+        public static boolean indeterminate(Row row) {
+            if (row == null) throw Checks.invalid();
+            return row.snapshot.work() == TaskSnapshot.Work.RUNNING && row.totalBytes < 0;
         }
         /** Intent gate only: success effect + actual end + committed record + current + native prompt. */
         public static boolean canRequestHandoff(Row row) {
-            if (row == null) throw invalid();
-            return row.nativeHandoffOffered
+            if (row == null) throw Checks.invalid();
+            return !row.suppressed.contains(RowAction.HANDOFF) && row.nativeHandoffOffered
                     && terminal(row) == Terminal.FINISHED_OBSERVED_SUCCESS
                     && row.snapshot.durability() == TaskSnapshot.Durability.COMMITTED
                     && row.snapshot.currentForPublication()
@@ -153,7 +178,7 @@ public final class DownloadsAdapter extends BaseAdapter {
             return String.join(" · ", parts);
         }
         public static String detail(Row row) {
-            if (row == null) throw invalid();
+            if (row == null) throw Checks.invalid();
             int percent = shownPercent(row);
             String size = sizeText(row.receivedBytes) + " / " + sizeText(row.totalBytes);
             String progress = percent < 0 ? "大小未知" : percent + "%";
@@ -172,6 +197,12 @@ public final class DownloadsAdapter extends BaseAdapter {
         private List<Row> rows = Collections.emptyList();
         private Object frame;
         private boolean retired;
+        private final List<Attempt> attempts = new ArrayList<>();
+        private static final int MAX_ATTEMPTS = MAX_ROWS * 3;
+        private static final class Attempt {
+            final Object frame,itemRef;final long revision;final RowAction action;
+            Attempt(Object frame,long revision,Object itemRef,RowAction action){this.frame=frame;this.revision=revision;this.itemRef=itemRef;this.action=action;}
+        }
         public Object show(long pageRevision, List<Row> next) {
             check();
             if (retired) throw new IllegalStateException("Retired native list cannot show a new page");
@@ -179,10 +210,28 @@ public final class DownloadsAdapter extends BaseAdapter {
             revision = pageRevision;
             rows = Collections.unmodifiableList(new ArrayList<>(next));
             frame = new Object();
+            attempts.clear(); // a fresh native page starts a new one-shot opportunity
             return frame;
         }
-        public void hide() { check(); rows = Collections.emptyList(); frame = null; }
-        public void retire() { check(); if (retired) return; retired = true; rows = Collections.emptyList(); frame = null; }
+        public void hide() { check(); rows = Collections.emptyList(); frame = null; attempts.clear(); }
+        public void retire() { check(); if (retired) return; retired = true; rows = Collections.emptyList(); frame = null; attempts.clear(); }
+        /** Consume the exact frame+row attempt BEFORE the callback; unknown outcome stays spent. */
+        public boolean beginAttempt(Object expectedFrame,long expectedRevision,Object itemRef,RowAction action){
+            check();
+            if(!current(expectedFrame,expectedRevision) || action==null)return false;
+            Row row=null;for(Row candidate:rows)if(candidate.itemRef()==itemRef){row=candidate;break;}
+            if(row==null || (action==RowAction.APPROVE?!Rows.canRequestApproval(row):action==RowAction.CANCEL?!Rows.canRequestCancel(row):!Rows.canRequestHandoff(row)))return false;
+            if(wasAttempted(expectedFrame,expectedRevision,itemRef,action))return false;
+            if(attempts.size()>=MAX_ATTEMPTS)return false;
+            attempts.add(new Attempt(expectedFrame,expectedRevision,itemRef,action));return true;
+        }
+        public boolean wasAttempted(Object expectedFrame,long expectedRevision,Object itemRef,RowAction action){
+            check();
+            for(Attempt attempt:attempts)
+                if(attempt.frame==expectedFrame && attempt.revision==expectedRevision
+                        && attempt.itemRef==itemRef && attempt.action==action)return true;
+            return false;
+        }
         public Object frame() { check(); return frame; }
         public long revision() { check(); return revision; }
         public int rowCount() { check(); return retired ? 0 : rows.size(); }
@@ -214,14 +263,14 @@ public final class DownloadsAdapter extends BaseAdapter {
 
     public DownloadsAdapter(Context context) {
         BrowserToolbar.main();
-        if (context == null) throw invalid();
+        if (context == null) throw Checks.invalid();
         Context application = context.getApplicationContext();
         this.context = application == null ? context : application;
     }
 
     public void bind(BrowserToolbar.Binding binding, long pageRevision, List<Row> rows, Actions actions) {
         BrowserToolbar.main();
-        if (binding == null || actions == null) throw invalid();
+        if (binding == null || actions == null) throw Checks.invalid();
         binding.check();
         state.show(pageRevision, rows);clearHolders();
         this.binding = binding;
@@ -287,6 +336,8 @@ public final class DownloadsAdapter extends BaseAdapter {
         detail.setTextSize(13);
         LinearLayout options = new LinearLayout(context);
         options.setOrientation(LinearLayout.HORIZONTAL);
+        android.widget.ProgressBar progress=new android.widget.ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
+        progress.setMax(100);progress.setVisibility(android.view.View.GONE);
         Button approve=button("批准下载");options.addView(approve,new LinearLayout.LayoutParams(0,dp(48),1));
         Button cancel = button("取消请求");
         Button handoff = button("交接文件");
@@ -294,8 +345,9 @@ public final class DownloadsAdapter extends BaseAdapter {
         options.addView(handoff, new LinearLayout.LayoutParams(0, dp(48), 1));
         root.addView(name, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         root.addView(detail, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        root.addView(progress, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dp(8)));
         root.addView(options, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        Holder holder = new Holder(holderIssuer,root, name, detail, approve,cancel, handoff);
+        Holder holder = new Holder(holderIssuer,root, name, detail, progress, approve,cancel, handoff);
         root.setTag(holder);
         return holder;
     }
@@ -305,13 +357,22 @@ public final class DownloadsAdapter extends BaseAdapter {
         long revision = state.revision();
         holder.name.setText(row.displayName());
         holder.detail.setText(Rows.detail(row));
-        holder.approve.setEnabled(Rows.canRequestApproval(row));holder.approve.setContentDescription("请求批准下载："+row.displayName());holder.approve.setOnClickListener(v->dispatch(frame,revision,row,APPROVE));
-        holder.cancel.setEnabled(Rows.canRequestCancel(row));
-        holder.handoff.setEnabled(Rows.canRequestHandoff(row));
-        holder.cancel.setContentDescription("请求取消下载：" + row.displayName());
-        holder.handoff.setContentDescription("交接下载文件给系统：" + row.displayName());
-        holder.cancel.setOnClickListener(v -> dispatch(frame, revision, row, CANCEL));
-        holder.handoff.setOnClickListener(v -> dispatch(frame, revision, row, HANDOFF));
+        boolean approve=Rows.canRequestApproval(row) && !state.wasAttempted(frame,revision,row.itemRef(),RowAction.APPROVE);
+        boolean cancel=Rows.canRequestCancel(row) && !state.wasAttempted(frame,revision,row.itemRef(),RowAction.CANCEL);
+        boolean handoff=Rows.canRequestHandoff(row) && !state.wasAttempted(frame,revision,row.itemRef(),RowAction.HANDOFF);
+        holder.approve.setEnabled(approve);
+        holder.approve.setContentDescription(approve?"请求批准下载："+row.displayName():"批准不可用或已请求，等待原生刷新："+row.displayName());
+        holder.cancel.setEnabled(cancel);
+        holder.cancel.setContentDescription(cancel?"请求取消下载："+row.displayName():"取消不可用或已请求："+row.displayName());
+        holder.handoff.setEnabled(handoff);
+        holder.handoff.setContentDescription(handoff?"交接下载文件给系统："+row.displayName():"交接不可用或已请求："+row.displayName());
+        holder.approve.setOnClickListener(approve?v->dispatch(frame,revision,row,APPROVE):null);
+        holder.cancel.setOnClickListener(cancel?v->dispatch(frame, revision, row, CANCEL):null);
+        holder.handoff.setOnClickListener(handoff?v->dispatch(frame, revision, row, HANDOFF):null);
+        boolean run=row.snapshot.work()==TaskSnapshot.Work.RUNNING;
+        holder.progress.setVisibility(run?android.view.View.VISIBLE:android.view.View.GONE);
+        holder.progress.setIndeterminate(Rows.indeterminate(row));
+        if(!Rows.indeterminate(row))holder.progress.setProgress(Rows.shownPercent(row)<0?0:Rows.shownPercent(row));
     }
 
     private void clear(Holder holder) {
@@ -326,6 +387,9 @@ public final class DownloadsAdapter extends BaseAdapter {
         holder.handoff.setOnClickListener(null);
         holder.cancel.setEnabled(false);
         holder.handoff.setEnabled(false);
+        holder.progress.setVisibility(android.view.View.GONE);
+        holder.progress.setIndeterminate(false);
+        holder.progress.setProgress(0);
     }
 
     private void clearHolders(){for(Holder holder:new ArrayList<>(holders.keySet()))if(holder!=null)clear(holder);holders.clear();}
@@ -338,6 +402,9 @@ public final class DownloadsAdapter extends BaseAdapter {
         catch(SecurityException staleSource){if(binding==capturedBinding)unbind();return;}
         catch(IllegalStateException|IllegalArgumentException staleFrameOrRow){return;}
         if(action==APPROVE?!Rows.canRequestApproval(row):action==CANCEL?!Rows.canRequestCancel(row):!Rows.canRequestHandoff(row))return;
+        RowAction rowAction=action==APPROVE?RowAction.APPROVE:action==CANCEL?RowAction.CANCEL:RowAction.HANDOFF;
+        if(!state.beginAttempt(expectedFrame,expectedRevision,row.itemRef(),rowAction))return;
+        notifyDataSetChanged();
         BrowserToolbar.IntentOutcome result=BrowserToolbar.invokeNativeIntent(()->{if(action==APPROVE)callback.requestApproval(row,expectedRevision);else if(action==CANCEL)callback.requestCancel(row,expectedRevision);else callback.requestHandoff(row,expectedRevision);});
         if(result==BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN && binding==capturedBinding && actions==callback && state.current(expectedFrame,expectedRevision))outcomeText="操作结果未知，请重新读取下载状态";
     }
@@ -355,21 +422,22 @@ public final class DownloadsAdapter extends BaseAdapter {
     private static final class Holder {
         final Object issuer;final LinearLayout root;
         final TextView name, detail;
+        final android.widget.ProgressBar progress;
         final Button approve,cancel, handoff;
-        Holder(Object issuer,LinearLayout root, TextView name, TextView detail,Button approve, Button cancel, Button handoff) {
+        Holder(Object issuer,LinearLayout root, TextView name, TextView detail,android.widget.ProgressBar progress,Button approve, Button cancel, Button handoff) {
             this.issuer=issuer;this.root = root; this.name = name; this.detail = detail;
-            this.approve=approve;this.cancel = cancel; this.handoff = handoff;
+            this.progress=progress;this.approve=approve;this.cancel = cancel; this.handoff = handoff;
         }
     }
 
     private static String text(String value, int maximum) {
-        if (value == null || value.isEmpty() || value.length() > maximum) throw invalid();
+        if (value == null || value.isEmpty() || value.length() > maximum) throw Checks.invalid();
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if (Character.isISOControl(c)) throw invalid();
+            if (Character.isISOControl(c)) throw Checks.invalid();
             if (Character.isHighSurrogate(c)) {
-                if (++i >= value.length() || !Character.isLowSurrogate(value.charAt(i))) throw invalid();
-            } else if (Character.isLowSurrogate(c)) throw invalid();
+                if (++i >= value.length() || !Character.isLowSurrogate(value.charAt(i))) throw Checks.invalid();
+            } else if (Character.isLowSurrogate(c)) throw Checks.invalid();
         }
         return value;
     }

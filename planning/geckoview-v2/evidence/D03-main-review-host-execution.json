@@ -1,0 +1,404 @@
+{
+  "revision": "R50",
+  "scope": "D03mainactualproduction bounded algorithms/immutableprojection/frame/latch/slot MODELmethods+SDKAPIcompile. NOT Android View/Bitmap/Notification/MotionEvent/OS/Geckoexecution.",
+  "baseSourceCommit": "4f42f4c36385b4a5d7833820cf4d95324b2a086b",
+  "providedDeliveryLocation": "dsh/result/d03/ perO88",
+  "latest25RuntimeHashesIndependentlyVerified": true,
+  "original107NonBuildInputsPreservedBeforeMainChanges": true,
+  "originalArchiveManifestSha256": "a8863bf7dff10e82657c040f2243ab69e277c8e8f8e520176a0676cd7ee02fb2",
+  "contextExactGitR49Matches": 6,
+  "suppliedContextCodeOrOther15JavaOr6AssetsMerged": false,
+  "providedTestClassesReported": 43,
+  "providedTestsReported": 180,
+  "providedProbeAssertionsReported": {
+    "regression": 13641,
+    "followup": 3635,
+    "targeted": 46
+  },
+  "workerReportsAdoptedAsIndependentExecution": false,
+  "providedReviewReportRef": "evidence/delegation-D03-delivered-review-report.json",
+  "providedReviewReportSha256": "297c56b58b755bd106ecea8a54eb997df89d9f4e57b8ff182ef996ccbb1e7951",
+  "original170ReportRef": "evidence/delegation-D03-original-170-report.json",
+  "acceptedRuntimeExtensions": 25,
+  "newRuntimeFiles": 0,
+  "mainSharedHelperFilesModified": 1,
+  "candidateTestClassesIndependentlyExecuted": 28,
+  "candidateTestsIndependentlyExecuted": 123,
+  "mainAddedPureAdversarialTests": 26,
+  "mainAddedAndroidBoundModelAdversarialTests": 17,
+  "mainAddedAdversarialTests": 43,
+  "baselineTestClassesRetained": 82,
+  "baselineTestsRetained": 778,
+  "allMainTestClassesExecuted": 112,
+  "allMainHostTestsPassed": 944,
+  "allPureHostTestsPassed": 501,
+  "pureCandidateTests": 48,
+  "pureSourceFilesCompiledWithJava8AndActualSdkBootclasspath": 49,
+  "nativeBoundCandidateAndMainModelAdditionalTests": 92,
+  "actualAndroidUiSdkMediaBitmapNotificationOrMotionEventExecuted": false,
+  "actualGeckoOrWebsiteOrCspExecuted": false,
+  "newActivityOrAssetsActivated": false,
+  "RootOrEnrollmentOrFormalKeysProvisioned": false,
+  "authorityBackendOrFullModulesCompleted": false,
+  "originalHistoricalReportsRewritten": false,
+  "actualPrivateSlotCasAndNotificationTakeModelsExecuted": true,
+  "nativeDisposalOrOverallMemoryQuiescenceQualified": false,
+  "ownedFilesOnlyNoRealCredentialsUserDataDevice": true,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "sha256": "73cc40859a45e8bfc0c275ced5f2a0189572fbb3e69c968cc00a658244c4773f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "sha256": "05418a06c9fe9abe3c96931a34f2bfd29dd4cdde45dcb3ae48206a226fec4ff3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "sha256": "9e5df7ba57c6f0211f537434ac830179c1f2a447d853fedb8c16e37eb6255d3a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "sha256": "93ee2ace7423b34653fc80b5414c8a67f683d5d20c4926c1d243493dd986c527"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "sha256": "accc72245f8ae595dc411cb3b3a449b1c8f3066ae04ebd9e27f033cde852e738"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "sha256": "f562341853fe5f33fe3e8ebe87284c98403d03b2c5681b51000b4e94316b950a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "sha256": "0ad0f1d9ca5c4871ce2e592ffa65f65c207a8007333cca4955cb59f45e9835a7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "sha256": "4069726efc5572569b2cd3821a2ac719074add5bbc88907268df695fd85d56f9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "sha256": "b62ef93ba64f36e6e65a2fce7a9b211807b3618c70a3f065acc6238b88073caa"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "sha256": "643330ed22ea4757263fe7f59d92bc5432120f56dd55bc4c49d886dff34faba2"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "sha256": "df9fae5a5c70ab512703691f46a2fb2367d289ddef9245968ca617d4272965b7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "sha256": "8117abbad493767f5693d0013a3da8f32e0ac5d36a2b3f46ddefc85f698c06c6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "sha256": "f134ae0a28388032d718f9c13ac25a4ea2e8b74abf780f81e09f3f7b689e59f7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "sha256": "1de54f70c9f35eee1493327173d56869ec865a2ef3d062ed126a34fa530de705"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "sha256": "e2e5627bf297e5752f78437e2358d43189f55e1e510f200a17af5769277df1be"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "daad94226d258604e66e23295a19e441ef74b9faa760a7180b10ad6c323d3fa4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "sha256": "91674efdebb5c6241c0b1d400391e8549c7e7105b5d2b31e7ed7d2aa26f23660"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "sha256": "593987cd3273886ecc6cbb771f751127b4b4f1b24139e7080684f135a73a5300"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "fb7b6713cb914f08cfacba846aae5e536ef5f5bac037c0494480fc8ab7158e49"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "sha256": "bdbbc4aa2c8679b329af20bd4c1687036d0bae7db54a702b48c11d37bbf8a728"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "206081aea53a1bee5b721731ab050387ed6b9cc497bd1722d3f5cc218eb481f8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "sha256": "88f27436f48dc32cc8afe4ad0f03b674c32eef93b34306aadeee2cf2cb8c75dd"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "sha256": "495d5e654da9625fb79ad21f2466d0f5c5a92648f9ae5d57eb7c0b08ec563374"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "26e3ee741e0af2fc19a49971ee678f69767c260052d14bbdec07df104a2a163c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "sha256": "eda0944c2ff854619e09ffdec366f95e4b02a1f8a92aee6e5650ecaf342affde"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "sha256": "afd750f402a5b904883e5f8b70a25b33a5501ccf7e0f412bff7ae6624e8789b1"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerD03Test.java",
+      "sha256": "66991eb065b0d8602178a8d9f943c7ac9b0e72d8eb93a986ab540d22e4c0100d"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
+      "sha256": "00f01a26024e5ae63adc2ba0146b2d60d0e0907426edc7f3f1dfba163b9c7a7b"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowD03Test.java",
+      "sha256": "1021b772877c35484db08352c6eb0a81192aca4563439024bc4b6ac19ffb1142"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
+      "sha256": "39965155a76f7bbde70f775f3df8f0d08b1b7d7bc34eff51c0a0ebd5f8f70925"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreD03Test.java",
+      "sha256": "6f2fa57bc9e07cb8863d865411161bc823b0b726a1decdcadbc81b15e556585a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
+      "sha256": "c732118e3daba1ed5ca987e769d9cc3cb38e25e608de195f67041810520008c5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicActivityD03Test.java",
+      "sha256": "ca2c4a7fb96e8a94e8ed69775d6e7f5310e565298887a25a047c45ec3c41abb0"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
+      "sha256": "87c438e4926cd6aee8518f76d3f11fc3ee31d0a947bd6f5787b39a4eb4b4b9c8"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicArtworkD03Test.java",
+      "sha256": "520be51d151fbc7acd29fae2bb7e2f42686a3ab3c17c82d62ae5afbb03df5a7d"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
+      "sha256": "29ff1b059ad3ad7afc3a3b3d6fc9b2917f999a9afe470e47b33aff1d77080b9e"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicLyricsD03Test.java",
+      "sha256": "5f07059d3dc44a40057e6ce6c8898482c771dd42a59ab20713861424fad17c97"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
+      "sha256": "b267b7e6476ed97878f9e8673401f0aec38abe0a9703d8d4c1fd4c68c6ab8a25"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionD03Test.java",
+      "sha256": "ced6f55eeb092570946352e00df9e01d7f1421f407fc97192018f44215025e60"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
+      "sha256": "c2fb0109f737d679486fda5598932dd7574d3c128642086d8d1fbae28c3297c5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicNotificationD03Test.java",
+      "sha256": "30651ce851f23d8295d467d7fac502c0c2b5450c17b60bb499532b0c7f50ef04"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
+      "sha256": "50327cc21a56cedc29ce6aa998430c3509a63628563108aeb2a4046e211c7904"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesD03Test.java",
+      "sha256": "b9cdf17d1f5c82584cf7f15bd0ba7783a0371f989cd58a536dc86ebb789bb99e"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
+      "sha256": "7a0383604dd96537a3f7fedaf16dfc6d4bd5981f7b618927982e2f273bd546cb"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicQueueD03Test.java",
+      "sha256": "a04c8f986cd17b4de9c880f0790fd5cbcf9a2e61cc54f45a95729f6ebf0c7a62"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
+      "sha256": "f218f795d1beb7fc643521547814f297a5708cbf166da5e8331ee66360a20823"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicStateD03Test.java",
+      "sha256": "717a1b3297901e25f30fc4ee94febf57a6ebdeca82629185a4709dd07f2ab57a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
+      "sha256": "5fb6aea4a9391056de9b2b6c0e2a860eb8b03dd67e0082223e18ff3e553e1acb"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/MailSearchD03Test.java",
+      "sha256": "2ef31fd7708572eee5ee68cfc607ed8954109701a61e995df05f8e1581472c08"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
+      "sha256": "b10541c602d9361e8f40e5443938ebfa026611213e8c6665b25c9b4413e1b1e3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityD03Test.java",
+      "sha256": "bbbdec6ff0a4dd8a6eb9bfdbaa828f84aca562cb20c84ec5fd452fb2b060ec4d"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
+      "sha256": "14b2d4e0737e92c667bf01b39450e004708506e32ed20992fddab1a9656a4bc5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityD03Test.java",
+      "sha256": "94eeea5e1357ce03255e54199d4bcd79ccce1bc5562c72ed44724cc47881baa4"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
+      "sha256": "674895e82fea956509837a4893001fdf96f89ba42abc32c2c6bb65e5da347bcb"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/review/D03MainPureRegressionTest.java",
+      "sha256": "65b7c982c262d0d7e9a33fe67b006d70b1bb5aadb5c10f334261fa522a5d24c4"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/review/D03MainUiModelsRegressionTest.java",
+      "sha256": "f0ded9ea551c46a543bd3377103004ff82a7761dab46e13e64fc18adee29d957"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityD03Test.java",
+      "sha256": "677c0895f453358e2de4a0857e51c342631b3f6d6030271304e7973fe4d4b4c3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
+      "sha256": "f245b22c586d09d20ec91a21afc9052abd0313c7ccec0bb59c86c99331df61d7"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkTreeD03Test.java",
+      "sha256": "bcf22697433733632f5e2806c0630da8fb52d86ec3488868c43373331367bef6"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+      "sha256": "f8995254a5ba97b1344c4efb9b50ccb9fceb758cddb054093ccb5c9c12197bf3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityD03Test.java",
+      "sha256": "2a43f0172ff5d10e02d81576f96d50c6d3d3d24027a73f503568746e4feed38b"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
+      "sha256": "942ba8b6cd25a873799e87e1303651d082fe643cccd9bf3b445c936fec64d78b"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterD03Test.java",
+      "sha256": "1c3492c805f16e4003b7840ff2409a5cbcd94bccb1eec4fdb129c1e6b9d1ee96"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+      "sha256": "b6d5734b74297642e11d3429bf3bd8c584002c3461b98b7ca0aff3c45141bec5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityD03Test.java",
+      "sha256": "8809683862d0a8ea67762ac934528cd2351f2ffe1663fb9e07889d7784344686"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
+      "sha256": "091ccdd934a07cef5178b675ec4d02fa5aad173f562fbb52d51457bc34222ab6"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterD03Test.java",
+      "sha256": "d7872f6ef384c0a1eda16dd7e52e0d7dba31001d3036e57218ffa58791255017"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+      "sha256": "ddc91b2990a327dd984d582cf5efb3b4e863f3a4f2bc6fe741c7aecea0175e0a"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/NewTabQueryD03Test.java",
+      "sha256": "302a4fd241271ba23ee10684cdc8bcf8bb63d3566550fe34d6b04a5b842509a7"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/NewTabViewD03Test.java",
+      "sha256": "2ee3d58b07757acd81db90f7afc039949accd7fb87a7d4fbb1aa3abd3f2c2db2"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
+      "sha256": "eb7d8a9004ae0fc5f0fdd9b6f105679545d80501f9edeb65cf01d07e5580b955"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityD03Test.java",
+      "sha256": "049074a5e441310cb5ef3802db6d1d2d25e4cdd1261346b4c12f953f8aa10492"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
+      "sha256": "931c63ba3b0a6ebfc324cb61f68977de678ab52f0daaa94131f0b0d8a6524828"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "sha256": "394b2bf92999833503298cd661b18e699bb6ae60a661151882f27a73d802b516"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsTypedD03Test.java",
+      "sha256": "8052054d8a9c388c03629c12b41500f30f5511531ce9e297fc4834add70b4855"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SitePermissionGroupsD03Test.java",
+      "sha256": "503860880d35785ac70002596ce271d65dd6e5a2f282a1021564a5cd50e717b5"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityD03Test.java",
+      "sha256": "cad3f072e4923a9021e5f3c32e32c96a783edac3ad81fd79e27067c9103d838c"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
+      "sha256": "a920785a13a836771f04835549937e5a9ac8fc1bbbbda927d7dbba302f130110"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SubapplicationDraftD03Test.java",
+      "sha256": "902aa594609990fc1f6a4a398b02bf113bcf54d752b52e16340117b40a28f688"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityD03Test.java",
+      "sha256": "3cb1f2dbfcfb41e212446f271f499a54b87c6e8c8ed61a70f16e6ee78ea61000"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
+      "sha256": "e743046f3e578741f83fc6bf3d0892061441ed044276e69db643431f3735485e"
+    }
+  ],
+  "mainFixes": [
+    "OriginalD03R47base regressedmainR48: restorestaleArtworkbegin0/zerogenreject/clockrollback/rawpreferenceprojectionbounds/privateviewcleanup/UTF16/arithbounds; 25latesthash+6contextR49 independentlyverified and107inputsarchivedbeforemainchanges",
+    "Applications toggle redrawchangedframe thenoldframecheckdiscardedALLrequests: nativeprojectionframe nowstable acrosslocalredraw, explicitnewbindonly; Bookmark renderclearedframeNULLandbrokeallactions: separateclearownedsubtreefromframeinvalidation; callbacksseparateprevalidationfrombusinessUNKNOWN",
+    "Settings oldgenericnavigationrowswereinventedbooleanpreferences: restoreREAD_ONLYroutes, retainreal4provideroption; oneonChanges(batch,revision)call replacespartialper-changeeffectloop; submitstateactualcontrolsrefreshed, shape/field/mapboundsstrict; unknownoptionnoDefault",
+    "UI oldoptions/sites couldlookupNEWdraft/pageafteroldclick: freezeexactframe/owner/projection/row; native-site groupidentityopaqueobject, neverlabels; spentrow suppressesalloppositepermissionchanges untilnewframe; allprivateview/listenerrootsclearedatdetach/rebind/destroy",
+    "Downloads publication+actualownedwork areSEPARATEexplicitnativeobservations, NOTinferredhandoff/success/100%/durability/phase; immutableUIactionsuppressionpreservesobservationsandcancelspentacrossfilters; adaptersrejectunknown/unofferedlatchtargets; prevnextrealnativebuttons",
+    "Artwork per-resultnativeexactSlotCAS preventsoldconcurrentreleasefreeingNEWowner; disposalspendbeforeJNI/noretryunknown, synchronizedOwnedBitmap, nativecallunknownreturnkeepsownership; perinstancebudgetNOTnativepeak/quiescencequalification",
+    "NativePLAY/PAUSE/SEEKandqueueactions explicitoffered; noambiguousplayPausecall orstateinferredoffers. RateUNKNOWNnot1x; estimatebindsexactobservationandboundedexplicitnativeRate, sourcecheckedtime. Seekgesturefrozenframe/generation/duration andpublicarithmeticbounds",
+    "Lyrics boundedlineiterationnotmillion-linesplitallocation, stableJava8Comparators/mapswithoutLambdaMetafactory, exacttranslationduplicates/missing/staleclear, uniqueactivewordstrictinterval/overlapambiguity. NativeexactcharacterWordSpanvalidatesliteralUnicodebeforeactualin-appboldstyle; no guessedrepeatedwordindices/rawYRC",
+    "Notification Snapshot actualatomicconsumptioninsidebuildbeforeSDKandprivatecontentrootdrop, concurrenttakeonce/noautomaticretry; emptyprojectionclearsoldcontent; noNotificationposting/PendingIntentconstruction",
+    "Overlaylocked/retiredgesturestartreject, no64-lifetimegestureexhaustion, nativepointervalidationatomicbeforeactivating, matchedpointerUP/cancel/hideownedinappview only; positionmissingstillvalidatesgeometry/exactrestoreclampsorigins",
+    "Offline privateissuedPresentationandBodyRequest exactidentity, nolegacyquery-value/latest-frame reacquisition; lateoldframes/requestsrefused; receivedbodyonce/currentSource/currentexactRow; search/pagingoneattempt; oldrecycled/cacheviewWeakownershiprestored; noDB/HTML/attachmentIO",
+    "MailSearch streamingKMP checkedbefore/afterread/afterclose cancellation, explicitEOF/result/scanlimits, UTF16/count/no-progressguard, nonoverlap/surrogate-bounded120snippet; ACTUALReaderreadChars distinctfromprocessedscannedCharsprefix",
+    "FirstindependentAGPcompilationfoundoldunownedBitmapdecodeAPIconsumers (migratedtoOwnedBitmap); first901tests19fails retained and individuallyclassified (stricteroffers/publication/rate/realnavigation-schema/opaqueidentity); no testmethoddeleted, main82baselineclasses+28candidateclassesretained"
+  ],
+  "newCurrentAgpEvidenceRef": "evidence/production-main-agp-R50-checks.json",
+  "ownFailuresPreserved": [
+    "Initialmaincompilesucceeded,testcompilationidentifiedoldunownedBitmapdecodecalls→migratedconsumers",
+    "901tests/19failures: unsafeorobsoletefixtureassumptions corrected againstspecifiednativeoffers/knownrows/rate/publication/identity/readonlysettings, no testmethodsdeleted",
+    "Java8HOSTtestcompilecaught2String.repeat(JDK11)uses; replacedJava8equivalent, actualSDKpurebootcompilehadpassed",
+    "944tests/1fixturefailure: rawtimingwords甲乙absentfromoriginal line, cannotclaimcharhighlight; explicitnative-mapping testsadded; final944/0"
+  ],
+  "notClaimed": [
+    "NativeViews/Activity/Notification/BitmapFactory/recycle/MotionEvent/WindowManager/Gecko/OS/website/CSP notexecuted; HOSTnestedmodels/puremethods/APIcompile only",
+    "No newActivityManifest/assetSourceSet/extension/service/notificationposting/PendingIntentcreation/enrollment/Root/key/dataDirprovision/signing/systemroles/login/playback/sensors/deviceactions",
+    "Settings/permission/download/queue DTO/offered/opaqueUIreceipts notsource/Actor/account/ownergrant/document ortask/filepublicationauthority. Actualnativebackendreauthorizes/rechecks beforeeffect",
+    "No completehistory/download/settings/bookmark/music/mail/overlaybackendorproductcompletion; existingentrysourceRootUNCONFIGURED, actoradmission/corecontrol remainsseparate",
+    "Onlysameframe native-character mappings enablewordspan; unsupported/unmappedtimingremainsseparatewordobservation; no rawofficialYRC/remoteAPI/rights claim",
+    "Logicalper-instanceownedbitmap/result credit is not wholeprocess/nativepeak/physicalGC/endofJNI guarantee. Unknownnative-return/disposalkeepsownedslot; copied/borrowedrefs separatelycaller-owned",
+    "OriginalD01/D02/R47/R48/R49evidence preserved againstoldinputs. CurrentR50reports reflectactualnewexecution, notupdatedhashesonoldruns"
+  ]
+}

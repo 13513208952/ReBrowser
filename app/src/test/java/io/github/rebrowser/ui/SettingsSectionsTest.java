@@ -71,7 +71,7 @@ public final class SettingsSectionsTest {
     @Test public void rowsCarryNoRunnableActivityOrStoredKeyTypes(){
         for (Method method : SettingsSections.Row.class.getDeclaredMethods()) {
             if(method.isSynthetic())continue; // --release8 private-nest accessor is not a public mutator
-            assertTrue(method.getParameterCount() == 0);
+            assertTrue(method.getParameterCount()==0 || method.getName().equals("findOption") && method.getParameterCount()==1 && method.getParameterTypes()[0]==String.class); // bounded read-only lookup is not a mutator
             assertFalse(method.getName().startsWith("set"));
             assertFalse(method.getName().toLowerCase().contains("save"));
         }

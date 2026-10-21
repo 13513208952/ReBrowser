@@ -17,7 +17,7 @@ public final class LyricPositionStoreTest {
         assertTrue(restore.hasPosition());
         assertEquals(100,restore.x());
         assertEquals(200,restore.y());
-        assertEquals(LyricPositionStore.RestoreKind.UNKNOWN,LyricPositionStore.restore(record,720,1600,360,200).kind());
+        assertEquals(LyricPositionStore.RestoreKind.UNKNOWN,LyricPositionStore.restoreExact(record,720,1600,360,200).kind());
         assertEquals(LyricPositionStore.RestoreKind.UNKNOWN,LyricPositionStore.restore(null,1080,2400,360,200).kind());
         assertThrows(IllegalStateException.class,()->LyricPositionStore.restore(null,1080,2400,360,200).x());
     }

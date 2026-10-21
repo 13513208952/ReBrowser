@@ -45,7 +45,7 @@ def render(manifest=None):
         active=f.get('activeDelegation')
         if active:
             assert active['round']=='D03' and active['scope']=='slice' and active['difficulty']=='bounded-code-extension'
-            assert active['status'] in ['reserved-not-started','in-progress','delivered-awaiting-main-review']
+            assert active['status'] in ['reserved-not-started','in-progress','delivered-awaiting-main-review','reviewed-scoped-host-api']
             assert active['doesNotReplaceHistoricalAdmission'] and active['assignmentRef']=='records/low-cost-agent-assignments.json'
         if f['state'] == 'planned-not-implemented':
             risk = f.get('riskAssessment')
@@ -64,7 +64,7 @@ def render(manifest=None):
         f'当前目标：`io.github.rebrowser` · 本体代码 **{len(files)}文件** · {len(groups)}职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。', '',
         '符号：`[J]`原生代码，`[S]`运行脚本/HTML，`[C]`运行样式，`[Q]`运行SQL，`[?]`需要Android/网站实证；`↪`为树外引用，不算本体代码叶节点。', '',
         '> D02分配时已评估全部126个剩余PLAN节点，本轮42个新目标（36Java+6运行资产）经O80主审后，R48并入36Java+4未激活资产，另2份窗口/桌面CSS无批准参考继续HOLD。旧6交付及主链依赖的有限准入仍保留，当前PLAN数以本页统计为准。`[LOW:Lxx]`为整项低风险；`[LOW-EFFECT:Lxx]`为完整低副作用任务但集成/实现风险仍中等；`[LOW-SLICE:Lxx]`仅允许该文件限定低风险切片。`[RISK:*]`是原完整责任风险，`[REVIEW-PENDING]`表示已有未准入交付。**任务数、解析/展示和交付都不是产品完成或业务授权。**只看[权威任务范围](records/low-cost-agent-assignments.json)／[全部剩余文件风险](records/remaining-file-risk-assessment.json)，共享上下文不另写交接文档。', '',
-        '> 当前D03依O83/O85/O86分配25个**既有Java文件的实质扩展**（L49–L73），不是25个新增文件/PLAN完成。`[D03:Lxx]`仅当前保留范围，不覆盖D01/D02历史准入；任务开始前上下文全同步，无额外交接/依赖源码副本。主agent避开这些文件继续核心；完整边界与验收由主agent独立审查。', '',
+        '> D03依O83/O85/O86分配25个**既有Java文件的实质扩展**（L49–L73），经O88完成通知后R50主审修正并有限准入，不是25个新增文件/PLAN完成。`[D03:Lxx]`是分工/审查范围，不覆盖历史证据或证明全文件运行。任务开始前上下文全同步，无额外交接/依赖源码副本；原交付保留，主agent独立验证后整合。', '',
         '## 本体代码树', '', '```text']
     leaf_count = 0
     def walk(items, prefix=''):
@@ -99,7 +99,7 @@ def render(manifest=None):
         if item.get('delegation'):
             d = item['delegation']
             lines.append('| ' + d['taskId'] + ' | `' + item['path'] + '` | '+item['riskAssessment']['fullFileRisk']+' / '+d['scope']+' / ' + d['status'] + ' |')
-    lines += ['', '## ↪ 当前D03：25既有代码文件扩展（不算新增文件，不是测试任务包）', '', '| 任务 | 保留文件 | 范围 / 状态 |', '| --- | --- | --- |']
+    lines += ['', '## ↪ D03主审：25既有代码文件扩展（不算新增文件，不是全后端/Android资格）', '', '| 任务 | 保留文件 | 范围 / 状态 |', '| --- | --- | --- |']
     for item in files:
         if item.get('activeDelegation'):
             d=item['activeDelegation'];lines.append('| '+d['taskId']+' | `'+item['path']+'` | '+d['scope']+' / '+d['status']+' |')
@@ -129,7 +129,8 @@ def render(manifest=None):
                                'productRuntimeIntegrated':False,
                                'delegatedRuntimeTargetsIncludingPriorDelivery':sum(bool(f.get('delegation')) for f in files),
                                'newD02DelegatedRuntimeFiles':sum(f.get('delegation',{}).get('round')=='D02' for f in files),
-                               'activeD03ExistingCodeExtensions':sum(f.get('activeDelegation',{}).get('round')=='D03' for f in files),
+                               'activeD03ExistingCodeExtensions':sum(f.get('activeDelegation',{}).get('round')=='D03' and f['activeDelegation']['status']!='reviewed-scoped-host-api' for f in files),
+                               'reviewedD03ExistingCodeExtensions':sum(f.get('activeDelegation',{}).get('round')=='D03' and f['activeDelegation']['status']=='reviewed-scoped-host-api' for f in files),
                                'remainingFilesRiskAssessed':sum(bool(f.get('riskAssessment')) for f in files)}
 
 

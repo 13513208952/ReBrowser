@@ -11,12 +11,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.EnumSet;
 
 /**
- * Native READ-ONLY site-permission list: origin display, capability, native grant expiry and OS
- * state, with an explicit change INTENT. It never prompts the OS, never grants/revokes Gecko
- * permission and never treats a finished native timer as proof that sensors stopped. Only rows
- * provided by the owner are shown; it does not enumerate other scopes.
+ * Native READ-ONLY site-permission page, grouped by the supplied site identity (partition+host)
+ * and capability. A change request captures the exact record token+revision; after an attempt the
+ * row is locally marked "waiting for a fresh read" rather than revoked, and a rebind never carries
+ * that pending mark into a new page. Expiry text is only the supplied observation; this window
+ * never prompts the OS, grants/revokes Gecko permission or merges different scopes.
  */
 public final class SitePermissionsActivity extends Activity {
     public static final int MAX_ROWS = 100;
@@ -27,22 +29,50 @@ public final class SitePermissionsActivity extends Activity {
     public enum RequestedChange { GRANT, REVOKE, RESET }
 
     public static final class Row {
-        private final Object token;private final String hostLabel,partitionLabel;private final Capability capability;
+        private final Object token,siteScopeIdentity;private final String hostLabel,partitionLabel;private final Capability capability;
         private final Expiry expiry;private final long expiresInMs;private final OsState osState;
+        private final Set<RequestedChange> nativeOffered;
         public Row(Object token,String hostLabel,String partitionLabel,Capability capability,Expiry expiry,long expiresInMs,OsState osState){
-            if(token==null || capability==null || expiry==null || osState==null)throw new IllegalArgumentException("Incomplete permission row");
-            this.token=token;this.hostLabel=host(hostLabel);this.partitionLabel=host(partitionLabel);
+            // Absence of a native action offer never enables any permission change.
+            this(token,hostLabel,partitionLabel,capability,expiry,expiresInMs,osState,
+                    Collections.<RequestedChange>emptySet());
+        }
+        public Row(Object token,String hostLabel,String partitionLabel,Capability capability,Expiry expiry,long expiresInMs,OsState osState,boolean nativeRevokeOffered){
+            this(token,hostLabel,partitionLabel,capability,expiry,expiresInMs,osState,
+                    nativeRevokeOffered?EnumSet.of(RequestedChange.REVOKE):Collections.<RequestedChange>emptySet());
+        }
+        /** Only the exact native owner supplies an explicit per-action offer. */
+        public Row(Object token,String hostLabel,String partitionLabel,Capability capability,Expiry expiry,long expiresInMs,
+                   OsState osState,Set<RequestedChange> nativeOffered){this(token,hostLabel,partitionLabel,capability,expiry,expiresInMs,osState,nativeOffered,null);}
+        public Row(Object token,String hostLabel,String partitionLabel,Capability capability,Expiry expiry,long expiresInMs,OsState osState,Set<RequestedChange> nativeOffered,Object nativeSiteScopeIdentity){
+            if(token==null || capability==null || expiry==null || osState==null || nativeOffered==null)
+                throw new IllegalArgumentException("Incomplete permission row");
+            EnumSet<RequestedChange> offered=EnumSet.noneOf(RequestedChange.class);
+            for(RequestedChange change:nativeOffered){
+                if(change==null)throw new IllegalArgumentException("Null permission action offer");
+                offered.add(change);
+            }
+            this.nativeOffered=Collections.unmodifiableSet(offered);
+            this.token=token;this.siteScopeIdentity=nativeSiteScopeIdentity==null?token:nativeSiteScopeIdentity;this.hostLabel=host(hostLabel);this.partitionLabel=host(partitionLabel);
             if(expiry!=Expiry.TIMED)this.expiresInMs=expressUnknown(expiresInMs);
             else{if(expiresInMs<0 || expiresInMs>365L*24*60*60*1000)throw new IllegalArgumentException("Invalid expiry");this.expiresInMs=expiresInMs;}
             this.capability=capability;this.expiry=expiry;this.osState=osState;
         }
         public Object token(){return token;}
+        /** Native grouping identity only, NEVER an authorization grant. Unknown stays per-row. */
+        public Object siteScopeIdentity(){return siteScopeIdentity;}
         public String hostLabel(){return hostLabel;}
         public String partitionLabel(){return partitionLabel;}
         public Capability capability(){return capability;}
         public Expiry expiry(){return expiry;}
         public long expiresInMs(){return expiresInMs;}
         public OsState osState(){return osState;}
+        public boolean nativeRevokeOffered(){return nativeOffers(RequestedChange.REVOKE);}
+        public boolean nativeOffers(RequestedChange change){
+            if(change==null)throw new IllegalArgumentException("Missing action");
+            return nativeOffered.contains(change);
+        }
+        public Set<RequestedChange> offeredActions(){return nativeOffered;}
         public String label(){return hostLabel+" · "+capabilityLabel(capability)+" · "+expiryLabel(expiry,expiresInMs)+" · "+osLabel(osState);}
     }
     public interface Actions {
@@ -60,60 +90,117 @@ public final class SitePermissionsActivity extends Activity {
         public List<Row> rows(){return rows;}
         public long revision(){return revision;}
     }
+    /** Stable site group: exact partition+host identity, never merged by host name alone. */
+    public static final class Group {
+        private final String partitionLabel,hostLabel;private final List<Row> rows;
+        private Group(String partitionLabel,String hostLabel,List<Row> rows){this.partitionLabel=partitionLabel;this.hostLabel=hostLabel;this.rows=Collections.unmodifiableList(rows);}
+        public String partitionLabel(){return partitionLabel;}
+        public String hostLabel(){return hostLabel;}
+        public List<Row> rows(){return rows;}
+        public String label(){return hostLabel+"（" + partitionLabel + "）";}
+    }
+    public static final class Groups {
+        /** First-appearance group order; capabilities ordered by kind then original position. */
+        public static List<Group> of(Page page){
+            if(page==null)throw new IllegalArgumentException("Missing permission page");
+            java.util.Map<Object,List<Row>> byScope=new java.util.IdentityHashMap<>();List<Object> order=new ArrayList<>();
+            for(Row row:page.rows()){List<Row> group=byScope.get(row.siteScopeIdentity());if(group==null){group=new ArrayList<>();byScope.put(row.siteScopeIdentity(),group);order.add(row.siteScopeIdentity());}else if(!group.get(0).partitionLabel().equals(row.partitionLabel()) || !group.get(0).hostLabel().equals(row.hostLabel()))throw new IllegalArgumentException("Conflicting native site display identity");group.add(row);}
+            List<Group> groups=new ArrayList<>();
+            for(Object scope:order){List<Row> rows=new ArrayList<>(byScope.get(scope));java.util.Collections.sort(rows,new java.util.Comparator<Row>(){public int compare(Row a,Row b){return Integer.compare(a.capability().ordinal(),b.capability().ordinal());}});Row first=rows.get(0);groups.add(new Group(first.partitionLabel(),first.hostLabel(),rows));}
+            return Collections.unmodifiableList(groups);
+        }
+    }
 
     private LinearLayout content;
+    private TextView status;
     private BrowserToolbar.Binding binding;private Object frame;
+    private Actions actions;private Page page;
+    private final Set<AttemptKey> pending=new HashSet<>();
+
+    private static final class AttemptKey {
+        final long revision;final Object token;final RequestedChange change;
+        AttemptKey(long revision,Object token,RequestedChange change){this.revision=revision;this.token=token;this.change=change;}
+        @Override public boolean equals(Object other){if(!(other instanceof AttemptKey))return false;AttemptKey key=(AttemptKey)other;return revision==key.revision && token==key.token && change==key.change;}
+        @Override public int hashCode(){return Long.hashCode(revision)*31+change.hashCode();}
+    }
 
     @Override protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         content=new LinearLayout(this);
         content.setOrientation(LinearLayout.VERTICAL);
-        setContentView(new ScrollView(this){{addView(content);}});
-        TextView empty=new TextView(this);empty.setText("网站权限未读取；不显示其他范围站点");content.addView(empty);
+        ScrollView scroll=new ScrollView(this);scroll.addView(content);
+        setContentView(scroll);
+        status=new TextView(this);
+        status.setText("网站权限未读取；不显示其他范围站点");
+        content.addView(status);
     }
 
     public void bind(BrowserToolbar.Binding binding,Page page,Actions actions){
         BrowserToolbar.main();
         if(binding==null || page==null || actions==null)throw new IllegalArgumentException("Missing native permission binding");
         binding.check();
-        this.binding=binding;
-        BrowserToolbar.clearOwnedViewTree(content);content.removeAllViews();
-        final Object current=new Object();frame=current;
-        TextView header=new TextView(this);
-        header.setText(page.rows().isEmpty()?"没有已提供的网站权限记录":"网站权限为只读投影；更改仅提交请求");
-        content.addView(header);
-        for(Row row:page.rows()){
-            TextView label=new TextView(this);
-            label.setText(row.label());
-            label.setMinimumHeight(dp(48));
-            content.addView(label,new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,dp(48)));
-            LinearLayout actionsRow=new LinearLayout(this);
-            actionsRow.setOrientation(LinearLayout.HORIZONTAL);
-            for(RequestedChange change:RequestedChange.values()){
-                Button button=new Button(this);
-                button.setText(change==RequestedChange.GRANT?"请求允许":change==RequestedChange.REVOKE?"请求撤销":"请求重置");
-                button.setMinimumHeight(dp(48));
-                button.setEnabled(row.expiry()!=Expiry.UNKNOWN || row.osState()!=OsState.UNKNOWN);
-                button.setContentDescription(button.getText()+"：" + row.label());
-                button.setOnClickListener(v->dispatch(current,row,change,page.revision(),actions));
-                actionsRow.addView(button,new LinearLayout.LayoutParams(0,dp(48),1));
+        this.binding=binding;this.page=page;this.actions=actions;this.frame=new Object();
+        pending.clear(); // a new native page owns a new pending domain
+        status.setText(page.rows().isEmpty()?"没有已提供的网站权限记录":"按站点与能力分组；更改仅提交请求");
+        render();
+    }
+
+    private void render(){
+        CharSequence message=status.getText();BrowserToolbar.clearOwnedViewTree(content);content.removeAllViews();status.setText(message);
+        content.addView(status);
+        if(page==null || binding==null)return;
+        final Object expectedFrame=frame;final Page originalPage=page;final Actions originalActions=actions;
+        for(Group group:Groups.of(page)){
+            TextView header=new TextView(this);
+            header.setText(group.label());
+            header.setTextSize(16);
+            header.setMinimumHeight(dp(48));
+            content.addView(header);
+            for(Row row:group.rows()){
+                TextView label=new TextView(this);
+                label.setText("  " + capabilityLabel(row.capability()) + " · " + expiryLabel(row.expiry(),row.expiresInMs()) + " · " + osLabel(row.osState()));
+                content.addView(label);
+                LinearLayout line=new LinearLayout(this);
+                line.setOrientation(LinearLayout.HORIZONTAL);
+                for(RequestedChange change:RequestedChange.values()){
+                    boolean offered=row.nativeOffers(change);
+                    boolean attempted=rowPending(row.token(),page.revision());
+                    boolean enabled=offered && !attempted && binding!=null;
+                    Button button=new Button(this);
+                    button.setText(change==RequestedChange.GRANT?"请求允许":change==RequestedChange.REVOKE?"请求撤回":"请求重置");
+                    button.setMinimumHeight(dp(48));
+                    button.setEnabled(enabled);
+                    button.setContentDescription(enabled?button.getText()+"：" + row.label()
+                            :attempted?"已请求，等待原生重新读取：" + row.label():"该操作未由原生提供：" + row.label());
+                    button.setOnClickListener(enabled?v->request(expectedFrame,originalPage,originalActions,row,change):null);
+                    line.addView(button,new LinearLayout.LayoutParams(0,dp(48),1));
+                }
+                content.addView(line);
             }
-            content.addView(actionsRow);
         }
     }
-    public void unbind(){BrowserToolbar.main();binding=null;frame=null;BrowserToolbar.clearOwnedViewTree(content);content.removeAllViews();}
 
-    private void dispatch(Object expected,Row row,RequestedChange change,long revision,Actions actions){
+    private boolean rowPending(Object token,long revision){for(AttemptKey key:pending)if(key.token==token && key.revision==revision)return true;return false;}
+    private void request(Object expected,Page currentPage,Actions owner,Row row,RequestedChange change){
         BrowserToolbar.Binding captured=binding;
-        if(captured==null || frame!=expected)return;
+        if(captured==null || owner==null || owner!=actions || currentPage==null || page!=currentPage || frame!=expected || !row.nativeOffers(change) || rowPending(row.token(),currentPage.revision()))return;
+        boolean exact=false;for(Row candidate:currentPage.rows())if(candidate==row){exact=true;break;}if(!exact)return;
+        try{captured.check();}catch(RuntimeException stale){return;}if(frame!=expected || binding!=captured || page!=currentPage || actions!=owner)return;
+        AttemptKey key=new AttemptKey(currentPage.revision(),row.token(),change);
+        if(!pending.add(key))return; // consumed before the callback; unknown stays pending
+        render();
         BrowserToolbar.IntentOutcome outcome=BrowserToolbar.invokeNativeIntent(()->{
             captured.check();
-            if(frame!=expected || captured!=binding)return;
-            actions.requestChange(row,change,revision);
+            if(frame!=expected || captured!=binding || page!=currentPage)return;
+            owner.requestChange(row,change,currentPage.revision());
         });
-        if(outcome==BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN && frame==expected)setTitle("权限更改结果未知，请重新读取");
+        if(outcome==BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN && frame==expected)
+            status.setText("权限请求结果未知，请重新读取；不显示为已撤回");
     }
 
+    public void unbind(){BrowserToolbar.main();binding=null;frame=null;actions=null;page=null;pending.clear();BrowserToolbar.clearOwnedViewTree(content);content.removeAllViews();content.addView(status);status.setText("网站权限未读取；不显示其他范围站点");}
+
+    @Override protected void onDestroy(){binding=null;frame=null;actions=null;page=null;pending.clear();BrowserToolbar.clearOwnedViewTree(content);super.onDestroy();}
     public static String capabilityLabel(Capability capability){
         if(capability==null)throw new IllegalArgumentException("Missing capability");
         switch(capability){case GEOLOCATION:return "位置";case CAMERA:return "摄像头";case MICROPHONE:return "麦克风";case NOTIFICATIONS:return "通知";case PERSISTENT_STORAGE:return "持久存储";case MEDIA_KEY_SYSTEM:return "媒体密钥系统";default:return "其他能力";}
@@ -132,6 +219,5 @@ public final class SitePermissionsActivity extends Activity {
         for(int i=0;i<value.length();i++){char c=value.charAt(i);if(c<0x21 || c>0x7e)throw new IllegalArgumentException("Host label must be printable ASCII");}
         return value.toLowerCase(java.util.Locale.ROOT);
     }
-    @Override protected void onDestroy(){binding=null;frame=null;BrowserToolbar.clearOwnedViewTree(content);super.onDestroy();}
     private int dp(int value){return Math.round(value*getResources().getDisplayMetrics().density);}
 }

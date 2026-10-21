@@ -31,7 +31,7 @@ public final class MusicArtworkTest {
         assertEquals(0,artwork.begin(3)); // cannot retarget old bytes by returning latest generation
         assertEquals(0,artwork.begin(5));
         assertThrows(IllegalArgumentException.class,()->artwork.begin(0));
-        assertThrows(IllegalArgumentException.class,()->artwork.decode(null,5));
-        assertThrows(IllegalArgumentException.class,()->artwork.decode(new byte[MusicArtwork.MAX_ENCODED_BYTES+1],5));
+        assertThrows(IllegalArgumentException.class,()->artwork.decodeOwned(null,5));
+        assertThrows(IllegalArgumentException.class,()->artwork.decodeOwned(new byte[MusicArtwork.MAX_ENCODED_BYTES+1],5));
     }
 }

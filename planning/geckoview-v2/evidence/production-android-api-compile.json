@@ -118,27 +118,27 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
-      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
+      "sha256": "26e3ee741e0af2fc19a49971ee678f69767c260052d14bbdec07df104a2a163c"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
-      "sha256": "ffc1aa74dd154f979b11e8a4b686be07a455142b727bb5f9d0bff3db1458f8a9"
+      "sha256": "f562341853fe5f33fe3e8ebe87284c98403d03b2c5681b51000b4e94316b950a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
-      "sha256": "8f593144ee3d75f6f01f53cc0092069533b801c3f2613ac66a263249a5e77538"
+      "sha256": "643330ed22ea4757263fe7f59d92bc5432120f56dd55bc4c49d886dff34faba2"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
-      "sha256": "aff241e13499812b4152c93ea618a8e364339eaf4420ae38f9909bc83991e73a"
+      "sha256": "df9fae5a5c70ab512703691f46a2fb2367d289ddef9245968ca617d4272965b7"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
-      "sha256": "41e818888525b26d647da0de0165cd0d16fa40f1c74ca46288af71cd058ea448"
+      "sha256": "73cc40859a45e8bfc0c275ced5f2a0189572fbb3e69c968cc00a658244c4773f"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
-      "sha256": "f19aa3cc35289146de1c9045fc6f4706c0fe51495cf8a825f0ef8e95afc159de"
+      "sha256": "9e5df7ba57c6f0211f537434ac830179c1f2a447d853fedb8c16e37eb6255d3a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
@@ -186,7 +186,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
-      "sha256": "c79b3f4ee464e11bf0fa184802be47392faffcc611064d84578f81af04726548"
+      "sha256": "8117abbad493767f5693d0013a3da8f32e0ac5d36a2b3f46ddefc85f698c06c6"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
@@ -194,7 +194,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
-      "sha256": "8cf3bc8b2c758c0636deba81dcb061567db38bafbfac9ce52a8a70e66b7fd4eb"
+      "sha256": "b62ef93ba64f36e6e65a2fce7a9b211807b3618c70a3f065acc6238b88073caa"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
@@ -1094,22 +1094,27 @@
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricOverlayController$Event.class",
-      "sha256": "d7ce59d4470263d6c27dea6ef19199ccc062b2e63ec6a8f3ebd0a52f743234e3",
+      "sha256": "2a6c98efbfe826f5c021d3df5705a3f9febb0da890c3a1ba8a6c4fa2735cbe20",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/lyrics/LyricOverlayController$Gesture.class",
+      "sha256": "9012b23caeac7251439015c3b54b6a1491a74fc4aabcd7fa0001932128602e61",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricOverlayController$Mode.class",
-      "sha256": "adb5716ab4bf24d3cc990b0e9afe5075503cb21919d6e8e0d142a25e82362bab",
+      "sha256": "77ef7b1b01dcfdabf96bc258a3280451aff5a0e12ab662e96bcad10926e0d12c",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricOverlayController$State.class",
-      "sha256": "aa956e4279bf66bb67cf35bb782e4ef18f87ac475379ffe77f9a77f2f1df6ac9",
+      "sha256": "2d7e762d73365dd8f9625c55e10f45d19641e97a700b64b422a14028aa47d78a",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricOverlayController.class",
-      "sha256": "dfa012a9bbe9033d7bfbd3ef925f9ae8748001abe8a1edc719aa156fcefbb7ef",
+      "sha256": "077c04865ad2ece12df71be58e4358c3da1cc0b854d25b2e4cfbcf0b0648d0d0",
       "classMajor": 52
     },
     {
@@ -1119,22 +1124,22 @@
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricPositionStore$Record.class",
-      "sha256": "e214915113a65103b433ed54af7b823844b9d379668c66844a705fbff2d90dfd",
+      "sha256": "1a4e8de3485f630fb6d6b357bc8260c963cad7461c7901698e99d863bb226a3e",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricPositionStore$Restore.class",
-      "sha256": "745449075fa562fa2af39db0c5fc51ad119c1a81f25deff8b48a2626b64d2089",
+      "sha256": "a31b91354b82195be9dac3e7460e4a0e2bbf808c0089a45bed40e7d977df8bae",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricPositionStore$RestoreKind.class",
-      "sha256": "c66f4c144f052300fff79c588dcc6f3806dfa351488c9d6cdff90ac008b8ab72",
+      "sha256": "394048d4bde825a41a8fc8d3104e562f72879952c2bcf3d8e39083a76803239d",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/lyrics/LyricPositionStore.class",
-      "sha256": "9318f78600108b66c074098c40935642d99d0328acd7c88ac7dda161434512a4",
+      "sha256": "c44934da84f684a2021bed264e3505188488c5a9561ee5433b095768d67b9ae1",
       "classMajor": 52
     },
     {
@@ -1164,112 +1169,152 @@
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics$1.class",
-      "sha256": "bc54ba4d39c79f1da936b38663db86587de562a65e365eb3a17b06f267640c24",
+      "sha256": "c35215b3a7e14db4ab3e0f740b271c19e7ccb3e27172d3eb4b6e3a612336bd69",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics$2.class",
-      "sha256": "87eb350a4872349024dd5dacc50a896b62fe20728d2a3fd22333b61b09d9aeae",
+      "sha256": "d38a5dc90d21af4cde031b91b5240d6aefc1dc1461a12636840ec42e94e4b17a",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics$Line.class",
-      "sha256": "5a4ae665719d09440fb476c135ad5eaac8c9ec4b9d86bda533b07363c1b34c7a",
+      "sha256": "c8ec0d54dd093d455b290911072f8cf76c5dc7abf8d34fb7b42dac79e673ca48",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics$Lyrics.class",
-      "sha256": "f50359967379d2bd2810674390ffc39bd146a60894d02a9c7701ddafe99f6bc9",
+      "sha256": "ded20f3bbdd1724d274e4c6a069b23a73172f2239c5b7d56113321d7a5b6733a",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics$Status.class",
-      "sha256": "a64133c5767945d0fead0832f5b41f3b93af2c884931a2173484fcb19087e1e9",
+      "sha256": "a3b9f8d385b219d5c25de8b7767e5c1c5dc209b4a8f28ed1304fef58d8e8dd7a",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics$Word.class",
-      "sha256": "a8f70ed0332c0c701a69abaa5820918f48b5b2c326e3fbf520f7e04d6e084285",
+      "sha256": "7233b823b5e9e9301131686acc176a4eb63ffadb5cfaeda1471b747a76bc414f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicLyrics$WordSpan.class",
+      "sha256": "912bbac9d61e32e42b31f8f0a02e256345e43ae635ce5a4ab95a26806a06dcd7",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicLyrics.class",
-      "sha256": "f7d041eec182cbb0c9c1f8d4d895643ed137e7dfa3a3a8cbc4d7968962c1275d",
+      "sha256": "dfbd0ccfcbfec86ad97f25fc678fac36be3c6e9fa8106984e8e8e061baf0c7b2",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicPreferences$Axis.class",
+      "sha256": "01c0e61e79c635849af18dc64a42c0d59c93e7574461ad95f830965aea3c9807",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicPreferences$Change.class",
-      "sha256": "f241ff84ce560b5163ea53c3681f41d9d04b301f2021a658e143bdecef82ec95",
+      "sha256": "95b66c135fecdaa6ed25cdb8282ba2fe3a7e9165583d90f0a7fa805c6bcf669b",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicPreferences$Draft.class",
+      "sha256": "acaef2472d5428ea51dbec73039473442568774af23f126b2dc2fb86a654a9d9",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicPreferences$Entry.class",
-      "sha256": "74cf332ec30a410b439714c8a3ec27859683e78eba821d8d06c8017452b21f7a",
+      "sha256": "781ca0a410d561df901dc8c0ba4e6cd47696f79741ff618b326e025c1e7a2cdc",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicPreferences$Snapshot.class",
-      "sha256": "278dace333b471585bea06b8bdada1331d9a0565a7a1befefcb79d32501cad1f",
+      "sha256": "e293be1dcfea4dd469deca2561644d7075675c8620842d917593c9decc3b8677",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicPreferences$Source.class",
-      "sha256": "566d02eed7a53df5d7fc28f89312a7ffccd16684750bf60f0e8ac7c3c231d3d8",
+      "sha256": "ca36e96de3647ecbe72e29e2991a933cd3ae144e57786f48d60355324d52b2d0",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicPreferences$Values.class",
-      "sha256": "bd6c1a46ddb26650b02277e54488550266dc552a6443ec46abc821c63694ffae",
+      "sha256": "7fbf442ad0b36c93b2f96045dd8b9a24a8804fc7e7fb1fdc5a35ada04dfb9aa8",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicPreferences.class",
-      "sha256": "7d12e81c3f6d55492e136ea9b734ff20dbeda74e96119e348958529e8b82bb7f",
+      "sha256": "5d439a61c2427d3f01d40073f2f9cca4c20cc7f42d706d444971e3603b7ccad7",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicQueue$1.class",
+      "sha256": "dbce1dc3dc9f4095c5a1eb2a1518359c71dd5a405c645157ca1b891451691cd0",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicQueue$Action.class",
-      "sha256": "15785300f4dbb8e1a8a0c5ff86137c54ce9dfadf3a31091f13dd50fcb97d7dd6",
+      "sha256": "50e957f0571006cbcf68802a6f6d0a6fb055b7bc6db7df1d7551350fe728f64e",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicQueue$Intent.class",
-      "sha256": "11ec32be13752bfdd40ee241750f8b31334c455a2d9a78cb5f17a35de4d69670",
+      "sha256": "4e44c7b38985276508c8329c648b93a0750a060e6587283ce6f23c4256ce5172",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicQueue$Like.class",
-      "sha256": "85397ea3593d92fb6618ddbe4bfd9cd862e3d80ed611c472bb7422420d088161",
+      "sha256": "f06b1bcc67cb3650521935292d477c756eec691929a8a8bbac1e38379c0121cd",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicQueue$Track.class",
-      "sha256": "421286b7e8edc556189847a4b9b3dc2061d49bd54f3a44ae914479c5d447b9ce",
+      "sha256": "86af69b1ca0450c2b36bf5bd28e4ab8c114f2face74bb9c2d0e70338b594694e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicQueue$ViewState.class",
+      "sha256": "2797989dc4ce2908db4761716c3f6776e364c0e66648ed4ef1e939df1d151a48",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicQueue$Window.class",
+      "sha256": "968c1c4cb589b1351d7ee9e952008aac6de9c3765442136b055a218572a8a52d",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicQueue.class",
-      "sha256": "f5ae1ff2b5f807d13851c125b6d206266c6c79415180008d1e6c541436305173",
+      "sha256": "57d3bb28d3e5ed80dccc3d6f84c519f7c6375b93d6e3d51e5f5e3c454e3a1f4c",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicState$1.class",
+      "sha256": "2e2602dcae6090d6885700d2af3ef31bcd671ca6a1a6c06a003b168a79ec5cc8",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicState$Account.class",
-      "sha256": "d5a58f2e4f1b94255b94d242cf33398c8e17c1bb042ff3cf9c1ad94e5149de1a",
+      "sha256": "c56b6bcb700b5b9d5b7059b4ea2c6b021d6270380696cc2beb728600b2c28d27",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/music/MusicState$Estimate.class",
+      "sha256": "0049ff2e45d8ec0965018af9c216fbb98df0a6339280adaf26828448a95fd876",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicState$Focus.class",
-      "sha256": "ba5230db4cb4606448a6fa9cef26299d170b4b28ac486397b368f36a3f12dc8f",
+      "sha256": "9c99d37f2dbbfd4fb0bb4d1fdc9b6df58a6854a93bb24deb290537977530a19e",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicState$Playback.class",
-      "sha256": "2d32b3308da170d25b63a088c8c96beda2c28113b4f5bde22882faef2fa1d48e",
+      "sha256": "3fb3f2b476085c0526e12068231526b2800be66e36e068aadfad078f26b556e4",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/music/MusicState.class",
-      "sha256": "2417e997935c97bd3c6a50437657a3bdc03d9729adfd49272db7bdc5e68d7a74",
+      "sha256": "121c7d9465e5a6eb21b107fd2e79ad4652ecbeaa77d7f1bd808fd92af40dc835",
       "classMajor": 52
     },
     {
@@ -1359,22 +1404,27 @@
     },
     {
       "path": "io/github/rebrowser/outlook/MailSearch$Match.class",
-      "sha256": "729f15a60d0a8690929cdf7f1685e52116d2e7226ff60509ea2de184f2885f95",
+      "sha256": "b53510699f19416ddabc593ada2fb8fdca3fc5179aa12cffbd6a61d4eb98e871",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/outlook/MailSearch$Page.class",
-      "sha256": "a16ca61fcfb25f993485404e3cab25f25b9eb7e22e75e0ff29b7338784bb2f64",
+      "sha256": "59668bc788137bee245dc7921fad6d34a6a2bcdf7b8f2f410d0076b716e1fc2f",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/outlook/MailSearch$Result.class",
-      "sha256": "1e20a38d504ef822dd77a54d8f3100ae9d41fe6fdaa738eddc75ee1ef1b6e403",
+      "sha256": "1a576d5748825cced486b64d92c56d2152d8f4c8678f3f8c0a8bf60faf0f1ac3",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/outlook/MailSearch$StopReason.class",
+      "sha256": "03694ea75ab57961899d334b5d308c37e6da814876783c34f0514862c7ec766c",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/outlook/MailSearch.class",
-      "sha256": "290047b4e5b5b523250ec077bf0bb3630a158a8885117ae97da9bb023403c54f",
+      "sha256": "14f06188fc2198083cec5097b815f0645c1efabf808ee56bf2ec19aec859586d",
       "classMajor": 52
     },
     {
@@ -1538,28 +1588,38 @@
       "classMajor": 52
     },
     {
+      "path": "io/github/rebrowser/ui/SettingsSections$Option.class",
+      "sha256": "7d4934320f766d5fcd1d91b8e5fd68610f08c3a9dac811602c6ea4d792b3ace9",
+      "classMajor": 52
+    },
+    {
       "path": "io/github/rebrowser/ui/SettingsSections$Route.class",
-      "sha256": "742e1aa7c6d392a6b611a462d861f6bed14b0fdceb821e1eb0468ad9afbbcf10",
+      "sha256": "886503d5735c2c153f16457075fd435ed51dbfcec804f4debd4777ff62d844bb",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/ui/SettingsSections$Row.class",
-      "sha256": "368bde3328457f9a36521d8caf8768e36e007898e36aa1a1f0fd88237db2389e",
+      "sha256": "fc0c03678317330b87f8cab52a0b7796e2d41b2d0105d76dd37ebc7ae0dbd562",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/ui/SettingsSections$Section.class",
-      "sha256": "9cb14c164ea5dcd4d160c24b3330412a86334c80481e18ac4d33356f454b5cee",
+      "sha256": "141267195062767c2bf571641e3f890a84e6686a0f2f56aa0c222d995b5d12dd",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/ui/SettingsSections$SectionId.class",
-      "sha256": "9aa6c8b226251ef2ee5ee7e1a5fd196c665aa27571c573987116e17ff052e207",
+      "sha256": "805e074083d132024a77894d3d7f639ed254dd6cc0ed4cc39569ba6b3f96437f",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/ui/SettingsSections$ValueKind.class",
+      "sha256": "70abd2fcd2d0060e3dc27c7daa0afe97c3d55d8de2287eab96505ff5d57621e4",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/ui/SettingsSections.class",
-      "sha256": "a7f4bd6a51f1516089b54854413c66517d94f4ed3991b5b181d2e85b88ab5530",
+      "sha256": "127e4aa7b81e7c4292c25812b27cb7cb8902abed457ed96ef2e6b35334b7fbe9",
       "classMajor": 52
     }
   ],

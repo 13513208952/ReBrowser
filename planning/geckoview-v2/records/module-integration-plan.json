@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R49",
+  "revision": "R50",
   "authority": [
     "O45",
     "O64",
@@ -157,44 +157,20 @@
     ],
     "contractRef": "records/low-cost-agent-assignments.json",
     "riskAssessmentRef": "records/remaining-file-risk-assessment.json",
-    "reservedRuntimeFiles": [
-      "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
-      "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
-      "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
-      "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
-      "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
-      "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
-      "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
-      "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
-      "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
-      "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
-      "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicState.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
-      "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
-      "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
-      "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
-      "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
-      "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
-      "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
-      "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java"
-    ],
+    "reservedRuntimeFiles": [],
     "workerWorkspace": "dsh/",
     "previousSixDeliveryStatus": "scoped-host-api-reviewed-no-Android-UI-or-backend-completion",
     "mainAgentRule": "等待owner再次通知前，不编辑L07-L48的42目标，主agent继续未分配核心链；所有slice之外与最终集成归主agent；任务数量不当完成证明。",
     "implementationOrCommitClaim": false,
-    "reviewStatus": "D03reserved25existingcodeextensions;D02historicalreview40/hold2",
+    "reviewStatus": "D03main-reviewed25scopedcodeextensions+mainfixes;notwholeAndroid/runtime/backend",
     "heldRuntimeFiles": [
       "app/src/main/assets/bridge/styles/music-window.css",
       "app/src/main/assets/bridge/styles/music-desktop.css"
     ],
-    "activeRound": "D03",
+    "activeRound": null,
     "fullContextSynchronizedAtWorkerStart": true,
-    "mainContinues": "Native retained-browser metadata persistence/capture IO core; no editing reserved25 files."
+    "mainContinues": "Native retained-browser metadata persistence/capture IO core; no editing reserved25 files.",
+    "D03ReviewContractRef": "records/D03-review-integration-contract.json",
+    "D03MergedRuntimeFiles": 25
   }
 }

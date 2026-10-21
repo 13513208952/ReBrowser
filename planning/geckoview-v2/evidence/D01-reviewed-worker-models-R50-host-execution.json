@@ -1,0 +1,156 @@
+{
+  "revision": "R50",
+  "scope": "Actual scoped pure/native-UI MODEL methods HOST and API compilation, NOT rendered Views/OS facts/store backend or completed product. Main fixes real Surface unit mismatch, callback exception outcome, view cleanup, approval intent and cancelled-but-ended truth.",
+  "pureRegistryTests": 8,
+  "pureSettingsTests": 8,
+  "deviceWindowProjectionTests": 11,
+  "historyModelTests": 12,
+  "downloadModelTests": 16,
+  "bookmarkModelTests": 12,
+  "hostTestsPassed": 67,
+  "mainSharedCallbackBoundaryTestsAdded": 5,
+  "productionModelHostMethodsExecuted": true,
+  "actualNativeViewOrActivityRendered": false,
+  "actualOwnWindowMetricsOrSurfaceGetterExecuted": false,
+  "domainBackendOrOsActionExecuted": false,
+  "fullModulesComplete": false,
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R50-checks.json",
+  "originalWorkerInputHashes": [
+    {
+      "taskId": "L01",
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363",
+      "bytes": 3911
+    },
+    {
+      "taskId": "L01",
+      "path": "app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java",
+      "sha256": "96c8eadfdf303c4251a687ff2fc11868b06f6456c98ddd1ff54f3d410630234c",
+      "bytes": 4689
+    },
+    {
+      "taskId": "L02",
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543",
+      "bytes": 6101
+    },
+    {
+      "taskId": "L02",
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "sha256": "55cd878bfa9dc767e6a43dfbfe2bcfee3b0339211a2a3130a357101cca645fda",
+      "bytes": 5279
+    },
+    {
+      "taskId": "L03",
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "e7fd079a5196260b4929ea275331c301cdce4ad6cd8a5776135b0ff566fc8984",
+      "bytes": 13343
+    },
+    {
+      "taskId": "L03",
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+      "sha256": "ddc91b2990a327dd984d582cf5efb3b4e863f3a4f2bc6fe741c7aecea0175e0a",
+      "bytes": 8490
+    },
+    {
+      "taskId": "L04",
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "0e466aefedc01f9ad9385b0ab3535b9d770899206b0058e45f85c62548fe4cf0",
+      "bytes": 18816
+    },
+    {
+      "taskId": "L04",
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+      "sha256": "aefcd3e69e8dbf2cf392d37787467ce85920477c739aa9d25d5e3bcac6506192",
+      "bytes": 14145
+    },
+    {
+      "taskId": "L05",
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "57837edb891f20422a4b43063e4e7673702f72d75d9bfd01ddf603e08e9fead3",
+      "bytes": 11418
+    },
+    {
+      "taskId": "L05",
+      "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+      "sha256": "f8995254a5ba97b1344c4efb9b50ccb9fceb758cddb054093ccb5c9c12197bf3",
+      "bytes": 9414
+    },
+    {
+      "taskId": "L06",
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "sha256": "904856b27042764569417aeba70e0eb94fe1915519a2e682eac7b11a3ac76311",
+      "bytes": 5241
+    },
+    {
+      "taskId": "L06",
+      "path": "app/src/test/java/io/github/rebrowser/system/DeviceWindowStateTest.java",
+      "sha256": "5d886749a24958547c04149d493845763a69ec59b7b63242429afb07fc0edda7",
+      "bytes": 6809
+    }
+  ],
+  "originalInputsPreservedInTaskPrivateArchive": true,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/subapps/SubapplicationRegistryTest.java",
+      "sha256": "a2e33d43486150fdc77416adc78b5a0b3d9d743ac65d87c1672177aa3ea77d65"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "26e3ee741e0af2fc19a49971ee678f69767c260052d14bbdec07df104a2a163c"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "sha256": "394b2bf92999833503298cd661b18e699bb6ae60a661151882f27a73d802b516"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "206081aea53a1bee5b721731ab050387ed6b9cc497bd1722d3f5cc218eb481f8"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+      "sha256": "ddc91b2990a327dd984d582cf5efb3b4e863f3a4f2bc6fe741c7aecea0175e0a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "fb7b6713cb914f08cfacba846aae5e536ef5f5bac037c0494480fc8ab7158e49"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+      "sha256": "b6d5734b74297642e11d3429bf3bd8c584002c3461b98b7ca0aff3c45141bec5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "daad94226d258604e66e23295a19e441ef74b9faa760a7180b10ad6c323d3fa4"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+      "sha256": "f8995254a5ba97b1344c4efb9b50ccb9fceb758cddb054093ccb5c9c12197bf3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "sha256": "cfb3ceec428a50ca90899815c6a5f202e7eab0f64bf5e4ad50d5d7fbea48f06f"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/system/DeviceWindowStateTest.java",
+      "sha256": "01d5b6997730c53bf1fed69ee809e5dbdbe99d946a3b13b6f80fb2e05b2ea8ae"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "sha256": "91674efdebb5c6241c0b1d400391e8549c7e7105b5d2b31e7ed7d2aa26f23660"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/ui/NativeWindowModelsTest.java",
+      "sha256": "13899917abdc80159ea2491b1a2e678fd9c267507c9c95c1f145bf6d3d6a6cc7"
+    }
+  ],
+  "historicalR47EvidenceRef": "evidence/D01-reviewed-worker-models-host-execution.json",
+  "currentActualHostRunRef": "evidence/production-main-agp-R50-checks.json",
+  "scopeNoteR48": "Same actual scoped tests executed again in R48; public R47 report remains byte-identical. Current exact common helper / KeyPurposeconsumer source hashes reflect the independently rerun code, NOT a rehash-only refresh.",
+  "historicalUnchangedEvidenceRef": "evidence/D01-reviewed-worker-models-R48-host-execution.json",
+  "scopeNoteR50": "Original baseline model methods independently rerun in R50; original reports not rewritten/rehashed. Current source/modified-test hash reflects newly executed source. Added D03 cases separately counted. NativeOS/View/SDK not executed."
+}

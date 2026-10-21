@@ -13,12 +13,12 @@ public final class MusicMediaSessionTest {
         assertTrue(projection.actions().contains(MusicMediaSession.Action.SKIP_NEXT));
         assertFalse(projection.actions().contains(MusicMediaSession.Action.SKIP_PREVIOUS));
         assertTrue(projection.actions().contains(MusicMediaSession.Action.SEEK));
-        assertEquals(1f,projection.speed(),0f);
+        assertEquals(0f,projection.speed(),0f);assertFalse(projection.reportedSpeedKnown()); // PLAYING is not a rate observation
     }
     @Test public void unknownPlaybackYieldsNoTransportAction(){
         MusicMediaSession.Projection projection=MusicMediaSession.project(state(MusicState.Playback.UNKNOWN,-1),true,true);
         assertEquals(MusicMediaSession.Transport.NONE,projection.transport());
-        assertTrue(projection.actions().isEmpty());
+        assertFalse(projection.actions().contains(MusicMediaSession.Action.PLAY));assertFalse(projection.actions().contains(MusicMediaSession.Action.PAUSE));assertTrue(projection.actions().contains(MusicMediaSession.Action.SKIP_NEXT));
         assertFalse(projection.seekable());
         assertEquals(-1,projection.durationMs());
     }

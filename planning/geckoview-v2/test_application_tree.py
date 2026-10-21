@@ -39,7 +39,7 @@ class ApplicationTreeTests(unittest.TestCase):
         for task in tasks:
             f = assigned[task['runtimePath']]
             if task['round']=='D03':
-                d=f['activeDelegation'];self.assertEqual(d['taskId'],task['id']);self.assertEqual(d['status'],'reserved-not-started');self.assertEqual(d['scope'],'slice')
+                d=f['activeDelegation'];self.assertEqual(d['taskId'],task['id']);self.assertEqual(d['status'],'reviewed-scoped-host-api');self.assertEqual(d['scope'],'slice')
                 self.assertTrue(task['existingFileExtension']);self.assertFalse(task['countedAsNewRuntimeFile']);self.assertTrue(task['requiredBehavior'] and task['acceptance']);self.assertIn('[D03:'+task['id']+']',text)
                 continue
             self.assertEqual(f['delegation']['taskId'], task['id'])
@@ -116,10 +116,13 @@ class ApplicationTreeTests(unittest.TestCase):
         self.assertEqual(record['currentBatchNewRuntimeFiles'],0)
         self.assertEqual(record['currentBatchTaskIds'],[t['id'] for t in tasks])
         for t in tasks:
-            raw=(P.parents[1]/t['runtimePath']).read_bytes();self.assertEqual(hashlib.sha256(raw).hexdigest(),t['inputRuntimeSha256'])
+            raw=(P.parents[1]/t['runtimePath']).read_bytes();self.assertEqual(hashlib.sha256(raw).hexdigest(),t['mainReviewedRuntimeSha256'])
+            import subprocess
+            original=subprocess.check_output(['git','show',t['inputBaseCommit']+':'+t['runtimePath']],cwd=P.parents[1]);self.assertEqual(hashlib.sha256(original).hexdigest(),t['inputRuntimeSha256'])
             self.assertTrue(t['runtimePath'].endswith('.java'));self.assertFalse(t['fullResponsibilityCompleteClaim'])
         self.assertTrue(record['D03Rules']['existingD02ResultUntouched'])
-        self.assertEqual(render(self.manifest)[1]['activeD03ExistingCodeExtensions'],25)
+        self.assertEqual(render(self.manifest)[1]['activeD03ExistingCodeExtensions'],0)
+        self.assertEqual(render(self.manifest)[1]['reviewedD03ExistingCodeExtensions'],25)
 
     def test_main_core_not_delegated_for_count(self):
         for suffix in ['ActorContext.java','AuthorityPolicy.java','DataKeyVault.java','PrivateRecordSealer.java','PrivateRecordStore.java','EpochErasureCoordinator.java','ControlDispatcher.java','PermissionCoordinator.java','BrowserStore.java','BrowserCatalogCodec.java','BrowserStoreCoordinator.java','MailDatabase.java','SourceWarningActivity.java']:

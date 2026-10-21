@@ -24,7 +24,10 @@ public final class BrowserToolbar extends LinearLayout {
         main();if(root==null)return;java.util.ArrayDeque<View> pending=new java.util.ArrayDeque<>();pending.add(root);int count=0;
         while(!pending.isEmpty()){View view=pending.removeFirst();if(++count>10000)throw new IllegalStateException("Owned UI subtree too large");
             if(view instanceof android.view.ViewGroup){android.view.ViewGroup group=(android.view.ViewGroup)view;for(int i=0;i<group.getChildCount();i++)pending.addLast(group.getChildAt(i));}
-            view.setOnClickListener(null);view.setOnLongClickListener(null);view.setOnTouchListener(null);view.setContentDescription(null);
+            if(view instanceof android.widget.AdapterView){android.widget.AdapterView<?> adapter=(android.widget.AdapterView<?>)view;adapter.setOnItemClickListener(null);adapter.setOnItemLongClickListener(null);adapter.setOnItemSelectedListener(null);}
+            else view.setOnClickListener(null); // AdapterView forbids even setOnClickListener(null)
+            view.setOnLongClickListener(null);view.setOnTouchListener(null);view.setContentDescription(null);
+            if(view instanceof android.widget.CompoundButton)((android.widget.CompoundButton)view).setOnCheckedChangeListener(null);
             if(view instanceof android.widget.TextView){android.widget.TextView text=(android.widget.TextView)view;text.setOnEditorActionListener(null);text.setText("");}
             if(view instanceof android.widget.ImageView)((android.widget.ImageView)view).setImageDrawable(null);
             if(view instanceof android.widget.SeekBar)((android.widget.SeekBar)view).setOnSeekBarChangeListener(null);

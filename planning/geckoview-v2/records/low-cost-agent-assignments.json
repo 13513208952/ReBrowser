@@ -17,7 +17,7 @@
     "O86"
   ],
   "baseSourceCommit": "dd41e3e7b1fb0aa6225837a309d9ac8d9a15f485",
-  "state": "D03-25-existing-code-extensions-reserved-D02-reviewed-historical",
+  "state": "D03-25-existing-code-extensions-main-reviewed-scoped-not-full-runtime",
   "scopeMeaning": "25 distinct existing productionJavafiles with concrete remaining algorithm/nativepresentation/ownedbitmap responsibilities. NOT25new files, NOT25PLANnodes completed, no cosmetic/test-onlypadding. Main core closure independent; prior D01/D02 task records and source evidence retained.",
   "handoff": null,
   "difficultyMarker": "[LOW:Lxx]",
@@ -1398,7 +1398,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
       "scope": "历史当前页检索与分页意图",
@@ -1420,7 +1420,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "8abecd1c6b8e5ce85677ae6134355027affbeb78acf8c9c0ee2241ba6a243caa",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "4b61808629c5c4306a3c1757ebc4a5d6c1133472cd3d7b2b33836e94237b804f",
+      "mainReviewedRuntimeSha256": "bdbbc4aa2c8679b329af20bd4c1687036d0bae7db54a702b48c11d37bbf8a728",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L50",
@@ -1428,7 +1433,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
       "scope": "行能力与删除请求所有权",
@@ -1450,7 +1455,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "0727f7e4a22c788315694ffe9ae8036b5b318af8f8aad12c302b5d81d54031ca",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "93d8f2cade9a6fef48c214cfd9225b644cef2bb25051d0ce21ec8bf94e950b2c",
+      "mainReviewedRuntimeSha256": "206081aea53a1bee5b721731ab050387ed6b9cc497bd1722d3f5cc218eb481f8",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L51",
@@ -1458,7 +1468,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
       "scope": "按真实任务轴筛选与分页",
@@ -1480,7 +1490,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "3c6d0a848d52e83c8979e3b9acabc6969325095a061fb428b1b43479fa1468ae",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "39f429fb10be38beef38057fa70acc8303ac3966923a3c25c4656ef3e8ca3c38",
+      "mainReviewedRuntimeSha256": "593987cd3273886ecc6cbb771f751127b4b4f1b24139e7080684f135a73a5300",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L52",
@@ -1488,7 +1503,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
       "scope": "批准/取消行的一次交接及显示预算",
@@ -1510,7 +1525,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "88611513d4d435a1810003bd849cd3c76ddabe4831e405ad69742f222eb0456b",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "33cce351f85b99916b09004281bde1d7a6d8ba0b87f1b95a5d58f1350d98bd73",
+      "mainReviewedRuntimeSha256": "fb7b6713cb914f08cfacba846aae5e536ef5f5bac037c0494480fc8ab7158e49",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L53",
@@ -1518,7 +1538,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
       "scope": "收藏树路径投影与本地筛选",
@@ -1540,7 +1560,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "a0efe2939031b64186e73c31a8be84b2464e09e1111a42cb58e61a29b47dec8c",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "ee122407edfec00dc753ba30079affdb56a4bfe8a77575168245edda4cc3c97c",
+      "mainReviewedRuntimeSha256": "daad94226d258604e66e23295a19e441ef74b9faa760a7180b10ad6c323d3fa4",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L54",
@@ -1548,7 +1573,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
       "scope": "类型化设置编辑会话",
@@ -1570,7 +1595,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "eda4ce8fe9813596e468efd0bd90cf256142ddb7cc81b44a1ae0ae369d5f38c3",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "e0f3ecee4eed98cdcf9ad486ab5f70d872ebfad6ef2307bd4c17c97a486b398a",
+      "mainReviewedRuntimeSha256": "495d5e654da9625fb79ad21f2466d0f5c5a92648f9ae5d57eb7c0b08ec563374",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L55",
@@ -1578,7 +1608,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
       "scope": "设置显示类型与固定选项描述",
@@ -1600,7 +1630,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "f7e137cbb9c23cba8c385eca09628e781c5a536f460b36d9cacc3f7b7de48818",
+      "mainReviewedRuntimeSha256": "26e3ee741e0af2fc19a49971ee678f69767c260052d14bbdec07df104a2a163c",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L56",
@@ -1608,7 +1643,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
       "scope": "子应用offered操作与请求态",
@@ -1630,7 +1665,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "2abfe8ad91a4db1288ac48648886fc4f6c36d44f1f56ef88d5389451a6fefee2",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "a2f917bd2db2a04e0522393beea397d950cdb21f9cf767d13073b0847f0075fb",
+      "mainReviewedRuntimeSha256": "e2e5627bf297e5752f78437e2358d43189f55e1e510f200a17af5769277df1be",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L57",
@@ -1638,7 +1678,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
       "scope": "子应用类型化编辑与未提交变化",
@@ -1660,7 +1700,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "618536a3b100e51926085ded1f5585ad4abab4ad19ff0795dc9150c619118c41",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "2102d5d7b8f77713a131f8c12bf94da98877ace9873888d2e15c038a7c547f8c",
+      "mainReviewedRuntimeSha256": "afd750f402a5b904883e5f8b70a25b33a5501ccf7e0f412bff7ae6624e8789b1",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L58",
@@ -1668,7 +1713,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
       "scope": "权限行分组和撤回意图",
@@ -1690,7 +1735,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "dd0963bd5f57e00591e136c3ea39978af670105281108ead980a7e738a69e627",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "3a0d850fac6d69794b932f6d29b7e6a9caefc40ff45a8f61a3474bcb83c3262a",
+      "mainReviewedRuntimeSha256": "eda0944c2ff854619e09ffdec366f95e4b02a1f8a92aee6e5650ecaf342affde",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L59",
@@ -1698,7 +1748,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
       "testPath": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
       "scope": "真正可输入的新页搜索与快捷方式编辑意图",
@@ -1720,7 +1770,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "508800ee0f4b6aa7bf21f9a3f9b3d98bb0560dc45ff17621717340dd953f02c6",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "28ce53efc407910bdc99597e54f1b6297a785658bf61911ec6b07e9143dd49ef",
+      "mainReviewedRuntimeSha256": "88f27436f48dc32cc8afe4ad0f03b674c32eef93b34306aadeee2cf2cb8c75dd",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L60",
@@ -1728,7 +1783,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
       "scope": "队列页操作与真实歌词显示接线",
@@ -1750,7 +1805,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "1df4f23046bf439d7a60207f5e8a7a5b09e21c1c3c5cd2287e2e26b0639e8acd",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "cf8242fc5256f57137173c9198447fbfa5db869158859c79d8bd21c49675e7ac",
+      "mainReviewedRuntimeSha256": "93ee2ace7423b34653fc80b5414c8a67f683d5d20c4926c1d243493dd986c527",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L61",
@@ -1758,7 +1818,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
       "scope": "队列有界窗口与原条目意图",
@@ -1780,7 +1840,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "8f593144ee3d75f6f01f53cc0092069533b801c3f2613ac66a263249a5e77538",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "906d6958aea431edd1c23c2d071beb113b35c3491901e8ef6bea7f8c8a778f08",
+      "mainReviewedRuntimeSha256": "643330ed22ea4757263fe7f59d92bc5432120f56dd55bc4c49d886dff34faba2",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L62",
@@ -1788,7 +1853,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
       "scope": "显示时域估计与事件顺序",
@@ -1810,7 +1875,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "aff241e13499812b4152c93ea618a8e364339eaf4420ae38f9909bc83991e73a",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicState.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicStateTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "73971d89f5c68839179914882b03941c550cb70d67cbbace9f92cc832450fff6",
+      "mainReviewedRuntimeSha256": "df9fae5a5c70ab512703691f46a2fb2367d289ddef9245968ca617d4272965b7",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L63",
@@ -1818,7 +1888,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
       "scope": "复合设置变化与精确revision意图",
@@ -1840,7 +1910,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "8cf3bc8b2c758c0636deba81dcb061567db38bafbfac9ce52a8a70e66b7fd4eb",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "2274bd0393b1f151d4901f937d5a5eabde14979188a96baed9804af1389eb004",
+      "mainReviewedRuntimeSha256": "b62ef93ba64f36e6e65a2fce7a9b211807b3618c70a3f065acc6238b88073caa",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L64",
@@ -1848,7 +1923,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
       "scope": "行翻译对齐与有时域词索引",
@@ -1870,7 +1945,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "ffc1aa74dd154f979b11e8a4b686be07a455142b727bb5f9d0bff3db1458f8a9",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "f56145c2267db7b1385b5e305676352a5583d0656e4b21f125ac9b6377dd3ad6",
+      "mainReviewedRuntimeSha256": "f562341853fe5f33fe3e8ebe87284c98403d03b2c5681b51000b4e94316b950a",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L65",
@@ -1878,7 +1958,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
       "scope": "返回图像的实际持有额度",
@@ -1900,7 +1980,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "ff520329d74941e54649acd6456f3706d919cd7d8dac1e20d8143d8330f5feda",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "8aa1c9e7a2eb4e8c07762a5bc55b5784175e2976744357c9d4656ed638654c53",
+      "mainReviewedRuntimeSha256": "accc72245f8ae595dc411cb3b3a449b1c8f3066ae04ebd9e27f033cde852e738",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L66",
@@ -1908,7 +1993,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
       "scope": "通知展示帧及动作快照",
@@ -1930,7 +2015,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "d39b35bf940f51620bf32ab7dc064e959e8e88d951853b9db02ceed37bff5700",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "3b7e6af9495b5faf1e1958dc4ceb7cdd2ac1eb47ea15ef8025a9ff75b3e771f5",
+      "mainReviewedRuntimeSha256": "4069726efc5572569b2cd3821a2ac719074add5bbc88907268df695fd85d56f9",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L67",
@@ -1938,7 +2028,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
       "testPath": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
       "scope": "完整未知值与动作/位置分离投影",
@@ -1960,7 +2050,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "8a267219293267faae7023ab634b5ce5861e45f67aa54950823305d03ba5e00b",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "896a89657741c4e8055fe4d2df0c6a79339a77ea91ba0832155413679520f5c8",
+      "mainReviewedRuntimeSha256": "0ad0f1d9ca5c4871ce2e592ffa65f65c207a8007333cca4955cb59f45e9835a7",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L68",
@@ -1968,7 +2063,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
       "scope": "拖动与窗口应用的完整有限状态",
@@ -1990,7 +2085,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "41e818888525b26d647da0de0165cd0d16fa40f1c74ca46288af71cd058ea448",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "660cfa6a4ca830747dbfe48ee1b994851efde3ecaaa8e00a4ee5bd373ef3b6f0",
+      "mainReviewedRuntimeSha256": "73cc40859a45e8bfc0c275ced5f2a0189572fbb3e69c968cc00a658244c4773f",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L69",
@@ -1998,7 +2098,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
       "scope": "多指/取消/旋转后的正确拖动",
@@ -2020,7 +2120,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "7ee3601a3b9bdb1f8d8f7e599d2d9f0c2ecb3dc133056a44e2cac8a86439f5d9",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "4a6c01b9db6ee9f409e095d8dda55e843241907bb6360064b6fcc3187fa04114",
+      "mainReviewedRuntimeSha256": "05418a06c9fe9abe3c96931a34f2bfd29dd4cdde45dcb3ae48206a226fec4ff3",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L70",
@@ -2028,7 +2133,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
       "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
       "scope": "可逆几何恢复与边界预算",
@@ -2050,7 +2155,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "f19aa3cc35289146de1c9045fc6f4706c0fe51495cf8a825f0ef8e95afc159de",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "bd8d46970408abcc5da884bd56019118bd771945a53d51bbe9100abeddef1962",
+      "mainReviewedRuntimeSha256": "9e5df7ba57c6f0211f537434ac830179c1f2a447d853fedb8c16e37eb6255d3a",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L71",
@@ -2058,7 +2168,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
       "scope": "账户未知/脱机与官方入口意图",
@@ -2080,7 +2190,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "3a6db32049cfd47241ca8f3e3ae6d5482ed2180539a7818ea14c8aaa6e45c520",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "846b078702eee92c785369e8eea5634f01771a33c31aad322d147336d7c7dc2b",
+      "mainReviewedRuntimeSha256": "1de54f70c9f35eee1493327173d56869ec865a2ef3d062ed126a34fa530de705",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L72",
@@ -2088,7 +2203,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
       "scope": "离线检索分页的请求/响应关联",
@@ -2110,7 +2225,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "6aea403177b9f9496ff436965cfaeb4e23552d76507b415955484125e196f17d",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "0d79ec54fc81524026404fecf5c30b93e4725c52de2de362544e9740d0ae6b0e",
+      "mainReviewedRuntimeSha256": "f134ae0a28388032d718f9c13ac25a4ea2e8b74abf780f81e09f3f7b689e59f7",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     },
     {
       "id": "L73",
@@ -2118,7 +2238,7 @@
       "difficulty": "bounded-code-extension",
       "delegationScope": "slice",
       "assignee": "owner-selected-low-cost-agent",
-      "status": "reserved-not-started",
+      "status": "reviewed-scoped-host-api",
       "runtimePath": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
       "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
       "scope": "线性有界流式字面检索",
@@ -2140,7 +2260,12 @@
       "inputBaseCommit": "1e98b9f26446796effbe77d6b816503189227f93",
       "inputRuntimeSha256": "c79b3f4ee464e11bf0fa184802be47392faffcc611064d84578f81af04726548",
       "deliveryRuntimePath": "dsh/result-D03/app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
-      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java"
+      "deliveryTestPath": "dsh/result-D03/app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
+      "deliveryObservedAt": "2026-10-21T02:56:28+08:00",
+      "actualDeliveryRoot": "dsh/result/d03/",
+      "suppliedReviewedRuntimeSha256": "efffc48cb3ac2ffef0b699a75054c935a8037e217b446e85113142ab1ddd2af9",
+      "mainReviewedRuntimeSha256": "8117abbad493767f5693d0013a3da8f32e0ac5d36a2b3f46ddefc85f698c06c6",
+      "mainReviewRef": "records/D03-review-integration-contract.json"
     }
   ],
   "retainedByMainAgent": [
@@ -2153,7 +2278,7 @@
   ],
   "blockedTaskRule": "如限定范围仍需要缺失的权威接口，交付已验证的展示组件和具体缺口，标记任务待主agent接线；不得创造安全敏感接口/伪成功/空服务凑文件或绕过当前Root锁定。",
   "workerWorkspace": "dsh/",
-  "coordination": "O86: worker starts with ALL conversation/context synchronized; no extra handoff background or context source copies. Main reserves these25 files until owner completion notice, and continues unreserved browser/source/persistence core. Main retains adversarial verification. After start, shared-interface changes require explicit coordination; no edits to workerfiles by main or corefiles byworker.",
+  "coordination": "O88notifiedactualdeliverydsh/result/d03/:mainreviewed25scopedruntimeextensionsafteroriginalpreservation, noD03reservationremains;O86allcontextatstart, nonewextrahandoff. Runtime/backends remainnotqualified asstated.",
   "newBatchRuntimeFileCount": 25,
   "newBatchJavaFiles": 25,
   "newBatchRuntimeAssets": 0,
@@ -2220,7 +2345,7 @@
   "D02ReviewContractRef": "records/D02-review-integration-contract.json",
   "futureRoundPolicy": {
     "authority": "O83",
-    "state": "D03-25-concrete-existing-code-files-assigned-not-implemented",
+    "state": "D03-25-concrete-existing-code-files-reviewed-scoped",
     "minimumDistinctRuntimeCodeFilesPerAssignment": 25,
     "workKind": "Actual implementation in individually named code files, not a primarily boundary-test assignment. New or meaningfully extended existing runtime files must solve concrete module work; do not claim 25 NEW files if existing files are reused.",
     "selection": "Dependency/module-first; identify self-contained implementable code responsibility even inside a high-risk whole file; explicitly retain native authorization/persistence/destructive/system-effect decisions and integration with main. Never relabel the whole high-risk responsibility low.",
@@ -2334,5 +2459,7 @@
       "rule": "只做有界展示/静态批准样式，无外部加载或新Native指令通道。"
     }
   ],
-  "D03RulesTakePrecedence": true
+  "D03RulesTakePrecedence": true,
+  "D03ReviewContractRef": "records/D03-review-integration-contract.json",
+  "D03ReviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
 }

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R49",
+  "revision": "R50",
   "authority": [
     "O41",
     "O42",
@@ -1351,7 +1351,8 @@
       "researchEvidence": [
         "records/native-browser-window-batch-contract.json",
         "records/native-private-record-store-contract.json",
-        "records/D02-review-integration-contract.json"
+        "records/D02-review-integration-contract.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "Native-owned presentation inputs -> bounded UI/view models/events, no business admission, DB open, positive owner consent or global resource settlement",
       "dependencies": "Actual platform Android View/Window/Activity APIs and existing native domain models; no new dependencies",
@@ -1363,7 +1364,7 @@
         "io.github.rebrowser.ui.NativeWindowModelsTest"
       ],
       "hostEvidence": "evidence/native-window-models-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "hostPresentationModelMethodsExecuted": true,
       "notClaimed": [
         "actual Android View/Window/dialog/metric/rendering callbacks",
@@ -1879,10 +1880,11 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "D01actual fixed native settingsection/row directory and unknown display value, no preferences/defaults or source consent",
+      "scope": "D01actual fixed native settingsection/row directory and unknown display value, no preferences/defaults or source consent; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
-        "records/module-integration-plan.json"
+        "records/module-integration-plan.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
@@ -1912,22 +1914,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "D01bounded native100rowhistory display/weakownedrecycledview cleanup/frame+binding guards and userintents, no DBwrites/navigation",
+      "scope": "D01bounded native100rowhistory display/weakownedrecycledview cleanup/frame+binding guards and userintents, no DBwrites/navigation; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
-        "records/module-integration-plan.json"
+        "records/module-integration-plan.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.HistoryAdapterTest"
+        "io.github.rebrowser.ui.HistoryAdapterTest",
+        "io.github.rebrowser.ui.HistoryAdapterD03Test"
       ],
       "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
         "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
@@ -1946,22 +1951,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "D01bounded nativeTaskSnapshotmultiaxisdisplay with approval/cancel/handoffintents and actualendtruthful, no streams/publication",
+      "scope": "D01bounded nativeTaskSnapshotmultiaxisdisplay with approval/cancel/handoffintents and actualendtruthful, no streams/publication; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
-        "records/module-integration-plan.json"
+        "records/module-integration-plan.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.DownloadsAdapterTest"
+        "io.github.rebrowser.ui.DownloadsAdapterTest",
+        "io.github.rebrowser.ui.DownloadsAdapterD03Test"
       ],
       "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
         "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
@@ -1980,22 +1988,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "D01real boundednativebookmark/folderview/callbackguard/privateviewtextlistenercleanup, no store/navigation/owner prompt",
+      "scope": "D01real boundednativebookmark/folderview/callbackguard/privateviewtextlistenercleanup, no store/navigation/owner prompt; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
-        "records/module-integration-plan.json"
+        "records/module-integration-plan.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/BookmarkTreeD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.BookmarkViewTest"
+        "io.github.rebrowser.ui.BookmarkViewTest",
+        "io.github.rebrowser.ui.BookmarkTreeD03Test"
       ],
       "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R47-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "ExistingformalRoot/wrapkey/epochdirectories not provisioned; defaultproductremainsUNCONFIGURED. Native seed/fresh/rescue/erasure/keycustody separate",
         "No AndroidKeyStore/ownApplication/Looper/Androidfilesystem/powerloss/processdeath/nativeUIrender executed; private toykey/path/source HOST pipeline only",
@@ -2048,22 +2059,27 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实native新标签页布局：只读背景展示、四个既定搜索引擎入口及有界收藏缩略行；复用Binding输出精确用户意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实native新标签页布局：只读背景展示、四个既定搜索引擎入口及有界收藏缩略行；复用Binding输出精确用户意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/NewTabViewD03Test.java",
+        "app/src/test/java/io/github/rebrowser/ui/NewTabQueryD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.NewTabViewTest"
+        "io.github.rebrowser.ui.NewTabViewTest",
+        "io.github.rebrowser.ui.NewTabViewD03Test",
+        "io.github.rebrowser.ui.NewTabQueryD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2081,22 +2097,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实Activity生命周期与已给定一页历史的呈现，接现有HistoryAdapter；期限/保留/暂停/删除只报告意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实Activity生命周期与已给定一页历史的呈现，接现有HistoryAdapter；期限/保留/暂停/删除只报告意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/HistoryActivityD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.HistoryActivityTest"
+        "io.github.rebrowser.ui.HistoryActivityTest",
+        "io.github.rebrowser.ui.HistoryActivityD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2114,22 +2133,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实Activity及已提供下载页的呈现，复用DownloadsAdapter；批准/取消/交接是待原生控制器审核的意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实Activity及已提供下载页的呈现，复用DownloadsAdapter；批准/取消/交接是待原生控制器审核的意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.DownloadsActivityTest"
+        "io.github.rebrowser.ui.DownloadsActivityTest",
+        "io.github.rebrowser.ui.DownloadsActivityD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2147,22 +2169,27 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实原生设置分组页面与SettingsSections组合；已知只读值、未知值禁用，动作只交回原生窗口所有者。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实原生设置分组页面与SettingsSections组合；已知只读值、未知值禁用，动作只交回原生窗口所有者。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/SettingsActivityD03Test.java",
+        "app/src/test/java/io/github/rebrowser/ui/SettingsTypedD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.SettingsActivityTest"
+        "io.github.rebrowser.ui.SettingsActivityTest",
+        "io.github.rebrowser.ui.SettingsActivityD03Test",
+        "io.github.rebrowser.ui.SettingsTypedD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2180,22 +2207,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "固定Outlook/音乐目录的真实native应用列表，启用状态来自只读投影，48dp设置齿轮与打开/启停意图分开。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "固定Outlook/音乐目录的真实native应用列表，启用状态来自只读投影，48dp设置齿轮与打开/启停意图分开。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.ApplicationsActivityTest"
+        "io.github.rebrowser.ui.ApplicationsActivityTest",
+        "io.github.rebrowser.ui.ApplicationsActivityD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2213,22 +2243,27 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实子设置页面展示音源/入口/恢复选项的已给定投影，生成明确更改意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实子设置页面展示音源/入口/恢复选项的已给定投影，生成明确更改意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityD03Test.java",
+        "app/src/test/java/io/github/rebrowser/ui/SubapplicationDraftD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.SubapplicationSettingsActivityTest"
+        "io.github.rebrowser.ui.SubapplicationSettingsActivityTest",
+        "io.github.rebrowser.ui.SubapplicationSettingsActivityD03Test",
+        "io.github.rebrowser.ui.SubapplicationDraftD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2246,22 +2281,27 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "仅网站/分区/能力/到期与OS状态的只读原生列表和请求更改意图；过期/未知文案不混淆。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "仅网站/分区/能力/到期与OS状态的只读原生列表和请求更改意图；过期/未知文案不混淆。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityD03Test.java",
+        "app/src/test/java/io/github/rebrowser/ui/SitePermissionGroupsD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.ui.SitePermissionsActivityTest"
+        "io.github.rebrowser.ui.SitePermissionsActivityTest",
+        "io.github.rebrowser.ui.SitePermissionsActivityD03Test",
+        "io.github.rebrowser.ui.SitePermissionGroupsD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2279,22 +2319,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实原生邮箱页面外壳、官方入口选择/账号观察/离线入口控件；接已由原生所有者提供的显示binding。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实原生邮箱页面外壳、官方入口选择/账号观察/离线入口控件；接已由原生所有者提供的显示binding。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.outlook.OutlookActivityTest"
+        "io.github.rebrowser.outlook.OutlookActivityTest",
+        "io.github.rebrowser.outlook.OutlookActivityD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2312,22 +2355,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实原生离线邮件metadata列表/搜索栏/附件行和恢复位置的展示模型；只消费原生已筛选的有界页。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实原生离线邮件metadata列表/搜索栏/附件行和恢复位置的展示模型；只消费原生已筛选的有界页。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.outlook.OfflineMailActivityTest"
+        "io.github.rebrowser.outlook.OfflineMailActivityTest",
+        "io.github.rebrowser.outlook.OfflineMailActivityD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2345,22 +2391,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实原生音乐控制/标题/队列/歌词布局，只读官方播放器投影及已提供的显示绑定，回传明确用户意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实原生音乐控制/标题/队列/歌词布局，只读官方播放器投影及已提供的显示绑定，回传明确用户意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicActivityD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicActivityTest"
+        "io.github.rebrowser.music.MusicActivityTest",
+        "io.github.rebrowser.music.MusicActivityD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2378,22 +2427,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实Notification.Builder构造与纯展示投影，标题/艺术家/可用动作和position秒到毫秒的边界转换。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实Notification.Builder构造与纯展示投影，标题/艺术家/可用动作和position秒到毫秒的边界转换。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicNotificationD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicNotificationTest"
+        "io.github.rebrowser.music.MusicNotificationTest",
+        "io.github.rebrowser.music.MusicNotificationD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2411,22 +2463,27 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "对原生已提供的<=8MiB编码字节做格式/尺寸检查、采样解码和最新请求代次保护；单张<=1024*1024像素。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "对原生已提供的<=8MiB编码字节做格式/尺寸检查、采样解码和最新请求代次保护；单张<=1024*1024像素。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicArtworkD03Test.java",
+        "app/src/test/java/io/github/rebrowser/review/D03MainUiModelsRegressionTest.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicArtworkTest"
+        "io.github.rebrowser.music.MusicArtworkTest",
+        "io.github.rebrowser.music.MusicArtworkD03Test",
+        "io.github.rebrowser.review.D03MainUiModelsRegressionTest"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2444,19 +2501,22 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "有界LRC及官方逐字时间文本的纯解析、稳定排序/重叠与逐字位置映射；保留译文/原文关联，不伪造缺失歌词。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "有界LRC及官方逐字时间文本的纯解析、稳定排序/重叠与逐字位置映射；保留译文/原文关联，不伪造缺失歌词。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicLyricsD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicLyricsTest"
+        "io.github.rebrowser.music.MusicLyricsTest",
+        "io.github.rebrowser.music.MusicLyricsD03Test"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -2477,19 +2537,22 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "有界不可变官网队列/歌单/喜欢状态展示与精确资源token的用户意图描述，不拥有播放器或流地址。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "有界不可变官网队列/歌单/喜欢状态展示与精确资源token的用户意图描述，不拥有播放器或流地址。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicQueueD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicQueueTest"
+        "io.github.rebrowser.music.MusicQueueTest",
+        "io.github.rebrowser.music.MusicQueueD03Test"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -2510,19 +2573,22 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "只读不可变官方播放/账号/资源/意图代次/焦点观察投影与字段校验，供UI消费。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "只读不可变官方播放/账号/资源/意图代次/焦点观察投影与字段校验，供UI消费。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicStateD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicStateTest"
+        "io.github.rebrowser.music.MusicStateTest",
+        "io.github.rebrowser.music.MusicStateD03Test"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -2543,19 +2609,22 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "纯owner-thread关闭/可拖动/锁定穿透的native用户意图与显示模式reducer，重绑/退役代次有界。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "纯owner-thread关闭/可拖动/锁定穿透的native用户意图与显示模式reducer，重绑/退役代次有界。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java"
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.lyrics.LyricOverlayControllerTest"
+        "io.github.rebrowser.lyrics.LyricOverlayControllerTest",
+        "io.github.rebrowser.lyrics.LyricOverlayControllerD03Test"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -2576,22 +2645,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "真实native歌词面板/拖拽触摸模型/锁定文案及layout参数描述，包含清理所有视图文本和监听。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "真实native歌词面板/拖拽触摸模型/锁定文案及layout参数描述，包含清理所有视图文本和监听。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java"
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java",
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.lyrics.LyricOverlayWindowTest"
+        "io.github.rebrowser.lyrics.LyricOverlayWindowTest",
+        "io.github.rebrowser.lyrics.LyricOverlayWindowD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",
@@ -2609,19 +2681,22 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "位置的有界不可变记录、版本与窗口内夹取/恢复纯计算；输入来自原生已读取记录，输出待保存意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "位置的有界不可变记录、版本与窗口内夹取/恢复纯计算；输入来自原生已读取记录，输出待保存意图。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java"
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
+        "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.lyrics.LyricPositionStoreTest"
+        "io.github.rebrowser.lyrics.LyricPositionStoreTest",
+        "io.github.rebrowser.lyrics.LyricPositionStoreD03Test"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -3040,19 +3115,24 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "只对原生已授权且交给它的Reader做有界literal中文跨块匹配/结果分页计算，返回位置片段；字面匹配不执行regex。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "只对原生已授权且交给它的Reader做有界literal中文跨块匹配/结果分页计算，返回位置片段；字面匹配不执行regex。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java"
+        "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
+        "app/src/test/java/io/github/rebrowser/outlook/MailSearchD03Test.java",
+        "app/src/test/java/io/github/rebrowser/review/D03MainPureRegressionTest.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.outlook.MailSearchTest"
+        "io.github.rebrowser.outlook.MailSearchTest",
+        "io.github.rebrowser.outlook.MailSearchD03Test",
+        "io.github.rebrowser.review.D03MainPureRegressionTest"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -3106,19 +3186,22 @@
       "validationMode": "jvm",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "只读配置投影/有界字段校验与精确revision的更改意图，默认未知；恢复意图不自动起播。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "只读配置投影/有界字段校验与精确revision的更改意图，默认未知；恢复意图不自动起播。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicPreferencesD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicPreferencesTest"
+        "io.github.rebrowser.music.MusicPreferencesTest",
+        "io.github.rebrowser.music.MusicPreferencesD03Test"
       ],
       "hostEvidence": "evidence/production-unit-tests.json",
       "androidApiCompileEvidence": "evidence/production-android-api-compile.json",
@@ -3139,22 +3222,25 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "纯官方播放器投影到Android PlaybackState/MediaMetadata构造与系统动作到意图类型的映射；秒/毫秒严格有界。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
+      "scope": "纯官方播放器投影到Android PlaybackState/MediaMetadata构造与系统动作到意图类型的映射；秒/毫秒严格有界。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/D03-review-integration-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
       "unresolvedWithinScope": [],
       "hostTestSources": [
-        "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java"
+        "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java",
+        "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionD03Test.java"
       ],
       "junitClasses": [
-        "io.github.rebrowser.music.MusicMediaSessionTest"
+        "io.github.rebrowser.music.MusicMediaSessionTest",
+        "io.github.rebrowser.music.MusicMediaSessionD03Test"
       ],
       "hostEvidence": "evidence/D02-main-review-host-execution.json",
-      "androidApiCompileEvidence": "evidence/production-main-agp-R48-checks.json",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",
       "notClaimed": [
         "NoActivityManifestregistration/export, noEntrySourceunlock/Rootprovisioning",
         "No asset sourceSet wiring/extensioninstall/readerlaunch/network/remoteHTML;fourassets are source/static-tested not APK/site/runtimequalified",

@@ -604,7 +604,28 @@
       "utf8Bytes": 101,
       "sha256": "918412aea6fe76c9b38a2638b570b66328b9040792c284da555cd5ff8a8953ed",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O87",
+      "file": "owner-verbatim/O87-continue-core-after-D03-assignment.txt",
+      "utf8Bytes": 21,
+      "sha256": "c3efccad72e6e19ee00af09c94583e0e1c9aef8bfdca526128895ae59fc2db1e",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O88",
+      "file": "owner-verbatim/O88-D03-result-notification-and-independent-progress.txt",
+      "utf8Bytes": 132,
+      "sha256": "6f06075af0421a2e688333b72dfc92fea8d13074a5bce9813b3086a6411903c5",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O89",
+      "file": "owner-verbatim/O89-continue-D03-main-review.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-20T21:51:07+08:00"
+  "lastAppendedAt": "2026-10-21T08:40:13+08:00"
 }

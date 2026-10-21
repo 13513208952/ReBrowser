@@ -9,9 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -19,6 +21,9 @@ import java.util.WeakHashMap;
  * loads a URL and never deletes a record: clicks only return the exact captured row token,
  * page revision and user intent to the owning window, which must re-authorize and re-read.
  * A Row token is a process-local UI handoff, NOT an account/grant/文件 capability.
+ * Retain/remove are ONE-SHOT per exact frame+row: after an attempt the button stays disabled
+ * until the native owner supplies a new page, even when the callback outcome is unknown.
+ * OPEN has a separate policy: navigation may be requested again (the owner re-authorizes).
  */
 public final class HistoryAdapter extends BaseAdapter {
     public static final int MAX_ROWS = 100;
@@ -26,6 +31,10 @@ public final class HistoryAdapter extends BaseAdapter {
     public static final int MAX_URL_CHARS = 8192;
     public static final int MAX_VISITED_TEXT_CHARS = 64;
     private static final int OPEN = 0, RETAIN = 1, REMOVE = 2;
+    /** Display-only capability reported by the native owner; it is not a grant to delete. */
+    public enum Offered { OPEN, RETAIN, REMOVE }
+    /** UI gate state: only AVAILABLE may be clicked; ATTEMPTED waits for a fresh native page. */
+    public enum ActionState { AVAILABLE, NOT_OFFERED, ATTEMPTED, UNAVAILABLE }
 
     public interface Actions {
         void open(Row row, long expectedRevision);
@@ -36,21 +45,43 @@ public final class HistoryAdapter extends BaseAdapter {
     /** Immutable display row. displayUrl is display text only, never a load target. */
     public static final class Row {
         private final Object itemRef;
-        private final String title, displayUrl, visitedText;
+        private final String title, displayUrl, visitedText, unavailableReason;
+        private final Set<Offered> offered;
         public Row(Object itemRef, String title, String displayUrl, String visitedText) {
-            if (itemRef == null) throw invalid();
+            this(itemRef, title, displayUrl, visitedText, EnumSet.of(Offered.OPEN), "原生未提供保留或删除操作");
+        }
+        /** A missing/empty offered set never enables open/retain/remove by default. */
+        public Row(Object itemRef, String title, String displayUrl, String visitedText, Set<Offered> offered, String unavailableReason) {
+            if (itemRef == null) throw Checks.invalid();
             this.itemRef = itemRef;
-            this.title = text(title, MAX_TITLE_CHARS);
-            this.displayUrl = text(displayUrl, MAX_URL_CHARS);
-            this.visitedText = text(visitedText, MAX_VISITED_TEXT_CHARS);
+            this.title = Checks.text(title, MAX_TITLE_CHARS);
+            this.displayUrl = Checks.text(displayUrl, MAX_URL_CHARS);
+            this.visitedText = Checks.text(visitedText, MAX_VISITED_TEXT_CHARS);
+            if (offered == null) throw Checks.invalid();
+            EnumSet<Offered> copy = EnumSet.noneOf(Offered.class);
+            copy.addAll(offered);
+            this.offered = Collections.unmodifiableSet(copy);
+            this.unavailableReason = unavailableReason == null ? "未提供可用原因" : text(unavailableReason, 96);
         }
         public Object itemRef() { return itemRef; }
         public String title() { return title; }
         public String displayUrl() { return displayUrl; }
         /** Pre-formatted display text supplied by the query owner; never parsed as authority. */
         public String visitedText() { return visitedText; }
+        public Set<Offered> offered(){return offered;}
+        public boolean offers(Offered action){return offered.contains(action);}
+        public String unavailableReason(){return unavailableReason;}
     }
 
+    /** Nested pure checks so Rows/State/Row never resolve the Android outer class at HOST runtime. */
+    static final class Checks {
+        static IllegalArgumentException invalid(){return new IllegalArgumentException("Invalid native list row/page");}
+        static String text(String value,int maximum){
+            if(value==null || value.length()>maximum)throw Checks.invalid();
+            for(int i=0;i<value.length();i++){char c=value.charAt(i);if(Character.isISOControl(c))throw Checks.invalid();if(Character.isHighSurrogate(c)){if(++i>=value.length() || !Character.isLowSurrogate(value.charAt(i)))throw Checks.invalid();}else if(Character.isLowSurrogate(c))throw Checks.invalid();}
+            return value;
+        }
+    }
     public static final class Rows {
         public static void validate(List<Row> rows, long pageRevision) {
             if (pageRevision < 1) throw new IllegalArgumentException("Invalid native history page revision");
@@ -61,9 +92,27 @@ public final class HistoryAdapter extends BaseAdapter {
                 if (seen.put(row.itemRef(), row) != null) throw new IllegalArgumentException("Duplicate native history row token");
             }
         }
-        public static String label(Row row) { if (row == null) throw invalid(); return row.title(); }
+        public static String label(Row row) { if (row == null) throw Checks.invalid(); return row.title(); }
+        public static ActionState actionState(Row row, Offered action, boolean attempted) {
+            if (row == null || action == null) throw Checks.invalid();
+            if (!row.offers(action)) return ActionState.NOT_OFFERED;
+            if (attempted && action != Offered.OPEN) return ActionState.ATTEMPTED;
+            return ActionState.AVAILABLE;
+        }
+        public static String actionReason(Row row, Offered action, ActionState state) {
+            if (row == null || action == null || state == null) throw Checks.invalid();
+            switch (state) {
+                case AVAILABLE: return actionLabel(action) + "：“" + row.title() + "”";
+                case NOT_OFFERED: return row.unavailableReason();
+                case ATTEMPTED: return "已请求“" + row.title() + "”，等待原生重新读取";
+                default: return "当前不可用";
+            }
+        }
+        public static String actionLabel(Offered action) {
+            switch (action) { case OPEN: return "打开历史记录"; case RETAIN: return "保留历史记录"; default: return "删除历史记录"; }
+        }
         public static String detail(Row row) {
-            if (row == null) throw invalid();
+            if (row == null) throw Checks.invalid();
             if (row.displayUrl().isEmpty()) return row.visitedText();
             if (row.visitedText().isEmpty()) return row.displayUrl();
             return row.displayUrl() + " · " + row.visitedText();
@@ -77,6 +126,12 @@ public final class HistoryAdapter extends BaseAdapter {
         private List<Row> rows = Collections.emptyList();
         private Object frame;
         private boolean retired;
+        private final List<Attempt> attempts = new ArrayList<>();
+        private static final int MAX_ATTEMPTS = MAX_ROWS * 3;
+        private static final class Attempt {
+            final Object frame, itemRef; final long revision; final Offered action;
+            Attempt(Object frame,long revision,Object itemRef,Offered action){this.frame=frame;this.revision=revision;this.itemRef=itemRef;this.action=action;}
+        }
         public Object show(long pageRevision, List<Row> next) {
             check();
             if (retired) throw new IllegalStateException("Retired native list cannot show a new page");
@@ -84,10 +139,29 @@ public final class HistoryAdapter extends BaseAdapter {
             revision = pageRevision;
             rows = Collections.unmodifiableList(new ArrayList<>(next));
             frame = new Object();
+            attempts.clear(); // a fresh native page re-enables genuinely re-offered actions
             return frame;
         }
-        public void hide() { check(); rows = Collections.emptyList(); frame = null; }
-        public void retire() { check(); if (retired) return; retired = true; rows = Collections.emptyList(); frame = null; }
+        public void hide() { check(); rows = Collections.emptyList(); frame = null; attempts.clear(); }
+        public void retire() { check(); if (retired) return; retired = true; rows = Collections.emptyList(); frame = null; attempts.clear(); }
+        /** Consume the single UI attempt BEFORE invoking the owner; unknown outcome stays spent. */
+        public boolean beginAttempt(Object expectedFrame, long expectedRevision, Object itemRef, Offered action) {
+            check();
+            if (!current(expectedFrame, expectedRevision) || action == null) return false;
+            Row row=null;for(Row candidate:rows)if(candidate.itemRef()==itemRef){row=candidate;break;}
+            if(row==null || !row.offers(action))return false;
+            if (wasAttempted(expectedFrame, expectedRevision, itemRef, action)) return false;
+            if (attempts.size() >= MAX_ATTEMPTS) return false; // bounded latch memory
+            attempts.add(new Attempt(expectedFrame, expectedRevision, itemRef, action));
+            return true;
+        }
+        public boolean wasAttempted(Object expectedFrame, long expectedRevision, Object itemRef, Offered action) {
+            check();
+            for (Attempt attempt : attempts)
+                if (attempt.frame == expectedFrame && attempt.revision == expectedRevision
+                        && attempt.itemRef == itemRef && attempt.action == action) return true;
+            return false;
+        }
         public Object frame() { check(); return frame; }
         public long revision() { check(); return revision; }
         public int rowCount() { check(); return retired ? 0 : rows.size(); }
@@ -122,14 +196,14 @@ public final class HistoryAdapter extends BaseAdapter {
 
     public HistoryAdapter(Context context) {
         BrowserToolbar.main();
-        if (context == null) throw invalid();
+        if (context == null) throw Checks.invalid();
         Context application = context.getApplicationContext();
         this.context = application == null ? context : application;
     }
 
     public void bind(BrowserToolbar.Binding binding, long pageRevision, List<Row> rows, Actions actions) {
         BrowserToolbar.main();
-        if (binding == null || actions == null) throw invalid();
+        if (binding == null || actions == null) throw Checks.invalid();
         binding.check();
         state.show(pageRevision, rows);
         clearHolders();
@@ -219,15 +293,17 @@ public final class HistoryAdapter extends BaseAdapter {
         long revision = state.revision();
         holder.title.setText(Rows.label(row));
         holder.detail.setText(Rows.detail(row));
-        holder.open.setContentDescription("打开历史记录：" + row.title());
-        holder.retain.setContentDescription("保留历史记录：" + row.title());
-        holder.remove.setContentDescription("删除历史记录：" + row.title());
-        holder.open.setEnabled(true);
-        holder.retain.setEnabled(true);
-        holder.remove.setEnabled(true);
-        holder.open.setOnClickListener(v -> dispatch(frame, revision, row, OPEN));
-        holder.retain.setOnClickListener(v -> dispatch(frame, revision, row, RETAIN));
-        holder.remove.setOnClickListener(v -> dispatch(frame, revision, row, REMOVE));
+        bindAction(holder.open, row, Offered.OPEN, frame, revision);
+        bindAction(holder.retain, row, Offered.RETAIN, frame, revision);
+        bindAction(holder.remove, row, Offered.REMOVE, frame, revision);
+    }
+    private void bindAction(Button button, Row row, Offered action, Object frame, long revision) {
+        ActionState actionState = Rows.actionState(row, action, state.wasAttempted(frame, revision, row.itemRef(), action));
+        button.setEnabled(actionState == ActionState.AVAILABLE);
+        button.setContentDescription(Rows.actionReason(row, action, actionState));
+        if (actionState != ActionState.AVAILABLE) { button.setOnClickListener(null); return; }
+        int kind = action == Offered.OPEN ? OPEN : action == Offered.RETAIN ? RETAIN : REMOVE;
+        button.setOnClickListener(v -> dispatch(frame, revision, row, kind));
     }
 
     private void clear(Holder holder) {
@@ -256,8 +332,13 @@ public final class HistoryAdapter extends BaseAdapter {
         try{capturedBinding.check();if(capturedBinding!=binding || callback!=actions)return;row=state.require(expectedFrame,expectedRevision,captured.itemRef());}
         catch(SecurityException staleSource){if(binding==capturedBinding)unbind();return;}
         catch(IllegalStateException|IllegalArgumentException staleFrameOrRow){return;}
+        Offered offeredAction=action==OPEN?Offered.OPEN:action==RETAIN?Offered.RETAIN:Offered.REMOVE;
+        if(!row.offers(offeredAction))return;
+        if(action==RETAIN&&!state.beginAttempt(expectedFrame,expectedRevision,row.itemRef(),Offered.RETAIN))return;
+        if(action==REMOVE&&!state.beginAttempt(expectedFrame,expectedRevision,row.itemRef(),Offered.REMOVE))return;
+        notifyDataSetChanged();
         BrowserToolbar.IntentOutcome result=BrowserToolbar.invokeNativeIntent(()->{if(action==OPEN)callback.open(row,expectedRevision);else if(action==RETAIN)callback.retain(row,expectedRevision);else callback.remove(row,expectedRevision);});
-        if(result==BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN && binding==capturedBinding && actions==callback && state.current(expectedFrame,expectedRevision))outcomeText="操作结果未知，请重新读取历史";
+        if(result==BrowserToolbar.IntentOutcome.CALLBACK_UNKNOWN && binding==capturedBinding && actions==callback && state.current(expectedFrame,expectedRevision)){outcomeText="操作结果未知，请重新读取历史";notifyDataSetChanged();}
     }
 
     private Button button(String label) {
@@ -282,13 +363,13 @@ public final class HistoryAdapter extends BaseAdapter {
     }
 
     private static String text(String value, int maximum) {
-        if (value == null || value.length() > maximum) throw invalid();
+        if (value == null || value.length() > maximum) throw Checks.invalid();
         for (int i = 0; i < value.length(); i++) {
             char c = value.charAt(i);
-            if (Character.isISOControl(c)) throw invalid();
+            if (Character.isISOControl(c)) throw Checks.invalid();
             if (Character.isHighSurrogate(c)) {
-                if (++i >= value.length() || !Character.isLowSurrogate(value.charAt(i))) throw invalid();
-            } else if (Character.isLowSurrogate(c)) throw invalid();
+                if (++i >= value.length() || !Character.isLowSurrogate(value.charAt(i))) throw Checks.invalid();
+            } else if (Character.isLowSurrogate(c)) throw Checks.invalid();
         }
         return value;
     }

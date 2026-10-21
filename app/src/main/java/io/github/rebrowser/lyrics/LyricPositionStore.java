@@ -1,9 +1,10 @@
 package io.github.rebrowser.lyrics;
 
 /**
- * Pure, bounded lyric-overlay POSITION record: validation, clamping into the own display and an
- * explicit restore result. It never writes SharedPreferences/files, never reads v1 positions and
- * never treats record validation as persistence or source authorization.
+ * Pure, bounded lyric-overlay POSITION record with RELATIVE-ANCHOR restore. It never writes
+ * SharedPreferences/files, never reads v1 positions and never treats record validation as
+ * persistence or source authorization. The record carries only geometry: no path, source or
+ * identity field, and every restored origin is clamped inside the current visible area.
  */
 public final class LyricPositionStore {
     public static final int MAX_COORD = 32_768;
@@ -24,6 +25,10 @@ public final class LyricPositionStore {
         public int displayWidthDp(){return displayWidthDp;} public int displayHeightDp(){return displayHeightDp;}
         public int panelWidthDp(){return panelWidthDp;} public int panelHeightDp(){return panelHeightDp;}
         public long revision(){return revision;}
+        /** Relative anchor in [0,1] (0 when the panel fully covers that axis). */
+        public double horizontalAnchor(){return anchor(x,displayWidthDp-panelWidthDp);}
+        public double verticalAnchor(){return anchor(y,displayHeightDp-panelHeightDp);}
+        private static double anchor(int value,int range){return range<=0?0d:Math.min(1d,Math.max(0d,(double)value/(double)range));}
     }
     public static final class Restore {
         private final RestoreKind kind;private final int x,y;
@@ -43,19 +48,35 @@ public final class LyricPositionStore {
     }
 
     /**
-     * Restore only from an exact native record for the current display; missing record, smaller
-     * display or different panel size yields UNKNOWN rather than a silently saved default.
+     * Restore the stored RELATIVE anchor onto the current bounds (rotation/split-screen safe).
+     * A panel that now exceeds the display, a negative anchor or an extreme ratio all clamp into
+     * the visible area; a missing record stays UNKNOWN rather than a saved default.
      */
     public static Restore restore(Record stored,int displayWidthDp,int displayHeightDp,int panelWidthDp,int panelHeightDp){
-        // Validate current geometry even when there is no prior record.
-        new Record(0,0,displayWidthDp,displayHeightDp,panelWidthDp,panelHeightDp,1);
+        if(displayWidthDp<1 || displayHeightDp<1 || displayWidthDp>MAX_COORD || displayHeightDp>MAX_COORD)
+            throw new IllegalArgumentException("Invalid display bounds");
+        if(panelWidthDp<1 || panelHeightDp<1 || panelWidthDp>MAX_PANEL_DP || panelHeightDp>MAX_PANEL_DP)
+            throw new IllegalArgumentException("Invalid panel size");
         if(stored==null)return new Restore(RestoreKind.UNKNOWN,0,0);
-        if(stored.displayWidthDp()!=displayWidthDp || stored.displayHeightDp()!=displayHeightDp || stored.panelWidthDp()!=panelWidthDp || stored.panelHeightDp()!=panelHeightDp)return new Restore(RestoreKind.UNKNOWN,0,0);
-        int maxX=Math.max(0,displayWidthDp-panelWidthDp),maxY=Math.max(0,displayHeightDp-panelHeightDp);
-        return new Restore(RestoreKind.POSITION,Math.max(0,Math.min(stored.x(),maxX)),Math.max(0,Math.min(stored.y(),maxY)));
+        int rangeX=Math.max(0,displayWidthDp-panelWidthDp),rangeY=Math.max(0,displayHeightDp-panelHeightDp);
+        int restoredX=(int)Math.round(stored.horizontalAnchor()*(double)rangeX);
+        int restoredY=(int)Math.round(stored.verticalAnchor()*(double)rangeY);
+        restoredX=Math.min(Math.max(0,restoredX),rangeX);
+        restoredY=Math.min(Math.max(0,restoredY),rangeY);
+        return new Restore(RestoreKind.POSITION,restoredX,restoredY);
     }
 
-    /** Save INTENT only; the native preference owner decides persistence. */
+    /** Exact-bounds restore used when the display/panel geometry did not change at all. */
+    public static Restore restoreExact(Record stored,int displayWidthDp,int displayHeightDp,int panelWidthDp,int panelHeightDp){
+        Restore clamped=restore(stored,displayWidthDp,displayHeightDp,panelWidthDp,panelHeightDp);
+        if(stored==null)return clamped;
+        if(stored.displayWidthDp()!=displayWidthDp || stored.displayHeightDp()!=displayHeightDp
+                || stored.panelWidthDp()!=panelWidthDp || stored.panelHeightDp()!=panelHeightDp)
+            return new Restore(RestoreKind.UNKNOWN,0,0);
+        return clamped;
+    }
+
+    /** Save INTENT only; the native preference owner decides persistence. No path/source identity. */
     public static String saveIntentLabel(Record record){
         if(record==null)throw new IllegalArgumentException("Missing position record");
         return "位置记录待原生保存（" + record.x() + "," + record.y() + "）· 未写入";

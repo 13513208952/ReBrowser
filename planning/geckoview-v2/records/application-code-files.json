@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R49",
+  "revision": "R50",
   "authority": [
     "O26",
     "O27",
@@ -533,6 +533,90 @@
           "kind": "delegated-scoped-model-api",
           "purpose": "L13 有限期/未知/OS拒绝展示、精确行scope与退役；实际授权/撤销链留主agent",
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/NewTabViewD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkTreeD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/NewTabQueryD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/SettingsTypedD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/SitePermissionGroupsD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/SubapplicationDraftD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -640,6 +724,30 @@
           "kind": "delegated-scoped-model-api",
           "purpose": "L31 原始正文/附件/唯一译文等不能误作cache、来源不明保留、派生依赖丢失时拒绝回收建议",
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/outlook/MailSearchD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/review/D03MainPureRegressionTest.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -709,6 +817,60 @@
           "kind": "delegated-scoped-model-api",
           "purpose": "L39 缺失/损坏/过长/未知枚举保持unknown，精确revision和副作用为空",
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicActivityD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicQueueD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicStateD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicLyricsD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicArtworkD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicNotificationD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/review/D03MainUiModelsRegressionTest.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -752,6 +914,24 @@
           "kind": "delegated-scoped-model-api",
           "purpose": "L25 异常为unknown而非false/true；回到页面和实际授权区别、源关闭与旧窗口失效",
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreD03Test.java",
+          "kind": "scoped-main-model-regression",
+          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -2674,7 +2854,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2697,16 +2877,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L59",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2719,7 +2901,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Scoped actual production HOST methods or PRIVATE synthetic native source/toykey/path fixtures + SDK compile; NOT actual Android Keystore/filesystem/UI/source/native SDK execution",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2743,16 +2925,18 @@
       "implementationEvidence": [
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
-        "evidence/production-main-agp-R47-checks.json"
+        "evidence/production-main-agp-R47-checks.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L53",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2765,7 +2949,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2788,16 +2972,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L49",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2810,7 +2996,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Scoped actual production HOST methods or PRIVATE synthetic native source/toykey/path fixtures + SDK compile; NOT actual Android Keystore/filesystem/UI/source/native SDK execution",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2834,16 +3020,18 @@
       "implementationEvidence": [
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
-        "evidence/production-main-agp-R47-checks.json"
+        "evidence/production-main-agp-R47-checks.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L50",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2856,7 +3044,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2879,16 +3067,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L51",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2901,7 +3091,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Scoped actual production HOST methods or PRIVATE synthetic native source/toykey/path fixtures + SDK compile; NOT actual Android Keystore/filesystem/UI/source/native SDK execution",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2925,16 +3115,18 @@
       "implementationEvidence": [
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
-        "evidence/production-main-agp-R47-checks.json"
+        "evidence/production-main-agp-R47-checks.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L52",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2947,7 +3139,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -2970,16 +3162,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L54",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -2992,7 +3186,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Scoped actual production HOST methods or PRIVATE synthetic native source/toykey/path fixtures + SDK compile; NOT actual Android Keystore/filesystem/UI/source/native SDK execution",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -3016,16 +3210,18 @@
       "implementationEvidence": [
         "records/native-private-record-store-contract.json",
         "evidence/D01-reviewed-worker-models-host-execution.json",
-        "evidence/production-main-agp-R47-checks.json"
+        "evidence/production-main-agp-R47-checks.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L55",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3038,7 +3234,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -3061,16 +3257,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L56",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3083,7 +3281,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -3106,16 +3304,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L57",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3128,7 +3328,7 @@
         "VT05",
         "VT03"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "ui",
       "delegation": {
@@ -3151,16 +3351,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L58",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3450,7 +3652,7 @@
         "VT06",
         "VT08"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "outlook",
       "delegation": {
@@ -3473,16 +3675,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L71",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3751,7 +3955,7 @@
         "VT06",
         "VT08"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "outlook",
       "delegation": {
@@ -3774,16 +3978,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L73",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3844,7 +4050,7 @@
         "VT06",
         "VT08"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "outlook",
       "delegation": {
@@ -3867,16 +4073,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L72",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -3975,7 +4183,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -3998,16 +4206,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L60",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4091,7 +4301,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4114,16 +4324,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L62",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4184,7 +4396,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4207,16 +4419,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L67",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4254,7 +4468,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4277,16 +4491,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L66",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4301,7 +4517,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4324,16 +4540,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L65",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4348,7 +4566,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4371,16 +4589,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L64",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4395,7 +4615,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4418,16 +4638,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L61",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4442,7 +4664,7 @@
         "VT06",
         "VT07"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "music",
       "delegation": {
@@ -4465,16 +4687,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L63",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4487,7 +4711,7 @@
         "VT07",
         "VT04"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "lyrics",
       "delegation": {
@@ -4510,16 +4734,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L68",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4532,7 +4758,7 @@
         "VT07",
         "VT04"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "lyrics",
       "delegation": {
@@ -4555,16 +4781,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L69",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {
@@ -4577,7 +4805,7 @@
         "VT07",
         "VT04"
       ],
-      "validationMeaning": "Actual bounded production model/parser HOST or syntheticDOM/staticasset checks + SDKAPIcompile; no nativeView/Gecko/site/authority/backend completion",
+      "validationMeaning": "R50 boundedmain-reviewedsource/models/API; actualAndroidcallbacks/render/wholebackendunqualified",
       "runtimePending": true,
       "testReferenceGroup": "lyrics",
       "delegation": {
@@ -4600,16 +4828,18 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/D02-review-integration-contract.json",
-        "evidence/D02-main-review-host-execution.json"
+        "evidence/D02-main-review-host-execution.json",
+        "records/D03-review-integration-contract.json"
       ],
       "activeDelegation": {
         "taskId": "L70",
         "round": "D03",
         "difficulty": "bounded-code-extension",
         "scope": "slice",
-        "status": "reserved-not-started",
+        "status": "reviewed-scoped-host-api",
         "assignmentRef": "records/low-cost-agent-assignments.json",
-        "doesNotReplaceHistoricalAdmission": true
+        "doesNotReplaceHistoricalAdmission": true,
+        "reviewEvidenceRef": "evidence/D03-main-review-host-execution.json"
       }
     },
     {

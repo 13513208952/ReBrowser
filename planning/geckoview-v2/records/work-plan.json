@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R49",
+  "revision": "R50",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,10 +225,10 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "O83/O85/O86：D03按实际算法/界面/资源所有权缺口分配L49–L73共25既有Java实质扩展，不算25新增/PLAN完成；开始前上下文全同步，无额外交接源码副本，保留dsh隔离与owner完成通知后主审",
-    "主agent避开25目标跨11核心文件闭合nativeepochpin→coherent保留目录capture→4MiB严格二进制→既有私有AEAD/CAS→单次有界IO检查，原生壳仅显式读取数量且不恢复；TEMP/privatecontext不进入保留记录",
-    "104源码实际AGP778HOST；49纯切片427HOST+实际SDKbootclasspath；新增50主审用合成来源/publictoykey与真实HOST文件，Android Handler/View/Keystore/Gecko仍未运行",
-    "真实checkpoint的SDK toString先完整JSONObject/String物化，不能假称有界native串流；明确保留SessionCheckpointStore/实际恢复/finitePermission/persistentcookie/sourcefresh等依赖，不用桩拖成假完成"
+    "O88通知D03实际结果dsh/result/d03/，25最新哈希/6R49context独立核对，107原始非build文件先私有归档；不照搬40Java/6资产/上下文或接受180/探针自述为主审证据",
+    "R50审查修正25既有Java扩展＋共享BrowserToolbar，真实修复重绘失效/陈旧回调重定向/设置部分提交/伪发布/未提供媒体能力/图像所有权ABA/私有view清理/词字符映射等缺陷，不以enum/假后端凑数",
+    "保留82主线基线类778测试并另列28交付相关类123测试、主审新增43；实际AGP104源码/560class/944HOST，49纯切片501HOST＋实际SDKbootclasspath，Android View/媒体/Gecko/网站未实测",
+    "D03当前无保留目标；原生来源Root/Actor/当前权限与目标证明、persistentcookiecontext/有限权限/真实checkpoint与恢复仍主线依赖。下一核心继续管理员当前准入而不是把持钥/DTO/显示当执行授权"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [

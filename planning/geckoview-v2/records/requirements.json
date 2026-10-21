@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R48",
+  "revision": "R50",
   "requirements": [
     {
       "id": "R01",
@@ -594,10 +594,10 @@
       "title": "低成本协作以实际代码实现为主且单批不少于25文件",
       "rule": "根据实际模块任务分配不少于25个不同应用代码文件的实质实现任务，不转为主要依靠低成本agent负责边界测试；主agent保留独立边界审查、接口/安全不变量和集成。不能用测试、文档、空实现、无意义改动凑数；不将高风险限定切片谎报整文件完成。",
       "state": "owner-required",
-      "implementation": "not-started",
-      "implementationEvidence": "records/low-cost-agent-assignments.json",
-      "implementationMeaning": "D03 assigned25distinctexistingJavafiles L49–L73 with concrete code responsibilities; no newruntimecount/PLANcompletion claimed; worker implementation and main independent review stillpending.",
-      "delegationAssignmentState": "D03-assigned-25-code-extensions-awaiting-worker"
+      "implementation": "partial-source",
+      "implementationEvidence": "records/implementation-readiness.json",
+      "implementationMeaning": "25existingruntimeJavaextensions delivered, reviewed/fixed and independentlytestedbyMain atscopedHOST/APIlevel; no fullbackend/Android claim",
+      "delegationAssignmentState": "D03-25-code-extensions-main-reviewed-scoped-not-wholeproduct"
     }
   ]
 }

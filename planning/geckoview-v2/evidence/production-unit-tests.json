@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
   "runtimeSourceFilesCompiled": 49,
-  "junitTestsPassed": 427,
-  "junitOutput": "JUnit version 4.13.2\n...........................................................................................................................................................................................................................................................................................................................................................................................................................................\nTime: 1.231\n\nOK (427 tests)\n\n",
+  "junitTestsPassed": 501,
+  "junitOutput": "JUnit version 4.13.2\n.....................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................\nTime: 2.596\n\nOK (501 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -119,27 +119,27 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
-      "sha256": "ace5699df579b5f0ba64ec4ec8f879316ded4ff034302b98b88855d20c627543"
+      "sha256": "26e3ee741e0af2fc19a49971ee678f69767c260052d14bbdec07df104a2a163c"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
-      "sha256": "ffc1aa74dd154f979b11e8a4b686be07a455142b727bb5f9d0bff3db1458f8a9"
+      "sha256": "f562341853fe5f33fe3e8ebe87284c98403d03b2c5681b51000b4e94316b950a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
-      "sha256": "8f593144ee3d75f6f01f53cc0092069533b801c3f2613ac66a263249a5e77538"
+      "sha256": "643330ed22ea4757263fe7f59d92bc5432120f56dd55bc4c49d886dff34faba2"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
-      "sha256": "aff241e13499812b4152c93ea618a8e364339eaf4420ae38f9909bc83991e73a"
+      "sha256": "df9fae5a5c70ab512703691f46a2fb2367d289ddef9245968ca617d4272965b7"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
-      "sha256": "41e818888525b26d647da0de0165cd0d16fa40f1c74ca46288af71cd058ea448"
+      "sha256": "73cc40859a45e8bfc0c275ced5f2a0189572fbb3e69c968cc00a658244c4773f"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
-      "sha256": "f19aa3cc35289146de1c9045fc6f4706c0fe51495cf8a825f0ef8e95afc159de"
+      "sha256": "9e5df7ba57c6f0211f537434ac830179c1f2a447d853fedb8c16e37eb6255d3a"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
@@ -187,7 +187,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
-      "sha256": "c79b3f4ee464e11bf0fa184802be47392faffcc611064d84578f81af04726548"
+      "sha256": "8117abbad493767f5693d0013a3da8f32e0ac5d36a2b3f46ddefc85f698c06c6"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
@@ -195,7 +195,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
-      "sha256": "8cf3bc8b2c758c0636deba81dcb061567db38bafbfac9ce52a8a70e66b7fd4eb"
+      "sha256": "b62ef93ba64f36e6e65a2fce7a9b211807b3618c70a3f065acc6238b88073caa"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
@@ -310,28 +310,52 @@
       "sha256": "32f21027f60d882bb7dd88a7be7fcf79b2192e93e8edf6adcfc509cad803ba91"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerD03Test.java",
+      "sha256": "66991eb065b0d8602178a8d9f943c7ac9b0e72d8eb93a986ab540d22e4c0100d"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java",
       "sha256": "00f01a26024e5ae63adc2ba0146b2d60d0e0907426edc7f3f1dfba163b9c7a7b"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreD03Test.java",
+      "sha256": "6f2fa57bc9e07cb8863d865411161bc823b0b726a1decdcadbc81b15e556585a"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java",
-      "sha256": "37ca849a3bd48da60a21755b777194926eb3d4722894ea102e83cb635617a4d9"
+      "sha256": "c732118e3daba1ed5ca987e769d9cc3cb38e25e608de195f67041810520008c5"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/lyrics/OverlayPermissionFlowTest.java",
       "sha256": "0cc5a656e3baf8f6a5f1feeecc52e634be74f1149600ffcd8d96bdaf7a933202"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicLyricsD03Test.java",
+      "sha256": "5f07059d3dc44a40057e6ce6c8898482c771dd42a59ab20713861424fad17c97"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java",
       "sha256": "b267b7e6476ed97878f9e8673401f0aec38abe0a9703d8d4c1fd4c68c6ab8a25"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesD03Test.java",
+      "sha256": "b9cdf17d1f5c82584cf7f15bd0ba7783a0371f989cd58a536dc86ebb789bb99e"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java",
       "sha256": "7a0383604dd96537a3f7fedaf16dfc6d4bd5981f7b618927982e2f273bd546cb"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicQueueD03Test.java",
+      "sha256": "a04c8f986cd17b4de9c880f0790fd5cbcf9a2e61cc54f45a95729f6ebf0c7a62"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java",
       "sha256": "f218f795d1beb7fc643521547814f297a5708cbf166da5e8331ee66360a20823"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/music/MusicStateD03Test.java",
+      "sha256": "717a1b3297901e25f30fc4ee94febf57a6ebdeca82629185a4709dd07f2ab57a"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java",
@@ -350,6 +374,10 @@
       "sha256": "91356f1207b331d7cc42fa9495e45568c46b053ee100aed64e54dfd9f25ea864"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/outlook/MailSearchD03Test.java",
+      "sha256": "2ef31fd7708572eee5ee68cfc607ed8954109701a61e995df05f8e1581472c08"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java",
       "sha256": "b10541c602d9361e8f40e5443938ebfa026611213e8c6665b25c9b4413e1b1e3"
     },
@@ -360,6 +388,10 @@
     {
       "path": "app/src/test/java/io/github/rebrowser/review/D02ParserRegressionTest.java",
       "sha256": "b458e7942936fdb611f2fe1cb2e37aecdcdcedf86198721be2b69b1d35b7bdef"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/review/D03MainPureRegressionTest.java",
+      "sha256": "65b7c982c262d0d7e9a33fe67b006d70b1bb5aadb5c10f334261fa522a5d24c4"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/settings/PersonalizationPolicyTest.java",
@@ -383,7 +415,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java",
-      "sha256": "39c5fa49ebfe478e13aae9a6842e99ffd9847c5ba18726470dbaf7e0ef3e13d9"
+      "sha256": "394b2bf92999833503298cd661b18e699bb6ae60a661151882f27a73d802b516"
     }
   ],
   "runnerSha256": "d8c072bea4c3d235606c32bd451ef3aecf806b56147b0a9cd3cfcabb8a2dad20",
@@ -392,8 +424,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 7639638016,
-  "memAvailableBefore": 4906000384,
+  "freeBytesBefore": 7736442880,
+  "memAvailableBefore": 5427036160,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

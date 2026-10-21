@@ -1,0 +1,27 @@
+{
+  "id": "R50",
+  "state": "D03scopedsourceextensions-reviewed-fixed-independentlyHOST/APIvalidated-not-full-Androidorbackends",
+  "contractRef": "records/D03-review-integration-contract.json",
+  "executionEvidenceRef": "evidence/D03-main-review-host-execution.json",
+  "workloadEvidenceRef": "evidence/D03-main-review-code-workload.json",
+  "actualRuntimeCodeChanged": 26,
+  "D03ExistingFilesIntegrated": 25,
+  "newRuntimeFiles": 0,
+  "AGPMainSourceFiles": 104,
+  "compiledMainClassFiles": 560,
+  "AGPHostTestsPassed": 944,
+  "pureHostTestsPassed": 501,
+  "mainAdversarialNewTestsPassed": 43,
+  "workerRelatedClassesIndependentlyExecuted": 28,
+  "workerRelatedTestsIndependentlyExecuted": 123,
+  "productComplete": false,
+  "notClaimed": [
+    "NativeViews/Activity/Notification/BitmapFactory/recycle/MotionEvent/WindowManager/Gecko/OS/website/CSP notexecuted; HOSTnestedmodels/puremethods/APIcompile only",
+    "No newActivityManifest/assetSourceSet/extension/service/notificationposting/PendingIntentcreation/enrollment/Root/key/dataDirprovision/signing/systemroles/login/playback/sensors/deviceactions",
+    "Settings/permission/download/queue DTO/offered/opaqueUIreceipts notsource/Actor/account/ownergrant/document ortask/filepublicationauthority. Actualnativebackendreauthorizes/rechecks beforeeffect",
+    "No completehistory/download/settings/bookmark/music/mail/overlaybackendorproductcompletion; existingentrysourceRootUNCONFIGURED, actoradmission/corecontrol remainsseparate",
+    "Onlysameframe native-character mappings enablewordspan; unsupported/unmappedtimingremainsseparatewordobservation; no rawofficialYRC/remoteAPI/rights claim",
+    "Logicalper-instanceownedbitmap/result credit is not wholeprocess/nativepeak/physicalGC/endofJNI guarantee. Unknownnative-return/disposalkeepsownedslot; copied/borrowedrefs separatelycaller-owned",
+    "OriginalD01/D02/R47/R48/R49evidence preserved againstoldinputs. CurrentR50reports reflectactualnewexecution, notupdatedhashesonoldruns"
+  ]
+}

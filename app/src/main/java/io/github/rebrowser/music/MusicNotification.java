@@ -4,16 +4,23 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.os.Build;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Builds a media notification VIEW only. It creates no channel, posts nothing, starts no
  * foreground service and fabricates no PendingIntent: actions must be exact intentionally-supplied
- * intents, and missing ones are omitted. Seconds from the official player are converted to
- * milliseconds with bounded long arithmetic; unknown duration stays unknown.
+ * intents. A {@link Snapshot} binds one native frame to immutable title/subtitle/action order,
+ * is consumable ONCE by its owner, and {@link Snapshot#empty()} clears stale private text/actions.
+ * Seconds from the official player are converted to milliseconds with bounded long arithmetic.
  */
 public final class MusicNotification {
     public static final int MAX_TEXT_CHARS = 128;
     public static final long MAX_POSITION_SECONDS = 24L * 60 * 60;
+    public static final int MAX_ACTIONS = 4;
     public static final String DEFAULT_CHANNEL_ID = "rebrowser.music.playback";
     public enum ActionKind { PLAY, PAUSE, NEXT, PREVIOUS }
 
@@ -49,33 +56,62 @@ public final class MusicNotification {
         public long shownProgressMillis(){return positionMillis();}
     }
 
+    /** One consumable display frame; a consumed/empty snapshot renders no stale private content. */
+    public static final class Snapshot {
+        private final Object frame;private Projection projection;private List<Action> actions;
+        private boolean consumed;
+        private Snapshot(Object frame,Projection projection,List<Action> actions){
+            this.frame=frame;this.projection=projection;this.actions=Collections.unmodifiableList(new ArrayList<>(actions));
+        }
+        public static Snapshot of(Projection projection,List<Action> offeredActions){
+            if(projection==null || offeredActions==null)throw new IllegalArgumentException("Missing notification projection/actions");
+            if(offeredActions.size()>MAX_ACTIONS)throw new IllegalArgumentException("Too many notification actions");
+            Set<ActionKind> kinds=EnumSet.noneOf(ActionKind.class);
+            List<Action> copy=new ArrayList<>();
+            for(Action action:offeredActions){
+                if(action==null)throw new IllegalArgumentException("Null notification action");
+                if(!kinds.add(action.kind()))throw new IllegalArgumentException("Duplicate notification action kind");
+                copy.add(action);
+            }
+            return new Snapshot(new Object(),projection,copy);
+        }
+        /** Explicit empty frame: clears title/subtitle/actions instead of reusing old ones. */
+        public static Snapshot empty(){return new Snapshot(new Object(),new Projection("","",false,0,-1),Collections.<Action>emptyList());}
+        public Object frame(){return frame;}
+        public synchronized Projection projection(){return consumed?new Projection("","",false,0,-1):projection;}
+        public synchronized List<Action> actions(){return consumed?Collections.<Action>emptyList():actions;}
+        public synchronized boolean isEmpty(){return consumed || projection.title().isEmpty() && projection.artist().isEmpty() && actions.isEmpty();}
+        public synchronized boolean consumed(){return consumed;}
+        /** Discard one owned frame; constructing the Notification uses the same atomic take. */
+        public synchronized boolean take(){if(consumed)return false;takeContent();return true;}
+        private synchronized Content takeContent(){if(consumed)throw new IllegalStateException("Notification frame already consumed");Content content=new Content(projection,actions);consumed=true;projection=null;actions=null;return content;}
+    }
+
+    private static final class Content {final Projection projection;final List<Action> actions;Content(Projection p,List<Action> a){projection=p;actions=a;}}
     private MusicNotification(){}
 
-    /**
-     * Construct (not post) a notification. API26+ requires a channel that the OWNER must have
-     * created; an absent channel is reported through the platform at post time, not faked here.
-     */
-    public static Notification build(Context context,String channelId,int smallIconResourceId,Projection projection,Action[] suppliedActions){
-        if(context==null || projection==null)throw new IllegalArgumentException("Missing notification context/projection");
-        if(smallIconResourceId==0)throw new IllegalArgumentException("A supplied small icon is required");
-        String channel=channelId==null || channelId.isEmpty()?DEFAULT_CHANNEL_ID:channelId;
+    /** Construct (not post) a notification from ONE frame; a consumed snapshot is rejected. */
+    public static Notification build(Context context,String channelId,int smallIconResourceId,Snapshot snapshot){
+        if(context==null || snapshot==null)throw new IllegalArgumentException("Missing notification context/snapshot");
+        if(smallIconResourceId<=0)throw new IllegalArgumentException("A supplied small icon is required");
+        String channel=channelId==null || channelId.isEmpty()?DEFAULT_CHANNEL_ID:text(channelId,128);
+        Content content=snapshot.takeContent();Projection projection=content.projection;
         Notification.Builder builder=Build.VERSION.SDK_INT>=26?new Notification.Builder(context,channel):new Notification.Builder(context);
         builder.setSmallIcon(smallIconResourceId)
-                .setContentTitle(projection.title().isEmpty()?"音乐":projection.title())
+                .setContentTitle(projection.title())
                 .setContentText(projection.artist())
                 .setOnlyAlertOnce(true)
                 .setOngoing(projection.playing())
                 .setShowWhen(false);
-        int count=suppliedActions==null?0:suppliedActions.length;
-        if(count>ActionKind.values().length)throw new IllegalArgumentException("Too many native actions");
-        java.util.Set<ActionKind> seen=java.util.EnumSet.noneOf(ActionKind.class);
-        for(int i=0;i<count;i++){
-            Action action=suppliedActions[i];
-            if(action==null || !seen.add(action.kind()))throw new IllegalArgumentException("Null or duplicate notification action");
-            builder.addAction(new Notification.Action.Builder(0,label(action.kind()),action.intent()).build());
-        }
+        for(Action action:content.actions)builder.addAction(new Notification.Action.Builder(0,label(action.kind()),action.intent()).build());
         // Progress is deliberately omitted: confirmed playback end is not established here.
         return builder.build();
+    }
+
+    /** Legacy convenience: one fresh frame from a projection, no actions. */
+    public static Notification build(Context context,String channelId,int smallIconResourceId,Projection projection,Action[] suppliedActions){
+        List<Action> actions=suppliedActions==null?Collections.<Action>emptyList():java.util.Arrays.asList(suppliedActions);
+        return build(context,channelId,smallIconResourceId,Snapshot.of(projection,actions));
     }
 
     public static String label(ActionKind kind){

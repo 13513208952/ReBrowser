@@ -1,0 +1,252 @@
+{
+  "revision": "D03",
+  "baseline": "temp@1d3b602 (reviewed D02 follow-up)",
+  "baselineMainRepo": "ReBrowser@6a5b2e783e9543a513171a22f21c7df69053797a (R47)",
+  "javaRuntimeFiles": 40,
+  "assets": 6,
+  "contextFiles": 6,
+  "d03Tasks": 25,
+  "d03FilesChanged": 25,
+  "testClasses": 43,
+  "testsRun": 170,
+  "failures": 0,
+  "ignored": 0,
+  "probesOriginal": 13641,
+  "probesFollowup": 3635,
+  "compiledWith": "javac --release 17, Android 37.2 android.jar, GeckoView 158 classes.jar, JUnit 4.13.2 (offline)",
+  "actualAndroidRuntimeExecuted": false,
+  "actualGeckoCallbacksExecuted": false,
+  "actualWebRenderOrCspExecuted": false,
+  "realAccountsKeysFilesOrDeviceUsed": false,
+  "notes": [
+    "HistoryAdapter/DownloadsAdapter/SettingsSections moved from read-only context/ into app/ because D03 extends them; context is now 6 files.",
+    "No manifest, Gradle, dependency, sourceSet or main-repository change was made; all Android/Gecko behaviour remains BLOCKED on HOST."
+  ],
+  "files": [
+    {
+      "id": "L49",
+      "task": "历史当前页检索与分页意图",
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "sha256": "4b61808629c5c4306a3c1757ebc4a5d6c1133472cd3d7b2b33836e94237b804f",
+      "bytes": 15590,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryActivityTest.java"
+    },
+    {
+      "id": "L50",
+      "task": "行能力与删除请求所有权",
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "93d8f2cade9a6fef48c214cfd9225b644cef2bb25051d0ce21ec8bf94e950b2c",
+      "bytes": 19806,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/HistoryAdapterTest.java"
+    },
+    {
+      "id": "L51",
+      "task": "按真实任务轴筛选与分页",
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "sha256": "39f429fb10be38beef38057fa70acc8303ac3966923a3c25c4656ef3e8ca3c38",
+      "bytes": 17202,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsActivityTest.java"
+    },
+    {
+      "id": "L52",
+      "task": "批准/取消行的一次交接及显示预算",
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "33cce351f85b99916b09004281bde1d7a6d8ba0b87f1b95a5d58f1350d98bd73",
+      "bytes": 25762,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/DownloadsAdapterTest.java"
+    },
+    {
+      "id": "L53",
+      "task": "收藏树路径投影与本地筛选",
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "9b33ab10b8f0cbf209234251090d0ad39aeab301657fe953c9bfccb8e7ec6dfc",
+      "bytes": 21650,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java"
+    },
+    {
+      "id": "L54",
+      "task": "类型化设置编辑会话",
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "sha256": "e0f3ecee4eed98cdcf9ad486ab5f70d872ebfad6ef2307bd4c17c97a486b398a",
+      "bytes": 17690,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java"
+    },
+    {
+      "id": "L55",
+      "task": "设置显示类型与固定选项描述",
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "f7e137cbb9c23cba8c385eca09628e781c5a536f460b36d9cacc3f7b7de48818",
+      "bytes": 10753,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SettingsSectionsTest.java"
+    },
+    {
+      "id": "L56",
+      "task": "子应用offered操作与请求态",
+      "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "sha256": "a2f917bd2db2a04e0522393beea397d950cdb21f9cf767d13073b0847f0075fb",
+      "bytes": 11459,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/ApplicationsActivityTest.java"
+    },
+    {
+      "id": "L57",
+      "task": "子应用类型化编辑与未提交变化",
+      "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "sha256": "2102d5d7b8f77713a131f8c12bf94da98877ace9873888d2e15c038a7c547f8c",
+      "bytes": 12898,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SubapplicationSettingsActivityTest.java"
+    },
+    {
+      "id": "L58",
+      "task": "权限行分组和撤回意图",
+      "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "sha256": "899e9f97c2fc0eec9bd8139cb197cd23d87fefa1adcab6160612702bfbc62dc1",
+      "bytes": 12907,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/SitePermissionsActivityTest.java"
+    },
+    {
+      "id": "L59",
+      "task": "真正可输入的新页搜索与快捷方式编辑意图",
+      "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "sha256": "28ce53efc407910bdc99597e54f1b6297a785658bf61911ec6b07e9143dd49ef",
+      "bytes": 13893,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/ui/NewTabViewTest.java"
+    },
+    {
+      "id": "L60",
+      "task": "队列页操作与真实歌词显示接线",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "sha256": "e7f337efd7772089753dbd941c077c9c66a608496ec0e54bbddca00d8be123de",
+      "bytes": 13188,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicActivityTest.java"
+    },
+    {
+      "id": "L61",
+      "task": "队列有界窗口与原条目意图",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "sha256": "906d6958aea431edd1c23c2d071beb113b35c3491901e8ef6bea7f8c8a778f08",
+      "bytes": 8918,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicQueueTest.java"
+    },
+    {
+      "id": "L62",
+      "task": "显示时域估计与事件顺序",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "sha256": "73971d89f5c68839179914882b03941c550cb70d67cbbace9f92cc832450fff6",
+      "bytes": 7075,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicStateTest.java"
+    },
+    {
+      "id": "L63",
+      "task": "复合设置变化与精确revision意图",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "sha256": "2274bd0393b1f151d4901f937d5a5eabde14979188a96baed9804af1389eb004",
+      "bytes": 8804,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicPreferencesTest.java"
+    },
+    {
+      "id": "L64",
+      "task": "行翻译对齐与有时域词索引",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "sha256": "412a419a3878771d82be3be7f4fcc3190a4c02c8d7f47eb002f5f1f1a90bce98",
+      "bytes": 11943,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicLyricsTest.java"
+    },
+    {
+      "id": "L65",
+      "task": "返回图像的实际持有额度",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "sha256": "ba959dcaa69204fe63ced5fdb57c2928b243c28992aaf40fa9b975b09394118d",
+      "bytes": 6305,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicArtworkTest.java"
+    },
+    {
+      "id": "L66",
+      "task": "通知展示帧及动作快照",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "sha256": "3b7e6af9495b5faf1e1958dc4ceb7cdd2ac1eb47ea15ef8025a9ff75b3e771f5",
+      "bytes": 8279,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicNotificationTest.java"
+    },
+    {
+      "id": "L67",
+      "task": "完整未知值与动作/位置分离投影",
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "sha256": "771132c6a58e2c6b391f8dddff13a07750e42b0efa3cc569794aad443ff5cb36",
+      "bytes": 7194,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/music/MusicMediaSessionTest.java"
+    },
+    {
+      "id": "L68",
+      "task": "拖动与窗口应用的完整有限状态",
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "sha256": "660cfa6a4ca830747dbfe48ee1b994851efde3ecaaa8e00a4ee5bd373ef3b6f0",
+      "bytes": 8313,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayControllerTest.java"
+    },
+    {
+      "id": "L69",
+      "task": "多指/取消/旋转后的正确拖动",
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "sha256": "475a672eab8d9b23a40e0e8c21f83221e735df9e3322ec51e547535f67c6999d",
+      "bytes": 11735,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricOverlayWindowTest.java"
+    },
+    {
+      "id": "L70",
+      "task": "可逆几何恢复与边界预算",
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "sha256": "bd8d46970408abcc5da884bd56019118bd771945a53d51bbe9100abeddef1962",
+      "bytes": 6094,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/lyrics/LyricPositionStoreTest.java"
+    },
+    {
+      "id": "L71",
+      "task": "账户未知/脱机与官方入口意图",
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "sha256": "846b078702eee92c785369e8eea5634f01771a33c31aad322d147336d7c7dc2b",
+      "bytes": 10918,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/OutlookActivityTest.java"
+    },
+    {
+      "id": "L72",
+      "task": "离线检索分页的请求/响应关联",
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "sha256": "0d79ec54fc81524026404fecf5c30b93e4725c52de2de362544e9740d0ae6b0e",
+      "bytes": 16874,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/OfflineMailActivityTest.java"
+    },
+    {
+      "id": "L73",
+      "task": "线性有界流式字面检索",
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "sha256": "bca45bb0eb2fd5821f3f57bcc7feed9ebd1a30673292959db0e266470617303b",
+      "bytes": 8664,
+      "changedFromD02Baseline": true,
+      "testPath": "app/src/test/java/io/github/rebrowser/outlook/MailSearchTest.java"
+    }
+  ]
+}

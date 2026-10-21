@@ -72,7 +72,7 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests','hostAndroidClassRetainedBrowserStoreTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests','hostAndroidClassRetainedBrowserStoreTests','hostAndroidClassD03PresentationModelsTests'])
     ledger = json.loads((P/'evidence/admin-idempotency-host-sql.json').read_text())
     assert ledger['hostSqlChecks'] == 39 and ledger['temporaryDbAndHarnessRemoved']
     ledger_history = json.loads((P/'evidence/admin-idempotency-host-sql-R43-checkpoint.json').read_text())
@@ -197,7 +197,7 @@ def review():
     assert sum(t['round']=='D02' and t['status']=='reviewed-scoped-host-api' for t in delegation['tasks'])==36
     assert sum(t['round']=='D02' and t['status']=='reviewed-static-source-inactive' for t in delegation['tasks'])==4
     assert sum(t['round']=='D02' and t['status']=='review-held-layout-unapproved' for t in delegation['tasks'])==2
-    d02=json.loads((P/'evidence/D02-main-review-host-execution.json').read_text())
+    d02=json.loads((P/app.get('currentD02HostEvidenceRef','evidence/D02-main-review-host-execution.json')).read_text())
     assert d02['acceptedJavaSources']==36 and d02['acceptedInactiveRuntimeAssets']==4 and d02['heldUnapprovedStyles']==2
     assert d02['providedContextExactBaseR47Matches']==9 and d02['sourceRuntimeHashesIndependentlyVerified']==42
     assert d02['syntheticDomAssertionsPassed']==20 and d02['runtimeJavaScriptActuallyExecuted']
@@ -206,7 +206,16 @@ def review():
     for source in d02['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     assert sum(t['round']=='D01' and t['status']=='reviewed-scoped-host-api' for t in delegation['tasks'])==6
-    assert sum(t['round']=='D03' and t['status']=='reserved-not-started' for t in delegation['tasks'])==25
+    assert sum(t['round']=='D03' and t['status']=='reviewed-scoped-host-api' for t in delegation['tasks'])==25
+    d03=json.loads((P/'evidence/D03-main-review-host-execution.json').read_text())
+    assert d03['acceptedRuntimeExtensions']==25 and d03['newRuntimeFiles']==0 and d03['mainSharedHelperFilesModified']==1
+    assert d03['latest25RuntimeHashesIndependentlyVerified'] and d03['original107NonBuildInputsPreservedBeforeMainChanges'] and d03['contextExactGitR49Matches']==6
+    assert d03['candidateTestClassesIndependentlyExecuted']==28 and d03['candidateTestsIndependentlyExecuted']==123
+    assert d03['mainAddedAdversarialTests']==43 and d03['mainAddedPureAdversarialTests']==26 and d03['mainAddedAndroidBoundModelAdversarialTests']==17
+    assert d03['nativeBoundCandidateAndMainModelAdditionalTests']==app['hostAndroidClassD03PresentationModelsTests']==92
+    assert not any(d03[k] for k in ['workerReportsAdoptedAsIndependentExecution','suppliedContextCodeOrOther15JavaOr6AssetsMerged','actualAndroidUiSdkMediaBitmapNotificationOrMotionEventExecuted','actualGeckoOrWebsiteOrCspExecuted','newActivityOrAssetsActivated','RootOrEnrollmentOrFormalKeysProvisioned','authorityBackendOrFullModulesCompleted','originalHistoricalReportsRewritten','nativeDisposalOrOverallMemoryQuiescenceQualified'])
+    for source in d03['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
     retained=json.loads((P/'evidence/native-retained-browser-store-host-execution.json').read_text())
     assert retained['pureCodecTests']==22 and retained['dataEpochPinTests']==7 and retained['nativeStorePipelineTests']==16 and retained['privateContextCaptureBoundaryTests']==5
     assert retained['actualProductionCaptureCodecGateMethodsExecuted'] and retained['actualJcaAndHostFilesystemStorePipelineExecuted']

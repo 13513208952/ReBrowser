@@ -2,18 +2,27 @@ package io.github.rebrowser.music;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Bounded pure parsing of LRC and official per-word timing text. No network, no page script and
- * no playback authorization: parsed timestamps are display data only. Unsupported input returns
- * an explicit UNSUPPORTED result instead of guessed times.
+ * Bounded pure parsing of LRC and official per-word timing text, exact-time translation
+ * alignment and binary-search line/word lookup. No network, no page script and no playback
+ * authorization: parsed timestamps are display data only. Unsupported input returns an explicit
+ * result instead of guessed times; translations are attached only on an EXACT time match and
+ * ambiguous duplicates stay untranslated rather than approximating.
  */
 public final class MusicLyrics {
     public static final int MAX_INPUT_CHARS = 1024 * 1024;
     public static final int MAX_LINE_CHARS = 4096;
     public static final int MAX_LINES = 4000;
     public static final int MAX_WORDS = 8000;
+    public static final int MAX_AMBIGUOUS_TIMES = 256;
+    // Avoid LambdaMetafactory on the Android bootclasspath-only compile path.
+    private static final java.util.Comparator<Word> WORD_ORDER = new java.util.Comparator<Word>(){
+        @Override public int compare(Word a,Word b){return Long.compare(a.startMs(),b.startMs());}
+    };
     public static final long MAX_TIME_MS = 24L * 60 * 60 * 1000;
     public enum Status { PARSED, EMPTY, UNSUPPORTED }
 
@@ -22,7 +31,9 @@ public final class MusicLyrics {
         Line(long timeMs,String text,String translation){this.timeMs=timeMs;this.text=text;this.translation=translation;}
         public long timeMs(){return timeMs;}
         public String text(){return text;}
+        /** Only an exactly aligned approved translation; null = none/ambiguous. */
         public String translation(){return translation;}
+        Line withTranslation(String translated){return new Line(timeMs,text,translated);}
     }
     public static final class Word {
         private final long startMs,endMs; private final String text;
@@ -31,33 +42,75 @@ public final class MusicLyrics {
         public long endMs(){return endMs;}
         public String text(){return text;}
     }
+    /** Explicit native-normalized character mapping; validated against exact line/word text.
+     * Parsed timing alone NEVER supplies character offsets or picks a repeated-word occurrence. */
+    public static final class WordSpan {
+        private final int wordIndex,lineIndex,start,end;
+        public WordSpan(int wordIndex,int lineIndex,int start,int end){if(wordIndex<0 || lineIndex<0 || start<0 || end<=start)throw new IllegalArgumentException("Invalid lyric span");this.wordIndex=wordIndex;this.lineIndex=lineIndex;this.start=start;this.end=end;}
+        public int wordIndex(){return wordIndex;}public int lineIndex(){return lineIndex;}public int start(){return start;}public int end(){return end;}
+    }
     public static final class Lyrics {
+        private final List<WordSpan> spans;
         private final Status status; private final List<Line> lines; private final List<Word> words;
-        private final boolean overlappingWords;
-        private Lyrics(Status status,List<Line> lines,List<Word> words,boolean overlapping){this.status=status;this.lines=Collections.unmodifiableList(lines);this.words=Collections.unmodifiableList(words);overlappingWords=overlapping;}
+        private final boolean overlappingWords;private final List<Long> ambiguousTimes;
+        private Lyrics(Status status,List<Line> lines,List<Word> words,boolean overlapping,List<Long> ambiguousTimes){this(status,lines,words,overlapping,ambiguousTimes,Collections.<WordSpan>emptyList());}
+        private Lyrics(Status status,List<Line> lines,List<Word> words,boolean overlapping,List<Long> ambiguousTimes,List<WordSpan> spans){
+            this.spans=Collections.unmodifiableList(new ArrayList<>(spans));
+            this.status=status;this.lines=Collections.unmodifiableList(lines);this.words=Collections.unmodifiableList(words);
+            this.overlappingWords=overlapping;this.ambiguousTimes=Collections.unmodifiableList(ambiguousTimes);
+        }
         public Status status(){return status;}
         public boolean available(){return status==Status.PARSED;}
         public List<Line> lines(){return lines;}
         public List<Word> words(){return words;}
         /** Reported per-word ranges overlap; the UI must not invent a merged timing. */
         public boolean overlappingWords(){return overlappingWords;}
-        /** Latest line whose reported start has passed; -1 before the first line. */
+        /** Exact times whose translation was ambiguous or had no unique original line. */
+        public List<Long> ambiguousTranslationTimes(){return ambiguousTimes;}
+        /** Latest line whose reported start has passed; stable for equal timestamps (last tie). */
         public int lineIndexAt(long positionMs){
             if(positionMs<0)throw new IllegalArgumentException("Negative lyric position");
-            int index=-1;
-            for(int i=0;i<lines.size();i++){if(lines.get(i).timeMs<=positionMs)index=i;else break;}
-            return index;
+            int low=0,high=lines.size()-1,result=-1;
+            while(low<=high){
+                int mid=(low+high)>>>1;
+                if(lines.get(mid).timeMs()<=positionMs){result=mid;low=mid+1;}else high=mid-1;
+            }
+            return result;
         }
-        /** Index of the latest word whose reported start passed, or -1; never extrapolates past it. */
+        /** Latest word whose reported start passed (legacy semantic); never extrapolates. */
         public int wordIndexAt(long positionMs){
             if(positionMs<0)throw new IllegalArgumentException("Negative lyric position");
-            int index=-1;
-            for(int i=0;i<words.size();i++){if(words.get(i).startMs<=positionMs)index=i;else break;}
-            return index;
+            int low=0,high=words.size()-1,result=-1;
+            while(low<=high){
+                int mid=(low+high)>>>1;
+                if(words.get(mid).startMs<=positionMs){result=mid;low=mid+1;}else high=mid-1;
+            }
+            return result;
+        }
+        /** Strict [start,end) active word; gaps and positions past the last end return -1. */
+        public int activeWordAt(long positionMs){
+            if(positionMs<0)throw new IllegalArgumentException("Negative lyric position");
+            int index=wordIndexAt(positionMs);
+            if(index<0)return -1;
+            Word word=words.get(index);
+            if(!overlappingWords)return positionMs>=word.startMs && positionMs<word.endMs?index:-1;
+            int unique=-1;for(int i=0;i<=index;i++)if(positionMs>=words.get(i).startMs && positionMs<words.get(i).endMs){if(unique>=0)return -1;unique=i;}return unique;
+        }
+        public WordSpan activeSpanAt(long positionMs){int word=activeWordAt(positionMs),line=lineIndexAt(positionMs);if(word<0 || line<0)return null;for(WordSpan span:spans)if(span.wordIndex==word && span.lineIndex==line)return span;return null;}
+        public Lyrics withNativeSpans(List<WordSpan> nativeSpans){
+            if(nativeSpans==null || nativeSpans.size()>MAX_WORDS)throw new IllegalArgumentException("Invalid lyric mappings");java.util.Set<Integer> seen=new java.util.HashSet<>();
+            for(WordSpan span:nativeSpans){if(span==null || span.wordIndex>=words.size() || span.lineIndex>=lines.size() || !seen.add(span.wordIndex))throw new IllegalArgumentException("Unknown/duplicate lyric mapping");String line=lines.get(span.lineIndex).text();if(span.end>line.length() || span.start>line.length() || span.start>0 && Character.isLowSurrogate(line.charAt(span.start)) || span.end<line.length() && Character.isLowSurrogate(line.charAt(span.end)) || !line.substring(span.start,span.end).equals(words.get(span.wordIndex).text()))throw new IllegalArgumentException("Lyric mapping does not match exact text");}
+            return new Lyrics(status,lines,words,overlappingWords,ambiguousTimes,nativeSpans);
+        }
+        public Line lineAt(long positionMs){
+            int index=lineIndexAt(positionMs);
+            return index<0?null:lines.get(index);
+        }
+        Lyrics withLines(List<Line> replaced,List<Long> ambiguous){
+            return new Lyrics(status,replaced,words,overlappingWords,ambiguous,spans);
         }
     }
 
-    private static final java.util.Comparator<Word> CHRONOLOGICAL_WORDS=new java.util.Comparator<Word>(){public int compare(Word a,Word b){return Long.compare(a.startMs(),b.startMs());}};
     public static Lyrics parseLrc(String text){return parse(text,Collections.<Word>emptyList());}
 
     /** Karaoke text lines are separate; per-word timing is parsed by {@link #parseWords}. */
@@ -68,7 +121,10 @@ public final class MusicLyrics {
             text(lrcText,MAX_INPUT_CHARS);
             List<long[]> times=new ArrayList<>();
             List<String> bodies=new ArrayList<>();
-            for(String raw:lrcText.split("\n",-1)){
+            int rawLines=0;
+            for(int offset=0;offset<=lrcText.length();){
+                if(++rawLines>MAX_LINES*2)throw new IllegalArgumentException("Too many source lyric lines");
+                int end=lrcText.indexOf('\n',offset);if(end<0)end=lrcText.length();String raw=lrcText.substring(offset,end);offset=end+1;
                 if(raw.length()>MAX_LINE_CHARS)throw new IllegalArgumentException("Lyric line too long");
                 String line=raw.endsWith("\r")?raw.substring(0,raw.length()-1):raw;
                 List<Long> stamps=new ArrayList<>();int cursor=0;
@@ -86,33 +142,66 @@ public final class MusicLyrics {
             }
             Integer[] order=new Integer[times.size()];
             for(int i=0;i<order.length;i++)order[i]=i;
-            java.util.Arrays.sort(order,new java.util.Comparator<Integer>(){public int compare(Integer a,Integer b){int c=Long.compare(times.get(a)[0],times.get(b)[0]);return c!=0?c:Integer.compare(a,b);}});
+            java.util.Arrays.sort(order,new java.util.Comparator<Integer>(){
+                @Override public int compare(Integer a,Integer b){int c=Long.compare(times.get(a)[0],times.get(b)[0]);return c!=0?c:Integer.compare(a,b);}
+            });
             for(Integer index:order)parsed.add(new Line(times.get(index)[0],bodies.get(index),null));
         }
-        // Stable chronological order is required by wordIndexAt and overlap detection.
         List<Word> sortedWords=new ArrayList<>(wordTimings);
         for(Word word:sortedWords)
             if(word==null || word.startMs()<0 || word.endMs()<word.startMs() || word.endMs()>MAX_TIME_MS)
                 throw new IllegalArgumentException("Invalid word timing");
-        java.util.Collections.sort(sortedWords,CHRONOLOGICAL_WORDS); // stable for ties
+        Collections.sort(sortedWords,WORD_ORDER); // stable for ties
         boolean overlap=false;
         long previousEnd=-1;
         for(Word word:sortedWords){
             if(word.startMs()<previousEnd)overlap=true;
             previousEnd=Math.max(previousEnd,word.endMs());
         }
-        Status status=parsed.isEmpty() && sortedWords.isEmpty()?(lrcText==null || lrcText.trim().isEmpty()?Status.EMPTY:Status.UNSUPPORTED):Status.PARSED;
-        return new Lyrics(status,parsed,sortedWords,overlap);
+        Status status=parsed.isEmpty() && sortedWords.isEmpty()
+                ?(lrcText==null || lrcText.trim().isEmpty()?Status.EMPTY:Status.UNSUPPORTED):Status.PARSED;
+        return new Lyrics(status,parsed,sortedWords,overlap,Collections.<Long>emptyList());
     }
 
-    public static List<Word> parseWords(String officialWordText){ // native-normalized TSV only; NOT a raw official YRC decoder
+    /**
+     * Align a translation LRC to the original by EXACT timestamp. A time needs exactly one
+     * original line and exactly one translation line; everything else stays untranslated and is
+     * reported as ambiguous instead of being approximated.
+     */
+    public static Lyrics alignTranslations(Lyrics original,Lyrics translation){
+        if(original==null || translation==null)throw new IllegalArgumentException("Missing lyric set");
+        Map<Long,List<String>> originalByTime=new LinkedHashMap<>();
+        for(Line line:original.lines())addAtTime(originalByTime,line);
+        Map<Long,List<String>> translatedByTime=new LinkedHashMap<>();
+        for(Line line:translation.lines())addAtTime(translatedByTime,line);
+        List<Line> aligned=new ArrayList<>();
+        List<Long> ambiguous=new ArrayList<>();
+        for(Line line:original.lines()){
+            List<String> originals=originalByTime.get(line.timeMs());
+            List<String> translations=translatedByTime.get(line.timeMs());
+            boolean unique=originals!=null && originals.size()==1 && translations!=null && translations.size()==1;
+            if(unique)aligned.add(line.withTranslation(translations.get(0)));
+            else{
+                aligned.add(line.withTranslation(null));
+                if((originals.size()>1 || translations!=null && translations.size()>1) && ambiguous.size()<MAX_AMBIGUOUS_TIMES && !ambiguous.contains(line.timeMs()))ambiguous.add(line.timeMs());
+            }
+        }
+        return original.withLines(aligned,ambiguous);
+    }
+
+    private static void addAtTime(Map<Long,List<String>> map,Line line){List<String> values=map.get(line.timeMs());if(values==null){values=new ArrayList<>();map.put(line.timeMs(),values);}values.add(line.text());}
+    /** Native-normalized TSV only, NOT raw official YRC. */
+    public static List<Word> parseWords(String officialWordText){
         if(officialWordText==null)return Collections.emptyList();
         text(officialWordText,MAX_INPUT_CHARS);
         List<Word> words=new ArrayList<>();
-        for(String raw:officialWordText.split("\n",-1)){
+        int rawLines=0;
+        for(int offset=0;offset<=officialWordText.length();){
+            if(++rawLines>MAX_WORDS*2)throw new IllegalArgumentException("Too many source word lines");
+            int endOfLine=officialWordText.indexOf('\n',offset);if(endOfLine<0)endOfLine=officialWordText.length();String raw=officialWordText.substring(offset,endOfLine);offset=endOfLine+1;
             String line=raw.endsWith("\r")?raw.substring(0,raw.length()-1):raw;
-            if(line.trim().isEmpty())continue;
             if(line.length()>MAX_LINE_CHARS)throw new IllegalArgumentException("Word timing line too long");
+            if(line.trim().isEmpty())continue;
             String[] parts=line.split("\t",-1);
             if(parts.length!=3)throw new IllegalArgumentException("Malformed word timing");
             long start=Long.parseLong(parts[0].trim()),end=Long.parseLong(parts[1].trim());
@@ -120,7 +209,7 @@ public final class MusicLyrics {
             words.add(new Word(start,end,text(parts[2],MAX_LINE_CHARS)));
             if(words.size()>MAX_WORDS)throw new IllegalArgumentException("Too many word timings");
         }
-        java.util.Collections.sort(words,CHRONOLOGICAL_WORDS); // stable chronological projection
+        Collections.sort(words,WORD_ORDER); // stable chronological projection
         return Collections.unmodifiableList(words);
     }
 
@@ -134,7 +223,6 @@ public final class MusicLyrics {
         if(!digits(secondsText,1,2) || !digits(fraction,dot<0?0:1,3))return null; // a dot REQUIRES 1..3 digits
         long minutesValue=Long.parseLong(minutes),secondsValue=Long.parseLong(secondsText);
         if(secondsValue>59)return null;
-        // LRC 1/2/3 fractional digits carry 100/10/1 millisecond precision.
         long millis=dot<0?0:Long.parseLong((fraction+"000").substring(0,3));
         long total=minutesValue*60000L+secondsValue*1000L+millis;
         if(total>MAX_TIME_MS)throw new IllegalArgumentException("Lyric time out of range");

@@ -18,7 +18,8 @@ public final class KeyPurposeTest {
         assertEquals(KeyPurpose.RecordKind.BOOKMARKS,KeyPurpose.RecordKind.fromCode(3));
         assertEquals(KeyPurpose.RecordKind.HISTORY,KeyPurpose.RecordKind.fromCode(4));
         assertEquals(KeyPurpose.RecordKind.SETTINGS,KeyPurpose.RecordKind.fromCode(5));
-        assertThrows(IllegalArgumentException.class,()->KeyPurpose.RecordKind.fromCode(6));
+        assertEquals(KeyPurpose.RecordKind.DOWNLOADS,KeyPurpose.RecordKind.fromCode(6));
+        assertThrows(IllegalArgumentException.class,()->KeyPurpose.RecordKind.fromCode(7));
         assertThrows(IllegalArgumentException.class,()->KeyPurpose.RecordKind.fromCode(0));
     }
     @Test public void budgetCheckNeverAllocatesOrAuthorizes(){

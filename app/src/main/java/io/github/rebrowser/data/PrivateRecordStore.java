@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class PrivateRecordStore {
     public static final String EPOCHS_DIRECTORY="owned-epochs-v1",RECORDS_DIRECTORY="private-records-v1";
-    public static final int MAX_RECORDS=3204; // 64workspaces *50tabs + retained catalog/bookmarks/history/settings
+    public static final int MAX_RECORDS=3205; // 64workspaces *50tabs + retained catalog/bookmarks/history/settings/downloads
     public static final long MAX_OWNED_DISK_BYTES=128L*1024*1024;
     public enum Kind { MISSING, CURRENT, UNFINISHED_WRITE }
     public static final class Reference {
@@ -83,7 +83,7 @@ public final class PrivateRecordStore {
         if(application==null || gate==null || nativeEpoch==null || nativeEpoch.length!=16)throw invalid();ioThread();byte[] epoch=nativeEpoch.clone();
         if(ProcessRole.classifyOwnApplication(application.getPackageName(),Application.getProcessName()).startupRoute()!=ProcessRole.StartupRoute.MAIN_NATIVE_OWNER)throw new SecurityException("Primary native private record owner required");
         gate.requireDataEpoch(permit,epoch);ComponentGate.ResourcePin pin=gate.newResourcePin();pin.checkEpochOrBind(permit,epoch);
-        Path noBackup=application.getNoBackupFilesDir().toPath(),epochs=noBackup.resolve(EPOCHS_DIRECTORY),own=epochs.resolve(hex(epoch)),records=own.resolve(RECORDS_DIRECTORY);
+        Path noBackup=application.getDataDir().toPath().resolve("no_backup"),epochs=noBackup.resolve(EPOCHS_DIRECTORY),own=epochs.resolve(hex(epoch)),records=own.resolve(RECORDS_DIRECTORY);
         DataKeyVault vault=DataKeyVault.openExisting(application,gate,epoch,permit);
         PrivateRecordStore result=new PrivateRecordStore(new Path[]{noBackup,epochs,own,records},gate,epoch,vault,true);pin.checkEpochOrBind(permit,epoch);result.check(permit);return result;
     }
@@ -99,22 +99,26 @@ public final class PrivateRecordStore {
         }}catch(IOException|GeneralSecurityException|RuntimeException|Error failure){if(result!=null)result.close();if(credit!=null)credit.releaseAfterOwnedAllocationFreed();throw failure;}finally{operation.set(false);}
     }
     /** Explicit native domain write, NOT automatic restore/repair. No success on unknown commit. */
-    public ReadStamp write(ReadStamp expected,byte[] plaintext,ComponentGate.BusinessPermit permit)throws IOException,GeneralSecurityException {
-        begin(permit);try{
+    public ReadStamp write(ReadStamp expected,byte[] plaintext,ComponentGate.BusinessPermit permit)throws IOException,GeneralSecurityException {return writeAfterNativeAuthorization(expected,plaintext,permit,()->{});}
+    /** Read-only native current domain/Actor checks under the actual IO lock, including AFTER
+     * file force and immediately before atomic replacement. Never an escaped/async/consuming grant. */
+    public interface NativeWriteFence {void requireCurrent();}
+    public ReadStamp writeAfterNativeAuthorization(ReadStamp expected,byte[] plaintext,ComponentGate.BusinessPermit permit,NativeWriteFence actualNativeCurrent)throws IOException,GeneralSecurityException {
+        if(actualNativeCurrent==null)throw invalid();begin(permit);try{
             if(expected==null || expected.issuer!=this || expected.kind==Kind.UNFINISHED_WRITE)throw invalid();Reference ref=expected.reference;own(ref);
             if(plaintext==null || plaintext.length>ref.purpose.maximumPlaintextBytes())throw invalid();
             try(Locked held=lock()){
-                check(permit);compare(expected,raw(ref));long revision=expected.kind==Kind.MISSING?1:next(expected.revision);
+                check(permit);actualNativeCurrent.requireCurrent();check(permit);compare(expected,raw(ref));long revision=expected.kind==Kind.MISSING?1:next(expected.revision);
                 byte[] encrypted=vault.seal(binding(ref,revision),plaintext,permit);checkDiskAdmission(ref,encrypted.length);check(permit);Path target=directory.resolve(ref.name),stage=directory.resolve(ref.name+".pending");
                 try(FileChannel file=FileChannel.open(stage,java.util.Set.of(StandardOpenOption.CREATE_NEW,StandardOpenOption.WRITE,LinkOption.NOFOLLOW_LINKS),PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")))){
                     BasicFileAttributes a=attrs(stage);if(!a.isRegularFile() || a.fileKey()==null)throw new IOException("Unsafe private record stage");
                     ByteBuffer buffer=ByteBuffer.wrap(encrypted);int zeros=0;while(buffer.hasRemaining()){int written=file.write(buffer);if(written==0){if(++zeros>16)throw new IOException("Private record stage stalled");}else zeros=0;}file.force(true);
                     BasicFileAttributes after=attrs(stage);if(!a.fileKey().equals(after.fileKey()) || after.size()!=encrypted.length)throw new IOException("Private record stage changed");
                 }
-                requireDirectories();check(permit);compare(expected,rawTarget(ref));requireDirectories();check(permit);
+                requireDirectories();check(permit);compare(expected,rawTarget(ref));requireDirectories();check(permit);actualNativeCurrent.requireCurrent();check(permit);
                 Files.move(stage,target,StandardCopyOption.ATOMIC_MOVE,StandardCopyOption.REPLACE_EXISTING);
                 try(FileChannel parent=FileChannel.open(directory,StandardOpenOption.READ)){parent.force(true);}
-                requireDirectories();Raw current=raw(ref);if(current.kind!=Kind.CURRENT || !MessageDigest.isEqual(digest(encrypted),digest(current.bytes)))throw new IOException("Private record commit readback mismatch");check(permit);
+                requireDirectories();Raw current=raw(ref);if(current.kind!=Kind.CURRENT || !MessageDigest.isEqual(digest(encrypted),digest(current.bytes)))throw new IOException("Private record commit readback mismatch");check(permit);actualNativeCurrent.requireCurrent();check(permit);
                 return stamp(ref,current,revision);
             }
         }finally{operation.set(false);} // failure preserves uncertain stage/target; NEVER auto-clean/retry
@@ -135,7 +139,7 @@ public final class PrivateRecordStore {
         try(java.nio.file.DirectoryStream<Path> files=Files.newDirectoryStream(directory)){
             for(Path file:files){if(++nodes>MAX_RECORDS*2+1)throw new IOException("Private record object budget reached");String name=file.getFileName().toString();BasicFileAttributes a=attrs(file);if(!a.isRegularFile() || a.fileKey()==null)throw new IOException("Unknown private record directory object");
                 if(name.equals(".private-records.lock"))continue;
-                if(!name.matches("p[1-5]_[0-9a-f]{32}\\.v1(\\.pending)?"))throw new IOException("Unexpected private record namespace object");
+                if(!name.matches("p[1-6]_[0-9a-f]{32}\\.v1(\\.pending)?"))throw new IOException("Unexpected private record namespace object");
                 names.add(name.endsWith(".pending")?name.substring(0,name.length()-8):name);if(names.size()>MAX_RECORDS || a.size()<0 || a.size()>MAX_OWNED_DISK_BYTES-used)throw new IOException("Private record disk budget reached");used+=a.size();
             }
         }

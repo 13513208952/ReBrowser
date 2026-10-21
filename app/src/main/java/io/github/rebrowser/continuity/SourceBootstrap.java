@@ -36,7 +36,7 @@ public final class SourceBootstrap {
         long start=SystemClock.elapsedRealtime();
         if(nativeApplication==null || nativeStore==null)return new Inspection(nativeApplication,Status.UNAVAILABLE,start,null);
         try{
-            nativeStore.requireNativeBootstrapPath(nativeApplication.getNoBackupFilesDir().toPath().resolve(LastGoodSourceStore.BOOTSTRAP_DIRECTORY));
+            nativeStore.requireNativeBootstrapPath(nativeApplication.getDataDir().toPath().resolve("no_backup").resolve(LastGoodSourceStore.BOOTSTRAP_DIRECTORY));
             SigningIdentity.OwnInspection before=SigningIdentity.inspectOwnForContinuity(nativeApplication);
             LastGoodSourceStore.View view=nativeStore.inspect();
             SigningIdentity.OwnInspection after=SigningIdentity.inspectOwnForContinuity(nativeApplication);

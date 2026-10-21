@@ -78,5 +78,40 @@ public final class BridgeBudget {
         if(expected<0 || actual<0)throw new IllegalArgumentException("Negative stream sequence");
         if(expected!=actual)throw new Rejected(Rejection.SEQUENCE_GAP);
     }
+    /** One session-lifetime stream slot: token/port rotation never resets held byte ownership.
+     * Producer retirement, REAL native-owner end and actual chunk disposal are separate axes. */
+    public static final class Streams {
+        private final Window bytes=new Window(CREDIT_WINDOW_BYTES,MAX_QUEUED_INGRESS_ENVELOPES);private StreamSlot live;
+        synchronized StreamSlot tryOpen(){if(live!=null)return null;live=new StreamSlot(this);return live;}
+        private synchronized void releaseIfEnded(StreamSlot slot){if(live==slot && slot.retired && slot.nativeEnd && bytes.objects()==0)live=null;}
+        public synchronized boolean hasOwnedStream(){return live!=null;}
+        public long ownedBytes(){return bytes.usedBytes();}
+    }
+    static final class StreamSlot {
+        final Streams issuer;private boolean retired,nativeEnd;
+        private StreamSlot(Streams issuer){this.issuer=issuer;}
+        Credit reserve(int n){synchronized(issuer){if(retired || issuer.live!=this)throw new IllegalStateException("Bridge stream fenced");return issuer.bytes.tryReserve(n);}}
+        void producerRetired(){synchronized(issuer){retired=true;issuer.releaseIfEnded(this);}}
+        void nativeOwnerEnded(){synchronized(issuer){nativeEnd=true;issuer.releaseIfEnded(this);}}
+        void bytesActuallyFreed(){issuer.releaseIfEnded(this);}
+        long available(){return issuer.bytes.remaining();}
+    }
+    /** Our bounded String roots only; SDK's already-materialized/transient JSON memory is separate. */
+    public static final class Ingress {
+        private int objects;private long bytes;
+        public synchronized Envelope retain(String text){
+            if(text==null || text.length()>MAX_ENVELOPE_UTF8_BYTES)throw new Rejected(Rejection.ENVELOPE_TOO_LARGE);int count=0;
+            for(int n=0;n<text.length();n++){char c=text.charAt(n);if(Character.isHighSurrogate(c)){if(++n>=text.length() || !Character.isLowSurrogate(text.charAt(n)))throw new IllegalArgumentException("Invalid UTF16 ingress");count+=4;}else if(Character.isLowSurrogate(c))throw new IllegalArgumentException("Invalid UTF16 ingress");else count+=c<128?1:c<2048?2:3;if(count>MAX_ENVELOPE_UTF8_BYTES)throw new Rejected(Rejection.ENVELOPE_TOO_LARGE);}
+            if(objects>=MAX_QUEUED_INGRESS_ENVELOPES || count>8L*MAX_ENVELOPE_UTF8_BYTES-bytes)throw new Rejected(Rejection.QUEUE_LIMIT);objects++;bytes+=count;return new Envelope(this,text,count);
+        }
+        public synchronized int objects(){return objects;}
+        private synchronized void free(int size){objects--;bytes-=size;}
+    }
+    public static final class Envelope implements AutoCloseable {
+        private final Ingress issuer;private String text;private final int size;
+        private Envelope(Ingress issuer,String text,int size){this.issuer=issuer;this.text=text;this.size=size;}
+        public synchronized String borrowed(){if(text==null)throw new IllegalStateException("Bridge ingress closed");return text;}
+        @Override public synchronized void close(){if(text==null)return;text=null;issuer.free(size);}
+    }
     private BridgeBudget(){}
 }

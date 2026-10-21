@@ -1,0 +1,30 @@
+package io.github.rebrowser.continuity;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.io.*;
+import java.lang.reflect.*;
+import java.nio.file.*;
+import java.util.*;
+/** Actual bounded ownership/capture/delete/empty NIO methods, generated private HOST trees.
+ * Reflected private capture guard is SYNTHETIC: no real final consent/cold Startup/PM/Keystore. */
+public final class PrivateEpochManifestTest {
+ static final class F implements AutoCloseable {
+  final Path data=Files.createTempDirectory("epoch-owned-host-"),backup=Files.createDirectory(data.resolve("no_backup")),epochs=Files.createDirectory(backup.resolve("owned-epochs-v1")),old=Files.createDirectory(epochs.resolve(repeat('0',32))),records=Files.createDirectory(old.resolve("private-records-v1")),file=Files.write(records.resolve("p6_"+repeat('1',32)+".v1"),new byte[]{1,2,3});
+  F()throws Exception{Files.createDirectory(backup.resolve("source-bootstrap-v1"));}
+  PrivateEpochManifest capture()throws Throwable{Method m=PrivateEpochManifest.class.getDeclaredMethod("captureOwnedColdPaths",Path.class,byte[].class,Runnable.class);m.setAccessible(true);try{return (PrivateEpochManifest)m.invoke(null,data,new byte[16],(Runnable)()->{});}catch(InvocationTargetException e){throw e.getCause();}}
+  public void close()throws Exception{try(java.util.stream.Stream<Path> p=Files.walk(data)){for(Path x:p.sorted(Comparator.reverseOrder()).toArray(Path[]::new))Files.delete(x);}}
+ }
+ @Test public void actualOwnedShapeAndExactEpochAliasOnly()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();assertEquals(3,m.ownedNodeCount());assertEquals(3,m.ownedFileBytes());assertEquals(Collections.singletonList("io.github.rebrowser.datawrap.v1."+repeat('0',32)),m.nativeEpochKeyAliases());assertFalse(m.nativeEpochKeyAliases().contains("io.github.rebrowser.install.v1"));m.requireUnchangedSnapshot();}}
+ @Test public void exactDeleteAndFreshEmptyNamespaceDoesNotTouchSurvivingBootstrap()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();Path baseline=f.backup.resolve("source-bootstrap-v1/source-continuity.v1");Files.write(baseline,new byte[]{7});m.requireUnchangedSnapshot();m.deleteExactOwnedNodes(()->{});assertFalse(Files.exists(f.old));byte[] fresh=new byte[16];fresh[0]=1;Object key=m.createFreshEmptyEpoch(fresh,()->{});m.verifyFreshEmptyEpoch(fresh,key);assertArrayEquals(new byte[]{7},Files.readAllBytes(baseline));}}
+ @Test public void unknownOwnedEpochFileBlocksBeforeAnyDeletion()throws Throwable{try(F f=new F()){Path unknown=Files.write(f.old.resolve("unowned-data"),new byte[]{8});assertThrows(IOException.class,f::capture);assertArrayEquals(new byte[]{1,2,3},Files.readAllBytes(f.file));assertTrue(Files.exists(unknown));}}
+ @Test public void sharedGeckoDataFailsColdPathRatherThanGuessingClearSuccess()throws Throwable{try(F f=new F()){Path files=Files.createDirectory(f.data.resolve("files"));Files.write(files.resolve("gecko-profile"),new byte[]{9});assertThrows(IOException.class,f::capture);assertTrue(Files.exists(f.file));}}
+ @Test public void unknownAppNamespaceAndOtherEpochCannotBeSwept()throws Throwable{try(F f=new F()){Path unknown=Files.createDirectory(f.data.resolve("app_unknown"));assertThrows(IOException.class,f::capture);Files.delete(unknown);Files.createDirectory(f.epochs.resolve(repeat('2',32)));assertThrows(IOException.class,f::capture);}}
+ @Test public void symlinkCannotBecomeRegularOwnedPrivateData()throws Throwable{try(F f=new F()){Path outside=Files.createTempFile("epoch-foreign-host-",".bin");try{Files.delete(f.file);Files.createSymbolicLink(f.file,outside);assertThrows(IOException.class,f::capture);assertTrue(Files.exists(outside));}finally{Files.deleteIfExists(outside);}}}
+ @Test public void membershipOrLengthChangeInvalidatesCapturedManifest()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();Files.write(f.file,new byte[]{1,2,3,4});assertThrows(IOException.class,m::requireUnchangedSnapshot);assertThrows(IOException.class,()->m.deleteExactOwnedNodes(()->{}));assertTrue(Files.exists(f.file));}}
+ @Test public void parentReplacementCannotRetargetLeafDeletionEvenWithSameHardlinkedFile()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();Path displaced=f.epochs.resolve("displaced");Files.move(f.old,displaced);Files.createDirectory(f.old);Files.createDirectory(f.records);Files.createLink(f.file,displaced.resolve("private-records-v1").resolve(f.file.getFileName()));assertThrows(IOException.class,()->m.deleteExactOwnedNodes(()->{}));assertTrue(Files.exists(f.file));}}
+ @Test public void newEpochCannotOverwriteExistingOrOldEpoch()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();assertThrows(IOException.class,()->m.newEpochPath(new byte[16]));byte[] fresh=new byte[16];fresh[0]=1;Files.createDirectory(m.newEpochPath(fresh));assertThrows(IOException.class,()->m.newEpochPath(fresh));}}
+ @Test public void newEpochDataOrDirectoryReplacementRevokesEmptyProof()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();m.deleteExactOwnedNodes(()->{});byte[] fresh=new byte[16];fresh[0]=1;Object key=m.createFreshEmptyEpoch(fresh,()->{});Path next=f.epochs.resolve("01"+repeat('0',30));Files.write(next.resolve("unexpected"),new byte[]{1});assertThrows(IOException.class,()->m.verifyFreshEmptyEpoch(fresh,key));}}
+ @Test public void eraseAttemptSpentBeforeNativeGuardFailure()throws Throwable{try(F f=new F()){PrivateEpochManifest m=f.capture();assertThrows(SecurityException.class,()->m.deleteExactOwnedNodes(()->{throw new SecurityException("synthetic current-source fence");}));assertThrows(IOException.class,()->m.deleteExactOwnedNodes(()->{}));assertTrue(Files.exists(f.file));}}
+ @Test public void noPublicReceiptOrColdFenceConstructors(){assertEquals(0,EpochErasureCoordinator.VerifiedEmpty.class.getConstructors().length);assertEquals(0,io.github.rebrowser.bootstrap.StartupCoordinator.ColdContinuityFence.class.getConstructors().length);}
+ private static String repeat(char c,int n){char[] b=new char[n];Arrays.fill(b,c);return new String(b);}
+}

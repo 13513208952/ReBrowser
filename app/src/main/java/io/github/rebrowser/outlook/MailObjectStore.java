@@ -1,0 +1,71 @@
+package io.github.rebrowser.outlook;
+
+import android.app.Application;
+import android.os.Looper;
+import io.github.rebrowser.crypto.ObjectAead;
+import java.io.*;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.security.*;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BooleanSupplier;
+
+/** Existing native per-account RAW immutable-object store. RBMOBJ1 seal + actual re-open/AEAD/
+ * digest verification precedes immutable publication/typed DB adoption. No key/directory seed,
+ * caller paths, automatic orphan cleanup or ZLIB-as-RAW shortcut. Compressed adoption remains a
+ * separate verified decode-stage gate. File publication != references/cursor transaction commit.
+ * No physical flash wipe/power-loss/whole-writer-quiescence guarantee. */
+public final class MailObjectStore {
+    public static final class Prepared {
+        final MailObjectStore issuer;final MailDatabase.Reservation reservation;final ObjectAead.Metadata metadata;final byte[] inline;final String fileKey;private final Object stageFileKey;private boolean claimed;private boolean finished;
+        private Prepared(MailObjectStore issuer,MailDatabase.Reservation reservation,ObjectAead.Metadata metadata,byte[] inline,String fileKey,Object stageFileKey){this.stageFileKey=stageFileKey;this.issuer=issuer;this.reservation=reservation;this.metadata=metadata;this.inline=inline;this.fileKey=fileKey;}
+        void claim(MailDatabase db){issuer.scope.requireCurrent();reservation.requireDatabase(db);if(claimed)throw new SecurityException("Native mail object adoption already attempted");claimed=true;}
+        void finishKnownDatabaseCommit()throws IOException{if(!claimed || finished)throw new IOException("Native object database adoption not current");issuer.scope.requireCurrent();if(inline!=null){issuer.requireDirectories();Path stage=issuer.root.resolve(hex(metadata.objectId())+".pending");BasicFileAttributes before=attrs(stage);if(!before.isRegularFile() || !stageFileKey.equals(before.fileKey()) || before.size()!=inline.length || !MessageDigest.isEqual(inline,issuer.readSmall(stage,inline.length)) || !stageFileKey.equals(attrs(stage).fileKey()))throw new IOException("Native inline stage differs after DB commit");Files.delete(stage);try(FileChannel parent=FileChannel.open(issuer.root,StandardOpenOption.READ)){parent.force(true);}}finished=true;}
+        public byte[] objectId(){return metadata.objectId();}
+    }
+    private final MailAccountCatalog.PersistenceScope scope;private final Path[] directories;private final Object[] keys;private final Path root;private final boolean privateHostFixture;private final AtomicBoolean operation=new AtomicBoolean();
+    private MailObjectStore(MailAccountCatalog.PersistenceScope scope,Path[] directories)throws IOException{this(scope,directories,false);}
+    // Private reflection-only HOST boundary, never a public constructor/factory or production mode.
+    private MailObjectStore(MailAccountCatalog.PersistenceScope scope,Path[] directories,boolean explicitHostFixture)throws IOException{privateHostFixture=explicitHostFixture;this.scope=scope;this.directories=directories.clone();keys=new Object[directories.length];for(int i=0;i<directories.length;i++){BasicFileAttributes a=attrs(directories[i]);if(!a.isDirectory() || a.fileKey()==null)throw new IOException("Existing identifiable native mail directories required");keys[i]=a.fileKey();}root=directories[directories.length-1];}
+    public static MailObjectStore openExisting(Application nativeOwnApplication,MailAccountCatalog.PersistenceScope actualNativeScope)throws IOException{
+        if(nativeOwnApplication==null || actualNativeScope==null)throw new IllegalArgumentException("Native existing mail object scope required");io();actualNativeScope.requireCurrent();Path noBackup=nativeOwnApplication.getDataDir().toPath().resolve("no_backup"),epochs=noBackup.resolve("owned-epochs-v1"),epoch=epochs.resolve(hex(actualNativeScope.dataEpoch())),objects=epoch.resolve("mail-objects-v1"),account=objects.resolve(hex(actualNativeScope.accountId()));MailObjectStore store=new MailObjectStore(actualNativeScope,new Path[]{noBackup,epochs,epoch,objects,account});actualNativeScope.requireCurrent();return store;
+    }
+    /** Owns preparedRaw input closure. Existing committed reservation is spent BEFORE encryption;
+     * any failure/unknown retains stage/reservation, never encrypts another value under that ID. */
+    public Prepared sealReservedRaw(MailDatabase.Reservation reservation,ObjectAead.WritePlan freshPlan,byte[] nativeExistingAccountPurposeDek,InputStream preparedRaw,BooleanSupplier cancelled)throws IOException,GeneralSecurityException{
+        ownedIo();if(reservation==null || freshPlan==null || nativeExistingAccountPurposeDek==null || nativeExistingAccountPurposeDek.length!=32 || preparedRaw==null || cancelled==null)throw new IllegalArgumentException("Native reserved raw object required");if(!operation.compareAndSet(false,true))throw new IllegalStateException("Native mail object IO already owned");byte[] key=nativeExistingAccountPurposeDek.clone();
+        try(InputStream owned=preparedRaw){scope.requireCurrent();ObjectAead.Metadata metadata=freshPlan.metadata();MailObjectFormat.Header h=MailObjectFormat.decode(metadata.headerBytes());if(metadata.codec()!=ObjectAead.Codec.RAW || h.originalBytes()>64L*1024*1024 || !MessageDigest.isEqual(scope.accountId(),h.accountId()) || !MessageDigest.isEqual(scope.dataEpoch(),h.dataEpoch()))throw new SecurityException("Wrong native mail object binding");reservation.consumeFor(freshPlan);String name=hex(metadata.objectId());Path stage=root.resolve(name+".pending"),target=root.resolve(name);requireDirectories();
+            try(Locked lock=lock()){admit(metadata.framedBytes());if(exists(target) || exists(stage))throw new IOException("Immutable native mail object already exists or pending");
+                try(FileChannel out=FileChannel.open(stage,Set.of(StandardOpenOption.CREATE_NEW,StandardOpenOption.WRITE,LinkOption.NOFOLLOW_LINKS),PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")))){
+                    ObjectAead.seal(freshPlan,key,owned,Channels.newOutputStream(out),()->cancelled.getAsBoolean());out.force(true);
+                }
+                requireDirectories();scope.requireCurrent();BasicFileAttributes before=attrs(stage);if(!before.isRegularFile() || before.fileKey()==null || before.size()!=metadata.framedBytes())throw new IOException("Native encrypted stage mismatch");
+                // REAL second pass authenticates exact ciphertext/RAW original SHA and EOF, no refetch.
+                try(InputStream encrypted=Channels.newInputStream(FileChannel.open(stage,StandardOpenOption.READ,LinkOption.NOFOLLOW_LINKS))){ObjectAead.open(metadata,key,encrypted,new OutputStream(){@Override public void write(int b){}@Override public void write(byte[] b,int o,int n){}},cancelled);}
+                BasicFileAttributes after=attrs(stage);if(!before.fileKey().equals(after.fileKey()) || before.size()!=after.size())throw new IOException("Native encrypted stage changed");scope.requireCurrent();requireDirectories();
+                byte[] inline=null;String fileKey=null;
+                if(metadata.framedBytes()<=65536){inline=readSmall(stage,(int)metadata.framedBytes());}else{Files.createLink(target,stage); // Atomic no-replace immutable publication; never overwrite a prior object.
+                    try(FileChannel dir=FileChannel.open(root,StandardOpenOption.READ)){dir.force(true);}if(!before.fileKey().equals(attrs(target).fileKey()) || !before.fileKey().equals(attrs(stage).fileKey()))throw new IOException("Immutable native object publication changed");Files.delete(stage);try(FileChannel dir=FileChannel.open(root,StandardOpenOption.READ)){dir.force(true);}fileKey=name;}
+                scope.requireCurrent();requireDirectories();return new Prepared(this,reservation,metadata,inline,fileKey,before.fileKey());
+            }
+        }finally{Arrays.fill(key,(byte)0);operation.set(false);} // Pending/inline stages deliberately retained on unknown; no global cleanup.
+    }
+    /** Authenticate into NATIVE UNPUBLISHED private staging only. Caller owns output lifecycle;
+     * any failure discards ALL prefixes. Never hand this sink a public URI/provider stream. */
+    public void readVerifiedRawIntoPrivateStage(MailDatabase.ObjectRecord exactNativeRecord,byte[] nativeExistingAccountPurposeDek,OutputStream unpublishedNativeStage,BooleanSupplier cancelled,MailDatabase.NativeFence currentReadAuthority)throws IOException,GeneralSecurityException{
+        ownedIo();if(exactNativeRecord==null || nativeExistingAccountPurposeDek==null || nativeExistingAccountPurposeDek.length!=32 || unpublishedNativeStage==null || cancelled==null || currentReadAuthority==null)throw new IllegalArgumentException("Native authenticated object read scope required");if(!operation.compareAndSet(false,true))throw new IOException("Native object IO still owned");byte[] key=nativeExistingAccountPurposeDek.clone();try{requireDirectories();exactNativeRecord.requireSource(scope);currentReadAuthority.requireCurrent();ObjectAead.Metadata metadata=exactNativeRecord.metadata();if(metadata.codec()!=ObjectAead.Codec.RAW)throw new IOException("Compressed native object decode-stage not admitted");BooleanSupplier stop=()->{scope.requireCurrent();exactNativeRecord.requireSource(scope);currentReadAuthority.requireCurrent();return cancelled.getAsBoolean();};byte[] inline=exactNativeRecord.borrowedInlineCipher();if(inline!=null){try(InputStream input=new ByteArrayInputStream(inline)){ObjectAead.open(metadata,key,input,unpublishedNativeStage,stop);}}else{String name=exactNativeRecord.ownedFileKey();if(name==null || !name.equals(hex(metadata.objectId())))throw new IOException("Wrong immutable native object key");Path file=root.resolve(name);BasicFileAttributes before=attrs(file);if(!before.isRegularFile() || before.fileKey()==null || before.size()!=metadata.framedBytes())throw new IOException("Native encrypted object unavailable/changed");try(InputStream input=Channels.newInputStream(FileChannel.open(file,StandardOpenOption.READ,LinkOption.NOFOLLOW_LINKS))){ObjectAead.open(metadata,key,input,unpublishedNativeStage,stop);}BasicFileAttributes after=attrs(file);if(!before.fileKey().equals(after.fileKey()) || after.size()!=before.size())throw new IOException("Native encrypted object replaced during read");}requireDirectories();exactNativeRecord.requireSource(scope);currentReadAuthority.requireCurrent();}finally{Arrays.fill(key,(byte)0);operation.set(false);}
+    }
+    private void admit(long next)throws IOException{requireDirectories();long used=0;int count=0;try(DirectoryStream<Path> files=Files.newDirectoryStream(root)){for(Path p:files){if(++count>4097)throw new IOException("Native mail object node budget reached");BasicFileAttributes a=attrs(p);String name=p.getFileName().toString();if(!a.isRegularFile() || a.fileKey()==null || a.size()<0)throw new IOException("Unknown native object node");if(name.equals(".objects.lock")){if(a.size()!=0)throw new IOException("Unsafe native object lock");continue;}if(!name.matches("[0-9a-f]{32}(\\.pending)?") || a.size()>128L*1024*1024-used)throw new IOException("Unknown/oversized native mail object");used+=a.size();}}if(count>4095 || next<0 || next>128L*1024*1024-used)throw new IOException("Native mail object disk budget reached");}
+    private byte[] readSmall(Path path,int expected)throws IOException{if(expected<144 || expected>65536)throw new IOException("Invalid inline encrypted size");byte[] b=new byte[expected];try(InputStream in=Channels.newInputStream(FileChannel.open(path,StandardOpenOption.READ,LinkOption.NOFOLLOW_LINKS))){int at=0;while(at<b.length){int n=in.read(b,at,b.length-at);if(n<=0)throw new IOException("Inline encrypted object truncated");at+=n;}if(in.read()!=-1)throw new IOException("Inline encrypted length changed");}return b;}
+    private Locked lock()throws IOException{Path p=root.resolve(".objects.lock");if(!exists(p))try(FileChannel ignored=FileChannel.open(p,Set.of(StandardOpenOption.CREATE_NEW,StandardOpenOption.WRITE,LinkOption.NOFOLLOW_LINKS),PosixFilePermissions.asFileAttribute(PosixFilePermissions.fromString("rw-------")))){}catch(FileAlreadyExistsException raced){}BasicFileAttributes a=attrs(p);if(!a.isRegularFile() || a.size()!=0 || a.fileKey()==null)throw new IOException("Unsafe native object lock");FileChannel channel=FileChannel.open(p,StandardOpenOption.WRITE,LinkOption.NOFOLLOW_LINKS);FileLock held=null;try{try{held=channel.tryLock();}catch(OverlappingFileLockException busy){throw new IOException("Native object writer busy");}if(held==null || !a.fileKey().equals(attrs(p).fileKey()))throw new IOException("Native object writer lock unavailable");return new Locked(channel,held);}catch(IOException|RuntimeException failure){if(held!=null)held.release();channel.close();throw failure;}}
+    private static final class Locked implements AutoCloseable{final FileChannel channel;final FileLock lock;Locked(FileChannel c,FileLock l){channel=c;lock=l;}public void close()throws IOException{try{lock.release();}finally{channel.close();}}}
+    private void requireDirectories()throws IOException{scope.requireCurrent();for(int i=0;i<directories.length;i++){BasicFileAttributes a=attrs(directories[i]);if(!a.isDirectory() || !keys[i].equals(a.fileKey()))throw new IOException("Native mail directory replaced");}}
+    private static BasicFileAttributes attrs(Path p)throws IOException{return Files.readAttributes(p,BasicFileAttributes.class,LinkOption.NOFOLLOW_LINKS);}
+    private static boolean exists(Path p)throws IOException{try{attrs(p);return true;}catch(NoSuchFileException missing){return false;}}
+    private static String hex(byte[] b){StringBuilder s=new StringBuilder();for(byte v:b)s.append(Character.forDigit((v&255)>>>4,16)).append(Character.forDigit(v&15,16));return s.toString();}
+    private void ownedIo(){if(!privateHostFixture)io();}
+    private static void io(){if(Looper.myLooper()==Looper.getMainLooper())throw new IllegalStateException("Native mail object owned IO lane required");}
+}

@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "ReBrowser built-in read-only observations",
+  "version": "1.0.0",
+  "browser_specific_settings": {"gecko": {"id": "rebrowser-builtin@io.github.rebrowser"}},
+  "permissions": ["nativeMessaging", "nativeMessagingFromContent", "geckoViewAddons"],
+  "background": {"scripts": ["background.js"]},
+  "content_scripts": [
+    {"matches": ["https://music.163.com/*"], "js": ["protocol.js", "page/music-api.js", "content/music.js"], "run_at": "document_idle", "all_frames": false},
+    {"matches": ["https://outlook.live.com/*", "https://outlook.office.com/*", "https://outlook.office365.com/*"], "js": ["protocol.js", "page/outlook-api.js", "content/outlook.js"], "run_at": "document_idle", "all_frames": false}
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'none'; base-uri 'none'"
+}

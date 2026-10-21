@@ -10,6 +10,13 @@ P=Path(__file__).resolve().parent
 ROOT=P.parents[1]
 
 def review(base=None,contract=None):
+    creation_gate=P/'records/source-creation-completion-gate.json'
+    if creation_gate.is_file():
+        gate=json.loads(creation_gate.read_text())
+        missing=[path for path in gate['requiredSourcePaths'] if not (ROOT/path).is_file() or (ROOT/path).stat().st_size==0]
+        assert not missing and gate['state']=='reviewed-all-sources-complete', 'O95 commit HOLD: all remaining source creation + substantive semantic/test admission required; missing='+str(len(missing))
+        admitted={f['path'] for f in json.loads((P/'records/implementation-readiness.json').read_text())['files']}
+        assert set(gate['requiredSourcePaths'])<=admitted, 'O95: existing files without reviewed source admission do not satisfy creation gate'
     current=json.loads((P/'evidence/production-main-app-compile.json').read_text()).get('currentCodeBatchContractRef','records/native-browser-window-batch-contract.json')
     batch=json.loads((contract or P/current).read_text())
     args=['git','diff','--name-only','--diff-filter=ACMR']+([base] if base else ['--cached'])+['--','app/src/main/java/io/github/rebrowser']

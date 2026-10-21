@@ -48,6 +48,8 @@ public final class OfflineMailActivity extends Activity {
   private final Presentation presentation;private final MailRow row;private final boolean attachment;private boolean delivered;
   private BodyRequest(Presentation p,MailRow row,boolean attachment){presentation=p;this.row=row;this.attachment=attachment;}
   public Presentation presentation(){return presentation;}public MailRow row(){return row;}public boolean attachment(){return attachment;}
+  /** Exact native recipient check, not body/account/Actor authorization; UI thread only. */
+  public void requireCurrentBodyRecipient(OfflineMailActivity exactOwnedWindow){owner();if(exactOwnedWindow==null || attachment || delivered || exactOwnedWindow.pendingBody!=this || !exactOwnedWindow.eligible(presentation))throw new SecurityException("Offline body recipient retired");}
  }
  public interface Actions {
   void open(BodyRequest request);

@@ -63,16 +63,19 @@ public final class StartupCoordinator {
     private final CompiledSourceIdentity compiledSource;
     private volatile GeckoRuntimeOwner runtimeOwner;
     private BrowserCoordinator browserDomain;private boolean browserDomainAttempted;
-    private BrowserStore browserStore;private boolean browserStoreAttempted;
+    private BrowserStore browserStore;private boolean browserStoreAttempted;private io.github.rebrowser.download.DownloadStore downloadStore;private boolean downloadStoreAttempted;
     private io.github.rebrowser.data.OwnedDataCatalog browserData;private boolean browserDataAttempted;
     private io.github.rebrowser.browser.BookmarkStore bookmarks;private io.github.rebrowser.browser.HistoryStore history;
     private io.github.rebrowser.settings.SettingsRepository settings;private io.github.rebrowser.subapps.SubapplicationCoordinator subapplications;
     private BrowserStoreCoordinator browserInspector;private boolean browserInspectorAttempted;
+    private io.github.rebrowser.music.MusicSessionOwner musicSessions;private boolean musicSessionsAttempted;private io.github.rebrowser.music.MusicCoordinator musicDomain;private boolean musicDomainAttempted;
+    private io.github.rebrowser.outlook.OutlookSessionOwner outlookSessions;private boolean outlookSessionsAttempted;
     private PrivateRecordStore privateRecords;private boolean privateRecordsAttempted;private final Object privateRecordOpening=new Object();
+    private io.github.rebrowser.system.ApkStagingStore apkStages;private boolean apkOpeningAttempted;private final Object apkOpening=new Object();
     private final ComponentGate.ResourcePin businessLifetime;
     private final AtomicReference<ComponentGate.SourceView> sourceView=new AtomicReference<>(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.INITIALIZING));
     private final Handler main=new Handler(Looper.getMainLooper());
-    private volatile SourceBootstrap.AcceptedContext acceptedSource;
+    private volatile SourceBootstrap.AcceptedContext acceptedSource;private volatile boolean sourceWasEverAccepted,coldContinuityFenceAttempted;
     private volatile SourceBootstrap.Status inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;
     private volatile boolean inspectionIoPending;
     private boolean inspectionStarted;private final PublicationGate publication=new PublicationGate();
@@ -102,7 +105,7 @@ public final class StartupCoordinator {
         catch(RuntimeException knownUnsubmitted){inspectionIoPending=false;publication.finish(ticket);failInspectionHandoff();return;}
         try{io.execute(()->{
             SourceBootstrap.Inspection result=null;
-            try{Path directory=application.getNoBackupFilesDir().toPath().resolve(LastGoodSourceStore.BOOTSTRAP_DIRECTORY);result=SourceBootstrap.inspectOwn(application,new LastGoodSourceStore(directory));}
+            try{Path directory=application.getDataDir().toPath().resolve("no_backup").resolve(LastGoodSourceStore.BOOTSTRAP_DIRECTORY);result=SourceBootstrap.inspectOwn(application,new LastGoodSourceStore(directory));}
             catch(Exception unavailable){/* missing/unsafe bootstrap is not a fresh installation */}
             finally{inspectionIoPending=false;if(result==null){if(inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED)inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));}}
             final SourceBootstrap.Inspection finished=result;
@@ -119,7 +122,7 @@ public final class StartupCoordinator {
         ownerThread();boolean pending=publication.hasPendingHandoff();if(!publication.finish(ticket)){if(pending)failInspectionHandoff();return;} // early/unknown submission cannot publish; duplicate completion cannot change a settled source
         inspectionStatus=inspection==null?SourceBootstrap.Status.UNAVAILABLE:inspection.status();
         if(inspection!=null && inspection.status()==SourceBootstrap.Status.ACCEPTED_STABLE){
-            try{SourceBootstrap.AcceptedContext accepted=inspection.takeAccepted(application);acceptedSource=accepted;sourceView.set(ComponentGate.SourceView.acceptedNative(accepted,accepted.dataEpoch()));return;}
+            try{SourceBootstrap.AcceptedContext accepted=inspection.takeAccepted(application);sourceWasEverAccepted=true;acceptedSource=accepted;sourceView.set(ComponentGate.SourceView.acceptedNative(accepted,accepted.dataEpoch()));return;}
             catch(RuntimeException stale){inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;}
         }
         sourceView.set(ComponentGate.SourceView.untrusted(inspectionStatus==SourceBootstrap.Status.UNCONFIGURED?ComponentGate.SourceState.UNCONFIGURED:ComponentGate.SourceState.LOCKED));
@@ -127,6 +130,14 @@ public final class StartupCoordinator {
     /** Native continuity MUST call/observe this BEFORE any ledger mutation or accepted source cutover.
      * Revoke-only; no public trust setter, no retry/new incarnation/runtime or actual-work release. */
     public void fenceNativeSourceBeforeContinuityMutation(){ownerThread();sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));acceptedSource=null;inspectionStatus=SourceBootstrap.Status.RECOVERY_REQUIRED;publication.revoke();}
+    /** Cold-only native safety capability. NOT callback/metadata-as-quiescence: it is issuable
+     * ONLY before this actual main owner has EVER accepted a business epoch or opened owners.
+     * Active/warm processes must use a separately qualified actual-stop path (not implemented). */
+    public static final class ColdContinuityFence {
+        private final StartupCoordinator issuer;private ColdContinuityFence(StartupCoordinator issuer){this.issuer=issuer;}
+        public void requireStillCold(Application exactNativeApplication){if(exactNativeApplication!=issuer.application || !issuer.coldContinuityFenceAttempted || issuer.sourceWasEverAccepted || issuer.acceptedSource!=null || issuer.inspectionIoPending || issuer.inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED || issuer.gate.sourceState()!=ComponentGate.SourceState.LOCKED || issuer.runtimeOwner!=null || issuer.privateRecords!=null || issuer.apkStages!=null || issuer.musicSessions!=null || issuer.outlookSessions!=null)throw new SecurityException("Native cold continuity safety no longer holds");}
+    }
+    public ColdContinuityFence fenceNeverActivatedMismatchForNativeRecovery(){ownerThread();if(coldContinuityFenceAttempted || sourceWasEverAccepted || inspectionStatus!=SourceBootstrap.Status.SOURCE_MISMATCH || inspectionIoPending || publication.hasPendingHandoff() || acceptedSource!=null || runtimeOwner!=null || privateRecords!=null || apkStages!=null || musicSessions!=null || outlookSessions!=null)throw new SecurityException("Active/unknown native work cannot use cold erasure path");coldContinuityFenceAttempted=true;fenceNativeSourceBeforeContinuityMutation();return new ColdContinuityFence(this);}
     public byte[] requireNativeDataEpoch(ComponentGate.BusinessPermit permit){
         businessLifetime.checkOrBind(permit);SourceBootstrap.AcceptedContext accepted=acceptedSource;if(accepted==null)throw new SecurityException("Native accepted source unavailable");byte[] epoch=accepted.dataEpoch();gate.requireDataEpoch(permit,epoch);return epoch;
     }
@@ -147,6 +158,10 @@ public final class StartupCoordinator {
         if(browserDomain!=null)return browserDomain;if(browserDomainAttempted)throw new IllegalStateException("Browser domain construction already attempted");browserDomainAttempted=true;
         browserDomain=BrowserCoordinator.createTemporaryNative(gate,browserRuntimeOwner(permit),epoch,8,permit);gate.checkCurrent(permit);return browserDomain;
     }
+    /** Canonical UI/service shared built-in session owners. Construction does not open/load/play. */
+    public io.github.rebrowser.music.MusicSessionOwner musicSessionOwner(ComponentGate.BusinessPermit permit){ownerThread();requireNativeDataEpoch(permit);if(musicSessions!=null)return musicSessions;if(musicSessionsAttempted)throw new IllegalStateException("Native music owner already attempted");musicSessionsAttempted=true;musicSessions=new io.github.rebrowser.music.MusicSessionOwner(gate,browserRuntimeOwner(permit),permit);gate.checkCurrent(permit);return musicSessions;}
+    public io.github.rebrowser.music.MusicCoordinator musicCoordinator(ComponentGate.BusinessPermit permit){ownerThread();requireNativeDataEpoch(permit);if(musicDomain!=null)return musicDomain;if(musicDomainAttempted)throw new IllegalStateException("Native music domain already attempted");musicDomainAttempted=true;musicDomain=new io.github.rebrowser.music.MusicCoordinator(application,gate,permit,browserRuntimeOwner(permit),musicSessionOwner(permit));gate.checkCurrent(permit);return musicDomain;}
+    public io.github.rebrowser.outlook.OutlookSessionOwner outlookSessionOwner(ComponentGate.BusinessPermit permit){ownerThread();requireNativeDataEpoch(permit);if(outlookSessions!=null)return outlookSessions;if(outlookSessionsAttempted)throw new IllegalStateException("Native Outlook owner already attempted");outlookSessionsAttempted=true;outlookSessions=new io.github.rebrowser.outlook.OutlookSessionOwner(gate,browserRuntimeOwner(permit),permit);gate.checkCurrent(permit);return outlookSessions;}
     /** Explicit owned IO call only. Existing directory/key required; never source/fresh-install seed.
      * Failure consumes opening attempt; an uncertain provider result cannot create another owner. */
     public PrivateRecordStore openExistingPrivateRecordsOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException {
@@ -159,6 +174,12 @@ public final class StartupCoordinator {
             PrivateRecordStore opened=PrivateRecordStore.openExisting(application,gate,epoch,permit);gate.requireDataEpoch(permit,epoch);privateRecords=opened;return opened;
         }
     }
+    /** Existing encrypted download metadata, shared native IO owner; never auto-seeds or restores grants. */
+    public io.github.rebrowser.download.DownloadStore openExistingDownloadsOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{if(Looper.myLooper()==Looper.getMainLooper())throw new IllegalStateException("Native download records require owned IO");requireNativeDataEpoch(permit);synchronized(privateRecordOpening){if(downloadStore!=null){downloadStore.requireBindings(gate,permit);return downloadStore;}if(downloadStoreAttempted)throw new IllegalStateException("Native download records opening already attempted");downloadStoreAttempted=true;io.github.rebrowser.download.DownloadStore opened=io.github.rebrowser.download.DownloadStore.openExisting(openExistingPrivateRecordsOnIo(permit),gate,permit);gate.checkCurrent(permit);downloadStore=opened;return opened;}}
+    /** Native task IO only; does not create missing private epoch/stage directories. */
+    public io.github.rebrowser.system.ApkStagingStore openExistingApkStagesOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException{if(Looper.myLooper()==Looper.getMainLooper())throw new IllegalStateException("Native APK stage opening requires owned IO");byte[] epoch=requireNativeDataEpoch(permit);synchronized(apkOpening){if(apkStages!=null){apkStages.requireBindings(gate,permit);return apkStages;}if(apkOpeningAttempted)throw new IllegalStateException("Native APK stage opening already attempted");apkOpeningAttempted=true;io.github.rebrowser.system.ApkStagingStore opened=io.github.rebrowser.system.ApkStagingStore.openExisting(application,gate.captureDataEpoch(permit));gate.requireDataEpoch(permit,epoch);apkStages=opened;return opened;}}
+    /** Provider reads only an already explicitly opened native stage owner. No lazy IO/creation. */
+    public io.github.rebrowser.system.ApkStagingStore existingApkStagesForNativeProvider(){synchronized(apkOpening){ComponentGate.BusinessPermit permit=gate.requireBusiness();if(apkStages==null)throw new SecurityException("Native APK stage owner not active");apkStages.requireBindings(gate,permit);return apkStages;}}
     /** Main-process accepted source only; canonical existing retained metadata owner on owned IO.
      * Missing/corrupt catalog is not fresh-install proof; no automatic write or restore occurs. */
     public BrowserStore openExistingBrowserStoreOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException {

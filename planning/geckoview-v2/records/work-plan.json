@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R51",
+  "revision": "R52",
   "activePhase": "V0",
   "codingAuthorizedByPlan": true,
   "phases": [
@@ -225,10 +225,11 @@
   },
   "workContinuationRule": "O42 explicitly: continue after commit/push in the same session; only checkpoints, not self-imposed pause milestones",
   "currentNewVersionIncrement": [
-    "O90/O91后转向尚未创建的正式核心：10新文件+4接口联动，104→114Java，76→66PLAN，不用空壳/DTO凑数",
-    "DisableLedger签名历史归约、低委托真实P256有界链、编译设备名单隔离/实际目标挑战、仅SPENT挑战内有效的Actor与当前策略、请求/任务预留桥、独立原生owner-grant和脱敏audit",
-    "实际114源码/590class/985HOST；57纯切片542HOST+实际SDKbootclasspath；新增41JCA/kernel对抗测试。旧基线全留，不替换旧证据哈希",
-    "尚无实际NativeCurrent持久head/目标适配器及效果dispatch；Root/设备表空，未调用OS授权或设备/登录/注册/签名，下一步native持久当前策略和目标owner接入仍需实做"
+    "本轮实质创建6个正式Java（5原PLAN+1共享严格二进制codec）联动4既有crypto/store/bootstrap，Java114→120、PLAN66→61，不以测试或DTO凑数",
+    "现有private-record包装键与目录之上的固定书签/历史/设置目的码3/4/5、严格有界不可变CRUD及完整记录CAS；缺失不默认、不自动保存/恢复，未知stage/对象保留",
+    "canonical Startup懒加载同一privateIO/catalog/store；子应用desired状态共用设置服务与一次性同步原生交接fence，不把disable/callback/Java返回当实际stop",
+    "实际120源码/新class数量见AGP报告/1034HOST，58纯切片552HOST＋SDKbootclasspath；新增49（10codec+19model+20真实HOST文件/JCA/CAS）",
+    "管理员NativeCurrent持久head/目标适配、真实Gecko history/private会话排除生产者、实际Android接口仍未接通，正式Root/目录/密钥不自动provision"
   ],
   "latestCheckpointRequest": "O38 save/push progress, not a pause instruction",
   "codingAuthority": [
@@ -243,7 +244,7 @@
     "I0",
     "L0"
   ],
-  "latestOwnerContinuation": "O91",
+  "latestOwnerContinuation": "O92",
   "primaryFocus": {
     "authority": "O45",
     "work": "formal main-program and administrator mechanism source implementation",
@@ -258,7 +259,7 @@
     "notCompletionProof": "code quantity is not whole responsibility or Android runtime completion"
   },
   "moduleIntegrationPlanRef": "records/module-integration-plan.json",
-  "currentModuleFocus": "Newcoreauthoritykernel10previousPLANfiles;notoldUIpolishing",
+  "currentModuleFocus": "Newbrowsercore existing encrypted bookmarks/history/settings/sharedsubapplication service; nativeauthority adapterexplicitlyblocked, notfakeinmemory",
   "modulePriority": [
     "entry",
     "browser",

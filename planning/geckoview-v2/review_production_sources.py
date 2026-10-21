@@ -72,11 +72,11 @@ def review():
     assert app['adminActivityExported'] == 'false'
     assert app['concreteActionArgumentSchemasImplemented'] == 4 and not app['allActionArgumentSchemasComplete']
     assert 'ActionSchemas.parse(proof)' in (ROOT/'app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java').read_text()
-    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests','hostAndroidClassRetainedBrowserStoreTests','hostAndroidClassD03PresentationModelsTests'])
+    assert app['unitTestsPassed'] == evidence['junitTestsPassed'] + sum(app.get(k,0) for k in ['hostAndroidClassPureIdentityTests','hostAndroidClassNativeControlTests','hostAndroidClassNavigationPolicyTests','hostAndroidClassTaskCoordinatorTests','hostAndroidClassResourceBudgetTests','hostAndroidClassWindowTargetTests','hostAndroidClassNativeWindowModelsTests','hostAndroidClassSourceBootstrapTests','hostAndroidClassTemporaryHostBoundaryTests','hostAndroidClassPrivateRecordBoundaryTests','hostAndroidClassD01PresentationModelsTests','hostAndroidClassD02PresentationModelsTests','hostAndroidClassRetainedBrowserStoreTests','hostAndroidClassD03PresentationModelsTests','hostAndroidClassBrowserMetadataTests'])
     kernel=json.loads((P/app['currentAuthorityKernelEvidenceRef']).read_text())
     assert kernel['newFormalMainRuntimeFiles']==10 and kernel['existingInterfacesUpdated']==4
-    assert kernel['runtimeJavaSourceCountNow']==app['productionJavaSourceFiles']==114
-    assert kernel['runtimePureSourceCountNow']==evidence['runtimeSourceFilesCompiled']==57
+    assert kernel['runtimeJavaSourceCountNow']==app['productionJavaSourceFiles']
+    assert kernel['runtimePureSourceCountNow']==evidence['runtimeSourceFilesCompiled']
     assert kernel['newKernelJcaHostTestsPassed']==41 and sum(t['tests'] for t in kernel['newKernelClassesExecuted'])==41
     assert kernel['allAGPHostTestsPassed']==app['unitTestsPassed'] and kernel['allPureHostTestsPassed']==evidence['junitTestsPassed']
     assert kernel['actualJcaP256DisableAndDelegationAndTargetSignaturesExecuted'] and kernel['actualPrivateActorAndSpentChallengeCallbackLifetimesExecuted']
@@ -226,7 +226,16 @@ def review():
     assert not any(d03[k] for k in ['workerReportsAdoptedAsIndependentExecution','suppliedContextCodeOrOther15JavaOr6AssetsMerged','actualAndroidUiSdkMediaBitmapNotificationOrMotionEventExecuted','actualGeckoOrWebsiteOrCspExecuted','newActivityOrAssetsActivated','RootOrEnrollmentOrFormalKeysProvisioned','authorityBackendOrFullModulesCompleted','originalHistoricalReportsRewritten','nativeDisposalOrOverallMemoryQuiescenceQualified'])
     for source in d03['sourceFiles']:
         assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
-    retained=json.loads((P/'evidence/native-retained-browser-store-host-execution.json').read_text())
+    metadata=json.loads((P/app['currentBrowserMetadataEvidenceRef']).read_text())
+    assert metadata['newFormalJavaFiles']==6 and metadata['newPriorPlanLeaves']==5 and metadata['newSharedPrimitiveFile']==1 and metadata['runtimeCodeWorkload']==10
+    assert metadata['runtimeJavaSourceFiles']==app['productionJavaSourceFiles']==120 and metadata['remainingPLAN']==61
+    assert metadata['newHostTestsPassed']==49 and metadata['newPureCodecTests']==10 and metadata['newNestedDomainModelTests']==19 and metadata['newJcaHostFilesystemAndHandoffTests']==20
+    assert app['hostAndroidClassBrowserMetadataTests']==39 and metadata['allAgpHostTestsPassed']==app['unitTestsPassed'] and metadata['allPureHostTestsPassed']==evidence['junitTestsPassed']
+    assert metadata['actualJcaHostCasForceRenameAndReadbackExecuted'] and metadata['oldPurposeCodesAndWireUnchanged'] and metadata['fixedRecordQuota']==3204
+    assert not any(metadata[k] for k in ['actualAndroidKeystoreOrFilesystemOrPowerLossExecuted','actualGeckoHistoryOrDocumentOrPrivateModeCaptureExecuted','actualSubapplicationNativeActivityServiceOpenedOrStopped','formalKeysOrDirectoriesOrSourceProvisioned','automaticDefaultsAutosaveRepairOrLatestGuarantee','authorityDurableHeadAdapterImplemented','historicalReportsRewritten'])
+    for source in metadata['sourceFiles']:
+        assert hashlib.sha256((ROOT/source['path']).read_bytes()).hexdigest()==source['sha256']
+    retained=json.loads((P/app.get('currentRetainedBrowserHostEvidenceRef','evidence/native-retained-browser-store-host-execution.json')).read_text())
     assert retained['pureCodecTests']==22 and retained['dataEpochPinTests']==7 and retained['nativeStorePipelineTests']==16 and retained['privateContextCaptureBoundaryTests']==5
     assert retained['actualProductionCaptureCodecGateMethodsExecuted'] and retained['actualJcaAndHostFilesystemStorePipelineExecuted']
     assert retained['retainedCoreHostTestsPassed']==50 and app['hostAndroidClassRetainedBrowserStoreTests']==21

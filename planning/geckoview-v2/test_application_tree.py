@@ -84,13 +84,13 @@ class ApplicationTreeTests(unittest.TestCase):
     def test_entire_remaining_tree_has_full_responsibility_risk(self):
         remaining = {f['path']:f for f in self.manifest['files'] if f['state']=='planned-not-implemented'}
         record = json.loads((P/'records/remaining-file-risk-assessment.json').read_text())
-        self.assertEqual(len(remaining),66)
+        self.assertEqual(len(remaining),61)
         self.assertEqual(set(remaining), {f['path'] for f in record['files'] if f['state']=='planned-not-implemented'})
         self.assertEqual(len(record['files']),126) # preserve original allocation survey, don't silently rewrite history
         for f in record['files']:
             if f['path'] in remaining:self.assertEqual(f['fullFileRisk'],remaining[f['path']]['riskAssessment']['fullFileRisk'])
             self.assertTrue(f['riskReason'])
-        self.assertEqual(record['coverage']['mainOnlyUnassignedFiles'],64)
+        self.assertEqual(record['coverage']['mainOnlyUnassignedFiles'],59)
 
     def test_new_round_42_does_not_recount_original_six(self):
         tasks = json.loads((P/'records/low-cost-agent-assignments.json').read_text())['tasks']

@@ -1,8 +1,8 @@
 {
   "scope": "production v2 source, Java8 compile/HOST JUnit; optional actual Android API bootclasspath compile, NOT runtime/admission implementation",
-  "runtimeSourceFilesCompiled": 57,
-  "junitTestsPassed": 542,
-  "junitOutput": "JUnit version 4.13.2\n..............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................\nTime: 3.43\n\nOK (542 tests)\n\n",
+  "runtimeSourceFilesCompiled": 58,
+  "junitTestsPassed": 552,
+  "junitOutput": "JUnit version 4.13.2\n........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................\nTime: 1.969\n\nOK (552 tests)\n\n",
   "compilerDiagnostics": "警告: [options] 源值 8 已过时，将在未来发行版中删除\n警告: [options] 目标值 8 已过时，将在未来发行版中删除\n警告: [options] 要隐藏有关已过时选项的警告, 请使用 -Xlint:-options。\n3 个警告\n",
   "sourceFiles": [
     {
@@ -111,7 +111,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
-      "sha256": "d5134c99747d2e5ff20dbfb96309baeb89a6379b2e107e3a0c962524c4c0b264"
+      "sha256": "2dfe9df4cf951f312b440ae238312c5e06dda98c6d37f719d0545a0c7e8741ef"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
@@ -171,7 +171,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
-      "sha256": "92e7179917a17f93cd9a49fb35352d93d595f6477b23a18816a47bc2e4073094"
+      "sha256": "0733a60d843b1bcd6e6d59bc43e7ae32e0c7c6c22aa32bc227844e261c4d8bb1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
@@ -232,6 +232,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
       "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "sha256": "7e766dc69373279a9e847a7bb6fedec6e4253f69cab1d7ee7a3ddb90bb22357a"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/authority/AuthorityContractsTest.java",
@@ -323,7 +327,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java",
-      "sha256": "9e1445cd70b94f92f611612e5a46cfef791dc2f1035a9aeb869a5ea72847d7b8"
+      "sha256": "300e678cfc6b9bd8ea7662be16b74631bc37416d367a59797924d0e2ae00406a"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java",
@@ -331,7 +335,11 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java",
-      "sha256": "8068303d44b036c8dfc6abf351ea98d875c841c3da078e0962fbdaadaf4919f3"
+      "sha256": "a158b8b71228d86e1203d4eb19e5438762bda448b4c315251f304b23e9b83b14"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/data/NativeRecordCodecTest.java",
+      "sha256": "a87308ed5ffca00cb866fdcd44fef60f0fab899a2266cae09663d7497a9c3ec5"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/download/ResponseStreamWorkerTest.java",
@@ -464,8 +472,8 @@
     "hamcrest": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
   },
   "temporaryNewPeakBudgetBytes": 16777216,
-  "freeBytesBefore": 7718580224,
-  "memAvailableBefore": 5419630592,
+  "freeBytesBefore": 7665754112,
+  "memAvailableBefore": 4564144128,
   "temporaryClassDirectoryRemoved": true,
   "androidRuntimeTested": false,
   "productApkBuilt": false,

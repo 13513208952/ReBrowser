@@ -1,0 +1,91 @@
+{
+  "revision": "R52",
+  "scope": "Actual private native host adapter -> production session observation model with SYNTHETIC private DTOs; actual reject methods with SYNTHETIC SDK callbacks/owned HOST streams. Native domain/SDK session factory API compiled, NOT Android/Gecko callback execution.",
+  "hostSessionPresentationTests": 17,
+  "hostPrivateAdapterRejectAndBodyCloseTests": 13,
+  "hostTestsPassed": 30,
+  "actualPrivateEventAdapterMethodsExecuted": true,
+  "actualSessionObservationModelMethodsExecuted": true,
+  "actualAndroidMediaRejectMethodsHostExecuted": true,
+  "actualRejectedBodyCloseHelperExecuted": true,
+  "syntheticPrivateNavigationProgressDtos": true,
+  "actualGeckoResultPermissionResponseExecuted": false,
+  "actualNativeSessionOrRuntimeFactoryExecuted": false,
+  "actualGeckoContentNavigationOrProgressCallbacksExecuted": false,
+  "actualAndroidHandlerApplicationViewOrDeviceExecuted": false,
+  "actualGeckoResponseBodyOrJniCloseLatencyQualified": false,
+  "documentIdentityOrOwnerConsentGranted": false,
+  "nativeNetworkOrWholeChainQuiescenceEstablished": false,
+  "nativeBrowserComplete": false,
+  "productionRootConfigured": false,
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R52-checks.json",
+  "unitTests": [
+    {
+      "class": "io.github.rebrowser.engine.SessionPresentationTest",
+      "tests": 17,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.engine.TemporaryHostBoundaryTest",
+      "tests": 13,
+      "failures": 0,
+      "errors": 0
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "3d3e1623f322e3e6d266186c20e71984b5affd9d062de20171e0de8c069867c3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "8ada828296c78f8ca0c2dcfd273f60cf9813fad3d66884e2ae0d99710ea3dc4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "sha256": "27d1f08e4705a4e06fc81791e37b632f0c452c2c7cf35b6024bf8f8cca463f29"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "sha256": "9e10c725359b7f5d0c1b4dc175f06f36f63932c52c0b632ee2dde24a903bf2f4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+      "sha256": "b94a475f6cccb0d4b64d1a05c252c35e99454347f89198d75da80e05ee41169c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/BrowserSessionHost.java",
+      "sha256": "27dc08c6484f55cb800d4f00fdb52933fb3bed2ae8ba60542615c1510fd225ce"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
+      "sha256": "4cc857741bf646b9e237d28ee01adddea10807cefefce5d0b6438a40cb56f7a6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PermissionDelegate.java",
+      "sha256": "e5fbbad37ad16206dcce19d6a39d431058713c32de3711573678754d7f9bd8f0"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
+      "sha256": "3328ec871a0d2aaa8686cf8098450149fb76eb5e676221810e8cfb369aa137d9"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/engine/SessionPresentationTest.java",
+      "sha256": "a9186c0f2a0f91ea96872f22ed8293770dd672a22a148ac16ab2f949e1815808"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java",
+      "sha256": "84f003f95dbaa8ac0d5211ec83f394305668ebb3943114d37d1f5a0c8198b6cb"
+    }
+  ],
+  "historicalUnchangedEvidenceRef": "evidence/native-temporary-browser-R49-host-execution.json",
+  "currentActualHostRunRef": "evidence/production-main-agp-R52-checks.json",
+  "scopeNoteR49": "Existing scoped HOST tests independently executed again in fullR49; exactR47/R48 reports NOT rewritten. Current source hashes include the actual R49 source/metadata/commonhelpers; actualAndroid/Gecko qualification remains false. New borrowed-plaintext/retained-source/format/store cases counted separately in retained core50.",
+  "actualCurrentWholeHostRerun": 1034,
+  "scopeNoteR52": "Originalscopedproductionmodel/algorithmtests genuinelyrerun innewR52build, nothistoricalreporthashrefresh. Originalreportsunchanged; newmetadata49separatelycounted; noAndroid/Gecko/wholepolicy/physicalantirollbackqualification."
+}

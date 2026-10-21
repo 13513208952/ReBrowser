@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "revision": "R51",
+  "revision": "R52",
   "authority": "O78",
   "baseSourceCommit": "dd41e3e7b1fb0aa6225837a309d9ac8d9a15f485",
   "definition": "fullFileRisk针对原完整责任，不是实施难度/代码完成/实际业务准入；LOW-SLICE只在被授权切片内低副作用，完整文件可能高风险。",
   "coverage": {
-    "allMasterRuntimeFiles": 184,
-    "previousAdmittedRuntimeFiles": 118,
-    "remainingPlanRuntimeFiles": 66,
+    "allMasterRuntimeFiles": 185,
+    "previousAdmittedRuntimeFiles": 124,
+    "remainingPlanRuntimeFiles": 61,
     "previousDeliveredAwaitingReview": 6,
     "newAssignedFiles": 42,
     "newAssignedJavaFiles": 36,
@@ -17,11 +17,11 @@
     "fullFileRiskCounts": {
       "low": 0,
       "medium": 2,
-      "high": 64
+      "high": 59
     },
-    "mainOnlyUnassignedFiles": 64,
+    "mainOnlyUnassignedFiles": 59,
     "initialRemainingPlanRuntimeFilesAtD02Allocation": 126,
-    "admittedSinceD02Allocation": 60,
+    "admittedSinceD02Allocation": 65,
     "initialMainOnlyFilesAtAllocation": 78,
     "initialFullFileRiskCounts": {
       "low": 8,
@@ -31,7 +31,7 @@
     "newD02AdmittedJava": 36,
     "newD02AdmittedInactiveAssets": 4,
     "newD02HeldStyles": 2,
-    "newRuntimeSourcesSinceSurvey": 2
+    "newRuntimeSourcesSinceSurvey": 3
   },
   "files": [
     {
@@ -442,24 +442,28 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
       "group": "browser",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。"
+      "riskReason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。",
+      "stateBeforeR52": "planned-not-implemented",
+      "implementationRef": "records/native-browser-metadata-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
       "group": "browser",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。"
+      "riskReason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。",
+      "stateBeforeR52": "planned-not-implemented",
+      "implementationRef": "records/native-browser-metadata-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
@@ -1311,24 +1315,28 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
       "group": "subapps",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "真正启停/开关写入/会话路由是领域副作用，不是静态目录。"
+      "riskReason": "真正启停/开关写入/会话路由是领域副作用，不是静态目录。",
+      "stateBeforeR52": "planned-not-implemented",
+      "implementationRef": "records/native-browser-metadata-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
       "group": "settings",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "配置持久化/授权URI访问不由展示建议替代。"
+      "riskReason": "配置持久化/授权URI访问不由展示建议替代。",
+      "stateBeforeR52": "planned-not-implemented",
+      "implementationRef": "records/native-browser-metadata-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
@@ -1355,13 +1363,15 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/data/OwnedDataCatalog.java",
       "group": "continuity",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "sourcePresentUnadmitted": false,
       "fullFileRisk": "high",
       "owner": "main",
       "delegatedTask": null,
       "allowedScope": null,
-      "riskReason": "来源/数据拥有集合/销毁或提交具有不可逆效果，保留主agent。"
+      "riskReason": "来源/数据拥有集合/销毁或提交具有不可逆效果，保留主agent。",
+      "stateBeforeR52": "planned-not-implemented",
+      "implementationRef": "records/native-browser-metadata-contract.json"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",

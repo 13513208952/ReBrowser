@@ -15,7 +15,8 @@ public final class PrivateRecordSealer {
     private static final long MAGIC=0x5242505249563100L; // RBPRIV1 NUL
     private static final SecureRandom RANDOM=new SecureRandom();
     public enum Purpose {
-        BROWSER_CATALOG(KeyPurpose.RecordKind.BROWSER_CATALOG),GECKO_CHECKPOINT(KeyPurpose.RecordKind.GECKO_CHECKPOINT);
+        BROWSER_CATALOG(KeyPurpose.RecordKind.BROWSER_CATALOG),GECKO_CHECKPOINT(KeyPurpose.RecordKind.GECKO_CHECKPOINT),
+        BOOKMARKS(KeyPurpose.RecordKind.BOOKMARKS),HISTORY(KeyPurpose.RecordKind.HISTORY),SETTINGS(KeyPurpose.RecordKind.SETTINGS);
         private final int code,maximum;
         Purpose(KeyPurpose.RecordKind kind){this.code=kind.code();this.maximum=(int)kind.maxBytes();}
         public int code(){return code;}public int maximumPlaintextBytes(){return maximum;}

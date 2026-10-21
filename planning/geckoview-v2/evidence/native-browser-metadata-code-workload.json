@@ -1,0 +1,51 @@
+{
+  "revision": "R52",
+  "minimumRuntimeCodeFiles": 10,
+  "runtimeCodeFilesChanged": 10,
+  "maximumFiles": null,
+  "newSubstantiveJavaFiles": 6,
+  "testsDocsGeneratedNotCounted": true,
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "sha256": "7e766dc69373279a9e847a7bb6fedec6e4253f69cab1d7ee7a3ddb90bb22357a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/OwnedDataCatalog.java",
+      "sha256": "25fe40273f343ec083efffe78c93ef787c583e9710e68ebf1e13e249aeada01d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "sha256": "afb5c4500f48c3e1ff8d437dfba669b28435faa966156c393418df79a0086100"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "sha256": "a0e48e6727b6c3ac8b8ee45b8cfbd16b31856c2cd4620ca12621829145856830"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "sha256": "210ab720caa186ee1ad25e4bcf2fdf31d6fd6567b3c606588e1b82e437c29c7e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "sha256": "1cffe4fa6c64a5ec977bd337cd11cdcdad0638328e7f97fde0106da9a118e184"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+      "sha256": "0733a60d843b1bcd6e6d59bc43e7ae32e0c7c6c22aa32bc227844e261c4d8bb1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "2dfe9df4cf951f312b440ae238312c5e06dda98c6d37f719d0545a0c7e8741ef"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "c2da45d76d0b48e11052cbdcb08c0d4547996ca38c5b3e8637f8c961b58bb399"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "3d3e1623f322e3e6d266186c20e71984b5affd9d062de20171e0de8c069867c3"
+    }
+  ],
+  "scope": "5priorPLANdomainfiles+1sharedcodecACTUALLYimplemented;4existingcrypto/store/bootstrapinterfacescoherentlyextended,notpadding/wholestoreorOSqualification"
+}

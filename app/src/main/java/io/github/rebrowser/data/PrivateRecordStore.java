@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public final class PrivateRecordStore {
     public static final String EPOCHS_DIRECTORY="owned-epochs-v1",RECORDS_DIRECTORY="private-records-v1";
-    public static final int MAX_RECORDS=3201; // 64workspaces *50tabs + one retained browser catalog
+    public static final int MAX_RECORDS=3204; // 64workspaces *50tabs + retained catalog/bookmarks/history/settings
     public static final long MAX_OWNED_DISK_BYTES=128L*1024*1024;
     public enum Kind { MISSING, CURRENT, UNFINISHED_WRITE }
     public static final class Reference {
@@ -119,6 +119,11 @@ public final class PrivateRecordStore {
             }
         }finally{operation.set(false);} // failure preserves uncertain stage/target; NEVER auto-clean/retry
     }
+    /** Exact existing native disk comparison only; not latest/anti-rollback or an effect lock.
+     * No filesystem lock escapes into a native UI/OS callback. */
+    public void requireCurrentStamp(ReadStamp expected,ComponentGate.BusinessPermit permit)throws IOException{
+        begin(permit);try{if(expected==null || expected.issuer!=this || expected.kind!=Kind.CURRENT)throw invalid();own(expected.reference);try(Locked ignored=lock()){check(permit);compare(expected,raw(expected.reference));check(permit);}}finally{operation.set(false);}
+    }
     /** Observation only. Zero alone is NOT all-process/SDK/key/erasure quiescence proof. */
     public boolean hasOwnedIoInFlight(){return operation.get();}
     private void begin(ComponentGate.BusinessPermit permit){check(permit);if(!operation.compareAndSet(false,true))throw new IllegalStateException("Private record IO already owned");try{check(permit);}catch(RuntimeException failure){operation.set(false);throw failure;}}
@@ -130,7 +135,7 @@ public final class PrivateRecordStore {
         try(java.nio.file.DirectoryStream<Path> files=Files.newDirectoryStream(directory)){
             for(Path file:files){if(++nodes>MAX_RECORDS*2+1)throw new IOException("Private record object budget reached");String name=file.getFileName().toString();BasicFileAttributes a=attrs(file);if(!a.isRegularFile() || a.fileKey()==null)throw new IOException("Unknown private record directory object");
                 if(name.equals(".private-records.lock"))continue;
-                if(!name.matches("p[12]_[0-9a-f]{32}\\.v1(\\.pending)?"))throw new IOException("Unexpected private record namespace object");
+                if(!name.matches("p[1-5]_[0-9a-f]{32}\\.v1(\\.pending)?"))throw new IOException("Unexpected private record namespace object");
                 names.add(name.endsWith(".pending")?name.substring(0,name.length()-8):name);if(names.size()>MAX_RECORDS || a.size()<0 || a.size()>MAX_OWNED_DISK_BYTES-used)throw new IOException("Private record disk budget reached");used+=a.size();
             }
         }

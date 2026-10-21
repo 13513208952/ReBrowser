@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R51",
+  "revision": "R52",
   "authority": [
     "O26",
     "O27",
@@ -105,6 +105,12 @@
           "kind": "host-native-source-receipt-synthetic-provenance",
           "purpose": "27actual HOST source receipt/metadata IO/publication ticket cases, private SYNTHETIC own-OS provenance; no real Handler/own signer/source unlock",
           "state": "main-HOST-controlled-source-pipeline-tested-Android-pending"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java",
+          "kind": "native-browser-metadata-regression",
+          "purpose": "Actualboundedmodels/codec/JCAHOSTCAS tests; notOS/Geckoqualification",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -164,6 +170,12 @@
           "kind": "delegated-scoped-model-api",
           "purpose": "L32 错误字符串<=256且不带私有URL/内容，unknown/等待/返回与效果、持久化、实际结束明确分离",
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/data/NativeRecordCodecTest.java",
+          "kind": "native-browser-metadata-regression",
+          "purpose": "Actualboundedmodels/codec/JCAHOSTCAS tests; notOS/Geckoqualification",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -449,6 +461,12 @@
           "kind": "scoped-main-production-host-test",
           "purpose": "PRIVATEsyntheticdomainactualcapture/privatecontext/owner/source checks; noSDKfactory",
           "state": "HOST-scoped-not-OS/SDK-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+          "kind": "native-browser-metadata-regression",
+          "purpose": "Actualboundedmodels/codec/JCAHOSTCAS tests; notOS/Geckoqualification",
+          "state": "scoped-HOST-not-native-runtime"
         }
       ]
     },
@@ -2731,13 +2749,13 @@
       "group": "browser",
       "kind": "native-code",
       "responsibility": "收藏/书签/搜索设置",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "ActualR52codecs/models/HOSTfileJCAorAPIasscoped; NOTactualAndroid/Gecko/wholebackend",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "riskAssessment": {
@@ -2746,20 +2764,24 @@
         "owner": "main",
         "reason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
       "group": "browser",
       "kind": "native-code",
       "responsibility": "近期访问/期限/维持/暂停写入",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
         "VT08",
         "VT09"
       ],
-      "validationMeaning": "referenced API/technology evidence, NOT this future file already compiled",
+      "validationMeaning": "ActualR52codecs/models/HOSTfileJCAorAPIasscoped; NOTactualAndroid/Gecko/wholebackend",
       "runtimePending": true,
       "testReferenceGroup": "browser",
       "riskAssessment": {
@@ -2768,7 +2790,11 @@
         "owner": "main",
         "reason": "浏览器持久化和历史/收藏写入必须绑实际epoch及原生存储权威。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -5533,13 +5559,13 @@
       "group": "subapps",
       "kind": "native-code",
       "responsibility": "NativeUI和管理员共享启用/打开/关闭/子设置路由",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
         "VT09"
       ],
-      "validationMeaning": "API/打包基础已核实，未来文件自身未实现/未编译",
+      "validationMeaning": "ActualR52codecs/models/HOSTfileJCAorAPIasscoped; NOTactualAndroid/Gecko/wholebackend",
       "runtimePending": true,
       "testReferenceGroup": "subapps",
       "riskAssessment": {
@@ -5548,20 +5574,24 @@
         "owner": "main",
         "reason": "真正启停/开关写入/会话路由是领域副作用，不是静态目录。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
       "group": "settings",
       "kind": "native-code",
       "responsibility": "本机通用/背景/搜索/子设置读写，与Activity分离",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
         "VT09"
       ],
-      "validationMeaning": "API/打包基础已核实，未来文件自身未实现/未编译",
+      "validationMeaning": "ActualR52codecs/models/HOSTfileJCAorAPIasscoped; NOTactualAndroid/Gecko/wholebackend",
       "runtimePending": true,
       "testReferenceGroup": "settings",
       "riskAssessment": {
@@ -5570,7 +5600,11 @@
         "owner": "main",
         "reason": "配置持久化/授权URI访问不由展示建议替代。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
@@ -5636,13 +5670,13 @@
       "group": "continuity",
       "kind": "native-code",
       "responsibility": "来源保护/私有对象访问共享的精确v2拥有集合，不接任意文件路径",
-      "state": "planned-not-implemented",
+      "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
         "VT03",
         "VT09"
       ],
-      "validationMeaning": "API/打包基础已核实，未来文件自身未实现/未编译",
+      "validationMeaning": "ActualR52codecs/models/HOSTfileJCAorAPIasscoped; NOTactualAndroid/Gecko/wholebackend",
       "runtimePending": true,
       "testReferenceGroup": "continuity",
       "riskAssessment": {
@@ -5651,7 +5685,11 @@
         "owner": "main",
         "reason": "来源/数据拥有集合/销毁或提交具有不可逆效果，保留主agent。",
         "contractRef": "records/remaining-file-risk-assessment.json"
-      }
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ]
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
@@ -5957,6 +5995,30 @@
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/native-retained-browser-store-contract.json"
+      ]
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "group": "core",
+      "kind": "native-code",
+      "responsibility": "原生元数据共享有界二进制原语/严格UTF8与EOF，不接任意路径或Java序列化",
+      "state": "implemented-host-tested-not-integrated",
+      "validationRefs": [
+        "VT09"
+      ],
+      "validationMeaning": "ActualR52codecs/models/HOSTfileJCAorAPIasscoped; NOTactualAndroid/Gecko/wholebackend",
+      "runtimePending": true,
+      "testReferenceGroup": "core",
+      "riskAssessment": {
+        "revision": "R52",
+        "fullFileRisk": "medium",
+        "owner": "main",
+        "reason": "共享私有元数据边界/分配上限与严格解析；不能变成授权或路径访问",
+        "contractRef": "records/native-browser-metadata-contract.json"
+      },
+      "implementationReadinessRef": "records/implementation-readiness.json",
+      "implementationEvidence": [
+        "records/native-browser-metadata-contract.json"
       ]
     }
   ],

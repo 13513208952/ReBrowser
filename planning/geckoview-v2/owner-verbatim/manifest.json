@@ -639,7 +639,21 @@
       "utf8Bytes": 135,
       "sha256": "cd0f6d1e2a763a1bb0c0b7111cc41580b4977bd5d2f703a6869aaf87d1ee7258",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O92",
+      "file": "owner-verbatim/O92-continue-core-stores.txt",
+      "utf8Bytes": 6,
+      "sha256": "7c9691192f1b73408bbe4c0cb6d00db94375ca9d8fce0a0d5985e7a5178f083f",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O93",
+      "file": "owner-verbatim/O93-continue-browser-metadata-integration.txt",
+      "utf8Bytes": 8,
+      "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-21T10:31:07+08:00"
+  "lastAppendedAt": "2026-10-21T14:16:41+08:00"
 }

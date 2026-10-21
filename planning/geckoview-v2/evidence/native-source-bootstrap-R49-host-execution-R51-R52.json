@@ -1,0 +1,78 @@
+{
+  "revision": "R52",
+  "hostTestsPassed": 27,
+  "scope": "Actual private native provenance-composition/accepted-context transfer + real bounded HOST ledger IO/gate/partition/publication model; explicitly SYNTHETIC own-Android provenance and clock, NOT real PM/Android files/process/Handler",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SourceBootstrap.java",
+      "sha256": "753ae7ee9dbf603f88d8026cbfdd455c20a56af98ce884b4a6385670a100d5f4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+      "sha256": "5263b2bc0c8f332228422dc4fbb4a71a739319db0db3637c862f9ac780dd527c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+      "sha256": "4bc75882096e4599628e6b046b43047e76b1f19f256afbb73ccc5e1e1dbbf59a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+      "sha256": "f4b6a282c8677d4bf7a1c70fb817a1353e898bddd2938f4a030a1203a9bf18d1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "3d3e1623f322e3e6d266186c20e71984b5affd9d062de20171e0de8c069867c3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "sha256": "c963656196d68baeae732018c1638cfd687901df239fe8b08de801a164544dcc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "65a05b709ece3590d44020b43bb934abc060e5d9fdcb7c07a777300aa405e562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "sha256": "c54120d9cb7090fa584a6e41c3ca6a3940ab333ceafc2ddbbceee2e54e67fb10"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "sha256": "45491f173b68b4da1cc6c49cec26b4b1b9fc9b2e3507b830576cdc4b2ee7ac06"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "a4e4423c8731ebf45fd9586a7e94a00d3a37b3758f6df656e9670ab63d72fdd7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "sha256": "1a56070130d6a84cc643b3d40cfb11557973aa5f18060cc1706d9bc6f38aaeaf"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/continuity/SourceBootstrapTest.java",
+      "sha256": "f24cd4db79681d72acd642ba832acbfd826a205978a93c1e1996baf6f03d0bcc"
+    }
+  ],
+  "privateSyntheticOwnInspectionConstructorUsed": true,
+  "actualSourceReceiptAndTransferMethodsExecuted": true,
+  "actualNativeLedgerReadConfirmHostExecuted": true,
+  "actualPublicationFenceModelExecuted": true,
+  "actualOwnAndroidSignerOrFilesystemExecuted": false,
+  "actualMainHandlerOrGeckoPublicationExecuted": false,
+  "realRootKeysCredentialsOrDeviceUsed": false,
+  "productSourceUnlockExecuted": false,
+  "productionUnconfiguredNoIoFastPathHostExecuted": true,
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R52-checks.json",
+  "positiveHandlerSubmissionReturnRequiredByTicketModel": true,
+  "earlyOrUnknownSubmissionCannotPublishTrustHostTested": true,
+  "historicalUnchangedEvidenceRef": "evidence/native-source-bootstrap-R49-host-execution-R51.json",
+  "currentActualHostRunRef": "evidence/production-main-agp-R52-checks.json",
+  "scopeNoteR49": "Existing scoped HOST tests independently executed again in fullR49; exactR47/R48 reports NOT rewritten. Current source hashes include the actual R49 source/metadata/commonhelpers; actualAndroid/Gecko qualification remains false. New borrowed-plaintext/retained-source/format/store cases counted separately in retained core50.",
+  "actualR51FullHostRerun": 985,
+  "scopeNoteR51": "Originalscopedmodeltests genuinelyrerun undernewsource; originalreportsunchanged. NoAndroid/DB/nativeglobalatomicityqualification.",
+  "actualCurrentWholeHostRerun": 1034,
+  "scopeNoteR52": "Originalscopedproductionmodel/algorithmtests genuinelyrerun innewR52build, nothistoricalreporthashrefresh. Originalreportsunchanged; newmetadata49separatelycounted; noAndroid/Gecko/wholepolicy/physicalantirollbackqualification."
+}

@@ -13,7 +13,8 @@ public final class KeyPurpose {
     /** Native private record classes with fixed IDs and conservative size ceilings. */
     public enum RecordKind {
         BROWSER_CATALOG(1, 4L * 1024 * 1024),
-        GECKO_CHECKPOINT(2, 2L * 1024 * 1024);
+        GECKO_CHECKPOINT(2, 2L * 1024 * 1024),
+        BOOKMARKS(3, 1024L * 1024), HISTORY(4, 4L * 1024 * 1024), SETTINGS(5, 64L * 1024);
 
         private final int code;
         private final long maxBytes;

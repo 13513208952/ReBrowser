@@ -1,6 +1,8 @@
-# ReBrowser v2 · 模块联动闭合 R51（当前：十个新核心文件与当前授权内核）
+# ReBrowser v2 · 模块联动闭合 R52（当前：浏览器元数据持久化核心）
 
-> **O90/O91：推进新核心文件，不陷入既有代码无限优化。** 本轮实质创建10个原PLAN正式Java文件、联动4个既有接口，Java104→114、PLAN76→66；不是空壳或DTO计数。新增禁用签名历史、低委托链、名单隔离/目标持钥、短时Actor/当前策略、请求任务预留桥、独立owner-grant及脱敏审计。实际985HOST（新增41项JCA/内核回归），57纯切片542HOST＋SDKbootclasspath；正式Root/设备表仍为空，NativeCurrent持久head/目标适配器、真正效果分发和Android OS验证尚未闭合，未激活外部入口。详见[契约](records/current-authority-kernel-contract.json)／[实际执行](evidence/current-authority-kernel-host-execution.json)／[R51审查](reviews/R51-new-core-authority-kernel.json)。
+> **新增核心，非继续打磨既有UI：** 实质创建6个正式Java文件（5原PLAN＋1共享codec）、联动4个既有crypto/store/bootstrap文件，Java114→120、PLAN66→61。书签树、历史/保留/暂停写入、四搜索引擎和双内置子应用desired设置走固定私有AEAD记录与完整快照CAS；共享子应用服务区分desired状态与真实open/stop。实际120源码/613class/1034HOST，58纯切片552HOST＋实际SDKbootclasspath，新增49项（10codec＋19model＋20真实HOST文件/JCA/CAS）。不自动填默认、建密钥/目录、自动保存/恢复；Gecko历史/私密会话过滤生产者、Android真实IO/组件执行及管理员持久head适配仍未接通。详见[契约](records/native-browser-metadata-contract.json)／[执行](evidence/native-browser-metadata-host-execution.json)／[R52](reviews/R52-native-browser-metadata-core.json)。
+
+> **历史R51，O90/O91：推进新核心文件，不陷入既有代码无限优化。** 本轮实质创建10个原PLAN正式Java文件、联动4个既有接口，Java104→114、PLAN76→66；不是空壳或DTO计数。新增禁用签名历史、低委托链、名单隔离/目标持钥、短时Actor/当前策略、请求任务预留桥、独立owner-grant及脱敏审计。实际985HOST（新增41项JCA/内核回归），57纯切片542HOST＋SDKbootclasspath；正式Root/设备表仍为空，NativeCurrent持久head/目标适配器、真正效果分发和Android OS验证尚未闭合，未激活外部入口。详见[契约](records/current-authority-kernel-contract.json)／[实际执行](evidence/current-authority-kernel-host-execution.json)／[R51审查](reviews/R51-new-core-authority-kernel.json)。
 
 > **D03已主审（O88/O89）**：[L49–L73](records/low-cost-agent-assignments.json)的25个既有Java扩展，从owner指定 `dsh/result/d03/` 原样归档107文件后，主审独立复测并修正再整合；不算25新增文件/模块完成。25原始源哈希/6R49context核对，非目标源码/资产/context/build未混入。原分配及[分配时哈希检查](evidence/delegation-D03-assignment-checks.json)原样保留；当前无保留目标，详见[独立主审证据](evidence/D03-main-review-host-execution.json)，不沿用worker自述180通过。
 
@@ -51,9 +53,9 @@ mindmap
 
 | 视图 | 用途 | 权威输入 |
 | --- | --- | --- |
-| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、49 HOST与55 Android绑定WIP＋4未激活静态资产，本轮实际AGP Java编译/985项HOST，清单任务UP-TO-DATE核对 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
+| [主程序构建入口](../../rebrowser/README.md)／[实际主程序编译](evidence/production-main-app-compile.json) | 独立v2源码、原生主窗口/管理员控制台、49 HOST与55 Android绑定WIP＋4未激活静态资产，本轮实际AGP Java编译/1034项HOST，清单任务UP-TO-DATE核对 | 不混旧WebView应用，未打APK/装机；正式根/连续性缺失时不解锁 |
 | [应用本体代码总树](APPLICATION_CODE_TREE.md) | 全部目标运行代码逐文件展开，区分PLAN与HOST，测试等辅助只概括引用 | O26／O27／O41，HOST不等于Android集成 |
-| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，985项HOST（542纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+40任务线程/工作集/fence+10资源计数/策略+19窗口目标registry+42窗口界面/回调模型+27原生回执/提交模型+13临时宿主adapter/拒绝/close+32私有vault/IO边界+51D01Android绑定模型+46D02Android绑定模型+21保留目录IO/私有context边界+92D03交付相关/主审Android绑定模型）；本轮AGP实际执行，不是Android UI运行 |
+| [逐文件实现准入](records/implementation-readiness.json)／[真实源码单元证据](evidence/production-unit-tests.json) | 已厘清职责/边界/依赖和测试后实现，不等所有领域完成 | O41／O42；主程序/编译身份验签/基础域，1034项HOST（552纯切片+10元数据+28合成认证控制流+12导航策略/SDK DTO+40任务线程/工作集/fence+10资源计数/策略+19窗口目标registry+42窗口界面/回调模型+27原生回执/提交模型+13临时宿主adapter/拒绝/close+32私有vault/IO边界+51D01Android绑定模型+46D02Android绑定模型+21保留目录IO/私有context边界+92D03交付相关/主审Android绑定模型+39浏览器元数据模型/真实HOST存储）；本轮AGP实际执行，不是Android UI运行 |
 | [动作到本体文件路由](records/application-action-routing.json) | 178动作逐项指向目标领域代码；延期动作不伪造当前实现 | 不以UI Activity替代领域服务 |
 | [主树文件权威清单](records/application-code-files.json) | 逐路径/职责/技术证据/辅助测试关联 | 不把测试/工具混入本体叶节点 |
 | [旧结构审查整理：统一任务](records/structure-retirement-policy.json)／[回收站记录](records/noncode-retirement-review.json) | 主体ZIP／凭据保留／其他价值耗尽进Trash是同任务内分流，与新版本工作并行 | O37；不把一次整理当停止节点 |

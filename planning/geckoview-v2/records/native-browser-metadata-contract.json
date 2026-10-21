@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "revision": "R52",
+  "authority": [
+    "O64",
+    "O67",
+    "O68",
+    "O69",
+    "O90",
+    "O91",
+    "O92",
+    "O93"
+  ],
+  "moduleFocus": "NEWbrowsercoremetadata/settings/subapplicationdomainpersistence; explicitindependentexitwhileactualnativeauthorityheadadapterblocked",
+  "commitMinimum": {
+    "minimumMeaningfulRuntimeCodeFiles": 10,
+    "maximumFiles": null,
+    "testsDocsGeneratedDoNotCount": true
+  },
+  "runtimeCodeBatch": [
+    "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+    "app/src/main/java/io/github/rebrowser/data/OwnedDataCatalog.java",
+    "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+    "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+    "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+    "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+    "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+    "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+    "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+    "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java"
+  ],
+  "newSubstantiveJavaFiles": 6,
+  "newPreviouslyPlannedJavaFiles": 5,
+  "newSharedPrimitiveSupportFile": "data/NativeRecordCodec.java",
+  "supportedSlice": "Existingnativeprivate-recordkey/directory+source->fixedBOOKMARKS/HISTORY/SETTINGSmetadataAEAD/CAS; immutablevalidateddomainCRUD; noautosave/defaults/nativeGeckocaptureortransportactivation",
+  "logic": [
+    "NativeRecordCodec canonical8Bmagic/U16version1/nativepositiveintegers/strictbooleans/U16UTF8lengths/UTF16+UTF8budgets/exactEOF/beforeallocationbounds, noJavaserialization",
+    "OwnedDataCatalog exact3fixednative16Bscopes/nopathURIparameters; one16MiBdecodedrootcreditkeptuntilView.close; privateviewstamp/type/family/codecidentity/exactdiskCAS/singlewriteorhandoffattempt; missingNOTfresh/empty/default andpendingretained",
+    "BookmarkStore max500nodes/depth16/1MiBactualencodedbudget; folder/parent/uniqueIDs/cyclevalidation, canonicalHTTP(S)URL, immutableadd/edit/move/subtreeremove/literal100rowpages andcanonicalboundedcodec",
+    "HistoryStore max5000entries/4MiB; canonicalstabletime-desc/id-order, nativeexplicitvisitmetadata/pausewrites/retain/remove/cutoffthatpreservespins, literalsearch100rows; NEVERpretendsactualprivate-sessionexclusion/documentcommit withoutnativeproducer",
+    "SettingsRepository onlyactual4searchproviders+2built-indesiredenablement; completemetadataCAS not inventedgenericbooleans/unknown=false; coherentbatchedimmutableedits, counteradvancenonregress",
+    "SubapplicationCoordinator usesSAMEsettings/domain fornativeUI/futureadmin desiredCAS, knownRegistryIDs, disabledOPENdeny/STOPallowed, spendbeforeoneexactcallback+thread/callbackcurrentdiskfence; callbackreturnnotactualopened/stopped anddurabletaskidempotencystillcallerowned",
+    "PurposeseparationextendsRBPRIV1codes3BOOKMARKS1MiB/4HISTORY4MiB/5SETTINGS64KiB; existingcodes1/2/wireunchanged, NOMAILformat/keyaliaschange. PrivateRecordStore bound3204objects/6409nodes andstrictp[1-5] namespace+128MiBdisk; unknownp6retainedandblocksnewwrite",
+    "StartupCoordinator lazycanonicalexistingprivateIOowner+singletonbookmarks/history/settings/subapps; NOstartupread/keys/directory/defaultseed/autorestore/automaticGecko/session/historycallbacks"
+  ],
+  "notClaimed": [
+    "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+    "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+    "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+    "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+    "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+    "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+    "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+  ],
+  "hostEvidenceRef": "evidence/native-browser-metadata-host-execution.json"
+}

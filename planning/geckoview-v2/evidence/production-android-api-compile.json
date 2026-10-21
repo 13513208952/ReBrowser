@@ -110,7 +110,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
-      "sha256": "d5134c99747d2e5ff20dbfb96309baeb89a6379b2e107e3a0c962524c4c0b264"
+      "sha256": "2dfe9df4cf951f312b440ae238312c5e06dda98c6d37f719d0545a0c7e8741ef"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
@@ -170,7 +170,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
-      "sha256": "92e7179917a17f93cd9a49fb35352d93d595f6477b23a18816a47bc2e4073094"
+      "sha256": "0733a60d843b1bcd6e6d59bc43e7ae32e0c7c6c22aa32bc227844e261c4d8bb1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
@@ -231,6 +231,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
       "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "sha256": "7e766dc69373279a9e847a7bb6fedec6e4253f69cab1d7ee7a3ddb90bb22357a"
     }
   ],
   "classFiles": [
@@ -1146,12 +1150,12 @@
     },
     {
       "path": "io/github/rebrowser/crypto/KeyPurpose$RecordKind.class",
-      "sha256": "a809a8117ab77712f2104627ceb4f50a14889df60dfc2ca6eb465323ce28f283",
+      "sha256": "b6db442c9c4fbf0bfcd7d95c1470aa27d309d71d69b40fe1357fc3a4f62ca27f",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/crypto/KeyPurpose.class",
-      "sha256": "d681ad8af6a73111f8a976079b0936bd63b7218fe2076cc3493e7a7e13a9e9e5",
+      "sha256": "216b5f99e1b89574aa20b1c636af97fb6fa1518e933c954d79640d9cb7164695",
       "classMajor": 52
     },
     {
@@ -1191,17 +1195,37 @@
     },
     {
       "path": "io/github/rebrowser/crypto/PrivateRecordSealer$Binding.class",
-      "sha256": "0a95328be235cb0208cc9839b9660418911721c0e67e974358dd64263aac8723",
+      "sha256": "b5d902499dd1144e9664566e1b93c3fbc80c1ddc1f6ffa7a1c413cf86f2893ff",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/crypto/PrivateRecordSealer$Purpose.class",
-      "sha256": "25623f7df2cc8fa00da79f3374aeb8ff53b7b70c5b30dbdb97589878297a5074",
+      "sha256": "81b3a6d2882a4d93e7a538ea144617ffe9edaedb22ba973f025f21b64ae36095",
       "classMajor": 52
     },
     {
       "path": "io/github/rebrowser/crypto/PrivateRecordSealer.class",
-      "sha256": "a06481cb905a12e4be500cd553358a9877d34c493c7ad119e588d8b435c9211c",
+      "sha256": "b35210373874762aa7ba0e6f00dcb796a530adf24928b17ea838fb91dfb14abf",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/data/NativeRecordCodec$Codec.class",
+      "sha256": "73a59128fd5c26c66d7a0fa905baafa9f4381715e5bf2d0964689fe2dfdee0a7",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/data/NativeRecordCodec$Reader.class",
+      "sha256": "1a56dbe2ba62b226e4024af117d481a93fdb4ed3064295821483e6e0bb6ef42e",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/data/NativeRecordCodec$Writer.class",
+      "sha256": "469840162367d92499ea9f3f3cb0203a221e8f3ecccb8eeece98c2bbfc9600e8",
+      "classMajor": 52
+    },
+    {
+      "path": "io/github/rebrowser/data/NativeRecordCodec.class",
+      "sha256": "a0badb76170aa954da6850e4ca5a1aba622db6a9a5dc04b527e4fa9aa8799c42",
       "classMajor": 52
     },
     {

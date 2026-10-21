@@ -1,0 +1,23 @@
+{
+  "id": "R52",
+  "state": "newnativebrowsermetadata-core-source-actualHOSTfileJCA-and-SDK-not-GeckoOScompletion",
+  "contractRef": "records/native-browser-metadata-contract.json",
+  "executionEvidenceRef": "evidence/native-browser-metadata-host-execution.json",
+  "workloadEvidenceRef": "evidence/native-browser-metadata-code-workload.json",
+  "newFormalJavaFiles": 6,
+  "runtimeWorkload": 10,
+  "mainJava": 120,
+  "compiledMainClasses": 613,
+  "AGPHOST": 1034,
+  "pureHOST": 552,
+  "newHOST": 49,
+  "notClaimed": [
+    "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+    "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+    "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+    "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+    "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+    "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+    "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+  ]
+}

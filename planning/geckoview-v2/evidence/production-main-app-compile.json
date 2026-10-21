@@ -60,7 +60,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
-      "sha256": "22ba1f05ee8866c6bb9b6e31d85da5d37d427ae9e1744bdd61c470b78f03236a"
+      "sha256": "3d3e1623f322e3e6d266186c20e71984b5affd9d062de20171e0de8c069867c3"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
@@ -73,6 +73,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
       "sha256": "39bdc4747ff3cec7d4c587ae7fe31fc8bf1f9f3d0295a701070ccd46c94fb328"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "sha256": "afb5c4500f48c3e1ff8d437dfba669b28435faa966156c393418df79a0086100"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
@@ -93,6 +97,10 @@
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
       "sha256": "e8a2b0ac3ef3d38895046d3f25f04c5cd63a522cb4083be7f9ac2186734f04a7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "sha256": "a0e48e6727b6c3ac8b8ee45b8cfbd16b31856c2cd4620ca12621829145856830"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
@@ -204,7 +212,7 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
-      "sha256": "92e7179917a17f93cd9a49fb35352d93d595f6477b23a18816a47bc2e4073094"
+      "sha256": "0733a60d843b1bcd6e6d59bc43e7ae32e0c7c6c22aa32bc227844e261c4d8bb1"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
@@ -212,11 +220,19 @@
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
-      "sha256": "d5134c99747d2e5ff20dbfb96309baeb89a6379b2e107e3a0c962524c4c0b264"
+      "sha256": "2dfe9df4cf951f312b440ae238312c5e06dda98c6d37f719d0545a0c7e8741ef"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "sha256": "7e766dc69373279a9e847a7bb6fedec6e4253f69cab1d7ee7a3ddb90bb22357a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/OwnedDataCatalog.java",
+      "sha256": "25fe40273f343ec083efffe78c93ef787c583e9710e68ebf1e13e249aeada01d"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
-      "sha256": "95dc6a029594736f193bf378734eeb25e930393d6c50497db497ba44f1c1f5a5"
+      "sha256": "c2da45d76d0b48e11052cbdcb08c0d4547996ca38c5b3e8637f8c961b58bb399"
     },
     {
       "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
@@ -359,6 +375,14 @@
       "sha256": "19e896934398078510a52a3197ea91a0ff9e0d7bb2174956b0c60859f2722bf4"
     },
     {
+      "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "sha256": "210ab720caa186ee1ad25e4bcf2fdf31d6fd6567b3c606588e1b82e437c29c7e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "sha256": "1cffe4fa6c64a5ec977bd337cd11cdcdad0638328e7f97fde0106da9a118e184"
+    },
+    {
       "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
       "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
     },
@@ -495,6 +519,10 @@
       "sha256": "fa85ac4872787aae28a203e5f62ebec4c23388a9d35790684b1cdfd5d85aa7fb"
     },
     {
+      "path": "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+      "sha256": "6818fae77e7e6366cbf8b12589ce345b67d67563cf1b15af48ddfb2c1df6312b"
+    },
+    {
       "path": "app/src/test/java/io/github/rebrowser/browser/BrowserRetainedCaptureBoundaryTest.java",
       "sha256": "7c066964f1b501193303ba759537b0b13a6195a92fed92c9e3a7991642db3771"
     },
@@ -592,7 +620,7 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/KeyPurposeTest.java",
-      "sha256": "9e1445cd70b94f92f611612e5a46cfef791dc2f1035a9aeb869a5ea72847d7b8"
+      "sha256": "300e678cfc6b9bd8ea7662be16b74631bc37416d367a59797924d0e2ae00406a"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/ObjectAeadTest.java",
@@ -600,7 +628,15 @@
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java",
-      "sha256": "8068303d44b036c8dfc6abf351ea98d875c841c3da078e0962fbdaadaf4919f3"
+      "sha256": "a158b8b71228d86e1203d4eb19e5438762bda448b4c315251f304b23e9b83b14"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java",
+      "sha256": "d0691bde09db246329f4513af2c987789dc403892c77de62bfb198cc12b1cfa4"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/data/NativeRecordCodecTest.java",
+      "sha256": "a87308ed5ffca00cb866fdcd44fef60f0fab899a2266cae09663d7497a9c3ec5"
     },
     {
       "path": "app/src/test/java/io/github/rebrowser/data/PrivateRecordStoreTest.java",
@@ -935,8 +971,8 @@
       "sha256": "6b1230b308d273dc8c5dab222ada62c10699b2b4807f1dc0414aed253a460b10"
     }
   ],
-  "productionJavaSourceFiles": 114,
-  "compiledClassFiles": 590,
+  "productionJavaSourceFiles": 120,
+  "compiledClassFiles": 613,
   "unitTests": [
     {
       "class": "io.github.rebrowser.authority.AuthorityContractsTest",
@@ -989,6 +1025,12 @@
     {
       "class": "io.github.rebrowser.browser.BrowserCatalogTest",
       "tests": 23,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.browser.BrowserMetadataModelsTest",
+      "tests": 19,
       "failures": 0,
       "errors": 0
     },
@@ -1151,6 +1193,18 @@
     {
       "class": "io.github.rebrowser.crypto.PrivateRecordSealerTest",
       "tests": 17,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.data.BrowserMetadataStoreTest",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "class": "io.github.rebrowser.data.NativeRecordCodecTest",
+      "tests": 10,
       "failures": 0,
       "errors": 0
     },
@@ -1623,7 +1677,7 @@
       "errors": 0
     }
   ],
-  "unitTestsPassed": 985,
+  "unitTestsPassed": 1034,
   "mergedManifestPackage": "io.github.rebrowser.development",
   "mergedApplicationClass": "io.github.rebrowser.ReBrowserApplication",
   "adminActivityExported": "false",
@@ -1703,14 +1757,14 @@
   "windowTargetReferenceRegistryHostExecuted": true,
   "windowTargetAndroidActivityOrWindowProbeExecuted": false,
   "windowTargetRegistryDispatcherIntegrated": false,
-  "currentAgpEvidenceRef": "evidence/production-main-agp-R51-checks.json",
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R52-checks.json",
   "historicalStandaloneCheckpointRef": "evidence/production-main-standalone-R42-checkpoint.json",
   "hostAndroidClassNativeWindowModelsTests": 42,
   "nativeWindowPresentationModelsHostExecuted": true,
   "nativeAndroidViewWindowDialogMetricsExecuted": false,
   "lastHistoricalAgpCheckpointRef": "evidence/production-main-agp-R38-checkpoint.json",
-  "currentCodeBatchContractRef": "records/current-authority-kernel-contract.json",
-  "currentCodeBatchWorkloadRef": "evidence/current-authority-kernel-code-workload.json",
+  "currentCodeBatchContractRef": "records/native-browser-metadata-contract.json",
+  "currentCodeBatchWorkloadRef": "evidence/native-browser-metadata-code-workload.json",
   "sourceIncarnationGateHostExecuted": true,
   "actualAndroidEntryProcessStartupExecuted": false,
   "currentAdminSqlEvidenceRef": "evidence/admin-idempotency-current-host-sql-R51.json",
@@ -1740,7 +1794,7 @@
   "D02UnapprovedStylesHeld": 2,
   "D02ActualAndroidViewOsOrGeckoQualified": false,
   "currentNativeWindowModelsEvidenceRef": "evidence/native-window-models-R50-host-execution.json",
-  "currentPrivateRecordHostEvidenceRef": "evidence/native-private-record-store-R49-host-execution.json",
+  "currentPrivateRecordHostEvidenceRef": "evidence/native-private-record-store-R49-host-execution-R52.json",
   "currentD01HostEvidenceRef": "evidence/D01-reviewed-worker-models-R50-host-execution.json",
   "hostAndroidClassRetainedBrowserStoreTests": 21,
   "nativeRetainedMetadataCaptureCodecStoreSourceImplemented": true,
@@ -1749,16 +1803,22 @@
   "nativeRetainedGeckoSessionCheckpointOrRestoreImplemented": false,
   "D03ReservedExistingCodeFiles": 0,
   "D03WorkerImplementationIntegrated": true,
-  "currentEntryContextEvidenceRef": "evidence/entry-source-context-R49-host-execution-R51.json",
-  "currentSourceBootstrapEvidenceRef": "evidence/native-source-bootstrap-R49-host-execution-R51.json",
-  "currentTemporaryBrowserHostEvidenceRef": "evidence/native-temporary-browser-R49-host-execution.json",
+  "currentEntryContextEvidenceRef": "evidence/entry-source-context-R49-host-execution-R51-R52.json",
+  "currentSourceBootstrapEvidenceRef": "evidence/native-source-bootstrap-R49-host-execution-R51-R52.json",
+  "currentTemporaryBrowserHostEvidenceRef": "evidence/native-temporary-browser-R49-host-execution-R52.json",
   "hostAndroidClassD03PresentationModelsTests": 92,
   "D03IntegrationMeaning": "25existingruntimeextensions main-reviewed with numerous realfixes; no newRuntimeFile/wholebackend/actualAndroidqualification",
   "D03ActualAndroidViewsOrNativeMediaOrNotificationExecuted": false,
-  "currentD02HostEvidenceRef": "evidence/D02-main-review-R50-host-execution.json",
-  "currentAuthorityKernelEvidenceRef": "evidence/current-authority-kernel-host-execution.json",
+  "currentD02HostEvidenceRef": "evidence/D02-main-review-R50-host-execution-R52.json",
+  "currentAuthorityKernelEvidenceRef": "evidence/current-authority-kernel-R52-host-execution.json",
   "newCoreRuntimeFilesR51": 10,
   "currentAuthorityReservationKernelImplemented": true,
   "currentAuthorityNativeDurableHeadTargetAdaptersActivated": false,
-  "administratorExternalEffectsImplemented": false
+  "administratorExternalEffectsImplemented": false,
+  "currentBrowserMetadataEvidenceRef": "evidence/native-browser-metadata-host-execution.json",
+  "hostAndroidClassBrowserMetadataTests": 39,
+  "browserMetadataKeysOrDirectoriesProvisioned": false,
+  "browserHistoryActualGeckoProducerInstalled": false,
+  "browserMetadataAutomaticDefaultsOrRestore": false,
+  "currentRetainedBrowserHostEvidenceRef": "evidence/native-retained-browser-store-host-execution-R52.json"
 }

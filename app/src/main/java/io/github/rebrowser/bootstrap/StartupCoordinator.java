@@ -64,6 +64,9 @@ public final class StartupCoordinator {
     private volatile GeckoRuntimeOwner runtimeOwner;
     private BrowserCoordinator browserDomain;private boolean browserDomainAttempted;
     private BrowserStore browserStore;private boolean browserStoreAttempted;
+    private io.github.rebrowser.data.OwnedDataCatalog browserData;private boolean browserDataAttempted;
+    private io.github.rebrowser.browser.BookmarkStore bookmarks;private io.github.rebrowser.browser.HistoryStore history;
+    private io.github.rebrowser.settings.SettingsRepository settings;private io.github.rebrowser.subapps.SubapplicationCoordinator subapplications;
     private BrowserStoreCoordinator browserInspector;private boolean browserInspectorAttempted;
     private PrivateRecordStore privateRecords;private boolean privateRecordsAttempted;private final Object privateRecordOpening=new Object();
     private final ComponentGate.ResourcePin businessLifetime;
@@ -166,6 +169,28 @@ public final class StartupCoordinator {
             if(browserStoreAttempted)throw new IllegalStateException("Native browser catalog opening already attempted");browserStoreAttempted=true;
             BrowserStore opened=BrowserStore.openExisting(openExistingPrivateRecordsOnIo(permit),gate,permit);gate.requireDataEpoch(permit,epoch);browserStore=opened;return opened;
         }
+    }
+    /** Canonical existing browser-metadata owner on the SAME private-record IO lane. No read,
+     * seed/default values, callbacks, autosave or directory/key creation at construction. */
+    public io.github.rebrowser.data.OwnedDataCatalog openExistingBrowserDataOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
+        if(Looper.myLooper()==Looper.getMainLooper())throw new IllegalStateException("Browser metadata requires an owned IO lane");
+        byte[] epoch=requireNativeDataEpoch(permit);synchronized(privateRecordOpening){
+            requireNativeDataEpoch(permit);if(browserData!=null){browserData.requireBindings(gate,permit);return browserData;}
+            if(browserDataAttempted)throw new IllegalStateException("Native browser metadata owner already attempted");browserDataAttempted=true;
+            io.github.rebrowser.data.OwnedDataCatalog opened=io.github.rebrowser.data.OwnedDataCatalog.openExisting(openExistingPrivateRecordsOnIo(permit),gate,permit);gate.requireDataEpoch(permit,epoch);browserData=opened;return opened;
+        }
+    }
+    public io.github.rebrowser.browser.BookmarkStore openExistingBookmarkStoreOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
+        synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(bookmarks==null)bookmarks=new io.github.rebrowser.browser.BookmarkStore(owner);return bookmarks;}
+    }
+    public io.github.rebrowser.browser.HistoryStore openExistingHistoryStoreOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
+        synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(history==null)history=new io.github.rebrowser.browser.HistoryStore(owner);return history;}
+    }
+    public io.github.rebrowser.settings.SettingsRepository openExistingSettingsOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
+        synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(settings==null)settings=new io.github.rebrowser.settings.SettingsRepository(owner);return settings;}
+    }
+    public io.github.rebrowser.subapps.SubapplicationCoordinator subapplicationDomainOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
+        synchronized(privateRecordOpening){io.github.rebrowser.settings.SettingsRepository owner=openExistingSettingsOnIo(permit);if(subapplications==null)subapplications=new io.github.rebrowser.subapps.SubapplicationCoordinator(owner);return subapplications;}
     }
     /** Lazy explicit native inspection only. Does not open Gecko or read any business record here. */
     public BrowserStoreCoordinator browserCatalogInspector(ComponentGate.BusinessPermit permit){

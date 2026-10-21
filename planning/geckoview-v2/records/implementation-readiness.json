@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": "R51",
+  "revision": "R52",
   "authority": [
     "O41",
     "O42",
@@ -401,7 +401,8 @@
         "records/native-source-bootstrap-contract.json",
         "records/native-temporary-browser-host-contract.json",
         "records/native-private-record-store-contract.json",
-        "records/native-retained-browser-store-contract.json"
+        "records/native-retained-browser-store-contract.json",
+        "records/native-browser-metadata-contract.json"
       ],
       "inputOutput": "native Android application/activity/process inputs; source-locked shell and on-demand SDK owner, no unguarded page/old app data",
       "dependencies": "new rebrowser standalone Android project + actual pinned Gecko158/SDK37.2",
@@ -1752,7 +1753,8 @@
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
         "records/module-integration-plan.json",
-        "records/D02-review-integration-contract.json"
+        "records/D02-review-integration-contract.json",
+        "records/native-browser-metadata-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
@@ -1820,7 +1822,8 @@
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
         "records/module-integration-plan.json",
-        "records/native-retained-browser-store-contract.json"
+        "records/native-retained-browser-store-contract.json",
+        "records/native-browser-metadata-contract.json"
       ],
       "inputOutput": "Exact native source/epoch/gate and owned inputs -> bounded authenticatedprivatebytes/CAS stamp OR readonly display/intent projection; no inferred Actor/owner/restoreauthority",
       "dependencies": "Pinned existing Android/JCA/Java8+Gecko classpath only, no new dependency/provider/real credentials",
@@ -2988,7 +2991,8 @@
       "scope": "固定密钥域词汇：APK_SIGN/ADMIN_ROOT/ADMIN_HIGH/ADMIN_LOW/DEVICE_INSTALL/DATA_WRAP/DATA_OBJECT；独立RecordKind目录BROWSER_CATALOG(code1,max4MiB)/GECKO_CHECKPOINT(code2,max2MiB)。; MAIN-AUDITED boundedlow-effectsubset, explicitremainingoriginalresponsibility",
       "researchEvidence": [
         "records/D02-review-integration-contract.json",
-        "records/low-cost-agent-assignments.json"
+        "records/low-cost-agent-assignments.json",
+        "records/native-browser-metadata-contract.json"
       ],
       "inputOutput": "原生已授权只读投影或有界纯输入 -> 真实展示/格式化/解析结果或用户意图；不产生Source/Actor/Document/权限/任务完成/文件发布权威",
       "dependencies": "ExistingpinnedJava8/Android37.2/Gecko158+nativeBinding only; suppliedassettextneverHTML/nativeauthority; no newlibrary/provider",
@@ -3831,6 +3835,208 @@
       ],
       "integrationGate": "Do notactivate/startentryuntilnativecurrentdurablehead/targetadapterandactualtransaction/domainchecksclose; productionRootunconfigured",
       "androidApiCompileEvidence": "evidence/production-main-agp-R51-checks.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "state": "implemented-host-tested-not-integrated",
+      "validationMode": "jvm",
+      "researchCompleteForScope": true,
+      "scope": "原生元数据共享有界二进制原语/严格UTF8与EOF，不接任意路径或Java序列化;R52boundednativeexistingbrowsermetadataonly",
+      "researchEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ],
+      "inputOutput": "Actualexistingepoch/privateAEAD+fixedscope/immutableintendedmetadata->boundedread/explicitCAS; nofresh/default/restoreauthority",
+      "dependencies": "NativeRecordCodec/existingPrivateRecordStore/ComponentGate; AndroidclassescompilednotactualAndroidIO",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/data/NativeRecordCodecTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.data.NativeRecordCodecTest"
+      ],
+      "hostEvidence": "evidence/production-unit-tests.json",
+      "notClaimed": [
+        "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+        "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+        "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+        "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+        "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+        "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+        "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+      ],
+      "integrationGate": "Noautomaticread/save/seed ornativeGeckowiring; actualcurrent-source/domainauthorizationplusrealIO+publication+nativeproducerbeforeentryactivation",
+      "androidApiCompileEvidence": "evidence/production-android-api-compile.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/OwnedDataCatalog.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "来源保护/私有对象访问共享的精确v2拥有集合，不接任意文件路径;R52boundednativeexistingbrowsermetadataonly",
+      "researchEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ],
+      "inputOutput": "Actualexistingepoch/privateAEAD+fixedscope/immutableintendedmetadata->boundedread/explicitCAS; nofresh/default/restoreauthority",
+      "dependencies": "NativeRecordCodec/existingPrivateRecordStore/ComponentGate; AndroidclassescompilednotactualAndroidIO",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+        "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserMetadataModelsTest",
+        "io.github.rebrowser.data.BrowserMetadataStoreTest"
+      ],
+      "hostEvidence": "evidence/native-browser-metadata-host-execution.json",
+      "notClaimed": [
+        "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+        "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+        "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+        "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+        "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+        "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+        "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+      ],
+      "integrationGate": "Noautomaticread/save/seed ornativeGeckowiring; actualcurrent-source/domainauthorizationplusrealIO+publication+nativeproducerbeforeentryactivation",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R52-checks.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "收藏/书签/搜索设置;R52boundednativeexistingbrowsermetadataonly",
+      "researchEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ],
+      "inputOutput": "Actualexistingepoch/privateAEAD+fixedscope/immutableintendedmetadata->boundedread/explicitCAS; nofresh/default/restoreauthority",
+      "dependencies": "NativeRecordCodec/existingPrivateRecordStore/ComponentGate; AndroidclassescompilednotactualAndroidIO",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+        "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserMetadataModelsTest",
+        "io.github.rebrowser.data.BrowserMetadataStoreTest"
+      ],
+      "hostEvidence": "evidence/native-browser-metadata-host-execution.json",
+      "notClaimed": [
+        "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+        "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+        "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+        "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+        "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+        "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+        "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+      ],
+      "integrationGate": "Noautomaticread/save/seed ornativeGeckowiring; actualcurrent-source/domainauthorizationplusrealIO+publication+nativeproducerbeforeentryactivation",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R52-checks.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "近期访问/期限/维持/暂停写入;R52boundednativeexistingbrowsermetadataonly",
+      "researchEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ],
+      "inputOutput": "Actualexistingepoch/privateAEAD+fixedscope/immutableintendedmetadata->boundedread/explicitCAS; nofresh/default/restoreauthority",
+      "dependencies": "NativeRecordCodec/existingPrivateRecordStore/ComponentGate; AndroidclassescompilednotactualAndroidIO",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+        "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserMetadataModelsTest",
+        "io.github.rebrowser.data.BrowserMetadataStoreTest"
+      ],
+      "hostEvidence": "evidence/native-browser-metadata-host-execution.json",
+      "notClaimed": [
+        "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+        "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+        "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+        "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+        "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+        "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+        "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+      ],
+      "integrationGate": "Noautomaticread/save/seed ornativeGeckowiring; actualcurrent-source/domainauthorizationplusrealIO+publication+nativeproducerbeforeentryactivation",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R52-checks.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "本机通用/背景/搜索/子设置读写，与Activity分离;R52boundednativeexistingbrowsermetadataonly",
+      "researchEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ],
+      "inputOutput": "Actualexistingepoch/privateAEAD+fixedscope/immutableintendedmetadata->boundedread/explicitCAS; nofresh/default/restoreauthority",
+      "dependencies": "NativeRecordCodec/existingPrivateRecordStore/ComponentGate; AndroidclassescompilednotactualAndroidIO",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+        "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserMetadataModelsTest",
+        "io.github.rebrowser.data.BrowserMetadataStoreTest"
+      ],
+      "hostEvidence": "evidence/native-browser-metadata-host-execution.json",
+      "notClaimed": [
+        "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+        "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+        "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+        "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+        "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+        "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+        "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+      ],
+      "integrationGate": "Noautomaticread/save/seed ornativeGeckowiring; actualcurrent-source/domainauthorizationplusrealIO+publication+nativeproducerbeforeentryactivation",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R52-checks.json"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "state": "source-in-progress-api-compiled",
+      "validationMode": "android-app",
+      "researchCompleteForScope": true,
+      "scope": "NativeUI和管理员共享启用/打开/关闭/子设置路由;R52boundednativeexistingbrowsermetadataonly",
+      "researchEvidence": [
+        "records/native-browser-metadata-contract.json"
+      ],
+      "inputOutput": "Actualexistingepoch/privateAEAD+fixedscope/immutableintendedmetadata->boundedread/explicitCAS; nofresh/default/restoreauthority",
+      "dependencies": "NativeRecordCodec/existingPrivateRecordStore/ComponentGate; AndroidclassescompilednotactualAndroidIO",
+      "unresolvedWithinScope": [],
+      "fullResponsibilityComplete": false,
+      "hostTestSources": [
+        "app/src/test/java/io/github/rebrowser/browser/BrowserMetadataModelsTest.java",
+        "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java"
+      ],
+      "junitClasses": [
+        "io.github.rebrowser.browser.BrowserMetadataModelsTest",
+        "io.github.rebrowser.data.BrowserMetadataStoreTest"
+      ],
+      "hostEvidence": "evidence/native-browser-metadata-host-execution.json",
+      "notClaimed": [
+        "FormalRootandexistingepoch/key/directory stillnotprovisioned; missingrecordisnotfreshinstall/dataemptyproof",
+        "NativeCurrentdurableauthorityhead/targetadapter remainsblocker; notsidesteppedwithmemorybool",
+        "ActualAndroidKeystore/filesystem/powerloss/UI/Gecko callbacks notqualified. ActualHOSTJCA/filesystemusesprivate taskownedsyntheticfixturesonly",
+        "No autoHistoryDelegate hookup/private-sessioncapture/visitedCSS/fakecommitteddocument; nativeproducerandnormal-user/adminauthorizationremainexternalgates",
+        "NoactualsubapplicationActivity/service/backendinstalled/launched/stopped/loggedin; close/callbackreturn/disabledsettingNOTactualworkend. SynchronousfencecannotescapeHandlerhandoff; nativeUIadapterneedsrealcrosslaneprotocol",
+        "OwnedDataCatalogisfixedBROWSERmetadatasubsetnotcompleteepochexactownership/erasuremanifest. No cleanup/deletion of unknown files/retry/migration/autoseed. Caller-ownedcopiesandnativeprovidertransientmemoryseparate",
+        "AEAD/exactCASisnotlatest/rollbackproof; callerexplicitlyreconcileswholeintendedmetadata; metadataIDs/enums/URLs/ReadStamp NOT Actor/domain/OSpermissions"
+      ],
+      "integrationGate": "Noautomaticread/save/seed ornativeGeckowiring; actualcurrent-source/domainauthorizationplusrealIO+publication+nativeproducerbeforeentryactivation",
+      "androidApiCompileEvidence": "evidence/production-main-agp-R52-checks.json"
     }
   ],
   "parallelPending": [

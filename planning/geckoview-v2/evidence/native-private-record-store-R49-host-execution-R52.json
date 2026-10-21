@@ -1,0 +1,58 @@
+{
+  "revision": "R52",
+  "scope": "Actual JCA private-record/wrapping/real HOST filesystem CAS+lock+force+readback pipeline with PRIVATE reflected TOY wrapping key/path/source fixtures. NOT Android provider/filesystem/source acceptance.",
+  "privateRecordSealerTests": 17,
+  "vaultBoundaryTests": 12,
+  "privateRecordStoreHostFilesystemTests": 20,
+  "hostTestsPassed": 49,
+  "actualJcaRecordAndWrappingMethodsExecuted": true,
+  "actualHostFileCasForceAtomicRenameReadbackExecuted": true,
+  "privateSyntheticNativeProvenance": true,
+  "actualAndroidKeystoreOrOwnApplicationExecuted": false,
+  "actualAndroidFilesystemOrPowerLossExecuted": false,
+  "formalOrRealUserKeysUsedOrProvisioned": false,
+  "actualSourceUnlockOrErasureExecuted": false,
+  "entireWriterOrNativeNetworkQuiescenceEstablished": false,
+  "antiRollbackLatestSnapshotGuaranteeEstablished": false,
+  "currentAgpEvidenceRef": "evidence/production-main-agp-R52-checks.json",
+  "sourceFiles": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "2dfe9df4cf951f312b440ae238312c5e06dda98c6d37f719d0545a0c7e8741ef"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+      "sha256": "a80bbcaec76b264405659e854c1c00df6b376185509a7c1688c57830f01696b5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "c2da45d76d0b48e11052cbdcb08c0d4547996ca38c5b3e8637f8c961b58bb399"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "3d3e1623f322e3e6d266186c20e71984b5affd9d062de20171e0de8c069867c3"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/PrivateRecordSealerTest.java",
+      "sha256": "a158b8b71228d86e1203d4eb19e5438762bda448b4c315251f304b23e9b83b14"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/crypto/DataKeyVaultTest.java",
+      "sha256": "ca27c11ee79d49096b9660e42172b7ac182b5b2ae191bc37438ef8c652ed5153"
+    },
+    {
+      "path": "app/src/test/java/io/github/rebrowser/data/PrivateRecordStoreTest.java",
+      "sha256": "2cb039c34807ae07934f0d2c52e684c936123407a444d086c0e3089415ad7a22"
+    }
+  ],
+  "historicalR47EvidenceRef": "evidence/native-private-record-store-host-execution.json",
+  "currentActualHostRunRef": "evidence/production-main-agp-R52-checks.json",
+  "scopeNoteR48": "Same actual scoped tests executed again in R48; public R47 report remains byte-identical. Current exact common helper / KeyPurposeconsumer source hashes reflect the independently rerun code, NOT a rehash-only refresh.",
+  "historicalUnchangedEvidenceRef": "evidence/native-private-record-store-R49-host-execution.json",
+  "scopeNoteR49": "Existing scoped HOST tests independently executed again in fullR49; exactR47/R48 reports NOT rewritten. Current source hashes include the actual R49 source/metadata/commonhelpers; actualAndroid/Gecko qualification remains false. New borrowed-plaintext/retained-source/format/store cases counted separately in retained core50.",
+  "actualCurrentWholeHostRerun": 1034,
+  "scopeNoteR52": "Originalscopedproductionmodel/algorithmtests genuinelyrerun innewR52build, nothistoricalreporthashrefresh. Originalreportsunchanged; newmetadata49separatelycounted; noAndroid/Gecko/wholepolicy/physicalantirollbackqualification.",
+  "currentMetadataPurposeCount": 5,
+  "currentRecordQuota": 3204,
+  "currentDirectoryNodeQuota": 6409
+}

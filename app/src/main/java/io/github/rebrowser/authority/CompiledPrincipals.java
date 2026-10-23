@@ -9,13 +9,24 @@ import java.util.Map;
 
 /**
  * Immutable APK-compiled principal identities, never populated from IPC/preferences.
- * Formal key custody/provisioning has not happened: current APK table is EMPTY and
- * all administrator proofs fail closed. Do not embed the public scalar1 test key here.
+ * Initial formal Root public key was generated under explicit owner authorization. Private
+ * PKCS8 material/passphrase remain outside this repository; offline custody/backup handoff is
+ * still pending. This public table does NOT establish current authority, owner consent, device
+ * enrollment, trusted installation/source or business unlock. Never embed a private/test key.
  * Adding high identities requires changing this compiled source in a signed APK update.
  */
 public final class CompiledPrincipals {
     public enum Role { LOW, HIGH, HIGHEST, ROOT }
-    private static final Entry[] APK_ENTRIES = {};
+    private static final Entry[] APK_ENTRIES = initialRootDeclarations();
+    private static Entry[] initialRootDeclarations(){
+        try{
+            Entry root=new Entry("rebrowser-root-2897220b1306695b",Role.ROOT,AuthorityScale.ROOT,
+                CryptoEncoding.decodeBase64Url("MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQ33HLWXWc9Q72gzId2jhtp_gl8sA414eN8bvavgpW2zi-df7gwZ99FppR6OOakYvK3VvA4quBq6vj3ybEY79RQ",91),
+                AuthorityScale.HIGH_BOUNDARY-1,java.util.Arrays.asList("host.openDefaultBrowserFlow","host.openPermissionSettings","host.openInstaller","host.window.back"));
+            if(!root.spkiSha256().equals("2897220b1306695b955d7d8d91c9d34f23d342e9ae5260b68619363b02fd2f11"))throw invalid();
+            return new Entry[]{root};
+        }catch(GeneralSecurityException|IllegalArgumentException invalid){throw new ExceptionInInitializerError(invalid);}
+    }
     private final Map<String, Entry> entries;
     private final Entry root;
 

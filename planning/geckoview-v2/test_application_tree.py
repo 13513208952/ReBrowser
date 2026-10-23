@@ -119,7 +119,8 @@ class ApplicationTreeTests(unittest.TestCase):
         # implementations. Do not overwrite its hashes to make corrected current code pass.
         import subprocess
         reviewed_commit='7411f906063e403a2dd641680b3a0063581e7363'
-        current=json.loads((P/'evidence/product-experience-correction-R55-host.json').read_text())
+        status=json.loads((P/'records/product-experience-correction-status.json').read_text())
+        current=json.loads((P/status['actualLimitedEvidenceRef']).read_text())
         current_hashes={s['path']:s['sha256'] for s in current['allMainSourceHashes']}
         for t in tasks:
             reviewed=subprocess.check_output(['git','show',reviewed_commit+':'+t['runtimePath']],cwd=P.parents[1]);self.assertEqual(hashlib.sha256(reviewed).hexdigest(),t['mainReviewedRuntimeSha256'])
@@ -135,8 +136,8 @@ class ApplicationTreeTests(unittest.TestCase):
 
     def test_current_source_evidence_is_complete_bound_and_not_historical_readmission(self):
         import hashlib
-        current=json.loads((P/'evidence/product-experience-correction-R55-host.json').read_text())
         status=json.loads((P/'records/product-experience-correction-status.json').read_text())
+        current=json.loads((P/status['actualLimitedEvidenceRef']).read_text())
         sources=current['allMainSourceHashes'];paths={s['path'] for s in sources}
         actual={str(p.relative_to(P.parents[1])) for p in (P.parents[1]/'app/src/main/java/io/github/rebrowser').rglob('*.java')}
         self.assertEqual(paths,actual);self.assertEqual(len(sources),current['mainSourceCount'])

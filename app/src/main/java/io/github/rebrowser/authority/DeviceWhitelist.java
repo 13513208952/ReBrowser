@@ -7,7 +7,12 @@ import java.util.*;
 
 /** Immutable APK whitelist ownership only. No device names/serials/account metadata, mutable
  * enrollment, exemption boolean or raw cross-owner enumeration. Membership is NOT possession,
- * enabled policy, owner consent or action admission. Production intentionally has zero devices. */
+ * enabled policy, owner consent or action admission. NOT a mandatory global administrator
+ * allowlist: absence never invalidates a valid administrator key. Ordinary authorized actions
+ * do not require membership; highest-risk actions without an applicable verified exemption
+ * require genuine scoped OwnerGrantStore consent/authentication, including for Root.
+ * Production still has zero ENROLLED installations. An ADB-attached device/model/serial is
+ * only an enrollment candidate, never an invented DEVICE_INSTALL public key or exemption. */
 public final class DeviceWhitelist {
     static final class Device {
         final String owner,fingerprint;final ECPublicKey key;

@@ -85,6 +85,16 @@ public final class TabCatalog {
         long generation=BrowserModels.next(tab.generation),revision=BrowserModels.next(group.revision);
         tab.generation=generation;clearParent(group,ref);group.revision=revision;return new DocumentLease(this,tab);
     }
+    /** Native session display observations ONLY. This does NOT issue/acquire a document lease,
+     * advance document generation, authorize website actions or prove a committed document.
+     * The browser owner must bind the original actual session to this issued TabRef. */
+    boolean updateSessionReportedMetadata(TabRef ref,String title,String displayUrl,ComponentGate.BusinessPermit permit){
+        workspaces.access(permit);workspace(ref);if(!workspaces.registered(ref.workspace(),permit) || workspaces.workspace(ref.workspace(),permit).placement()!=Placement.ACTIVE)return false;
+        Group group=groups.get(ref.workspace());Tab tab=group==null?null:group.tabs.get(ref);if(tab==null)return false;
+        String nextTitle=title==null?tab.title:BrowserModels.title(title,tab.title),nextUrl=displayUrl==null?tab.url:BrowserModels.displayUrl(displayUrl);
+        if(nextTitle.equals(tab.title) && nextUrl.equals(tab.url))return false;
+        long next=BrowserModels.next(group.revision);tab.title=nextTitle;tab.url=nextUrl;group.revision=next;return true;
+    }
     public boolean updateMetadata(DocumentLease lease,String title,String displayUrl,ComponentGate.BusinessPermit permit){
         workspaces.access(permit);if(lease==null || lease.issuer!=this)throw BrowserModels.invalid();
         if(!workspaces.registered(lease.tab.workspace(),permit))return false;

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "at": "2026-10-23T10:23:10+08:00",
+  "state": "owner-authorized-initial-root-generated-public-identity-only",
+  "keyId": "rebrowser-root-2897220b1306695b",
+  "role": "ROOT",
+  "level": 10,
+  "algorithm": "ECDSA_P256_SHA256",
+  "publicSpkiBase64Url": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQ33HLWXWc9Q72gzId2jhtp_gl8sA414eN8bvavgpW2zi-df7gwZ99FppR6OOakYvK3VvA4quBq6vj3ybEY79RQ",
+  "publicSpkiSha256": "2897220b1306695b955d7d8d91c9d34f23d342e9ae5260b68619363b02fd2f11",
+  "publicProofOfPossession": {
+    "domain": "ReBrowser.Root.Provisioning.Verify.1",
+    "challengeBase64Url": "UmVCcm93c2VyLlJvb3QuUHJvdmlzaW9uaW5nLlZlcmlmeS4xAIoN6GrAuD6oQfZzG4zXBqWlBmqWtSPhu-Sa2eaTIIGC",
+    "signatureDerBase64Url": "MEQCIEBfiiBO86s5iVMVrkgRJDKt8RlMIfM34CEBlAU_BmfxAiAa3lU6U86o_xI4TOIYQa8gl6itzNvX4lPpeYYMQxJ7eA",
+    "opensslVerified": true,
+    "meaning": "Provisioning-only public signature sample, not a control request/owner consent/device enrollment/source acceptance"
+  },
+  "custody": {
+    "encryptedPkcs8": "outside-repository, owner filesystem permissions only",
+    "encryption": "PBES2/PBKDF2-600000/AES-256-CBC",
+    "passphrase": "random, separate restricted location on SAME host; not in command arguments/output/repository",
+    "offlineCopiesVerified": 0,
+    "ownerBackupAndRecoveryHandoffPending": true,
+    "completeHostCompromiseProtectionClaimed": false
+  },
+  "apkSigningKeyGenerated": false,
+  "deviceWhitelistEnrollmentPerformed": false,
+  "sourceOrBusinessUnlocked": false
+}

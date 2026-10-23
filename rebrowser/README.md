@@ -2,7 +2,21 @@
 
 独立 Android 项目，入口 `io.github.rebrowser.ReBrowserApplication`；主代码仍位于总树的 [`app/src/main/java/io/github/rebrowser`](../app/src/main/java/io/github/rebrowser)。不引入旧 `io.github.reoutlook` / WebView 运行实现或数据迁移；既有产品体验和已批准的界面资源不是应当丢弃的旧实现。
 
-## 当前产品体验修正：新标签页
+## 当前主程序接线（R57，未安装Demo）
+
+`BrowserActivity`现在确实消费同一浏览器域、新标签页原生数据绑定和GeckoView／SessionDisplayBinding，不再只是开发状态展示。已接入原有单行顶栏、全窗背景与白色前景、地址导航、实际主页配置、新建总／子标签、双层概览和临时环境切换；原生会话观测经弱窗口订阅合并刷新，不用网页轮询，不把显示URI当文档授权。返回等待原会话新的位置观测，不把SDK调用返回称作已返回；会话退出也不会自动重开或堵住其他标签的目录操作。
+
+这些路径仍只在独立来源检查已接受时启用。**新安装的首次初始化／密钥与初始记录创建尚未接通，所以目前仍不能给出可操作的已安装Demo**；没有为展示效果绕过来源闸门。当前原生工厂仅临时环境／8个活会话；持久恢复、Popup、多选、完整权限、历史OPEN、收藏和三同级设置等后续逐项闭合。概览列表也尚不是全部批准卡片外观的最终恢复。
+
+实际有限检查：1338项HOST／146测试类通过（R57新增22项），170主Java以Java8语言级和实际SDK37.2／固定Gecko／生成R类编译为908class；18项资源实际链接，仍无Android／官网运行资格。见[源绑定检查](../planning/geckoview-v2/evidence/native-browser-window-R57-host.json)。
+
+## 推进顺序与管理员配置
+
+先打通ReBrowser主程序，再依次完成ReMusic、ReOutlook；相关管理员控制调试能力随对应真实业务服务一起实现，不再独立扩展脱离产品的框架。
+
+机主已授权生成初始Root，公钥已固定编入身份表；私钥加密留仓库外，离线备份交接仍待完成。唯一连接设备已被动识别，但尚未安装正式v2，缺少真实安装公钥，仍是待登记候选而不是已激活名单。名单不是全局准入条件：最高危操作无名单例外时，必须保留有效管理员密钥＋真实机主授权路径。公钥配置不等于来源接受、机主认证或业务解锁，详见[密钥与设备登记](../docs/ADMINISTRATOR_PROVISIONING.md)。R56实际1316项HOST及全部170主Java实际SDK编译通过，未安装、启动或唤醒设备。
+
+## R55产品体验修正：新标签页
 
 `NewTabView`已改回批准的品牌Logo、圆角共用搜索／地址输入栏和横向最近访问栏；没有独立引擎Spinner、四个引擎按钮、收藏管理或空卡片。`bindNative`在有界后台线程读取同一规范设置／历史拥有者：只用实际默认引擎，最多8个最新不同完整URL；点击重新查找原记录及到期状态，通用显示token不能当原生历史记录打开，网址输入不被一律当搜索词。
 
@@ -12,7 +26,7 @@
 
 新标签页、历史页和Gecko访问采集现在共用启动器的一条单worker／64排队数据IO通道，避免同一解码快照额度被独立线程争用。原生访问在入队前捕获进程记录开关代次，暂停期间的中间访问、以及跨暂停／恢复周期的旧排队访问都不会在恢复后补写。最近栏刷新保留未改变的已解码背景；解码队列饱和只保留有界弱引用等待者，等实际完成后再尝试固定公共图片，不引入额外线程或任意URI。
 
-当前实际有限检查：170份主Java源码完成Java8＋实际SDK37.2／固定Gecko／生成R类编译，1307项HOST回归通过（R55新增44项），另8项资源来源检查及12份WebP实际链接包字节核对。**完整主窗口尚未调用`bindNative`，BrowserActivity仍为开发锁定壳；顶栏／全窗背景联动、全局Back、历史OPEN路由和实际Android渲染／IME／解码仍未完成或验证。**本轮未构建APK／装机／登录／配置根，不把组件或测试当作产品已恢复。见[当前工作状态](../planning/geckoview-v2/records/product-experience-correction-status.json)／[源绑定有限证据](../planning/geckoview-v2/evidence/product-experience-correction-R55-host.json)。
+R55时实际有限检查：170份主Java源码完成Java8＋实际SDK37.2／固定Gecko／生成R类编译，1307项HOST回归通过（R55新增44项），另8项资源来源检查及12份WebP实际链接包字节核对。**完整主窗口尚未调用`bindNative`，BrowserActivity仍为开发锁定壳；顶栏／全窗背景联动、全局Back、历史OPEN路由和实际Android渲染／IME／解码仍未完成或验证。**本轮未构建APK／装机／登录／配置根，不把组件或测试当作产品已恢复。见[当前工作状态](../planning/geckoview-v2/records/product-experience-correction-status.json)／[源绑定有限证据](../planning/geckoview-v2/evidence/product-experience-correction-R55-host.json)。
 
 ## R54历史记录修正
 

@@ -103,6 +103,12 @@ public final class StartupCoordinator {
         businessLifetime=gate.newResourcePin();
     }
     public ComponentGate gate() { return gate; }
+    public interface NativeEntryObserver {void changed();}
+    private java.lang.ref.WeakReference<NativeEntryObserver> entryObserver=new java.lang.ref.WeakReference<>(null);private Object entryObserverToken;
+    public final class EntrySubscription implements AutoCloseable {private final Object token;private NativeEntryObserver retained;private EntrySubscription(Object token,NativeEntryObserver retained){this.token=token;this.retained=retained;}public void close(){ownerThread();if(entryObserverToken==token){entryObserver.clear();entryObserverToken=null;}retained=null;}}
+    /** Minimal source-status publication, not a trust setter/permit or business observer. */
+    public EntrySubscription observeNativeEntry(NativeEntryObserver observer){ownerThread();if(observer==null || entryObserver.get()!=null)throw new IllegalStateException("Native entry window already observed");Object token=new Object();entryObserverToken=token;entryObserver=new java.lang.ref.WeakReference<>(observer);return new EntrySubscription(token,observer);}
+    private void notifyNativeEntry(){main.post(()->{NativeEntryObserver observer=entryObserver.get();if(observer!=null)try{observer.changed();}catch(RuntimeException unavailable){/* UI status failure is not a different source or an unlock receipt */}});}
     /** Minimal native entry metadata only; does not initialize/inspect business/Gecko state. */
     public EntryStatus inspectNativeEntry(){return new EntryStatus(gate.sourceState(),runtimeOwner!=null,inspectionIoPending,inspectionStatus);}
     /** One bounded metadata/PM IO owner; no retry, marker creation or old business data open. */
@@ -127,19 +133,19 @@ public final class StartupCoordinator {
         catch(RuntimeException unknownSubmission){failInspectionHandoff();}
         finally{io.shutdown();} // orderly only, NEVER interruption/timeout as actual IO completion
     }
-    private void failInspectionHandoff(){if(inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED)inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));}
+    private void failInspectionHandoff(){if(inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED)inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));notifyNativeEntry();}
     private void publishNativeInspection(PublicationGate.Ticket ticket,SourceBootstrap.Inspection inspection){
         ownerThread();boolean pending=publication.hasPendingHandoff();if(!publication.finish(ticket)){if(pending)failInspectionHandoff();return;} // early/unknown submission cannot publish; duplicate completion cannot change a settled source
         inspectionStatus=inspection==null?SourceBootstrap.Status.UNAVAILABLE:inspection.status();
         if(inspection!=null && inspection.status()==SourceBootstrap.Status.ACCEPTED_STABLE){
-            try{SourceBootstrap.AcceptedContext accepted=inspection.takeAccepted(application);sourceWasEverAccepted=true;acceptedSource=accepted;sourceView.set(ComponentGate.SourceView.acceptedNative(accepted,accepted.dataEpoch()));return;}
+            try{SourceBootstrap.AcceptedContext accepted=inspection.takeAccepted(application);sourceWasEverAccepted=true;acceptedSource=accepted;sourceView.set(ComponentGate.SourceView.acceptedNative(accepted,accepted.dataEpoch()));notifyNativeEntry();return;}
             catch(RuntimeException stale){inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;}
         }
-        sourceView.set(ComponentGate.SourceView.untrusted(inspectionStatus==SourceBootstrap.Status.UNCONFIGURED?ComponentGate.SourceState.UNCONFIGURED:ComponentGate.SourceState.LOCKED));
+        sourceView.set(ComponentGate.SourceView.untrusted(inspectionStatus==SourceBootstrap.Status.UNCONFIGURED?ComponentGate.SourceState.UNCONFIGURED:ComponentGate.SourceState.LOCKED));notifyNativeEntry();
     }
     /** Native continuity MUST call/observe this BEFORE any ledger mutation or accepted source cutover.
      * Revoke-only; no public trust setter, no retry/new incarnation/runtime or actual-work release. */
-    public void fenceNativeSourceBeforeContinuityMutation(){ownerThread();sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));acceptedSource=null;inspectionStatus=SourceBootstrap.Status.RECOVERY_REQUIRED;publication.revoke();}
+    public void fenceNativeSourceBeforeContinuityMutation(){ownerThread();sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));acceptedSource=null;inspectionStatus=SourceBootstrap.Status.RECOVERY_REQUIRED;publication.revoke();notifyNativeEntry();}
     /** Cold-only native safety capability. NOT callback/metadata-as-quiescence: it is issuable
      * ONLY before this actual main owner has EVER accepted a business epoch or opened owners.
      * Active/warm processes must use a separately qualified actual-stop path (not implemented). */

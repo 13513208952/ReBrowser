@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "asOf": "2026-10-23T10:19:26+08:00",
+  "ownerAuthorizedConnectedDeviceReadAndListPreparation": true,
+  "passivelyObservedUniqueAuthorizedAdbDevice": true,
+  "connectedCandidateCount": 1,
+  "formalV2PackageInstalledOnObservedDevice": false,
+  "developmentV2PackageInstalledOnObservedDevice": false,
+  "candidateListOwnerKeyId": "rebrowser-root-2897220b1306695b",
+  "candidateInstallPublicKey": null,
+  "enrolledCompiledInstallations": 0,
+  "state": "OWNER_APPROVED_CANDIDATE_PENDING_GENUINE_V2_INSTALL_KEY",
+  "privateMetadata": "Device serial/model/build information recorded only in restricted external workspace, not APK/public policy/source",
+  "blocker": "The formal io.github.rebrowser installation does not exist on this connected device. A real per-install Android Keystore public key and fresh target possession/enrollment evidence cannot be obtained by reading ADB model/serial properties.",
+  "requiredNextSteps": [
+    "Complete explicitly controlled enrollment under the FINAL appId and formal APK signing identity; do not create an unrelated probe key and pretend it transfers across Android UIDs",
+    "Obtain this installation public key plus genuine fresh possession and the required owner enrollment evidence",
+    "Compile the verified public key/Root ownership/minimal receipt binding into the device policy, without serials or account details",
+    "Keep the non-whitelisted administrator-key plus genuine scoped owner-authentication route; adding devices is not a prerequisite for all control"
+  ],
+  "notPerformed": ["app install or launch", "device wake or unlock", "OS owner authentication prompt", "device key generation", "device enrollment", "whitelist exemption activation", "legacy app/data access"],
+  "nonWhitelistPolicy": {
+    "isGlobalDenyList": false,
+    "ordinaryActions": "Valid identity/current scope/level/target/source checks; no universal whitelist requirement",
+    "highestRiskActions": "Applicable authenticated compiled-device exemption OR genuine scoped owner consent/authentication, always WITH valid enabled administrator key and sufficient authority",
+    "rootExemptFromOwnerAuthenticationOutsideList": false,
+    "implementationStatus": "Ordinary reservation path tested without any enrolled device. Full highest-risk OwnerGrantStore/dispatcher/native Android path remains integration-pending, not claimed usable."
+  }
+}

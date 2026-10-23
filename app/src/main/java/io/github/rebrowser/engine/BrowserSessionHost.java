@@ -10,7 +10,7 @@ import org.mozilla.geckoview.GeckoSession;
 public final class BrowserSessionHost implements GeckoSessionOwner.Initializer {
     private final ComponentGate gate;private final PartitionCatalog partitions;private final int capacity;
     private PartitionCatalog.Domain domain=PartitionCatalog.Domain.BROWSER;private Object builtinToken;
-    public interface BrowserHistory {void visited(TabRef tab,String url);void titleChanged(TabRef tab,String url,String title);}
+    public interface BrowserHistory {void visited(TabRef tab,String url);void titleChanged(TabRef tab,String url,String title);default void sessionReported(TabRef tab,SessionPresentation.Frame frame){}}
     private BrowserHistory history;
     private GeckoSessionOwner owner;
     private final Map<GeckoSessionOwner.SessionRef,Bundle> bundles=new IdentityHashMap<>();
@@ -73,6 +73,7 @@ public final class BrowserSessionHost implements GeckoSessionOwner.Initializer {
         final GeckoSession session;final SessionPresentation model=new SessionPresentation();final NavigationDelegate navigation;final ProgressDelegate progress;final ContentDelegate content;
         Bundle(GeckoSession session,GeckoSessionOwner.SessionRef ref,PartitionCatalog.Lease partition,Object token){
             this.session=session;content=new ContentDelegate(session,owner,ref,gate,partitions,model);
+            if(domain==PartitionCatalog.Domain.BROWSER && history!=null && token instanceof TabRef)model.installNativeObserver(frame->history.sessionReported((TabRef)token,frame));
             Events events=new Events(model,()->owner.fenceConnectorDocument(ref));
             navigation=new NavigationDelegate(session,gate,partitions,partition,events);
             progress=new ProgressDelegate(session,gate,partitions,partition,token,events);

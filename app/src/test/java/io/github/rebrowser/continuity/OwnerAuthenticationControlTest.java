@@ -144,9 +144,15 @@ public final class OwnerAuthenticationControlTest {
             ContinuityCoordinator flow=f.flow();OwnerAuthentication.ContinuityListener listener=()->{throw new IllegalStateException("synthetic observer");};f.auth.beginContinuityVerification(force2(flow),listener);assertThrows(IllegalStateException.class,()->f.p.latest.success(OwnerAuthentication.AuthKind.BIOMETRIC));assertEquals(ContinuityCoordinator.Stage.WAITING_TICKET,flow.view().stage());assertTrue(f.auth.hasPendingContinuityVerification());assertThrows(IllegalStateException.class,f.auth::tryConsumeContinuityVerification);assertEquals(ContinuityState.Confirmation.FORCE_3,flow.view().step());assertFalse(f.auth.hasPendingContinuityVerification());assertEquals(1,f.p.builds);
         }
     }
-    @Test public void productionRootUnconfiguredFactoryCannotStartSyntheticOrRealSourceFlow()throws Exception{
+    @Test public void productionRootDoesNotAcceptWrongRootSyntheticSourceContext()throws Exception{
         try(Fixture f=new Fixture()){
-            assertFalse(CompiledSourceIdentity.current().configured());assertThrows(SecurityException.class,()->f.auth.newContinuityFlow(f.context,c->{}));assertEquals(0,f.p.builds);assertFalse(f.auth.hasPendingOsRequest());
+            assertTrue(CompiledSourceIdentity.current().configured());assertThrows(SecurityException.class,()->f.auth.newContinuityFlow(f.context,c->{}));assertEquals(0,f.p.builds);assertFalse(f.auth.hasPendingOsRequest());
+        }
+    }
+    @Test public void matchingPublicRootStillRequiresActualAndroidSourceOwner()throws Exception{
+        try(Fixture f=new Fixture()){
+            ContinuityCoordinator.Context matching=ContinuityCoordinator.Context.fromNativeMetadata(f.store.inspect(),B,CompiledSourceIdentity.current().requireRootSpkiSha256());
+            assertThrows(SecurityException.class,()->f.auth.newContinuityFlow(matching,c->{}));assertEquals(0,f.p.builds);assertFalse(f.auth.hasPendingOsRequest());
         }
     }
     @Test public void noPublicPlatformInjectionConstructorExists(){

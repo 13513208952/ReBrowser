@@ -1,7 +1,8 @@
 {
   "schema": 1,
   "revision": "R9",
-  "state": "engineering-adopted-design-no-keys-generated",
+  "state": "initial-root-public-key-provisioned-device-enrollment-pending",
+  "currentProvisioningRef": "records/admin-root-public-provisioning.json",
   "keyDomains": [
     {
       "id": "APK_SIGN",
@@ -59,7 +60,7 @@
   },
   "backupPlan": {
     "newOfflinePrivateKeys": "two independent encrypted offline copies with owner-held passphrase/recovery inventory; verify restore using signatures against public fingerprint, never expose private bytes",
-    "state": "PLANNED, not created or backed up",
+    "state": "Initial ADMIN_ROOT encrypted local PKCS8 created under owner authorization; separate same-host passphrase; zero independently verified offline copies. Other domains not generated, owner backup/recovery handoff pending.",
     "applicationDataBackup": "exclude old private data epochs/lease tokens/keystore-dependent vaults from automatic cross-device OS backup unless explicit later recovery design; logical deletion not physical flash/backup overwrite guarantee"
   },
   "enrollmentFlow": [
@@ -79,7 +80,9 @@
     "hardware attestation optional; do not claim every Android11 device key provably unclonable",
     "an intentionally shared administrator key means shared identity; key possession/source neutrality does not remove nonce/action/target/scope validation"
   ],
-  "generatedKeys": false,
+  "generatedKeys": true,
+  "generatedKeyDomains": ["ADMIN_ROOT"],
+  "deviceEnrollmentStatusRef": "records/device-enrollment-status.json",
   "deviceEnrollmentPerformed": false,
   "rootWhitelistCompiledEntries": []
 }

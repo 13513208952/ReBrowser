@@ -6060,7 +6060,8 @@
         "app/src/main/res/",
         "app/src/main/assets/background/",
         "rebrowser/app/src/main/res/",
-        "planning/geckoview-v2/records/native-new-tab-resource-provenance.json"
+        "planning/geckoview-v2/records/native-new-tab-resource-provenance.json",
+        "planning/geckoview-v2/records/native-browser-chrome-resource-provenance.json"
       ]
     },
     {

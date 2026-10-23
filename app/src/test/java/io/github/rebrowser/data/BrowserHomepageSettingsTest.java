@@ -1,0 +1,17 @@
+package io.github.rebrowser.data;
+
+import static org.junit.Assert.*;
+import io.github.rebrowser.browser.SearchEngines;
+import io.github.rebrowser.settings.SettingsRepository;
+import java.nio.ByteBuffer;
+import org.junit.Test;
+
+/** Real production codec/private AEAD/CAS with private synthetic HOST source/key. No Android. */
+public final class BrowserHomepageSettingsTest {
+    @Test public void explicitNewSnapshotHasApprovedDefaultButMissingStoreNeverSeeds()throws Exception{SettingsRepository.Snapshot fresh=new SettingsRepository.Snapshot(0,SearchEngines.Provider.GOOGLE,false,false);assertEquals(SearchEngines.defaultHome().url(),fresh.homepage());try(BrowserMetadataStoreTest.F f=new BrowserMetadataStoreTest.F();OwnedDataCatalog.View<SettingsRepository.Snapshot> view=f.settings.read(f.permit)){assertEquals(PrivateRecordStore.Kind.MISSING,view.kind());assertThrows(IllegalStateException.class,()->view.value(f.permit));}}
+    @Test public void customHomeSurvivesUnrelatedSearchAppAndBackgroundChanges(){SettingsRepository.Snapshot s=new SettingsRepository.Snapshot(0,SearchEngines.Provider.BING,false,false).withHomepage("https://example.test/start?q=1#home");SettingsRepository.Snapshot after=s.withSearch(SearchEngines.Provider.GOOGLE).withEnabled("music",true).withNewTab(SettingsRepository.NewTabBackground.WHITE,false);assertEquals(s.homepage(),after.homepage());assertEquals(s.homepage(),after.homeTarget().url());assertEquals(SearchEngines.Kind.WEB,after.homeTarget().kind());assertEquals(4,after.metadataRevision());}
+    @Test public void configuredBlankHomeIsDistinctFromNewWorkspacePolicy(){SettingsRepository.Snapshot s=new SettingsRepository.Snapshot(0,SearchEngines.Provider.BAIDU,false,false).withHomepage("about:blank");assertEquals(SearchEngines.Kind.NEW_TAB,s.homeTarget().kind());SettingsRepository.Snapshot decoded=SettingsRepository.CODEC.decode(ByteBuffer.wrap(SettingsRepository.CODEC.encode(s)));assertEquals("about:blank",decoded.homepage());}
+    @Test public void unsupportedHomepageDoesNotBecomeSearchOrImplicitDefault(){SettingsRepository.Snapshot s=new SettingsRepository.Snapshot(0,SearchEngines.Provider.BING,false,false);for(String invalid:new String[]{"","javascript:alert(1)","file:///private","https://x.test/\n","search text"})assertThrows(IllegalArgumentException.class,()->s.withHomepage(invalid));}
+    @Test public void customHomeRoundTripsThroughActualEncryptedRecords()throws Exception{try(BrowserMetadataStoreTest.F f=new BrowserMetadataStoreTest.F()){f.seedSettings(false);try(OwnedDataCatalog.View<SettingsRepository.Snapshot> v=f.settings.read(f.permit)){f.settings.compareAndWrite(v,v.value(f.permit).withHomepage("https://example.test/private-home"),f.permit);}try(OwnedDataCatalog.View<SettingsRepository.Snapshot> v=f.settings.read(f.permit)){assertEquals("https://example.test/private-home",v.value(f.permit).homeTarget().url());}String cipher=new String(java.nio.file.Files.readAllBytes(f.root.resolve(f.ref(OwnedDataCatalog.Family.SETTINGS).opaqueRef())),java.nio.charset.StandardCharsets.ISO_8859_1);assertFalse(cipher.contains("private-home"));}}
+    @Test public void incompleteUnshipped02IsNotSilentlyAssignedBingHomepage(){byte[] old=new NativeRecordCodec.Writer("RBSETT02",200).nonnegative(0).text("bing",16,false).bool(false).bool(false).text("EXCLUSIVE",16,false).bool(true).finish();assertThrows(IllegalArgumentException.class,()->SettingsRepository.CODEC.decode(ByteBuffer.wrap(old)));}
+}

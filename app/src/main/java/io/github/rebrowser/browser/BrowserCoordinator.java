@@ -36,9 +36,28 @@ public final class BrowserCoordinator {
     private final Thread thread=Thread.currentThread();
     private final Map<WorkspaceRef,PartitionCatalog.Lease> contexts=new HashMap<>();
     private final Map<TabRef,GeckoSessionOwner.SessionRef> live=new HashMap<>();
+    /** Native request display only, not page success or document authority. Remains unknown
+     * on thrown SDK handoff; never reload another URL/session as a fallback. */
+    private static final class RequestedNavigation {final SearchEngines.Target target;final long locationSequence;RequestedNavigation(SearchEngines.Target target,long sequence){this.target=target;locationSequence=sequence;}}
+    private final Map<TabRef,RequestedNavigation> requested=new HashMap<>();
     private final Set<TabRef> requiresRestore=new HashSet<>();
     private boolean engineMutation;
     private boolean temporaryNativeOnly;
+    public interface NativeWindowObserver {void changed();}
+    private java.lang.ref.WeakReference<NativeWindowObserver> windowObserver=new java.lang.ref.WeakReference<>(null);private Object observerToken;
+    /** Window owns this subscription and its listener. The process browser holds ONLY a weak
+     * reference, so a retired Activity cannot be retained by a session/delegate callback. */
+    public final class WindowSubscription implements AutoCloseable {
+        private final Object token;private NativeWindowObserver listener;
+        private WindowSubscription(Object token,NativeWindowObserver listener){this.token=token;this.listener=listener;}
+        public void close(){ownerThread();if(observerToken==token){windowObserver.clear();observerToken=null;}listener=null;}
+    }
+    public WindowSubscription observeNativeWindow(NativeWindowObserver listener,ComponentGate.BusinessPermit permit){access(permit);if(listener==null || windowObserver.get()!=null)throw new IllegalStateException("Native browser window already observed");Object token=new Object();observerToken=token;windowObserver=new java.lang.ref.WeakReference<>(listener);return new WindowSubscription(token,listener);}
+    private void windowChanged(){NativeWindowObserver listener=windowObserver.get();if(listener!=null)try{listener.changed();}catch(RuntimeException unavailable){/* UI publication is not a navigation outcome */}}
+    private void sessionReported(TabRef tab,SessionPresentation.Frame frame){
+        ownerThread();if(!engineMutation && frame!=null && !frame.retired() && live.containsKey(tab))try{ComponentGate.BusinessPermit permit=gate.requireBusiness();sourceLifetime.checkOrBind(permit);tabs.updateSessionReportedMetadata(tab,frame.reportedTitle(),frame.reportedLocation(),permit);}catch(RuntimeException stale){/* no reassignment to a newer tab/document */}
+        windowChanged(); // native window observer coalesces onto its owner event loop
+    }
     public interface HistorySink {void visited(HistoryStore.Page page);void sourceChanged(HistoryStore.Source source);void titleChanged(String workspaceId,String tabId,String url,String title);}
     private HistorySink history;
     public void installHistorySink(HistorySink nativeSink,ComponentGate.BusinessPermit permit){access(permit);if(history!=null || nativeSink==null)throw new IllegalStateException("Canonical history already connected");history=nativeSink;}
@@ -54,7 +73,7 @@ public final class BrowserCoordinator {
         gate.requireDataEpoch(permit,acceptedEpoch);WorkspaceCatalog workspaces=new WorkspaceCatalog(gate);TabCatalog tabs=new TabCatalog(workspaces);
         PartitionCatalog partitions=new PartitionCatalog(gate,acceptedEpoch,WorkspaceCatalog.MAX_WORKSPACES);
         final BrowserCoordinator[] nativeOwner=new BrowserCoordinator[1];
-        GeckoSessionOwner sessions=BrowserSessionHost.createTemporaryOwner(gate,runtime,partitions,capacity,new BrowserSessionHost.BrowserHistory(){public void visited(TabRef tab,String url){if(nativeOwner[0]!=null)nativeOwner[0].historyVisit(tab,url);}public void titleChanged(TabRef tab,String url,String title){if(nativeOwner[0]!=null)nativeOwner[0].historyTitle(tab,url,title);}});
+        GeckoSessionOwner sessions=BrowserSessionHost.createTemporaryOwner(gate,runtime,partitions,capacity,new BrowserSessionHost.BrowserHistory(){public void visited(TabRef tab,String url){if(nativeOwner[0]!=null)nativeOwner[0].historyVisit(tab,url);}public void titleChanged(TabRef tab,String url,String title){if(nativeOwner[0]!=null)nativeOwner[0].historyTitle(tab,url,title);}public void sessionReported(TabRef tab,SessionPresentation.Frame frame){if(nativeOwner[0]!=null)nativeOwner[0].sessionReported(tab,frame);}});
         BrowserCoordinator domain=new BrowserCoordinator(gate,workspaces,tabs,partitions,sessions);nativeOwner[0]=domain;domain.temporaryNativeOnly=true;domain.access(permit);gate.requireDataEpoch(permit,acceptedEpoch);return domain;
     }
     public SessionDisplayAccess sessionDisplayAccess(ComponentGate.BusinessPermit permit){access(permit);return new SessionDisplayAccess(sessions);}
@@ -74,7 +93,13 @@ public final class BrowserCoordinator {
         capture.requireBindings(gate,permit);access(permit);return capture;
     }
     public Selection captureSelection(ComponentGate.BusinessPermit permit){access(permit);return tabs.captureSelection(permit);}
-    public SessionPresentation.Frame selectedPresentation(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());return ref==null?null:sessions.presentation(ref,permit);}
+    /** Original native session observation for an outstanding UI Back, even if the user has
+     * selected another tab. Never resolve "current" again to complete the old operation. */
+    public SessionPresentation.Frame observeOwnedSession(GeckoSessionOwner.SessionRef ref,ComponentGate.BusinessPermit permit){access(permit);if(ref==null || !live.containsValue(ref) || sessions.state(ref)!=GeckoSessionOwner.State.OPEN_REQUESTED)return null;try{return sessions.presentation(ref,permit);}catch(IllegalStateException unavailable){return null;}}
+    public boolean ownedSessionEnded(GeckoSessionOwner.SessionRef ref,ComponentGate.BusinessPermit permit){access(permit);return ref!=null && sessions.state(ref)==GeckoSessionOwner.State.CLOSED;}
+    public GeckoSessionOwner.SessionRef existingSelectedSession(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());if(ref==null || sessions.state(ref)!=GeckoSessionOwner.State.OPEN_REQUESTED)return null;try{sessions.requireOpen(ref,permit);return ref;}catch(IllegalStateException closed){return null;}}
+    public SessionPresentation.Frame selectedPresentation(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());if(ref==null || sessions.state(ref)!=GeckoSessionOwner.State.OPEN_REQUESTED)return null;try{return sessions.presentation(ref,permit);}catch(IllegalStateException retired){return null;}}
+    public SearchEngines.Target selectedRequestedTarget(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);RequestedNavigation pending=requested.get(selection.tab());if(pending==null)return null;GeckoSessionOwner.SessionRef ref=live.get(selection.tab());if(ref!=null && sessions.state(ref)==GeckoSessionOwner.State.OPEN_REQUESTED && selectedPresentation(selection,permit)!=null && sessions.presentation(ref,permit).reportedLocationSequence()>pending.locationSequence){requested.remove(selection.tab());return null;}return pending.target;}
     public BrowserCoordinator(ComponentGate gate,WorkspaceCatalog workspaces,TabCatalog tabs,PartitionCatalog partitions,GeckoSessionOwner sessions){
         if(gate==null || workspaces==null || tabs==null || partitions==null || sessions==null)throw BrowserModels.invalid();
         workspaces.requireGate(gate);tabs.requireCatalog(workspaces);partitions.requireGate(gate);sessions.requireBindings(gate,partitions);
@@ -91,7 +116,11 @@ public final class BrowserCoordinator {
     /** Metadata becomes active; closed sessions still require explicit validated restore. */
     public void restoreSecondary(WorkspaceRef ref,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){access(permit);workspaces.restoreSecondary(ref,expectedWorkspaceRevision,permit);historySource(ref,permit);}
     public WindowSnapshot windowSnapshot(ComponentGate.BusinessPermit permit){
-        access(permit);WorkspacesView view=workspaces.snapshot(permit);TabsView selected=view.selected()==null?null:tabs.snapshot(view.selected(),permit);
+        access(permit);
+        // Reconcile observations that arrived synchronously during an engine mutation. These
+        // are display values only; never reacquire currentDocument() to invent authority.
+        for(Map.Entry<TabRef,GeckoSessionOwner.SessionRef> entry:live.entrySet()){if(sessions.state(entry.getValue())!=GeckoSessionOwner.State.OPEN_REQUESTED)continue;try{SessionPresentation.Frame frame=sessions.presentation(entry.getValue(),permit);if(!frame.retired())tabs.updateSessionReportedMetadata(entry.getKey(),frame.reportedTitle(),frame.reportedLocation(),permit);}catch(IllegalStateException unavailable){/* preserve original metadata/owner; a dead session must not strand all other tabs */}}
+        WorkspacesView view=workspaces.snapshot(permit);TabsView selected=view.selected()==null?null:tabs.snapshot(view.selected(),permit);
         WorkspacesView after=workspaces.snapshot(permit);if(after.revision()!=view.revision() || after.selected()!=view.selected())throw new IllegalStateException("Browser window snapshot changed during capture");gate.checkCurrent(permit);return new WindowSnapshot(view,selected);
     }
     public TabRef addTab(WorkspaceRef workspace,long expectedTabsRevision,ComponentGate.BusinessPermit permit){access(permit);return tabs.addTab(workspace,expectedTabsRevision,permit);}
@@ -118,9 +147,12 @@ public final class BrowserCoordinator {
     public TabCatalog.DocumentLease navigateSelected(Selection selection,SearchEngines.Target target,ComponentGate.BusinessPermit permit){
         access(permit);if(target==null)throw BrowserModels.invalid();tabs.requireSelection(selection,permit);
         GeckoSessionOwner.SessionRef ref=requireSelectedSession(permit);tabs.requireSelection(selection,permit);
-        TabCatalog.DocumentLease lease=tabs.beginDocument(selection.tab(),selection.tabsRevision(),permit);engineMutation=true;
+        long observedLocation=sessions.presentation(ref,permit).reportedLocationSequence();
+        TabCatalog.DocumentLease lease=tabs.beginDocument(selection.tab(),selection.tabsRevision(),permit);requested.put(selection.tab(),new RequestedNavigation(target,observedLocation));engineMutation=true;
         try{sessions.requireOpen(ref,permit).loadUri(target.url());return lease;}finally{engineMutation=false;}
     }
+    /** Reload the exact selected existing native session, one attempt, no alternate route. */
+    public void reloadSelected(Selection selection,ComponentGate.BusinessPermit permit){access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());if(ref==null)throw new IllegalStateException("No current session");tabs.beginDocument(selection.tab(),selection.tabsRevision(),permit);engineMutation=true;try{sessions.requireOpen(ref,permit).reload();}finally{engineMutation=false;windowChanged();}}
     /** Exact current native history handoff, no global BACK or inferred navigation success. */
     public void traverseSelected(Selection selection,boolean backwards,ComponentGate.BusinessPermit permit){
         access(permit);tabs.requireSelection(selection,permit);GeckoSessionOwner.SessionRef ref=live.get(selection.tab());if(ref==null)throw new IllegalStateException("No current session");
@@ -141,7 +173,7 @@ public final class BrowserCoordinator {
     }
     private void closeOwnedSessionInternal(TabRef tab){
         GeckoSessionOwner.SessionRef ref=live.get(tab);if(ref==null)return;
-        sessions.close(ref);live.remove(tab);requiresRestore.add(tab);
+        sessions.close(ref);live.remove(tab);requested.remove(tab);requiresRestore.add(tab);
     }
     public void shelfSecondary(WorkspaceRef workspace,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){
         access(permit);WorkspaceView current=workspaces.workspace(workspace,permit);

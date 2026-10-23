@@ -1,0 +1,19 @@
+package io.github.rebrowser.engine;
+
+import static org.junit.Assert.*;
+import java.util.*;
+import java.util.concurrent.*;
+import org.junit.Test;
+
+/** Actual native presentation reducer/observer. No View/Handler/Gecko/JNI runtime proof. */
+public final class SessionWindowObservationTest {
+    @Test public void nativeObserverSeesValuesAfterMutationNotPreviousFrame(){SessionPresentation m=new SessionPresentation();List<SessionPresentation.Frame> frames=new ArrayList<>();m.installNativeObserver(frames::add);m.title("actual");m.location("https://example.test/");m.back(true);assertEquals("actual",frames.get(0).reportedTitle());assertEquals("https://example.test/",frames.get(1).reportedLocation());assertTrue(frames.get(2).reportedCanGoBack());assertEquals(3,frames.size());}
+    @Test public void progressNeverPretendsNewLocationOrDocumentCommit(){SessionPresentation m=new SessionPresentation();m.location("https://example.test/old");long location=m.snapshot().reportedLocationSequence();m.start();m.progress(20);m.title("title");m.stop(true);assertEquals(location,m.snapshot().reportedLocationSequence());assertTrue(m.snapshot().observationSequence()>location);assertEquals(20,m.snapshot().reportedProgress());}
+    @Test public void repeatedSameUrlNativeLocationStillHasNewObservationSequence(){SessionPresentation m=new SessionPresentation();m.location("about:blank");long first=m.snapshot().reportedLocationSequence();m.location("about:blank");assertTrue(m.snapshot().reportedLocationSequence()>first);}
+    @Test public void malformedLocationCannotCompleteAnotherPendingNavigation(){SessionPresentation m=new SessionPresentation();m.location("https://example.test/");long before=m.snapshot().reportedLocationSequence();m.location("bad\nurl");assertEquals(before,m.snapshot().reportedLocationSequence());assertEquals("https://example.test/",m.snapshot().reportedLocation());}
+    @Test public void newNativeStartHasDistinctProgressOnlyIdentity(){SessionPresentation m=new SessionPresentation();assertNull(m.snapshot().reportedLoad());m.start();SessionPresentation.LoadObservation first=m.snapshot().reportedLoad();assertNotNull(first);m.progress(50);m.stop(true);assertSame(first,m.snapshot().reportedLoad());m.start();assertNotSame(first,m.snapshot().reportedLoad());assertEquals(0,m.snapshot().reportedProgress());}
+    @Test public void retirementClearsPrivateTextAndObserverOnlyOnce(){SessionPresentation m=new SessionPresentation();List<SessionPresentation.Frame> frames=new ArrayList<>();m.installNativeObserver(frames::add);m.title("private");m.start();m.retire();SessionPresentation.Frame last=frames.get(frames.size()-1);assertTrue(last.retired());assertNull(last.reportedTitle());assertNull(last.reportedLoad());int count=frames.size();m.title("late");m.retire();assertEquals(count,frames.size());}
+    @Test public void observerFailureIsNotUnderlyingNavigationOrNativeWorkFailure(){SessionPresentation m=new SessionPresentation();m.installNativeObserver(frame->{throw new IllegalStateException("synthetic UI publication failure");});m.location("https://example.test/");m.start();m.progress(40);m.stop(true);assertEquals("https://example.test/",m.snapshot().reportedLocation());assertEquals(40,m.snapshot().reportedProgress());assertEquals(Boolean.TRUE,m.snapshot().reportedStopSuccess());}
+    @Test public void fixedNativeObserverCannotBeReplaced(){SessionPresentation m=new SessionPresentation();m.installNativeObserver(frame->{});assertThrows(IllegalStateException.class,()->m.installNativeObserver(frame->{}));}
+    @Test public void observerInstallationRejectsForeignThread()throws Exception{SessionPresentation m=new SessionPresentation();ExecutorService e=Executors.newSingleThreadExecutor();try{assertTrue(e.submit(()->{try{m.installNativeObserver(frame->{});return false;}catch(IllegalStateException expected){return true;}}).get(2,TimeUnit.SECONDS));}finally{e.shutdown();assertTrue(e.awaitTermination(2,TimeUnit.SECONDS));}}
+}

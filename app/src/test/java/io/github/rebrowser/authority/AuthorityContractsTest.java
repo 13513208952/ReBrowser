@@ -43,8 +43,8 @@ public final class AuthorityContractsTest {
     @Test public void invalidLevelsNeverCoerce()throws Exception{
         for(int n:new int[]{-1,11,Integer.MIN_VALUE,Integer.MAX_VALUE})reject(()->AuthorityScale.meetsThreshold(n,1));
     }
-    @Test public void productionPolicyIsUnconfiguredAndRejectsPublicTestKey()throws Exception{
-        assertFalse(CompiledPrincipals.production().formalRootConfigured());assertEquals(0,CompiledPrincipals.production().size());
+    @Test public void productionPolicyHasAuthorizedRootAndStillRejectsPublicTestKey()throws Exception{
+        assertTrue(CompiledPrincipals.production().formalRootConfigured());assertEquals(1,CompiledPrincipals.production().size());assertNull(CompiledPrincipals.production().find("public-dummy-principal"));
         reject(()->new AdminProofVerifier(CompiledPrincipals.production()).verifyCompiledKey(proof(fields(),SIG,"")));
     }
     @Test public void validHistoricalProofAndEquivalentSignatureMapToOneCompiledIdentity()throws Exception{

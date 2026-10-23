@@ -1,0 +1,36 @@
+{
+  "sourceTag": "v1.0.4",
+  "scope": "Exact approved native browser-menu vectors, no new artwork or wholesale legacy resource import",
+  "runtimeResources": [
+    {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_back.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_back.xml",
+      "bytes": 298,
+      "sha256": "92546b1e3d25d17a68990c7b352b477361217d990a18907a7bbc057fcd15a563"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_forward.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_forward.xml",
+      "bytes": 297,
+      "sha256": "85cbf904c1bb96d9632d0e52e87893e9a9149f6a676e1a4b9ce0ef30449c7a8a"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_star_outline.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_star_outline.xml",
+      "bytes": 456,
+      "sha256": "6ad6d4f2b3b4098139e9c688ed76b3d989ad69f5a124960a15dcc3a0f7fe6070"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_orientation_portrait.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_orientation_portrait.xml",
+      "bytes": 419,
+      "sha256": "8388be230f9b625f436940a62c8527f09bcb5fbdb1c8b1d856f8efe561b113c8"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_refresh.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_refresh.xml",
+      "bytes": 348,
+      "sha256": "7e95b52ea971ed10f8997caec02462400f0428cfa4800a3cce1d4420357b275e"
+    }
+  ]
+}

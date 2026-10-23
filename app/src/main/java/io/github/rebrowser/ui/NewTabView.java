@@ -132,6 +132,14 @@ public final class NewTabView extends FrameLayout {
     private BrowserToolbar.Binding binding;private NativeOwner owner;private Navigation navigation;
     private Model model;private Object frame;private Submission submission=new Submission();private boolean loading;
     private int stableWidth,stableHeight;private long artworkRevision;private boolean decoding;private int decodedWidth,decodedHeight;
+    public interface PhotoAppearance {void changed(boolean photo);}
+    private WeakReference<View> backdropRoot=new WeakReference<>(null);private PhotoAppearance photoAppearance;
+    /** Actual native ANCESTOR only: approved photograph spans the toolbar/system-inset root,
+     * not merely a220dp block or the scrolling content. No URI or window authority is granted. */
+    public void shareNativeBackdrop(View ownAncestor,PhotoAppearance appearance){
+        BrowserToolbar.main();if(ownAncestor==null || appearance==null || ownAncestor==this)throw invalid();android.view.ViewParent parent=getParent();int depth=0;while(parent!=null && parent!=ownAncestor && ++depth<=64)parent=parent.getParent();if(parent!=ownAncestor)throw invalid();backdropRoot=new WeakReference<>(ownAncestor);photoAppearance=appearance;setBackgroundColor(0x00000000);applyBackdrop(false,null);
+    }
+    private void applyBackdrop(boolean photo,Drawable pixels){View root=backdropRoot.get();View target=root==null?this:root;if(pixels==null)target.setBackgroundColor(photo?0xff302653:0xffffffff);else target.setBackground(pixels);if(root!=null)setBackgroundColor(0x00000000);if(photoAppearance!=null)photoAppearance.changed(photo);}
 
     public NewTabView(Context context){
         super(context);BrowserToolbar.main();setBackgroundColor(0xffffffff);setSaveEnabled(false);
@@ -185,7 +193,7 @@ public final class NewTabView extends FrameLayout {
         input.setError(null);controls(true);layoutBody();
         // Refreshing recent visits or changing only the default engine must not discard an
         // unchanged approved photo, flash the fallback color, or decode it again on return.
-        if(backgroundChanged){artworkRevision++;decodedWidth=decodedHeight=0;setBackgroundColor(page.photo()?0xff302653:0xffffffff);}
+        if(backgroundChanged){artworkRevision++;decodedWidth=decodedHeight=0;applyBackdrop(page.photo(),null);}
         requestBackground();
     }
     private void submitInput(){
@@ -200,11 +208,12 @@ public final class NewTabView extends FrameLayout {
     }
     private void preparationFailed(String reason){if(!current())return;submission.preparationFailed();controls(true);input.setError(reason);}
     /** Global Back can dismiss the actual local input before webpage/environment handling. */
+    public boolean hasInputFocus(){BrowserToolbar.main();return input.hasFocus();}
     public boolean dismissInput(){BrowserToolbar.main();if(!input.hasFocus())return false;input.clearFocus();InputMethodManager ime=(InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);if(ime!=null)ime.hideSoftInputFromWindow(input.getWindowToken(),0);return true;}
     private void clearRecent(){BrowserToolbar.clearOwnedViewTree(recent);recent.removeAllViews();recent.setVisibility(GONE);}
     public void unbind(){
         BrowserToolbar.main();frame=null;binding=null;navigation=null;if(owner!=null)owner.retire();owner=null;model=null;loading=false;submission=new Submission();artworkRevision++;decodedWidth=decodedHeight=0;
-        input.setText("");input.setError(null);input.clearFocus();logo.setImageDrawable(null);engine.setImageDrawable(null);logoSlot.setVisibility(INVISIBLE);clearRecent();controls(false);setBackgroundColor(0xffffffff);
+        input.setText("");input.setError(null);input.clearFocus();logo.setImageDrawable(null);engine.setImageDrawable(null);logoSlot.setVisibility(INVISIBLE);clearRecent();controls(false);applyBackdrop(false,null);
         // Retire recipients only. Already running IO/decode finishes on its real worker; detach
         // does not cancel streams, release a running-worker slot, or recycle a displayed bitmap.
     }
@@ -214,13 +223,14 @@ public final class NewTabView extends FrameLayout {
     private GradientDrawable surface(int color,int radius,boolean border){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(radius));if(border)d.setStroke(dp(1),0xffe8e5ed);return d;}
     private int dp(int value){return Math.round(value*getResources().getDisplayMetrics().density);}
     private void layoutBody(){
-        if(stableWidth<1 || stableHeight<1)return;LayoutParams p=(LayoutParams)body.getLayoutParams();p.width=Math.min(Math.max(1,stableWidth-dp(36)),dp(720));body.setLayoutParams(p);body.setPadding(0,dp(stableWidth>stableHeight?12:44),0,dp(28));
+        if(stableWidth<1 || stableHeight<1)return;LayoutParams p=(LayoutParams)body.getLayoutParams();p.width=Math.min(Math.max(1,(getWidth()>0?getWidth():stableWidth)-dp(36)),dp(720));body.setLayoutParams(p);body.setPadding(0,dp(stableWidth>stableHeight?12:44),0,dp(28));
         LayoutParams l=(LayoutParams)logoPanel.getLayoutParams();l.width=Math.min(p.width,dp(model!=null && model.provider()==SearchEngines.Provider.DUCKDUCKGO?290:240));logoPanel.setLayoutParams(l);
     }
     @Override protected void onSizeChanged(int w,int h,int oldw,int oldh){super.onSizeChanged(w,h,oldw,oldh);updateViewport(w,h);}
     @Override protected void onLayout(boolean changed,int left,int top,int right,int bottom){super.onLayout(changed,left,top,right,bottom);updateViewport(getWidth(),getHeight());}
     @Override public WindowInsets onApplyWindowInsets(WindowInsets insets){WindowInsets result=super.onApplyWindowInsets(insets);updateViewport(getWidth(),getHeight());return result;}
     private void updateViewport(int w,int h){
+        View geometry=backdropRoot.get();if(geometry!=null && geometry.getWidth()>0 && geometry.getHeight()>0){w=geometry.getWidth();h=geometry.getHeight();}else geometry=this;
         if(w<1 || h<1)return;WindowInsets insets=getRootWindowInsets();boolean ime=insets!=null && insets.isVisible(WindowInsets.Type.ime());
         int nextH=(ime || insets==null && stableWidth==w && stableHeight>h) && stableWidth==w && stableHeight>0?stableHeight:h;
         // Prefer this ACTUAL Activity's window, not application/display metrics. This remains
@@ -228,7 +238,7 @@ public final class NewTabView extends FrameLayout {
         // follows real split-window resize. No keyboard dimensions decide device/orientation.
         Context context=getContext();for(int n=0;n<8 && context instanceof android.content.ContextWrapper && !(context instanceof android.app.Activity);n++)context=((android.content.ContextWrapper)context).getBaseContext();
         if(context instanceof android.app.Activity)try{
-            android.view.WindowMetrics metrics=((android.app.Activity)context).getWindowManager().getCurrentWindowMetrics();int[] location=new int[2];getLocationInWindow(location);
+            android.view.WindowMetrics metrics=((android.app.Activity)context).getWindowManager().getCurrentWindowMetrics();int[] location=new int[2];geometry.getLocationInWindow(location);
             android.graphics.Insets bars=metrics.getWindowInsets().getInsetsIgnoringVisibility(WindowInsets.Type.systemBars()|WindowInsets.Type.displayCutout());
             nextH=PersonalizationPolicy.unoccludedViewportHeight(h,metrics.getBounds().height(),location[1],bars.bottom);
         }catch(RuntimeException unavailable){/* keep only observed own-content geometry above */}
@@ -249,7 +259,7 @@ public final class NewTabView extends FrameLayout {
             final Bitmap result=pixels;handler.post(()->{try{
                 NewTabView view=weak.get();if(view==null){if(result!=null)result.recycle();return;}view.decoding=false;
                 if(view.artworkRevision!=revision || view.model==null || !view.model.photo()){if(result!=null)result.recycle();view.requestBackground();return;}
-                if(result!=null && view.current()){view.decodedWidth=w;view.decodedHeight=h;view.setBackground(new TopArtwork(result,h));}else if(result!=null)result.recycle();
+                if(result!=null && view.current()){view.decodedWidth=w;view.decodedHeight=h;view.applyBackdrop(true,new TopArtwork(result,h));}else if(result!=null)result.recycle();
             }finally{resumeDeferredArtwork();}});
         });}catch(java.util.concurrent.RejectedExecutionException busy){decoding=false;deferArtwork();}
     }

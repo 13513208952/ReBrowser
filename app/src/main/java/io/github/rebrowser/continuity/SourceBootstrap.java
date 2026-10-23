@@ -33,8 +33,10 @@ public final class SourceBootstrap {
     public static Inspection inspectOwn(Application nativeApplication,LastGoodSourceStore nativeStore){
         CompiledSourceIdentity root=CompiledSourceIdentity.current();
         if(!root.configured())return new Inspection(nativeApplication,Status.UNCONFIGURED,0,null);
+        // Configuring a public Root is not source acceptance. Missing native context must fail
+        // without touching Android PM/clock/filesystem, not crash or infer first installation.
+        if(nativeApplication==null || nativeStore==null)return new Inspection(nativeApplication,Status.UNAVAILABLE,0,null);
         long start=SystemClock.elapsedRealtime();
-        if(nativeApplication==null || nativeStore==null)return new Inspection(nativeApplication,Status.UNAVAILABLE,start,null);
         try{
             nativeStore.requireNativeBootstrapPath(nativeApplication.getDataDir().toPath().resolve("no_backup").resolve(LastGoodSourceStore.BOOTSTRAP_DIRECTORY));
             SigningIdentity.OwnInspection before=SigningIdentity.inspectOwnForContinuity(nativeApplication);

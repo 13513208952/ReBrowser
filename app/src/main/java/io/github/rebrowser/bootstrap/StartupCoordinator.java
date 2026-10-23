@@ -65,12 +65,22 @@ public final class StartupCoordinator {
     private BrowserCoordinator browserDomain;private boolean browserDomainAttempted;
     private BrowserStore browserStore;private boolean browserStoreAttempted;private io.github.rebrowser.download.DownloadStore downloadStore;private boolean downloadStoreAttempted;
     private io.github.rebrowser.data.OwnedDataCatalog browserData;private boolean browserDataAttempted;
-    private io.github.rebrowser.browser.BookmarkStore bookmarks;private io.github.rebrowser.browser.HistoryStore history;
+    private io.github.rebrowser.browser.BookmarkStore bookmarks;private volatile io.github.rebrowser.browser.HistoryStore history;
+    private volatile boolean historyCaptureIncomplete;
     private io.github.rebrowser.settings.SettingsRepository settings;private io.github.rebrowser.subapps.SubapplicationCoordinator subapplications;
     private BrowserStoreCoordinator browserInspector;private boolean browserInspectorAttempted;
     private io.github.rebrowser.music.MusicSessionOwner musicSessions;private boolean musicSessionsAttempted;private io.github.rebrowser.music.MusicCoordinator musicDomain;private boolean musicDomainAttempted;
     private io.github.rebrowser.outlook.OutlookSessionOwner outlookSessions;private boolean outlookSessionsAttempted;
     private PrivateRecordStore privateRecords;private boolean privateRecordsAttempted;private final Object privateRecordOpening=new Object();
+    private final ThreadPoolExecutor browserDataIo=newBrowserDataExecutor();
+    /** Settings/history share ONE decoded-root credit. Their actual native producers/readers
+     * must therefore use one lane, rather than fail randomly on independent UI worker threads.
+     * No thread/read/key/directory is started merely by constructing this executor. */
+    private static ThreadPoolExecutor newBrowserDataExecutor(){ThreadPoolExecutor e=new ThreadPoolExecutor(1,1,15,TimeUnit.SECONDS,new ArrayBlockingQueue<Runnable>(64),r->{Thread t=new Thread(r,"ReBrowser-browser-data");t.setDaemon(true);return t;},new ThreadPoolExecutor.AbortPolicy());e.allowCoreThreadTimeOut(true);return e;}
+    /** Admission only. Each native job MUST recheck its exact source on execution and keep its
+     * own finally/close handling. No wrapper skips that cleanup on a later source revocation.
+     * Window retirement never shuts down or frees a running shared job. No main-thread IO. */
+    public void executeBrowserDataIo(ComponentGate.BusinessPermit permit,Runnable nativeJob){if(nativeJob==null)throw new IllegalArgumentException("Missing native browser data job");gate.checkCurrent(permit);browserDataIo.execute(nativeJob);}
     private io.github.rebrowser.system.ApkStagingStore apkStages;private boolean apkOpeningAttempted;private final Object apkOpening=new Object();
     private final ComponentGate.ResourcePin businessLifetime;
     private final AtomicReference<ComponentGate.SourceView> sourceView=new AtomicReference<>(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.INITIALIZING));
@@ -156,7 +166,25 @@ public final class StartupCoordinator {
     public BrowserCoordinator temporaryBrowserDomain(ComponentGate.BusinessPermit permit){
         ownerThread();byte[] epoch=requireNativeDataEpoch(permit);
         if(browserDomain!=null)return browserDomain;if(browserDomainAttempted)throw new IllegalStateException("Browser domain construction already attempted");browserDomainAttempted=true;
-        browserDomain=BrowserCoordinator.createTemporaryNative(gate,browserRuntimeOwner(permit),epoch,8,permit);gate.checkCurrent(permit);return browserDomain;
+        browserDomain=BrowserCoordinator.createTemporaryNative(gate,browserRuntimeOwner(permit),epoch,8,permit);
+        browserDomain.installHistorySink(new NativeHistorySink(permit),permit);gate.checkCurrent(permit);return browserDomain;
+    }
+    /** Non-secret capture availability, not success/empty-history or a storage-completion proof. */
+    public boolean historyCaptureIncomplete(){return historyCaptureIncomplete;}
+    private interface NativeHistoryWrite {void write(io.github.rebrowser.browser.HistoryStore store)throws Exception;}
+    /** Own application IO, never a caller-supplied history backend or Activity reference. Native
+     * SDK visits and catalog lifecycle changes share one bounded ordered queue. Rejection/failure
+     * is reported, not silently called a recorded visit; it never breaks page navigation. */
+    private final class NativeHistorySink implements BrowserCoordinator.HistorySink {
+        private final ComponentGate.BusinessPermit permit;
+        private final java.util.LinkedHashMap<String,io.github.rebrowser.browser.HistoryStore.Entry> latest=new java.util.LinkedHashMap<>();
+        private long recordingRevision=-1;
+        NativeHistorySink(ComponentGate.BusinessPermit permit){this.permit=permit;}
+        private long observedRecording(){try{io.github.rebrowser.browser.HistoryStore known=history;return known==null?0:known.captureVisitRecordingRevision();}catch(RuntimeException sourceUnavailable){historyCaptureIncomplete=true;return -1;}}
+        private void submit(NativeHistoryWrite work){try{gate.checkCurrent(permit);executeBrowserDataIo(permit,()->{try{gate.checkCurrent(permit);io.github.rebrowser.browser.HistoryStore store=openExistingHistoryStoreOnIo(permit);long revision=store.recordingRevision();if(revision!=recordingRevision){latest.clear();recordingRevision=revision;}work.write(store);gate.checkCurrent(permit);}catch(Exception unavailable){historyCaptureIncomplete=true;}});}catch(RuntimeException unavailable){historyCaptureIncomplete=true;}}
+        public void visited(io.github.rebrowser.browser.HistoryStore.Page page){long observedRecording=observedRecording();if(observedRecording<0)return;long now=System.currentTimeMillis();submit(store->{if(store.paused() || store.recordingRevision()!=observedRecording)return;io.github.rebrowser.browser.HistoryStore.Snapshot saved=store.recordVisit(page,now,observedRecording,permit);if(store.recordingRevision()!=observedRecording)return;io.github.rebrowser.browser.HistoryStore.Entry found=null;for(io.github.rebrowser.browser.HistoryStore.Entry e:saved.entries())if(e.tabId().equals(page.tabId()) && e.workspaceId().equals(page.source().workspaceId()) && e.url().equals(page.url()) && e.visitedUtcMs()==now && (found==null || e.ordinal()>found.ordinal()))found=e;if(found!=null){String key=found.workspaceId()+":"+found.tabId();if(!latest.containsKey(key) && latest.size()>=io.github.rebrowser.browser.HistoryStore.MAX_CURRENT_PAGES)latest.remove(latest.keySet().iterator().next());latest.put(key,found);}});}
+        public void sourceChanged(io.github.rebrowser.browser.HistoryStore.Source source){long now=System.currentTimeMillis();submit(store->{store.workspaceChanged(source,now,permit);if(!source.open())latest.values().removeIf(e->e.workspaceId().equals(source.workspaceId()));});}
+        public void titleChanged(String workspaceId,String tabId,String url,String title){long observedRecording=observedRecording();if(observedRecording<0)return;submit(store->{if(store.paused() || store.recordingRevision()!=observedRecording)return;io.github.rebrowser.browser.HistoryStore.Entry original=latest.get(workspaceId+":"+tabId);if(original!=null && original.url().equals(url))store.updateNativeVisitTitle(original.id(),url,title,permit);});}
     }
     /** Canonical UI/service shared built-in session owners. Construction does not open/load/play. */
     public io.github.rebrowser.music.MusicSessionOwner musicSessionOwner(ComponentGate.BusinessPermit permit){ownerThread();requireNativeDataEpoch(permit);if(musicSessions!=null)return musicSessions;if(musicSessionsAttempted)throw new IllegalStateException("Native music owner already attempted");musicSessionsAttempted=true;musicSessions=new io.github.rebrowser.music.MusicSessionOwner(gate,browserRuntimeOwner(permit),permit);gate.checkCurrent(permit);return musicSessions;}
@@ -204,8 +232,11 @@ public final class StartupCoordinator {
     public io.github.rebrowser.browser.BookmarkStore openExistingBookmarkStoreOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
         synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(bookmarks==null)bookmarks=new io.github.rebrowser.browser.BookmarkStore(owner);return bookmarks;}
     }
+    /** Native current open-page metadata only, for explicit resume-recording synchronization.
+     * Never creates a browser/session or restores shelved environments just to inspect history. */
+    public java.util.List<io.github.rebrowser.browser.HistoryStore.Page> captureOpenHistoryPages(ComponentGate.BusinessPermit permit){ownerThread();gate.checkCurrent(permit);return browserDomain==null?java.util.Collections.emptyList():browserDomain.captureOpenHistoryPages(permit);}
     public io.github.rebrowser.browser.HistoryStore openExistingHistoryStoreOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
-        synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(history==null)history=new io.github.rebrowser.browser.HistoryStore(owner);return history;}
+        synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(history==null)history=new io.github.rebrowser.browser.HistoryStore(owner,permit);return history;}
     }
     public io.github.rebrowser.settings.SettingsRepository openExistingSettingsOnIo(ComponentGate.BusinessPermit permit)throws java.io.IOException,java.security.GeneralSecurityException{
         synchronized(privateRecordOpening){io.github.rebrowser.data.OwnedDataCatalog owner=openExistingBrowserDataOnIo(permit);if(settings==null)settings=new io.github.rebrowser.settings.SettingsRepository(owner);return settings;}

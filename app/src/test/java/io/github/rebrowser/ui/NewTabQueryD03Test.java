@@ -3,7 +3,7 @@ package io.github.rebrowser.ui;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-/** New-tab query validation and offered-management model; no navigation occurs. */
+/** New-tab query validation and actual recent-visibility setting; no navigation occurs. */
 public final class NewTabQueryD03Test {
     @Test public void blankOversizeAndBrokenUtf16AreRejectedLocally(){
         assertThrows(IllegalArgumentException.class,()->NewTabView.Query.require(null));
@@ -12,11 +12,12 @@ public final class NewTabQueryD03Test {
         assertThrows(IllegalArgumentException.class,()->NewTabView.Query.require("\ud800"));
         assertEquals("abc",NewTabView.Query.require("  abc  ").trim());
     }
-    @Test public void shortcutModelCarriesManageOfferAndRejectsDuplicates(){
+    @Test public void shortcutModelUsesRecentSettingNotInventedFavoriteManagement(){
         NewTabView.Shortcut shortcut=new NewTabView.Shortcut(new Object(),"标题","example.com");
-        assertFalse(new NewTabView.Model(java.util.Arrays.asList(shortcut),false).manageOffered());
-        assertTrue(new NewTabView.Model(java.util.Arrays.asList(shortcut)).manageOffered());
-        assertThrows(IllegalArgumentException.class,()->new NewTabView.Model(java.util.Arrays.asList(shortcut,shortcut)));
-        assertThrows(IllegalArgumentException.class,()->new NewTabView.Shortcut(new Object(),"t","例子.测试"));
+        io.github.rebrowser.settings.SettingsRepository.Snapshot settings=new io.github.rebrowser.settings.SettingsRepository.Snapshot(0,io.github.rebrowser.browser.SearchEngines.Provider.BING,false,false);
+        assertFalse(new NewTabView.Model(settings,java.util.Arrays.asList(shortcut)).empty());
+        assertTrue(new NewTabView.Model(settings.withNewTab(settings.newTabBackground(),false),java.util.Arrays.asList(shortcut)).empty());
+        assertThrows(IllegalArgumentException.class,()->new NewTabView.Model(settings,java.util.Arrays.asList(shortcut,shortcut)));
+        assertThrows(IllegalArgumentException.class,()->new NewTabView.Shortcut(new Object(),"t","bad host"));
     }
 }

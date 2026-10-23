@@ -1,0 +1,85 @@
+{
+  "sourceTag": "v1.0.4",
+  "sourceCommit": "ba8a452ad9bc3b0070ae06016f10de8ec9578470",
+  "scope": "Approved existing artwork only, byte-identical extraction; no legacy Java/manifest/code/assets import. Photo wordmarks retain v1 white-text/Google75percent transparent-canvas adjustments. No brand authorization asserted.",
+  "runtimeResources": [
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_bing_icon.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_bing_icon.webp",
+      "bytes": 3538,
+      "sha256": "980b575e80fe76921f39bf6179e4ecf8cf7d816b98f3f23582bc3944c2369645"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_baidu_icon.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_baidu_icon.webp",
+      "bytes": 1174,
+      "sha256": "9c3631e52e5949fb595ec1b9935edc299cc231fe3ff2a8258aad8a0a0b9fd840"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_google_icon.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_google_icon.webp",
+      "bytes": 2788,
+      "sha256": "5c6a23e798706ff90a118a4fa1ca38fa12c1a1ab01204fa3bbaae9ab0c37ce54"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_duckduckgo_icon.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_duckduckgo_icon.webp",
+      "bytes": 11594,
+      "sha256": "96d13da31ec9d85d6bd4c058b2e3442df0eec235a5f0ad697c6a468e543754e3"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_baidu_logo.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_baidu_logo.webp",
+      "bytes": 5044,
+      "sha256": "12a016bb77cbc7c9bf95c81744424e1559fb64e4d3716cc74b79dfadccd12781"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_bing_logo.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_bing_logo.webp",
+      "bytes": 13184,
+      "sha256": "8b8850038ede0bbf8a36d31432bed52363e250767583c6735848d42507490dfa"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable-nodpi/rb_brand_duckduckgo_logo.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_duckduckgo_logo.webp",
+      "bytes": 10406,
+      "sha256": "b342d8d871659b6a180181ed13ef1149d15c389b02c497dd29454513eafee604"
+    },
+    {
+      "sourcePath": "app/src/background/res/drawable-nodpi/rb_brand_bing_logo.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_bing_logo_photo.webp",
+      "bytes": 11778,
+      "sha256": "ae78f5079efbcc591285bac7135b9fd891aa6f11b866af326163e9d7605736b2"
+    },
+    {
+      "sourcePath": "app/src/background/res/drawable-nodpi/rb_brand_duckduckgo_logo.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_duckduckgo_logo_photo.webp",
+      "bytes": 9900,
+      "sha256": "e0ed9bc1926f527ab0606e68593412736dc209a0583bd33722500bb763eaa1e0"
+    },
+    {
+      "sourcePath": "app/src/background/res/drawable-nodpi/rb_brand_google_logo.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_google_logo_photo.webp",
+      "bytes": 15872,
+      "sha256": "f040b2580ac18e37d663bb82d6ddc09902db631ca21346f50c56d216edcca88c"
+    },
+    {
+      "sourcePath": "app/src/background/res/drawable-nodpi/rb_brand_google_logo_light.webp",
+      "runtimePath": "rebrowser/app/src/main/res/drawable-nodpi/rb_brand_google_logo_light_photo.webp",
+      "bytes": 8510,
+      "sha256": "fd73f70c047850ee37f51e108fabef5eb01a5d780801826e436dbbb61d8be478"
+    },
+    {
+      "sourcePath": "app/src/background/res/raw/rb_new_tab_background.webp",
+      "runtimePath": "rebrowser/app/src/main/res/raw/rb_new_tab_background.webp",
+      "bytes": 834672,
+      "sha256": "0e0d46d19d1ac602ce579b0eb16ae918367a9bcf36aa533636345c1cc7e558d3"
+    },
+    {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_submit.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_submit.xml",
+      "bytes": 403,
+      "sha256": "8f7cd7c7aa965d6cbab9ac27e89f696747c7a0f9e7f972c712085f65842ff3b6"
+    }
+  ]
+}

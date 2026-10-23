@@ -18,6 +18,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="io.github.rebrowser.ui.HistoryActivity"
+            android:exported="false" />
+        <activity
             android:name="io.github.rebrowser.entrypoints.AdminControlActivity"
             android:exported="false" />
     </application>

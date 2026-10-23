@@ -52,6 +52,8 @@ public final class OwnedDataCatalog {
     }
     public void requireFamily(View<?> view,Family family,NativeRecordCodec.Codec<?> codec){if(view==null || view.issuer!=this || view.family!=family || view.codec!=codec)throw NativeRecordCodec.bad();synchronized(view){view.open();}}
     public void requireExact(View<?> view,ComponentGate.BusinessPermit permit)throws IOException{if(view==null || view.issuer!=this)throw NativeRecordCodec.bad();synchronized(view){view.open();check(permit);records.requireCurrentStamp(view.stamp,permit);check(permit);}}
+    /** Capture on the native IO owner; the returned epoch pin permits cheap source checks on UI. */
+    public ComponentGate.DataEpochPin captureDataEpoch(ComponentGate.BusinessPermit permit){check(permit);return gate.captureDataEpoch(permit);}
     public void requireBindings(ComponentGate expected,ComponentGate.BusinessPermit permit){if(expected!=gate)throw NativeRecordCodec.bad();check(permit);}
     private void check(ComponentGate.BusinessPermit permit){source.requireBindings(gate,permit);records.requireBindings(gate,source.dataEpoch(),permit);}
 }

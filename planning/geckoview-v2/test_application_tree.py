@@ -115,14 +115,37 @@ class ApplicationTreeTests(unittest.TestCase):
         self.assertEqual(len(tasks),25);self.assertEqual(len({t['runtimePath'] for t in tasks}),25)
         self.assertEqual(record['currentBatchNewRuntimeFiles'],0)
         self.assertEqual(record['currentBatchTaskIds'],[t['id'] for t in tasks])
+        # Frozen R50 review evidence is about THESE real committed bytes, not all future
+        # implementations. Do not overwrite its hashes to make corrected current code pass.
+        import subprocess
+        reviewed_commit='7411f906063e403a2dd641680b3a0063581e7363'
+        current=json.loads((P/'evidence/product-experience-correction-R55-host.json').read_text())
+        current_hashes={s['path']:s['sha256'] for s in current['allMainSourceHashes']}
         for t in tasks:
-            raw=(P.parents[1]/t['runtimePath']).read_bytes();self.assertEqual(hashlib.sha256(raw).hexdigest(),t['mainReviewedRuntimeSha256'])
-            import subprocess
+            reviewed=subprocess.check_output(['git','show',reviewed_commit+':'+t['runtimePath']],cwd=P.parents[1]);self.assertEqual(hashlib.sha256(reviewed).hexdigest(),t['mainReviewedRuntimeSha256'])
+            raw=(P.parents[1]/t['runtimePath']).read_bytes()
+            # Still reject ANY current source drift not bound to independently rerun current
+            # limited compile/HOST evidence. Neither snapshot is product/Android admission.
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),current_hashes[t['runtimePath']])
             original=subprocess.check_output(['git','show',t['inputBaseCommit']+':'+t['runtimePath']],cwd=P.parents[1]);self.assertEqual(hashlib.sha256(original).hexdigest(),t['inputRuntimeSha256'])
             self.assertTrue(t['runtimePath'].endswith('.java'));self.assertFalse(t['fullResponsibilityCompleteClaim'])
         self.assertTrue(record['D03Rules']['existingD02ResultUntouched'])
         self.assertEqual(render(self.manifest)[1]['activeD03ExistingCodeExtensions'],0)
         self.assertEqual(render(self.manifest)[1]['reviewedD03ExistingCodeExtensions'],25)
+
+    def test_current_source_evidence_is_complete_bound_and_not_historical_readmission(self):
+        import hashlib
+        current=json.loads((P/'evidence/product-experience-correction-R55-host.json').read_text())
+        status=json.loads((P/'records/product-experience-correction-status.json').read_text())
+        sources=current['allMainSourceHashes'];paths={s['path'] for s in sources}
+        actual={str(p.relative_to(P.parents[1])) for p in (P.parents[1]/'app/src/main/java/io/github/rebrowser').rglob('*.java')}
+        self.assertEqual(paths,actual);self.assertEqual(len(sources),current['mainSourceCount'])
+        for source in sources:self.assertEqual(hashlib.sha256((P.parents[1]/source['path']).read_bytes()).hexdigest(),source['sha256'])
+        self.assertEqual(hashlib.sha256(json.dumps(sources,ensure_ascii=False,separators=(',',':')).encode()).hexdigest(),current['allMainSourceSnapshotSha256'])
+        self.assertEqual(current['failures']+current['errors'],0);self.assertTrue(current['actualSdkBootclasspathCompile'])
+        self.assertFalse(current['androidRuntimeExecuted']);self.assertFalse(current['apkBuilt'])
+        self.assertTrue(status['runtimePending']);self.assertTrue(status['noCompletionOrAdmissionWaiver'])
+        self.assertIn('R52历史准入快照',render(self.manifest)[0])
 
     def test_main_core_not_delegated_for_count(self):
         for suffix in ['ActorContext.java','AuthorityPolicy.java','DataKeyVault.java','PrivateRecordSealer.java','PrivateRecordStore.java','EpochErasureCoordinator.java','ControlDispatcher.java','PermissionCoordinator.java','BrowserStore.java','BrowserCatalogCodec.java','BrowserStoreCoordinator.java','MailDatabase.java','SourceWarningActivity.java']:

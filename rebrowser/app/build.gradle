@@ -18,7 +18,8 @@ android {
     sourceSets {
         main.java.setSrcDirs(['../../app/src/main/java/io/github/rebrowser'])
         test.java.setSrcDirs(['../../app/src/test/java/io/github/rebrowser'])
-        // Runtime assets are admitted explicitly when their owning feature is wired.
+        // Native res/ explicitly contains the approved v1.0.4 new-tab artwork, byte-identical
+        // with recorded provenance. No wholesale legacy res/asset directory is on this path.
         // Never import the old WebView assets or legacy io.github.reoutlook sources.
     }
     buildTypes {

@@ -1,9 +1,11 @@
 # 应用本体目标代码总树 · R10首版
 
+> **当前代码纠偏见[产品体验工作状态](records/product-experience-correction-status.json)。** 下列准入标签/数量仍是截至R52的历史逐文件准入快照，不代表当前物理源码数量，也不沿用旧源码哈希证明R53–R55新代码。总树保留并修正职责，正式准入待按实际源码/消费链重新核对；不能以历史PLAN标签推断文件尚不存在，或以文件已创建推断产品已完成。
+
 > O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。
 > 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。`[ASSET/WIP]`仅静态/合成DOM验证的未激活运行资产，不等于APK资源已接线或真实渲染。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。
 
-当前已准入本体源码：**124文件**；其中HOST测试切片 **58文件**，API编译/实现中 **62文件**，静态资产WIP **4文件**；其余 **61文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
+R52历史准入快照：**124文件**；其中HOST测试切片 **58文件**，API编译/实现中 **62文件**，静态资产WIP **4文件**；其余 **61文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。
 
 当前目标：`io.github.rebrowser` · 本体代码 **185文件** · 18职责分组。源码增加/更名必须先改权威清单，再重新生成；不能用省略号隐藏源码。
 
@@ -225,7 +227,7 @@
                                 ├── HistoryAdapter.java [J][API/WIP][?][LOW-EFFECT:L03][RISK:MEDIUM][D03:L50] — 有界近期/历史列表
                                 ├── LoadingProgressView.java [J][API/WIP][?] — Gecko会话/文档代际绑定的单调加载条、批准渐变、动画取消与解绑
                                 ├── NativeDialogs.java [J][API/WIP][?] — 取消/危险确认/平台等待，不默认为同意
-                                ├── NewTabView.java [J][API/WIP][?][LOW:L07][RISK:LOW][D03:L59] — 批准背景/搜索/收藏布局
+                                ├── NewTabView.java [J][API/WIP][?][LOW:L07][RISK:LOW][D03:L59] — 批准整窗背景/实际默认引擎品牌/共用地址搜索/8个真实最近访问，非收藏管理
                                 ├── OverviewSelection.java [J][API/WIP][?] — 每窗口环境/子标签多选和面板返回清除状态，不冒充领域数据或跨窗口持久化
                                 ├── SettingsActivity.java [J][API/WIP][?][LOW-SLICE:L10][RISK:MEDIUM][D03:L54] — 通用/权限/应用管理入口
                                 ├── SettingsSections.java [J][HOST][?][LOW:L02][RISK:LOW][D03:L55] — Native设置项与结果绑定
@@ -352,7 +354,7 @@
 | 入口与进程 | runtime-declarations | 应用标识/Activity/Service/Provider/权限/备份边界<br>`app/src/main/AndroidManifest.xml`<br>`app/src/main/res/xml/backup_rules.xml`<br>`app/src/main/res/xml/data_extraction_rules.xml`<br>`app/src/main/res/xml/network_security_config.xml` |
 | 管理员政策 | compiled-policy | APK不可变的管理员/设备公钥与动作政策；私钥不入包<br>`app/src/main/assets/policy/principals.json`<br>`app/src/main/assets/policy/devices.json`<br>`app/src/main/assets/policy/actions.json` |
 | APK内建连接器 | builtin-extension-declaration | 扩展版本/host权限/固定连接器定义，非测试入口<br>`app/src/main/assets/bridge/manifest.json` |
-| 原生浏览器界面 | resources | 图标/主题/文案/批准背景等资产独立清单，不当辅助源码展开<br>`app/src/main/res/`<br>`app/src/main/assets/background/` |
+| 原生浏览器界面 | resources | 图标/主题/文案/批准背景等资产独立引用；R55实际v2新标签页资源逐项从v1.0.4原样继承，非导入整个旧资源目录，不计本体代码叶节点<br>`app/src/main/res/`<br>`app/src/main/assets/background/`<br>`rebrowser/app/src/main/res/`<br>`planning/geckoview-v2/records/native-new-tab-resource-provenance.json` |
 | 入口与进程 | build-tooling | 构建/依赖/正式R8/签名公共模板；独立辅助目录<br>`build.gradle.kts`<br>`settings.gradle.kts`<br>`gradle.properties`<br>`gradle/wrapper/gradle-wrapper.properties`<br>`app/build.gradle.kts`<br>`app/proguard-rules.pro`<br>`tools/build/` |
 | 统一控制入口与协议 | auxiliary-clients | 辅助CLI/协议文档，调用同控制服务，不是APK本体<br>`tools/admin/`<br>`docs/admin/` |
 | 入口与进程 | legacy-retention | 旧包/发布/密钥维护资料独立保留，不挤入新应用源码<br>`docs/releases/`<br>`tools/maintenance/`<br>`planning/geckoview-v2/evidence/legacy-public-trust.json` |

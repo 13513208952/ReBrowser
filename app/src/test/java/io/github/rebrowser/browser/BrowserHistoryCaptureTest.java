@@ -1,0 +1,21 @@
+package io.github.rebrowser.browser;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import io.github.rebrowser.bootstrap.ComponentGate;
+import io.github.rebrowser.browser.BrowserModels.*;
+import java.lang.reflect.*;
+import java.util.*;
+/** Native domain capture and lifecycle methods using PRIVATE synthetic allocation, no SDK session. */
+public final class BrowserHistoryCaptureTest {
+ static final class F {
+  final BrowserCatalogCodecTest.F model=new BrowserCatalogCodecTest.F();final BrowserCoordinator domain;
+  F()throws Exception{Class<?> type=Class.forName("sun.misc.Unsafe");Field singleton=type.getDeclaredField("theUnsafe");singleton.setAccessible(true);Object unsafe=singleton.get(null);domain=(BrowserCoordinator)type.getMethod("allocateInstance",Class.class).invoke(unsafe,BrowserCoordinator.class);put("thread",Thread.currentThread());put("gate",model.gate);put("sourceLifetime",model.gate.newResourcePin());put("workspaces",model.workspaces);put("tabs",model.tabs);put("live",new HashMap<>());}
+  void put(String name,Object value)throws Exception{Field field=BrowserCoordinator.class.getDeclaredField(name);field.setAccessible(true);field.set(domain,value);}
+  WorkspaceRef add(Level level,String url){WorkspaceRef w=model.add(level);TabRef t=model.tabs.snapshot(w,model.permit).selected();model.tabs.updateMetadata(model.tabs.currentDocument(t,model.permit),"标题",url,model.permit);return w;}
+ }
+ @Test public void resumeCapturesOrdinaryTemporaryPagesButNotBlankOrShelved()throws Exception{F f=new F();f.add(Level.TEMPORARY,"https://example.test/temp");f.add(Level.TEMPORARY,"about:blank");WorkspaceRef shelved=f.add(Level.SECONDARY,"https://example.test/shelf");f.model.workspaces.shelfSecondary(shelved,f.model.workspaces.workspace(shelved,f.model.permit).revision(),f.model.permit);List<HistoryStore.Page> pages=f.domain.captureOpenHistoryPages(f.model.permit);assertEquals(1,pages.size());assertEquals("https://example.test/temp",pages.get(0).url());assertFalse(pages.get(0).source().longLived());assertThrows(UnsupportedOperationException.class,()->pages.clear());}
+ @Test public void eachOpenTabIsCapturedOnceWithoutCreatingAnySessions()throws Exception{F f=new F();WorkspaceRef w=f.add(Level.PRIMARY,"https://example.test/1");TabRef t=f.model.tabs.addTab(w,f.model.tabs.snapshot(w,f.model.permit).revision(),f.model.permit);f.model.tabs.updateMetadata(f.model.tabs.currentDocument(t,f.model.permit),"第二页","https://example.test/2",f.model.permit);assertEquals(2,f.domain.captureOpenHistoryPages(f.model.permit).size());assertEquals(2,f.model.tabs.snapshot(w,f.model.permit).tabs().size());}
+ @Test public void sourceLockRejectsCaptureInsteadOfReturningAnInventedEmptyPage()throws Exception{F f=new F();f.add(Level.TEMPORARY,"https://example.test/");f.model.source.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));assertThrows(SecurityException.class,()->f.domain.captureOpenHistoryPages(f.model.permit));}
+ @Test public void levelChangesNotifyExactWholeWorkspaceHistoryScope()throws Exception{F f=new F();WorkspaceRef w=f.add(Level.TEMPORARY,"https://example.test/");List<HistoryStore.Source> changes=new ArrayList<>();f.domain.installHistorySink(new BrowserCoordinator.HistorySink(){public void visited(HistoryStore.Page p){}public void sourceChanged(HistoryStore.Source s){changes.add(s);}public void titleChanged(String w,String t,String u,String title){}},f.model.permit);f.domain.changeWorkspaceLevel(w,f.model.workspaces.workspace(w,f.model.permit).revision(),Level.SECONDARY,f.model.permit);assertEquals(1,changes.size());assertTrue(changes.get(0).longLived());assertEquals(w.id(),changes.get(0).workspaceId());f.domain.changeWorkspaceLevel(w,f.model.workspaces.workspace(w,f.model.permit).revision(),Level.TEMPORARY,f.model.permit);assertFalse(changes.get(1).longLived());}
+ @Test public void canonicalSinkCannotBeReplacedByAnotherHistoryOwner()throws Exception{F f=new F();BrowserCoordinator.HistorySink sink=new BrowserCoordinator.HistorySink(){public void visited(HistoryStore.Page p){}public void sourceChanged(HistoryStore.Source s){}public void titleChanged(String w,String t,String u,String title){}};f.domain.installHistorySink(sink,f.model.permit);assertThrows(IllegalStateException.class,()->f.domain.installHistorySink(sink,f.model.permit));}
+}

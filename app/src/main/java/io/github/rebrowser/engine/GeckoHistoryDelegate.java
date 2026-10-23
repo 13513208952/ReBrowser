@@ -4,15 +4,17 @@ import org.mozilla.geckoview.GeckoResult;
 import org.mozilla.geckoview.GeckoSession;
 
 /**
- * Read-only adapter for the pinned SDK HistoryDelegate. It stores NO URL, opens no HistoryStore,
- * never returns a fabricated "visited" answer and never turns an authenticated transient into a
- * committed history record. Without a native query backend the visited callbacks return null (the
- * SDK decides its own default) and the owner is told history is UNCONNECTED.
+ * Actual bound HistoryDelegate visit producer. Only native top-level web visits (not redirect
+ * sources, failed loads or frames) reach the optional browser-owned IO sink. The adapter retains
+ * no URL/database/Activity, does not claim a queued write committed, and returns no fabricated
+ * visited-link CSS answers. Three-argument observation-only consumers remain UNCONNECTED.
  */
 public final class GeckoHistoryDelegate implements GeckoSession.HistoryDelegate {
     public enum Status { UNCONNECTED, OBSERVED }
     public interface Guard { boolean current(GeckoSession boundSession); }
     public interface Listener { void observed(Observation observation); }
+    /** Actual bound SDK visit, not a DOM/payload claim or a request-completion receipt. */
+    public interface VisitSink {void visited(String nativeUrl);}
 
     /** URL-free summary: counts and a transient classification only. */
     public static final class Observation {
@@ -29,16 +31,26 @@ public final class GeckoHistoryDelegate implements GeckoSession.HistoryDelegate 
     }
 
     private final GeckoSession bound;private final Guard guard;private final Listener listener;
+    private final VisitSink visits;
     private long sequence;private boolean invalidated;
     private final Thread owner=Thread.currentThread();private boolean checking;
 
-    public GeckoHistoryDelegate(GeckoSession exactSession,Guard guard,Listener listener){
+    public GeckoHistoryDelegate(GeckoSession exactSession,Guard guard,Listener listener){this(exactSession,guard,listener,null);}
+    public GeckoHistoryDelegate(GeckoSession exactSession,Guard guard,Listener listener,VisitSink nativeHistory){
         if(exactSession==null || guard==null || listener==null)throw new IllegalArgumentException("Exact session/guard/listener required");
-        bound=exactSession;this.guard=guard;this.listener=listener;
+        bound=exactSession;this.guard=guard;this.listener=listener;visits=nativeHistory;
     }
 
     /** No highlight decision is made by this adapter; null keeps the SDK default. */
-    @Override public GeckoResult<Boolean> onVisited(GeckoSession session,String url,String lastVisitedUrl,int flags){return null;}
+    @Override public GeckoResult<Boolean> onVisited(GeckoSession session,String url,String lastVisitedUrl,int flags){
+        if(visits!=null && eligible(session) && acceptsVisit(url,flags))try{visits.visited(url);}catch(RuntimeException unavailable){/* optional history must not stop browsing */}
+        return null; // No fabricated visited-link CSS result or IO-completion acknowledgement.
+    }
+    public static boolean acceptsVisit(String url,int flags){
+        int known=VISIT_TOP_LEVEL|VISIT_REDIRECT_TEMPORARY|VISIT_REDIRECT_PERMANENT|VISIT_REDIRECT_SOURCE|VISIT_REDIRECT_SOURCE_PERMANENT|VISIT_UNRECOVERABLE_ERROR;
+        if((flags&VISIT_TOP_LEVEL)==0 || (flags&~known)!=0 || (flags&(VISIT_REDIRECT_SOURCE|VISIT_REDIRECT_SOURCE_PERMANENT|VISIT_UNRECOVERABLE_ERROR))!=0)return false;
+        try{io.github.rebrowser.browser.SearchEngines.requireWebUrl(url);return true;}catch(IllegalArgumentException invalid){return false;}
+    }
 
     /** No fabricated visited answer; a real backend must be wired by the native owner. */
     @Override public GeckoResult<boolean[]> getVisited(GeckoSession session,String[] urls){return null;}

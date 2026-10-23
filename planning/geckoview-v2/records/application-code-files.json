@@ -2926,7 +2926,7 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "批准背景/搜索/收藏布局",
+      "responsibility": "批准整窗背景/实际默认引擎品牌/共用地址搜索/8个真实最近访问，非收藏管理",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -6055,10 +6055,12 @@
     {
       "group": "ui",
       "kind": "resources",
-      "summary": "图标/主题/文案/批准背景等资产独立清单，不当辅助源码展开",
+      "summary": "图标/主题/文案/批准背景等资产独立引用；R55实际v2新标签页资源逐项从v1.0.4原样继承，非导入整个旧资源目录，不计本体代码叶节点",
       "paths": [
         "app/src/main/res/",
-        "app/src/main/assets/background/"
+        "app/src/main/assets/background/",
+        "rebrowser/app/src/main/res/",
+        "planning/geckoview-v2/records/native-new-tab-resource-provenance.json"
       ]
     },
     {

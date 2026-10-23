@@ -1,6 +1,30 @@
 # ReBrowser v2 主程序
 
-独立 Android 项目，入口 `io.github.rebrowser.ReBrowserApplication`；主代码仍位于总树的 [`app/src/main/java/io/github/rebrowser`](../app/src/main/java/io/github/rebrowser)。不引入旧 `io.github.reoutlook`、WebView、旧资产或数据迁移。
+独立 Android 项目，入口 `io.github.rebrowser.ReBrowserApplication`；主代码仍位于总树的 [`app/src/main/java/io/github/rebrowser`](../app/src/main/java/io/github/rebrowser)。不引入旧 `io.github.reoutlook` / WebView 运行实现或数据迁移；既有产品体验和已批准的界面资源不是应当丢弃的旧实现。
+
+## 当前产品体验修正：新标签页
+
+`NewTabView`已改回批准的品牌Logo、圆角共用搜索／地址输入栏和横向最近访问栏；没有独立引擎Spinner、四个引擎按钮、收藏管理或空卡片。`bindNative`在有界后台线程读取同一规范设置／历史拥有者：只用实际默认引擎，最多8个最新不同完整URL；点击重新查找原记录及到期状态，通用显示token不能当原生历史记录打开，网址输入不被一律当搜索词。
+
+13份背景／品牌／提交按钮资源逐字节继承v1.0.4已批准资源，独立置于本工程`app/src/main/res/`，并已通过实际AAPT2链接；没有全量引入旧资源或旧实现。[来源与hash](../planning/geckoview-v2/records/native-new-tab-resource-provenance.json)保留背景版Bing／DuckDuckGo文字白色处理、Google 75%透明画布等既有调整，不宣称新增品牌授权。3324×2493母图后台解码为水平居中／顶部取景，输出像素有限；使用自身Activity的WindowMetrics区分实际窗口与键盘裁剪，不据键盘尺寸推断设备。没有回收已显示Bitmap来冒充渲染器已释放。
+
+`SettingsRepository`补入背景／最近访问两项持久配置，修改搜索引擎或子应用不重置它们。未发行的`RBSETT02`明确拒绝不完整旧开发格式，不猜测迁移或缺失默认值；完整三同级设置页仍待恢复。
+
+新标签页、历史页和Gecko访问采集现在共用启动器的一条单worker／64排队数据IO通道，避免同一解码快照额度被独立线程争用。原生访问在入队前捕获进程记录开关代次，暂停期间的中间访问、以及跨暂停／恢复周期的旧排队访问都不会在恢复后补写。最近栏刷新保留未改变的已解码背景；解码队列饱和只保留有界弱引用等待者，等实际完成后再尝试固定公共图片，不引入额外线程或任意URI。
+
+当前实际有限检查：170份主Java源码完成Java8＋实际SDK37.2／固定Gecko／生成R类编译，1307项HOST回归通过（R55新增44项），另8项资源来源检查及12份WebP实际链接包字节核对。**完整主窗口尚未调用`bindNative`，BrowserActivity仍为开发锁定壳；顶栏／全窗背景联动、全局Back、历史OPEN路由和实际Android渲染／IME／解码仍未完成或验证。**本轮未构建APK／装机／登录／配置根，不把组件或测试当作产品已恢复。见[当前工作状态](../planning/geckoview-v2/records/product-experience-correction-status.json)／[源绑定有限证据](../planning/geckoview-v2/evidence/product-experience-correction-R55-host.json)。
+
+## R54历史记录修正
+
+本轮直接修正既有主程序文件，不重画产品界面或推翻总树：
+
+- 历史页恢复维持记录、单次清理有时限记录、面具暂停写入三个独立控件，以及原有标题／网址／时间和来源列表。取消逐条“保留”作为期限规则的替代设计；加载更早记录不再被展示层的100行限制卡住。
+- 普通临时总标签页仍记录30分钟历史；打开的副／主来源长期保留，副来源收起／降级从转换时起计时，重复关闭不续期。维持状态落盘，结束后有时限记录重新获得30分钟；暂停仅属于规范历史拥有者的进程状态，不落盘、不暂停已有记录到期。
+- 已接线绑定的 Gecko HistoryDelegate 顶层访问 → 浏览器原生归属 → 有界后台历史写入，标题更新不新增访问；环境级别／收起／恢复／删除向同一个存储服务提交期限变化。网站帧、重定向源和错误访问不直接记为成功访问。历史页读取、到期、清理、删除和恢复记录时的当前打开页同步已连接实际私有记录IO，未复制Cookie或重开旧环境。
+- 更正尚未发行的本地历史格式为`RBHIST02`（来源／子页／期限／访问顺序／维持状态）。旧开发格式不会被猜测转换或自动覆盖，缺失记录仍不当作首次安装。现有4MiB／5000条元数据后端上限仍需后续存储闭合，达到容量会报错，不自动丢弃长期记录；这不是最终无限历史规模保证。
+
+R54时实际有限离线检查：170份主源码完成Java8＋固定SDK37.2／Gecko类编译，1263项HOST测试通过，含47项R54新增回归；不是Android渲染、真实Gecko回调／私有模式差异、进程恢复或网站验收。最新检查与仍需接通的产品路径见上节。正式根配置和来源保护没有被绕过。
+
 
 - 正式身份 `io.github.rebrowser` / 2.0.0 / API30+，仅全量含背景版。
 - 原生主窗口和内部管理员控制台已开始编写；工作区/标签模型、分区及 Gecko Session/View 所有权、浏览器协调器也已有实际源码。导航目标/外部Intent清理、选中Tab后的SDK加载和进度/敏感快照回调已有源码（回调尚未实测）；Native导航委托已有保守web/blank加载策略和12项HOST测试，Popup/未支持的schemes仍拒绝；网页主窗口、委托实际初始化、持久化/正确恢复和权限协调仍未接通，尚不是完整可用浏览器；编译身份验签不是动作准入。
@@ -19,7 +43,7 @@ $GRADLE_96/bin/gradle -p rebrowser :app:compileDebugJavaWithJavac \
 
 SDK、Gradle 用户目录、项目缓存及 `java.io.tmpdir` 使用既有隔离环境；不要改动全局 SDK/缓存。代码/清单编译通过不等于 APK、Android运行或网站验证。
 
-R52继续创建6个实质Java文件：NativeRecordCodec、OwnedDataCatalog、BookmarkStore、HistoryStore、SettingsRepository、SubapplicationCoordinator，另联动4个既有接口；Java114→120、PLAN66→61。真实实现固定purpose3/4/5的现有私有记录AEAD/CAS、书签树有界CRUD、历史保留/暂停与显式过期、四搜索引擎/双内置子应用desired设置，以及一次性同步原生交接fence；启动器只懒建规范owner，不读取默认值、不创建密钥/目录、不自动保存/恢复。实际120源码/613class/1034HOST，58纯切片552HOST＋SDKbootclasspath，新增49项模型/codec/真实HOST文件JCA/CAS回归。没有把desired-disabled/回调返回当实际停止；真实Gecko历史捕获、私密会话排除、Android IO/组件执行和管理员持久head适配尚未完成。详见[契约](../planning/geckoview-v2/records/native-browser-metadata-contract.json)。
+历史R52继续创建6个实质Java文件：NativeRecordCodec、OwnedDataCatalog、BookmarkStore、HistoryStore、SettingsRepository、SubapplicationCoordinator，另联动4个既有接口；Java114→120、PLAN66→61。真实实现固定purpose3/4/5的现有私有记录AEAD/CAS、书签树有界CRUD、历史保留/暂停与显式过期、四搜索引擎/双内置子应用desired设置，以及一次性同步原生交接fence；启动器只懒建规范owner，不读取默认值、不创建密钥/目录、不自动保存/恢复。实际120源码/613class/1034HOST，58纯切片552HOST＋SDKbootclasspath，新增49项模型/codec/真实HOST文件JCA/CAS回归。没有把desired-disabled/回调返回当实际停止；真实Gecko历史捕获、私密会话排除、Android IO/组件执行和管理员持久head适配尚未完成。详见[契约](../planning/geckoview-v2/records/native-browser-metadata-contract.json)。
 
 历史R51依O90/O91转向尚未创建的正式核心：新增10个实质Java文件（ActorContext、AuthorityPolicy、DisableLedger、LowDelegationVerifier、DeviceWhitelist、TargetPossessionProof、OwnerGrantStore、AdminAudit、ActionRegistry、ControlDispatcher）并联动4既有接口，Java104→114、PLAN76→66。真实实现签名历史/有界委托/设备名单隔离与目标挑战、仅在已消费挑战预留回调内有效的Actor、当前策略和任务预留桥；不把语法/持钥/历史有效当最新授权。实际114源码/590class/985HOST，57纯切片542HOST＋实际SDKbootclasspath，新增41JCA/内核回归。正式Root/设备表仍空，持久当前head/原生目标适配器、效果分发和Android系统授权尚未实测/激活，见[新核心契约](../planning/geckoview-v2/records/current-authority-kernel-contract.json)。
 

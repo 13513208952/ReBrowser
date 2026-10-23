@@ -1,4 +1,12 @@
-# ReBrowser v2 · 模块联动闭合 R52（当前：浏览器元数据持久化核心）
+# ReBrowser v2 · 主程序产品体验纠偏（R54／R55工作中）
+
+当前在正式修改运行代码，而非继续研究或按文件计数推进：R54修正原有历史期限、三项独立控制和Gecko访问采集接线；R55恢复新标签页批准背景、实际默认引擎品牌／共用地址搜索、8个真实最近访问及原生设置／历史读取。总树保留，修正新标签页“收藏布局”职责并逐项引用13份原样继承的批准资源，不重新设计既有界面。专门人机界面升级仍须提前通知；后续不再自动逐条录入机主原话。
+
+当前实际有限检查为170主Java／1307项HOST回归、实际SDK37.2 Java8编译、8项资源来源检查及实际AAPT2资源链接字节核对；不是Android渲染、Gecko／官网或可交付产品验收。完整BrowserActivity仍为开发锁定壳，NewTabView原生数据绑定尚待主窗口消费；Root未配置，不绕过来源保护。详见[当前工作状态与缺口](records/product-experience-correction-status.json)／[源绑定有限执行证据](evidence/product-experience-correction-R55-host.json)／[主程序](../../rebrowser/README.md)。
+
+以下R52及更早准入、数量和证据保持历史口径，不自动覆盖R53–R55当前物理源码；总树也已明确这一差别。
+
+## 历史模块联动 R52：浏览器元数据持久化核心
 
 > **新增核心，非继续打磨既有UI：** 实质创建6个正式Java文件（5原PLAN＋1共享codec）、联动4个既有crypto/store/bootstrap文件，Java114→120、PLAN66→61。书签树、历史/保留/暂停写入、四搜索引擎和双内置子应用desired设置走固定私有AEAD记录与完整快照CAS；共享子应用服务区分desired状态与真实open/stop。实际120源码/613class/1034HOST，58纯切片552HOST＋实际SDKbootclasspath，新增49项（10codec＋19model＋20真实HOST文件/JCA/CAS）。不自动填默认、建密钥/目录、自动保存/恢复；Gecko历史/私密会话过滤生产者、Android真实IO/组件执行及管理员持久head适配仍未接通。详见[契约](records/native-browser-metadata-contract.json)／[执行](evidence/native-browser-metadata-host-execution.json)／[R52](reviews/R52-native-browser-metadata-core.json)。
 

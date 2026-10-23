@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
- * Bounded ONE-PAGE native history list. This adapter NEVER queries the database, never
+ * Bounded virtualized native history list, growing by queried pages. This adapter NEVER queries the database, never
  * loads a URL and never deletes a record: clicks only return the exact captured row token,
  * page revision and user intent to the owning window, which must re-authorize and re-read.
  * A Row token is a process-local UI handoff, NOT an account/grant/文件 capability.
@@ -26,10 +26,12 @@ import java.util.WeakHashMap;
  * OPEN has a separate policy: navigation may be requested again (the owner re-authorizes).
  */
 public final class HistoryAdapter extends BaseAdapter {
-    public static final int MAX_ROWS = 100;
+    // Append older pages without truncating the history; only visible rows create Views.
+    public static final int MAX_ROWS = io.github.rebrowser.browser.HistoryStore.MAX_ENTRIES;
+    private static final int MAX_BOUND_HOLDERS = 200;
     public static final int MAX_TITLE_CHARS = 4096;
     public static final int MAX_URL_CHARS = 8192;
-    public static final int MAX_VISITED_TEXT_CHARS = 64;
+    public static final int MAX_VISITED_TEXT_CHARS = 1024;
     private static final int OPEN = 0, RETAIN = 1, REMOVE = 2;
     /** Display-only capability reported by the native owner; it is not a grant to delete. */
     public enum Offered { OPEN, RETAIN, REMOVE }
@@ -252,7 +254,7 @@ public final class HistoryAdapter extends BaseAdapter {
         } else {
             holder = create();
         }
-        if(!holders.containsKey(holder) && holders.size()>=MAX_ROWS*2)throw new IllegalStateException("Native history view budget reached");
+        if(!holders.containsKey(holder) && holders.size()>=MAX_BOUND_HOLDERS)throw new IllegalStateException("Native history view budget reached");
         holders.put(holder,Boolean.TRUE);
         Row row = state.rowAt(position);
         if (row == null) {
@@ -264,38 +266,27 @@ public final class HistoryAdapter extends BaseAdapter {
     }
 
     private Holder create() {
-        if(holders.size()>=MAX_ROWS*2)throw new IllegalStateException("Native history view budget reached");
-        LinearLayout root = new LinearLayout(context);
-        root.setOrientation(LinearLayout.VERTICAL);
-        root.setMinimumHeight(dp(48));
-        TextView title = new TextView(context);
-        title.setTextSize(16);
-        TextView detail = new TextView(context);
-        detail.setTextSize(13);
-        LinearLayout options = new LinearLayout(context);
-        options.setOrientation(LinearLayout.HORIZONTAL);
-        Button open = button("打开");
-        Button retain = button("保留");
-        Button remove = button("删除");
-        options.addView(open, new LinearLayout.LayoutParams(0, dp(48), 1));
-        options.addView(retain, new LinearLayout.LayoutParams(0, dp(48), 1));
-        options.addView(remove, new LinearLayout.LayoutParams(0, dp(48), 1));
-        root.addView(title, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        root.addView(detail, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        root.addView(options, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        Holder holder = new Holder(holderIssuer,root, title, detail, open, retain, remove);
-        root.setTag(holder);
-        return holder;
+        if(holders.size()>=MAX_BOUND_HOLDERS)throw new IllegalStateException("Native history view budget reached");
+        LinearLayout root=new LinearLayout(context);root.setOrientation(LinearLayout.HORIZONTAL);
+        root.setGravity(android.view.Gravity.CENTER_VERTICAL);root.setPadding(dp(12),dp(10),dp(6),dp(10));root.setMinimumHeight(dp(64));
+        TextView title=new TextView(context);title.setTextSize(15);title.setSingleLine(true);title.setTypeface(null,android.graphics.Typeface.BOLD);
+        TextView detail=new TextView(context);detail.setTextSize(11);detail.setSingleLine(true);
+        TextView info=new TextView(context);info.setTextSize(11);info.setSingleLine(true);
+        android.graphics.drawable.GradientDrawable surface=new android.graphics.drawable.GradientDrawable();surface.setColor(android.graphics.Color.WHITE);surface.setCornerRadius(dp(10));root.setBackground(surface);
+        LinearLayout labels=new LinearLayout(context);labels.setOrientation(LinearLayout.VERTICAL);labels.addView(title);labels.addView(detail);labels.addView(info);
+        root.addView(labels,new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+        Button remove=button("删除");root.addView(remove,new LinearLayout.LayoutParams(dp(64),dp(52)));
+        Holder holder=new Holder(holderIssuer,root,title,detail,info,remove);root.setTag(holder);return holder;
     }
 
     private void bindRow(Holder holder, Row row) {
-        Object frame = state.frame();
-        long revision = state.revision();
-        holder.title.setText(Rows.label(row));
-        holder.detail.setText(Rows.detail(row));
-        bindAction(holder.open, row, Offered.OPEN, frame, revision);
-        bindAction(holder.retain, row, Offered.RETAIN, frame, revision);
-        bindAction(holder.remove, row, Offered.REMOVE, frame, revision);
+        Object frame=state.frame();long revision=state.revision();
+        holder.title.setText(Rows.label(row));holder.detail.setText(row.displayUrl());holder.info.setText(row.visitedText());
+        // Selecting the title/address opens the record. Per-item retention was a regression;
+        // the WHOLE workspace and the global maintenance switch own retention.
+        holder.root.setOnClickListener(row.offers(Offered.OPEN)?v->dispatch(frame,revision,row,OPEN):null);
+        holder.remove.setVisibility(row.offers(Offered.REMOVE)?View.VISIBLE:View.GONE);
+        bindAction(holder.remove,row,Offered.REMOVE,frame,revision);
     }
     private void bindAction(Button button, Row row, Offered action, Object frame, long revision) {
         ActionState actionState = Rows.actionState(row, action, state.wasAttempted(frame, revision, row.itemRef(), action));
@@ -308,17 +299,12 @@ public final class HistoryAdapter extends BaseAdapter {
 
     private void clear(Holder holder) {
         holder.title.setText("");
-        holder.detail.setText("");
+        holder.detail.setText("");holder.info.setText("");
         holder.title.setContentDescription(null);
-        holder.detail.setContentDescription(null);
-        holder.open.setContentDescription(null);
-        holder.retain.setContentDescription(null);
+        holder.detail.setContentDescription(null);holder.info.setContentDescription(null);
+        holder.root.setOnClickListener(null);
         holder.remove.setContentDescription(null);
-        holder.open.setOnClickListener(null);
-        holder.retain.setOnClickListener(null);
         holder.remove.setOnClickListener(null);
-        holder.open.setEnabled(false);
-        holder.retain.setEnabled(false);
         holder.remove.setEnabled(false);
     }
 
@@ -354,11 +340,10 @@ public final class HistoryAdapter extends BaseAdapter {
     private static final class Holder {
         final Object issuer;
         final LinearLayout root;
-        final TextView title, detail;
-        final Button open, retain, remove;
-        Holder(Object issuer,LinearLayout root, TextView title, TextView detail, Button open, Button retain, Button remove) {
-            this.issuer=issuer;this.root = root; this.title = title; this.detail = detail;
-            this.open = open; this.retain = retain; this.remove = remove;
+        final TextView title, detail,info;
+        final Button remove;
+        Holder(Object issuer,LinearLayout root, TextView title, TextView detail,TextView info, Button remove) {
+            this.issuer=issuer;this.root=root;this.title=title;this.detail=detail;this.info=info;this.remove=remove;
         }
     }
 

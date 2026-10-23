@@ -1,0 +1,42 @@
+{
+  "revision": "R55-working-source",
+  "asOf": "2026-10-22T04:05:05+08:00",
+  "productDirection": "既有实验性浏览器平台的GeckoView重制升级；保留既有用户体验。ReMusic/ReOutlook仍以官网网页与专用定制整合为主，不替换为通用原生客户端。",
+  "ownerWorkDirection": "继续正式修正主程序；不再自动逐条录入原话。恢复既有交互不视为新设计，专门人机界面升级须提前通知。",
+  "treePolicy": "保留并修正总树。旧R52准入标签/数量是历史源码范围，未对R53–R55重新完成逐项准入，不隐改旧证据。",
+  "currentSourceHead": "43d8e0b9abf12fe269659b0960f6c04699c42fd8",
+  "uncommittedWork": [
+    "R54实际历史期限/三独立控件/Gecko采集与环境事件/规范私有AEAD存储接线",
+    "R55 NewTabView恢复实际默认引擎品牌/共用地址搜索/真实8个不同完整URL最近访问；点击对规范历史重新查找，非收藏管理",
+    "R55明确逐项继承批准背景/品牌共13资源，源/原tag/实际AAPT2资源链接包逐字节核对12WebP；不全量引入旧代码/资源目录",
+    "R55 SettingsRepository持久化背景与最近访问开关，编辑引擎或子应用不重置两者；未发行RBSETT02明确拒绝不完整01，不自动转换或补值",
+    "R55实际新标签页/历史页/Gecko采集共用启动器单worker64排队数据IO，不放宽规范存储唯一解码快照额度；Native各自前后复核精确source并在finally结束真实操作",
+    "R55原生访问在入队前捕获进程记录开关代次；暂停期间及跨暂停/恢复周期的旧排队访问不在恢复后补记，新增实际HOST文件/JCA回归",
+    "R55背景解码独立单worker1排队，饱和请求只保留最多64弱引用等待者并在实际解码完成后逐次尝试；刷新最近访问不丢弃未改变背景；解码输出4Mi像素/实际Bitmap16MiB，非Skia/renderer全内存保证"
+  ],
+  "actualLimitedEvidenceRef": "evidence/product-experience-correction-R55-host.json",
+  "runtimePending": [
+    "BrowserActivity仍为开发锁定壳；NewTabView.bindNative尚未由完整主浏览器窗口调用，不是可交付界面",
+    "完整主窗口/顶栏白色前景与背景覆盖/全局Back和Popup/历史OPEN实际路由仍需接通",
+    "设置仍为7通用分组，完整3同级页和其余配置尚需恢复；新标签页设置字段已持久化不等于完整设置完成",
+    "首次来源部署/真实持久环境与Cookie恢复/有限网站权限/真实管理员共享处理器仍需闭合；Root未配置，不作调试绕过",
+    "历史5000条/4MiB后端仍非最终规模闭合，不自动淘汰旧长期记录",
+    "Android实际View/WindowMetrics/IME/ImageDecoder/Handler/Keystore/FS/SQLite/Gecko回调/网站/产品均未在本轮执行；像素输出上限不证明Skia/渲染器全内存上限",
+    "ReMusic/ReOutlook官网会话与完整业务纠偏尚待继续"
+  ],
+  "missingOriginalPlannedResources": [
+    "app/src/main/assets/bridge/styles/music-window.css",
+    "app/src/main/assets/bridge/styles/music-desktop.css",
+    "app/src/main/assets/sql/browser-v1.sql",
+    "app/src/main/assets/sql/control-v1.sql"
+  ],
+  "noCompletionOrAdmissionWaiver": true,
+  "checkpointAuthorization": {
+    "scope": "Owner explicitly requested committing current progress after R55; one checkpoint commit, no push requested",
+    "supersedesO95WaitForThisCheckpointOnly": true,
+    "originalSourceCompletionGateStillUnsatisfied": true,
+    "doesNotClaimAllSourcesCreatedOrProductComplete": true,
+    "excludedExistingUntrackedPaths": ["dsh/", "tools/tests/test_v2_connector_protocol.cjs"]
+  },
+  "deferred": "子应用占用查看、缓存及全部数据清理继续延期，不混同来源保护或邮件内部完整性"
+}

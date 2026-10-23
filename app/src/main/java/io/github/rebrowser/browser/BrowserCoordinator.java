@@ -39,12 +39,23 @@ public final class BrowserCoordinator {
     private final Set<TabRef> requiresRestore=new HashSet<>();
     private boolean engineMutation;
     private boolean temporaryNativeOnly;
+    public interface HistorySink {void visited(HistoryStore.Page page);void sourceChanged(HistoryStore.Source source);void titleChanged(String workspaceId,String tabId,String url,String title);}
+    private HistorySink history;
+    public void installHistorySink(HistorySink nativeSink,ComponentGate.BusinessPermit permit){access(permit);if(history!=null || nativeSink==null)throw new IllegalStateException("Canonical history already connected");history=nativeSink;}
+    private void historyVisit(TabRef tab,String url){
+        ownerThread();if(history==null)return;ComponentGate.BusinessPermit permit=gate.requireBusiness();sourceLifetime.checkOrBind(permit);
+        WorkspaceView workspace=workspaces.workspace(tab.workspace(),permit);boolean found=false;for(TabView row:tabs.snapshot(tab.workspace(),permit).tabs())if(row.ref()==tab)found=true;
+        if(found && workspace.placement()==Placement.ACTIVE)history.visited(new HistoryStore.Page(HistoryStore.Source.from(workspace),tab.id(),"",url));
+    }
+    private void historyTitle(TabRef tab,String url,String title){ownerThread();if(history==null || url==null)return;ComponentGate.BusinessPermit permit=gate.requireBusiness();sourceLifetime.checkOrBind(permit);workspaces.requireActive(tab.workspace(),permit);history.titleChanged(tab.workspace().id(),tab.id(),url,BrowserModels.title(title,url));}
+    private void historySource(WorkspaceRef ref,ComponentGate.BusinessPermit permit){if(history!=null)history.sourceChanged(HistoryStore.Source.from(workspaces.workspace(ref,permit)));}
     /** Real native graph, but deliberately no persistent/secondary/primary restoration path. */
     public static BrowserCoordinator createTemporaryNative(ComponentGate gate,GeckoRuntimeOwner runtime,byte[] acceptedEpoch,int capacity,ComponentGate.BusinessPermit permit){
         gate.requireDataEpoch(permit,acceptedEpoch);WorkspaceCatalog workspaces=new WorkspaceCatalog(gate);TabCatalog tabs=new TabCatalog(workspaces);
         PartitionCatalog partitions=new PartitionCatalog(gate,acceptedEpoch,WorkspaceCatalog.MAX_WORKSPACES);
-        GeckoSessionOwner sessions=BrowserSessionHost.createTemporaryOwner(gate,runtime,partitions,capacity);
-        BrowserCoordinator domain=new BrowserCoordinator(gate,workspaces,tabs,partitions,sessions);domain.temporaryNativeOnly=true;domain.access(permit);gate.requireDataEpoch(permit,acceptedEpoch);return domain;
+        final BrowserCoordinator[] nativeOwner=new BrowserCoordinator[1];
+        GeckoSessionOwner sessions=BrowserSessionHost.createTemporaryOwner(gate,runtime,partitions,capacity,new BrowserSessionHost.BrowserHistory(){public void visited(TabRef tab,String url){if(nativeOwner[0]!=null)nativeOwner[0].historyVisit(tab,url);}public void titleChanged(TabRef tab,String url,String title){if(nativeOwner[0]!=null)nativeOwner[0].historyTitle(tab,url,title);}});
+        BrowserCoordinator domain=new BrowserCoordinator(gate,workspaces,tabs,partitions,sessions);nativeOwner[0]=domain;domain.temporaryNativeOnly=true;domain.access(permit);gate.requireDataEpoch(permit,acceptedEpoch);return domain;
     }
     public SessionDisplayAccess sessionDisplayAccess(ComponentGate.BusinessPermit permit){access(permit);return new SessionDisplayAccess(sessions);}
     /** Native display owner only; never IPC. Does not open or claim a View by itself. */
@@ -75,10 +86,10 @@ public final class BrowserCoordinator {
         tabs.initializeWorkspace(ref,permit);return ref;
     }
     /** Native UI/admin shared services: caller authorization precedes these domain mutations. */
-    public void renameWorkspace(WorkspaceRef ref,long expectedWorkspaceRevision,String nativeTitle,ComponentGate.BusinessPermit permit){access(permit);workspaces.rename(ref,expectedWorkspaceRevision,nativeTitle,permit);}
-    public void changeWorkspaceLevel(WorkspaceRef ref,long expectedWorkspaceRevision,Level level,ComponentGate.BusinessPermit permit){access(permit);if(temporaryNativeOnly && level!=Level.TEMPORARY)throw new UnsupportedOperationException("Persistent browser factory/restore not implemented");workspaces.changeLevel(ref,expectedWorkspaceRevision,level,permit);}
+    public void renameWorkspace(WorkspaceRef ref,long expectedWorkspaceRevision,String nativeTitle,ComponentGate.BusinessPermit permit){access(permit);workspaces.rename(ref,expectedWorkspaceRevision,nativeTitle,permit);historySource(ref,permit);}
+    public void changeWorkspaceLevel(WorkspaceRef ref,long expectedWorkspaceRevision,Level level,ComponentGate.BusinessPermit permit){access(permit);if(temporaryNativeOnly && level!=Level.TEMPORARY)throw new UnsupportedOperationException("Persistent browser factory/restore not implemented");workspaces.changeLevel(ref,expectedWorkspaceRevision,level,permit);historySource(ref,permit);}
     /** Metadata becomes active; closed sessions still require explicit validated restore. */
-    public void restoreSecondary(WorkspaceRef ref,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){access(permit);workspaces.restoreSecondary(ref,expectedWorkspaceRevision,permit);}
+    public void restoreSecondary(WorkspaceRef ref,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){access(permit);workspaces.restoreSecondary(ref,expectedWorkspaceRevision,permit);historySource(ref,permit);}
     public WindowSnapshot windowSnapshot(ComponentGate.BusinessPermit permit){
         access(permit);WorkspacesView view=workspaces.snapshot(permit);TabsView selected=view.selected()==null?null:tabs.snapshot(view.selected(),permit);
         WorkspacesView after=workspaces.snapshot(permit);if(after.revision()!=view.revision() || after.selected()!=view.selected())throw new IllegalStateException("Browser window snapshot changed during capture");gate.checkCurrent(permit);return new WindowSnapshot(view,selected);
@@ -136,7 +147,7 @@ public final class BrowserCoordinator {
         access(permit);WorkspaceView current=workspaces.workspace(workspace,permit);
         if(current.revision()!=expectedWorkspaceRevision || current.level()!=Level.SECONDARY || current.placement()!=Placement.ACTIVE)throw BrowserModels.invalid();
         engineMutation=true;
-        try{for(TabView tab:tabs.snapshot(workspace,permit).tabs())closeOwnedSessionInternal(tab.ref());workspaces.shelfSecondary(workspace,expectedWorkspaceRevision,permit);}
+        try{for(TabView tab:tabs.snapshot(workspace,permit).tabs())closeOwnedSessionInternal(tab.ref());workspaces.shelfSecondary(workspace,expectedWorkspaceRevision,permit);historySource(workspace,permit);}
         finally{engineMutation=false;}
     }
     public void removeWorkspace(WorkspaceRef workspace,long expectedWorkspaceRevision,ComponentGate.BusinessPermit permit){
@@ -149,7 +160,20 @@ public final class BrowserCoordinator {
             if(context!=null){partitions.fence(context,permit);partitions.retire(context,permit);} // retirement, NOT erasure/quiescence
             tabs.retireWorkspace(workspace,permit);workspaces.remove(workspace,expectedWorkspaceRevision,permit);contexts.remove(workspace);
             for(TabView tab:group.tabs())requiresRestore.remove(tab.ref());
+            if(history!=null)history.sourceChanged(new HistoryStore.Source(current.ref().id(),current.title(),current.level(),false));
         }finally{engineMutation=false;}
+    }
+    /** Capture actual open native catalog pages without loading/reopening anything. Used once
+     * when the owner ends history pause, not a replay of the intermediate paused navigation. */
+    public java.util.List<HistoryStore.Page> captureOpenHistoryPages(ComponentGate.BusinessPermit permit){
+        access(permit);java.util.List<HistoryStore.Page> result=new java.util.ArrayList<>();
+        for(WorkspaceView workspace:workspaces.snapshot(permit).active())for(TabView tab:tabs.snapshot(workspace.ref(),permit).tabs()){
+            String url=tab.displayUrl(),title=tab.title();GeckoSessionOwner.SessionRef ref=live.get(tab.ref());
+            if(ref!=null){SessionPresentation.Frame frame=sessions.presentation(ref,permit);if(!frame.retired()){if(frame.reportedLocation()!=null)url=frame.reportedLocation();if(frame.reportedTitle()!=null)title=frame.reportedTitle();}}
+            if(url==null || "about:blank".equalsIgnoreCase(url))continue;
+            try{result.add(new HistoryStore.Page(HistoryStore.Source.from(workspace),tab.ref().id(),BrowserModels.title(title,url),url));}catch(IllegalArgumentException unsupported){/* no blank/file/script URL history */}
+        }
+        access(permit);return java.util.Collections.unmodifiableList(result);
     }
     public WorkspacesView workspaces(ComponentGate.BusinessPermit permit){access(permit);return workspaces.snapshot(permit);}
     public TabsView tabs(WorkspaceRef workspace,ComponentGate.BusinessPermit permit){access(permit);return tabs.snapshot(workspace,permit);}

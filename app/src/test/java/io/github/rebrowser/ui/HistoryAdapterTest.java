@@ -20,14 +20,14 @@ public final class HistoryAdapterTest {
         for (int i = 0; i < count; i++) rows.add(row(new Object(), "记录" + i));
         return rows;
     }
-    @Test public void pageIsBoundedToOneHundredRowsAndPositiveRevision(){
+    @Test public void growingVirtualizedListIsBoundedWithoutHundredRowTruncation(){
         HistoryAdapter.State state = new HistoryAdapter.State();
-        assertNotNull(state.show(1, page(100)));
-        assertEquals(100, state.rowCount());
-        assertThrows(IllegalArgumentException.class, () -> state.show(2, page(101)));
+        assertNotNull(state.show(1, page(HistoryAdapter.MAX_ROWS)));
+        assertEquals(HistoryAdapter.MAX_ROWS, state.rowCount());
+        assertThrows(IllegalArgumentException.class, () -> state.show(2, page(HistoryAdapter.MAX_ROWS+1)));
         assertThrows(IllegalArgumentException.class, () -> state.show(3, null));
         assertThrows(IllegalArgumentException.class, () -> state.show(0, page(1)));
-        assertEquals(100, state.rowCount());
+        assertEquals(HistoryAdapter.MAX_ROWS, state.rowCount());
     }
     @Test public void shownPageIsDefensivelyCopiedAndImmutable(){
         HistoryAdapter.State state = new HistoryAdapter.State();
@@ -55,7 +55,7 @@ public final class HistoryAdapterTest {
         assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, null, "", ""));
         assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, "x".repeat(4097), "", ""));
         assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, "t", "u".repeat(8193), ""));
-        assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, "t", "", "v".repeat(65)));
+        assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, "t", "", "v".repeat(HistoryAdapter.MAX_VISITED_TEXT_CHARS+1)));
         for (String broken : new String[]{"\ud800", "\udc00", "line\nbreak", "nul\u0000char"}) {
             assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, broken, "", ""));
             assertThrows(IllegalArgumentException.class, () -> new HistoryAdapter.Row(token, "t", broken, ""));

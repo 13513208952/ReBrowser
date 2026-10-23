@@ -10,7 +10,9 @@ import org.mozilla.geckoview.WebResponse;
 public final class ContentDelegate implements GeckoSession.ContentDelegate {
     private final GeckoSession bound;private final GeckoSessionOwner owner;private final GeckoSessionOwner.SessionRef ref;private final ComponentGate gate;private final PartitionCatalog partitions;private final SessionPresentation presentation;private boolean retired,unknownResponseClose;
     ContentDelegate(GeckoSession bound,GeckoSessionOwner owner,GeckoSessionOwner.SessionRef ref,ComponentGate gate,PartitionCatalog partitions,SessionPresentation presentation){if(bound==null || owner==null || ref==null || gate==null || partitions==null || presentation==null)throw new IllegalArgumentException("Exact native content binding required");this.bound=bound;this.owner=owner;this.ref=ref;this.gate=gate;this.partitions=partitions;this.presentation=presentation;}
-    @Override public void onTitleChange(GeckoSession actual,String title){if(eligible(actual))presentation.title(title);}
+    private java.util.function.BiConsumer<String,String> historyTitle;
+    void installBrowserHistoryTitle(java.util.function.BiConsumer<String,String> actualNativeHistory){GeckoSessionOwner.mainThread();if(historyTitle!=null || actualNativeHistory==null)throw new IllegalStateException("History title already connected");historyTitle=actualNativeHistory;}
+    @Override public void onTitleChange(GeckoSession actual,String title){if(eligible(actual)){presentation.title(title);if(historyTitle!=null)try{historyTitle.accept(presentation.snapshot().reportedLocation(),title);}catch(RuntimeException unavailable){/* no duplicate visit or browsing failure */}}}
     @Override public void onFullScreen(GeckoSession actual,boolean fullScreen){if(eligible(actual))presentation.fullScreen(fullScreen);}
     @Override public void onCloseRequest(GeckoSession actual){if(eligible(actual))presentation.closeRequested();} // request, NEVER window-end acknowledgement
     @Override public void onCrash(GeckoSession actual){engineClosed(actual);}

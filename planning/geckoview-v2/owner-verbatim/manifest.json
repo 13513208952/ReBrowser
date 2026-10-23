@@ -688,7 +688,35 @@
       "utf8Bytes": 8,
       "sha256": "e256ee8e7aff6957a781d8328f0f68e26996564c81fa458da59fbca2305138ad",
       "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O99",
+      "file": "owner-verbatim/O99-clarify-geckoview-platform-and-inherited-subapplications.txt",
+      "utf8Bytes": 3402,
+      "sha256": "4a15bc820a80d59cdaf2018159305d4538838d23b3f52938a5a151b6af6a7819",
+      "provenance": "owner user-message verbatim; punctuation, spacing and original v2.o spelling preserved"
+    },
+    {
+      "id": "O100",
+      "file": "owner-verbatim/O100-study-inherited-product-before-discussion.txt",
+      "utf8Bytes": 51,
+      "sha256": "ba2e4611927b99a7ad365125bb0569c075e744627f290adc6547084bf4939c2a",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O101",
+      "file": "owner-verbatim/O101-study-browser-ui-history-back-bookmarks-settings.txt",
+      "utf8Bytes": 490,
+      "sha256": "264661575390ae59143bbfd1ef9bfd95b31a658ae7ac753da3992934d5a1dec1",
+      "provenance": "owner user-message verbatim"
+    },
+    {
+      "id": "O102",
+      "file": "owner-verbatim/O102-enough-understanding-continue-owner-explanation.txt",
+      "utf8Bytes": 57,
+      "sha256": "12da428907c136af431f9a95b11f7f99c7ebcb9ab2a72853ddfd29c8e11eff49",
+      "provenance": "owner user-message verbatim"
     }
   ],
-  "lastAppendedAt": "2026-10-21T22:53:38+08:00"
+  "lastAppendedAt": "2026-10-22T02:18:30+08:00"
 }

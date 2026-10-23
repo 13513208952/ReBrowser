@@ -42,6 +42,24 @@ public final class PersonalizationPolicy {
         return new Crop(sourceWidth,sourceHeight,(sourceWidth-cropW)/2,(sourceHeight-cropH)/2,cropW,cropH,outputW,outputH);
     }
 
+    /** Approved new-tab photograph: horizontally centered, TOP anchored, never vertical center.
+     * Native output dimensions are bounded; this arithmetic is not a whole-Skia RAM guarantee. */
+    public static Crop centerTopCrop(int sourceWidth,int sourceHeight,int targetWidthPx,int targetHeightPx,int maxOutputPixels){
+        if(sourceWidth<1 || sourceHeight<1 || (long)sourceWidth*sourceHeight>MAX_SOURCE_PIXELS || targetWidthPx<1 || targetHeightPx<1 || targetWidthPx>65536 || targetHeightPx>65536 || maxOutputPixels<1 || maxOutputPixels>MAX_SOURCE_PIXELS)throw new IllegalArgumentException("Invalid approved background geometry");
+        double aspect=(double)targetWidthPx/targetHeightPx;int w=sourceWidth,h=sourceHeight;
+        if((double)sourceWidth/sourceHeight>aspect)w=Math.max(1,Math.min(sourceWidth,(int)Math.round(sourceHeight*aspect)));else h=Math.max(1,Math.min(sourceHeight,(int)Math.round(sourceWidth/aspect)));
+        double scale=Math.min(1d,Math.min((double)targetWidthPx/w,(double)targetHeightPx/h));scale=Math.min(scale,Math.sqrt((double)maxOutputPixels/((long)w*h)));
+        int outW=Math.min(maxOutputPixels,Math.max(1,(int)Math.floor(w*scale))),outH=Math.max(1,(int)Math.floor(h*scale));outH=Math.min(outH,Math.max(1,maxOutputPixels/outW));
+        return new Crop(sourceWidth,sourceHeight,(sourceWidth-w)/2,0,w,h,outW,outH);
+    }
+
+    /** Own Activity WindowMetrics are independent of the software keyboard's content resize.
+     * Coordinates/insets must be observed natively, not inferred from a webpage/screen dp size. */
+    public static int unoccludedViewportHeight(int actualHeight,int windowHeight,int topInWindow,int bottomInset){
+        if(actualHeight<1 || actualHeight>65536 || windowHeight<1 || windowHeight>65536 || topInWindow<0 || topInWindow>65536 || bottomInset<0 || bottomInset>65536)throw new IllegalArgumentException("Invalid own-window geometry");
+        return Math.max(actualHeight,Math.max(1,windowHeight-topInWindow-bottomInset));
+    }
+
     /** WCAG-style relative luminance of an opaque sRGB color; no image is read. */
     public static double relativeLuminance(int argb){
         if((argb>>>24)!=255)throw new IllegalArgumentException("Background alpha needs explicit native compositing");

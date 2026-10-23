@@ -10,12 +10,15 @@ import org.mozilla.geckoview.GeckoSession;
 public final class BrowserSessionHost implements GeckoSessionOwner.Initializer {
     private final ComponentGate gate;private final PartitionCatalog partitions;private final int capacity;
     private PartitionCatalog.Domain domain=PartitionCatalog.Domain.BROWSER;private Object builtinToken;
+    public interface BrowserHistory {void visited(TabRef tab,String url);void titleChanged(TabRef tab,String url,String title);}
+    private BrowserHistory history;
     private GeckoSessionOwner owner;
     private final Map<GeckoSessionOwner.SessionRef,Bundle> bundles=new IdentityHashMap<>();
     private BrowserSessionHost(ComponentGate gate,PartitionCatalog partitions,int capacity){this.gate=gate;this.partitions=partitions;this.capacity=capacity;}
-    public static GeckoSessionOwner createTemporaryOwner(ComponentGate gate,GeckoRuntimeOwner runtime,PartitionCatalog partitions,int capacity){
+    public static GeckoSessionOwner createTemporaryOwner(ComponentGate gate,GeckoRuntimeOwner runtime,PartitionCatalog partitions,int capacity){return createTemporaryOwner(gate,runtime,partitions,capacity,null);}
+    public static GeckoSessionOwner createTemporaryOwner(ComponentGate gate,GeckoRuntimeOwner runtime,PartitionCatalog partitions,int capacity,BrowserHistory nativeHistory){
         GeckoSessionOwner.mainThread();if(gate==null || runtime==null || partitions==null || capacity<1 || capacity>64)throw new IllegalArgumentException("Bounded native browser graph required");
-        BrowserSessionHost host=new BrowserSessionHost(gate,partitions,capacity);GeckoSessionOwner sessions=new GeckoSessionOwner(gate,runtime,partitions,host,capacity);host.owner=sessions;return sessions;
+        BrowserSessionHost host=new BrowserSessionHost(gate,partitions,capacity);GeckoSessionOwner sessions=new GeckoSessionOwner(gate,runtime,partitions,host,capacity);host.owner=sessions;host.history=nativeHistory;return sessions;
     }
     /** Fixed built-in domain graph, separate from browser/private workspaces. Cookie-context
      * persistence/finite-grant reconciliation remain unqualified; all permissions still denied. */
@@ -34,6 +37,11 @@ public final class BrowserSessionHost implements GeckoSessionOwner.Initializer {
         Bundle bundle=new Bundle(session,ref,partition,token);bundles.put(ref,bundle); // retain before ANY SDK setter
         session.setPermissionDelegate(new PermissionDelegate());
         session.setContentDelegate(bundle.content);session.setNavigationDelegate(bundle.navigation);session.setProgressDelegate(bundle.progress);
+        if(domain==PartitionCatalog.Domain.BROWSER && history!=null){
+            TabRef tab=(TabRef)token;
+            session.setHistoryDelegate(new GeckoHistoryDelegate(session,actual->{try{owner.requireOpen(ref,gate.requireBusiness());return actual==session;}catch(RuntimeException retired){return false;}},ignored->{},url->history.visited(tab,url)));
+            bundle.content.installBrowserHistoryTitle((url,title)->history.titleChanged(tab,url,title));
+        }
     }
     @Override public void retireDelegates(GeckoSession session,GeckoSessionOwner.SessionRef ref){
         GeckoSessionOwner.mainThread();Bundle b=bundles.get(ref);if(b==null)return;if(b.session!=session)throw new SecurityException("Foreign native session retirement");

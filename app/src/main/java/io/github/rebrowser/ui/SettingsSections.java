@@ -14,21 +14,21 @@ import java.util.Set;
  * arbitrary URL or domain permission. These option values are UI vocabulary, not storage keys.
  */
 public final class SettingsSections {
-    public enum SectionId { GENERAL, APPEARANCE, SEARCH, SUBAPPLICATIONS, SITE_PERMISSIONS, SOURCE_SAFETY, ABOUT }
+    public enum SectionId { GENERAL, ISOLATION_PERMISSIONS, APPLICATIONS }
     /** Descriptive navigation hint for the owning native window; never an admin action or setting key. */
     public enum Route {
         PREFERENCES_GENERAL, PREFERENCES_STARTUP, APPEARANCE, SEARCH,
-        SUBAPPLICATIONS, SITE_PERMISSIONS, SOURCE_SAFETY, ABOUT
+        SUBAPPLICATIONS, SITE_PERMISSIONS, SOURCE_SAFETY, DEFAULT_BROWSER, ABOUT
     }
     /** Editing/display kind offered to the window; storage semantics remain with the owner. */
     public enum ValueKind { READ_ONLY, BOOLEAN, FIXED_OPTION, BOUNDED_TEXT }
     public static final int MAX_TITLE_CHARS = 32;
-    public static final int MAX_SECTIONS = 7;
+    public static final int MAX_SECTIONS = 3;
     public static final int MAX_ROWS = 16;
     public static final int MAX_OPTIONS = 8;
     public static final int MAX_OPTION_VALUE_CHARS = 32;
     public static final int MAX_OPTION_LABEL_CHARS = 32;
-    public static final int MAX_TEXT_CHARS = 256;
+    public static final int MAX_TEXT_CHARS = 8192;
     public static final String UNKNOWN_TEXT = "未读取";
 
     /** Bounded fixed option; value is an opaque UI token, label is display text. */
@@ -121,21 +121,19 @@ public final class SettingsSections {
 
     private static List<Section> build() {
         List<Section> sections = new ArrayList<>();
-        sections.add(section(SectionId.GENERAL, "通用",
-                readOnlyRow("ui.row.general.preferences", "通用设置", Route.PREFERENCES_GENERAL),
-                readOnlyRow("ui.row.general.startup", "启动与主页", Route.PREFERENCES_STARTUP)));
-        sections.add(section(SectionId.APPEARANCE, "外观",
-                readOnlyRow("ui.row.appearance.background", "背景与外观", Route.APPEARANCE)));
-        sections.add(section(SectionId.SEARCH, "搜索",
-                optionRow("ui.row.search.engine", "搜索引擎", Route.SEARCH, searchProviderOptions())));
-        sections.add(section(SectionId.SUBAPPLICATIONS, "子应用",
-                readOnlyRow("ui.row.subapplications.enabled", "子应用启用", Route.SUBAPPLICATIONS)));
-        sections.add(section(SectionId.SITE_PERMISSIONS, "网站权限",
-                readOnlyRow("ui.row.permissions.sites", "网站权限", Route.SITE_PERMISSIONS)));
-        sections.add(section(SectionId.SOURCE_SAFETY, "来源安全",
-                readOnlyRow("ui.row.source.safety", "来源与会话安全", Route.SOURCE_SAFETY)));
-        sections.add(section(SectionId.ABOUT, "关于",
+        sections.add(section(SectionId.GENERAL, "常规",
+                row("ui.row.general.homepage", "主页网址", Route.PREFERENCES_STARTUP,ValueKind.BOUNDED_TEXT,Collections.<Option>emptyList(),8192),
+                optionRow("ui.row.search.engine", "搜索引擎", Route.SEARCH, searchProviderOptions()),
+                optionRow("ui.row.appearance.background", "新标签页背景", Route.APPEARANCE,java.util.Arrays.asList(new Option("exclusive","专属背景"),new Option("white","纯白"))),
+                booleanRow("ui.row.general.recent", "显示最近访问", Route.PREFERENCES_GENERAL),
+                optionRow("ui.row.general.device-type", "设备类型", Route.PREFERENCES_GENERAL,java.util.Arrays.asList(new Option("auto","自动识别"),new Option("phone","手机"),new Option("tablet","平板"))),
+                readOnlyRow("ui.row.general.default-browser", "默认浏览器", Route.DEFAULT_BROWSER),
                 readOnlyRow("ui.row.about.version", "关于 ReBrowser", Route.ABOUT)));
+        sections.add(section(SectionId.ISOLATION_PERMISSIONS, "隔离与权限",
+                readOnlyRow("ui.row.permissions.sites", "网站权限与隔离状态", Route.SITE_PERMISSIONS),
+                readOnlyRow("ui.row.source.safety", "来源与会话安全", Route.SOURCE_SAFETY)));
+        sections.add(section(SectionId.APPLICATIONS, "应用管理",
+                readOnlyRow("ui.row.subapplications.enabled", "子应用启用与运行状态", Route.SUBAPPLICATIONS)));
         if (sections.size() != MAX_SECTIONS) throw new IllegalStateException("Native settings directory corrupted");
         validate(sections);
         return Collections.unmodifiableList(sections);

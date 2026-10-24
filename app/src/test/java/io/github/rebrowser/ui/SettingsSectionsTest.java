@@ -8,13 +8,11 @@ import org.junit.Test;
 
 /** Actual static settings directory model: display only, no repository/defaults/policy. */
 public final class SettingsSectionsTest {
-    @Test public void sevenFixedSectionsInStableChineseOrder(){
+    @Test public void threeApprovedPeerSectionsInStableChineseOrder(){
         List<SettingsSections.Section> sections = SettingsSections.sections();
-        assertEquals(7, sections.size());
-        String[] titles = {"通用", "外观", "搜索", "子应用", "网站权限", "来源安全", "关于"};
-        SettingsSections.SectionId[] ids = {SettingsSections.SectionId.GENERAL, SettingsSections.SectionId.APPEARANCE,
-                SettingsSections.SectionId.SEARCH, SettingsSections.SectionId.SUBAPPLICATIONS,
-                SettingsSections.SectionId.SITE_PERMISSIONS, SettingsSections.SectionId.SOURCE_SAFETY, SettingsSections.SectionId.ABOUT};
+        assertEquals(3, sections.size());
+        String[] titles = {"常规", "隔离与权限", "应用管理"};
+        SettingsSections.SectionId[] ids = {SettingsSections.SectionId.GENERAL, SettingsSections.SectionId.ISOLATION_PERMISSIONS, SettingsSections.SectionId.APPLICATIONS};
         for (int i = 0; i < titles.length; i++) {
             assertEquals(ids[i], sections.get(i).id());
             assertEquals(titles[i], sections.get(i).title());
@@ -35,7 +33,13 @@ public final class SettingsSectionsTest {
             }
         }
         assertTrue(rows <= SettingsSections.MAX_ROWS);
-        assertEquals(8, rows);
+        assertEquals(10, rows);
+    }
+    @Test public void defaultBrowserIsNativeReadOnlyRouteNotSavedPreference(){
+        SettingsSections.Row row=SettingsSections.requireRow("ui.row.general.default-browser");
+        assertEquals(SettingsSections.Route.DEFAULT_BROWSER,row.route());assertEquals(SettingsSections.ValueKind.READ_ONLY,row.kind());
+        assertThrows(IllegalArgumentException.class,()->new SettingsActivity.Change(row.id(),row.kind(),null,null,1));
+        assertTrue(SettingsSections.require(SettingsSections.SectionId.GENERAL).rows().contains(row));
     }
     @Test public void directoryIsImmutableAndDefensivelyCopied(){
         List<SettingsSections.Section> sections = SettingsSections.sections();
@@ -46,7 +50,7 @@ public final class SettingsSectionsTest {
     }
     @Test public void exactSectionLookupRejectsNullButNeverSelectsDefault(){
         assertSame(SettingsSections.sections().get(0), SettingsSections.require(SettingsSections.SectionId.GENERAL));
-        assertSame(SettingsSections.sections().get(6), SettingsSections.require(SettingsSections.SectionId.ABOUT));
+        assertSame(SettingsSections.sections().get(2), SettingsSections.require(SettingsSections.SectionId.APPLICATIONS));
         assertThrows(IllegalArgumentException.class, () -> SettingsSections.require(null));
     }
     @Test public void unknownConfigurationIsNotReadableOrActionable(){
@@ -88,7 +92,7 @@ public final class SettingsSectionsTest {
     @Test public void sourceSafetyRowDoesNotReplaceFourStepConfirmation(){
         boolean found = false;
         for (SettingsSections.Section section : SettingsSections.sections()) {
-            if (section.id() != SettingsSections.SectionId.SOURCE_SAFETY) continue;
+            if (section.id() != SettingsSections.SectionId.ISOLATION_PERMISSIONS) continue;
             for (SettingsSections.Row row : section.rows()) {
                 assertFalse(row.title().contains("信任"));
                 assertFalse(row.title().contains("强行"));

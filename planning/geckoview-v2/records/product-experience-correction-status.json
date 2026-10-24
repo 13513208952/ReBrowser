@@ -1,17 +1,29 @@
 {
-  "revision": "R57-working-source",
-  "asOf": "2026-10-23T11:59:25+08:00",
+  "revision": "R71-owner-checkpoint-native-partial",
+  "asOf": "2026-10-24T11:56:00+08:00",
   "productDirection": "既有实验性浏览器平台的GeckoView重制升级；保留既有用户体验。ReMusic/ReOutlook仍以官网网页与专用定制整合为主，不替换为通用原生客户端。",
   "ownerWorkDirection": "继续正式修正主程序；不再自动逐条录入原话。恢复既有交互不视为新设计，专门人机界面升级须提前通知。",
-  "treePolicy": "保留并修正总树。旧R52准入标签/数量是历史源码范围，未对R53–R55重新完成逐项准入，不隐改旧证据。",
-  "actualLimitedEvidenceRef": "evidence/native-browser-window-R57-host.json",
+  "treePolicy": "保留并修正总树。旧R52准入标签/数量是历史源码范围，未对R53–R71重新完成逐项准入，不隐改旧证据。",
+  "actualLimitedEvidenceRef": "evidence/native-device-dpi-R71-checkpoint.json",
+  "lastFullyExecutedLimitedNativeRoundRef": "evidence/native-window-direction-R70-limited.json",
+  "currentNativeQualificationComplete": false,
+  "ownerRequestedCheckpoint20261024": {
+    "scope": "Owner requested current remote progress checkpoint, paused before commit, then explicitly resumed continuous development; pending checkpoint now resumes first",
+    "supersedesO95WaitForThisCheckpointOnly": true,
+    "sourceCompletionGateStillUnsatisfied": true,
+    "doesNotClaimR71NativeOrProductComplete": true,
+    "excludedPaths": ["dsh/", "tools/tests/test_v2_connector_protocol.cjs"],
+    "privateKeysPasswordsApksDeviceWitnessesExcluded": true,
+    "futureCommitPushAuthorization": false
+  },
+  "persistentEnvironmentCapabilityRef": "records/native-persistent-browser-admission-status.json",
   "runtimePending": [
-    "First-start native fresh inventory/consent/installation+wrapping-key/default-record initialization NOT implemented; no business/source bypass, not yet an installable working demo",
-    "Temporary native browsing path wired in source, Android/Gecko/website still NOT executed or qualified; persistent workspaces/real cookie contexts/Popup/selection/finite grants/checkpoints pending",
-    "Full3-peer settings/favorites/workspace-bookmark distinction/download UI and internal history OPEN route still pending",
-    "Root public configured, but first formal installation/device key/true enrollment/current durable administrator policy/effect routes remain pending",
-    "History5000entries/4MiB backend not final scale closure, no silent eviction",
-    "ReMusic then ReOutlook remain next after main browser journeys, not standalone native client replacements"
+    "Only these pinned Gecko/Android15 native favorite/history/static DOM fullscreen/standard JS prompt journeys; not streaming video/PiP/tablet/all sites/vendors/API30+/physical rotation/power loss/races/500-row UI scale",
+    "Native event metadata is not authoritative document identity; no bridge/admin permissions derive from painted/location status",
+    "Native clipboard menu callback DENY is NOT universal JS Clipboard policy: pinned Gecko same-origin-own-clipboard fastpath read allowed; actual separate-origin denied. Complete finite web/OS clipboard grants remain pending; background DOM range can persist although old view/menu offer is retired",
+    "Complete main persistent profile/checkpoint/workspace-level/environment-bookmarks/shelving/download/Popup/finite-grants/other-native-prompts-and-safe-form-tab-close/default-browser-OEM-role-change-qualification/externalURI-policy/selection/fullscreen journeys still pending",
+    "Root offline custody/formal signing/current durable admin policy/effects/genuine highest-risk owner auth/formal device enrollment remain pending",
+    "Four planned resource sources/source admission hold not waived; no filler files"
   ],
   "missingOriginalPlannedResources": [
     "app/src/main/assets/bridge/styles/music-window.css",
@@ -32,7 +44,7 @@
     "coversCurrentR56Changes": false
   },
   "deferred": "子应用占用查看、缓存及全部数据清理继续延期，不混同来源保护或邮件内部完整性",
-  "sourceBaseCommit": "2947b94d501e24ccfd50e8506e9aa2260933e6ef",
+  "sourceBaseCommit": "789af99e6549d92736d5e9a67cb19c3fd54f89d2",
   "committedR54R55Progress": [
     "R54实际历史期限/三独立控件/Gecko采集与环境事件/规范私有AEAD存储接线",
     "R55 NewTabView恢复实际默认引擎品牌/共用地址搜索/真实8个不同完整URL最近访问；点击对规范历史重新查找，非收藏管理",
@@ -64,11 +76,41 @@
     "supersedesO95WaitForThisCheckpointOnly": true,
     "sourceCompletionGateStillUnsatisfied": true,
     "productAndInstalledDemoStillIncomplete": true,
-    "privateMaterialAndDshExcluded": true
+    "privateMaterialAndDshExcluded": true,
+    "completedCommitAndPush": "789af99e6549d92736d5e9a67cb19c3fd54f89d2",
+    "futureCommitPushAuthorization": false
   },
   "demoWorkflow": {
     "milestones": "Complete a real main-browser journey, then install an explicitly bounded demo for owner review; do not pass off a locked shell/static preview as working browser",
     "hciChanges": "Restore inherited interactions directly; specialized upgrades require proposal/impact description and owner approval before implementing",
-    "demoReadyNow": false
+    "demoReadyNow": true,
+    "scope": "Installed temporary-browsing main + four actual General settings + native history OPEN + flat global URL favorites + standard JS prompts + DOM fullscreen + native clipboard selection menu + untrusted external HTTP(S) entry/new isolated temporary workspace + native own-role observation/system-default recommendation + native beforeunload/repost confirmation + actual menu-dismiss/focus handoff + inherited native own-window direction tap/longpress/canonical preference persistence; not full browser/OS-role-change/settings/persistent environments/complete clipboard permissions/whole2.0"
+  },
+  "checkpointIncludedWork": [
+    "R58 genuine cold first setup/backend/keys/initial encrypted records/native source commit and independent acceptance, now actual Android15 executed",
+    "R58 native private-cookie history producer, failed-load display/pending bootstrap blank fix and explicit refresh retry path",
+    "R58 operable development MAIN demo installed, native Cookie-sharing/isolation/domestic page/history controls verified; full browser and subapps not complete",
+    "R59 actual3peer Settings/native4General fields/shared IO/base-record CAS/scoped backend/readback/save/main consumers and lifecycle smoke executed",
+    "R59 native Spinner cleanup failure fixed via actual Android View test, loaded choice/reverting-draft bugs fixed, one main/settings instance and draft retention verified",
+    "Owner-approvedR60 modesthomevectoronly/sameactionandtoucharea, actualnormal/photo/nativehome tested",
+    "R60 nativecanonicalhistoryOPEN exactoriginalmainTab/source/entry/expiry, one-use receipt andactualDOM navigation verified",
+    "R61 actual native content-paint+location records shown pages beforeloadend; controlled pendingbody/abandon/redirect/error native cases verified, no completion/document-authority confusion",
+    "R62 removed wrong unused folder tree in favor of flat browser-global URL favorites; actual star/list/edit/full-query OPEN/duplicate/no-write reject/delete/cold retention/new-workspace cookie isolation verified",
+    "R62 same canonical encrypted metadata IO/version/source/readback; original native weak window/tab target, not environment restoration. Native error-popup button obstruction and underlay visibility fixed/requalified on Android",
+    "R63 persistent-environment API review found default external Gecko debug YAML startup injection path; explicitly disabled, console/devtools false, native candidate settings readback before publication. Actual cold Gecko/native favorites smoke passed; no persistent Profile/mode conversion claimed",
+    "R64 actual selected native webpage fullscreen drives own chrome/insets; Back dispatches to original actual SessionRef and waits new native false observation, not SDK return. Real DOM enter/Back/DOM exit/background/resume/native favorites return verified; video/global orientation policy remains pending",
+    "R65 actual native standard JS alert/confirm/text source/session/weak-window binding and one-use request/UI lifetime; actual positive/negative/typed/null/chained/modalBack/background/oversize/cross-fullscreen verified. Native chained-response timing failure preserved then fixed via actual dismiss plus native original-window focus before publication; no OS/admin/permission grant",
+    "R66 window-owned source-fenced native floating copy/cut/paste/select-all interface; canonical one-use actual SDK selection/menu path, actual range Back and30s negative expiry, native view detach/rebind tested. Fresh chained prompt/fullscreen/favorites still work; same-origin Clipboard API engine fastpath limitation honestly retained",
+    "R67 actual bounded HTTP(S) native VIEW entry after independent source gate, new isolated temporary workspace/no old account retarget, cold/warm/query/fragment/Cookie isolation/invalid URL/extras/private-action data/no replay/native Settings handoff verified. Native duplicate reorder-order failure preserved then corrected, no default OS role changed",
+    "R68 native own-UID RoleManager actual observation and explicit original-bound/source-guarded system-default recommendation. Actual enabled SYSTEM handler in separate task, General draft retained/reverted/p5 ciphertext unchanged, native role NOT_HELD before/return/cold, external/favorites/chained prompts/fullscreen regression. No system UI interaction/default role assignment; settings state not written to claim OS role",
+    "R69 actual native beforeunload Cancel/Back preserves armed original form/URL, positive B render, genuine STOPPED negative cleanup; repost Cancel/Back/background no fake POST, explicit positive actual counter4→5. Fixed native menu action actual-dismiss/focus handoff after first repeat-Refresh failure; full native forms/settings/favorites/chained prompts/fullscreen requalified. SDK null AllowOrDeny means ALLOW, never used for cancellation; safe tab-close/checkpoint not claimed",
+    "R70 inherited own main-window direction tap opposite actual shape/lock + longpress unlock; explicit03→04 narrow direction CAS/readback only, no read migration/General orientation loss. Actual portrait/landscape configuration preserves armed same Gecko DOM/no HTTP reload/Cookie, rebound prompt, landscape scroll Settings saves keep orientation, native requested mode vs actual configuration separated, cold stored landscape then finalPORTRAIT restored; no System rotation writes/temporary Profile restore claim",
+    "R71 checkpoint PARTIAL: physical-DPI >=7in classification and manual presentation correction restore inherited policy, explicit05/no-read-migrate/typed General and narrow direction preservation.1468HOST/170actualSDK934class/currentAPK installed; native manual policy/DOM-Cookie/General/cold PHONE+LANDSCAPE stages passed, final AUTO/PORTRAIT/no-op/peers still pending after incomplete UIAutomator hierarchy. Not a full native R71 report; R70 remains last fully executed scoped round"
+  ],
+  "deviceTestingConstraints": {
+    "device": "Owner-connected OnePlus Android15, rooted/no password does not authorize root modifications",
+    "independentContinuousWork": "Owner explicitly requests continued development through whole2.0 without routine checkpoint stops; report USB instability if observed",
+    "safety": "No su/flashing/partition/system changes/unrelated app data clearing",
+    "network": "Domestic sites only; no phone proxy, computer Internet/proxy sharing/tether/VPN; local fixture is loopback-static-only, no upstream routing"
   }
 }

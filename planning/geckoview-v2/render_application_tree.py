@@ -58,7 +58,7 @@ def render(manifest=None):
         current[path.name] = f
     lines = [
         '# 应用本体目标代码总树 · R10首版', '',
-        '> **当前代码纠偏见[产品体验工作状态](records/product-experience-correction-status.json)。** 下列准入标签/数量仍是截至R52的历史逐文件准入快照，不代表当前物理源码数量，也不沿用旧源码哈希证明R53–R57新代码。总树保留并修正职责，正式准入待按实际源码/消费链重新核对；不能以历史PLAN标签推断文件尚不存在，或以文件已创建推断产品已完成。', '',
+        '> **当前代码纠偏见[产品体验工作状态](records/product-experience-correction-status.json)。** 下列准入标签/数量仍是截至R52的历史逐文件准入快照，不代表当前物理源码数量，也不沿用旧源码哈希证明R53–R71新代码。总树保留并修正职责，正式准入待按实际源码/消费链重新核对；不能以历史PLAN标签推断文件尚不存在，或以文件已创建推断产品已完成。', '',
         '> O27范围：只逐文件展开应用自身运行代码。测试/验证/构建/维护/文档不混入主树；在树后按关联概括并引用目标位置。',
         '> 总树同时区分规划节点和已准入源码。`[HOST]`仅指该文件已编写并通过所列主机测试，不是Android集成/产品完成；`[?]`仍保留未决运行证据。`[API/WIP]`为Android绑定源码实现中，可能已有合成HOST子集，不等于仅有编译或完整文件验证；逐项看准入记录。`[ASSET/WIP]`仅静态/合成DOM验证的未激活运行资产，不等于APK资源已接线或真实渲染。固定Gecko隔离样机的局部Android结果不自动覆盖产品文件。', '',
         f'R52历史准入快照：**{len(implemented)}文件**；其中HOST测试切片 **{sum(f["state"] == "implemented-host-tested-not-integrated" for f in files)}文件**，API编译/实现中 **{sum(f["state"] == "source-in-progress-api-compiled" for f in files)}文件**，静态资产WIP **{sum(f["state"] == "source-in-progress-static-tested" for f in files)}文件**；其余 **{len(files)-len(implemented)}文件**仍为规划。依据：[逐文件实现记录](records/implementation-readiness.json)。', '',

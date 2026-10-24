@@ -1,0 +1,1080 @@
+{
+  "revision": "R68-working-source",
+  "at": "2026-10-24T09:19:38+08:00",
+  "sourceBaseCommit": "789af99e6549d92736d5e9a67cb19c3fd54f89d2",
+  "meaning": "Native General settings own-UID default-browser role observation and explicit handoff to system-owned default-app selection, not automatic role assignment; exact source/window/one-attempt ownership, no persisted role-setting boolean",
+  "mainSourceCount": 170,
+  "allMainSource8Target8ClassCount": 929,
+  "allMainSourceHashes": [
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ReBrowserApplication.java",
+      "sha256": "c963656196d68baeae732018c1638cfd687901df239fe8b08de801a164544dcc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminAudit.java",
+      "sha256": "6e985721d1565707660383728ab81af53d842ac2787b98df4e1edd756b9c4f5c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AdminProofVerifier.java",
+      "sha256": "4c753a5c3f1946c57b49e4d5eee293add31e0c3843932907fa9267f816627e9d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityPolicy.java",
+      "sha256": "0f893c5e26a3753e496e9a96fba3972a897617e2d58f1619bc082e5ce0960eb7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/AuthorityScale.java",
+      "sha256": "484fe039b8aada90a40bff0d2df2db428d5acc1a6467163baa104bbc6c32d173"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/CompiledPrincipals.java",
+      "sha256": "8f95ab5b302cf052b51a8ecd6066adf770203f3f75672fa813291677f5ff48bb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DeviceWhitelist.java",
+      "sha256": "64a1d2709cd9b3a1c7db54744e9e6c2c5ec4976e0582c220da2909176740e758"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/DisableLedger.java",
+      "sha256": "c73e73b289d0dde300b8d0cc56967a1a9cf874a1d46704bf301c79f98bb9dc41"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/EnrollmentProposal.java",
+      "sha256": "a4213107add0b96ac7010453d30327059df2909d5d6dd00810e69f14517cc5f4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/LowDelegationVerifier.java",
+      "sha256": "4b63f0017cadc979660d7538a0675ffabaea325d2c0ecfd7ac101cf074856408"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/OwnerGrantStore.java",
+      "sha256": "c3c1252a5340a2ddd3e5f52e7f962c5eb530bbb59ec3693daa9978219552b29f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/authority/TargetPossessionProof.java",
+      "sha256": "992f2e73bb2b6697713b6872bfa6631671974700ee8f426e64f2ae193e56eef1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/BrowserStoreCoordinator.java",
+      "sha256": "d6d1d065e2cf8d782e5067ad6654bb5cf4b3aca532bd061b11dc35c4ce8896f9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ComponentGate.java",
+      "sha256": "65a05b709ece3590d44020b43bb934abc060e5d9fdcb7c07a777300aa405e562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/ProcessRole.java",
+      "sha256": "25e3ae10defb9ad076aea789ecbe07cd6e9f5fbf29de147a9701e365458fb562"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bootstrap/StartupCoordinator.java",
+      "sha256": "b0bda665d9ce5bd1e3bbe050087a5d9b7846d34a325fd7898d4db3086a57409e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeBudget.java",
+      "sha256": "df9106e4fa9df9fcd4efbb357be4b6d45fc52fe280a9d8bffe324d4fe2258212"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeMessages.java",
+      "sha256": "25a1af219470467071f83bd31721db898ff4ab11d2b9c1eca01a2187cd397b87"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BridgeStreamReceiver.java",
+      "sha256": "4fff694cf8d69d64e4dcfccbe943af3b980ac3568754427e6a6922eb8956bf10"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/BuiltinConnectorManager.java",
+      "sha256": "f0579a1ad0b0c77bd42c62cc0d3e442a93fe538913ca670a74f3aa0d472667ff"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/ConnectorBroker.java",
+      "sha256": "ad20fa01e65876713de83832610910ee9a25af057359c81349aac2caa093c86f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/DocumentLease.java",
+      "sha256": "224e14395c4a17d041fe239d037891f6c657df4071add2e51bfeb62ff9a0cc37"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/MusicConnector.java",
+      "sha256": "508ed897b9ae4bfc81a1a3746d86637484610cebf9b4c2e7404672d983dcc2f6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/bridge/OutlookConnector.java",
+      "sha256": "896ae46f7d0c2f92975375de131c71b70a35e5991980f59a3fefb7a56c43161b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BackCoordinator.java",
+      "sha256": "39bdc4747ff3cec7d4c587ae7fe31fc8bf1f9f3d0295a701070ccd46c94fb328"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
+      "sha256": "ec862bb1c367e63233b63675fde13c5094fd49288457394fe6fa8527866923ce"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCatalogCodec.java",
+      "sha256": "af74f9ee6e70d42ed55d21d0938f306bfb729c94fb0fa67e6a2c77d6c22d1f01"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserCoordinator.java",
+      "sha256": "98f07f2869ed469908d9cd5f55ac0d9e771c29a4fd7825b43dce58a85a1c7602"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserModels.java",
+      "sha256": "27d1f08e4705a4e06fc81791e37b632f0c452c2c7cf35b6024bf8f8cca463f29"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/BrowserStore.java",
+      "sha256": "06bbc59fb7d8e18fcfd0955720591246f1377f24a09741308c5e44d97cf77424"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
+      "sha256": "319a72f592ee885e77a8de44b7589391be56f644085e028246a3474972135f02"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/HistoryStore.java",
+      "sha256": "9a7f2af2ac8ba137d8ba9c119cbb7ff215c66773e7fb37afaf1b003c9938c77d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/SearchEngines.java",
+      "sha256": "dba5dab12e6829a4cc9db92957dc5c4ad397b5b11a5be758b6a6b920e07eda65"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/TabCatalog.java",
+      "sha256": "4ab796aaadb85551c6f30a4a7c52fe0751677639ccc4e182165b4c9cf9495acb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/browser/WorkspaceCatalog.java",
+      "sha256": "99db92396b8fc3bed7f775e2bad9dcd85c580314aefe9ab0b1ee46f41ed0c010"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/CompiledSourceIdentity.java",
+      "sha256": "f4b6a282c8677d4bf7a1c70fb817a1353e898bddd2938f4a030a1203a9bf18d1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityCoordinator.java",
+      "sha256": "0e353205d8197b1358363fd305779901d70060aadd0ddf18ac7d53745c647da1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/ContinuityState.java",
+      "sha256": "2717a9a1ffd4b23372973e7da1865f9d4355b8368e7be2e0f407f13a7e8e3e66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/EpochCommitter.java",
+      "sha256": "fcdefe16e14788d97da5caea4f54d2e3fadf3825489fc900e6820218c73ad18d"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/EpochErasureCoordinator.java",
+      "sha256": "51da29aa88ce7d7dc2d5b635033499073c2d92738b6f3d70efc95b7efc8dcfe4"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/LastGoodSourceStore.java",
+      "sha256": "4bc75882096e4599628e6b046b43047e76b1f19f256afbb73ccc5e1e1dbbf59a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/OwnerAuthentication.java",
+      "sha256": "0d886efd68a8c2f70aa905bd8d9126c1198f62b426cc2afb8c4fa5caca1356ba"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/PrivateEpochManifest.java",
+      "sha256": "d91105ed49c6f540de15a4e78134c994d3854d228df690dd16dbf4f82fbc2223"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SigningIdentity.java",
+      "sha256": "e973b1af2734954c1f76a36c44ea1a1b18468aa0b8fc7c69a68d05b2233fb821"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/continuity/SourceBootstrap.java",
+      "sha256": "229716ae74489a0e43f4206996728540a1cb199a4de3a702f5af521689a7af91"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionRegistry.java",
+      "sha256": "adf6a2c3a41cdaae93d2efa9caefcd62ea4f378c15dd9aed25624307000e2523"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ActionSchemas.java",
+      "sha256": "ab7d9a6620bebb54da6772786f9b1a61a4362dee7cdf63ba7c7708ecec8e571f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlChallengeStore.java",
+      "sha256": "f629f8394465961c1c2441825151ff70a2e9bb8f0dbc1b173b9ed507a9aa953a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDecoder.java",
+      "sha256": "213e84383c29eae1e104a0f6147d1ef473c33b7a66a128fb1ef7c3387dbe6d66"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlDispatcher.java",
+      "sha256": "acf5fc52459ef1f6e25c5e01758308431448e380c58e4a7883351c2221426f36"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlEnvelope.java",
+      "sha256": "f8c9b71472a484b99abc8a0a8deda40c512c02c2e8d9488a3f61b21a5146f44b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/ControlResultStream.java",
+      "sha256": "a45157a8c0657a5b6cfc6f5e31344cf8233929a8b0ae8d3b9cfcec98fc2146ce"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/IdempotencyStore.java",
+      "sha256": "a4e4423c8731ebf45fd9586a7e94a00d3a37b3758f6df656e9670ab63d72fdd7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/control/PrivateDataController.java",
+      "sha256": "05c850177224d3042b1109bd8f2958457b51b6b0621e4687645343551a9366ca"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ActorContext.java",
+      "sha256": "9c4c6ca6fbbcb8249215fa7cd41e2240b6457d9b9e8f237f5a5545ecc36efa91"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/Cancellation.java",
+      "sha256": "55cb84857d3e40b1533861507b708234bcad9e0d21b5b89707168ae5e5501798"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/DomainResult.java",
+      "sha256": "8b23d719026c39619ae642c9728d3d80709ad550f6463b5195c3bfec8fcb63b9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/ResourceBudgets.java",
+      "sha256": "d2670bf4d3136dc8daf9ad8c151bb8fa9fa21436fb95929c29b619e7f7d1a1ac"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TargetReferences.java",
+      "sha256": "1a56070130d6a84cc643b3d40cfb11557973aa5f18060cc1706d9bc6f38aaeaf"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskCoordinator.java",
+      "sha256": "78b182596a2578892c9b61486e67bf1a778f6e8d35e39543aca5901e2aaba300"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskJournal.java",
+      "sha256": "45491f173b68b4da1cc6c49cec26b4b1b9fc9b2e3507b830576cdc4b2ee7ac06"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/core/TaskSnapshot.java",
+      "sha256": "60d5b1d7235064752f4ec356481fc0d54a14fef754b373871c82664446db9119"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/CryptoEncoding.java",
+      "sha256": "dae86e37e9b135e1c8d41727b3dd7088221bc256ada91456507fdc7cce70b37c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
+      "sha256": "70caf422602b03c391d2cde82807073f10e8ad604a5dddd166c0e9a3473eea85"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/InstallKeyStore.java",
+      "sha256": "adda9effb61197dfbba8511e9fa1147534019fa903d288e370953e3798de3272"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/KeyPurpose.java",
+      "sha256": "92d33ad606cab8fc677eb1c45395ee928085bd6fb83b1c281b251e73837c340c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/ObjectAead.java",
+      "sha256": "07564bda5fb12cf1982c0ae1a82272c735626f76ec0db76b3fa42ded68809210"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/crypto/PrivateRecordSealer.java",
+      "sha256": "3af289e16345fce027b17340c3a6e35e56c890d28f74afc821cb09b1a385f851"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/NativeRecordCodec.java",
+      "sha256": "7e766dc69373279a9e847a7bb6fedec6e4253f69cab1d7ee7a3ddb90bb22357a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/OwnedDataCatalog.java",
+      "sha256": "0f5b10fddbb08e3ce5cef6de57006f95e69d9a87ed79649189daec061c45145f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/data/PrivateRecordStore.java",
+      "sha256": "77c47830c661cd3afd1828acf1b72ef6b3ae40cba1f89a8d817c0322ca934716"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/DownloadCoordinator.java",
+      "sha256": "cc170b49594a4da22f812bbd6d35677ee74cc4114834b42874d3b3052f714915"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/DownloadHandoff.java",
+      "sha256": "f8118b3ae3545cb0ec27b73a6b185c6179aaacc8d02a572d398a6263ef70c753"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/DownloadStore.java",
+      "sha256": "f5d19891c84f516553c83c685b26f9a9c71d74592d8861075d22d048a3000a94"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/ResponseStreamWorker.java",
+      "sha256": "07516fbd723b392d1ff1af894ebc29c0b8602c6f9946cf52d8ebbf53690cc8cb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/download/SaveTargetRegistry.java",
+      "sha256": "92887f9b46d3dbaa8ff9ae263c04f27d49537e4150c69a5d0f45c2e7d37709ef"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/BrowserSessionHost.java",
+      "sha256": "35ac91a08756eca0c71a44d6efe764851a662ad592fe08d0196effe5dc67e515"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ContentDelegate.java",
+      "sha256": "23eaed5c95666023737d150f25f7529603b6cf93b7627af14826c706cff36091"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/DiagnosticCoordinator.java",
+      "sha256": "bf8691d9bf5de453e55d80d799830956906e48a0934369243c3c081e8b4aceee"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoHistoryDelegate.java",
+      "sha256": "d3f923fad99935a49ff07240d3e1231aa15ccf41cbac2d3d6ffbe6dba58887cb"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoMediaBridge.java",
+      "sha256": "83d22520793276d95b6623bd4cf34d0b57cd41d7a5c3a6b52dd08685c3efd6b5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
+      "sha256": "ecfa82f3fe6e2f5d0eff32183ef49558f9e327550f4e9dfc8152f78b254a0f0b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/GeckoSessionOwner.java",
+      "sha256": "b721a0628031d0fbdef7504fe09fd5ef0b2fffb97b8bc27f8990a10b11e0a59b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/NavigationDelegate.java",
+      "sha256": "bb6a4deaaaae42b8107d5e290237d94274fd03d2d22078568d0a357885fd0d1e"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PartitionCatalog.java",
+      "sha256": "5266fcffadf2ba1b6e47908778a97b747b3ec0fdca755c68cd36e8a52543e89a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PermissionDelegate.java",
+      "sha256": "e5fbbad37ad16206dcce19d6a39d431058713c32de3711573678754d7f9bd8f0"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ProgressDelegate.java",
+      "sha256": "81890073cef691535b35a01d29272b1c7097f3a8e976e8967acb7fffd5ac659b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/PromptDelegate.java",
+      "sha256": "f47b10bb7bffeeb0862b29e5fdd8710e28ca677077a1169872a7fd9cffc0bfa1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SelectionDelegate.java",
+      "sha256": "dd2f3413979189002cd9171cae232853ef019710721e1ee23992164be6de11f0"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionCheckpointStore.java",
+      "sha256": "c3ef96d4cb4e8d2ea9c44a20a568f0d896bd0a01f7e36c7b96a22fddbb1452a5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
+      "sha256": "9723d554f6498566e348dbdd0492485616969baad7a71a05d02eeed20772d728"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
+      "sha256": "2f29d54ae538f57a086f6756e6abc2846b2ebc83aa70cb16dbab8e650322e9a8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/engine/ViewportPolicy.java",
+      "sha256": "776cfc19d2f4d92d1d084f89c2c6cbad1990d4ee8d0097b05d1993326cf13f4b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlActivity.java",
+      "sha256": "46f3ffeae7f9ee5c2c9746b2bb9895b29ed0f2aa665ab3a4b38f8a063a65d6dc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/entrypoints/AdminControlProvider.java",
+      "sha256": "ba5106ac7e81d20d8748a90dd24a1d85c27ad4222eaa9df7d18fb0d5d7ab0f67"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayController.java",
+      "sha256": "73cc40859a45e8bfc0c275ced5f2a0189572fbb3e69c968cc00a658244c4773f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricOverlayWindow.java",
+      "sha256": "05418a06c9fe9abe3c96931a34f2bfd29dd4cdde45dcb3ae48206a226fec4ff3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/LyricPositionStore.java",
+      "sha256": "9e5df7ba57c6f0211f537434ac830179c1f2a447d853fedb8c16e37eb6255d3a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/lyrics/OverlayPermissionFlow.java",
+      "sha256": "e6c285248585f44d9b7d98cb797836249b519d306e23d874be4694180cd04373"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicActivity.java",
+      "sha256": "93ee2ace7423b34653fc80b5414c8a67f683d5d20c4926c1d243493dd986c527"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicArtwork.java",
+      "sha256": "accc72245f8ae595dc411cb3b3a449b1c8f3066ae04ebd9e27f033cde852e738"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicAudioFocus.java",
+      "sha256": "f29ec88403d68e4c16f39a78dfd769c4e2f8c996ff61134d21bff7008689bc7b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicAuthentication.java",
+      "sha256": "b164e8ef137a6807285e8a9c05e1c43bebd0ff7a839faf4569449fd3ea733f15"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicCoordinator.java",
+      "sha256": "676977e1ba3ca5340bb849ac7d81a6b543b935acda7dad978ded710ce7a118a6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicLyrics.java",
+      "sha256": "f562341853fe5f33fe3e8ebe87284c98403d03b2c5681b51000b4e94316b950a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicMediaSession.java",
+      "sha256": "0ad0f1d9ca5c4871ce2e592ffa65f65c207a8007333cca4955cb59f45e9835a7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicNotification.java",
+      "sha256": "4069726efc5572569b2cd3821a2ac719074add5bbc88907268df695fd85d56f9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPlaybackAuthorization.java",
+      "sha256": "8f8465fb723f1ad0a1e9f3a2cf9665f52192c4aac212468acfae858979cce6b7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicPreferences.java",
+      "sha256": "b62ef93ba64f36e6e65a2fce7a9b211807b3618c70a3f065acc6238b88073caa"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicQueue.java",
+      "sha256": "643330ed22ea4757263fe7f59d92bc5432120f56dd55bc4c49d886dff34faba2"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicService.java",
+      "sha256": "2e812c21260ee0a1dbd71bbd67ab0e3d41c69f2f83881eac687b07078f8b50d8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicSessionOwner.java",
+      "sha256": "525f146372e49f987d924af1b629d3db57988097737bbf7debab99ac55b56b71"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/music/MusicState.java",
+      "sha256": "df9fae5a5c70ab512703691f46a2fb2367d289ddef9245968ca617d4272965b7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/AttachmentCoordinator.java",
+      "sha256": "85887efb367c30cbee6721c7886dc7ac51c3589f12c5134c72f646d645058d8a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailAccountCatalog.java",
+      "sha256": "f351ef9a04de5f44e477d453b25cb7a16fd42520b5cde9316596295cd24d98a6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailAuthCoordinator.java",
+      "sha256": "9e2ea2dd02b1deb2ad84edbb0b824b542ed0605a4bf63ae1023b865dbf5c2a53"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailCaptureValidator.java",
+      "sha256": "76189ede90b8e0bf5bdb96454fc9d6e3e1edaad023b35b3482535da997e01a76"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailDatabase.java",
+      "sha256": "5758259ae40c2bc6cc3f15303cbb08775c5a4c0fac84df5029ffa2ffe30d7301"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailExportCoordinator.java",
+      "sha256": "13a9e599e76a622092a997f38cf78b2a575ddcadd47f525b43fdc4442bbd06f2"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectCodec.java",
+      "sha256": "e1de4f363b078570452376909468038db26a953e6832cdeda12235234f448e63"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectFormat.java",
+      "sha256": "653f9f73ad9a1d65b0495141666355c6f1d7196da4149314421f532745729f92"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailObjectStore.java",
+      "sha256": "2cce2d9ebf94a6fd6a10ab38bd6f67295f7ee33c4a4e193833dfd30f4ee0f268"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailReferenceReconciler.java",
+      "sha256": "a180f11d94d859a2375ac1ad284e97390584955a541488837670db1505fed59c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailRetentionPolicy.java",
+      "sha256": "419f5a751db2c88f9a66c0fb3c95fc34ec6153662ad6267983cfb519afa4c6f5"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSearch.java",
+      "sha256": "8117abbad493767f5693d0013a3da8f32e0ac5d36a2b3f46ddefc85f698c06c6"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/MailSyncCoordinator.java",
+      "sha256": "e5cb81bb17260db6ec8b44710de16085586691ff29b51b0b21211af64e64beab"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailActions.java",
+      "sha256": "6f62a3c67d916b408281d98587285b3a47a446d636d73fd981dc42f2e90e2273"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfficialMailEntry.java",
+      "sha256": "a3f14e0ce0b7cda58d91221475530b0c3bc43a948eed9a504f60453221e31be1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailActivity.java",
+      "sha256": "0f765c993d3ae950b5dd81c32665dfe305288118b8df5c94d7cab2afe8a1a7db"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OfflineMailRenderer.java",
+      "sha256": "fba06a1d80e03521814dd0701fcb1dfcf76bc0af74adff93309cfe59943ee49b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookActivity.java",
+      "sha256": "1de54f70c9f35eee1493327173d56869ec865a2ef3d062ed126a34fa530de705"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/outlook/OutlookSessionOwner.java",
+      "sha256": "9242aa25835a1b6767cc5977ad03c9912ea3fa1aa6c4f063b7e82e587a64dbe9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/ClipboardCoordinator.java",
+      "sha256": "12912f1f22464f88a9b2d02be64a0071906279e26869f5fd90678672861b49c7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/FilePickerCoordinator.java",
+      "sha256": "773ab19493225edc6735c8d2a533b4ac8a7e49fb2b6355562467051039ee3c83"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/PendingPromptRegistry.java",
+      "sha256": "010ffb47ab645378eab4d65c0595c7ec1739d6d29f6c21da0be729494238513c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/PermissionCoordinator.java",
+      "sha256": "176c410b44d452231dd7573c992f547213e01a6ac0f4965a090caaefa6bbea23"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/permissions/SiteGrantStore.java",
+      "sha256": "c732c8a6d4f5082769e059779b63f53c8c47bbb7d8f0736a5f7d3e92e2acece3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/settings/PersonalizationPolicy.java",
+      "sha256": "9bc195f70a1e82daf2cf6ba6ad0788dc580b47fa9f3377436f8bd9fc1f3a5701"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
+      "sha256": "d9471b87b74c2cd02e0153da1e0478231c5075f4cfdb5ca769d5cdf89b912471"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationCoordinator.java",
+      "sha256": "1cffe4fa6c64a5ec977bd337cd11cdcdad0638328e7f97fde0106da9a118e184"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/subapps/SubapplicationRegistry.java",
+      "sha256": "d0b98b7e859c04b744c9d8b212eae2ec5c6c07d618cf5b0bae5e6d5fbe0a7363"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffActivity.java",
+      "sha256": "43376988fa08cb35fc157c256cc470c10d22348568476378b66ffa3df649a34b"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkHandoffCoordinator.java",
+      "sha256": "96b7d11eca16a5f482397f13394c1444716b6e8a5458e4f284849afc2ae04d98"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkStagingProvider.java",
+      "sha256": "6fa08dd5fd5b1b86a3592648506a6421965105bbbc9b6ca52fa99295082afda9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ApkStagingStore.java",
+      "sha256": "028a1c0b71fb38ad4dd9c728cdbf59b95ea62590eaf0b9203266f2249f2cf796"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
+      "sha256": "81a0387a211dcd54278f4c71576cea7373aee343643dc5635d750e5a27a98965"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
+      "sha256": "cfb3ceec428a50ca90899815c6a5f202e7eab0f64bf5e4ad50d5d7fbea48f06f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/ForegroundPolicy.java",
+      "sha256": "5c0ff714d3a543d10fb9e5fcb89152ad2548fccad418f9fa9615539e7478dc90"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/MemoryPressurePolicy.java",
+      "sha256": "27ce88b83cdf891470d2350e314038cf4a40a56927cd7b6fecb911639952e3f9"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/system/PlatformResultRouter.java",
+      "sha256": "967ce2ea0ceb6456f1125bcec134df85ad2717a42f04ac2290188e7eab4b5a03"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/ApplicationsActivity.java",
+      "sha256": "e2e5627bf297e5752f78437e2358d43189f55e1e510f200a17af5769277df1be"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
+      "sha256": "e1d487cc2c361c836f1d5ad801026442212cc867361eaaa970e285a39690b36a"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
+      "sha256": "7fd3da0efde3c07d6fabf357ab0d1e575f922b9565b2ef27149f73886261f5e7"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
+      "sha256": "c674e9096dc0576d5d7335afe2547711e96b3405811c89744cf3df3ca98f9651"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsActivity.java",
+      "sha256": "593987cd3273886ecc6cbb771f751127b4b4f1b24139e7080684f135a73a5300"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/DownloadsAdapter.java",
+      "sha256": "fb7b6713cb914f08cfacba846aae5e536ef5f5bac037c0494480fc8ab7158e49"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
+      "sha256": "0827cb778e3e15bb5a174e3d97bc9ce05892a5a473f0c19a8abfe1acc35deaf3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/HistoryAdapter.java",
+      "sha256": "2cd80127c136a3e1c3a0bc8d643b85d97c5d8dd6bfb00b99d2e5ba2444c37160"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/LoadingProgressView.java",
+      "sha256": "d2fcf85dae131ae3ae5a610a24cccb4ac123806ba884672bf10ca2c9ca06a73f"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NativeDialogs.java",
+      "sha256": "665f586c0108f67bf2920a7b4369f993bec2570d3f36cdb1dc5adddabf1c51d8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/NewTabView.java",
+      "sha256": "8ce20d2541530cf495e9a54d3b6cc838e1795bf8141e7c9fbf3a34ab50888fb2"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/OverviewSelection.java",
+      "sha256": "ccef10c25944982b5f6d7492496b13a450e64be1d37f25f7cbf55e3de1d081de"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
+      "sha256": "55638e1d89fc16926c3f307c80a9dc2bf3f67983244cea6aa4c5d87b819b2e8c"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
+      "sha256": "4adc6ad25ded45fefd5aa33ed8f8442635b3e815f803c61fe761fb1d4f11db83"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SitePermissionsActivity.java",
+      "sha256": "eda0944c2ff854619e09ffdec366f95e4b02a1f8a92aee6e5650ecaf342affde"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SourceWarningActivity.java",
+      "sha256": "b5e3213515d7d69bfecf57e18588a8908791d6a03ffed526794ff0c05358e1c8"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/SubapplicationSettingsActivity.java",
+      "sha256": "afd750f402a5b904883e5f8b70a25b33a5501ccf7e0f412bff7ae6624e8789b1"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/TabPanel.java",
+      "sha256": "914c558c1556076a5182fde76bbfbddf6dd84fc7a77f576b16f7f633bce58abc"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
+      "sha256": "386dda27e22458a15604e2f1c87fcaca16a9f6041e0f4def3da6c301a9049eb3"
+    },
+    {
+      "path": "app/src/main/java/io/github/rebrowser/ui/WorkspacePanel.java",
+      "sha256": "c5aeb1b57e06084cc1e0b3928f453cbd599e1b757c7206180d826873ced60f4f"
+    }
+  ],
+  "allMainSourceSnapshotSha256": "9ee2795689949b8d0f4ec219879c187c51bb5b6973d98b07b06efca420c8115e",
+  "tests": 1436,
+  "testClasses": 158,
+  "failures": 0,
+  "errors": 0,
+  "newR68HostMethods": 8,
+  "actualGradlePhase": "r68-native-default-apps-03",
+  "actualSdkBootclasspathCompile": true,
+  "actualGradleGate": {
+    "memAvailableBytes": 8968413184,
+    "freeBytes": 6125338624,
+    "expectedIncrementalBytes": 33554432,
+    "reserveBytes": 1073741824
+  },
+  "actualLinkedResourceArchiveSha256": "174caf7f5db2e356add41fdac67c7095a794d52860a751c2ef18fc7f03206320",
+  "linkedResourceEntries": [
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_bing_icon.webp",
+      "bytes": 3538,
+      "sha256": "980b575e80fe76921f39bf6179e4ecf8cf7d816b98f3f23582bc3944c2369645",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_baidu_icon.webp",
+      "bytes": 1174,
+      "sha256": "9c3631e52e5949fb595ec1b9935edc299cc231fe3ff2a8258aad8a0a0b9fd840",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_google_icon.webp",
+      "bytes": 2788,
+      "sha256": "5c6a23e798706ff90a118a4fa1ca38fa12c1a1ab01204fa3bbaae9ab0c37ce54",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_duckduckgo_icon.webp",
+      "bytes": 11594,
+      "sha256": "96d13da31ec9d85d6bd4c058b2e3442df0eec235a5f0ad697c6a468e543754e3",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_baidu_logo.webp",
+      "bytes": 5044,
+      "sha256": "12a016bb77cbc7c9bf95c81744424e1559fb64e4d3716cc74b79dfadccd12781",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_bing_logo.webp",
+      "bytes": 13184,
+      "sha256": "8b8850038ede0bbf8a36d31432bed52363e250767583c6735848d42507490dfa",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_duckduckgo_logo.webp",
+      "bytes": 10406,
+      "sha256": "b342d8d871659b6a180181ed13ef1149d15c389b02c497dd29454513eafee604",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_bing_logo_photo.webp",
+      "bytes": 11778,
+      "sha256": "ae78f5079efbcc591285bac7135b9fd891aa6f11b866af326163e9d7605736b2",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_duckduckgo_logo_photo.webp",
+      "bytes": 9900,
+      "sha256": "e0ed9bc1926f527ab0606e68593412736dc209a0583bd33722500bb763eaa1e0",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_google_logo_photo.webp",
+      "bytes": 15872,
+      "sha256": "f040b2580ac18e37d663bb82d6ddc09902db631ca21346f50c56d216edcca88c",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable-nodpi-v4/rb_brand_google_logo_light_photo.webp",
+      "bytes": 8510,
+      "sha256": "fd73f70c047850ee37f51e108fabef5eb01a5d780801826e436dbbb61d8be478",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/raw/rb_new_tab_background.webp",
+      "bytes": 834672,
+      "sha256": "0e0d46d19d1ac602ce579b0eb16ae918367a9bcf36aa533636345c1cc7e558d3",
+      "scope": "exact original approved raster"
+    },
+    {
+      "name": "res/drawable/ic_rb_submit.xml",
+      "bytes": 752,
+      "sha256": "bf200a413f4acdf2489de4ac21bb9122146a2e68d794b86091f615c266f35be8",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_back.xml",
+      "bytes": 608,
+      "sha256": "9d50ff00eb0c55792c2d25afc2c4d2482ba439a37a30b1f491cfbd2430df82f8",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_forward.xml",
+      "bytes": 608,
+      "sha256": "a51aab51002a003ca5791c8e50500d9687216076c6efc9b351dbd2cc73d4f233",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_star_outline.xml",
+      "bytes": 780,
+      "sha256": "1edbc41b9fffaac611f7dde61a630d3371e32836ba9a122d8012a6bc59039340",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_orientation_portrait.xml",
+      "bytes": 700,
+      "sha256": "8b2c615c830142bcc543304d81626c893bb4314d4693edc0748117ead0d531d9",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_refresh.xml",
+      "bytes": 656,
+      "sha256": "0426e0e97e90dcb1f8c20048142ed37d55031c9513e7de86f772c6ac4c973ff5",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rebrowser_launcher.xml",
+      "bytes": 1248,
+      "sha256": "8fc7bf18925ff3ac9dc9f5e7b42820183f0f18ee54294d3f0ffdda30b6e745ba",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_star_filled.xml",
+      "bytes": 632,
+      "sha256": "d24696f19693e9ac4aaf27b4d13978c37b5a117647db063367112af03f2e3c67",
+      "scope": "binary compiled vector"
+    },
+    {
+      "name": "res/drawable/ic_rb_home.xml",
+      "bytes": 924,
+      "sha256": "0d9e65184c24cc0b2f8dc3ebbb1b580672c899dfeb0db172beade246140f2151",
+      "scope": "binary compiled vector"
+    }
+  ],
+  "actualCompiledManifestSha256": "2f256684699a70b1160315133e4b7345a59e414f609ccaeda85b05a49f7b9cf9",
+  "previousEvidenceRef": "evidence/native-external-web-R67-limited.json",
+  "fixedBusinessSemantics": [
+    "Restores inherited native system-default recommendation through General settings, no arbitrary new specialized UI redesign. Nine total read-only/typed directory rows, exactly four unchanged canonical stored General fields",
+    "RoleManager native own-caller UID isRoleAvailable/isRoleHeld observation on real source-accepted Settings load/resume; unavailable is UNKNOWN, never infers held from launch return/Activity result/default UI text/caller extras",
+    "Default row READ_ONLY is rejected by typed Change writer, never stored in SettingsRepository or RBSETT schema. Unrelated General draft/revert/save remains canonical existing IO flow",
+    "Native explicit click checks original frame AND original Binding identity, current native source, live foreground focused own Activity and no pending save. A callback from retired window cannot silently use new binding. Source/window/focus rechecked after PM query and before launch",
+    "Fresh fixed MANAGE_DEFAULT_APPS_SETTINGS query MATCH_DEFAULT_ONLY|MATCH_SYSTEM_ONLY; only exported enabled SYSTEM/UPDATED_SYSTEM_APP candidate also enabled at application level. Preferred synthetic resolver/third-party/noncandidate never directly launched; empty/over32 candidate sets reject. Narrow manifest query only, no QUERY_ALL_PACKAGES",
+    "Fresh explicit ComponentName from actual OS PackageManager, no hardcoded OEM package, arbitrary URI/caller extras/grants or role-assignment API. NEW_TASK keeps system page out of browser native task/Back stack",
+    "Flow-issued original-revision/thread-bound one-attempt request spent before startActivity; native return means only CALL_RETURNED_NOT_ROLE_ASSIGNED, unknown submission has no fallback/retry/default grant. Fresh native observation on own resume, not synthetic role success",
+    "HOST fabricated ResolveInfo tests qualify predicate/selection/size only, not actual OS/system signatures/source authority. Native handoff separately observed on owner Android15 phone"
+  ],
+  "nativeDemo": {
+    "appId": "io.github.rebrowser.development",
+    "formalRelease": false,
+    "abi": "arm64-v8a",
+    "deviceFamily": "Owner-connected OnePlus Android15/API35",
+    "installedApkSha256": "6da0f094d653de821107df723c52dee04cbd344a1c56a6eca19a0c22eda3c679",
+    "exactInstalledJavaSourcesMatchThisCompile": true,
+    "exactInstalledManifestMatches": true,
+    "actualJourneys": [
+      "Actual own native role label NOT_HELD before route, after return and after genuine own-app force-stop/cold launcher; never selected/granted default role",
+      "Native original General button opened actual com.android.permissioncontroller/.role.ui.DefaultAppListActivity, matching actual system-only resolver rather than guessed settings package. APK03 native own Settings task and system page task IDs differ",
+      "No system UI screenshot/dump/gesture/Back/default selection; returned only through own exported Main. System page launch is not asserted to change any role",
+      "Unsaved native home draft changed to approved domestic Baidu URL before handoff, preserved in same original Settings Activity after return; fresh role label remains NOT_HELD/button available. Reverted to approved cnBing draft before Save-and-return",
+      "Canonical own p5 settings ciphertext byte hash identical before route, after draft return/revert, after own force-stop/cold reload and after peer regression: no role preference writes, defaults seeded or source/key repair",
+      "Current APK03 external VIEW real Gecko full query+fragment LOCATION rendered; canonical favorites0 masks native underlay and Back returns original actual page",
+      "Two chained native JavaScript confirms actually TRUE/TRUE; real DOM fullscreen enter hides chrome and Android Back observes inactive then restores chrome; end requested configured domestic cnBing Home"
+    ],
+    "systemDefaultBrowserRoleChanged": false,
+    "phonePublicSitesDomesticOnly": true,
+    "staticFixtureHasNoInternetClientOrUpstreamProxy": true,
+    "formalDeviceEnrollmentPerformed": false,
+    "rootCommandsUsed": false,
+    "systemOrNetworkSettingsChanged": false,
+    "usbDisconnectObserved": false
+  },
+  "privateNativeWitnesses": [
+    {
+      "name": "r68-apk03-native-default-browser-witness-private.json",
+      "sha256": "e5329184a0b0d8cd4cc2d8d4ff98b94d8b1befe39042717413744be1f8dac6f7",
+      "bytes": 2307
+    },
+    {
+      "name": "r68-apk03-main-0-0-private.xml",
+      "sha256": "9439b3e9f28d33ccda57b57703385f2c21de21f5b48f6234988b1db45b049b61",
+      "bytes": 13894
+    },
+    {
+      "name": "r68-apk03-menu-1-0-private.xml",
+      "sha256": "249a48e9bbbbe08c73a14da062b7c19a544f36d2e45a5351d4153733debddcd5",
+      "bytes": 5463
+    },
+    {
+      "name": "r68-apk03-settings-2-0-private.xml",
+      "sha256": "7e426a13decdf91c1394ac72cc76655d34b14c27b34d7fe6eb6f18406a7f3635",
+      "bytes": 11564
+    },
+    {
+      "name": "r68-apk03-draft-before-os-3-0-private.xml",
+      "sha256": "17a4774101cfd94193c2557134d8ef890b83a4d2aca1d8aa32de2983f48621ff",
+      "bytes": 11565
+    },
+    {
+      "name": "r68-apk03-system-route-private.json",
+      "sha256": "9213c5ce818dcd32fd00ebe98583501c4cab530dee5bb214165d4c97f79a6f5d",
+      "bytes": 371
+    },
+    {
+      "name": "r68-apk03-main-4-0-private.xml",
+      "sha256": "9439b3e9f28d33ccda57b57703385f2c21de21f5b48f6234988b1db45b049b61",
+      "bytes": 13894
+    },
+    {
+      "name": "r68-apk03-menu-5-0-private.xml",
+      "sha256": "249a48e9bbbbe08c73a14da062b7c19a544f36d2e45a5351d4153733debddcd5",
+      "bytes": 5463
+    },
+    {
+      "name": "r68-apk03-settings-6-1-private.xml",
+      "sha256": "74812977a82d75d8907010beeae35cb186655dc362cd0f3330aec682c055a0ba",
+      "bytes": 11590
+    },
+    {
+      "name": "r68-apk03-draft-retention-private.json",
+      "sha256": "826694e7621544fffcce058bd09364e1cb101928d4ae77fa4336fe774a34be25",
+      "bytes": 468
+    },
+    {
+      "name": "r68-apk03-reverted-draft-7-0-private.xml",
+      "sha256": "295f7277619a81205bc3f03cf92cde8b7e902efa1cd8bbb027f0d53730588d85",
+      "bytes": 11587
+    },
+    {
+      "name": "r68-apk03-main-8-0-private.xml",
+      "sha256": "9439b3e9f28d33ccda57b57703385f2c21de21f5b48f6234988b1db45b049b61",
+      "bytes": 13894
+    },
+    {
+      "name": "r68-apk03-main-9-1-private.xml",
+      "sha256": "9439b3e9f28d33ccda57b57703385f2c21de21f5b48f6234988b1db45b049b61",
+      "bytes": 13894
+    },
+    {
+      "name": "r68-apk03-menu-10-0-private.xml",
+      "sha256": "249a48e9bbbbe08c73a14da062b7c19a544f36d2e45a5351d4153733debddcd5",
+      "bytes": 5463
+    },
+    {
+      "name": "r68-apk03-settings-11-1-private.xml",
+      "sha256": "7e426a13decdf91c1394ac72cc76655d34b14c27b34d7fe6eb6f18406a7f3635",
+      "bytes": 11564
+    },
+    {
+      "name": "r68-apk03-main-12-0-private.xml",
+      "sha256": "9439b3e9f28d33ccda57b57703385f2c21de21f5b48f6234988b1db45b049b61",
+      "bytes": 13894
+    },
+    {
+      "name": "r68-apk03-external-rendered-13-0-private.xml",
+      "sha256": "5cfd86199cc4a1fe4bababd6737c8368b2e5f78e199a0682f49ae4a260bc6f63",
+      "bytes": 5385
+    },
+    {
+      "name": "r68-apk03-external-rendered-13-1-private.xml",
+      "sha256": "5cfd86199cc4a1fe4bababd6737c8368b2e5f78e199a0682f49ae4a260bc6f63",
+      "bytes": 5385
+    },
+    {
+      "name": "r68-apk03-external-rendered-13-2-private.xml",
+      "sha256": "61f76743f377eaf758a55cf267b148f0388a6f8a61e0430b5ad91c45de3aaa38",
+      "bytes": 10679
+    },
+    {
+      "name": "r68-apk03-favorite-menu-14-0-private.xml",
+      "sha256": "396b3f804e3af31ba3dbea43b9a6b36e1f384e001de2dfc227abcd3dfd979191",
+      "bytes": 5462
+    },
+    {
+      "name": "r68-apk03-favorites-zero-15-0-private.xml",
+      "sha256": "c4a1ee65b46568b72b666c45c440b17d531ed7add16fcc8ac5330e0a1279d154",
+      "bytes": 8949
+    },
+    {
+      "name": "r68-apk03-favorites-back-16-0-private.xml",
+      "sha256": "61f76743f377eaf758a55cf267b148f0388a6f8a61e0430b5ad91c45de3aaa38",
+      "bytes": 10679
+    },
+    {
+      "name": "r68-apk03-prompts-ready-17-0-private.xml",
+      "sha256": "94a122b3411ed2deee4daca6ed731979439af8b03d41d5a30d8dba3bf19741b0",
+      "bytes": 5370
+    },
+    {
+      "name": "r68-apk03-prompts-ready-17-1-private.xml",
+      "sha256": "94a122b3411ed2deee4daca6ed731979439af8b03d41d5a30d8dba3bf19741b0",
+      "bytes": 5370
+    },
+    {
+      "name": "r68-apk03-prompts-ready-17-2-private.xml",
+      "sha256": "378b1585685d5af34bea98e6f7ff61fada9c6539c6e0799651218e5bfe9d22a3",
+      "bytes": 8239
+    },
+    {
+      "name": "r68-apk03-first-confirm-18-0-private.xml",
+      "sha256": "d3d38014890f68913ae358e8173eb37294044d1ff16590bcba9e15e5b3464033",
+      "bytes": 5925
+    },
+    {
+      "name": "r68-apk03-second-confirm-19-0-private.xml",
+      "sha256": "d8910d213d5f38822398901907e4008e54611d411c3dc72182ba56637bd676f5",
+      "bytes": 5926
+    },
+    {
+      "name": "r68-apk03-both-true-20-0-private.xml",
+      "sha256": "86807061021ea04ac6948c4e378b64bdc6ba20aeb46b7fd443b430be89fea1c9",
+      "bytes": 8241
+    },
+    {
+      "name": "r68-apk03-fullscreen-ready-21-0-private.xml",
+      "sha256": "1d88cc073d6f3ea252fcd1cd7cc9fa34a950335410c4528a1b7edf0057fab995",
+      "bytes": 5373
+    },
+    {
+      "name": "r68-apk03-fullscreen-ready-21-1-private.xml",
+      "sha256": "1d88cc073d6f3ea252fcd1cd7cc9fa34a950335410c4528a1b7edf0057fab995",
+      "bytes": 5373
+    },
+    {
+      "name": "r68-apk03-fullscreen-ready-21-2-private.xml",
+      "sha256": "f460a00155f6f3daf8dd17f715a3c08531a7f613982fd96c3479106ed5c4a3c7",
+      "bytes": 8992
+    },
+    {
+      "name": "r68-apk03-fullscreen-active-22-0-private.xml",
+      "sha256": "b3deb7522bc0eb3179b0341481a04057587ed40ce72ba40c1a6a4629444032b7",
+      "bytes": 6450
+    },
+    {
+      "name": "r68-apk03-fullscreen-back-23-0-private.xml",
+      "sha256": "f460a00155f6f3daf8dd17f715a3c08531a7f613982fd96c3479106ed5c4a3c7",
+      "bytes": 8992
+    },
+    {
+      "name": "r68-system-only-default-apps-resolver-private.txt",
+      "sha256": "4e2ab99e1cd65cacd9658c42730bf6bd40f37e1d78551b5b83ea661dfd496b16",
+      "bytes": 140
+    },
+    {
+      "name": "r68-apk02-own-uid-crash-log-private.txt",
+      "sha256": "34343c858542d70ff4209673d2de7974e7edea769cbfe439955c87769f3a9872",
+      "bytes": 1990
+    },
+    {
+      "name": "r68-apk02-system-route-task-witness-private.json",
+      "sha256": "a96d7cf8f66ce2ddfc1d8137a741d38933ff5788bb0d15c039c9ea70356de350",
+      "bytes": 371
+    },
+    {
+      "name": "r68-native-default-apps-top-component-private.json",
+      "sha256": "89da8479014ebe44748fe4d5e1041f91d3bf04fbbeb58b410ac3b8047e25f0c6",
+      "bytes": 232
+    },
+    {
+      "name": "r68-apk02-cold-launcher-route-private.txt",
+      "sha256": "7a0d605dbbfe958ae986906c3e288326c8fb74196940f85b7eaa02c79fb5ab37",
+      "bytes": 181
+    }
+  ],
+  "priorAttemptsAndHarnessLimits": [
+    "APK01 actual ordinary startActivity put native system page inside browser task. When later test returned via own Main without closing system page, stale foreign page could surface at task bring-to-front/update. APK02+ uses NEW_TASK, APK03 actual separate task proven; old test residue handled only by normal own launcher NEW_TASK|RESET_TASK_IF_NEEDED, not system Activity/data manipulation",
+    "First harness expected target package string to contain settings; actual valid OS handler is PermissionController. Preserved initial mismatch, independently verified system-only handler and returned own Main. No Android code hardcoded that erroneous assumption",
+    "Native am start -W wait timed out once while return had actually completed; observed existing own foreground before continuing, did not infer page failure/USB disconnect or automatically retry unknown route. Use actual native window/page observations, not SDK/shell return",
+    "Early own-resume UI assertions were bounded handoff observations, not crash proof. Own UID crash log retained historical R59 Spinner exception only, not a new R68 crash or a newly fixed issue. One UID-regex diagnostic and unsupported shell flag guess failed before meaningful qualification; actual supported numeric own launcher flags used",
+    "APK03 original Binding capture/focus/no-save checks were independent source hardening after APK02 native success, not claimed actual stale-callback exploit qualification"
+  ],
+  "limits": [
+    "Only pinned Gecko and owner Android15; no API30+/all-vendor/default role-held positive/real system-selection/physical rotation/power loss/OS-role-manager failure/stale event race qualification",
+    "Actual default role assignment was deliberately not performed under no-system-settings-change constraint. Owner may later choose manually in genuine system UI; administrators/webpage/caller data never set it silently",
+    "Persistent profile/promotion/checkpoint/context-clear completion/environment bookmarks/shelving/restore remain genuinely incomplete; no private-mode flip/new profile/login loss/unbounded state fake restoration",
+    "Full settings/finite web+OS grants/Popup/downloads/streaming video/PiP/orientation/official Music/Mail still pending; native clipboard same-origin engine fastpath limitation remains R66",
+    "Root offline custody/formal signer/enrollment0/current durable admin policy/effects/genuine highest-risk owner auth/four-source O95 admission hold unchanged"
+  ],
+  "androidRuntimeExecuted": true,
+  "apkBuilt": true,
+  "demoInstalled": true,
+  "formalTreeAdmissionRenewed": false
+}

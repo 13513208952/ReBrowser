@@ -10,9 +10,12 @@ import org.mozilla.geckoview.WebResponse;
 public final class ContentDelegate implements GeckoSession.ContentDelegate {
     private final GeckoSession bound;private final GeckoSessionOwner owner;private final GeckoSessionOwner.SessionRef ref;private final ComponentGate gate;private final PartitionCatalog partitions;private final SessionPresentation presentation;private boolean retired,unknownResponseClose;
     ContentDelegate(GeckoSession bound,GeckoSessionOwner owner,GeckoSessionOwner.SessionRef ref,ComponentGate gate,PartitionCatalog partitions,SessionPresentation presentation){if(bound==null || owner==null || ref==null || gate==null || partitions==null || presentation==null)throw new IllegalArgumentException("Exact native content binding required");this.bound=bound;this.owner=owner;this.ref=ref;this.gate=gate;this.partitions=partitions;this.presentation=presentation;}
-    private java.util.function.BiConsumer<String,String> historyTitle;
+    private java.util.function.BiConsumer<String,String> historyTitle;private Runnable historyPaint;
     void installBrowserHistoryTitle(java.util.function.BiConsumer<String,String> actualNativeHistory){GeckoSessionOwner.mainThread();if(historyTitle!=null || actualNativeHistory==null)throw new IllegalStateException("History title already connected");historyTitle=actualNativeHistory;}
     @Override public void onTitleChange(GeckoSession actual,String title){if(eligible(actual)){presentation.title(title);if(historyTitle!=null)try{historyTitle.accept(presentation.snapshot().reportedLocation(),title);}catch(RuntimeException unavailable){/* no duplicate visit or browsing failure */}}}
+    void installBrowserHistoryPaint(Runnable nativePaint){GeckoSessionOwner.mainThread();if(historyPaint!=null || nativePaint==null)throw new IllegalStateException("Native paint producer already connected");historyPaint=nativePaint;}
+    /** Some content was painted, NOT full rendering/page completion or a document grant. */
+    @Override public void onFirstContentfulPaint(GeckoSession actual){if(eligible(actual) && historyPaint!=null)try{historyPaint.run();}catch(RuntimeException unavailable){/* optional history cannot break rendering */}}
     @Override public void onFullScreen(GeckoSession actual,boolean fullScreen){if(eligible(actual))presentation.fullScreen(fullScreen);}
     @Override public void onCloseRequest(GeckoSession actual){if(eligible(actual))presentation.closeRequested();} // request, NEVER window-end acknowledgement
     @Override public void onCrash(GeckoSession actual){engineClosed(actual);}
@@ -28,6 +31,6 @@ public final class ContentDelegate implements GeckoSession.ContentDelegate {
     }
     static boolean closeRejectedBody(InputStream body){if(body==null)return true;try{body.close();return true;}catch(IOException|RuntimeException unknown){return false;}}
     boolean hasUnknownResponseClose(){return unknownResponseClose;} // sticky uncertainty; no false quiescence receipt
-    void retire(){GeckoSessionOwner.mainThread();retired=true;presentation.retire();}
+    void retire(){GeckoSessionOwner.mainThread();retired=true;historyTitle=null;historyPaint=null;presentation.retire();}
     private boolean eligible(GeckoSession actual){GeckoSessionOwner.mainThread();if(retired || actual!=bound || !bound.isOpen())return false;try{ComponentGate.BusinessPermit permit=gate.requireBusiness();owner.requireOpen(ref,permit);partitions.requireActive(ref.partition(),permit);return true;}catch(SecurityException|IllegalArgumentException|IllegalStateException unavailable){return false;}}
 }

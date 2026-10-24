@@ -8,6 +8,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.content.res.ColorStateList;
+import android.util.TypedValue;
+import io.github.rebrowser.R;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import io.github.rebrowser.bootstrap.ComponentGate;
@@ -24,7 +28,8 @@ public final class BrowserToolbar extends LinearLayout {
         main();if(root==null)return;java.util.ArrayDeque<View> pending=new java.util.ArrayDeque<>();pending.add(root);int count=0;
         while(!pending.isEmpty()){View view=pending.removeFirst();if(++count>10000)throw new IllegalStateException("Owned UI subtree too large");
             if(view instanceof android.view.ViewGroup){android.view.ViewGroup group=(android.view.ViewGroup)view;for(int i=0;i<group.getChildCount();i++)pending.addLast(group.getChildAt(i));}
-            if(view instanceof android.widget.AdapterView){android.widget.AdapterView<?> adapter=(android.widget.AdapterView<?>)view;adapter.setOnItemClickListener(null);adapter.setOnItemLongClickListener(null);adapter.setOnItemSelectedListener(null);}
+            if(view instanceof android.widget.AdapterView){android.widget.AdapterView<?> adapter=(android.widget.AdapterView<?>)view;if(!(adapter instanceof android.widget.Spinner))adapter.setOnItemClickListener(null); // Spinner forbids even a null item-click listener
+                adapter.setOnItemLongClickListener(null);adapter.setOnItemSelectedListener(null);}
             else view.setOnClickListener(null); // AdapterView forbids even setOnClickListener(null)
             view.setOnLongClickListener(null);view.setOnTouchListener(null);view.setContentDescription(null);
             if(view instanceof android.widget.CompoundButton)((android.widget.CompoundButton)view).setOnCheckedChangeListener(null);
@@ -55,12 +60,14 @@ public final class BrowserToolbar extends LinearLayout {
         public void clear(){observed="";draft="";editing=false;}
         private static String bounded(String value){if(value==null || value.length()>SearchEngines.MAX_INPUT_CHARS)throw invalid();for(int i=0;i<value.length();i++){char c=value.charAt(i);if(Character.isHighSurrogate(c)){if(++i>=value.length() || !Character.isLowSurrogate(value.charAt(i)))throw invalid();}else if(Character.isLowSurrogate(c))throw invalid();}return value;}
     }
-    private final EditText address;private final android.widget.TextView home,addChild,workspace,menu;private final View blankSpacer;private final AddressState state=new AddressState();
+    private final EditText address;private final ImageButton home;private final android.widget.TextView addChild,workspace,menu;private final View blankSpacer;private final AddressState state=new AddressState();
     private Binding binding;private Actions actions;private boolean nativeNewTab,photo;
     public BrowserToolbar(Context context){
         super(context);main();setOrientation(HORIZONTAL);setGravity(android.view.Gravity.CENTER_VERTICAL);setPadding(dp(6),dp(6),dp(6),dp(6));setElevation(dp(3));
         // These glyphs, dimensions and order are inherited from the approved native toolbar.
-        home=icon("⌂","打开当前子标签页的主页",19,46,50);home.setOnClickListener(v->dispatch(6));
+        // Owner-approved refinement ONLY: same placement/46x50dp touch area/action, stable
+        // vector geometry instead of a font-dependent house glyph. No navigation semantics change.
+        home=new ImageButton(context);home.setImageResource(R.drawable.ic_rb_home);home.setContentDescription("打开当前子标签页的主页");home.setScaleType(android.widget.ImageView.ScaleType.CENTER_INSIDE);TypedValue feedback=new TypedValue();if(context.getTheme().resolveAttribute(android.R.attr.selectableItemBackgroundBorderless,feedback,true))home.setBackgroundResource(feedback.resourceId);home.setPadding(dp(11),dp(13),dp(11),dp(13));addView(home,new LayoutParams(dp(46),dp(50)));home.setOnClickListener(v->dispatch(6));
         address=new EditText(context);address.setSaveEnabled(false);address.setImportantForAutofill(IMPORTANT_FOR_AUTOFILL_NO);address.setSingleLine(true);address.setTextSize(14);address.setTextColor(0xff222730);address.setHintTextColor(0xff646b76);address.setHint("搜索或输入网址");address.setContentDescription("地址与搜索");address.setSelectAllOnFocus(true);address.setPadding(dp(16),0,dp(12),0);address.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_URI);address.setImeOptions(EditorInfo.IME_ACTION_GO);address.setFilters(new InputFilter[]{new InputFilter.LengthFilter(SearchEngines.MAX_INPUT_CHARS)});android.graphics.drawable.GradientDrawable pill=new android.graphics.drawable.GradientDrawable();pill.setColor(0xffeff1f6);pill.setCornerRadius(dp(24));address.setBackground(pill);LayoutParams ap=new LayoutParams(0,dp(48),1);ap.setMargins(dp(2),0,dp(3),0);addView(address,ap);
         blankSpacer=new View(context);addView(blankSpacer,new LayoutParams(0,dp(48),1));blankSpacer.setVisibility(GONE);
         addChild=icon("＋","新建并打开子标签页",27,40,48);addChild.setOnClickListener(v->dispatch(7));
@@ -70,7 +77,7 @@ public final class BrowserToolbar extends LinearLayout {
     }
     public void bind(Binding current,Actions nativeActions,String displayUrl,boolean canGoBack){bind(current,nativeActions,displayUrl,canGoBack,false,1);}
     public void bind(Binding current,Actions nativeActions,String displayUrl,boolean canGoBack,boolean nativeNewTab,int workspaceCount){main();if(current==null || nativeActions==null || workspaceCount<1 || workspaceCount>64)throw invalid();current.check();if(binding!=current){unbind();binding=current;}actions=nativeActions;state.reportDisplay(displayUrl==null?"":displayUrl);if(!address.hasFocus())address.setText(state.visible());this.nativeNewTab=nativeNewTab;address.setVisibility(nativeNewTab?GONE:VISIBLE);blankSpacer.setVisibility(nativeNewTab?VISIBLE:GONE);workspace.setText(Integer.toString(workspaceCount));workspace.setContentDescription("管理总标签页，共"+workspaceCount+"个");appearance(photo);setControls(true);}
-    public void appearance(boolean photo){main();this.photo=photo;boolean light=photo && nativeNewTab;int foreground=light?0xffffffff:0xff31353d;setBackgroundColor(light?0x00000000:0xffffffff);for(android.widget.TextView v:new android.widget.TextView[]{home,addChild,workspace,menu})v.setTextColor(foreground);android.graphics.drawable.GradientDrawable counter=new android.graphics.drawable.GradientDrawable();counter.setColor(0x00000000);counter.setCornerRadius(dp(8));counter.setStroke(dp(2),light?0xffffffff:0xff444952);workspace.setBackground(counter);setElevation(light?0:dp(3));}
+    public void appearance(boolean photo){main();this.photo=photo;boolean light=photo && nativeNewTab;int foreground=light?0xffffffff:0xff31353d;setBackgroundColor(light?0x00000000:0xffffffff);for(android.widget.TextView v:new android.widget.TextView[]{addChild,workspace,menu})v.setTextColor(foreground);home.setImageTintList(new ColorStateList(new int[][]{new int[]{android.R.attr.state_enabled},new int[]{}},new int[]{foreground,(foreground&0x00ffffff)|0x61000000}));android.graphics.drawable.GradientDrawable counter=new android.graphics.drawable.GradientDrawable();counter.setColor(0x00000000);counter.setCornerRadius(dp(8));counter.setStroke(dp(2),light?0xffffffff:0xff444952);workspace.setBackground(counter);setElevation(light?0:dp(3));}
     public View menuAnchor(){return menu;}
     public boolean hasInputFocus(){main();return address.hasFocus();}
     public boolean dismissInput(){main();if(!address.hasFocus())return false;address.clearFocus();android.view.inputmethod.InputMethodManager ime=(android.view.inputmethod.InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);if(ime!=null)ime.hideSoftInputFromWindow(address.getWindowToken(),0);state.abandonEdit();address.setText(state.visible());return true;}

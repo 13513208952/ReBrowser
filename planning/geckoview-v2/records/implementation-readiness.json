@@ -1995,7 +1995,10 @@
       "validationMode": "android-app",
       "fullResponsibilityComplete": false,
       "researchCompleteForScope": true,
-      "scope": "D01real boundednativebookmark/folderview/callbackguard/privateviewtextlistenercleanup, no store/navigation/owner prompt; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
+      "historicalScope": "D01real boundednativebookmark/folderview/callbackguard/privateviewtextlistenercleanup, no store/navigation/owner prompt; R50 D03 concreteextensionreview+mainfixes,notwholebackend",
+      "scope": "R62 flat browser-global URL favorite view/native star/list/exact edit/delete/open canonical encrypted IO; remove wrong unused hierarchy. Not persistent/shelved environment bookmarks",
+      "currentLimitedEvidenceRef": "evidence/native-url-favorites-R62-limited.json",
+      "historicalEvidenceAndNotClaimedBelow": "D01/R50 scope retained below, not current Android execution status; current R62 native scope/limits live in currentLimitedEvidenceRef",
       "researchEvidence": [
         "records/native-private-record-store-contract.json",
         "records/module-integration-plan.json",
@@ -2006,11 +2009,11 @@
       "unresolvedWithinScope": [],
       "hostTestSources": [
         "app/src/test/java/io/github/rebrowser/ui/BookmarkViewTest.java",
-        "app/src/test/java/io/github/rebrowser/ui/BookmarkTreeD03Test.java"
+        "app/src/test/java/io/github/rebrowser/data/UrlFavoritesStoreTest.java"
       ],
       "junitClasses": [
         "io.github.rebrowser.ui.BookmarkViewTest",
-        "io.github.rebrowser.ui.BookmarkTreeD03Test"
+        "io.github.rebrowser.data.UrlFavoritesStoreTest"
       ],
       "hostEvidence": "evidence/D01-reviewed-worker-models-host-execution.json",
       "androidApiCompileEvidence": "evidence/production-main-agp-R50-checks.json",

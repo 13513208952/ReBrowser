@@ -27,6 +27,7 @@ public final class GeckoSessionOwner {
         /** Synchronous/idempotent positive-publication fencing, NOT writer or JNI quiescence. */
         default void retireDelegates(GeckoSession session,SessionRef owner){}
         default SessionPresentation.Frame presentation(SessionRef owner){throw new UnsupportedOperationException("Session presentation unavailable");}
+        default PromptDelegate promptDelegate(SessionRef owner){return null;}
     }
     public static final class SessionRef {
         private final GeckoSessionOwner issuer;
@@ -117,6 +118,7 @@ public final class GeckoSessionOwner {
     /** SDK onCrash/onKill says window closed; never re-open or silently restore here. */
     public void observeEngineClosed(SessionRef ref){mainThread();own(ref);if(ref.session.isOpen())throw new IllegalStateException("Engine window still open");initializer.retireDelegates(ref.session,ref);ref.state=State.CLOSED;sessions.remove(ref);}
     public SessionPresentation.Frame presentation(SessionRef ref,ComponentGate.BusinessPermit permit){requireOpen(ref,permit);SessionPresentation.Frame frame=initializer.presentation(ref);requireOpen(ref,permit);return frame;}
+    public PromptDelegate promptDelegate(SessionRef ref,ComponentGate.BusinessPermit permit){requireOpen(ref,permit);return initializer.promptDelegate(ref);}
     /** Native safety sweep only; no IPC publication, no whole-work/erasure/quiescence claim. */
     public static final class StopSweep {
         private final int closedWindows,stillTracked;

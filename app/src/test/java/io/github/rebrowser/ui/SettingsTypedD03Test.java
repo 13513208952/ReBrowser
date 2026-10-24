@@ -17,7 +17,7 @@ public final class SettingsTypedD03Test {
     }
     @Test public void editSessionValidatesThenSubmitsOnce(){
         SettingsActivity.EditSession session=new SettingsActivity.EditSession(4);
-        assertThrows(IllegalArgumentException.class,()->session.setBoolean("ui.row.general.preferences",true)); // generic navigation is not a boolean preference
+        assertThrows(IllegalArgumentException.class,()->session.setBoolean("ui.row.source.safety",true)); // generic navigation is not a boolean preference
         assertEquals("不支持的选项，未提交",session.chooseOption("ui.row.search.engine","nope"));
         assertNull(session.chooseOption("ui.row.search.engine","google"));
         assertTrue(session.isDirty());
@@ -29,10 +29,10 @@ public final class SettingsTypedD03Test {
         assertFalse(session.cancel());
     }
     @Test public void unknownObservationStaysInertAndChangeShapeIsChecked(){
-        SettingsActivity.Observed observed=new SettingsActivity.Observed(java.util.Collections.singletonMap("ui.row.general.preferences",Boolean.TRUE),1);
+        SettingsActivity.Observed observed=new SettingsActivity.Observed(java.util.Collections.singletonMap("ui.row.general.recent",Boolean.TRUE),1);
         assertNull(observed.value("ui.row.search.engine"));
         assertNull(observed.option("ui.row.search.engine"));
-        assertThrows(IllegalArgumentException.class,()->new SettingsActivity.Change("ui.row.general.preferences",SettingsSections.ValueKind.BOOLEAN,null,null,1));
+        assertThrows(IllegalArgumentException.class,()->new SettingsActivity.Change("ui.row.general.recent",SettingsSections.ValueKind.BOOLEAN,null,null,1));
         assertThrows(IllegalArgumentException.class,()->new SettingsActivity.Change("ui.row.search.engine",SettingsSections.ValueKind.FIXED_OPTION,null,"nope",1));
         assertTrue(new SettingsActivity.Change("ui.row.search.engine",SettingsSections.ValueKind.FIXED_OPTION,null,"bing",3).expectedRevision()==3);
     }

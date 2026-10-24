@@ -1,0 +1,20 @@
+{
+  "revision": "R60",
+  "authorship": "New native-authored vector geometry; not imported v1 artwork or a third-party icon",
+  "ownerApprovalScope": "Modest refinement of existing top-left house/home button; placement, touch target, navigation semantics and other layout unchanged",
+  "runtimeResources": [
+    {
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_home.xml",
+      "sha256": "03bab3b69cc1b15d96833cc839e724828b550e46b0c6ee06564cbc747802db04",
+      "opticalSizeDp": 24,
+      "scope": "Rounded strokes, normal/photo foreground tint, native touch feedback; replaces font-dependent house glyph only"
+    }
+  ],
+  "preserved": {
+    "touchWidthDp": 46,
+    "touchHeightDp": 50,
+    "position": "first toolbar item",
+    "contentDescription": "打开当前子标签页的主页",
+    "action": "Existing configured-home native route, not hard-coded URI or new session"
+  }
+}

@@ -41,6 +41,7 @@ public final class SigningIdentity {
         private final Object application;private final Identity identity;private final long version,updated;
         private OwnInspection(Object application,Identity identity,long version,long updated){this.application=application;this.identity=identity;this.version=version;this.updated=updated;}
         public Identity identity(){return identity;}
+        long nativePackageLastUpdateTime(){return updated;}
         boolean belongsTo(Object nativeApplication){return application==nativeApplication;}
         boolean sameInstallation(OwnInspection other){return other!=null && application==other.application && version==other.version && updated==other.updated && identity.current.equals(other.identity.current);}
     }

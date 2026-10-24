@@ -14,7 +14,7 @@ public final class SessionDisplayBinding {
     private final GeckoView view;
     private final GeckoSessionOwner owner;
     private final Object token=new Object();
-    private GeckoSessionOwner.SessionRef bound;
+    private GeckoSessionOwner.SessionRef bound;private SelectionDelegate selection;private boolean selectionAttempted,selectionInstalled;
     public SessionDisplayBinding(GeckoView view,GeckoSessionOwner owner){GeckoSessionOwner.mainThread();if(view==null || owner==null)throw new IllegalArgumentException("Native view/session owner required");this.view=view;this.owner=owner;}
     public void attach(GeckoSessionOwner.SessionRef ref,ComponentGate.BusinessPermit permit){
         GeckoSessionOwner.mainThread();owner.requireOpen(ref,permit);
@@ -28,6 +28,12 @@ public final class SessionDisplayBinding {
             throw failure;
         }
     }
+    /** Window-owned delegate, never installed permanently into a process session. Native
+     * source/selection/window validation belongs to this exact display, not an IPC payload. */
+    public SelectionDelegate bindNativeSelection(android.app.Activity actualActivity,ComponentGate.DataEpochPin nativeSource,Runnable requireOriginalWindow,ComponentGate.BusinessPermit permit){GeckoSessionOwner.mainThread();GeckoSession session=requireOwnDisplay();owner.requireOpen(bound,permit);if(selection!=null){if(!selectionInstalled || selection.isRetired())throw new IllegalStateException("Selection binding retired or installation unknown");return selection;}if(selectionAttempted)throw new IllegalStateException("Selection binding outcome unavailable");selectionAttempted=true;session.setSelectionActionDelegate(null);SelectionDelegate candidate=new SelectionDelegate(actualActivity,session,nativeSource,requireOriginalWindow);selection=candidate;session.setSelectionActionDelegate(candidate);selectionInstalled=true;return candidate;}
+    public void fenceNativeSelection(){GeckoSessionOwner.mainThread();if(selection!=null)selection.fenceDocument();}
+    public boolean hasNativeSelection(){GeckoSessionOwner.mainThread();return selection!=null && selection.hasPendingMode();}
+    public boolean requestNativeSelectionCancel(Runnable actualDestroyed){GeckoSessionOwner.mainThread();return selection!=null && selection.requestOwnedCancel(actualDestroyed);}
     public void updateVisibility(boolean visible,boolean focused,boolean keepActiveWhileHidden,ComponentGate.BusinessPermit permit){
         GeckoSessionOwner.mainThread();if(focused && !visible)throw new IllegalArgumentException("Hidden display cannot be focused");requireOwnDisplay();
         GeckoSession session=owner.requireOpen(bound,permit);session.setFocused(visible&&focused);session.setActive(visible||keepActiveWhileHidden);
@@ -36,9 +42,10 @@ public final class SessionDisplayBinding {
     public void hideOwnedSession(){GeckoSessionOwner.mainThread();requireOwnDisplay();owner.hide(bound);}
     public void detach(){
         GeckoSessionOwner.mainThread();if(bound==null)return;GeckoSession expected=requireOwnDisplay();
+        if(selection!=null){selection.retire();GeckoSession.SelectionActionDelegate actual=expected.getSelectionActionDelegate();if(actual!=null && actual!=selection)throw new IllegalStateException("Native selection owner replaced outside display");expected.setSelectionActionDelegate(null);selection=null;selectionInstalled=false;}
         if(expected.isOpen())expected.setFocused(false);
         GeckoSession released=view.releaseSession();if(released!=expected)throw new IllegalStateException("Wrong released display session");
-        owner.releaseDisplay(bound,token);bound=null;
+        owner.releaseDisplay(bound,token);bound=null;selectionAttempted=false;
         // Explicitly do NOT call shutdown(), close(), setActive(false), or assume async flush committed.
     }
     public boolean isAttached(){GeckoSessionOwner.mainThread();return bound!=null;}

@@ -144,7 +144,15 @@ class ApplicationTreeTests(unittest.TestCase):
         for source in sources:self.assertEqual(hashlib.sha256((P.parents[1]/source['path']).read_bytes()).hexdigest(),source['sha256'])
         self.assertEqual(hashlib.sha256(json.dumps(sources,ensure_ascii=False,separators=(',',':')).encode()).hexdigest(),current['allMainSourceSnapshotSha256'])
         self.assertEqual(current['failures']+current['errors'],0);self.assertTrue(current['actualSdkBootclasspathCompile'])
-        self.assertFalse(current['androidRuntimeExecuted']);self.assertFalse(current['apkBuilt'])
+        self.assertFalse(current['formalTreeAdmissionRenewed'])
+        if current['androidRuntimeExecuted']:
+            # Explicit limited native axis is not historical full-file/product readmission.
+            # This HOST test checks scope declarations, NOT the device execution itself.
+            self.assertTrue(current['apkBuilt']);self.assertTrue(current['demoInstalled'])
+            native=current['nativeDemo'];self.assertFalse(native['formalRelease'])
+            self.assertEqual(native['appId'],'io.github.rebrowser.development')
+            self.assertFalse(native['formalDeviceEnrollmentPerformed']);self.assertTrue(native['actualJourneys'])
+        else:self.assertFalse(current['apkBuilt'])
         self.assertTrue(status['runtimePending']);self.assertTrue(status['noCompletionOrAdmissionWaiver'])
         self.assertIn('R52历史准入快照',render(self.manifest)[0])
 

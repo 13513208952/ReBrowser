@@ -89,6 +89,26 @@ public final class StartupCoordinator {
     private volatile SourceBootstrap.Status inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;
     private volatile boolean inspectionIoPending;
     private boolean inspectionStarted;private final PublicationGate publication=new PublicationGate();
+    private volatile boolean firstSetupPending;private boolean firstSetupAttempted;private volatile FirstSetupFence firstSetupFence;
+    private volatile String firstSetupExplanation="";
+    /** Issued only by this actual still-cold native owner, not caller package/ADB/metadata. */
+    public static final class FirstSetupFence {
+        private final StartupCoordinator issuer;private FirstSetupFence(StartupCoordinator issuer){this.issuer=issuer;}
+        public Application nativeApplication(){return issuer.application;}
+        public void requireStillCold(Application exactApplication){if(exactApplication!=issuer.application || issuer.firstSetupFence!=this || !issuer.firstSetupPending || issuer.sourceWasEverAccepted || issuer.acceptedSource!=null || issuer.inspectionIoPending || issuer.runtimeOwner!=null || issuer.privateRecords!=null || issuer.browserDomain!=null || issuer.apkStages!=null || issuer.musicSessions!=null || issuer.outlookSessions!=null || issuer.gate.sourceState()!=ComponentGate.SourceState.LOCKED)throw new SecurityException("Native first-setup owner no longer cold");}
+    }
+    public boolean firstSetupPending(){return firstSetupPending;}
+    public String firstSetupExplanation(){return firstSetupExplanation;}
+    /** First setup never piggybacks an unknown normal inspection/active business epoch. */
+    public void requestFirstSetup(android.app.Activity nativeWindow){
+        ownerThread();if(firstSetupAttempted || coldContinuityFenceAttempted || !compiledSource.configured() || sourceWasEverAccepted || acceptedSource!=null || inspectionIoPending || publication.hasPendingHandoff() || runtimeOwner!=null || privateRecords!=null || browserDomain!=null || apkStages!=null || musicSessions!=null || outlookSessions!=null || nativeWindow==null || nativeWindow.getApplication()!=application)throw new SecurityException("First setup unavailable for current owner");
+        firstSetupAttempted=true;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));firstSetupPending=true;firstSetupExplanation="正在核对空白安装；尚未创建数据";FirstSetupFence fence=new FirstSetupFence(this);firstSetupFence=fence;notifyNativeEntry();
+        try{SourceBootstrap.requestFirstSetup(nativeWindow,fence,(inspection,explanation)->{ownerThread();if(firstSetupFence!=fence || !firstSetupPending)return;firstSetupExplanation=explanation;
+            try{fence.requireStillCold(application);if(inspection!=null && inspection.status()==SourceBootstrap.Status.ACCEPTED_STABLE){SourceBootstrap.AcceptedContext accepted=inspection.takeAccepted(application);acceptedSource=accepted;sourceWasEverAccepted=true;inspectionStatus=SourceBootstrap.Status.ACCEPTED_STABLE;sourceView.set(ComponentGate.SourceView.acceptedNative(accepted,accepted.dataEpoch()));}else{inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));}}
+            catch(RuntimeException stale){inspectionStatus=SourceBootstrap.Status.UNAVAILABLE;sourceView.set(ComponentGate.SourceView.untrusted(ComponentGate.SourceState.LOCKED));firstSetupExplanation="初始化结果未获当前原生来源确认；未解锁";}
+            finally{firstSetupPending=false;firstSetupFence=null;notifyNativeEntry();}
+        });}catch(RuntimeException knownEntryFailure){firstSetupPending=false;firstSetupFence=null;firstSetupExplanation="初始化入口不可用；未自动重试";notifyNativeEntry();throw knownEntryFailure;}
+    }
 
     private StartupCoordinator(Application application, ProcessRole role) {
         if (application == null || role != ProcessRole.MAIN) throw new IllegalStateException("Primary startup only");
@@ -104,11 +124,12 @@ public final class StartupCoordinator {
     }
     public ComponentGate gate() { return gate; }
     public interface NativeEntryObserver {void changed();}
-    private java.lang.ref.WeakReference<NativeEntryObserver> entryObserver=new java.lang.ref.WeakReference<>(null);private Object entryObserverToken;
-    public final class EntrySubscription implements AutoCloseable {private final Object token;private NativeEntryObserver retained;private EntrySubscription(Object token,NativeEntryObserver retained){this.token=token;this.retained=retained;}public void close(){ownerThread();if(entryObserverToken==token){entryObserver.clear();entryObserverToken=null;}retained=null;}}
-    /** Minimal source-status publication, not a trust setter/permit or business observer. */
-    public EntrySubscription observeNativeEntry(NativeEntryObserver observer){ownerThread();if(observer==null || entryObserver.get()!=null)throw new IllegalStateException("Native entry window already observed");Object token=new Object();entryObserverToken=token;entryObserver=new java.lang.ref.WeakReference<>(observer);return new EntrySubscription(token,observer);}
-    private void notifyNativeEntry(){main.post(()->{NativeEntryObserver observer=entryObserver.get();if(observer!=null)try{observer.changed();}catch(RuntimeException unavailable){/* UI status failure is not a different source or an unlock receipt */}});}
+    private final java.util.Map<Object,java.lang.ref.WeakReference<NativeEntryObserver>> entryObservers=new java.util.IdentityHashMap<>();
+    public final class EntrySubscription implements AutoCloseable {private final Object token;private NativeEntryObserver retained;private EntrySubscription(Object token,NativeEntryObserver retained){this.token=token;this.retained=retained;}public void close(){ownerThread();entryObservers.remove(token);retained=null;}}
+    /** Real native Activities overlap during transitions. Each owns its exact weak subscription;
+     * source loss reaches all live windows, without a process-held Activity or an unlock setter. */
+    public EntrySubscription observeNativeEntry(NativeEntryObserver observer){ownerThread();entryObservers.values().removeIf(ref->ref.get()==null);if(observer==null || entryObservers.size()>=16)throw new IllegalStateException("Native entry window subscription bound reached");Object token=new Object();entryObservers.put(token,new java.lang.ref.WeakReference<>(observer));return new EntrySubscription(token,observer);}
+    private void notifyNativeEntry(){main.post(()->{entryObservers.values().removeIf(ref->ref.get()==null);for(java.lang.ref.WeakReference<NativeEntryObserver> ref:new java.util.ArrayList<>(entryObservers.values())){NativeEntryObserver observer=ref.get();if(observer!=null)try{observer.changed();}catch(RuntimeException unavailable){/* UI failure is not a different source or an unlock receipt */}}});}
     /** Minimal native entry metadata only; does not initialize/inspect business/Gecko state. */
     public EntryStatus inspectNativeEntry(){return new EntryStatus(gate.sourceState(),runtimeOwner!=null,inspectionIoPending,inspectionStatus);}
     /** One bounded metadata/PM IO owner; no retry, marker creation or old business data open. */
@@ -153,7 +174,7 @@ public final class StartupCoordinator {
         private final StartupCoordinator issuer;private ColdContinuityFence(StartupCoordinator issuer){this.issuer=issuer;}
         public void requireStillCold(Application exactNativeApplication){if(exactNativeApplication!=issuer.application || !issuer.coldContinuityFenceAttempted || issuer.sourceWasEverAccepted || issuer.acceptedSource!=null || issuer.inspectionIoPending || issuer.inspectionStatus!=SourceBootstrap.Status.RECOVERY_REQUIRED || issuer.gate.sourceState()!=ComponentGate.SourceState.LOCKED || issuer.runtimeOwner!=null || issuer.privateRecords!=null || issuer.apkStages!=null || issuer.musicSessions!=null || issuer.outlookSessions!=null)throw new SecurityException("Native cold continuity safety no longer holds");}
     }
-    public ColdContinuityFence fenceNeverActivatedMismatchForNativeRecovery(){ownerThread();if(coldContinuityFenceAttempted || sourceWasEverAccepted || inspectionStatus!=SourceBootstrap.Status.SOURCE_MISMATCH || inspectionIoPending || publication.hasPendingHandoff() || acceptedSource!=null || runtimeOwner!=null || privateRecords!=null || apkStages!=null || musicSessions!=null || outlookSessions!=null)throw new SecurityException("Active/unknown native work cannot use cold erasure path");coldContinuityFenceAttempted=true;fenceNativeSourceBeforeContinuityMutation();return new ColdContinuityFence(this);}
+    public ColdContinuityFence fenceNeverActivatedMismatchForNativeRecovery(){ownerThread();if(firstSetupPending || coldContinuityFenceAttempted || sourceWasEverAccepted || inspectionStatus!=SourceBootstrap.Status.SOURCE_MISMATCH || inspectionIoPending || publication.hasPendingHandoff() || acceptedSource!=null || runtimeOwner!=null || privateRecords!=null || apkStages!=null || musicSessions!=null || outlookSessions!=null)throw new SecurityException("Active/unknown native work cannot use cold erasure path");coldContinuityFenceAttempted=true;fenceNativeSourceBeforeContinuityMutation();return new ColdContinuityFence(this);}
     public byte[] requireNativeDataEpoch(ComponentGate.BusinessPermit permit){
         businessLifetime.checkOrBind(permit);SourceBootstrap.AcceptedContext accepted=acceptedSource;if(accepted==null)throw new SecurityException("Native accepted source unavailable");byte[] epoch=accepted.dataEpoch();gate.requireDataEpoch(permit,epoch);return epoch;
     }

@@ -21,6 +21,12 @@
       "sha256": "6ad6d4f2b3b4098139e9c688ed76b3d989ad69f5a124960a15dcc3a0f7fe6070"
     },
     {
+      "sourcePath": "app/src/main/res/drawable/ic_rb_orientation_landscape.xml",
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_orientation_landscape.xml",
+      "bytes": 418,
+      "sha256": "55320412182d705b0282de1a7fdb39a5ed96084eac2bbfff8125c950ff9dc0a4"
+    },
+    {
       "sourcePath": "app/src/main/res/drawable/ic_rb_orientation_portrait.xml",
       "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_orientation_portrait.xml",
       "bytes": 419,
@@ -31,6 +37,18 @@
       "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_refresh.xml",
       "bytes": 348,
       "sha256": "7e95b52ea971ed10f8997caec02462400f0428cfa4800a3cce1d4420357b275e"
+    },
+    {
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rebrowser_launcher.xml",
+      "sourcePath": "app/src/main/res/drawable/ic_rebrowser_launcher.xml",
+      "sha256": "2f3a753dd71c6742bfb5c334fc00372d517a6268390053b9c9275859ea95ad0a",
+      "scope": "Exact approved v1.0.4 ReBrowser launcher icon; no bulk resource import or runtime-code leaf padding"
+    },
+    {
+      "runtimePath": "rebrowser/app/src/main/res/drawable/ic_rb_star_filled.xml",
+      "sourcePath": "app/src/main/res/drawable/ic_rb_star_filled.xml",
+      "sha256": "a34adb3119df3bc1a08092b232a427c95baa10cb9acbb8011bdec657d9e3509d",
+      "scope": "Exact approved v1.0.4 favorite-current-page filled star, paired with existing outline; no hierarchy UI"
     }
   ]
 }

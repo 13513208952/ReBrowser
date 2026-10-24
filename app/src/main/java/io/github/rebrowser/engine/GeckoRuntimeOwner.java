@@ -6,6 +6,7 @@ import java.util.Arrays;
 import io.github.rebrowser.bootstrap.ComponentGate;
 import io.github.rebrowser.bootstrap.ProcessRole;
 import org.mozilla.geckoview.GeckoRuntime;
+import org.mozilla.geckoview.GeckoRuntimeSettings;
 
 /** Application-process lifetime Gecko owner; native UI/background transitions never shut it down. */
 public final class GeckoRuntimeOwner {
@@ -34,11 +35,20 @@ public final class GeckoRuntimeOwner {
         if (runtime == null) {
             if (creationAttempted) throw new IllegalStateException("Gecko initialization already attempted; no automatic second runtime");
             creationAttempted = true;
-            runtime = GeckoRuntime.create(application);
+            GeckoRuntime candidate=GeckoRuntime.create(application, sourceBoundSettings());
+            GeckoRuntimeSettings observed=candidate.getSettings();
+            if(!"".equals(observed.getConfigFilePath()) || observed.getRemoteDebuggingEnabled() || observed.getConsoleOutputEnabled())throw new SecurityException("Native runtime startup policy mismatch");
+            runtime=candidate; // publish only after native readback; a failed attempt stays spent
         }
         sourceLifetime.checkEpochOrBind(permit,epoch); // source may change during native runtime creation; never publish old-context runtime
         return runtime;
     }
+    /** Null configuration path lets a debuggable Android app read external
+     * /data/local/tmp/$PACKAGE-geckoview-config.yaml and merge process args/preferences/extras.
+     * That file is NOT source-authorized. Empty explicitly disables this pinned SDK path;
+     * no Intent/debug config may substitute a profile, enable devtools or turn on console logs.
+     * This is startup policy only, NOT persistent-profile provisioning or a new source grant. */
+    static GeckoRuntimeSettings sourceBoundSettings(){return new GeckoRuntimeSettings.Builder().configFilePath("").remoteDebuggingEnabled(false).consoleOutput(false).build();}
     /** Lazy native extension owner, not extension installation/asset existence or page READY. */
     public io.github.rebrowser.bridge.BuiltinConnectorManager builtinConnectors(ComponentGate.BusinessPermit permit){mainThread();sourceLifetime.checkEpochOrBind(permit,epoch);if(connectors==null)connectors=new io.github.rebrowser.bridge.BuiltinConnectorManager(application,this,gate,permit);return connectors;}
     public void requireNativeBindings(Application expectedApplication,ComponentGate expectedGate,ComponentGate.DataEpochPin expectedSource){mainThread();if(expectedApplication!=application || expectedGate!=gate || expectedSource==null || !Arrays.equals(epoch,expectedSource.dataEpoch()))throw new SecurityException("Foreign native connector runtime binding");sourceLifetime.requireCurrent();}

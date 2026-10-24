@@ -2,9 +2,37 @@
 
 先ReBrowser主程序，再ReMusic、ReOutlook；相关管理员控制调试随实际业务服务一起实现。阶段性安装可操作Demo供机主体验反馈；恢复既有交互直接做，专门界面升级先提方案、经机主审批再实现。
 
+**当前远端检查点：R71 真机部分完成。** [所有者分析入口](CURRENT_CHECKPOINT.md)／[当前精确源码证据](evidence/native-device-dpi-R71-checkpoint.json)：1468HOST／170实际SDK934class，物理DPI七英寸呈现分类和手动纠正已接通；整轮最后默认恢复／回归未完成，最新完整限定轮次仍为R70，不伪造通过或放宽O95准入。
+
+**R70自身窗口方向历史完整限定轮次：** 恢复旧菜单点击横竖锁定／长按解除，canonical窄方向CAS回读，旧03无读迁移、显式意图写04且常规互不夹带。真机同Gecko原DOM／Cookie跨配置保留、横屏滚动菜单常规保存不丢方向、冷启保存横屏／最终恢复竖屏及原生回归，1452HOST／170主Java实际SDK931class／22资源。[R70限定证据](evidence/native-window-direction-R70-limited.json)。不写系统旋转、不冒称临时Profile冷恢复／平板小窗传感器与视频策略完成。
+
+**R69网页表单导航历史检查：** 原生 beforeunload／repost 一次确认与实际关闭焦点；真机取消／Back／实际 STOPPED 不离开原表单或重发，明确确认后实际 B／固定假 POST4→5。修正菜单关闭／焦点交接时序并重跑设置／收藏／提示／全屏，1439HOST／170主Java实际SDK930class。[R69限定证据](evidence/native-form-navigation-R69-limited.json)。未做真实交易／凭据测试，关闭标签离页保护、持久恢复及全浏览器未完成。
+
+**R68系统默认入口历史检查：** 原窗口／来源／焦点约束的显式系统默认应用页面，本UID原生角色只读实测，不从返回伪报授予。真机独立系统任务、设置草稿保留／还原／密文无写入、前后及冷启 NOT_HELD、外部URL／收藏／提示／全屏回归，1436HOST／170主Java实际SDK929class。[R68限定证据](evidence/native-default-browser-R68-limited.json)。未在系统页操作或更改默认角色，不冒称全OEM／持久环境完成。
+
+**R67外部网页历史检查：** 有界HTTP(S)action／data在独立来源接受后新建临时隔离环境；caller额外字段／私有action不是权限。真机冷暖／Cookie隔离／完整query-fragment／非法拒绝／设置上原窗口交接／后台不重放及提示收藏回归，1428HOST／170主Java实际SDK928class。[R67限定证据](evidence/native-external-web-R67-limited.json)。未改OS默认角色，不冒称旋转／持久环境／全浏览器完成。
+
+**R66原生选择历史检查：** 窗口级SDK选择菜单＋规范一次性原SDK选择／原生菜单复制剪切粘贴，实际范围返回／30秒负向过期／窗口解绑及提示全屏收藏回归实测，1422HOST／170主Java实际SDK926class。[R66限定证据](evidence/native-selection-clipboard-R66-limited.json)。内核同来源自身剪贴板快路允许／实际跨来源拒绝、后台DOM选区保留均如实记录，不冒称完整网页权限或擦除。
+
+**R65标准网页提示历史检查：** 标准JS alert／confirm／文本提示以原SDK请求、已接受来源下的原会话、弱窗口和一次性决定接入；实际UI关闭与原窗口焦点恢复后再发布。真机正反／输入取消／连续确认／后台／模态返回及全屏双层返回通过；连续提示时序失败保留后修正。1419HOST／170主Java实际SDK927class。[R65限定证据](evidence/native-standard-prompts-R65-limited.json)。不是OS／管理员／机主授权，其他提示／有限权限及持久环境继续。
+
+**R64原生网页全屏历史检查：** 所选实际Gecko全屏回调控制自有顶栏／系统栏；返回向原实际会话发退出并等新的原生false观测，非SDK返回。真机DOM进入／返回不导航／自行退出／后台重开／规范收藏返回实测，1411HOST／170主Java实际SDK924class。[R64限定证据](evidence/native-web-fullscreen-R64-limited.json)。不因此宣称视频方向／PiP／物理旋转或持久环境完成。
+
+**R63原生启动历史检查：** 显式禁用Gecko可调试默认外部YAML参数入口／console／devtools，实际设置回读后才发布runtime；真机冷Gecko／规范收藏／返回实测，1406HOST／170主Java实际SDK924class。[R63限定证据](evidence/native-runtime-startup-R63-limited.json)。持久Profile／无损转换／有界checkpoint仍按[真实能力条件](records/native-persistent-browser-admission-status.json)推进，不用私有模式翻转或新Profile丢登录充数。
+
+**R62已实现的主程序闭环：** 平面全局网址收藏菜单星标／列表／完整query编辑／原子页打开／取消删除／冷保留已走规范加密IO及真实Gecko；与副级整个环境书签严格分开。真机确认跨新总标签打开仍用当前隔离Cookie环境，重复／非法／取消不写盘。1404HOST／170主Java实际SDK924class／21资源，仍非持久环境与全产品验收。[R62收藏限定证据](evidence/native-url-favorites-R62-limited.json)。
+
+**R61历史访问数据闭环：** 原生内容绘制＋顶层位置记录实际已显示页面，不等整个加载链结束；受控正文仍未结束时历史已记录，离开中断保留访问，302源与绘制前错误不记录。1404HOST／170主Java实际SDK923class，非文档／任务完成授权。[R61历史限定证据](evidence/native-visible-history-R61-limited.json)。
+
+**R60真实主程序阶段：** 经机主许可小幅修正左上主页矢量图标，保持原范围和功能；历史标题／网址点击经规范存储新查、原条目／原标签／原来源及一次性期限回执接入真实导航，Android15本机A→B→历史A通过。1396HOST／170主Java实际SDK923class／20资源，仍非完整v2；快速离开尚未完成加载页面的访问捕获缺口继续修正。[当前限定证据](evidence/native-home-history-open-R60-limited.json)。
+
+**R59真实常规设置后端，不能因阶段进度自行停工。** 批准的三同级设置页已恢复；主页／搜索／背景／最近四项以原私有记录版本CAS、领域范围防夹带、完整读回后保存，实际主界面消费已通过。草稿跨页／后台／重开、无效输入阻止保存／回到原值不写盘、一主窗口／一设置窗口限定真机回归通过。1390HOST／170主Java实际SDK920class／19批准资源，当前开发APK源码清单精确绑定；其余权限／应用管理内容仍待真实服务闭合。[当前限定证据](evidence/native-general-settings-R59-limited.json)。
+
+**R58真实主程序闭环：** 独立开发包已在一加Android15完成原生首次清点／确认／密钥／三初始加密记录／来源提交及独立接受，真实Gecko网页、国内百度／cn.bing、总子标签／Cookie隔离、规范历史写入／暂停恢复／维持与错误页已限定实测。1379HOST／170主Java实际SDK915class，非完整v2／所有机型／完整来源恢复或正式设备登记。手机不配置代理、不共享电脑外网，只测国内站点；USB本机静态页不转发任何外网。[当前限定证据](evidence/native-first-setup-R58-limited.json)。当前远端进度提交789af99，R58运行工作仍未提交。
+
 R56已授权生成并编入初始Root公钥，私钥在仓库外加密暂存。唯一连接设备尚未安装正式v2，是真实安装公钥待取得的候选，不是已激活名单；名单外仍须保留有效管理员密钥＋真实机主授权路径。见[配置说明](../../docs/ADMINISTRATOR_PROVISIONING.md)／[R56源绑定检查](evidence/administrator-provisioning-R56-host.json)。1316项HOST、170主Java实际SDK编译通过，不等于来源接受、OS认证或设备登记。
 
-R57主窗口代码现已实际消费浏览器域／新标签页／Gecko显示，接入地址、主页、总／子标签切换、弱原生观测与返回；1338项HOST和全部170主Java实际SDK编译通过。首次初始化仍缺失，未安装或宣称可操作Demo，未绕过来源保护；持久恢复／Popup／完整设置等仍待继续。[当前源绑定检查](evidence/native-browser-window-R57-host.json)。
+R57当时：主窗口代码已实际消费浏览器域／新标签页／Gecko显示，接入地址、主页、总／子标签切换、弱原生观测与返回；1338项HOST和全部170主Java实际SDK编译通过。首次初始化仍缺失，未安装或宣称可操作Demo，未绕过来源保护；持久恢复／Popup／完整设置等仍待继续。[R57历史源绑定检查](evidence/native-browser-window-R57-host.json)。
 
 ## R54／R55已提交的历史修正范围
 
@@ -12,7 +40,7 @@ R57主窗口代码现已实际消费浏览器域／新标签页／Gecko显示，
 
 当前实际有限检查为170主Java／1307项HOST回归、实际SDK37.2 Java8编译、8项资源来源检查及实际AAPT2资源链接字节核对；不是Android渲染、Gecko／官网或可交付产品验收。完整BrowserActivity仍为开发锁定壳，NewTabView原生数据绑定尚待主窗口消费；Root未配置，不绕过来源保护。详见[当前工作状态与缺口](records/product-experience-correction-status.json)／[源绑定有限执行证据](evidence/product-experience-correction-R55-host.json)／[主程序](../../rebrowser/README.md)。
 
-以下R52及更早准入、数量和证据保持历史口径，不自动覆盖R53–R55当前物理源码；总树也已明确这一差别。
+以下R52及更早准入、数量和证据保持历史口径，不自动覆盖R53–R58当前物理源码；总树也已明确这一差别。
 
 ## 历史模块联动 R52：浏览器元数据持久化核心
 

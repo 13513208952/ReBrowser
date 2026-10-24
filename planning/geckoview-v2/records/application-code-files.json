@@ -107,6 +107,24 @@
           "state": "main-HOST-controlled-source-pipeline-tested-Android-pending"
         },
         {
+          "path": "app/src/test/java/io/github/rebrowser/continuity/FirstSetupFilesystemTest.java",
+          "kind": "host-first-setup-namespace",
+          "purpose": "Actual HOST bounded fresh directory/no-follow/nonempty/unknown/readback/library-marker checks; fixtures not native consent/Android key evidence",
+          "state": "host-tested-native-proof-separate"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/data/DeviceTypeSettingsStoreTest.java",
+          "kind": "explicit-device-choice-canonical-store",
+          "purpose": "Legacy03/04 bytes preserved, explicit05 optional direction/device enum, malformed/no seed/encrypted CAS and mutual field guards; not hardware identity",
+          "state": "scoped-HOST-native-partial-checkpoint"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/data/WindowOrientationStoreTest.java",
+          "kind": "canonical-direction-metadata-cas",
+          "purpose": "Actual codec03byte-preservation/explicit04/all transforms preserve/malformed04/encrypted-filesystem read-no-migrate/narrow direction-General CAS/missing-no-seed; no Android rotation",
+          "state": "scoped-HOST-native-execution-separate"
+        },
+        {
           "path": "app/src/test/java/io/github/rebrowser/data/BrowserMetadataStoreTest.java",
           "kind": "native-browser-metadata-regression",
           "purpose": "Actualboundedmodels/codec/JCAHOSTCAS tests; notOS/Geckoqualification",
@@ -215,6 +233,12 @@
           "kind": "private-record-jca-host-filesystem",
           "purpose": "Bounded independentlyversioned non-mail AESGCM metadata framing/purpose-epoch-scope-revision binding with strict lengths and nonce freshness; real HOST pipeline with explicitlyPRIVATEtoyAndroidprovenance",
           "state": "HOST-scoped-tested-Android-unexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/crypto/InitialRecordEnvelopeTest.java",
+          "kind": "host-initial-private-envelope",
+          "purpose": "JCA AEAD/FS initial frames consumed by canonical existing readers; full-byte/binding/key/nonce tests, not Android source evidence",
+          "state": "host-tested-native-proof-separate"
         },
         {
           "path": "app/src/test/java/io/github/rebrowser/crypto/DataKeyVaultTest.java",
@@ -346,6 +370,36 @@
           "state": "host-tested-native-callbacks-pending"
         },
         {
+          "path": "app/src/test/java/io/github/rebrowser/engine/NativeSelectionBoundsTest.java",
+          "kind": "native-selection-bounds-helper",
+          "purpose": "Actual app-side native selection UTF16/32Ki boundary including caret/multiline; not HOST clipboard/menu/Android execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/NativeNavigationPromptSdkTest.java",
+          "kind": "pinned-sdk-navigation-confirmation-contract",
+          "purpose": "Actual pinned SDK one-use response object/dismiss no allow/explicit allow-deny/null-is-ALLOW; private reflection HOST-only, not production/Android UI/native POST execution",
+          "state": "scoped-HOST-pinned-SDK-not-native-rendering"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/NativePromptLifetimeTest.java",
+          "kind": "native-prompt-request-ui-focus-lifetime",
+          "purpose": "Actual one-use response versus unknown show/actual dismiss/native focus publication guard and owner-thread reducer; not HOST Android prompt execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/NativeFullscreenObservationTest.java",
+          "kind": "native-fullscreen-observation-reducer",
+          "purpose": "Actual original-frame fullscreen sequence/false observation, unrelated metadata/old frame/retirement rejection; not HOST Android fullscreen execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/NativeRuntimeSettingsPolicyTest.java",
+          "kind": "pinned-sdk-settings-policy",
+          "purpose": "Actual pinned SDK builder default-null/external-config-disable distinction and independent settings mutation isolation; not HOST native-runtime execution",
+          "state": "scoped-HOST-not-native-runtime"
+        },
+        {
           "path": "app/src/test/java/io/github/rebrowser/engine/TemporaryHostBoundaryTest.java",
           "kind": "unit-native-temporary-session-host",
           "purpose": "Actual native observation model/reject callback and body-close helper HOST; no real Gecko/Android event execution",
@@ -356,6 +410,12 @@
           "kind": "delegated-scoped-model-api",
           "purpose": "L41 SDK158签名API编译、旧session/退役/秒单位/未知feature；合成DTO测试不能说真实Gecko callback运行",
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/engine/PrivateCookieHistoryVisitsTest.java",
+          "kind": "host-private-cookie-history-reducer",
+          "purpose": "Production reducer with HOST events: error/redirect/bootstrap/stale reject, reload/back/fragment/retirement, actual Android proof separate",
+          "state": "host-tested"
         },
         {
           "path": "app/src/test/java/io/github/rebrowser/engine/GeckoHistoryDelegateTest.java",
@@ -427,10 +487,22 @@
           "purpose": "多环境切换/临时环境、官方认证新窗、旋转小窗/进程恢复不串区"
         },
         {
+          "path": "app/src/test/java/io/github/rebrowser/browser/RequestedNavigationDisplayTest.java",
+          "kind": "host-request-display-observation",
+          "purpose": "Native bootstrap blank cannot erase requested web display; no document authority",
+          "state": "host-tested"
+        },
+        {
           "path": "app/src/test/java/io/github/rebrowser/browser/BrowserCatalogTest.java",
           "kind": "unit-real-browser-catalogs",
           "purpose": "14HOST actual primary/secondary/temp/shelf/pin/quota/tab/Popup/generation/Unicode/foreignhandle/thread tests, notGecko orBrowserStore",
           "state": "host-tested-not-Android-browser"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/browser/ExternalWebDataTest.java",
+          "kind": "untrusted-external-web-data",
+          "purpose": "Actual8192HTTP(S)data/query/fragment/rejected schemes/credentials/duplicate-attempt/thread model; no Android/source/Actor/grant minted by data",
+          "state": "scoped-HOST-not-native-runtime"
         },
         {
           "path": "app/src/test/java/io/github/rebrowser/browser/SearchEnginesTest.java",
@@ -541,6 +613,24 @@
           "state": "actual-scoped-HOST/API-tested-OS/Gecko/Viewunexecuted"
         },
         {
+          "path": "app/src/test/java/io/github/rebrowser/ui/NativeHistoryOpenTest.java",
+          "kind": "host-original-history-navigation",
+          "purpose": "Canonical entry ID/URL/expiry/deletion plus PRIVATE synthetic source-bound monotonic/one-use handoff; actual Android row navigation proof separate",
+          "state": "host-tested-native-proof-separate"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/OwnWindowDirectionPolicyTest.java",
+          "kind": "approved-own-window-direction-policy",
+          "purpose": "Phone legacy portrait/manual/sensor-landscape/unlocked, tabletFULL_USER/multi-PiPunspecified arithmetic; not Android device/sensor completion or OS setting",
+          "state": "scoped-HOST-no-native-rotation"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/ui/NativeGeneralSettingsTest.java",
+          "kind": "host-general-domain-intent",
+          "purpose": "UI-vocabulary to complete canonical General snapshot, application flags preserved, exact original revision and duplicate/invalid/schema-smuggling rejection; actual Android proof separate",
+          "state": "host-tested-native-source-evidence-separate"
+        },
+        {
           "path": "app/src/test/java/io/github/rebrowser/ui/SettingsActivityTest.java",
           "kind": "delegated-scoped-model-api",
           "purpose": "L10 未知配置保持未读取，分类/绑定/退役及返回处理，无已保存/已授权假象",
@@ -619,9 +709,9 @@
           "state": "scoped-HOST-not-native-runtime"
         },
         {
-          "path": "app/src/test/java/io/github/rebrowser/ui/BookmarkTreeD03Test.java",
-          "kind": "scoped-main-model-regression",
-          "purpose": "D03boundedcodeextensions/mainadversarialregressions; NoOS/View/Gecko execution",
+          "path": "app/src/test/java/io/github/rebrowser/data/UrlFavoritesStoreTest.java",
+          "kind": "host-flat-url-favorites-storage",
+          "purpose": "Replaces wrong unactivated folder-tree assumptions with actual encrypted flat favorites add/edit/remove/duplicate/exact initial-empty compatibility/source and CAS rejection; not environment bookmarks or Android proof",
           "state": "scoped-HOST-not-native-runtime"
         },
         {
@@ -992,6 +1082,18 @@
           "state": "scoped-production-model-HOST-tested-Android-UI-not-rendered"
         },
         {
+          "path": "app/src/test/java/io/github/rebrowser/system/DevicePresentationClassificationTest.java",
+          "kind": "physical-dpi-presentation-classification",
+          "purpose": "7inch/native-pixel-DPI/explicit manual/UNKNOWN vs labelled fallback arithmetic; not actual display, source/whitelist/admin or enrollment",
+          "state": "scoped-HOST-native-partial-checkpoint"
+        },
+        {
+          "path": "app/src/test/java/io/github/rebrowser/system/DefaultAppsHandlerTest.java",
+          "kind": "system-default-handler-predicate",
+          "purpose": "Fabricated ResolveInfo predicate/eligible SYSTEM/exported/enabled/preferred candidate match/over32 bound; not Android PM/signature/role qualification",
+          "state": "scoped-HOST-model-only"
+        },
+        {
           "path": "app/src/test/java/io/github/rebrowser/system/DefaultBrowserFlowTest.java",
           "kind": "delegated-scoped-model-api",
           "purpose": "L26 未知/持有/未持有分开，返回不是角色获取成功，页面请求不是已授权系统修改",
@@ -1176,19 +1278,20 @@
       "path": "app/src/main/java/io/github/rebrowser/continuity/SourceBootstrap.java",
       "group": "continuity",
       "kind": "native-code",
-      "responsibility": "原生自身签名/编译Root/last-good稳定快照检查与一次性交接回执，非元数据布尔解锁",
+      "responsibility": "原生自身签名/Root/last-good检查及一次性交接；冷首次安装清点/原生确认/新密钥与初始记录后提交，非布尔解锁",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT04"
       ],
-      "validationMeaning": "27 actual HOST provenance/metadata IO/one-shot transfer/publication model cases; private synthetic own-OS provenance, no Android source/Handler publication",
+      "validationMeaning": "Historical27 HOST provenance/metadata/publication retained; R58 explicit first-setup backend plus actual Android15 init/readback/cold resume, not full vendor/power-loss qualification",
       "runtimePending": true,
       "testReferenceGroup": "continuity",
       "implementationReadinessRef": "records/implementation-readiness.json",
       "implementationEvidence": [
         "records/native-source-bootstrap-contract.json",
         "evidence/native-source-bootstrap-host-execution.json",
-        "evidence/production-main-agp-R45-checks.json"
+        "evidence/production-main-agp-R45-checks.json",
+        "evidence/native-first-setup-R58-limited.json"
       ]
     },
     {
@@ -1549,7 +1652,7 @@
       "path": "app/src/main/java/io/github/rebrowser/crypto/InstallKeyStore.java",
       "group": "crypto",
       "kind": "native-code",
-      "responsibility": "安装设备EC密钥持有与目标challenge，不用序列号作凭据",
+      "responsibility": "安装EC密钥持有/目标challenge，冷首次原生生成及持有校验，不用序列号或生成本身作名单凭据",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT04",
@@ -1570,7 +1673,7 @@
       "path": "app/src/main/java/io/github/rebrowser/crypto/DataKeyVault.java",
       "group": "crypto",
       "kind": "native-code",
-      "responsibility": "epoch包装密钥/账户用途DEK与版本",
+      "responsibility": "epoch包装密钥/用途DEK与版本；明确首次创建仅凭私有原生同意能力，既有读取不补建密钥",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT04",
@@ -2083,7 +2186,8 @@
       "path": "app/src/main/java/io/github/rebrowser/engine/GeckoRuntimeOwner.java",
       "group": "engine",
       "kind": "native-code",
-      "responsibility": "主进程唯一runtime，原生子进程由SDK管理",
+      "responsibility": "主进程唯一runtime／禁止来源外部启动配置／原生设置回读后发布；子进程由SDK管理",
+      "currentLimitedEvidenceRef": "evidence/native-runtime-startup-R63-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
@@ -2153,7 +2257,8 @@
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionDisplayBinding.java",
       "group": "engine",
       "kind": "native-code",
-      "responsibility": "View附着/分离/可见/focus与session生命分离",
+      "responsibility": "View附着/分离/可见/focus与session生命分离；窗口级选择委托安装／撤销／未知状态保留",
+      "currentLimitedEvidenceRef": "evidence/native-selection-clipboard-R66-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
@@ -2259,7 +2364,8 @@
       "path": "app/src/main/java/io/github/rebrowser/engine/PromptDelegate.java",
       "group": "engine",
       "kind": "native-code",
-      "responsibility": "网站提示/文件选择的Native/系统等待",
+      "responsibility": "原SDK标准JS及离页／重发表单确认／弱原生窗口／一次决定与实际关闭焦点发布／负向栅栏不授予OS或来源",
+      "currentLimitedEvidenceRef": "evidence/native-form-navigation-R69-limited.json",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -2306,7 +2412,8 @@
       "path": "app/src/main/java/io/github/rebrowser/engine/SelectionDelegate.java",
       "group": "engine",
       "kind": "native-code",
-      "responsibility": "网页选择/复制与用户动作",
+      "responsibility": "自有窗口SDK浮动选择菜单／原会话与来源复核／原生复制剪切粘贴／实际模式关闭后退；非JS持久剪贴板授权",
+      "currentLimitedEvidenceRef": "evidence/native-selection-clipboard-R66-limited.json",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -2748,7 +2855,8 @@
       "path": "app/src/main/java/io/github/rebrowser/browser/BookmarkStore.java",
       "group": "browser",
       "kind": "native-code",
-      "responsibility": "收藏/书签/搜索设置",
+      "responsibility": "规范加密平面全局URL收藏／原ID+URL+版本CRUD；不混同副级环境书签",
+      "currentLimitedEvidenceRef": "evidence/native-url-favorites-R62-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -2816,7 +2924,8 @@
       "path": "app/src/main/java/io/github/rebrowser/browser/ExternalNavigation.java",
       "group": "browser",
       "kind": "native-code",
-      "responsibility": "拒绝无效/userinfo/控制字符URL，重建私有Intent丢外部extras/selector/ClipData，合法链接入新临时隔离环境",
+      "responsibility": "8192界限HTTP(S)外部URL数据／拒绝scheme-userinfo-控制字符／丢caller extras与grants／一次尝试非authority／独立来源接受后进新临时隔离环境",
+      "currentLimitedEvidenceRef": "evidence/native-external-web-R67-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -2848,7 +2957,8 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserActivity.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "主窗口和Native/Gecko显示协调",
+      "responsibility": "来源约束主窗口／收藏历史后退全屏及外部隔离／原菜单关闭焦点后一次交接／方向窄写回读弱原窗口消费与横屏菜单可达性",
+      "currentLimitedEvidenceRef": "evidence/native-window-direction-R70-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -2866,7 +2976,7 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/BrowserToolbar.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "原生地址/返回/刷新/输入建议",
+      "responsibility": "原生地址／主页等动作；主页图标经批准改为矢量与原生反馈，保持原点击范围和配置主页路由",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -2973,7 +3083,8 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/BookmarkView.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "收藏和书签操作",
+      "responsibility": "平面URL收藏列表／标题网址编辑删除打开原生意图／原窗口帧校验；不提供环境或文件夹树",
+      "currentLimitedEvidenceRef": "evidence/native-url-favorites-R62-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -3021,7 +3132,7 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/HistoryActivity.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "原生历史查询/期限/清理入口",
+      "responsibility": "原生历史查询／期限／清理；点击按原条目重新核对，回到原主窗口与子标签的一次性导航，不借Intent或新目标替换",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -3211,7 +3322,8 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsActivity.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "通用/权限/应用管理入口",
+      "responsibility": "三同级Native设置；四字段真实常规草稿与原版本CAS回读／独立系统默认入口与本UID角色实测不写偏好／未完成能力不伪报",
+      "currentLimitedEvidenceRef": "evidence/native-default-browser-R68-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -3258,7 +3370,8 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/SettingsSections.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "Native设置项与结果绑定",
+      "responsibility": "三同级Native设置九项／四可保存常规字段／系统默认只读路由不进Change写入／目录不授予来源或角色",
+      "currentLimitedEvidenceRef": "evidence/native-default-browser-R68-limited.json",
       "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT05",
@@ -3488,7 +3601,8 @@
       "path": "app/src/main/java/io/github/rebrowser/ui/WindowPresentation.java",
       "group": "ui",
       "kind": "native-code",
-      "responsibility": "状态栏/全屏/窗口布局，不改用户全局设置",
+      "responsibility": "自身窗口栏全屏布局／继承方向策略及原Binding焦点约束请求，API返回非实际旋转，不改系统全局设置",
+      "currentLimitedEvidenceRef": "evidence/native-window-direction-R70-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT05",
@@ -3678,7 +3792,8 @@
       "path": "app/src/main/java/io/github/rebrowser/permissions/ClipboardCoordinator.java",
       "group": "permissions",
       "kind": "native-code",
-      "responsibility": "网页单次原生输入信用/遮挡与代次取消，不由JS或持久grant生成；管理员证明与OS前台条件另行校验；Native clipboard read走SelectionActionDelegate，不把screenPoint当手势证明",
+      "responsibility": "实际SDK Selection与原生菜单的一次性复制剪切粘贴／密码复制拒绝／原窗口来源与30秒期限；不直接读系统剪贴板或把JS坐标当手势，不冒称完整网页API权限政策",
+      "currentLimitedEvidenceRef": "evidence/native-selection-clipboard-R66-limited.json",
       "state": "planned-not-implemented",
       "validationRefs": [
         "VT02",
@@ -4960,7 +5075,8 @@
       "path": "app/src/main/java/io/github/rebrowser/system/DeviceWindowState.java",
       "group": "system",
       "kind": "native-code",
-      "responsibility": "窗口/平板/横竖屏事实，不以型号硬门控",
+      "responsibility": "自身窗口事实／原生最大像素与物理DPI七英寸呈现分类及显式纠正，UNKNOWN不伪造事实，不作来源或身份门控",
+      "currentLimitedEvidenceRef": "evidence/native-device-dpi-R71-checkpoint.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
@@ -4998,7 +5114,8 @@
       "path": "app/src/main/java/io/github/rebrowser/system/DefaultBrowserFlow.java",
       "group": "system",
       "kind": "native-code",
-      "responsibility": "用户/已授权动作打开系统推荐默认应用页，已持有角色也可打开；只读角色不直接设置默认，不交第三方/合成Resolver",
+      "responsibility": "本UID原生只读角色／原窗口来源双栅栏／显式用户打开独立系统默认应用任务／一次尝试非角色回执／不交第三方或合成Resolver",
+      "currentLimitedEvidenceRef": "evidence/native-default-browser-R68-limited.json",
       "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
@@ -5584,7 +5701,8 @@
       "path": "app/src/main/java/io/github/rebrowser/settings/SettingsRepository.java",
       "group": "settings",
       "kind": "native-code",
-      "responsibility": "本机通用/背景/搜索/子设置读写，与Activity分离",
+      "responsibility": "canonical设置／四常规与方向各自窄CAS／旧03字节无读迁移／仅显式方向写04且各字段互不夹带，独立Activity",
+      "currentLimitedEvidenceRef": "evidence/native-window-direction-R70-limited.json",
       "state": "source-in-progress-api-compiled",
       "validationRefs": [
         "VT02",
@@ -5900,7 +6018,8 @@
       "path": "app/src/main/java/io/github/rebrowser/engine/SessionPresentation.java",
       "group": "engine",
       "kind": "native-code",
-      "responsibility": "Bounded owner-thread immutable SESSION display/security/history/loading observations, never actual document identity/task/grant or native work-end",
+      "responsibility": "Bounded owner-thread immutable SESSION display/security/history/loading/fullscreen-sequence observations; original-session false event settles fullscreen Back only, never document/task/grant/native work-end",
+      "currentLimitedEvidenceRef": "evidence/native-web-fullscreen-R64-limited.json",
       "state": "implemented-host-tested-not-integrated",
       "validationRefs": [
         "VT02",
@@ -6061,7 +6180,8 @@
         "app/src/main/assets/background/",
         "rebrowser/app/src/main/res/",
         "planning/geckoview-v2/records/native-new-tab-resource-provenance.json",
-        "planning/geckoview-v2/records/native-browser-chrome-resource-provenance.json"
+        "planning/geckoview-v2/records/native-browser-chrome-resource-provenance.json",
+        "planning/geckoview-v2/records/native-home-button-resource.json"
       ]
     },
     {

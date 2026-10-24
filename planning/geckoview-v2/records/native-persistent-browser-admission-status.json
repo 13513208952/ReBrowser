@@ -1,0 +1,27 @@
+{
+  "revision": "R63-capability-review-not-implementation",
+  "productRequirement": "Temporary→secondary→primary and open/shelved secondary environments must retain the SAME environment/Profile/login and children; global URL favorites are separate. No silent private-mode flip, new-Profile swap, JS-cookie-only migration or metadata-only restoration claim.",
+  "currentNativeFactory": "Temporary/private-cookie only,8live sessions. PartitionCatalog contexts are process-local and cannot be reconstituted merely from IPC/catalog labels.",
+  "pinnedGecko": {
+    "version": "158.0.20261007201254",
+    "classesSha256": "f42db6ed0c09a2aa091d663ebae13df4ed3e0a1e8ad98555781754bb657ef049",
+    "sessionPrivateAndContextSettings": "Actual SDK: Builder.usePrivateMode/contextId set private GeckoSessionSettings setters; no public live-session conversion API. Reopening a new normal session does NOT prove existing private login/storage transferred.",
+    "contextClear": "StorageController.clearDataForSessionContext returns void and dispatches GeckoView:ClearSessionContextData. Pinned GeckoViewStorageController clearSessionContextData calls clearData/QMS without returning a completion receipt. SDK requires closing all affected sessions before clearing to avoid reaccumulation. Return/timeout/barrier guessing cannot certify erasure.",
+    "checkpoint": "SessionState.toString invokes mState.toJSONObject().toString; writeToParcel first invokes toString. Post-string truncation/dataSize is too late to bound the first full materialization. Public history list is not full hidden form/storage/checkpoint state.",
+    "runtimeLifetime": "One main GeckoThread/runtime initialization; same-process second-runtime/alternate-profile fallback is not a valid migration strategy.",
+    "startupConfig": "Default null configFilePath can read external /data/local/tmp package YAML for debuggable apps and merge args/preferences/extras; corrected separately in actual R63 runtime startup. Empty disables this pinned path; no hostile file was created for tests."
+  },
+  "requiredBeforePersistentEnablement": [
+    "Source/epoch-bound native Gecko profile namespace and birth before runtime creation; no external/Intent path, unrecognized-directory adoption or default-key repair",
+    "Canonical durable native workspace→context binding and actual owner-issued restoration admission; authenticated metadata remains separate from latest/current document/permission authority",
+    "Preserve existing live private environment or explicitly keep it unpromotable pending supported lossless conversion; never silently drop HttpOnly cookies/IDB/localStorage/service workers",
+    "If investigating future promotable contexts backed persistently from their birth, keep old private contexts untouched and assess temporary privacy/lifetime/clear semantics first; this is an option, not an approved completed design",
+    "Bounded native checkpoint capture/restore with honest partial-vs-full semantics, original child/context association, failure/unknown states and actual IO close/readback",
+    "Integrated actual UI/store/runtime open→shelf→cold→restore journey with same cookie/storage identity; no detached registry/method-count completion",
+    "Epoch cutover/erasure must track native runtime, sessions, queued IO and all storage owners; close/Java return/timeout do not establish whole cleanup"
+  ],
+  "implementedFromThisReview": "Only R63 fixed runtime startup configuration/readback, tested on actual Android. Persistent environment/profile birth, conversion and restoration remain pending.",
+  "currentEvidenceRef": "evidence/native-runtime-startup-R63-limited.json",
+  "globalUrlFavoritesEvidenceRef": "evidence/native-url-favorites-R62-limited.json",
+  "formalAdmissionOrSourceCreationWaiver": false
+}

@@ -2,7 +2,7 @@
 
 **ReBrowser** 是一个**实验性项目**，依赖于安卓系统webview组件，提供了一个**轻量级浏览器环境**，同时提供了两个实例性基于网页的子应用**Reoutlook和Remusic**.
 
-[下载 v1.0.4](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.4) · [开始使用](#开始使用) · [项目定位](docs/PROJECT_VISION.md) · [文档目录](docs/README.md)
+[下载 v1.0.5](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.5) · [开始使用](#开始使用) · [项目定位](docs/PROJECT_VISION.md) · [文档目录](docs/README.md)
 
 Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进行重新包装和针对性代码工作，使其最终以应用的形态展现。目前总共有**2个子应用**可用，分别是**ReOutlook和ReMusic**.
 
@@ -54,13 +54,13 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 
 ## 下载与安装
 
-当前正式版本：**[v1.0.4](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.4)**。从 [GitHub Releases](https://github.com/13513208952/ReBrowser/releases) 下载，使用 [SHA256SUMS.txt](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/SHA256SUMS.txt) 校验。
+当前正式版本：**[v1.0.5](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.5)**。从 [GitHub Releases](https://github.com/13513208952/ReBrowser/releases) 下载，使用 [SHA256SUMS.txt](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/SHA256SUMS.txt) 校验。
 
 | 套件 | 内容 | 下载 |
 | --- | --- | --- |
-| **极简无背景** | 仅 ReBrowser，纯白新标签页，约 220 KB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/ReBrowser-v1.0.4-minimal-lite.apk) |
-| **极简有背景** | 仅 ReBrowser，包含蓝紫背景照片，约 1.07 MB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/ReBrowser-v1.0.4-minimal-background.apk) |
-| **全量有背景** | ReBrowser、ReOutlook、ReMusic，约 1.14 MB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.4/ReBrowser-v1.0.4-full-background.apk) |
+| **极简无背景** | 仅 ReBrowser，纯白新标签页，约 220 KB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/ReBrowser-v1.0.5-minimal-lite.apk) |
+| **极简有背景** | 仅 ReBrowser，包含蓝紫背景照片，约 1.07 MB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/ReBrowser-v1.0.5-minimal-background.apk) |
+| **全量有背景** | ReBrowser、ReOutlook、ReMusic，约 1.15 MB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/ReBrowser-v1.0.5-full-background.apk) |
 
 **使用 ReOutlook 或 ReMusic，请选择全量包。** 子应用在设置中主动启用或进入，不需要另装 APK。
 
@@ -70,7 +70,7 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 - **三包同安装身份，不能并装。升级只覆盖安装，不卸载、不清数据。** 极简可覆盖升级到全量；安装新版全量后，普通安装器不能回退极简或较低版本码的旧包。
 - 升级保留既有背景和近期访问选择。无背景包不含照片；历史为空时不显示近期访问。重要的临时浏览环境请先上锁，避免进程重启后丢失。
 
-v1.0.4 集中改进音乐启动、首页与完整播放器布局、官方歌词和桌面歌词，并修正系统媒体进度跳转卡住的问题。验证范围及未测项目见[本版发布记录](docs/releases/v1.0.4.md)。
+v1.0.5 新增 ReOutlook／ReMusic 独立设置、缓存与全部本机数据的分别清理，以及支持情况下的当前网站部分存储估算。详细变化和验证范围见[本版发布记录](docs/releases/v1.0.5.md)。
 
 ## 开始使用
 

@@ -10,7 +10,8 @@ final class ReBrowserMusicEntrance {
     private final ComponentName alias;
     ReBrowserMusicEntrance(Context context) {
         packages = context.getPackageManager();
-        alias = new ComponentName(context.getPackageName(), context.getPackageName() + ".ReBrowserMusicLauncher");
+        alias = new ComponentName(context.getPackageName(),
+                ReBrowserMusicActivity.class.getPackage().getName() + ".ReBrowserMusicLauncher");
     }
     boolean enabled() {
         if (!BuildConfig.FULL_SUITE) return false;

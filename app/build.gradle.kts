@@ -1,5 +1,15 @@
+import java.io.File
+
 plugins {
     id("com.android.application")
+}
+
+// All generated artifacts for the 1.06-alpha1 workspace can be redirected outside
+// the source tree. Gradle's project cache and user home must also be redirected
+// with --project-cache-dir and GRADLE_USER_HOME when invoking the wrapper.
+providers.environmentVariable("REBROWSER_BUILD_ROOT").orNull?.let { root ->
+    require(root.isNotBlank() && File(root).isAbsolute) { "REBROWSER_BUILD_ROOT must be absolute" }
+    layout.buildDirectory.set(file(root).resolve("app"))
 }
 
 android {
@@ -48,11 +58,6 @@ android {
         dex {
             useLegacyPackaging = true
         }
-        resources {
-            // This Java-only app has no kotlin-reflect; R8 retains no Kotlin runtime classes.
-            // Reevaluate if future features introduce Kotlin runtime reflection.
-            excludes += setOf("kotlin/*.kotlin_builtins", "kotlin/**/*.kotlin_builtins")
-        }
     }
 
     buildFeatures {
@@ -78,6 +83,7 @@ androidComponents {
 
 dependencies {
     implementation("androidx.webkit:webkit:1.14.0")
+    add("fullImplementation", project(":revideo-platform"))
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.14.1")

@@ -10,8 +10,6 @@ import android.os.StatFs;
 import android.os.SystemClock;
 import android.util.Base64;
 
-import androidx.webkit.ProfileStore;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.security.MessageDigest;
@@ -295,7 +293,7 @@ final class ReBrowserDownloadController {
                     && store.refresh(record)) refreshed++;
             if (ReBrowserDownloads.STATUS_PENDING.equals(record.status)
                     && (!ReBrowserStore.isOwnedProfile(record.profileName)
-                    || ProfileStore.getInstance().getProfile(record.profileName) == null)) {
+                    || !pageBridge.profileExists(record.profileName))) {
                 failRecord(record, "profile-unavailable");
                 record.status = ReBrowserDownloads.STATUS_EXPIRED;
                 expired++;
@@ -363,14 +361,40 @@ final class ReBrowserDownloadController {
             if (!ReBrowserStore.isOwnedProfile(record.profileName)) {
                 throw new SecurityException("non-ReBrowser-profile");
             }
-            String cookie = pageBridge.cookieForHttpDownload(
-                    record.tabId, record.profileName, record.sourceOrigin, record.url);
-            String referer = record.sourceOrigin.equals(safeOrigin(record.url))
-                    ? record.sourceUrl : record.sourceOrigin + "/";
-            store.enqueueHttp(record, cookie, referer);
+            // WebView can answer immediately; Gecko resolves the matching context's
+            // cookie jar through its fixed built-in extension without exporting it early.
+            record.status = ReBrowserDownloads.STATUS_DOWNLOADING;
+            record.updatedAt = System.currentTimeMillis();
+            customIds.add(record.id);
             saveAndNotify();
-            message("已开始下载；不会自动打开文件");
+            pageBridge.cookieForHttpDownload(record.tabId, record.profileName,
+                    record.sourceOrigin, record.url, cookie -> mainHandler.post(() -> {
+                        customIds.remove(record.id);
+                        if (!owns(record)
+                                || !ReBrowserDownloads.STATUS_DOWNLOADING.equals(record.status)) {
+                            return;
+                        }
+                        if (cookie == null) {
+                            failRecord(record, "cookie-query-failed");
+                            saveAndNotify();
+                            message("无法读取当前网站的下载会话");
+                            return;
+                        }
+                        try {
+                            String referer = record.sourceOrigin.equals(safeOrigin(record.url))
+                                    ? record.sourceUrl : record.sourceOrigin + "/";
+                            store.enqueueHttp(record, cookie, referer);
+                            saveAndNotify();
+                            message("已开始下载；不会自动打开文件");
+                        } catch (Exception error) {
+                            failRecord(record, error.getClass().getSimpleName()
+                                    + ":" + error.getMessage());
+                            saveAndNotify();
+                            message("无法开始下载");
+                        }
+                    }));
         } catch (Exception error) {
+            customIds.remove(record.id);
             failRecord(record, error.getClass().getSimpleName() + ":" + error.getMessage());
             saveAndNotify();
             message("无法开始下载");

@@ -6,10 +6,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.webkit.ValueCallback;
-import android.webkit.WebView;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import java.lang.ref.WeakReference;
 import java.util.UUID;
 import java.util.function.Consumer;
 
@@ -54,16 +52,6 @@ final class ReBrowserStorageEstimate {
         String url();
         void evaluate(String script, ValueCallback<String> callback);
     }
-    private static final class WebDriver implements Driver {
-        final WeakReference<WebView> view;
-        WebDriver(WebView view) { this.view = new WeakReference<>(view); }
-        @Override public String url() { WebView web = view.get(); return web == null ? null : web.getUrl(); }
-        @Override public void evaluate(String script, ValueCallback<String> callback) {
-            WebView web = view.get();
-            if (web == null) throw new IllegalStateException("page-unavailable");
-            web.evaluateJavascript(script, callback);
-        }
-    }
     private static final class Store {
         final Context app;
         final Endpoint[] endpoints = new Endpoint[2];
@@ -104,23 +92,15 @@ final class ReBrowserStorageEstimate {
     private static void ui() {
         if (Looper.myLooper() != Looper.getMainLooper()) throw new IllegalStateException("UI thread required");
     }
-    static void register(Context context, String id, WebView web) { register(context, id, new WebDriver(web)); }
     static void register(Context context, String id, Driver driver) {
         ui(); Store s = state(context); int i = index(id);
         if (s.endpoints[i] != null && s.endpoints[i].active != null) s.endpoints[i].active.abandon();
         s.endpoints[i] = new Endpoint(driver);
     }
-    static void navigating(Context context, String id, WebView web) {
-        ui(); Endpoint e = state(context).endpoints[index(id)];
-        if (matches(e, web)) invalidate(context, id);
-    }
-    static void unregister(Context context, String id, WebView web) {
+    static void unregister(Context context, String id, Driver driver) {
         ui(); Store s = state(context); int i = index(id); Endpoint e = s.endpoints[i];
-        if (!matches(e, web)) return;
+        if (driver == null || e == null || e.driver != driver) return;
         if (e.active != null) e.active.abandon(); s.endpoints[i] = null;
-    }
-    private static boolean matches(Endpoint e, WebView web) {
-        return web != null && e != null && e.driver instanceof WebDriver && ((WebDriver) e.driver).view.get() == web;
     }
     static void invalidate(Context context, String id) {
         ui(); Endpoint e = state(context).endpoints[index(id)];

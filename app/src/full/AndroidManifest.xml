@@ -5,6 +5,15 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application>
+        <activity android:name="com.example.piliplus.MainActivity" />
+        <activity-alias android:name=".ReVideoLauncher" android:exported="true"
+            android:icon="@mipmap/revideo_ic_launcher" android:label="ReVideo"
+            android:targetActivity="com.example.piliplus.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
         <activity android:name=".ReBrowserSubapplicationSettingsActivity"
             android:exported="false" android:launchMode="singleTop" />
         <service android:name=".ReBrowserMusicService" android:exported="false"

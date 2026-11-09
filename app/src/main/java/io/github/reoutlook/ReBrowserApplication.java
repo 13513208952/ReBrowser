@@ -4,6 +4,10 @@ package io.github.reoutlook;
 public final class ReBrowserApplication extends android.app.Application {
     @Override public void onCreate() {
         super.onCreate();
+        if (android.app.Application.getProcessName().endsWith(":revideo")) {
+            android.webkit.WebView.setDataDirectorySuffix("revideo");
+            return;
+        }
         try {
             if (BuildConfig.FULL_SUITE) new ReOutlookLauncherVisibility(this).migrateInstallation();
             else if (!getSharedPreferences("rebrowser_applications_v1", MODE_PRIVATE).getBoolean("entranceDefaultsMigrated", false)) {

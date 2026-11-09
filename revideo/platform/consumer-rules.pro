@@ -1,0 +1,3 @@
+-keep class com.example.piliplus.AndroidHelper { *; }
+-keep class com.example.piliplus.AndroidHelper$ToDart { *; }
+-keep class com.example.piliplus.MediaHelper { *; }

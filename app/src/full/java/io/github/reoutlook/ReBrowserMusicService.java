@@ -330,7 +330,8 @@ public final class ReBrowserMusicService extends Service implements ReBrowserMus
     @Override public void onTaskRemoved(Intent root) {
         if (root != null && root.getComponent() != null) {
             String c = root.getComponent().getClassName();
-            if (c.equals(getPackageName() + ".ReBrowserMusicActivity") || c.equals(getPackageName() + ".ReBrowserMusicLauncher")) {
+            if (c.equals(ReBrowserMusicActivity.class.getName()) || c.equals(
+                    ReBrowserMusicActivity.class.getPackage().getName() + ".ReBrowserMusicLauncher")) {
                 // Removal of an old task can arrive after a replacement has claimed this service.
                 boolean replacementPresent = false;
                 try { replacementPresent = currentTaskPresent(); } catch (RuntimeException unavailable) { /* Stop safely. */ }

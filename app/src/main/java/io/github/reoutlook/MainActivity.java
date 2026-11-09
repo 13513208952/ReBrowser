@@ -3,9 +3,7 @@ package io.github.reoutlook;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
@@ -19,27 +17,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewConfiguration;
-import android.webkit.CookieManager;
-import android.webkit.GeolocationPermissions;
-import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.webkit.JavaScriptReplyProxy;
-import androidx.webkit.WebMessageCompat;
-import androidx.webkit.WebViewCompat;
-import androidx.webkit.WebViewFeature;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,7 +35,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -82,7 +65,7 @@ public final class MainActivity extends Activity {
         }
     };
 
-    private WebView webView;
+    private ReOutlookWebController webController;
     private ProgressBar progressBar;
     private TextView statusText;
     private View drawerScrim;
@@ -94,7 +77,6 @@ public final class MainActivity extends Activity {
     private long autoScrollPausedUntil;
     private long lastBackPressAt;
     private MailDatabase database;
-    private ValueCallback<Uri[]> pendingFileChooser;
     private final ExecutorService cacheWriter = Executors.newSingleThreadExecutor();
     private final Map<String, SyncWriteState> syncWriteStates = new HashMap<>();
     private boolean activityVisible;
@@ -113,27 +95,24 @@ public final class MainActivity extends Activity {
         }
         ReBrowserSubapplicationGate.register(this, ReBrowserApplications.OUTLOOK);
         SystemBackDispatcher.register(this, this::handleSystemBack);
-        // Repair a vendor package-manager override left by an interrupted maintenance test.
-        MaintenanceAuthorizer.ensureEntryPointsEnabled(this);
-        // A normal launch invalidates any interrupted, short-lived administrator challenge.
-        MaintenanceAuthorizer.clearPendingChallenge(this);
-        ReBrowserAdminAuthorizer.clearPendingChallenge(this);
+        ReOutlookLaunchMaintenance.prepare(this);
         database = new MailDatabase(this);
         database.cleanupLegacyDuplicates();
+        webController = new ReOutlookWebController(this, new OutlookPageListener(),
+                FILE_CHOOSER_REQUEST);
+        structuredCaptureEnabled = webController.structuredCaptureEnabled();
         setContentView(createContentView());
-        configureWebView();
-        ReBrowserStorageEstimate.register(this, ReBrowserApplications.OUTLOOK, webView);
+        ReBrowserStorageEstimate.register(
+                this, ReBrowserApplications.OUTLOOK, webController.storageDriver());
 
-        boolean restored = savedInstanceState != null && webView.restoreState(savedInstanceState) != null;
-        if (!restored) webView.loadUrl(OUTLOOK_URL);
+        if (!webController.restoreState(savedInstanceState)) webController.loadUrl(OUTLOOK_URL);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        MaintenanceAuthorizer.clearPendingChallenge(this);
-        ReBrowserAdminAuthorizer.clearPendingChallenge(this);
+        ReOutlookLaunchMaintenance.onNewIntent(this);
     }
 
     private View createContentView() {
@@ -141,8 +120,7 @@ public final class MainActivity extends Activity {
         root.setBackgroundColor(Color.WHITE);
         WindowStyling.apply(this, root);
 
-        webView = new WebView(this);
-        root.addView(webView, new FrameLayout.LayoutParams(
+        root.addView(webController.view(), new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
@@ -351,7 +329,7 @@ public final class MainActivity extends Activity {
         }));
         drawer.addView(drawerItem("刷新 Outlook", "重新连接并继续同步", view -> {
             closeDrawer();
-            webView.reload();
+            webController.reload();
         }));
         drawer.addView(drawerItem("缓存当前邮件", "页面适配器手动回退", view -> {
             closeDrawer();
@@ -359,11 +337,11 @@ public final class MainActivity extends Activity {
         }));
         drawer.addView(drawerItem("Outlook 首页", "返回收件箱入口", view -> {
             closeDrawer();
-            webView.loadUrl(OUTLOOK_URL);
+            webController.loadUrl(OUTLOOK_URL);
         }));
         drawer.addView(drawerItem("网页后退", "返回上一个网页页面", view -> {
             closeDrawer();
-            if (webView.canGoBack()) webView.goBack();
+            if (webController.canGoBack()) webController.goBack();
         }));
 
         View spacer = new View(this);
@@ -485,7 +463,7 @@ public final class MainActivity extends Activity {
     }
 
     private boolean isOutlookMailListPage() {
-        String currentUrl = webView == null ? null : webView.getUrl();
+        String currentUrl = webController == null ? null : webController.url();
         if (!isOutlookMailOrigin(currentUrl)) return false;
         String path = Uri.parse(currentUrl).getPath();
         if (path == null) return false;
@@ -497,70 +475,11 @@ public final class MainActivity extends Activity {
     private void scrollOutlookMailList() {
         if (!activityVisible || drawerOpen || !isOutlookMailListPage()
                 || SystemClock.elapsedRealtime() < autoScrollPausedUntil) return;
-        webView.evaluateJavascript(CaptureScript.SCROLL_MAIL_LIST, ignored -> {});
+        webController.evaluate(CaptureScript.SCROLL_MAIL_LIST, ignored -> {});
     }
 
-    private void configureWebView() {
-        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);
-        settings.setDatabaseEnabled(true);
-        settings.setGeolocationEnabled(false);
-        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        settings.setAllowFileAccess(false);
-        settings.setAllowContentAccess(false);
-        settings.setAllowFileAccessFromFileURLs(false);
-        settings.setAllowUniversalAccessFromFileURLs(false);
-        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-        settings.setSafeBrowsingEnabled(true);
-        settings.setSupportZoom(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setDisplayZoomControls(false);
-        settings.setMediaPlaybackRequiresUserGesture(true);
-
-        CookieManager cookies = CookieManager.getInstance();
-        cookies.setAcceptCookie(true);
-        cookies.setAcceptThirdPartyCookies(webView, true);
-
-        installStructuredCapture();
-        webView.setWebViewClient(new BrowserClient());
-        webView.setWebChromeClient(new BrowserChromeClient());
-        webView.setOnTouchListener((view, event) -> {
-            if (autoScrollEnabled && event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                autoScrollPausedUntil = SystemClock.elapsedRealtime() + MANUAL_SCROLL_PAUSE_MS;
-            }
-            return false;
-        });
-    }
-
-    private void installStructuredCapture() {
-        if (!WebViewFeature.isFeatureSupported(WebViewFeature.WEB_MESSAGE_LISTENER)
-                || !WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-            structuredCaptureEnabled = false;
-            return;
-        }
-        Set<String> origins = Set.of(
-                "https://outlook.office.com",
-                "https://outlook.office365.com",
-                "https://outlook.live.com"
-        );
-        WebViewCompat.addWebMessageListener(
-                webView,
-                "reOutlookBridge",
-                origins,
-                (view, message, sourceOrigin, isMainFrame, replyProxy) -> {
-                    if (!isMainFrame || !isOutlookMailOrigin(sourceOrigin.toString())) return;
-                    handleBridgeMessage(message, replyProxy);
-                }
-        );
-        WebViewCompat.addDocumentStartJavaScript(webView, CaptureScript.OWA_SERVICE_RESPONSES, origins);
-        structuredCaptureEnabled = true;
-    }
-
-    private void handleBridgeMessage(WebMessageCompat message, JavaScriptReplyProxy replyProxy) {
+    private void handleBridgeMessage(String payload, ValueCallback<String> reply) {
         if (destroying) return;
-        String payload = message.getData();
         if (payload == null || payload.length() > 1_800_000) return;
         cacheWriter.execute(() -> {
             try {
@@ -643,7 +562,7 @@ public final class MainActivity extends Activity {
                     runOnUiThread(() -> {
                         if (destroying) return;
                         try {
-                            replyProxy.postMessage(decision.toString());
+                            reply.onReceiveValue(decision.toString());
                         } catch (Exception ignored) {
                             // The page may have navigated before the database query completed.
                         }
@@ -671,13 +590,13 @@ public final class MainActivity extends Activity {
     }
 
     private void captureCurrentMessage(boolean userRequested) {
-        if (!activityVisible || webView == null) return;
-        String currentUrl = webView.getUrl();
+        if (!activityVisible || webController == null) return;
+        String currentUrl = webController.url();
         if (!isOutlookMailOrigin(currentUrl)) {
             if (userRequested) toast("请先打开 Outlook 邮件阅读页");
             return;
         }
-        webView.evaluateJavascript(CaptureScript.CURRENT_MESSAGE, encodedResult -> {
+        webController.evaluate(CaptureScript.CURRENT_MESSAGE, encodedResult -> {
             try {
                 if (encodedResult == null || "null".equals(encodedResult)) {
                     if (userRequested) toast("当前没有识别到已打开的邮件");
@@ -708,7 +627,7 @@ public final class MainActivity extends Activity {
         });
     }
 
-    private static boolean isOutlookMailOrigin(String value) {
+    static boolean isOutlookMailOrigin(String value) {
         if (value == null) return false;
         String host = Uri.parse(value).getHost();
         if (host == null) return false;
@@ -719,7 +638,7 @@ public final class MainActivity extends Activity {
     }
 
     private boolean isViewingOutlookMessage() {
-        String currentUrl = webView == null ? null : webView.getUrl();
+        String currentUrl = webController == null ? null : webController.url();
         if (!isOutlookMailOrigin(currentUrl)) return false;
         String path = Uri.parse(currentUrl).getPath();
         if (path == null) return false;
@@ -729,8 +648,8 @@ public final class MainActivity extends Activity {
     }
 
     private boolean shouldNavigateWebHistory() {
-        if (webView == null || !webView.canGoBack()) return false;
-        String currentUrl = webView.getUrl();
+        if (webController == null || !webController.canGoBack()) return false;
+        String currentUrl = webController.url();
         if (!isOutlookMailOrigin(currentUrl)) return true;
         return !isOutlookHomePage(currentUrl);
     }
@@ -747,24 +666,24 @@ public final class MainActivity extends Activity {
     }
 
     private void handleSystemBack() {
-        if (webView == null) { finish(); return; }
+        if (webController == null) { finish(); return; }
         if (drawerOpen) {
             closeDrawer();
             return;
         }
         if (shouldNavigateWebHistory()) {
             lastBackPressAt = 0;
-            webView.goBack();
+            webController.goBack();
             return;
         }
         if (isViewingOutlookMessage()) {
             lastBackPressAt = 0;
-            webView.loadUrl(OUTLOOK_URL);
+            webController.loadUrl(OUTLOOK_URL);
             return;
         }
-        if (webView != null && !isOutlookHomePage(webView.getUrl())) {
+        if (!isOutlookHomePage(webController.url())) {
             lastBackPressAt = 0;
-            webView.loadUrl(OUTLOOK_URL);
+            webController.loadUrl(OUTLOOK_URL);
             return;
         }
         long now = SystemClock.elapsedRealtime();
@@ -784,9 +703,9 @@ public final class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (webView == null) return;
+        if (webController == null) return;
         activityVisible = true;
-        webView.onResume();
+        webController.onResume();
         handler.removeCallbacks(autoCapture);
         handler.postDelayed(autoCapture, AUTO_CAPTURE_INTERVAL_MS);
         handler.removeCallbacks(autoScroll);
@@ -795,37 +714,37 @@ public final class MainActivity extends Activity {
     }
 
     @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (webController != null) webController.onWindowFocusChanged(hasFocus);
+    }
+
+    @Override
     protected void onPause() {
-        if (webView == null) { super.onPause(); return; }
+        if (webController == null) { super.onPause(); return; }
         activityVisible = false;
         handler.removeCallbacks(autoCapture);
         handler.removeCallbacks(autoScroll);
-        CookieManager.getInstance().flush();
-        webView.onPause();
+        webController.onPause();
         super.onPause();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (webView != null) webView.saveState(outState);
+        if (webController != null) webController.saveState(outState);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onDestroy() {
         destroying = true;
-        ReBrowserStorageEstimate.unregister(this, ReBrowserApplications.OUTLOOK, webView);
+        if (webController != null) {
+            ReBrowserStorageEstimate.unregister(this, ReBrowserApplications.OUTLOOK,
+                    webController.storageDriver());
+        }
         ReBrowserSubapplicationGate.unregister(this);
         handler.removeCallbacksAndMessages(null);
-        if (pendingFileChooser != null) pendingFileChooser.onReceiveValue(null);
-        pendingFileChooser = null;
-        if (webView != null) {
-            webView.stopLoading();
-            webView.loadUrl("about:blank");
-            webView.clearHistory();
-            webView.removeAllViews();
-            webView.destroy();
-        }
+        if (webController != null) webController.destroy();
         // Drain accepted writes before releasing the reset fence; never close/reopen behind queued work.
         if (database != null) cacheWriter.execute(database::close);
         cacheWriter.shutdown();
@@ -835,10 +754,7 @@ public final class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != FILE_CHOOSER_REQUEST || pendingFileChooser == null) return;
-        Uri[] result = WebChromeClient.FileChooserParams.parseResult(resultCode, data);
-        pendingFileChooser.onReceiveValue(result);
-        pendingFileChooser = null;
+        if (webController != null) webController.onActivityResult(requestCode, resultCode, data);
     }
 
     private void toast(String message) {
@@ -849,17 +765,14 @@ public final class MainActivity extends Activity {
         return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
-    private final class BrowserClient extends WebViewClient {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+    private final class OutlookPageListener implements ReOutlookWebController.Listener {
+        @Override public void onPageStarted() {
             if (destroying) return;
-            ReBrowserStorageEstimate.navigating(MainActivity.this, ReBrowserApplications.OUTLOOK, view);
             progressBar.setVisibility(View.VISIBLE);
             statusText.setText("正在连接…");
         }
 
-        @Override
-        public void onPageFinished(WebView view, String url) {
+        @Override public void onPageFinished() {
             if (destroying) return;
             progressBar.setVisibility(View.GONE);
             statusText.setText(getString(R.string.local_mail_count, database.count()));
@@ -868,64 +781,25 @@ public final class MainActivity extends Activity {
             }
         }
 
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            Uri uri = request.getUrl();
-            String scheme = uri.getScheme();
-            if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) return false;
-            try {
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            } catch (ActivityNotFoundException error) {
-                toast("没有能够打开此链接的应用");
-            }
-            return true;
+        @Override public void onProgressChanged(int progress) {
+            progressBar.setProgress(progress);
+            progressBar.setVisibility(progress >= 100 ? View.GONE : View.VISIBLE);
         }
 
-        @Override
-        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-            if (request.isForMainFrame()) {
-                statusText.setText("页面连接失败，可查看本地邮件");
-                progressBar.setVisibility(View.GONE);
+        @Override public void onMainFrameError() {
+            statusText.setText("页面连接失败，可查看本地邮件");
+            progressBar.setVisibility(View.GONE);
+        }
+
+        @Override public void onUserTouch() {
+            if (autoScrollEnabled) {
+                autoScrollPausedUntil = SystemClock.elapsedRealtime() + MANUAL_SCROLL_PAUSE_MS;
             }
         }
-    }
 
-    private final class BrowserChromeClient extends WebChromeClient {
-        @Override
-        public void onPermissionRequest(PermissionRequest request) {
-            request.deny();
-        }
-
-        @Override
-        public void onGeolocationPermissionsShowPrompt(
-                String origin,
-                GeolocationPermissions.Callback callback
-        ) {
-            callback.invoke(origin, false, false);
-        }
-
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            progressBar.setProgress(newProgress);
-            progressBar.setVisibility(newProgress >= 100 ? View.GONE : View.VISIBLE);
-        }
-
-        @Override
-        public boolean onShowFileChooser(
-                WebView view,
-                ValueCallback<Uri[]> filePathCallback,
-                FileChooserParams fileChooserParams
-        ) {
-            if (pendingFileChooser != null) pendingFileChooser.onReceiveValue(null);
-            pendingFileChooser = filePathCallback;
-            try {
-                startActivityForResult(fileChooserParams.createIntent(), FILE_CHOOSER_REQUEST);
-                return true;
-            } catch (ActivityNotFoundException error) {
-                pendingFileChooser = null;
-                toast("没有可用的文件选择器");
-                return false;
-            }
+        @Override public void onStructuredMessage(String payload,
+                ValueCallback<String> reply) {
+            handleBridgeMessage(payload, reply);
         }
     }
 }

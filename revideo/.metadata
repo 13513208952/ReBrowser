@@ -1,0 +1,5 @@
+# Flutter add-to-app module containing the owner-provided pili20 source.
+version:
+  revision: 84fc5cbb22
+  channel: user-branch
+project_type: module

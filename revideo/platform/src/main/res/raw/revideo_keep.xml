@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_notification_icon,@drawable/ic_player_rewind_10s,@drawable/ic_player_pause,@drawable/ic_player_play,@drawable/ic_player_fast_forward_10s" />

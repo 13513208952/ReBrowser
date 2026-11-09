@@ -294,9 +294,12 @@ public final class ReBrowserSettingsActivity extends Activity {
         }
         ReBrowserRuntime.Status runtime = ReBrowserRuntime.inspect();
         if (runtimeMessage != null) runtimeMessage.setText(runtime.browserAvailable()
-                ? "ReBrowser 浏览功能可用。子软件是同一应用内的独立模式。"
-                : runtime.provider ? "当前 WebView 不满足 ReBrowser 隔离浏览要求；仍可进入 ReOutlook。此页面不启动浏览器工作区。"
-                : "当前没有可用 WebView；原生应用管理仍可使用，安装或启用 WebView 后再进入网页模式。");
+                ? "ReBrowser 浏览功能可用，当前内核："
+                        + ReBrowserRuntime.engineDisplayName() + "。"
+                : runtime.provider ? "当前" + ReBrowserRuntime.engineDisplayName()
+                        + "不满足 ReBrowser 隔离浏览要求；此页面不启动浏览器工作区。"
+                : "当前没有可用的" + ReBrowserRuntime.engineDisplayName()
+                        + "；原生设置仍可使用，恢复内核后再进入网页模式。");
         if (outlookOpenButton != null) outlookOpenButton.setEnabled(runtime.provider);
         refreshMusicEntrance();
         if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();

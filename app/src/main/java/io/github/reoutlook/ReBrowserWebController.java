@@ -220,12 +220,20 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         this.container = container;
     }
 
-    static android.content.pm.PackageInfo currentProvider() {
-        return WebView.getCurrentWebViewPackage();
-    }
-
     boolean hasPages() {
         return !pagesByTabId.isEmpty();
+    }
+
+    @Override
+    public boolean profileExists(String profileName) {
+        return ReBrowserStore.isOwnedProfile(profileName)
+                && ProfileStore.getInstance().getProfile(profileName) != null;
+    }
+
+    boolean deleteProfile(String profileName) {
+        if (!ReBrowserStore.isOwnedProfile(profileName)) return false;
+        ProfileStore.getInstance().deleteProfile(profileName);
+        return true;
     }
 
     void showTab(String workspaceId, String profileName, ReBrowserStore.Tab tab) {

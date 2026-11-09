@@ -17,7 +17,7 @@ final class ReOutlookLauncherVisibility {
         this.context = context.getApplicationContext();
         packages = this.context.getPackageManager();
         launcher = new ComponentName(this.context.getPackageName(),
-                this.context.getPackageName() + ".ReOutlookLauncher");
+                MainActivity.class.getPackage().getName() + ".ReOutlookLauncher");
     }
 
     void migrateInstallation() {
@@ -59,7 +59,7 @@ final class ReOutlookLauncherVisibility {
     JSONObject snapshot() throws JSONException {
         return new JSONObject()
                 .put("outlookLauncherVisible", visible())
-                .put("outlookActivityEnabled", BuildConfig.FULL_SUITE && enabled(new ComponentName(context.getPackageName(), context.getPackageName() + ".MainActivity")))
+                .put("outlookActivityEnabled", BuildConfig.FULL_SUITE && enabled(new ComponentName(context, MainActivity.class)))
                 .put("rebrowserLauncherEnabled", enabled(new ComponentName(
                         context, ReBrowserLauncherActivity.class)))
                 .put("administratorCanSet", false);

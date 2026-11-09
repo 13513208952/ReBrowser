@@ -7,8 +7,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 
-import androidx.webkit.WebViewFeature;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -463,10 +461,10 @@ final class ReBrowserAdminController {
         value.put("maxWorkspaces", ReBrowserStore.MAX_WORKSPACES);
         value.put("maxPrimaryWorkspaces", ReBrowserStore.MAX_PRIMARY_WORKSPACES);
         value.put("maxTabsPerWorkspace", ReBrowserStore.MAX_TABS_PER_WORKSPACE);
-        value.put("multiProfile", WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE));
-        value.put("deleteBrowsingData",
-                WebViewFeature.isFeatureSupported(WebViewFeature.DELETE_BROWSING_DATA));
-        value.put("saveState", WebViewFeature.isFeatureSupported(WebViewFeature.SAVE_STATE));
+        ReBrowserRuntime.Status runtime = ReBrowserRuntime.inspect();
+        value.put("multiProfile", runtime.multiProfile);
+        value.put("deleteBrowsingData", ReBrowserRuntime.supportsDeleteBrowsingData());
+        value.put("saveState", ReBrowserRuntime.supportsSaveState());
         value.put("downloads", downloadPolicy());
         value.put("websitePermissions", websitePermissionPolicy());
         value.put("launcherVisibility", new ReOutlookLauncherVisibility(context).snapshot());
@@ -477,12 +475,17 @@ final class ReBrowserAdminController {
 
     private JSONObject diagnostics() throws Exception {
         JSONObject value = new JSONObject();
-        android.content.pm.PackageInfo provider = ReBrowserWebController.currentProvider();
-        value.put("runtime", ReBrowserRuntime.inspect().snapshot());
+        ReBrowserRuntime.Status runtime = ReBrowserRuntime.inspect();
+        value.put("runtime", runtime.snapshot());
         value.put("applications", ReBrowserApplications.snapshot(context));
-        value.put("webViewPackage", provider == null ? "" : provider.packageName);
-        value.put("webViewVersion", provider == null ? "" : provider.versionName);
-        value.put("multiProfile", WebViewFeature.isFeatureSupported(WebViewFeature.MULTI_PROFILE));
+        value.put("engine", ReBrowserRuntime.engineDisplayName());
+        value.put("enginePackage", runtime.packageName);
+        value.put("engineVersion", runtime.version);
+        value.put("webViewPackage", ReBrowserRuntime.usesSystemWebView()
+                ? runtime.packageName : "");
+        value.put("webViewVersion", ReBrowserRuntime.usesSystemWebView()
+                ? runtime.version : "");
+        value.put("multiProfile", runtime.multiProfile);
         ReBrowserStore.Workspace workspace = activeWorkspace();
         value.put("activeWorkspaceId", workspace == null ? "" : workspace.id);
         ReBrowserStore.Tab tab = workspace == null ? null : workspace.activeTab();

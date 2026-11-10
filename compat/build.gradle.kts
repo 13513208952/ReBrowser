@@ -131,6 +131,7 @@ val stageSharedWorkspaceSources = tasks.register<Sync>("stageSharedWorkspaceSour
         include("io/github/reoutlook/ReBrowserUi.java")
         include("io/github/reoutlook/ReBrowserWorkspaceController.java")
         include("io/github/reoutlook/ReOutlookLauncherVisibility.java")
+        include("io/github/reoutlook/ReVideoShortcutActivity.java")
         include("io/github/reoutlook/SystemBackDispatcher.java")
         include("io/github/reoutlook/WindowStyling.java")
     }
@@ -211,7 +212,6 @@ val generateOutlookBridge = tasks.register<JavaExec>("generateOutlookBridge") {
 tasks.named("preBuild").configure { dependsOn(generateOutlookBridge) }
 
 dependencies {
-    implementation(project(":revideo-platform"))
     // Temporary API-compatible pin for AGP 8.9.1/SDK 36. Revisit Gecko
     // security support before release; this is not an approved full suite.
     add("armv7Implementation", "org.mozilla.geckoview:geckoview-armeabi-v7a:149.0.20260403140140")

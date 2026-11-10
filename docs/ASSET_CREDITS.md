@@ -43,24 +43,8 @@ ReMusic展示图来自机主准备的v1.0.4实际手机界面，逐张对照审�
 
 机主提供由本地 AI 从模糊缩略图重新生成的高分辨率照片，用作 ReBrowser 背景特色。应用背景资源仅包含背景版的 3324×2493 压缩 WebP 派生母图；约 1.93 亿像素原图、处理脚本、未处理设备截图及临时预览保存在仓库外，不作为应用资源发布。经审核的文档展示图另见上节。
 
-## ReVideo：pili20 / PiliPlus 原生源码与资源
+## ReVideo / BiliClient
 
-ReVideo 的原生模块直接移植机主提供的 `pili20`（`/home/zhao/pilito20`）源码，不再用 Java / Gecko / dash.js 近似绘制原版页面。参考仓库保持不变；本项目拥有并维护 `revideo/` 中的定制副本。来源仓库声明派生自 [PiliPlus / bggRGjQaUbCoE 及贡献者](https://github.com/bggRGjQaUbCoE/PiliPlus)，并致谢 [guozhigq/PiliPala](https://github.com/guozhigq/pilipala) 与 [orz12/PiliPalaX](https://github.com/orz12/PiliPalaX)。源码移植遵循 GPLv3，完整条款见根 `LICENSE` 与 `revideo/LICENSE`；第三方字体、插件与原生媒体库仍适用各自许可。
+ReBrowser 仅保留用于 `.ReVideoLauncher` 快捷入口的原 ReVideo 启动图资源；功能实现不再作为模块编入本仓库。独立 BiliClient 源码及其完整上游版权、GPLv3 和第三方许可记录由 <https://github.com/13513208952/BiliClient> 维护。BiliClient 基于 [PiliPlus / bggRGjQaUbCoE 及贡献者](https://github.com/bggRGjQaUbCoE/PiliPlus) 和机主提供的 pili20 源码修改。
 
-| 本项目位置 | 来源及用途 |
-| --- | --- |
-| `revideo/lib/` | 原版 Flutter 页面、控制器、真实接口、生成协议与 JNI 绑定，包括历史、我的、收藏、稍后再看、订阅、播放器及完整播放设置。保留原版控件与接口，按宿主边界定制生命周期、目录、自动匿名公共请求、TLS 策略与品牌，不另造近似控件。 |
-| `revideo/assets/`、`revideo/av_list.txt` | 原版图标、字体、图片、着色器与怀旧清单。普通推荐与搜索不使用怀旧清单代替真实结果。 |
-| `revideo/platform/src/main/` | 原版 AndroidHelper、MediaHelper、音频/PiP 接入及对应资源；Activity 改为等价 Java 宿主，保留 JNI 包名，加入有限关闭通道及进程隔离。 |
-| `revideo/tool/vendor/`、`pubspec.yaml`、`pubspec.lock` | 原版媒体插件及锁定依赖。原生 JAR 校验固定 SHA-256；下载与中间产物不作为源码资源入库。 |
-
-### 字体与许可
-
-原版 CustomIcons、Material、Font Awesome 及依赖字体通过 Flutter 资源和原版字形类调用，不再维护 `ReVideoIcons.java` 或网页 CSS 的第二套码位表。AOT 构建使用 `--no-tree-shake-icons`，不重新绘制或转换字体。
-
-- `assets/fonts/custom_icon.ttf` 与原版 `lib/common/widgets/custom_icon.dart` 保留；内嵌版权为 **“Copyright (C) 2026 by original authors @ fluttericon.com, fontello.com”**，保留 <http://fontello.com> 与 <https://www.fluttericon.com/> 来源。参考仓库仅提供根 GPLv3，未为该字体提供额外单独许可；不声称为 ReVideo 原创。
-- Material 图标来自本机实际 **Flutter 3.44.7** SDK（安装目录名称仍为 `flutter-3.44.6`）。版权为 **“Copyright 2019 Google LLC. All Rights Reserved.”**；随 SDK 提供的 `MaterialIcons_LICENSE.txt` 为 **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)**，不根据其他图标仓库推定许可。来源：[Google Material Icons](https://github.com/google/material-design-icons) / [Flutter](https://github.com/flutter/flutter)。
-- Font Awesome 来自锁定的 [`font_awesome_flutter` 分支](https://github.com/bggRGjQaUbCoE/font_awesome_flutter)，提交 `cf4a19ece5cb296d73d90f0d73106f779c85fa26`，包版本 10.9.0、字体内嵌版本 Font Awesome 6.7.2。字体适用 **[SIL OFL 1.1](https://openfontlicense.org/open-font-license-official-text/)**，保留 Fonticons, Inc. 版权及 Reserved Font Name “Font Awesome”；Dart 包的 Brian Egan / Michael Spiss MIT 署名另行保留。
-- `revideo/assets/licenses/` 保留 `custom_icon_LICENSE.txt`、`MaterialIcons_LICENSE.txt`、`FontAwesome_LICENSE.txt` 与 `FONT_NOTICES.txt`，并作为 Flutter 资源打包；其余依赖许可由原版锁定依赖及 Flutter 许可收集机制保留，不被代码 GPLv3 覆盖。
-
-参考截图仅用于布局对照，未将其中真实账号、统计数字、封面或其他用户内容作为应用资源打包。上述资源归属不表示原作者、Google、Flutter 或 Font Awesome 对本项目的认可。开发与许可记录留在文档，不增加未经机主确认的界面说明。
+上述资源归属不表示原作者或相关服务方对本项目的认可。开发与许可记录留在文档，不增加未经机主确认的界面说明。

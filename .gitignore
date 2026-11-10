@@ -39,10 +39,3 @@ __pycache__/
 *.sqlite-shm
 .DS_Store
 
-# ReVideo Flutter module generated tooling and embedding hosts.
-revideo/.android/
-revideo/.ios/
-revideo/.dart_tool/
-revideo/.flutter-plugins-dependencies
-# The Flutter build link is a local symlink, not a source directory.
-revideo/build

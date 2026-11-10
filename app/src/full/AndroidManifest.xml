@@ -4,11 +4,18 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <queries>
+        <package android:name="com.bilibilitakemeback" />
+    </queries>
     <application>
-        <activity android:name="com.example.piliplus.MainActivity" />
+        <activity
+            android:name=".ReVideoShortcutActivity"
+            android:exported="false"
+            android:noHistory="true"
+            android:theme="@style/Theme.ReVideoShortcut" />
         <activity-alias android:name=".ReVideoLauncher" android:exported="true"
             android:icon="@mipmap/revideo_ic_launcher" android:label="ReVideo"
-            android:targetActivity="com.example.piliplus.MainActivity">
+            android:targetActivity=".ReVideoShortcutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

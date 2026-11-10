@@ -83,7 +83,6 @@ androidComponents {
 
 dependencies {
     implementation("androidx.webkit:webkit:1.14.0")
-    add("fullImplementation", project(":revideo-platform"))
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.14.1")

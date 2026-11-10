@@ -108,39 +108,9 @@ v1.0.3发布轮的取消／延期预算与RC2平板证据保留为[历史验收�
 
 管理员保持固定白名单和有界状态，不增加任意脚本、模块、网络、文件/数据库/偏好、Intent 或安装命令，不授予网页能力、不启用音乐，浏览器根不能授权邮件导出。历史讨论不等于当前实施授权。
 
-## 独立 compat / ReVideo 原生迁移
+## 独立 compat / ReVideo 外部应用
 
-`:compat` 保持独立安装身份 `io.github.rebrowser.compat`，不覆盖 `io.github.reoutlook`。WebView 完整套件与 GeckoView 宿主共用 `revideo/` 原生 Flutter / media_kit 模块；外层浏览器内核不决定 ReVideo 的页面或播放内核。当前正式版本与旧开发包的验收不能代替本轮原生迁移验收。
+`:compat` 保持独立安装身份 `io.github.rebrowser.compat`，不覆盖 `io.github.reoutlook`。ReVideo 不再作为 Flutter/AAR 模块编入任一浏览器宿主；两个完整宿主中的 `.ReVideoLauncher` 仅启动独立包 `com.bilibilitakemeback`。
 
-2026-11-09 按机主要求暂停功能开发。当前完整导入的原版栏目不是已接受的产品范围；后续应在原生底座上做减法，不再恢复旧混合方案。原定布局、额外定制要求、实际验证边界和恢复工作顺序统一记录于 [ReVideo 暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md)。
-
-### 源码与宿主边界
-
-- 直接维护机主提供的 pili20 原版 Dart、资源、锁定依赖和 Android JNI 接入副本；参考仓库 `/home/zhao/pilito20` 保持不变。历史、我的、收藏、稍后再看、订阅、登录、播放器控件及播放设置使用原版页面、控制器和接口，不用官方网页功能页或 Java 近似控件替代。
-- 原版普通推荐与搜索独立取数，只有怀旧推荐使用清单。当前导入仍保留上游栏目、多模式和离线归档入口，尚未完成产品收敛；目标仅保留在线怀旧推荐，普通推荐与综合搜索不能依赖 `av_list`，详见暂停检查点。
-- 公共 1080P 的 `tryLook` 随实际视频账号登录状态自动计算；没有播放前二选一或单独的免登录画质开关，不伪造会员权限。删除原版调试/代理路径的忽略 TLS 校验逻辑，不提供证书绕过开关。
-- 原版单 P 隐藏分 P 区域，多 P 保留原版横向选集；底栏保持白色且不绘制淡紫色选中底块。禁止新增非原版说明性界面文本；确需新增必须先逐条向机主确认，维护约束见 `revideo/AGENTS.md`。
-- `:revideo-platform` 保留 JNI 所需的 `com.example.piliplus` 包名、AndroidHelper、MediaHelper 和原版 AudioServiceActivity；两个宿主通过既有 `.ReVideoLauncher` alias 启动非导出的原生 Activity。Activity、音频服务和原版必要辅助组件运行于 `:revideo`，task affinity 与浏览器分离。
-- 有限通道 `io.github.rebrowser.revideo/host` 仅承接关闭。根返回和退出定时器暂停并同步进度、刷新已打开的正确类型 Hive 盒，再关闭所属 Activity/音频服务；不退出整个宿主进程。最终关闭前清除指向旧 Dart isolate 的两个 Java 回调，避免重开后调用失效端口。
-- 进程隔离不等于文件隔离：支持目录、临时目录、图片缓存、日志及默认下载均使用 `revideo` 子目录；清缓存只枚举所属目录，不删除浏览器下载临时文件、APK handoff、邮件或音乐缓存。原版图片库通过现有 `cacheDirectoryProvider` 接入，不另外实现图片缓存。
-- `:revideo` 的原版验证码等辅助 WebView 在初始化前设置独立 `revideo` data-directory suffix，不共享或清理外层 WebView 的 Cookie/WebStorage。核心功能页与播放器仍为原生 Flutter；不导出旧 Gecko Cookie，也不从 PC 审查账号复制登录。
-- 删除上游独立应用更新入口，避免下载另一应用的 PiliPlus 安装包；删除会操作整个浏览器包默认链接设置的独立应用入口。成员固定快捷方式显式指向本宿主的 ReVideo alias，继续交给原版 URI 路由处理。
-- 旧 Java/Gecko/dash.js ReVideo 实现、专用扩展脚本、图标码位层及其专属测试已移除，不保留双实现或兼容别名。字体、完整许可和代码归属见 [资源来源](ASSET_CREDITS.md)。
-
-### 数据与验证边界
-
-旧开发版的 `revideo_tasks.db`、私有分片及已发布媒体文件不删除；新原版下载格式不自动导入旧 Java 下载任务。原版账号由本模块自己的登录流程建立，不以另一浏览器容器的登录状态冒充。真实账号修改和会员专项必须分别验证；不把匿名页面、静态源码或旧审查服务当成新登录链路证明。
-
-构建必须使用[原生有界构建入口](../tools/build/README.md#revideo-原生模块的有界构建)。中间产物与缓存写入经机主授权的独占工作区；系统盘启动/运行空闲下限 3/2GiB，构建盘 12/8GiB，工作区上限 16GiB。停止整组进程并确认 Gradle 停止后清理可重建产物，保留安装包与固定摘要原生库，不清扫其他 Windows 内容或用户数据。
-
-当前已执行的针对性证据：
-
-| 检查 | 观察 |
-| --- | --- |
-| `python3 -B tools/tests/test_revideo_native_build.py` | 9 项通过；包含低空间拒绝启动、运行中终止、忽略 TERM 的孙进程、目录逃逸、保留产物、缓存环境变化和扫描期间目录消失。 |
-| 独立 Dart / Hive API 烟测 | 确认类型化 Hive 盒不能用无类型查找；正确类型刷新后立即退出进程，重新打开读回全部 1000 条排队写入。该检查不是 Android 界面验收。 |
-| 原生 AAR 与双宿主 APK | release AOT AAR（arm/arm64/x64）构建成功；compat arm64/x64 和 WebView fullBackground Debug 三个 APK 构建成功，构建结束确认无 Gradle daemon。compat x64 签名摘要与旧开发包一致。 |
-| Android 原生页面与播放器 | API 35 隔离模拟器安装 compat x64 成功；实际看到原生推荐、我的、设置及播放器设置；`MacBook` 搜索返回真实结果，`BV1NS4t6oEXQ` 在原生播放器呈现视频与弹幕，进度推进。未完成实际轨道 1080P、重开持久化、PiP、多 P、账号历史与 WebView 宿主实跑验收；旧实现证据不得沿用。 |
-
-下一正式版仍须同时通过 WebView 与 GeckoView 的完整质量门槛，长期并行维护。本轮迁移不自动代表正式版就绪；大会员专项按机主要求暂缓，不擅自消耗硬币或执行账号写入。
+独立应用未安装时，入口显示 BiliClient Releases 地址并自动复制到剪切板。BiliClient 的源码、依赖、账号、媒体进程、存储和发布生命周期由独立仓库 <https://github.com/13513208952/BiliClient> 管理，不与 ReBrowser 共享库或应用数据。2026-11-09 的 [ReVideo 原生移植暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md) 仅保留为迁移历史，不再描述当前宿主构建结构。
 

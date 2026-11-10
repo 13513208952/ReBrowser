@@ -19,7 +19,7 @@
 | [项目定位：重新定义浏览器](PROJECT_VISION.md) | Re的含义、应用环境方向、已实现实践与不能外推的技术边界 |
 | [实际界面与隐私审核](SCREENSHOT_REVIEW.md) | 私有原图／裁剪与隐私替换对照、机主先审查、批准后才公开；不改变应用或账号状态 |
 | [开发入口](DEVELOPMENT.md) | 构建、安装身份、测试、发布流程与参考索引 |
-| [ReVideo 原生移植暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md) | 当前底座、原定范围、下一阶段减法、相对 pili20 的特殊修改、操作目录与有限验证；恢复工作必读 |
+| [ReVideo 原生移植暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md) | 2026-11-09 的迁移历史记录；当前 ReVideo 已改为启动独立 BiliClient 应用 |
 | [项目状态](PROJECT_STATUS.md) | 当前版本、实现与有限证据、已知限制；不再混入完整历史报告 |
 | [仓库维护与清理](MAINTENANCE.md)、[离线维护工具](../tools/maintenance/README.md) | 文件归属、不可变/私有保留、链接检查、生成物 dry-run 清理 |
 | [设置与应用管理](REBROWSER_SETTINGS.md) | 三页设置、子软件入口、迁移、风味默认与原生回退 |

@@ -1,6 +1,6 @@
 # Release APK 无损压缩与统计
 
-Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压缩。完整套件包含原生 Flutter ReVideo 及其插件；保留依赖所需的 Kotlin 元数据、许可证与服务描述，不按旧 Java-only 假设裁剪运行时。
+Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压缩；保留依赖所需的 Kotlin 元数据、许可证与服务描述。
 
 ## 输入与资源预算
 
@@ -13,32 +13,6 @@ Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压
 | `fullBackground` | `app/build/outputs/apk/fullBackground/release/app-full-background-release-unsigned.apk` |
 
 按[开发参考](../../docs/DEVELOPMENT.md#有界串行构建)分批构建，`--no-daemon --max-workers=1`、Gradle1536MiB、test fork1/512MiB；`bounded-tests.gradle` 是显式 `-I` 使用的测试限制，不负责 Gradle 堆或系统内存。不要重叠 JVM/R8/Lint 高峰。
-
-## ReVideo 原生模块的有界构建
-
-使用 `tools/build/revideo_native.py` 串行构建原版 Flutter AOT 模块与两种 Android 宿主，不直接启动无空间保护的 Flutter/Gradle 构建。需先为 `revideo/` 完成锁定依赖解析，提供已安装且满足 `pubspec.yaml` 要求的 Flutter SDK、Android SDK 与 JDK。
-
-```sh
-TMPDIR=/home/zhao/temp/reoutlook_removeable/agent-runtime python3 -B tools/tests/test_revideo_native_build.py
-python3 -B tools/build/revideo_native.py \
-  --work-root /run/media/zhao/Windows/tempuseforrebrowser/revideo-native \
-  --flutter-sdk /home/zhao/.local/opt/flutter-3.44.6 \
-  --stage all
-```
-
-SDK 目录名不是版本证据；本机该目录实际为 Flutter 3.44.7 / Dart 3.12.2。`module` 阶段发布 arm/arm64/x64 的 release AOT AAR；`hosts` 阶段消费该产物，构建 compat arm64/x64 与 fullBackground Debug。两种宿主共用同一 release 播放核心，调试宿主不改用 JIT。`--prepare-only` 仅检查空间并配置输出路径，不编译。
-
-- 仅接管空目录，或带本仓库匹配所有权标记的工作区；拒绝逃逸工作区的符号链接。包装器发行包复用既有缓存，其余 Gradle 缓存、构建中间产物、Dart AOT 临时产物与固定摘要的原生库均写入指定工作区。
-- 启动前系统盘至少 3GiB、构建盘至少 12GiB 空闲；运行时下限分别为 2GiB / 8GiB，工作区上限 16GiB。触限终止整组构建进程，包括忽略 TERM 的孙进程；收到 TERM 也走关闭与清理路径。
-- Gradle 单 worker、堆上限 2048MiB；1024MiB 已在原版插件编译中触发 GC thrashing，不能靠关闭 GC 保护掩盖。不要同时运行模拟器或另一组 JVM 编译高峰。退出时确认所属 Gradle 已停止，再清理可重建中间产物与转换缓存；保留 APK、模块仓库、已校验原生库及依赖。保留工作区超过 8GiB 时额外清除可再下载的依赖缓存。
-- AAR 仓库位于 `artifacts/module/host/outputs/repo`，供 `REBROWSER_REVIDEO_MAVEN_DIR` 指向；APK 位于 `artifacts/apk/`。不会删除旧安装包、设备数据、账号数据或其他 Windows 目录内容。
-- 本机构建如需 HTTP 代理，可通过常规 JVM `JAVA_TOOL_OPTIONS` 设置 `http.proxyHost` / `https.proxyHost` 等参数；保持证书校验，不加入忽略 TLS 的构建选项。不要把本机代理端口或凭证固化进项目。
-- module 阶段在 Android library `finalizeDsl` 将低于 36 的插件 compileSdk 统一到 36，以满足锁定依赖的 AAR metadata；不关闭兼容检查，也不修改宿主 minSdk/targetSdk。宿主通过 JitPack 获取原插件依赖时，仅开放 `com.github.LinXunFeng` 与 `com.github.Yalantis` 两个精确 group。
-- 工作目录授权与虚拟机授权分离：VM 镜像、AVD、磁盘、日志及运行临时文件只能位于 `/run/media/zhao/Windows/android15/`。本轮测试环境已迁至其 `revideo-parity/` 子目录，注册文件为 `avd/revideo-pili-parity-35.ini`；原有 `ReBrowserAndroid15` 保持不变。
-- 项目工作文件不得写入 `/tmp` 或 `/dev/shm`。构建入口显式设置 `TMPDIR` / `TMP` / `TEMP` 与 JVM `java.io.tmpdir`，并用 `-XX:+PerfDisableSharedMem` 避免 JVM 在系统 `/tmp` 创建性能计数文件。测试命令同样必须显式提供获准的 `TMPDIR`，不能使用 Python 的系统默认临时目录。
-- 模拟器 SDK 不完全遵循通用临时变量：必须再设 `ANDROID_TMP=/run/media/zhao/Windows/android15/revideo-parity/tmp`；ADB 使用 `ANDROID_ADB_LOG_PATH` 指向同一 VM 根内的日志文件。已实跑确认崩溃日志转入获准目录，不通过关闭崩溃记录来掩盖路径问题。
-
-上述 9 项资源保护回归已实跑。2026-11-09 原生 AOT AAR、compat arm64/x64 与 fullBackground Debug APK 均构建成功；仅 compat x64 完成一次匿名原生界面与实际视频播放烟测，不代表双宿主、全部画质、账号操作或正式发行验收。功能开发已按机主要求暂停，后续先执行[范围减法](../../docs/REVIDEO_NATIVE_CHECKPOINT.md)。
 
 
 ## 无损 ZIP 优化

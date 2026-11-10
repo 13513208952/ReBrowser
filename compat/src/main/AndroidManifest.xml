@@ -18,6 +18,10 @@
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <uses-feature android:name="android.hardware.location" android:required="false" />
 
+    <queries>
+        <package android:name="com.bilibilitakemeback" />
+    </queries>
+
     <application
         android:name=".ReBrowserApplication"
         android:allowBackup="false"
@@ -60,13 +64,16 @@
         </activity-alias>
 
         <activity
-            android:name="com.example.piliplus.MainActivity" />
+            android:name=".ReVideoShortcutActivity"
+            android:exported="false"
+            android:noHistory="true"
+            android:theme="@style/Theme.ReVideoShortcut" />
         <activity-alias
             android:name=".ReVideoLauncher"
             android:exported="true"
             android:icon="@mipmap/revideo_ic_launcher"
             android:label="ReVideo"
-            android:targetActivity="com.example.piliplus.MainActivity">
+            android:targetActivity=".ReVideoShortcutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

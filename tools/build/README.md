@@ -1,6 +1,6 @@
 # Release APK 无损压缩与统计
 
-Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压缩。当前 Java 应用不保留 Kotlin 反射运行时，只排除无用 `*.kotlin_builtins` 元数据；未来引入反射必须重评估，不移除许可证、服务描述或现有功能。
+Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压缩；保留依赖所需的 Kotlin 元数据、许可证与服务描述。
 
 ## 输入与资源预算
 
@@ -13,6 +13,7 @@ Release 开启完整模式 R8 优化/剪枝/混淆、资源裁剪和 DEX ZIP 压
 | `fullBackground` | `app/build/outputs/apk/fullBackground/release/app-full-background-release-unsigned.apk` |
 
 按[开发参考](../../docs/DEVELOPMENT.md#有界串行构建)分批构建，`--no-daemon --max-workers=1`、Gradle1536MiB、test fork1/512MiB；`bounded-tests.gradle` 是显式 `-I` 使用的测试限制，不负责 Gradle 堆或系统内存。不要重叠 JVM/R8/Lint 高峰。
+
 
 ## 无损 ZIP 优化
 

@@ -9,10 +9,6 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -30,7 +26,7 @@ public final class ArchiveActivity extends Activity {
     private MailDatabase database;
     private List<CachedMessage> messages;
     private LinearLayout root;
-    private WebView detailWebView;
+    private ReOutlookArchiveRenderer detailRenderer;
     private boolean showingDetail;
 
     @Override
@@ -138,29 +134,8 @@ public final class ArchiveActivity extends Activity {
             root.addView(date);
         }
 
-        detailWebView = new WebView(this);
-        WebSettings settings = detailWebView.getSettings();
-        settings.setJavaScriptEnabled(false);
-        settings.setBlockNetworkLoads(true);
-        settings.setAllowFileAccess(false);
-        settings.setAllowContentAccess(false);
-        settings.setBuiltInZoomControls(true);
-        settings.setDisplayZoomControls(false);
-        detailWebView.setBackgroundColor(Color.WHITE);
-        detailWebView.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                return true;
-            }
-        });
-
-        String html = "<!doctype html><html><head><meta name=\"viewport\" " +
-                "content=\"width=device-width,initial-scale=1\"><style>" +
-                "body{font-family:sans-serif;color:#242424;margin:16px;overflow-wrap:anywhere}" +
-                "img{max-width:100%;height:auto}pre{white-space:pre-wrap}a{color:#0f6cbd}" +
-                "</style></head><body>" + message.bodyHtml + "</body></html>";
-        detailWebView.loadDataWithBaseURL("about:blank", html, "text/html", "UTF-8", null);
-        root.addView(detailWebView, new LinearLayout.LayoutParams(
+        detailRenderer = new ReOutlookArchiveRenderer(this, message.bodyHtml);
+        root.addView(detailRenderer.view(), new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
         setContentView(root);
     }
@@ -273,11 +248,9 @@ public final class ArchiveActivity extends Activity {
     }
 
     private void destroyDetailWebView() {
-        if (detailWebView == null) return;
-        detailWebView.stopLoading();
-        detailWebView.removeAllViews();
-        detailWebView.destroy();
-        detailWebView = null;
+        if (detailRenderer == null) return;
+        detailRenderer.destroy();
+        detailRenderer = null;
     }
 
     @Override

@@ -42,3 +42,9 @@ ReMusic展示图来自机主准备的v1.0.4实际手机界面，逐张对照审�
 ## 专属蓝紫背景
 
 机主提供由本地 AI 从模糊缩略图重新生成的高分辨率照片，用作 ReBrowser 背景特色。应用背景资源仅包含背景版的 3324×2493 压缩 WebP 派生母图；约 1.93 亿像素原图、处理脚本、未处理设备截图及临时预览保存在仓库外，不作为应用资源发布。经审核的文档展示图另见上节。
+
+## ReVideo / BiliClient
+
+ReBrowser 仅保留用于 `.ReVideoLauncher` 快捷入口的原 ReVideo 启动图资源；功能实现不再作为模块编入本仓库。独立 BiliClient 源码及其完整上游版权、GPLv3 和第三方许可记录由 <https://github.com/13513208952/BiliClient> 维护。BiliClient 基于 [PiliPlus / bggRGjQaUbCoE 及贡献者](https://github.com/bggRGjQaUbCoE/PiliPlus) 和机主提供的 pili20 源码修改。
+
+上述资源归属不表示原作者或相关服务方对本项目的认可。开发与许可记录留在文档，不增加未经机主确认的界面说明。

@@ -16,6 +16,14 @@
 
 `src/main` 是共享代码；音乐具体实现和固定 assets 位于 `src/full`，`src/minimal` 的未注册门面不是残留；`src/lite`、`src/background` 决定照片和品牌资源。详细职责见[仓库地图](MAINTENANCE.md#文件归属)。
 
+### 双内核维护与下一发行版
+
+- 下一正式版须同时发行 WebView 与 GeckoView 两个内核版本，并长期并行维护；GeckoView 不是替代或停止维护 WebView 的迁移终点。
+- ReVideo 之前的 GeckoView 工作目标仍有效：功能与质量不低于最新 WebView 基线，不能用新播放器的阶段性结果代替既有功能的对等验收。
+- 当前允许先集中校准 GeckoView 的 ReVideo 与画中画实际体验。稳定后按相同功能、交互行为和验证标准推进 WebView，不只同步外观；不为提前抽象双内核而阻塞当前真实效果验证。
+- 两个版本均完成各自的功能与运行验证后，才进入下一正式版发布准备。独立 `:compat` 开发 APK、单内核检查通过或浏览器审查通过，都不能标记为双版本正式发行完成。
+
+
 ## 环境
 
 - JDK 17 或兼容 Android Gradle Plugin 的较新 JDK，Java 源码目标 17；Android SDK/build-tools 36。
@@ -99,3 +107,10 @@ v1.0.3发布轮的取消／延期预算与RC2平板证据保留为[历史验收�
 | 窄播放兼容及已否决试验 | [YouTube](YOUTUBE_PLAYER_COMPATIBILITY.md)、[假缩放移除](REBROWSER_LAYOUT_ZOOM.md) |
 
 管理员保持固定白名单和有界状态，不增加任意脚本、模块、网络、文件/数据库/偏好、Intent 或安装命令，不授予网页能力、不启用音乐，浏览器根不能授权邮件导出。历史讨论不等于当前实施授权。
+
+## 独立 compat / ReVideo 外部应用
+
+`:compat` 保持独立安装身份 `io.github.rebrowser.compat`，不覆盖 `io.github.reoutlook`。ReVideo 不再作为 Flutter/AAR 模块编入任一浏览器宿主；两个完整宿主中的 `.ReVideoLauncher` 仅启动独立包 `com.bilibilitakemeback`。
+
+独立应用未安装时，入口显示 BiliClient Releases 地址并自动复制到剪切板。BiliClient 的源码、依赖、账号、媒体进程、存储和发布生命周期由独立仓库 <https://github.com/13513208952/BiliClient> 管理，不与 ReBrowser 共享库或应用数据。2026-11-09 的 [ReVideo 原生移植暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md) 仅保留为迁移历史，不再描述当前宿主构建结构。
+

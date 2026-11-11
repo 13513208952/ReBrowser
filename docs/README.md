@@ -19,6 +19,7 @@
 | [项目定位：重新定义浏览器](PROJECT_VISION.md) | Re的含义、应用环境方向、已实现实践与不能外推的技术边界 |
 | [实际界面与隐私审核](SCREENSHOT_REVIEW.md) | 私有原图／裁剪与隐私替换对照、机主先审查、批准后才公开；不改变应用或账号状态 |
 | [开发入口](DEVELOPMENT.md) | 构建、安装身份、测试、发布流程与参考索引 |
+| [ReVideo 原生移植暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md) | 2026-11-09 的迁移历史记录；当前 ReVideo 已改为启动独立 BiliClient 应用 |
 | [项目状态](PROJECT_STATUS.md) | 当前版本、实现与有限证据、已知限制；不再混入完整历史报告 |
 | [仓库维护与清理](MAINTENANCE.md)、[离线维护工具](../tools/maintenance/README.md) | 文件归属、不可变/私有保留、链接检查、生成物 dry-run 清理 |
 | [设置与应用管理](REBROWSER_SETTINGS.md) | 三页设置、子软件入口、迁移、风味默认与原生回退 |
@@ -75,4 +76,4 @@
 
 ## 维护资料
 
-本维护机器临时文件统一使用 `/home/zhao/temp/re_outlook/`，不使用内存盘 `/tmp`。历史设备截图、日志、私钥、原始照片及R8报告保留在仓库外，不作为公开文档资产上传，也不因目录名含temp／旧版本就删除。展示图仅接受机主先审查原图／隐私处理对照并批准的最终处理版本；原图和对照材料仍保持私有。[清理边界与流程](MAINTENANCE.md#安全清理流程)。
+本项目一般临时/构建文件仅使用 `/home/zhao/temp/reoutlook_removeable/` 或 `/run/media/zhao/Windows/tempuseforrebrowser/` 的自有子目录；VM 镜像、AVD、日志、截图与运行临时文件唯一获准根为 `/run/media/zhao/Windows/android15/`。不得向 `/tmp` 或 `/dev/shm` 写项目工作文件，编译与模拟器不得重叠。详细环境变量和资源边界见 [ReVideo 暂停检查点](REVIDEO_NATIVE_CHECKPOINT.md#操作目录与资源要求)。历史设备截图、日志、私钥、原始照片及R8报告保留在仓库外，不作为公开文档资产上传，也不因目录名含temp／旧版本就删除。展示图仅接受机主先审查原图／隐私处理对照并批准的最终处理版本；原图和对照材料仍保持私有。[清理边界与流程](MAINTENANCE.md#安全清理流程)。

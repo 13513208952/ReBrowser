@@ -33,9 +33,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.webkit.ProfileStore;
-import androidx.webkit.WebViewFeature;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -589,12 +586,13 @@ public final class ReBrowserActivity extends Activity
         sitePermissions.clearForProfile(profileName);
         webController.clearYoutubePlayerCompatibility(profileName);
         try {
-            ProfileStore.getInstance().deleteProfile(profileName);
-            workspaceController.unmarkProfileForDeletion(profileName);
+            if (webController.deleteProfile(profileName)) {
+                workspaceController.unmarkProfileForDeletion(profileName);
+            }
         } catch (IllegalStateException ignored) {
-            // The provider can retain a recently destroyed WebView until process shutdown.
+            // The engine can retain a recently closed page until process shutdown.
         } catch (RuntimeException ignored) {
-            // Keep the deletion marker and retry before WebView creation in the next process.
+            // Keep the deletion marker and retry before page creation in the next process.
         }
     }
 

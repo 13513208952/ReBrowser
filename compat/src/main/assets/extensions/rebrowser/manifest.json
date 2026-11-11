@@ -1,0 +1,64 @@
+{
+  "manifest_version": 2,
+  "name": "ReBrowser Engine Bridge",
+  "version": "1.6.7",
+  "description": "Fixed GeckoView bridge for ReBrowser permissions and downloads.",
+  "applications": {
+    "gecko": {
+      "id": "engine-bridge@rebrowser.local"
+    }
+  },
+  "permissions": [
+    "nativeMessaging",
+    "nativeMessagingFromContent",
+    "geckoViewAddons",
+    "cookies",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_security_policy": "script-src 'self'; object-src 'none'",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://outlook.office.com/*",
+        "https://*.outlook.office.com/*",
+        "https://outlook.office365.com/*",
+        "https://*.outlook.office365.com/*",
+        "https://outlook.live.com/*",
+        "https://*.outlook.live.com/*"
+      ],
+      "js": ["outlook-page.js"],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://outlook.office.com/*",
+        "https://*.outlook.office.com/*",
+        "https://outlook.office365.com/*",
+        "https://*.outlook.office365.com/*",
+        "https://outlook.live.com/*",
+        "https://*.outlook.live.com/*"
+      ],
+      "js": ["outlook-content.js"],
+      "world": "ISOLATED",
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://music.163.com/*", "https://y.music.163.com/*"],
+      "js": ["music-content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ]
+}

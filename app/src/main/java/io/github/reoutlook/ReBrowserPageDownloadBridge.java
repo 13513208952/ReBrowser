@@ -4,6 +4,11 @@ import android.webkit.ValueCallback;
 
 /** Fixed, download-only page capabilities; it cannot execute caller-supplied scripts. */
 interface ReBrowserPageDownloadBridge {
+    /** Engine-specific profile existence check used only to expire stale pending records. */
+    default boolean profileExists(String profileName) {
+        return ReBrowserStore.isOwnedProfile(profileName);
+    }
+
     final class BlobHandle {
         final String tabId;
         final String profileName;
@@ -60,6 +65,18 @@ interface ReBrowserPageDownloadBridge {
             String profileName,
             String sourceOrigin,
             String requestUrl);
+
+    /** Gecko resolves its context cookie jar asynchronously through a built-in extension. */
+    default void cookieForHttpDownload(
+            String tabId,
+            String profileName,
+            String sourceOrigin,
+            String requestUrl,
+            ValueCallback<String> callback
+    ) {
+        callback.onReceiveValue(cookieForHttpDownload(
+                tabId, profileName, sourceOrigin, requestUrl));
+    }
 
     BlobHandle beginBlobTransfer(
             String tabId,

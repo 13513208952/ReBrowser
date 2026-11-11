@@ -65,6 +65,23 @@ public final class MailDatabase extends SQLiteOpenHelper {
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
+        if (!db.isReadOnly() && db.getVersion() == 0) {
+            db.execSQL("PRAGMA auto_vacuum = FULL");
+        }
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (db.isReadOnly() || autoVacuumMode(db) == 1) return;
+        db.execSQL("PRAGMA auto_vacuum = FULL");
+        db.execSQL("VACUUM");
+    }
+
+    private static int autoVacuumMode(SQLiteDatabase db) {
+        try (Cursor cursor = db.rawQuery("PRAGMA auto_vacuum", null)) {
+            return cursor.moveToFirst() ? cursor.getInt(0) : 0;
+        }
     }
 
     @Override

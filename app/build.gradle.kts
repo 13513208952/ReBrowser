@@ -1,5 +1,15 @@
+import java.io.File
+
 plugins {
     id("com.android.application")
+}
+
+// All generated artifacts for the 1.06-alpha1 workspace can be redirected outside
+// the source tree. Gradle's project cache and user home must also be redirected
+// with --project-cache-dir and GRADLE_USER_HOME when invoking the wrapper.
+providers.environmentVariable("REBROWSER_BUILD_ROOT").orNull?.let { root ->
+    require(root.isNotBlank() && File(root).isAbsolute) { "REBROWSER_BUILD_ROOT must be absolute" }
+    layout.buildDirectory.set(file(root).resolve("app"))
 }
 
 android {
@@ -12,21 +22,21 @@ android {
         targetSdk = 36
         // Minimal codes must remain below the full range forever. Normal Android install
         // rejects full -> minimal as a version downgrade, including newer minimal releases.
-        versionCode = 106
-        versionName = "1.0.5"
+        versionCode = 107
+        versionName = "1.0.6"
     }
 
     flavorDimensions += listOf("suite", "background")
     productFlavors {
         create("minimal") {
             dimension = "suite"
-            versionCode = 106
+            versionCode = 107
             buildConfigField("boolean", "FULL_SUITE", "false")
         }
         create("full") {
             dimension = "suite"
             // Private settings previews used 1_000_106; formal release supersedes them.
-            versionCode = 1_000_107
+            versionCode = 1_000_108
             buildConfigField("boolean", "FULL_SUITE", "true")
         }
         create("lite") { dimension = "background" }
@@ -47,11 +57,6 @@ android {
     packaging {
         dex {
             useLegacyPackaging = true
-        }
-        resources {
-            // This Java-only app has no kotlin-reflect; R8 retains no Kotlin runtime classes.
-            // Reevaluate if future features introduce Kotlin runtime reflection.
-            excludes += setOf("kotlin/*.kotlin_builtins", "kotlin/**/*.kotlin_builtins")
         }
     }
 

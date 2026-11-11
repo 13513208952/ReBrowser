@@ -3,7 +3,7 @@
 if (window.top !== window || location.origin !== 'https://music.163.com' || location.pathname !== '/st/webplayer') return;
 if (window.__rbNeteaseProviderV1) return;
 // Fixed version-specific facade, not an arbitrary module/action/network bridge.
-const playerDocument = __PLAYER_ALLOWED__;
+let playerDocument = __PLAYER_ALLOWED__;
 let helper=null, api=null, sdk=null, lyricParser=null, disposed=false, hooked=false;
 let lyricRequest=null, lyricResult=null;
 let auth='pending', accountBusy=false, lastAccount=0, accountFailures=0, accountGeneration=0, accountTimer=0;
@@ -298,7 +298,9 @@ function cleanup(){
  releaseConnection();helper=null;api=null;sdk=null;lyricParser=null;lyricRequest=lyricResult=null;mediaRef=null;mediaTime=-1;mediaPlayResult='none';mediaTrack='';seekResumeArmed=resumeRequested=false;rootRoute='';
  for(const type of ['pointerup','dblclick','keydown'])document.removeEventListener(type,trusted,true);
 }
-window.__rbNeteaseProviderV1=Object.freeze({state,command,lyrics,route,back,recheck:()=>{
+window.__rbNeteaseProviderV1=Object.freeze({state,command,lyrics,route,back,activate:()=>{
+ if(disposed)return false;playerDocument=true;connect();return true;
+},recheck:()=>{
  if(disposed)return;
  releaseConnection();connectionAttempts=0;connectionStarted=null;connectionFailed=false;accountFailures=0;lastAccount=0;
  connect();account();

@@ -45,6 +45,18 @@ final class ReBrowserRuntime {
                 info.packageName, info.versionName == null ? "" : info.versionName);
     }
 
+    static String engineDisplayName() { return "系统 WebView"; }
+
+    static boolean usesSystemWebView() { return true; }
+
+    static boolean supportsDeleteBrowsingData() {
+        return feature(WebViewFeature.DELETE_BROWSING_DATA);
+    }
+
+    static boolean supportsSaveState() {
+        return feature(WebViewFeature.SAVE_STATE);
+    }
+
     static boolean feature(String name) {
         try { return WebViewFeature.isFeatureSupported(name); }
         catch (RuntimeException | LinkageError error) { return false; }

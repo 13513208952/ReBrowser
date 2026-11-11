@@ -36,6 +36,7 @@ final class ReBrowserMusicRuntime {
     private Runnable accountTimeout, initializationTimeout;
     private final ReBrowserMusicInitialization initialization = new ReBrowserMusicInitialization();
     private final WebView web;
+    private final ReBrowserStorageEstimate.Driver storageDriver;
     private ScriptHandler providerScript, layoutScript;
     private int document;
     private final ReBrowserMusicEvaluation polling = new ReBrowserMusicEvaluation();
@@ -62,6 +63,13 @@ final class ReBrowserMusicRuntime {
         layoutSource = resource(application, "rebrowser_netease_layout.js");
         accountSource = resource(application, "rebrowser_netease_account.js");
         web = new WebView(context);
+        storageDriver = new ReBrowserStorageEstimate.Driver() {
+            @Override public String url() { return web.getUrl(); }
+            @Override public void evaluate(String script,
+                    android.webkit.ValueCallback<String> callback) {
+                web.evaluateJavascript(script, callback);
+            }
+        };
         try {
         WebViewCompat.setProfile(web, ReBrowserMusicPolicy.PROFILE);
         android.webkit.WebSettings settings = web.getSettings();
@@ -84,7 +92,7 @@ final class ReBrowserMusicRuntime {
                 return !ReBrowserMusicPolicy.allowsNavigation(url);
             }
             @Override public void onPageStarted(WebView view, String url, android.graphics.Bitmap icon) {
-                ReBrowserStorageEstimate.navigating(application, ReBrowserApplications.MUSIC, view);
+                ReBrowserStorageEstimate.invalidate(application, ReBrowserApplications.MUSIC);
                 document++; resetEvaluations(); ready = false; coldPause.reset(); loginVisible = false;
                 view.getSettings().setMediaPlaybackRequiresUserGesture(true);
                 if (!ReBrowserMusicPolicy.allowsNavigation(url)) { view.stopLoading(); return; }
@@ -142,11 +150,13 @@ final class ReBrowserMusicRuntime {
             if (accountCheck.active(url)) failAccount(url);
             else listener.failure("音乐模式不支持下载");
         });
-        ReBrowserStorageEstimate.register(application, ReBrowserApplications.MUSIC, web);
+        ReBrowserStorageEstimate.register(
+                application, ReBrowserApplications.MUSIC, storageDriver);
         load();
         handler.post(tick);
         } catch (RuntimeException | LinkageError failure) {
-            ReBrowserStorageEstimate.unregister(application, ReBrowserApplications.MUSIC, web);
+            ReBrowserStorageEstimate.unregister(
+                    application, ReBrowserApplications.MUSIC, storageDriver);
             web.destroy(); throw failure;
         }
     }
@@ -417,7 +427,8 @@ final class ReBrowserMusicRuntime {
     }
     void close() {
         if (disposed) return;
-        ReBrowserStorageEstimate.unregister(application, ReBrowserApplications.MUSIC, web);
+        ReBrowserStorageEstimate.unregister(
+                application, ReBrowserApplications.MUSIC, storageDriver);
         disposed = true; ready = false; document++; resetEvaluations(); lifecycle.stop(); handler.removeCallbacksAndMessages(null);
         if (providerScript != null) providerScript.remove();
         if (layoutScript != null) layoutScript.remove();

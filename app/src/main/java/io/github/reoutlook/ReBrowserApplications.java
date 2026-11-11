@@ -21,7 +21,7 @@ final class ReBrowserApplications {
     }
     static Intent applicationSettingsIntent(Context context, String id) {
         if (!validApplication(id)) throw new IllegalArgumentException("Unsupported fixed application");
-        return new Intent().setClassName(context, context.getPackageName() + ".ReBrowserSubapplicationSettingsActivity")
+        return new Intent().setClassName(context, ReBrowserSettingsActivity.class.getPackage().getName() + ".ReBrowserSubapplicationSettingsActivity")
                 .putExtra(EXTRA_APPLICATION, id)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_SINGLE_TOP);
     }

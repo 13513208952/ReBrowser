@@ -2,6 +2,7 @@ package io.github.reoutlook;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -157,6 +158,23 @@ public final class ReBrowserSettingsActivity extends Activity {
         musicOpenButton.setOnClickListener(v -> ModeRouter.openMusic(this)); musicRow.addView(musicOpenButton);
         musicRow.addView(applicationSettingsButton(ReBrowserApplications.MUSIC));
         applications.addView(musicRow);
+        LinearLayout videoRow = new LinearLayout(this);
+        videoRow.setGravity(Gravity.CENTER_VERTICAL);
+        videoRow.setPadding(dp(8), dp(12), dp(8), dp(12));
+        videoRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        LinearLayout videoName = new LinearLayout(this);
+        videoName.setOrientation(LinearLayout.VERTICAL);
+        videoName.addView(fieldLabel("ReVideo"));
+        videoName.addView(fieldLabel("BiliClient · 快捷入口"));
+        videoRow.addView(videoName, new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        Button videoOpenButton = new Button(this);
+        videoOpenButton.setText("进入");
+        videoOpenButton.setContentDescription("进入 ReVideo");
+        videoOpenButton.setOnClickListener(v ->
+                startActivity(new Intent(this, ReVideoShortcutActivity.class)));
+        videoRow.addView(videoOpenButton);
+        applications.addView(videoRow);
         }
 
         content.addView(sectionTitle("启动与搜索"));
@@ -294,9 +312,12 @@ public final class ReBrowserSettingsActivity extends Activity {
         }
         ReBrowserRuntime.Status runtime = ReBrowserRuntime.inspect();
         if (runtimeMessage != null) runtimeMessage.setText(runtime.browserAvailable()
-                ? "ReBrowser 浏览功能可用。子软件是同一应用内的独立模式。"
-                : runtime.provider ? "当前 WebView 不满足 ReBrowser 隔离浏览要求；仍可进入 ReOutlook。此页面不启动浏览器工作区。"
-                : "当前没有可用 WebView；原生应用管理仍可使用，安装或启用 WebView 后再进入网页模式。");
+                ? "ReBrowser 浏览功能可用，当前内核："
+                        + ReBrowserRuntime.engineDisplayName() + "。"
+                : runtime.provider ? "当前" + ReBrowserRuntime.engineDisplayName()
+                        + "不满足 ReBrowser 隔离浏览要求；此页面不启动浏览器工作区。"
+                : "当前没有可用的" + ReBrowserRuntime.engineDisplayName()
+                        + "；原生设置仍可使用，恢复内核后再进入网页模式。");
         if (outlookOpenButton != null) outlookOpenButton.setEnabled(runtime.provider);
         refreshMusicEntrance();
         if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();

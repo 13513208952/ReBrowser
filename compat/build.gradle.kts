@@ -21,7 +21,7 @@ android {
         applicationId = "io.github.rebrowser.compat"
         minSdk = 29
         targetSdk = 36
-        versionName = "1.0.6-alpha1"
+        versionName = "1.0.6"
         buildConfigField("boolean", "FULL_SUITE", "true")
     }
 

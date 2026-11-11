@@ -2,6 +2,7 @@ package io.github.reoutlook;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -157,6 +158,23 @@ public final class ReBrowserSettingsActivity extends Activity {
         musicOpenButton.setOnClickListener(v -> ModeRouter.openMusic(this)); musicRow.addView(musicOpenButton);
         musicRow.addView(applicationSettingsButton(ReBrowserApplications.MUSIC));
         applications.addView(musicRow);
+        LinearLayout videoRow = new LinearLayout(this);
+        videoRow.setGravity(Gravity.CENTER_VERTICAL);
+        videoRow.setPadding(dp(8), dp(12), dp(8), dp(12));
+        videoRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        LinearLayout videoName = new LinearLayout(this);
+        videoName.setOrientation(LinearLayout.VERTICAL);
+        videoName.addView(fieldLabel("ReVideo"));
+        videoName.addView(fieldLabel("BiliClient · 快捷入口"));
+        videoRow.addView(videoName, new LinearLayout.LayoutParams(
+                0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        Button videoOpenButton = new Button(this);
+        videoOpenButton.setText("进入");
+        videoOpenButton.setContentDescription("进入 ReVideo");
+        videoOpenButton.setOnClickListener(v ->
+                startActivity(new Intent(this, ReVideoShortcutActivity.class)));
+        videoRow.addView(videoOpenButton);
+        applications.addView(videoRow);
         }
 
         content.addView(sectionTitle("启动与搜索"));

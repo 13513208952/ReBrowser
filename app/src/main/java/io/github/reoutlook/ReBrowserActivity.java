@@ -109,7 +109,8 @@ public final class ReBrowserActivity extends Activity
         bookmarks.addAll(bookmarkStore.load());
         root = createRoot();
         webController.attachContainer(webContainer);
-        fullscreenController.attachStyledRoot(root);
+        fullscreenController.attachBrowserLayout(
+                root, webContainer, browserToolbar, progressBar);
         setContentView(root);
         downloadController = new ReBrowserDownloadController(
                 this, webController, new DownloadListener());
@@ -1894,7 +1895,7 @@ public final class ReBrowserActivity extends Activity
             dismissPermissionPrompt("user-dismissed");
             return;
         }
-        if (fullscreenController.hideIfVisible()) return;
+        if (webController.exitFullscreen()) return;
         switch (overviewController.page()) {
             case CHILD_TABS:
                 if (overviewController.hasChildSelection()) exitChildSelection();

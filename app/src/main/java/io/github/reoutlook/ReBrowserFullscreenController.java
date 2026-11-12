@@ -26,7 +26,8 @@ final class ReBrowserFullscreenController {
         this.preferences = preferences;
     }
 
-    void attachStyledRoot(View root) {
+    void attachBrowserLayout(View root, View fullscreenContent, View... browserChrome) {
+        // WebView supplies a separate full-window custom view, so its browser layout stays put.
         styledRoot = root;
     }
 

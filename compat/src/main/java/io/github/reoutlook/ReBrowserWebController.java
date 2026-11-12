@@ -620,6 +620,14 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     }
     void stop(String tabId) { requirePage(tabId).session.stop(); }
     void reload(String tabId) { requirePage(tabId).session.reload(); }
+    boolean exitFullscreen() {
+        if (!fullscreenController.isFullscreen()) return false;
+        PageBinding page = visiblePage;
+        if (page != null && page.session.isOpen()) page.session.exitFullScreen();
+        else fullscreenController.hide();
+        return true;
+    }
+
     boolean canGoBack(String tabId) {
         PageBinding page = pagesByTabId.get(tabId);
         return page != null && page.canGoBack;
@@ -703,6 +711,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
 
     void onResume() {
         foreground = true;
+        applyPreferencesToAll();
         if (visiblePage != null) {
             visiblePage.session.setActive(true);
             visiblePage.session.setFocused(true);
@@ -1003,7 +1012,10 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
                 if (owns(page, session)) listener.onCloseRequested(page.tab);
             }
             @Override public void onFullScreen(GeckoSession session, boolean fullScreen) {
-                if (isVisible(page)) fullscreenController.setDocumentFullscreen(fullScreen);
+                if (!owns(page, session) || visiblePage != page) return;
+                if (!fullScreen || isVisible(page)) {
+                    fullscreenController.setDocumentFullscreen(fullScreen);
+                }
             }
             @Override public void onExternalResponse(GeckoSession session,
                     WebResponse response) {

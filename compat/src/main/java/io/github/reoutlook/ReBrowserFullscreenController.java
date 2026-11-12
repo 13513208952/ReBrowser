@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.view.WindowInsetsController;
 
@@ -13,6 +14,12 @@ final class ReBrowserFullscreenController {
     private final Activity activity;
     private final ReBrowserPreferences preferences;
     private View styledRoot;
+    private View fullscreenContent;
+    private View[] browserChrome = new View[0];
+    private int[] chromeVisibility = new int[0];
+    private int[] chromeAccessibility = new int[0];
+    private int contentTopMargin;
+    private boolean fullscreenLayoutApplied;
     private boolean fullscreen;
     private int systemUiBeforeFullscreen;
 
@@ -21,7 +28,13 @@ final class ReBrowserFullscreenController {
         this.preferences = preferences;
     }
 
-    void attachStyledRoot(View root) { styledRoot = root; }
+    void attachBrowserLayout(View root, View content, View... chrome) {
+        styledRoot = root;
+        fullscreenContent = content;
+        browserChrome = chrome;
+        chromeVisibility = new int[chrome.length];
+        chromeAccessibility = new int[chrome.length];
+    }
     boolean isFullscreen() { return fullscreen; }
     boolean isLandscape() {
         return activity.getResources().getConfiguration().orientation
@@ -73,9 +86,12 @@ final class ReBrowserFullscreenController {
 
     void setDocumentFullscreen(boolean enabled) {
         if (fullscreen == enabled) return;
+        if (enabled) {
+            systemUiBeforeFullscreen = activity.getWindow().getDecorView()
+                    .getSystemUiVisibility();
+        }
         fullscreen = enabled;
-        if (enabled) systemUiBeforeFullscreen = activity.getWindow().getDecorView()
-                .getSystemUiVisibility();
+        setFullscreenLayout(enabled);
         setFullscreenSystemUi(enabled);
         applyGlobalOrientationPreference();
     }
@@ -111,6 +127,44 @@ final class ReBrowserFullscreenController {
         return ReBrowserPreferences.ORIENTATION_PORTRAIT.equals(mode)
                 ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                 : ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+    }
+
+    private void setFullscreenLayout(boolean enabled) {
+        if (enabled) {
+            if (fullscreenLayoutApplied || fullscreenContent == null) return;
+            ViewGroup.LayoutParams rawParams = fullscreenContent.getLayoutParams();
+            if (rawParams instanceof ViewGroup.MarginLayoutParams) {
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) rawParams;
+                contentTopMargin = params.topMargin;
+                params.topMargin = 0;
+                fullscreenContent.setLayoutParams(params);
+            }
+            for (int index = 0; index < browserChrome.length; index++) {
+                View chrome = browserChrome[index];
+                chromeVisibility[index] = chrome.getVisibility();
+                chromeAccessibility[index] = chrome.getImportantForAccessibility();
+                chrome.setVisibility(View.GONE);
+                chrome.setImportantForAccessibility(
+                        View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+            }
+            fullscreenLayoutApplied = true;
+            fullscreenContent.requestLayout();
+            return;
+        }
+        if (!fullscreenLayoutApplied) return;
+        ViewGroup.LayoutParams rawParams = fullscreenContent.getLayoutParams();
+        if (rawParams instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) rawParams;
+            params.topMargin = contentTopMargin;
+            fullscreenContent.setLayoutParams(params);
+        }
+        for (int index = 0; index < browserChrome.length; index++) {
+            View chrome = browserChrome[index];
+            chrome.setVisibility(chromeVisibility[index]);
+            chrome.setImportantForAccessibility(chromeAccessibility[index]);
+        }
+        fullscreenLayoutApplied = false;
+        fullscreenContent.requestLayout();
     }
 
     private void setFullscreenSystemUi(boolean enabled) {

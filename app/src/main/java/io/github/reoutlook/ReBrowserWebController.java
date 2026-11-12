@@ -653,6 +653,10 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         requirePage(tabId).webView.reload();
     }
 
+    boolean exitFullscreen() {
+        return fullscreenController.hideIfVisible();
+    }
+
     boolean canGoBack(String tabId) {
         PageBinding page = pagesByTabId.get(tabId);
         return page != null && page.webView.canGoBack();

@@ -1,8 +1,8 @@
 # ReBrowser
 
-**ReBrowser** 是一个**实验性项目**，依赖于安卓系统webview组件，提供了一个**轻量级浏览器环境**，同时提供了两个实例性基于网页的子应用**Reoutlook和Remusic**.
+**ReBrowser** 是一个**实验性 Android 项目**，提供依赖系统 WebView 的轻量版本和自带 GeckoView 内核的兼容版本；浏览器之外，还提供两个基于网页的实例性子应用：**ReOutlook** 和 **ReMusic**。
 
-[下载 v1.0.5](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.5) · [开始使用](#开始使用) · [项目定位](docs/PROJECT_VISION.md) · [文档目录](docs/README.md)
+[下载 v1.0.6](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.6) · [开始使用](#开始使用) · [项目定位](docs/PROJECT_VISION.md) · [文档目录](docs/README.md)
 
 Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进行重新包装和针对性代码工作，使其最终以应用的形态展现。目前总共有**2个子应用**可用，分别是**ReOutlook和ReMusic**.
 
@@ -11,7 +11,7 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 | **ReOutlook · 邮件** | Outlook邮箱网页版，可快速查看邮箱，额外提供了备份和导出记录功能 |
 | **ReMusic · 音乐** | 网易云音乐webplayer重包装版，针对手机等竖屏形态进行了重新适配，并且可以与安卓系统联动 |
 
-**极简包**仅含Rebrowser浏览器功能本体，**全量包**额外含有全部子应用，极简包额外提供了去掉背景照片的轻量版本。
+**WebView 极简包**仅含 ReBrowser 浏览器，**WebView 全量包**额外含全部子应用；GeckoView 版本自带浏览器内核、仅提供全量包，并使用独立安装身份。
 
 ## 界面与实践
 
@@ -54,23 +54,25 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 
 ## 下载与安装
 
-当前正式版本：**[v1.0.5](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.5)**。从 [GitHub Releases](https://github.com/13513208952/ReBrowser/releases) 下载，使用 [SHA256SUMS.txt](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/SHA256SUMS.txt) 校验。
+当前正式版本：**[v1.0.6](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.6)**。从 [GitHub Releases](https://github.com/13513208952/ReBrowser/releases) 下载，使用 [SHA256SUMS.txt](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/SHA256SUMS.txt) 校验。
 
 | 套件 | 内容 | 下载 |
 | --- | --- | --- |
-| **极简无背景** | 仅 ReBrowser，纯白新标签页，约 220 KB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/ReBrowser-v1.0.5-minimal-lite.apk) |
-| **极简有背景** | 仅 ReBrowser，包含蓝紫背景照片，约 1.07 MB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/ReBrowser-v1.0.5-minimal-background.apk) |
-| **全量有背景** | ReBrowser、ReOutlook、ReMusic，约 1.15 MB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.5/ReBrowser-v1.0.5-full-background.apk) |
+| **WebView 极简无背景** | 仅 ReBrowser，纯白新标签页，约 235 KiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-minimal-lite.apk) |
+| **WebView 极简有背景** | 仅 ReBrowser，包含蓝紫背景照片，约 1.04 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-minimal-background.apk) |
+| **WebView 全量有背景** | ReBrowser、ReOutlook、ReMusic，约 1.12 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-full-background.apk) |
+| **GeckoView 全量 · arm64** | 自带 GeckoView 内核；适用于绝大多数较新的 64 位 ARM 设备，约 182 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-geckoview-arm64.apk) |
+| **GeckoView 全量 · armv7** | 自带 GeckoView 内核；适用于 32 位 ARM 设备，约 146 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-geckoview-armv7.apk) |
 
-**使用 ReOutlook 或 ReMusic，请选择全量包。** 子应用在设置中主动启用或进入，不需要另装 APK。
+**使用 ReOutlook 或 ReMusic，请选择 WebView 全量包或对应 CPU 架构的 GeckoView 包。** GeckoView 版没有极简包。
 
 ### 运行要求与升级
 
-- **Android 10 或更高版本**。浏览器和其他子应用分别对安卓环境依赖有不同的要求，部分设备上可能功能不完整或不可用，建议使用较高安卓版本的设备安装使用。
-- **三包同安装身份，不能并装。升级只覆盖安装，不卸载、不清数据。** 极简可覆盖升级到全量；安装新版全量后，普通安装器不能回退极简或较低版本码的旧包。
+- **Android 10 或更高版本**。WebView 版依赖设备的系统 WebView；GeckoView 版自带浏览器内核，但安装前需要确认设备使用 arm64 还是 armv7。
+- **WebView 三包使用同一安装身份，不能并装；GeckoView 使用独立安装身份，可以与 WebView 版并存。** 同一内核版本升级只覆盖安装，不卸载、不清数据。WebView 极简可升级到全量；安装新版全量后，普通安装器不能回退极简或较低版本码的旧包。
 - 升级保留既有背景和近期访问选择。无背景包不含照片；历史为空时不显示近期访问。重要的临时浏览环境请先上锁，避免进程重启后丢失。
 
-v1.0.5 新增 ReOutlook／ReMusic 独立设置、缓存与全部本机数据的分别清理，以及支持情况下的当前网站部分存储估算。详细变化和验证范围见[本版发布记录](docs/releases/v1.0.5.md)。
+v1.0.6 新增 GeckoView 全量包，WebView 版加入邮件数据库压缩，ReVideo 改为外部 BiliClient 入口。详细变化、包体校验和验证范围见[本版发布记录](docs/releases/v1.0.6.md)。
 
 ## 开始使用
 
@@ -91,13 +93,13 @@ v1.0.5 新增 ReOutlook／ReMusic 独立设置、缓存与全部本机数据的�
 
 ## 其他说明
 
-ReBrowser 当前是基于系统 WebView 的 Android 应用，不是新的操作系统，也不宣称包含完整桌面 Chromium 或能自动适配任意网站。[完整项目定位](docs/PROJECT_VISION.md)。
+ReBrowser 提供系统 WebView 与内置 GeckoView 两种内核版本，不是新的操作系统，也不宣称包含完整桌面 Chromium 或能自动适配任意网站。[完整项目定位](docs/PROJECT_VISION.md)。
 
-项目**尚未接受独立安全审计**，不保证每家 WebView 或每个网站都兼容。为兼容旧版覆盖升级，公开包沿用历史 Android Debug 证书，APK 本身是非调试 Release 构建。详见[隐私说明](PRIVACY.md)、[安全策略](SECURITY.md)与[已知限制](docs/PROJECT_STATUS.md)。
+项目**尚未接受独立安全审计**，不保证每家 WebView、GeckoView 或网站都兼容。为兼容覆盖升级，公开包沿用各自历史签名证书，APK 本身是非调试 Release 构建。详见[隐私说明](PRIVACY.md)、[安全策略](SECURITY.md)与[已知限制](docs/PROJECT_STATUS.md)。
 
 ## 反馈与更多资料
 
-遇到问题可在 [Issues](https://github.com/13513208952/ReBrowser/issues) 反馈，请描述设备、Android／WebView 版本和复现步骤；不要公开真实邮件、密码、登录令牌或私钥。
+遇到问题可在 [Issues](https://github.com/13513208952/ReBrowser/issues) 反馈，请描述设备、Android 版本、所用内核及 WebView／GeckoView 版本和复现步骤；不要公开真实邮件、密码、登录令牌或私钥。
 
 [文档目录](docs/README.md) · [项目状态](docs/PROJECT_STATUS.md) · [开发参考](docs/DEVELOPMENT.md) · [仓库维护](docs/MAINTENANCE.md) · [发布记录](docs/releases/README.md)
 

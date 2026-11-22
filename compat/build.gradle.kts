@@ -49,6 +49,9 @@ android {
 
     buildTypes {
         release {
+            if (providers.gradleProperty("rebrowserDebugSigning").orNull == "true") {
+                signingConfig = signingConfigs.getByName("debug")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))

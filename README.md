@@ -2,7 +2,7 @@
 
 **ReBrowser** 是一个**实验性 Android 项目**，提供依赖系统 WebView 的轻量版本和自带 GeckoView 内核的兼容版本；浏览器之外，还提供两个基于网页的实例性子应用：**ReOutlook** 和 **ReMusic**。
 
-[下载 v1.0.6](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.6) · [开始使用](#开始使用) · [项目定位](docs/PROJECT_VISION.md) · [文档目录](docs/README.md)
+[下载](https://github.com/13513208952/ReBrowser/releases) · [开始使用](#开始使用) · [项目定位](docs/PROJECT_VISION.md) · [文档目录](docs/README.md)
 
 Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进行重新包装和针对性代码工作，使其最终以应用的形态展现。目前总共有**2个子应用**可用，分别是**ReOutlook和ReMusic**.
 
@@ -54,15 +54,14 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 
 ## 下载与安装
 
-当前正式版本：**[v1.0.6](https://github.com/13513208952/ReBrowser/releases/tag/v1.0.6)**。从 [GitHub Releases](https://github.com/13513208952/ReBrowser/releases) 下载，使用 [SHA256SUMS.txt](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/SHA256SUMS.txt) 校验。
+安装包见 [GitHub Releases](https://github.com/13513208952/ReBrowser/releases)。
 
-| 套件 | 内容 | 下载 |
-| --- | --- | --- |
-| **WebView 极简无背景** | 仅 ReBrowser，纯白新标签页，约 235 KiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-minimal-lite.apk) |
-| **WebView 极简有背景** | 仅 ReBrowser，包含蓝紫背景照片，约 1.04 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-minimal-background.apk) |
-| **WebView 全量有背景** | ReBrowser、ReOutlook、ReMusic，约 1.12 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-full-background.apk) |
-| **GeckoView 全量 · arm64** | 自带 GeckoView 内核；适用于绝大多数较新的 64 位 ARM 设备，约 182 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-geckoview-arm64.apk) |
-| **GeckoView 全量 · armv7** | 自带 GeckoView 内核；适用于 32 位 ARM 设备，约 146 MiB | [APK](https://github.com/13513208952/ReBrowser/releases/download/v1.0.6/ReBrowser-v1.0.6-geckoview-armv7.apk) |
+| 套件 | 内容 |
+| --- | --- |
+| **WebView 极简无背景** | 仅 ReBrowser，纯白新标签页 |
+| **WebView 极简有背景** | 仅 ReBrowser，包含蓝紫背景照片 |
+| **WebView 全量有背景** | ReBrowser、ReOutlook、ReMusic |
+| **GeckoView 全量 · arm64 / armv7** | 自带 GeckoView 内核，按设备支持的 ARM 架构选择 |
 
 **使用 ReOutlook 或 ReMusic，请选择 WebView 全量包或对应 CPU 架构的 GeckoView 包。** GeckoView 版没有极简包。
 

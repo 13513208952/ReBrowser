@@ -58,7 +58,7 @@ public final class ReBrowserSettingsActivity extends Activity {
         launcherVisibility = new ReOutlookLauncherVisibility(this);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(Color.rgb(247, 248, 252));
+        root.setBackgroundColor(ReBrowserUi.SETTINGS_BACKGROUND);
         WindowStyling.apply(this, root);
         root.setOnApplyWindowInsetsListener((view, insets) -> {
             view.setPadding(0, insets.getSystemWindowInsetTop(),
@@ -68,26 +68,21 @@ public final class ReBrowserSettingsActivity extends Activity {
 
         LinearLayout header = new LinearLayout(this);
         header.setOrientation(LinearLayout.VERTICAL);
-        header.setPadding(dp(22), dp(18), dp(22), dp(8));
+        header.setPadding(dp(16), dp(14), dp(16), dp(8));
         root.addView(header, matchWrap());
 
         TextView title = new TextView(this);
         title.setText("ReBrowser 设置");
-        title.setTextSize(26);
-        title.setTextColor(Color.rgb(31, 36, 45));
-        title.setTypeface(null, android.graphics.Typeface.BOLD);
+        title.setTextSize(22);
+        title.setTextColor(0xff242129);
+        title.setTypeface(android.graphics.Typeface.create("sans-serif-medium", 0));
         header.addView(title, matchWrap());
 
-        TextView scope = new TextView(this);
-        scope.setText("这些设置由同一应用内的所有 ReBrowser 总标签页共享；网站登录状态仍按总标签页 Profile 隔离。");
-        scope.setTextSize(13);
-        scope.setTextColor(Color.rgb(93, 100, 111));
-        LinearLayout.LayoutParams scopeParams = matchWrap();
-        scopeParams.setMargins(0, dp(8), 0, dp(14));
-        header.addView(scope, scopeParams);
         LinearLayout navigation = new LinearLayout(this);
-        navigation.setPadding(dp(3), dp(3), dp(3), dp(3));
-        navigation.setBackground(roundedBackground(0xffe7e9ef, dp(14)));
+        navigation.setPadding(dp(2), dp(2), dp(2), dp(2));
+        navigation.setBackground(roundedBackground(0xffe3dce9, dp(14)));
+        LinearLayout.LayoutParams navigationParams = matchWrap();
+        navigationParams.topMargin = dp(8);
         String[] sectionLabels = {"常规", "隔离与权限", "应用管理"};
         for (int i = 0; i < pages.length; i++) {
             final String section = ReBrowserSettings.SECTIONS[i];
@@ -96,17 +91,17 @@ public final class ReBrowserSettingsActivity extends Activity {
             button.setContentDescription(sectionLabels[i] + "设置");
             button.setEnabled(BuildConfig.FULL_SUITE || !ReBrowserSettings.APPLICATIONS.equals(section));
             button.setOnClickListener(v -> showSection(section));
-            navigation.addView(button, new LinearLayout.LayoutParams(0, dp(48), 1));
+            navigation.addView(button, new LinearLayout.LayoutParams(0, dp(44), 1));
             pageButtons[i] = button;
         }
-        header.addView(navigation, matchWrap());
+        header.addView(navigation, navigationParams);
         FrameLayout pageHost = new FrameLayout(this);
         root.addView(pageHost, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0, 1));
         for (int i = 0; i < pages.length; i++) {
             ScrollView scroll = new ScrollView(this); scroll.setFillViewport(true);
             scroll.setTag(ReBrowserSettings.SECTIONS[i]);
             LinearLayout panel = new LinearLayout(this); panel.setOrientation(LinearLayout.VERTICAL);
-            panel.setPadding(dp(22), 0, dp(22), dp(20));
+            panel.setPadding(dp(16), 0, dp(16), dp(20));
             scroll.addView(panel, new ScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             pageHost.addView(scroll, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             pages[i] = scroll; pageContents[i] = panel;
@@ -118,13 +113,13 @@ public final class ReBrowserSettingsActivity extends Activity {
         applications.addView(runtimeMessage);
         if (BuildConfig.FULL_SUITE) {
         applications.addView(sectionTitle("子软件"));
+        LinearLayout appGroup = ReBrowserUi.settingsGroup(applications);
         LinearLayout applicationRow = new LinearLayout(this);
         applicationRow.setGravity(Gravity.CENTER_VERTICAL);
-        applicationRow.setPadding(dp(8), dp(12), dp(8), dp(12));
-        applicationRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        applicationRow.setPadding(dp(12), dp(8), dp(10), dp(8));
         LinearLayout name = new LinearLayout(this);
         name.setOrientation(LinearLayout.VERTICAL);
-        name.addView(fieldLabel("ReOutlook"));
+        name.addView(applicationName("ReOutlook"));
         name.addView(fieldLabel("邮件模式 · 与本应用共用安装包"));
         applicationRow.addView(name, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         outlookLauncherSwitch = new Switch(this);
@@ -138,14 +133,15 @@ public final class ReBrowserSettingsActivity extends Activity {
         outlookOpenButton.setOnClickListener(v -> ModeRouter.openOutlook(this));
         applicationRow.addView(outlookOpenButton);
         applicationRow.addView(applicationSettingsButton(ReBrowserApplications.OUTLOOK));
-        applications.addView(applicationRow);
-        applications.addView(fieldLabel("开关仅控制桌面入口；隐藏时仍可点击进入。新安装默认隐藏，升级保留已有选择。"));
+        styleButton(outlookOpenButton, 0xffeae0f6, 0xff463174, 18);
+        ReBrowserUi.tintSettingsSwitch(outlookLauncherSwitch);
+        appGroup.addView(applicationRow, matchWrap());
+        ReBrowserUi.settingsDivider(appGroup);
         LinearLayout musicRow = new LinearLayout(this);
         musicRow.setGravity(Gravity.CENTER_VERTICAL);
-        musicRow.setPadding(dp(8), dp(12), dp(8), dp(12));
-        musicRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        musicRow.setPadding(dp(12), dp(8), dp(10), dp(8));
         LinearLayout musicName = new LinearLayout(this); musicName.setOrientation(LinearLayout.VERTICAL);
-        musicName.addView(fieldLabel("音乐"));
+        musicName.addView(applicationName("音乐"));
         musicName.addView(fieldLabel("网易云 · 共存型 · 独立任务与登录环境"));
         musicRow.addView(musicName, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         musicEnabledSwitch = new Switch(this);
@@ -157,14 +153,16 @@ public final class ReBrowserSettingsActivity extends Activity {
         musicOpenButton.setContentDescription("进入音乐");
         musicOpenButton.setOnClickListener(v -> ModeRouter.openMusic(this)); musicRow.addView(musicOpenButton);
         musicRow.addView(applicationSettingsButton(ReBrowserApplications.MUSIC));
-        applications.addView(musicRow);
+        styleButton(musicOpenButton, 0xffeae0f6, 0xff463174, 18);
+        ReBrowserUi.tintSettingsSwitch(musicEnabledSwitch);
+        appGroup.addView(musicRow, matchWrap());
+        ReBrowserUi.settingsDivider(appGroup);
         LinearLayout videoRow = new LinearLayout(this);
         videoRow.setGravity(Gravity.CENTER_VERTICAL);
-        videoRow.setPadding(dp(8), dp(12), dp(8), dp(12));
-        videoRow.setBackground(roundedBackground(Color.WHITE, dp(14)));
+        videoRow.setPadding(dp(12), dp(8), dp(10), dp(8));
         LinearLayout videoName = new LinearLayout(this);
         videoName.setOrientation(LinearLayout.VERTICAL);
-        videoName.addView(fieldLabel("ReVideo"));
+        videoName.addView(applicationName("ReVideo"));
         videoName.addView(fieldLabel("BiliClient · 快捷入口"));
         videoRow.addView(videoName, new LinearLayout.LayoutParams(
                 0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
@@ -173,21 +171,22 @@ public final class ReBrowserSettingsActivity extends Activity {
         videoOpenButton.setContentDescription("进入 ReVideo");
         videoOpenButton.setOnClickListener(v ->
                 startActivity(new Intent(this, ReVideoShortcutActivity.class)));
+        styleButton(videoOpenButton, 0xffeae0f6, 0xff463174, 18);
         videoRow.addView(videoOpenButton);
-        applications.addView(videoRow);
+        appGroup.addView(videoRow, matchWrap());
         }
 
         content.addView(sectionTitle("启动与搜索"));
-        content.addView(fieldLabel("主页网址"));
+        LinearLayout searchGroup = ReBrowserUi.settingsGroup(content);
         homeUrl = new EditText(this);
         homeUrl.setSingleLine(true);
         initialHome = preferences.homeUrl();
         homeUrl.setText(savedInstanceState == null ? initialHome : savedInstanceState.getString("homeDraft", initialHome));
         homeUrl.setHint("https://cn.bing.com/");
-        content.addView(homeUrl, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
-
-        content.addView(fieldLabel("默认搜索引擎"));
+        homeUrl.setTextSize(14);
+        homeUrl.setBackgroundColor(Color.TRANSPARENT);
+        addField(searchGroup, "主页网址", homeUrl);
+        ReBrowserUi.settingsDivider(searchGroup);
         searchEngine = new Spinner(this);
         String[] labels = {"Bing", "百度", "DuckDuckGo", "Google"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -196,28 +195,29 @@ public final class ReBrowserSettingsActivity extends Activity {
         String currentSearch = preferences.searchEngine();
         initialSearch = searchPosition(currentSearch);
         searchEngine.setSelection(savedInstanceState == null ? initialSearch : savedInstanceState.getInt("searchDraft", initialSearch));
-        content.addView(searchEngine, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
+        addField(searchGroup, "默认搜索引擎", searchEngine);
 
         isolation.addView(sectionTitle("网页行为"));
-        isolation.addView(settingSwitch(
+        LinearLayout webGroup = ReBrowserUi.settingsGroup(isolation);
+        webGroup.addView(settingSwitch(
                 "JavaScript",
                 "关闭后部分网站将无法正常工作",
                 preferences.javascriptEnabled(),
                 preferences::setJavascriptEnabled));
-        isolation.addView(settingSwitch(
+        ReBrowserUi.settingsDivider(webGroup);
+        webGroup.addView(settingSwitch(
                 "允许第三方 Cookie",
                 "按总标签页 Profile 分别保存；不会与 ReOutlook 共用",
                 preferences.thirdPartyCookiesEnabled(),
                 preferences::setThirdPartyCookiesEnabled));
         content.addView(sectionTitle("网页显示"));
-        content.addView(settingSwitch(
+        ReBrowserUi.settingsGroup(content).addView(settingSwitch(
                 "桌面版网站",
                 "新建或重新载入的页面使用桌面布局",
                 preferences.desktopModeEnabled(),
                 preferences::setDesktopModeEnabled));
         isolation.addView(sectionTitle("总标签页生命周期"));
-        isolation.addView(settingSwitch(
+        ReBrowserUi.settingsGroup(isolation).addView(settingSwitch(
                 "允许强行提升为主标签页",
                 "开启后，临时总标签页可跳过副级别直接提升为主；其他生命周期规则不变",
                 preferences.forcePrimaryPromotionEnabled(),
@@ -227,21 +227,23 @@ public final class ReBrowserSettingsActivity extends Activity {
         isolation.addView(sitePermissionsView, matchWrap());
 
         content.addView(sectionTitle("设备与方向"));
-        content.addView(fieldLabel("设备类型"));
+        LinearLayout deviceGroup = ReBrowserUi.settingsGroup(content);
         deviceType = new Spinner(this);
         deviceType.setContentDescription("设备类型：自动、手机或平板");
         deviceType.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,
                 new String[]{"自动识别", "手机", "平板"}));
         deviceType.setSelection(devicePosition(preferences.deviceType()));
         deviceType.setOnItemSelectedListener(deviceListener);
-        content.addView(deviceType, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(56)));
-        deviceStatus = fieldLabel("");
-        content.addView(deviceStatus);
-        content.addView(fieldLabel("自动按屏幕物理 DPI 计算对角线，7 英寸及以上识别为平板；可手动纠正。"
-                + "平板完整窗口遵守系统方向锁定，允许四个朝向；分屏、小窗跟随窗口。设置界面固定竖屏。"));
+        addField(deviceGroup, "设备类型", deviceType);
+        ReBrowserUi.settingsDivider(deviceGroup);
+        deviceStatus = groupDescription("");
+        deviceGroup.addView(deviceStatus);
+        ReBrowserUi.settingsDivider(deviceGroup);
+        deviceGroup.addView(groupDescription("自动按屏幕物理 DPI 计算对角线，7 英寸及以上识别为平板；可手动纠正。"));
         refreshDeviceStatus();
 
         content.addView(sectionTitle("视频播放器"));
+        LinearLayout videoGroup = ReBrowserUi.settingsGroup(content);
         videoOverrideRow = settingSwitch(
                 "覆写视频播放器界面方向",
                 "仅手机生效；平板完整窗口始终遵守系统四方向策略",
@@ -250,10 +252,12 @@ public final class ReBrowserSettingsActivity extends Activity {
                     preferences.setVideoOrientationOverrideEnabled(enabled);
                     updateVideoOrientationSelector();
                 });
-        content.addView(videoOverrideRow);
+        videoGroup.addView(videoOverrideRow);
         videoOrientationSelector = createVideoOrientationSelector();
-        content.addView(videoOrientationSelector, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(50)));
+        LinearLayout.LayoutParams videoParams = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(48));
+        videoParams.setMargins(dp(10), 0, dp(10), dp(8));
+        videoGroup.addView(videoOrientationSelector, videoParams);
         updateVideoOrientationSelector();
 
         content.addView(sectionTitle("系统默认浏览器"));
@@ -261,6 +265,9 @@ public final class ReBrowserSettingsActivity extends Activity {
         defaultBrowser.setText("选择默认浏览器");
         defaultBrowser.setContentDescription("选择默认浏览器，打开 Android 系统默认应用设置");
         defaultBrowser.setOnClickListener(v -> ReBrowserDefaultBrowser.openSettings(this));
+        defaultBrowser.setAllCaps(false);
+        defaultBrowser.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        styleButton(defaultBrowser, ReBrowserUi.SETTINGS_SURFACE, ReBrowserUi.SETTINGS_ACCENT, 14);
         content.addView(defaultBrowser, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(54)));
 
         Button save = new Button(this);
@@ -269,10 +276,14 @@ public final class ReBrowserSettingsActivity extends Activity {
             saveSettings(true);
             finish();
         });
-        LinearLayout.LayoutParams saveParams = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(54));
-        saveParams.setMargins(dp(22), dp(8), dp(22), dp(12));
-        root.addView(save, saveParams);
+        styleButton(save, ReBrowserUi.SETTINGS_ACCENT, Color.WHITE, 24);
+        LinearLayout footer = new LinearLayout(this);
+        footer.setGravity(Gravity.END);
+        footer.setPadding(dp(16), dp(8), dp(16), dp(12));
+        ReBrowserUi.settingsDivider(root);
+        footer.addView(save, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, dp(48)));
+        root.addView(footer, matchWrap());
         showSection(savedInstanceState == null ? getIntent().getStringExtra(ReBrowserSettings.EXTRA_SECTION)
                 : savedInstanceState.getString(ReBrowserSettings.EXTRA_SECTION));
         if (savedInstanceState != null) for (int i = 0; i < pages.length; i++) {
@@ -336,8 +347,8 @@ public final class ReBrowserSettingsActivity extends Activity {
             boolean selected = selectedSection.equals(ReBrowserSettings.SECTIONS[i]);
             pages[i].setVisibility(selected ? View.VISIBLE : View.GONE);
             pageButtons[i].setSelected(selected);
-            pageButtons[i].setTextColor(selected ? Color.WHITE : 0xff373b44);
-            pageButtons[i].setBackground(roundedBackground(selected ? 0xff5b46b4 : Color.TRANSPARENT, dp(11)));
+            pageButtons[i].setTextColor(selected ? 0xff382365 : 0xff373b44);
+            pageButtons[i].setBackground(roundedBackground(selected ? 0xffd8c9f6 : Color.TRANSPARENT, dp(11)));
         }
         if (sitePermissionsView != null && ReBrowserSettings.ISOLATION.equals(selectedSection)) sitePermissionsView.refresh();
     }
@@ -396,10 +407,10 @@ public final class ReBrowserSettingsActivity extends Activity {
     private TextView sectionTitle(String text) {
         TextView title = new TextView(this);
         title.setText(text);
-        title.setTextSize(16);
-        title.setTextColor(Color.rgb(91, 70, 180));
+        title.setTextSize(13);
+        title.setTextColor(ReBrowserUi.SETTINGS_ACCENT);
         title.setTypeface(null, android.graphics.Typeface.BOLD);
-        title.setPadding(0, dp(18), 0, dp(8));
+        title.setPadding(dp(4), dp(12), dp(4), dp(6));
         return title;
     }
 
@@ -411,6 +422,48 @@ public final class ReBrowserSettingsActivity extends Activity {
         label.setPadding(0, dp(8), 0, 0);
         return label;
     }
+
+    private void addField(LinearLayout group, String label, View control) {
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setPadding(dp(12), 0, dp(10), 0);
+        TextView name = fieldLabel(label);
+        name.setTextSize(14);
+        name.setTextColor(0xff242129);
+        name.setPadding(0, 0, dp(8), 0);
+        if (control instanceof EditText) ((EditText) control).setGravity(Gravity.END | Gravity.CENTER_VERTICAL);
+        if (control.getId() == View.NO_ID) control.setId(View.generateViewId());
+        name.setLabelFor(control.getId());
+        row.addView(name, new LinearLayout.LayoutParams(dp(108), ViewGroup.LayoutParams.WRAP_CONTENT));
+        row.addView(control, new LinearLayout.LayoutParams(0, dp(50), 1));
+        group.addView(row, matchWrap());
+    }
+
+    private TextView applicationName(String text) {
+        TextView label = fieldLabel(text);
+        label.setTextSize(14);
+        label.setTextColor(0xff242129);
+        label.setPadding(0, 0, 0, 0);
+        label.setTypeface(android.graphics.Typeface.create("sans-serif-medium", 0));
+        return label;
+    }
+
+    private TextView groupDescription(String text) {
+        TextView label = fieldLabel(text);
+        label.setPadding(dp(12), dp(8), dp(12), dp(8));
+        return label;
+    }
+
+    private void styleButton(Button button, int fill, int text, int radius) {
+        button.setTextColor(new android.content.res.ColorStateList(
+                new int[][] {{-android.R.attr.state_enabled}, {}},
+                new int[] {0xff857b91, text}));
+        button.setBackground(new android.graphics.drawable.RippleDrawable(
+                android.content.res.ColorStateList.valueOf(0x246047ad),
+                roundedBackground(fill, dp(radius)), null));
+        button.setPadding(dp(14), 0, dp(14), 0);
+    }
+
 
     private LinearLayout createVideoOrientationSelector() {
         LinearLayout selector = new LinearLayout(this);
@@ -516,12 +569,13 @@ public final class ReBrowserSettingsActivity extends Activity {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
         row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setPadding(dp(4), dp(8), 0, dp(8));
+        row.setPadding(dp(12), dp(6), dp(10), dp(6));
         LinearLayout labels = new LinearLayout(this);
         labels.setOrientation(LinearLayout.VERTICAL);
         TextView titleView = new TextView(this);
         titleView.setText(title);
-        titleView.setTextSize(16);
+        titleView.setTextSize(14);
+        titleView.setTypeface(android.graphics.Typeface.create("sans-serif-medium", 0));
         titleView.setTextColor(Color.rgb(35, 40, 49));
         labels.addView(titleView);
         TextView subtitleView = new TextView(this);
@@ -535,8 +589,9 @@ public final class ReBrowserSettingsActivity extends Activity {
         toggle.setContentDescription(title);
         toggle.setChecked(checked);
         toggle.setOnCheckedChangeListener((button, enabled) -> listener.accept(enabled));
-        row.addView(toggle, new LinearLayout.LayoutParams(dp(58), dp(52)));
-        row.setMinimumHeight(dp(72));
+        ReBrowserUi.tintSettingsSwitch(toggle);
+        row.addView(toggle, new LinearLayout.LayoutParams(dp(48), dp(48)));
+        row.setMinimumHeight(dp(54));
         row.setLayoutParams(new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return row;

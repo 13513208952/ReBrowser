@@ -189,7 +189,7 @@ public final class ReBrowserActivity extends Activity
         toolbar.setBackgroundColor(Color.WHITE);
         toolbar.setElevation(dp(3));
 
-        TextView home = toolbarButton("⌂", "打开当前子标签页的主页");
+        ImageButton home = toolbarIcon(R.drawable.ic_rb_home, "打开当前子标签页的主页");
         home.setOnClickListener(view -> navigateActiveTab(browserPreferences.homeUrl()));
         toolbar.addView(home, new LinearLayout.LayoutParams(dp(46), dp(50)));
 
@@ -215,8 +215,7 @@ public final class ReBrowserActivity extends Activity
         addressParams.setMargins(dp(2), 0, dp(3), 0);
         toolbar.addView(omnibox, addressParams);
 
-        TextView addChildTab = toolbarButton("＋", "新建并打开子标签页");
-        addChildTab.setTextSize(27);
+        ImageButton addChildTab = toolbarIcon(R.drawable.ic_rb_add_tab, "新建并打开子标签页");
         addChildTab.setOnClickListener(view -> createChildTab(true));
         toolbar.addView(addChildTab, new LinearLayout.LayoutParams(dp(40), dp(48)));
 
@@ -229,11 +228,21 @@ public final class ReBrowserActivity extends Activity
         counterParams.setMargins(0, 0, dp(3), 0);
         toolbar.addView(workspaceCountButton, counterParams);
 
-        TextView menu = toolbarButton("⋮", "ReBrowser 菜单");
-        menu.setTextSize(25);
+        ImageButton menu = toolbarIcon(R.drawable.ic_rb_menu_dots, "ReBrowser 菜单");
         menu.setOnClickListener(this::showBrowserMenu);
         toolbar.addView(menu, new LinearLayout.LayoutParams(dp(42), dp(50)));
         return toolbar;
+    }
+
+    private ImageButton toolbarIcon(int icon, String description) {
+        ImageButton button = new ImageButton(this);
+        button.setImageResource(icon);
+        button.setImageTintList(ColorStateList.valueOf(Color.rgb(49, 53, 61)));
+        button.setScaleType(ImageView.ScaleType.CENTER);
+        button.setPadding(0, 0, 0, 0);
+        button.setContentDescription(description);
+        button.setBackgroundResource(android.R.drawable.list_selector_background);
+        return button;
     }
 
     private void openWorkspaceBookmark(ReBrowserStore.Workspace workspace, boolean shelved) {
@@ -614,10 +623,10 @@ public final class ReBrowserActivity extends Activity
 
         LinearLayout panel = new LinearLayout(this);
         panel.setOrientation(LinearLayout.VERTICAL);
-        panel.setPadding(dp(8), dp(9), dp(8), dp(10));
-        panel.setBackground(roundedBackground(Color.rgb(250, 249, 253), dp(28)));
+        panel.setPadding(dp(7), dp(6), dp(7), dp(7));
+        panel.setBackground(roundedBackground(0xfffaf7fc, dp(24)));
 
-        int popupWidth = dp(264);
+        int popupWidth = dp(248);
         PopupWindow popup = new PopupWindow(panel, popupWidth,
                 ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popup.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
@@ -669,7 +678,7 @@ public final class ReBrowserActivity extends Activity
                     reloadActivePage();
                 }));
         panel.addView(shortcuts, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(60)));
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(50)));
         panel.addView(menuDivider(), new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(1)));
 
@@ -704,7 +713,7 @@ public final class ReBrowserActivity extends Activity
                 });
         panel.addView(menuDivider(), new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(1)));
-        addMenuListItem(panel, R.drawable.ic_rb_settings, "浏览器设置", () -> {
+        addMenuListItem(panel, R.drawable.ic_rb_menu_settings, "浏览器设置", () -> {
             popup.dismiss();
             startActivity(new Intent(this, ReBrowserSettingsActivity.class));
         });
@@ -723,16 +732,17 @@ public final class ReBrowserActivity extends Activity
         ImageButton button = new ImageButton(this);
         button.setImageResource(iconResource);
         button.setScaleType(ImageView.ScaleType.CENTER);
-        button.setPadding(dp(10), dp(10), dp(10), dp(10));
+        button.setPadding(0, 0, 0, 0);
         button.setContentDescription(description);
         button.setAlpha(enabled ? 1f : 0.3f);
         button.setEnabled(enabled);
-        GradientDrawable circle = roundedBackground(Color.rgb(239, 237, 243), dp(22));
+        GradientDrawable circle = roundedBackground(0xfff0ebf4, dp(19));
+        android.graphics.drawable.InsetDrawable inset = new android.graphics.drawable.InsetDrawable(
+                circle, dp(5), dp(6), dp(5), dp(6));
         button.setBackground(new RippleDrawable(
-                ColorStateList.valueOf(Color.argb(28, 63, 63, 70)), circle, null));
+                ColorStateList.valueOf(Color.argb(28, 63, 63, 70)), inset, null));
         if (enabled) button.setOnClickListener(view -> action.run());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(dp(44), dp(44));
-        params.setMargins(dp(2), 0, dp(2), 0);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, dp(49), 1f);
         button.setLayoutParams(params);
         return button;
     }
@@ -755,23 +765,23 @@ public final class ReBrowserActivity extends Activity
     ) {
         TextView row = new TextView(this);
         row.setText(title);
-        row.setTextSize(17);
+        row.setTextSize(16);
         row.setTextColor(Color.rgb(39, 38, 43));
         row.setGravity(Gravity.CENTER_VERTICAL);
-        row.setPadding(dp(14), 0, dp(12), 0);
-        row.setCompoundDrawablePadding(dp(18));
+        row.setPadding(dp(12), 0, dp(12), 0);
+        row.setCompoundDrawablePadding(dp(12));
         row.setCompoundDrawablesWithIntrinsicBounds(iconResource, 0, 0, 0);
         row.setBackgroundResource(android.R.drawable.list_selector_background);
         row.setAlpha(enabled ? 1f : 0.32f);
         row.setEnabled(enabled);
         if (enabled) row.setOnClickListener(view -> action.run());
         panel.addView(row, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(58)));
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(48)));
     }
 
     private View menuDivider() {
         View divider = new View(this);
-        divider.setBackgroundColor(Color.rgb(224, 222, 228));
+        divider.setBackgroundColor(0xffe9e2eb);
         return divider;
     }
 
@@ -1785,10 +1795,12 @@ public final class ReBrowserActivity extends Activity
         browserToolbar.setElevation(nativePage ? 0 : dp(3));
         omnibox.setVisibility(nativePage ? View.INVISIBLE : View.VISIBLE);
         int color = photo ? Color.WHITE : Color.rgb(49, 53, 61);
+        ColorStateList iconTint = ColorStateList.valueOf(color);
         for (int i = 0; i < browserToolbar.getChildCount(); i++) {
             View child = browserToolbar.getChildAt(i);
-            if (child instanceof TextView && child != omnibox) ((TextView) child).setTextColor(color);
+            if (child instanceof ImageButton) ((ImageButton) child).setImageTintList(iconTint);
         }
+        workspaceCountButton.setTextColor(color);
         GradientDrawable counter = roundedBackground(Color.TRANSPARENT, dp(8));
         counter.setStroke(dp(2), color);
         workspaceCountButton.setBackground(counter);

@@ -1,13 +1,47 @@
 package io.github.reoutlook;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.drawable.GradientDrawable;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 
 /** Stateless view and dimension helpers shared by ReBrowser UI components. */
 final class ReBrowserUi {
     private ReBrowserUi() {}
+
+    static final int SETTINGS_BACKGROUND = 0xffede8f0;
+    static final int SETTINGS_ACCENT = 0xff6047ad;
+    static final int SETTINGS_SURFACE = 0xfffffaff;
+
+    static LinearLayout settingsGroup(LinearLayout parent) {
+        Context context = parent.getContext();
+        LinearLayout group = new LinearLayout(context);
+        group.setOrientation(LinearLayout.VERTICAL);
+        group.setBackground(roundedBackground(SETTINGS_SURFACE, dp(context, 14)));
+        group.setClipToOutline(true);
+        parent.addView(group, new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return group;
+    }
+
+    static void settingsDivider(LinearLayout group) {
+        View line = new View(group.getContext());
+        line.setBackgroundColor(0xffebe5ee);
+        group.addView(line, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 1));
+    }
+
+    static void tintSettingsSwitch(Switch toggle) {
+        toggle.setThumbTintList(new ColorStateList(
+                new int[][] {{android.R.attr.state_checked}, {}},
+                new int[] {0xffffffff, 0xff746a7e}));
+        toggle.setTrackTintList(new ColorStateList(
+                new int[][] {{android.R.attr.state_checked}, {}},
+                new int[] {SETTINGS_ACCENT, 0xffb9adbf}));
+    }
 
     static int dp(Context context, int value) {
         return Math.round(value * context.getResources().getDisplayMetrics().density);

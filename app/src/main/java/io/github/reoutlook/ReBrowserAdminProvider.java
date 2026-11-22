@@ -41,8 +41,7 @@ public final class ReBrowserAdminProvider extends ContentProvider {
             result.putString("challenge", challenge);
             result.putString("requestId", last.optString("requestId"));
             result.putInt("authorizationLevel", last.optInt("authorizationLevel", 1));
-            result.putString("administratorKeys",
-                    "reoutlook-root-v1,rebrowser-root-v1");
+            result.putString("administratorKeys", ReBrowserAdminKeys.REBROWSER_ROOT_ID);
             result.putString("authentication", last.optInt("authorizationLevel", 1) >= 3
                     ? "administrator-root-key"
                     : "administrator-root-key OR device-credential");

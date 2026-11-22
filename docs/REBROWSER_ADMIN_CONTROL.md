@@ -10,16 +10,16 @@ The rejected host-resize/View-transform experiment has been removed from current
 
 Both exported ReBrowser administrator components require `android.permission.DUMP`, so only ADB shell/system callers can reach them. Every command then uses a three-minute, single-use challenge bound to the exact request, installation ID, request ID, random nonce, issue time, and expiry.
 
-Two immutable public roots are compiled into the application:
-
-- `reoutlook-root-v1`: RSA-3072/SHA-256, fingerprint `0c045556f779ddc469cdf64c14b33f27904bf75fd48956111860a9f081be99fd`;
-- `rebrowser-root-v1`: ECDSA P-256/SHA-256, fingerprint `38d674fb6eb66ed4efaf2360def9c023c81b18a594b3fcea127bc87338a0ef01`.
-
-Both roots can independently authorize all three ReBrowser control levels and cannot be disabled by an application setting or administrator command. The ReBrowser root does **not** authorize ReOutlook mail export. ReOutlook export continues to require its RSA administrator signature and a separate foreground owner-credential confirmation.
+ReBrowser and ReOutlook trust one immutable administrator signing root:
+`rebrowser-root-v2` (ECDSA P-256/SHA-256), fingerprint
+`d3e730cab1ad80e5319f7966a269ea94d8a8126788a3bc0a956785b81f97cd55`.
+Both old signing roots are rejected. ReOutlook export still requires separate
+foreground owner-credential confirmation and uses its unchanged RSA encryption key.
+See [offline recovery](../tools/admin/README.md#reproduce-a-v2-rebrowser-administrator-root).
 
 The device owner may approve level-one and level-two ReBrowser operations using the Android system lock credential instead of a root signature. Level-three operations always require at least one administrator root signature and cannot be approved by the owner credential alone.
 
-Other trusted keys, if introduced, must be added with explicit scopes in source code and a new APK. There is no command for enrolling a key. Non-root keys may be marked unavailable by a later build; the two development roots have no runtime revocation state.
+There is no ordinary key enrollment or runtime revocation. Changing the root requires a new APK.
 
 ## Authorization levels
 
@@ -65,37 +65,12 @@ A bounded audit ring records the request ID, operation, level, authorization met
 Examples:
 
 ```bash
-export REBROWSER_ROOT_PRIVATE_KEY=/secure/path/rebrowser-root-v1-private.pem
-
-python3 tools/admin/rebrowser_admin.py capabilities --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py state --key-id rebrowser-root-v1 --compact
-python3 tools/admin/rebrowser_admin.py new-workspace --key-id rebrowser-root-v1
+export REBROWSER_ROOT_PRIVATE_KEY=/secure/path/rebrowser-root-v2-ecdsa-private.pem
+python3 tools/admin/rebrowser_admin.py capabilities
+python3 tools/admin/rebrowser_admin.py state --compact
 python3 tools/admin/rebrowser_admin.py open https://www.baidu.com/ \
-  --workspace WORKSPACE_ID --tab TAB_ID --wait --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py lock WORKSPACE_ID --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py close-workspace WORKSPACE_ID \
-  --confirm-delete --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py download-policy --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py set-downloads-enabled false --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py set-downloads-enabled true --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py downloads --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py approve-download DOWNLOAD_ID --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py delete-download DOWNLOAD_ID \
-  --confirm-delete --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py repair-downloads --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py site-permissions --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py disable-site-permission camera \
-  --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py clear-site-permissions clipboard \
-  --confirm-delete --key-id rebrowser-root-v1
-python3 tools/admin/rebrowser_admin.py repair --key-id rebrowser-root-v1
-```
-
-The existing ReOutlook RSA root remains accepted:
-
-```bash
-export REOUTLOOK_MAINTENANCE_PRIVATE_KEY=/secure/path/reoutlook-maintenance-rsa-private.pem
-python3 tools/admin/rebrowser_admin.py diagnostics --key-id reoutlook-root-v1
+  --workspace WORKSPACE_ID --tab TAB_ID --wait
+python3 tools/admin/rebrowser_admin.py repair
 ```
 
 Use `--auth device` for an owner-approved level-one or level-two command. Run `--help` for target and wait options.
@@ -151,7 +126,7 @@ python3 tools/admin/rebrowser_admin.py set-pref newTabRecent true
 
 ## Native mode management and runtime diagnostics (v1.0.0)
 
-New level-one operations retain DUMP, exact signed one-use challenge, both immutable roots, owner-credential limits, and audit records:
+These level-one operations retain DUMP, exact signed one-use challenges, owner-credential limits and audit records:
 
 - `GET_APPLICATION_STATUS` / `applications`: fixed same-package modes, launcher visibility and provider availability; no component setter.
 - `GET_RUNTIME_STATUS` / `runtime`: installed WebView identity/version and missing browser features, without creating a workspace or WebView.

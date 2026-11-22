@@ -21,7 +21,7 @@ android {
         applicationId = "io.github.rebrowser.compat"
         minSdk = 29
         targetSdk = 36
-        versionName = "1.0.6"
+        versionName = "1.0.7"
         buildConfigField("boolean", "FULL_SUITE", "true")
     }
 
@@ -32,17 +32,17 @@ android {
     productFlavors {
         create("armv7") {
             dimension = "cpu"
-            versionCode = 1060001
+            versionCode = 1070001
             ndk { abiFilters += "armeabi-v7a" }
         }
         create("arm64") {
             dimension = "cpu"
-            versionCode = 1060002
+            versionCode = 1070002
             ndk { abiFilters += "arm64-v8a" }
         }
         create("x86_64") {
             dimension = "cpu"
-            versionCode = 1060003
+            versionCode = 1070003
             ndk { abiFilters += "x86_64" }
         }
     }

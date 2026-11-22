@@ -9,11 +9,8 @@ import android.util.Base64;
 import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
-import java.security.Signature;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.UUID;
 
 final class MaintenanceAuthorizer {
@@ -81,14 +78,7 @@ final class MaintenanceAuthorizer {
                 throw new SecurityException("Active account changed");
             }
         }
-        byte[] publicBytes = Base64.decode(
-                MaintenanceKeys.SIGNING_RSA_X509_BASE64, Base64.DEFAULT);
-        Signature verifier = Signature.getInstance("SHA256withRSA");
-        verifier.initVerify(KeyFactory.getInstance("RSA")
-                .generatePublic(new X509EncodedKeySpec(publicBytes)));
-        verifier.update(challenge.getBytes(StandardCharsets.UTF_8));
-        byte[] signature = Base64.decode(signatureBase64, Base64.DEFAULT);
-        if (!verifier.verify(signature)) throw new SecurityException("Invalid administrator signature");
+        ReBrowserAdminKeys.verify(ReBrowserAdminKeys.REBROWSER_ROOT_ID, challenge, signatureBase64);
         return payload;
     }
 

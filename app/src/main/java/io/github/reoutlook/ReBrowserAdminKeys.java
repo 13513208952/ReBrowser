@@ -10,37 +10,23 @@ import java.security.KeyFactory;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 
-/** Immutable public roots for ReBrowser administrator control. */
+/** Immutable public root for ReBrowser administrator control. */
 final class ReBrowserAdminKeys {
-    static final String REOUTLOOK_ROOT_ID = "reoutlook-root-v1";
-    static final String REBROWSER_ROOT_ID = "rebrowser-root-v1";
+    static final String REBROWSER_ROOT_ID = "rebrowser-root-v2";
     private static final String REBROWSER_EC_X509_BASE64 =
-            "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE7UvUBKa2X4Mlov8IdqnfwalvTudNbx2bHNFQDNoiZVTT0N5C89qqsueJkr1OtZMb8trItFvXtqWFn+m8xOW3QQ==";
-    private static final String REOUTLOOK_FINGERPRINT =
-            "0c045556f779ddc469cdf64c14b33f27904bf75fd48956111860a9f081be99fd";
+            "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAENOeoTzrWMF2moFGhvb3F0lFIhjUggnNq1Yg2LNbflpED22iWs2wRSHUNatwXTkOo3KGJvDcJqTAEaHKaefmkSA==";
     private static final String REBROWSER_FINGERPRINT =
-            "38d674fb6eb66ed4efaf2360def9c023c81b18a594b3fcea127bc87338a0ef01";
+            "d3e730cab1ad80e5319f7966a269ea94d8a8126788a3bc0a956785b81f97cd55";
 
     private ReBrowserAdminKeys() {}
 
     static String verify(String keyId, String challenge, String signatureBase64) throws Exception {
-        String selected = keyId == null || keyId.isBlank() ? REOUTLOOK_ROOT_ID : keyId;
-        byte[] encodedPublic;
-        String keyAlgorithm;
-        String signatureAlgorithm;
-        if (REOUTLOOK_ROOT_ID.equals(selected)) {
-            encodedPublic = Base64.decode(MaintenanceKeys.SIGNING_RSA_X509_BASE64, Base64.DEFAULT);
-            keyAlgorithm = "RSA";
-            signatureAlgorithm = "SHA256withRSA";
-        } else if (REBROWSER_ROOT_ID.equals(selected)) {
-            encodedPublic = Base64.decode(REBROWSER_EC_X509_BASE64, Base64.DEFAULT);
-            keyAlgorithm = "EC";
-            signatureAlgorithm = "SHA256withECDSA";
-        } else {
+        if (!REBROWSER_ROOT_ID.equals(keyId)) {
             throw new SecurityException("Unknown or unavailable administrator key");
         }
-        Signature verifier = Signature.getInstance(signatureAlgorithm);
-        verifier.initVerify(KeyFactory.getInstance(keyAlgorithm)
+        byte[] encodedPublic = Base64.decode(REBROWSER_EC_X509_BASE64, Base64.DEFAULT);
+        Signature verifier = Signature.getInstance("SHA256withECDSA");
+        verifier.initVerify(KeyFactory.getInstance("EC")
                 .generatePublic(new X509EncodedKeySpec(encodedPublic)));
         verifier.update(challenge.getBytes(StandardCharsets.UTF_8));
         byte[] signature;
@@ -52,13 +38,11 @@ final class ReBrowserAdminKeys {
         if (!verifier.verify(signature)) {
             throw new SecurityException("Invalid administrator signature");
         }
-        return selected;
+        return REBROWSER_ROOT_ID;
     }
 
     static JSONArray capabilities() throws Exception {
         JSONArray keys = new JSONArray();
-        keys.put(keyValue(REOUTLOOK_ROOT_ID, "RSA-3072/SHA-256",
-                REOUTLOOK_FINGERPRINT, "rebrowser:root,reoutlook:maintenance"));
         keys.put(keyValue(REBROWSER_ROOT_ID, "ECDSA-P256/SHA-256",
                 REBROWSER_FINGERPRINT, "rebrowser:root"));
         return keys;

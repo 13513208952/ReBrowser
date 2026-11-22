@@ -13,15 +13,13 @@ import time
 import uuid
 
 from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import ec, padding, rsa
+from cryptography.hazmat.primitives.asymmetric import ec
 
 PACKAGE = "io.github.reoutlook"
 ACTIVITY = f"{PACKAGE}/.ReBrowserAdminActivity"
 URI = "content://io.github.reoutlook.rebrowser.admin"
 HERE = pathlib.Path(__file__).resolve().parent
-PRIVATE_KEY = pathlib.Path(os.environ.get(
-    "REOUTLOOK_MAINTENANCE_PRIVATE_KEY",
-    str(HERE / "reoutlook-maintenance-rsa-private.pem"))).expanduser()
+ROOT_KEY_ID = "rebrowser-root-v2"
 ANDROID_HOME = pathlib.Path(os.environ.get(
     "ANDROID_HOME", str(pathlib.Path.home() / "Android" / "Sdk"))).expanduser()
 ADB = shutil.which("adb") or str(ANDROID_HOME / "platform-tools" / "adb")
@@ -114,7 +112,7 @@ STRING_PREFERENCES = {
 }
 REBROWSER_PRIVATE_KEY = pathlib.Path(os.environ.get(
     "REBROWSER_ROOT_PRIVATE_KEY",
-    str(HERE / "rebrowser-root-v1-ecdsa-private.pem"))).expanduser()
+    str(HERE / "rebrowser-root-v2-ecdsa-private.pem"))).expanduser()
 
 
 def adb_command(*args: str) -> list[str]:
@@ -252,25 +250,16 @@ def build_request(args: argparse.Namespace) -> dict:
 
 
 def selected_key(args: argparse.Namespace) -> tuple[str, pathlib.Path]:
-    key_id = args.key_id
-    if key_id is None:
-        key_id = ("rebrowser-root-v1" if os.environ.get("REBROWSER_ROOT_PRIVATE_KEY")
-                  else "reoutlook-root-v1")
-    if args.private_key:
-        path = pathlib.Path(args.private_key).expanduser()
-    else:
-        path = REBROWSER_PRIVATE_KEY if key_id == "rebrowser-root-v1" else PRIVATE_KEY
-    return key_id, path
+    path = pathlib.Path(args.private_key).expanduser() if args.private_key else REBROWSER_PRIVATE_KEY
+    return args.key_id, path
 
 
 def sign_challenge(challenge: str, path: pathlib.Path) -> bytes:
     if not path.is_file():
         raise SystemExit(f"Missing offline signing key: {path}")
     private_key = serialization.load_pem_private_key(path.read_bytes(), password=None)
-    if isinstance(private_key, rsa.RSAPrivateKey):
-        return private_key.sign(
-            challenge.encode("ascii"), padding.PKCS1v15(), hashes.SHA256())
-    if isinstance(private_key, ec.EllipticCurvePrivateKey):
+    if isinstance(private_key, ec.EllipticCurvePrivateKey) and isinstance(
+            private_key.curve, ec.SECP256R1):
         return private_key.sign(challenge.encode("ascii"), ec.ECDSA(hashes.SHA256()))
     raise SystemExit("Unsupported administrator private key type")
 
@@ -333,7 +322,7 @@ def main() -> None:
     parser.add_argument("--timeout", type=int, default=30)
     parser.add_argument("--confirm-delete", action="store_true")
     parser.add_argument("--auth", choices=("key", "device"), default="key")
-    parser.add_argument("--key-id", choices=("reoutlook-root-v1", "rebrowser-root-v1"))
+    parser.add_argument("--key-id", choices=(ROOT_KEY_ID,), default=ROOT_KEY_ID)
     parser.add_argument("--private-key")
     parser.add_argument("--compact", action="store_true")
     args = parser.parse_args()

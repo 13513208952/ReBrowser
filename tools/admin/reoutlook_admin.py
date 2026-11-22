@@ -9,16 +9,12 @@ import shutil
 import subprocess
 import sys
 
-from cryptography.hazmat.primitives import hashes, serialization
-from cryptography.hazmat.primitives.asymmetric import padding
+from rebrowser_admin import REBROWSER_PRIVATE_KEY, sign_challenge
 
 PACKAGE = "io.github.reoutlook"
 ACTIVITY = f"{PACKAGE}/.MaintenanceActivity"
 URI = "content://io.github.reoutlook.maintenance"
-HERE = pathlib.Path(__file__).resolve().parent
-PRIVATE_KEY = pathlib.Path(os.environ.get(
-    "REOUTLOOK_MAINTENANCE_PRIVATE_KEY",
-    str(HERE / "reoutlook-maintenance-rsa-private.pem"))).expanduser()
+PRIVATE_KEY = REBROWSER_PRIVATE_KEY
 ANDROID_HOME = pathlib.Path(os.environ.get(
     "ANDROID_HOME", str(pathlib.Path.home() / "Android" / "Sdk"))).expanduser()
 ADB = shutil.which("adb") or str(ANDROID_HOME / "platform-tools" / "adb")
@@ -47,10 +43,7 @@ def request_export() -> None:
         clear_challenge()
         raise SystemExit(f"Could not read challenge: {response}")
     challenge = match.group(1)
-    private_key = serialization.load_pem_private_key(
-        PRIVATE_KEY.read_bytes(), password=None)
-    signature = private_key.sign(
-        challenge.encode("ascii"), padding.PKCS1v15(), hashes.SHA256())
+    signature = sign_challenge(challenge, PRIVATE_KEY)
     signature_b64 = base64.b64encode(signature).decode("ascii")
     output = adb("shell", "am", "start", "-n", ACTIVITY,
                  "--es", "challenge", challenge, "--es", "signature", signature_b64)

@@ -61,7 +61,7 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 | **WebView 极简无背景** | 仅 ReBrowser，纯白新标签页 |
 | **WebView 极简有背景** | 仅 ReBrowser，包含蓝紫背景照片 |
 | **WebView 全量有背景** | ReBrowser、ReOutlook、ReMusic |
-| **GeckoView 全量 · arm64 / armv7** | 自带 GeckoView 内核，按设备支持的 ARM 架构选择 |
+| **GeckoView 全量 · arm64** | 自带 GeckoView 内核，适用于 64 位 ARM 设备 |
 
 **使用 ReOutlook 或 ReMusic，请选择 WebView 全量包或对应 CPU 架构的 GeckoView 包。** GeckoView 版没有极简包。
 

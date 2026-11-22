@@ -24,6 +24,45 @@ export REOUTLOOK_MAINTENANCE_PRIVATE_KEY=/secure/path/reoutlook-maintenance-rsa-
 export REOUTLOOK_EXPORT_PRIVATE_KEY=/secure/path/reoutlook-export-rsa-private.pem
 ```
 
+## Reproduce a v2 ReBrowser administrator root
+
+On a trusted offline machine with Python 3 and `cryptography` installed, run:
+
+```bash
+python3 tools/admin/derive_rebrowser_root.py
+```
+
+Enter the same recovery passphrase twice at the hidden terminal prompts. Without
+`--private-out`, only the public key and its fingerprint are printed and no key
+file is created. To regenerate a key for CLI use, append
+`--private-out /secure/path/rebrowser-root-v2-ecdsa-private.pem` and use that PEM
+with `REBROWSER_ROOT_PRIVATE_KEY` on an APK that trusts the v2 public key.
+The PEM is unencrypted, written with owner-only permissions, and never
+overwrites a file. Do not put it or the passphrase in source control, shell
+arguments, environment variables, or chat. The passphrase is the only secret
+input; anyone who learns it can regenerate the private key.
+
+**Stable v2 derivation format:**
+
+1. Encode the exact nonempty passphrase as UTF-8. No trimming, normalization,
+   added newline, or numeric conversion.
+2. Use scrypt with the literal ASCII salt `ReBrowser administrator root v2 | ECDSA P-256`,
+   `N=131072`, `r=8`, `p=1`, and a 64-byte output. The tool's 256 MiB
+   memory limit affects only execution, not the output.
+3. Interpret the output as an unsigned big-endian integer `x`. The P-256
+   private scalar is `1 + (x mod (q - 1))`, where the curve order `q` is
+   `FFFFFFFF00000000FFFFFFFFFFFFFFFFBCE6FAADA7179E84F3B9CAC2FC632551` in hex.
+4. Compute the public key on `secp256r1`. Use standard Base64 of its DER
+   SubjectPublicKeyInfo in the application. The fingerprint is lowercase
+   SHA-256 hex of those same DER bytes.
+
+Public test vector (never use as a secret): `ReBrowser public test vector 例`
+has fingerprint `c41ae146b9686565f6476033f9f255a845fffa95c5dd0b0093c0c3740ac7cced`.
+This format cannot regenerate a v1 key. A new passphrase changes the public key,
+so rotation requires a new APK. Published public keys allow offline guesses;
+use a randomly chosen passphrase, not a previously disclosed value or a device
+identifier.
+
 ## Request an owner-approved export
 
 ```bash

@@ -15,7 +15,7 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 
 ## 界面与实践
 
-以下为 **v1.0.4 手机实机界面**，并进行了一定的隐私处理。
+以下为 **v1.0.4 手机实机界面**，并进行了一定的隐私处理。（tips:rebrowser已经更新新版UI,请安装后查看）
 
 ### ReBrowser：
 
@@ -50,7 +50,7 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 
 > 依次为**推荐页、歌单侧栏、完整播放器与歌词**。头像、私人歌单名及来源用户名已进行隐私处理，其余内容保留实机显示；。示例头像的作者、许可与处理方式见[资源说明](docs/ASSET_CREDITS.md#remusic示例头像)。
 
-**截图用于展示界面**，不代表所有设备、窗口形态或服务权益均已验证。[当前实现与已知限制](docs/PROJECT_STATUS.md)。
+[当前实现与已知限制](docs/PROJECT_STATUS.md)。
 
 ## 下载与安装
 
@@ -68,8 +68,7 @@ Rebrowser的“子应用”是基于**网页即应用**的理念，对网页进�
 ### 运行要求与升级
 
 - **Android 10 或更高版本**。WebView 版依赖设备的系统 WebView；GeckoView 版自带浏览器内核，但安装前需要确认设备使用 arm64 还是 armv7。
-- **WebView 三包使用同一安装身份，不能并装；GeckoView 使用独立安装身份，可以与 WebView 版并存。** 同一内核版本升级只覆盖安装，不卸载、不清数据。WebView 极简可升级到全量；安装新版全量后，普通安装器不能回退极简或较低版本码的旧包。
-- 升级保留既有背景和近期访问选择。无背景包不含照片；历史为空时不显示近期访问。重要的临时浏览环境请先上锁，避免进程重启后丢失。
+- **WebView 三包使用同一安装身份，不能并装；GeckoView 使用独立安装身份，可以与 WebView 版并存。** 
 
 v1.0.6 新增 GeckoView 全量包，WebView 版加入邮件数据库压缩，ReVideo 改为外部 BiliClient 入口。详细变化、包体校验和验证范围见[本版发布记录](docs/releases/v1.0.6.md)。
 
@@ -86,19 +85,16 @@ v1.0.6 新增 GeckoView 全量包，WebView 版加入邮件数据库压缩，ReV
 - **ReMusic**：全量包在 **设置 → 应用管理 → 音乐** 主动启用。启用与独立图标绑定，完成官方登录后进入 WebPlayer；新运行时默认暂停，继续播放需要明确操作。
 - **默认浏览器**：点击后进入安卓系统默认浏览器设置界面，可以自行设置包括Rebrowser在内的任何一个系统已有的浏览器。
 
-  > **tips**:为了您的日常使用体验，我们建议使用chrome,edge,firefox等浏览器。本项目的浏览器功能**仅适用于查看新闻等日常用途**，自动拦截等相关功能部分情况下会影响网页正常工作。
+  > **tips**:自动拦截等相关功能部分情况下会影响网页正常工作，遇到这种情况时，请使用常规浏览器。
 
 详细操作：[ReBrowser 指南](docs/user/REBROWSER.md) · [ReOutlook 指南](docs/user/REOUTLOOK.md) · [ReMusic 指南](docs/user/MUSIC.md)。
 
 ## 其他说明
-
-ReBrowser 提供系统 WebView 与内置 GeckoView 两种内核版本，不是新的操作系统，也不宣称包含完整桌面 Chromium 或能自动适配任意网站。[完整项目定位](docs/PROJECT_VISION.md)。
-
-项目**尚未接受独立安全审计**，不保证每家 WebView、GeckoView 或网站都兼容。为兼容覆盖升级，公开包沿用各自历史签名证书，APK 本身是非调试 Release 构建。详见[隐私说明](PRIVACY.md)、[安全策略](SECURITY.md)与[已知限制](docs/PROJECT_STATUS.md)。
+更多信息详见[隐私说明](PRIVACY.md)、[安全策略](SECURITY.md)与[已知限制](docs/PROJECT_STATUS.md)。
 
 ## 反馈与更多资料
 
-遇到问题可在 [Issues](https://github.com/13513208952/ReBrowser/issues) 反馈，请描述设备、Android 版本、所用内核及 WebView／GeckoView 版本和复现步骤；不要公开真实邮件、密码、登录令牌或私钥。
+遇到问题可在 [Issues](https://github.com/13513208952/ReBrowser/issues) 反馈，请描述设备、Android 版本、所用内核及 WebView／GeckoView 版本和复现步骤。
 
 [文档目录](docs/README.md) · [项目状态](docs/PROJECT_STATUS.md) · [开发参考](docs/DEVELOPMENT.md) · [仓库维护](docs/MAINTENANCE.md) · [发布记录](docs/releases/README.md)
 

@@ -113,6 +113,7 @@ final class ReBrowserDevice {
         }
 
         boolean tablet() { return TABLET.equals(effective); }
+        boolean allowsTabletSites() { return TABLET.equals(automatic) && tablet(); }
 
         JSONObject snapshot() throws JSONException {
             return new JSONObject().put("choice", preference).put("automaticType", automatic)

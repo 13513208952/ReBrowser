@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 
 /** Stateless view and dimension helpers shared by ReBrowser UI components. */
 final class ReBrowserUi {
@@ -52,6 +53,32 @@ final class ReBrowserUi {
         background.setColor(color);
         background.setCornerRadius(radiusPixels);
         return background;
+    }
+
+    static int appDrawerWidth(Context context) {
+        return Math.min(dp(context, 320),
+                Math.round(context.getResources().getDisplayMetrics().widthPixels * 0.84f));
+    }
+
+    static void styleAppDrawer(View drawer) {
+        Context context = drawer.getContext();
+        drawer.setElevation(dp(context, 18));
+        drawer.setPadding(dp(context, 20), dp(context, 24), dp(context, 16), dp(context, 18));
+        GradientDrawable background = new GradientDrawable();
+        background.setColor(0xfffafbfd);
+        int corner = dp(context, 22);
+        background.setCornerRadii(new float[]{0, 0, corner, corner, corner, corner, 0, 0});
+        drawer.setBackground(background);
+    }
+
+    static void addAppDrawerHeading(LinearLayout drawer, CharSequence title) {
+        Context context = drawer.getContext();
+        TextView brand = new TextView(context);
+        brand.setText(title);
+        brand.setTextColor(0xff0f548c);
+        brand.setTextSize(27);
+        brand.setTypeface(null, android.graphics.Typeface.BOLD);
+        drawer.addView(brand, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(context, 46)));
     }
 
     static FrameLayout.LayoutParams matchMatch() {

@@ -70,6 +70,55 @@
             android:theme="@style/Theme.ReVideoShortcut" />
 
         <activity
+            android:name=".ReBrowserTabletSiteActivity$ChatGpt"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize"
+            android:exported="false"
+            android:icon="@drawable/ic_official_chatgpt"
+            android:label="ChatGPT"
+            android:launchMode="singleTask"
+            android:taskAffinity="io.github.rebrowser.compat.chatgpt"
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustResize">
+            <property android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY" android:value="true" />
+        </activity>
+        <activity-alias
+            android:name=".ReBrowserChatGptLauncher"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_official_chatgpt"
+            android:label="ChatGPT"
+            android:targetActivity=".ReBrowserTabletSiteActivity$ChatGpt">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity
+            android:name=".ReBrowserTabletSiteActivity$RainClass"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize"
+            android:exported="false"
+            android:icon="@drawable/ic_official_rainclass"
+            android:label="雨课堂 Web"
+            android:launchMode="singleTask"
+            android:taskAffinity="io.github.rebrowser.compat.rainclass"
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustResize">
+            <property android:name="android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY" android:value="true" />
+        </activity>
+        <activity-alias
+            android:name=".ReBrowserRainClassLauncher"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@drawable/ic_official_rainclass"
+            android:label="雨课堂 Web"
+            android:targetActivity=".ReBrowserTabletSiteActivity$RainClass">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
             android:name=".ReBrowserSubapplicationSettingsActivity"
             android:exported="false"
             android:label="应用设置"
@@ -89,9 +138,9 @@
             android:windowSoftInputMode="adjustResize" />
         <activity-alias
             android:name=".ReOutlookLauncher"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/ic_official_outlook"
             android:label="@string/reoutlook_name"
             android:targetActivity=".MainActivity">
             <intent-filter>

@@ -205,7 +205,7 @@
             android:name=".ReOutlookLauncher"
             android:enabled="false"
             android:exported="true"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/ic_official_outlook"
             android:label="@string/reoutlook_name"
             android:targetActivity=".MainActivity">
             <intent-filter>

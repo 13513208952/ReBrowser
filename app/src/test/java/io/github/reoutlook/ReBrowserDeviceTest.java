@@ -57,6 +57,12 @@ public final class ReBrowserDeviceTest {
         preferences.setDeviceType("auto");assertEquals("auto", preferences.deviceType());
     }
 
+    @Test public void tabletWebAppsRequireADetectedTabletAndRespectPhoneMode() {
+        assertTrue(ReBrowserDevice.classify(ReBrowserDevice.AUTO, 2400, 3200, 350, 350).allowsTabletSites());
+        assertFalse(ReBrowserDevice.classify(ReBrowserDevice.PHONE, 2400, 3200, 350, 350).allowsTabletSites());
+        assertFalse(ReBrowserDevice.classify(ReBrowserDevice.TABLET, 1080, 2400, 480, 480).allowsTabletSites());
+    }
+
     @Test public void wholeTabletWindowUsesFullUserNotUnrestrictedSensors() {
         assertEquals(ActivityInfo.SCREEN_ORIENTATION_FULL_USER,
                 ReBrowserFullscreenController.windowOrientation(true, true, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT));

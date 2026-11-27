@@ -420,6 +420,7 @@ final class ReBrowserAdminController {
             preferences.setSearchEngine((String) value);
         } else if ("deviceType".equals(name)) {
             preferences.setDeviceType((String) value);
+            ReBrowserTabletApp.deviceTypeChanged(context);
             fullscreenController.applyGlobalOrientationPreference();
         } else if ("newTabBackground".equals(name)) {
             preferences.setNewTabBackground((String) value);

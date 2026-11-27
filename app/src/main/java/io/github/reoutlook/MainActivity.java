@@ -138,8 +138,7 @@ public final class MainActivity extends Activity {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         appDrawer = createDrawer();
-        int drawerWidth = Math.min(dp(320),
-                Math.round(getResources().getDisplayMetrics().widthPixels * 0.84f));
+        int drawerWidth = ReBrowserUi.appDrawerWidth(this);
         FrameLayout.LayoutParams drawerParams = new FrameLayout.LayoutParams(
                 drawerWidth, ViewGroup.LayoutParams.MATCH_PARENT, Gravity.START);
         appDrawer.setTranslationX(-drawerWidth);
@@ -281,20 +280,8 @@ public final class MainActivity extends Activity {
     private LinearLayout createDrawer() {
         LinearLayout drawer = new LinearLayout(this);
         drawer.setOrientation(LinearLayout.VERTICAL);
-        drawer.setElevation(dp(18));
-        drawer.setPadding(dp(20), dp(24), dp(16), dp(18));
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(Color.rgb(250, 251, 253));
-        background.setCornerRadii(new float[]{0, 0, dp(22), dp(22), dp(22), dp(22), 0, 0});
-        drawer.setBackground(background);
-
-        TextView brand = new TextView(this);
-        brand.setText(R.string.app_name);
-        brand.setTextColor(Color.rgb(15, 84, 140));
-        brand.setTextSize(27);
-        brand.setTypeface(null, android.graphics.Typeface.BOLD);
-        drawer.addView(brand, new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, dp(46)));
+        ReBrowserUi.styleAppDrawer(drawer);
+        ReBrowserUi.addAppDrawerHeading(drawer, getText(R.string.app_name));
 
         TextView description = new TextView(this);
         description.setText("Outlook 网页与离线邮件");

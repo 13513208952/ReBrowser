@@ -827,6 +827,8 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         pendingFileChooserGeneration = 0L;
     }
 
+    void onDestroy() { cancelPendingFileChooser(); }
+
     private void cancelFileChooserForTab(String tabId) {
         if (tabId != null && tabId.equals(pendingFileChooserTabId)) cancelPendingFileChooser();
     }

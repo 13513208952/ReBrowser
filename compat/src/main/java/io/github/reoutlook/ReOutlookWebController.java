@@ -1,7 +1,6 @@
 package io.github.reoutlook;
 
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,7 +42,7 @@ final class ReOutlookWebController {
 
     private final Activity activity;
     private final Listener listener;
-    private final int fileChooserRequestCode;
+    private final ReBrowserGeckoFileChooser fileChooser;
     private final GeckoRuntime runtime;
     private GeckoSession session;
     private GeckoSession.SessionState lastState;
@@ -62,8 +61,6 @@ final class ReOutlookWebController {
             };
     private WebExtension extension;
     private WebExtension.Port port;
-    private GeckoSession.PromptDelegate.FilePrompt pendingFilePrompt;
-    private GeckoResult<GeckoSession.PromptDelegate.PromptResponse> pendingFileResult;
     private String pendingUrl;
     private String url = "";
     private long navigationGeneration;
@@ -76,7 +73,7 @@ final class ReOutlookWebController {
     ReOutlookWebController(Activity activity, Listener listener, int fileChooserRequestCode) {
         this.activity = activity;
         this.listener = listener;
-        this.fileChooserRequestCode = fileChooserRequestCode;
+        fileChooser = new ReBrowserGeckoFileChooser(activity, fileChooserRequestCode);
         runtime = ReBrowserGeckoRuntime.get(activity);
         statePrefs = activity.getSharedPreferences(STATE_PREFS, Activity.MODE_PRIVATE);
         session = newSession();
@@ -168,37 +165,14 @@ final class ReOutlookWebController {
     }
 
     boolean onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != fileChooserRequestCode || pendingFilePrompt == null) return false;
-        GeckoSession.PromptDelegate.FilePrompt prompt = pendingFilePrompt;
-        GeckoResult<GeckoSession.PromptDelegate.PromptResponse> result = pendingFileResult;
-        pendingFilePrompt = null;
-        pendingFileResult = null;
-        if (resultCode != Activity.RESULT_OK || data == null) {
-            result.complete(prompt.dismiss());
-            return true;
-        }
-        List<Uri> uris = new ArrayList<>();
-        ClipData clip = data.getClipData();
-        if (clip != null) {
-            for (int index = 0; index < clip.getItemCount(); index++) {
-                Uri item = clip.getItemAt(index).getUri();
-                if (item != null) uris.add(item);
-            }
-        } else if (data.getData() != null) uris.add(data.getData());
-        result.complete(uris.isEmpty() ? prompt.dismiss()
-                : prompt.confirm(activity, uris.toArray(new Uri[0])));
-        return true;
+        return fileChooser.onActivityResult(requestCode, resultCode, data);
     }
 
     void destroy() {
         if (destroyed) return;
         destroyed = true;
         cancelCallbacks();
-        if (pendingFilePrompt != null && pendingFileResult != null) {
-            pendingFileResult.complete(pendingFilePrompt.dismiss());
-        }
-        pendingFilePrompt = null;
-        pendingFileResult = null;
+        fileChooser.close();
         if (port != null) port.disconnect();
         port = null;
         if (view.getSession() != null) view.releaseSession();
@@ -217,6 +191,7 @@ final class ReOutlookWebController {
 
     private void onContentLost(GeckoSession lost, String reason) {
         if (destroyed || lost != session || contentLost) return;
+        fileChooser.cancel(lost);
         contentLost = true;
         navigationGeneration++;
         cancelCallbacks();
@@ -409,6 +384,7 @@ final class ReOutlookWebController {
         });
         session.setProgressDelegate(new GeckoSession.ProgressDelegate() {
             @Override public void onPageStart(GeckoSession session, String value) {
+                fileChooser.onPageStart(session);
                 url = value == null ? "" : value;
                 navigationGeneration++;
                 cancelCallbacks();
@@ -419,6 +395,7 @@ final class ReOutlookWebController {
                 listener.onProgressChanged(progress);
             }
             @Override public void onPageStop(GeckoSession session, boolean success) {
+                fileChooser.onPageStop(session, success);
                 if (success) listener.onPageFinished();
             }
             @Override public void onSessionStateChange(GeckoSession source,
@@ -438,27 +415,10 @@ final class ReOutlookWebController {
         session.setPromptDelegate(new GeckoSession.PromptDelegate() {
             @Override public GeckoResult<PromptResponse> onFilePrompt(GeckoSession session,
                     FilePrompt prompt) {
-                if (!foreground || pendingFilePrompt != null) {
-                    return GeckoResult.fromValue(prompt.dismiss());
-                }
-                pendingFilePrompt = prompt;
-                GeckoResult<PromptResponse> result = new GeckoResult<>();
-                pendingFileResult = result;
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
-                        .addCategory(Intent.CATEGORY_OPENABLE)
-                        .setType(prompt.mimeTypes == null || prompt.mimeTypes.length == 0
-                                ? "*/*" : prompt.mimeTypes[0]);
-                if (prompt.mimeTypes != null && prompt.mimeTypes.length > 1) {
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, prompt.mimeTypes);
-                }
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                try { activity.startActivityForResult(intent, fileChooserRequestCode); }
-                catch (RuntimeException error) {
-                    pendingFilePrompt = null;
-                    pendingFileResult = null;
-                    result.complete(prompt.dismiss());
-                }
-                return result;
+                return foreground && !destroyed && !contentLost
+                        && session == ReOutlookWebController.this.session
+                        ? fileChooser.onFilePrompt(session, prompt)
+                        : GeckoResult.fromValue(prompt.dismiss());
             }
         });
         session.setPermissionDelegate(new GeckoSession.PermissionDelegate() {

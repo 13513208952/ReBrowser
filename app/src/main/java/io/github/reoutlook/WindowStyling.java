@@ -49,10 +49,13 @@ public final class WindowStyling {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 android.graphics.Insets safe = insets.getInsets(
                         WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+                // Edge-to-edge windows are not resized for the keyboard, so the
+                // IME inset must be part of the content padding or it covers the
+                // focused editor (web page and extension panels alike).
                 left = safe.left;
                 top = safe.top;
                 right = safe.right;
-                bottom = safe.bottom;
+                bottom = Math.max(safe.bottom, insets.getInsets(WindowInsets.Type.ime()).bottom);
             } else {
                 left = insets.getSystemWindowInsetLeft();
                 top = insets.getSystemWindowInsetTop();

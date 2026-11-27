@@ -37,6 +37,7 @@ public final class ReBrowserSettingsActivity extends Activity {
     private Spinner searchEngine;
     private Spinner deviceType;
     private TextView deviceStatus;
+    private LinearLayout tabletSiteRows;
     private LinearLayout videoOverrideRow;
     private LinearLayout videoOrientationSelector;
     private TextView videoLandscape;
@@ -174,6 +175,12 @@ public final class ReBrowserSettingsActivity extends Activity {
         styleButton(videoOpenButton, 0xffeae0f6, 0xff463174, 18);
         videoRow.addView(videoOpenButton);
         appGroup.addView(videoRow, matchWrap());
+        if (!ReBrowserRuntime.usesSystemWebView()) {
+            tabletSiteRows = new LinearLayout(this);
+            tabletSiteRows.setOrientation(LinearLayout.VERTICAL);
+            for (ReBrowserTabletApp site : ReBrowserTabletApp.values()) addTabletSiteRow(site);
+            appGroup.addView(tabletSiteRows, matchWrap());
+        }
         }
 
         content.addView(sectionTitle("启动与搜索"));
@@ -391,6 +398,32 @@ public final class ReBrowserSettingsActivity extends Activity {
         if (musicOpenButton != null) musicOpenButton.setEnabled(enabled && ReBrowserRuntime.inspect().browserAvailable());
     }
 
+    private void addTabletSiteRow(ReBrowserTabletApp site) {
+        ReBrowserUi.settingsDivider(tabletSiteRows);
+        LinearLayout row = new LinearLayout(this);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        row.setPadding(dp(12), dp(8), dp(10), dp(8));
+        LinearLayout labels = new LinearLayout(this);
+        labels.setOrientation(LinearLayout.VERTICAL);
+        labels.addView(applicationName(site.title));
+        labels.addView(fieldLabel(site.summary));
+        row.addView(labels, new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
+        Switch launcher = new Switch(this);
+        launcher.setContentDescription("显示 " + site.title + " 桌面图标");
+        launcher.setChecked(site.launcherPreferred(this));
+        launcher.setOnCheckedChangeListener((button, checked) -> site.setLauncherPreferred(this, checked));
+        ReBrowserUi.tintSettingsSwitch(launcher);
+        row.addView(launcher);
+        Button open = new Button(this);
+        open.setText("进入");
+        open.setContentDescription("进入 " + site.title);
+        open.setEnabled(ReBrowserRuntime.inspect().browserAvailable());
+        open.setOnClickListener(view -> site.open(this));
+        styleButton(open, 0xffeae0f6, 0xff463174, 18);
+        row.addView(open);
+        tabletSiteRows.addView(row, matchWrap());
+    }
+
     private android.widget.ImageButton applicationSettingsButton(String id) {
         android.widget.ImageButton button = new android.widget.ImageButton(this);
         button.setImageResource(R.drawable.ic_rb_settings);
@@ -502,7 +535,10 @@ public final class ReBrowserSettingsActivity extends Activity {
         @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             String value = position == 1 ? ReBrowserDevice.PHONE
                     : position == 2 ? ReBrowserDevice.TABLET : ReBrowserDevice.AUTO;
-            if (!value.equals(preferences.deviceType())) preferences.setDeviceType(value);
+            if (!value.equals(preferences.deviceType())) {
+                preferences.setDeviceType(value);
+                ReBrowserTabletApp.deviceTypeChanged(ReBrowserSettingsActivity.this);
+            }
             refreshDeviceStatus();
         }
         @Override public void onNothingSelected(AdapterView<?> parent) {}
@@ -520,6 +556,9 @@ public final class ReBrowserSettingsActivity extends Activity {
                 : "（屏幕尺寸或物理 DPI 不可用，默认手机）";
         deviceStatus.setText("自动识别：" + (ReBrowserDevice.TABLET.equals(status.automatic) ? "平板" : "手机")
                 + size + "；当前按" + (status.tablet() ? "平板" : "手机") + "处理");
+        if (tabletSiteRows != null) {
+            tabletSiteRows.setVisibility(status.allowsTabletSites() ? View.VISIBLE : View.GONE);
+        }
         updateVideoOrientationSelector();
     }
 

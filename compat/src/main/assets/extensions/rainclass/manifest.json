@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "granted_host_permissions": true,
+  "name": "雨课堂在线学习智能插件",
+  "version": "1.2.13",
+  "description": "前台续播未完成视频；按需将题目截图和文字发送给 DeepSeek Flash。",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "rainclass-foreground-playback@local",
+      "data_collection_permissions": {
+        "required": [
+          "websiteContent",
+          "authenticationInfo"
+        ]
+      }
+    }
+  },
+  "permissions": [
+    "nativeMessaging",
+    "nativeMessagingFromContent",
+    "geckoViewAddons"
+  ],
+  "optional_host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "ds-common.js",
+      "ds-clean.js",
+      "ds-background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.yuketang.cn/ai-workspace/lms-graph/*"
+      ],
+      "js": [
+        "activation.js",
+        "ds-directory.js",
+        "playback.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.yuketang.cn/ai-workspace/lms-graph/*",
+        "https://www.yuketang.cn/v2/web/exam/*",
+        "https://www.yuketang.cn/v2/web/iframe-quiz/*",
+        "https://www.yuketang.cn/v2/web/studentQuiz_web/*",
+        "https://www.yuketang.cn/v2/web/quizResult/*",
+        "https://examination.xuetangx.com/exam/*",
+        "https://examination.xuetangx.com/result/*"
+      ],
+      "js": [
+        "activation.js",
+        "vendor/katex.min.js",
+        "vendor/markdown-it.min.js",
+        "ds-math.js",
+        "ds-common.js",
+        "ds-capture.js",
+        "ds-navigation.js",
+        "ds-panel.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.yuketang.cn/*",
+        "https://*.xuetangx.com/*"
+      ],
+      "js": [
+        "cleanup.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

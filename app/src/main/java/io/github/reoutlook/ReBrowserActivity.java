@@ -2053,7 +2053,7 @@ public final class ReBrowserActivity extends Activity
         fullscreenController.hide();
         saveCurrentTabStates();
         destroyTabWebViews();
-        webController.cancelPendingFileChooser();
+        webController.onDestroy();
         for (ReBrowserStore.Workspace workspace : workspaces) {
             if (workspace.level == ReBrowserStore.Level.TEMPORARY) {
                 deleteProfileIfPossible(workspace.profileName);

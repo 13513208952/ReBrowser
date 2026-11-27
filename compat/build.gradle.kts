@@ -125,6 +125,7 @@ val stageSharedWorkspaceSources = tasks.register<Sync>("stageSharedWorkspaceSour
         include("io/github/reoutlook/ReBrowserSearchEngineAssets.java")
         include("io/github/reoutlook/ReBrowserSettings.java")
         include("io/github/reoutlook/ReBrowserSettingsActivity.java")
+        include("io/github/reoutlook/ReBrowserTabletApp.java")
         include("io/github/reoutlook/ReBrowserSitePermissions.java")
         include("io/github/reoutlook/ReBrowserSitePermissionsActivity.java")
         include("io/github/reoutlook/ReBrowserSitePermissionsView.java")

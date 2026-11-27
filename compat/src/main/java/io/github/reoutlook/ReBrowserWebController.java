@@ -135,7 +135,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     private final ReBrowserSitePermissions sitePermissions;
     private final ReBrowserFullscreenController fullscreenController;
     private final Listener listener;
-    private final int fileChooserRequestCode;
+    private final ReBrowserGeckoFileChooser fileChooser;
     private final GeckoRuntime runtime;
     private final Map<String, PageBinding> pagesByTabId = new HashMap<>();
     private final Map<GeckoSession, PageBinding> pagesBySession = new IdentityHashMap<>();
@@ -145,9 +145,6 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     private final Map<String, BlobChunk> completedBlobChunks = new HashMap<>();
     private FrameLayout container;
     private PageBinding visiblePage;
-    private GeckoSession.PromptDelegate.FilePrompt pendingFilePrompt;
-    private GeckoResult<GeckoSession.PromptDelegate.PromptResponse> pendingFileResult;
-    private PageBinding pendingFilePage;
     private WebExtension bridgeExtension;
     private WebExtension.Port bridgeServicePort;
     private final Map<String, ValueCallback<JSONObject>> bridgeServiceCallbacks =
@@ -166,7 +163,8 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         this.sitePermissions = sitePermissions;
         this.fullscreenController = fullscreenController;
         this.listener = listener;
-        this.fileChooserRequestCode = fileChooserRequestCode;
+        fileChooser = new ReBrowserGeckoFileChooser(
+                activity, fileChooserRequestCode, listener::onFileChooserUnavailable);
         runtime = ReBrowserGeckoRuntime.get(activity);
         runtime.getWebExtensionController().ensureBuiltIn(
                 "resource://android/assets/extensions/rebrowser/",
@@ -275,6 +273,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     private void showPage(PageBinding page, boolean loadInitialUrl) {
         if (container == null) throw new IllegalStateException("web-container-unavailable");
         if (visiblePage != null && visiblePage != page) {
+            fileChooser.cancel();
             visiblePage.session.setFocused(false);
             visiblePage.session.setActive(false);
             visiblePage.session.flushSessionState();
@@ -312,6 +311,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     void showNativePage(android.view.View view) {
         if (container == null || view.getParent() == container) return;
         if (visiblePage != null) {
+            fileChooser.cancel();
             visiblePage.session.setFocused(false);
             visiblePage.session.setActive(false);
             visiblePage.view.releaseSession();
@@ -688,7 +688,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     }
 
     private void destroyPage(PageBinding page) {
-        if (pendingFilePage == page) cancelPendingFileChooser();
+        fileChooser.cancel(page.session);
         pagesByTabId.remove(page.tab.id);
         pagesBySession.remove(page.session);
         if (page.view.getSession() != null) page.view.releaseSession();
@@ -740,36 +740,11 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
     }
 
     void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != fileChooserRequestCode || pendingFilePrompt == null) return;
-        GeckoSession.PromptDelegate.FilePrompt prompt = pendingFilePrompt;
-        GeckoResult<GeckoSession.PromptDelegate.PromptResponse> result = pendingFileResult;
-        pendingFilePrompt = null;
-        pendingFileResult = null;
-        pendingFilePage = null;
-        if (resultCode != Activity.RESULT_OK || data == null) {
-            result.complete(prompt.dismiss());
-            return;
-        }
-        List<Uri> uris = new ArrayList<>();
-        ClipData clip = data.getClipData();
-        if (clip != null) {
-            for (int i = 0; i < clip.getItemCount(); i++) {
-                Uri uri = clip.getItemAt(i).getUri();
-                if (uri != null) uris.add(uri);
-            }
-        } else if (data.getData() != null) uris.add(data.getData());
-        if (uris.isEmpty()) result.complete(prompt.dismiss());
-        else result.complete(prompt.confirm(activity, uris.toArray(new Uri[0])));
+        fileChooser.onActivityResult(requestCode, resultCode, data);
     }
-    boolean hasPendingFileChooser() { return pendingFilePrompt != null; }
-    void cancelPendingFileChooser() {
-        if (pendingFilePrompt != null && pendingFileResult != null) {
-            pendingFileResult.complete(pendingFilePrompt.dismiss());
-        }
-        pendingFilePrompt = null;
-        pendingFileResult = null;
-        pendingFilePage = null;
-    }
+    boolean hasPendingFileChooser() { return fileChooser.pending(); }
+    void cancelPendingFileChooser() { fileChooser.cancel(); }
+    void onDestroy() { fileChooser.close(); }
 
     @Override public String cookieForHttpDownload(String tabId, String profileName,
             String sourceOrigin, String requestUrl) {
@@ -971,6 +946,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         page.session.setProgressDelegate(new GeckoSession.ProgressDelegate() {
             @Override public void onPageStart(GeckoSession session, String url) {
                 if (!owns(page, session)) return;
+                fileChooser.onPageStart(session);
                 page.url = url;
                 page.navigationGeneration++;
                 page.clipboardGesture.invalidate();
@@ -993,6 +969,7 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
             }
             @Override public void onPageStop(GeckoSession session, boolean success) {
                 if (!owns(page, session)) return;
+                fileChooser.onPageStop(session, success);
                 page.loading = false;
                 page.progress = success ? 100 : page.progress;
                 if (success) {
@@ -1003,6 +980,12 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
         });
 
         page.session.setContentDelegate(new GeckoSession.ContentDelegate() {
+            @Override public void onCrash(GeckoSession session) {
+                fileChooser.cancel(session);
+            }
+            @Override public void onKill(GeckoSession session) {
+                fileChooser.cancel(session);
+            }
             @Override public void onTitleChange(GeckoSession session, String title) {
                 if (!owns(page, session)) return;
                 page.title = title;
@@ -1149,29 +1132,9 @@ final class ReBrowserWebController implements ReBrowserPageDownloadBridge {
 
             @Override public GeckoResult<PromptResponse> onFilePrompt(GeckoSession session,
                     FilePrompt prompt) {
-                if (!isVisible(page) || pendingFilePrompt != null) {
-                    return GeckoResult.fromValue(prompt.dismiss());
-                }
-                pendingFilePrompt = prompt;
-                GeckoResult<PromptResponse> result = new GeckoResult<>();
-                pendingFileResult = result;
-                pendingFilePage = page;
-                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT)
-                        .addCategory(Intent.CATEGORY_OPENABLE)
-                        .setType(prompt.mimeTypes == null || prompt.mimeTypes.length == 0
-                                ? "*/*" : prompt.mimeTypes[0]);
-                if (prompt.mimeTypes != null && prompt.mimeTypes.length > 1) {
-                    intent.putExtra(Intent.EXTRA_MIME_TYPES, prompt.mimeTypes);
-                }
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                try {
-                    activity.startActivityForResult(intent, fileChooserRequestCode);
-                } catch (RuntimeException error) {
-                    cancelPendingFileChooser();
-                    listener.onFileChooserUnavailable();
-                }
-                // Completion is delivered asynchronously by onActivityResult.
-                return result;
+                return owns(page, session) && isVisible(page) && foreground
+                        ? fileChooser.onFilePrompt(session, prompt)
+                        : GeckoResult.fromValue(prompt.dismiss());
             }
         });
 

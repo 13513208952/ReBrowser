@@ -212,6 +212,7 @@ public final class ReBrowserAdminActivity extends Activity {
         if (ReBrowserAdminProtocol.OP_SET_PREFERENCE.equals(operation)
                 && "deviceType".equals(pendingRequest.optString("name"))) {
             new ReBrowserPreferences(this).setDeviceType(pendingRequest.getString("value"));
+            ReBrowserTabletApp.deviceTypeChanged(this);
             ReBrowserAdminProtocol.recordStatus(this, pendingRequest, "completed", authentication, keyId,
                     new JSONObject().put("name", "deviceType").put("updated", true)
                             .put("device", ReBrowserDevice.inspect(this).snapshot()), null);
